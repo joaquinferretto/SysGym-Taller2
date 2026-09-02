@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using exxen2._0.capaDatos.Contexto;
 using exxen2._0.capaDatos.Entidades;
+using exxen2._0.capaDatos.Repositorios;
 
 namespace exxen2._0.capaLogica
 {
@@ -12,10 +11,10 @@ namespace exxen2._0.capaLogica
         public RutinaEjercicio AgregarEjercicio(RutinaEjercicio rutinaEjercicio)
         {
             ValidarDatos(rutinaEjercicio);
-            using (var context = new GymContext())
+            using (var datos = new GymUnidadDeTrabajo())
             {
-                var rutina = context.Rutinas.Find(rutinaEjercicio.IdRutina);
-                var ejercicio = context.Ejercicios.Find(rutinaEjercicio.IdEjercicio);
+                var rutina = datos.Rutinas.Buscar(rutinaEjercicio.IdRutina);
+                var ejercicio = datos.Ejercicios.Buscar(rutinaEjercicio.IdEjercicio);
                 if (rutina == null || !rutina.Estado)
                 {
                     throw new InvalidOperationException("La rutina no existe o está inactiva.");
@@ -27,8 +26,8 @@ namespace exxen2._0.capaLogica
                 }
 
                 rutinaEjercicio.Estado = true;
-                context.RutinaEjercicios.Add(rutinaEjercicio);
-                context.SaveChanges();
+                datos.RutinaEjercicios.Agregar(rutinaEjercicio);
+                datos.GuardarCambios();
                 return rutinaEjercicio;
             }
         }
@@ -36,16 +35,16 @@ namespace exxen2._0.capaLogica
         public RutinaEjercicio Modificar(RutinaEjercicio rutinaEjercicio)
         {
             ValidarDatos(rutinaEjercicio);
-            using (var context = new GymContext())
+            using (var datos = new GymUnidadDeTrabajo())
             {
-                var existente = context.RutinaEjercicios.Find(rutinaEjercicio.IdRutinaEjercicio);
+                var existente = datos.RutinaEjercicios.Buscar(rutinaEjercicio.IdRutinaEjercicio);
                 if (existente == null)
                 {
                     throw new InvalidOperationException("El ejercicio de la rutina no existe.");
                 }
 
-                var rutina = context.Rutinas.Find(existente.IdRutina);
-                var ejercicio = context.Ejercicios.Find(rutinaEjercicio.IdEjercicio);
+                var rutina = datos.Rutinas.Buscar(existente.IdRutina);
+                var ejercicio = datos.Ejercicios.Buscar(rutinaEjercicio.IdEjercicio);
                 if (rutina == null || !rutina.Estado)
                 {
                     throw new InvalidOperationException("La rutina no existe o está inactiva.");
@@ -63,31 +62,31 @@ namespace exxen2._0.capaLogica
                 existente.Descanso = rutinaEjercicio.Descanso;
                 existente.Orden = rutinaEjercicio.Orden;
                 existente.Estado = rutinaEjercicio.Estado;
-                context.SaveChanges();
+                datos.GuardarCambios();
                 return existente;
             }
         }
 
         public void Quitar(int idRutinaEjercicio)
         {
-            using (var context = new GymContext())
+            using (var datos = new GymUnidadDeTrabajo())
             {
-                var rutinaEjercicio = context.RutinaEjercicios.Find(idRutinaEjercicio);
+                var rutinaEjercicio = datos.RutinaEjercicios.Buscar(idRutinaEjercicio);
                 if (rutinaEjercicio == null)
                 {
                     throw new InvalidOperationException("El ejercicio de la rutina no existe.");
                 }
 
                 rutinaEjercicio.Estado = false;
-                context.SaveChanges();
+                datos.GuardarCambios();
             }
         }
 
         public List<RutinaEjercicio> ListarPorRutina(int idRutina)
         {
-            using (var context = new GymContext())
+            using (var datos = new GymUnidadDeTrabajo())
             {
-                return context.RutinaEjercicios.Include(re => re.Ejercicio)
+                return datos.RutinaEjercicios.Consultar("Ejercicio")
                     .Where(re => re.IdRutina == idRutina && re.Estado)
                     .OrderBy(re => re.Orden).ToList();
             }

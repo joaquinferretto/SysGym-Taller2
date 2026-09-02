@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Data.Entity;
-using exxen2._0.capaDatos.Contexto;
 using exxen2._0.capaDatos.Entidades;
+using exxen2._0.capaDatos.Repositorios;
 using Konscious.Security.Cryptography;
 
 namespace exxen2._0.capaLogica
@@ -28,7 +27,7 @@ namespace exxen2._0.capaLogica
                 throw new InvalidOperationException("La contraseña es obligatoria.");
             }
 
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
                 var rol = ObtenerRolActivo(context, usuario.IdRol);
                 ValidarUnicidad(context, usuario.DNI, usuario.Username, 0);
@@ -39,7 +38,7 @@ namespace exxen2._0.capaLogica
                 usuario.Estado = true;
 
                 context.UsuariosSistema.Add(usuario);
-                context.SaveChanges();
+                context.GuardarCambios();
                 return usuario;
             }
         }
@@ -48,7 +47,7 @@ namespace exxen2._0.capaLogica
         {
             ValidarDatos(usuario);
 
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
                 var existente = context.UsuariosSistema.SingleOrDefault(u => u.IdUsuarioSistema == usuario.IdUsuarioSistema);
                 if (existente == null)
@@ -74,43 +73,43 @@ namespace exxen2._0.capaLogica
                     existente.Password = GenerarPassword(nuevaPassword);
                 }
 
-                context.SaveChanges();
+                context.GuardarCambios();
                 return existente;
             }
         }
 
         public UsuarioSistema ObtenerPorId(int idUsuarioSistema)
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
-                return context.UsuariosSistema.Include(u => u.Rol)
+                return context.UsuariosSistema.Consultar("Rol")
                     .SingleOrDefault(u => u.IdUsuarioSistema == idUsuarioSistema);
             }
         }
 
         public UsuarioSistema ObtenerPorDni(string dni)
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
-                return context.UsuariosSistema.Include(u => u.Rol)
+                return context.UsuariosSistema.Consultar("Rol")
                     .SingleOrDefault(u => u.DNI == dni);
             }
         }
 
         public UsuarioSistema ObtenerPorUsername(string username)
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
-                return context.UsuariosSistema.Include(u => u.Rol)
+                return context.UsuariosSistema.Consultar("Rol")
                     .SingleOrDefault(u => u.Username == username);
             }
         }
 
         public List<UsuarioSistema> ListarActivos()
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
-                return context.UsuariosSistema.Include(u => u.Rol)
+                return context.UsuariosSistema.Consultar("Rol")
                     .Where(u => u.Estado && u.Rol.Estado)
                     .OrderBy(u => u.Apellido).ThenBy(u => u.Nombre).ToList();
             }
@@ -123,9 +122,9 @@ namespace exxen2._0.capaLogica
                 return new List<UsuarioSistema>();
             }
 
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
-                return context.UsuariosSistema.Include(u => u.Rol)
+                return context.UsuariosSistema.Consultar("Rol")
                     .Where(u => u.Estado && u.Rol.Estado && u.Rol.Descripcion == descripcionRol)
                     .OrderBy(u => u.Apellido).ThenBy(u => u.Nombre).ToList();
             }
@@ -133,7 +132,7 @@ namespace exxen2._0.capaLogica
 
         public void DarDeBaja(int idUsuarioSistema)
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
                 var usuario = context.UsuariosSistema.Find(idUsuarioSistema);
                 if (usuario == null)
@@ -142,7 +141,7 @@ namespace exxen2._0.capaLogica
                 }
 
                 usuario.Estado = false;
-                context.SaveChanges();
+                context.GuardarCambios();
             }
         }
 
@@ -153,10 +152,9 @@ namespace exxen2._0.capaLogica
                 return null;
             }
 
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
-                var usuario = context.UsuariosSistema
-                    .Include(u => u.Rol)
+                var usuario = context.UsuariosSistema.Consultar("Rol")
                     .SingleOrDefault(u => u.Username == username && u.Estado);
 
                 if (usuario == null || usuario.Rol == null || !usuario.Rol.Estado)
@@ -275,7 +273,7 @@ namespace exxen2._0.capaLogica
             }
         }
 
-        private static Rol ObtenerRolActivo(GymContext context, int idRol)
+        private static Rol ObtenerRolActivo(IUnidadDeTrabajo context, int idRol)
         {
             var rol = context.Roles.SingleOrDefault(r => r.IdRol == idRol);
             if (rol == null || !rol.Estado)
@@ -286,7 +284,7 @@ namespace exxen2._0.capaLogica
             return rol;
         }
 
-        private static void ValidarUnicidad(GymContext context, string dni, string username, int idActual)
+        private static void ValidarUnicidad(IUnidadDeTrabajo context, string dni, string username, int idActual)
         {
             if (context.UsuariosSistema.Any(u => u.DNI == dni && u.IdUsuarioSistema != idActual))
             {

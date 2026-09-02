@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Data.Entity;
-using exxen2._0.capaDatos.Contexto;
 using exxen2._0.capaDatos.Entidades;
+using exxen2._0.capaDatos.Repositorios;
 
 namespace exxen2._0.capaLogica
 {
@@ -12,11 +11,11 @@ namespace exxen2._0.capaLogica
         public Plan Crear(Plan plan)
         {
             ValidarDatos(plan);
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
                 plan.Estado = true;
                 context.Planes.Add(plan);
-                context.SaveChanges();
+                context.GuardarCambios();
                 return plan;
             }
         }
@@ -24,7 +23,7 @@ namespace exxen2._0.capaLogica
         public Plan Modificar(Plan plan)
         {
             ValidarDatos(plan);
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
                 var existente = context.Planes.Find(plan.IdPlan);
                 if (existente == null)
@@ -39,31 +38,32 @@ namespace exxen2._0.capaLogica
                 existente.IncluyeRutinaPersonal = plan.IncluyeRutinaPersonal;
                 existente.Estado = plan.Estado;
                 existente.IdRutina = plan.IdRutina;
-                context.SaveChanges();
+                context.GuardarCambios();
                 return existente;
             }
         }
 
         public Plan ObtenerPorId(int idPlan)
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
-                return context.Planes.Include(p => p.Rutina)
+                return context.Planes.Consultar("Rutina")
                     .SingleOrDefault(p => p.IdPlan == idPlan);
             }
         }
 
         public List<Plan> ListarActivos()
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
-                return context.Planes.Where(p => p.Estado).OrderBy(p => p.Nombre).ToList();
+                return context.Planes.Consultar("Rutina")
+                    .Where(p => p.Estado).OrderBy(p => p.Nombre).ToList();
             }
         }
 
         public void DarDeBaja(int idPlan)
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
                 var plan = context.Planes.Find(idPlan);
                 if (plan == null)
@@ -72,7 +72,7 @@ namespace exxen2._0.capaLogica
                 }
 
                 plan.Estado = false;
-                context.SaveChanges();
+                context.GuardarCambios();
             }
         }
 

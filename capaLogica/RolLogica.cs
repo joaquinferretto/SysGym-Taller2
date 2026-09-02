@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using exxen2._0.capaDatos.Contexto;
 using exxen2._0.capaDatos.Entidades;
+using exxen2._0.capaDatos.Repositorios;
 
 namespace exxen2._0.capaLogica
 {
@@ -9,7 +9,7 @@ namespace exxen2._0.capaLogica
     {
         public Rol ObtenerPorId(int idRol)
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
                 return context.Roles.SingleOrDefault(r => r.IdRol == idRol);
             }
@@ -22,7 +22,7 @@ namespace exxen2._0.capaLogica
                 return null;
             }
 
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
                 return context.Roles.SingleOrDefault(r => r.Descripcion == descripcion);
             }
@@ -30,7 +30,7 @@ namespace exxen2._0.capaLogica
 
         public List<Rol> ListarActivos()
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
                 return context.Roles.Where(r => r.Estado).OrderBy(r => r.Descripcion).ToList();
             }

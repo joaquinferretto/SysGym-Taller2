@@ -32,6 +32,7 @@ namespace exxen2._0.capaDatos.Contexto
         public DbSet<Rutina> Rutinas { get; set; }
         public DbSet<Ejercicio> Ejercicios { get; set; }
         public DbSet<RutinaEjercicio> RutinaEjercicios { get; set; }
+        public DbSet<RutinaAsignacion> RutinaAsignaciones { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -53,6 +54,7 @@ namespace exxen2._0.capaDatos.Contexto
             modelBuilder.Entity<Rutina>().ToTable("Rutina");
             modelBuilder.Entity<Ejercicio>().ToTable("Ejercicio");
             modelBuilder.Entity<RutinaEjercicio>().ToTable("RutinaEjercicio");
+            modelBuilder.Entity<RutinaAsignacion>().ToTable("RutinaAsignacion");
 
             modelBuilder.Entity<Socio>().Property(s => s.Peso).HasPrecision(6, 2);
             modelBuilder.Entity<Socio>().Property(s => s.Altura).HasPrecision(5, 2);
@@ -141,12 +143,6 @@ namespace exxen2._0.capaDatos.Contexto
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Rutina>()
-                .HasRequired(r => r.Socio)
-                .WithMany(s => s.Rutinas)
-                .HasForeignKey(r => r.IdSocio)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Rutina>()
                 .HasRequired(r => r.Entrenador)
                 .WithMany(u => u.RutinasComoEntrenador)
                 .HasForeignKey(r => r.IdEntrenador)
@@ -162,6 +158,18 @@ namespace exxen2._0.capaDatos.Contexto
                 .HasRequired(re => re.Ejercicio)
                 .WithMany(e => e.Rutinas)
                 .HasForeignKey(re => re.IdEjercicio)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<RutinaAsignacion>()
+                .HasRequired(ra => ra.Rutina)
+                .WithMany(r => r.Asignaciones)
+                .HasForeignKey(ra => ra.IdRutina)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<RutinaAsignacion>()
+                .HasRequired(ra => ra.Membresia)
+                .WithMany(m => m.Rutinas)
+                .HasForeignKey(ra => ra.IdMembresia)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Plan>()

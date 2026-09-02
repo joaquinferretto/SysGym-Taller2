@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Data.Entity;
-using exxen2._0.capaDatos.Contexto;
 using exxen2._0.capaDatos.Entidades;
+using exxen2._0.capaDatos.Repositorios;
 
 namespace exxen2._0.capaLogica
 {
@@ -12,7 +11,7 @@ namespace exxen2._0.capaLogica
         public Socio Crear(Socio socio)
         {
             ValidarDatos(socio);
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
                 if (context.Socios.Any(s => s.DNI == socio.DNI))
                 {
@@ -21,7 +20,7 @@ namespace exxen2._0.capaLogica
 
                 socio.Estado = true;
                 context.Socios.Add(socio);
-                context.SaveChanges();
+                context.GuardarCambios();
                 return socio;
             }
         }
@@ -29,7 +28,7 @@ namespace exxen2._0.capaLogica
         public Socio Modificar(Socio socio)
         {
             ValidarDatos(socio);
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
                 var existente = context.Socios.Find(socio.IdSocio);
                 if (existente == null)
@@ -49,23 +48,23 @@ namespace exxen2._0.capaLogica
                 existente.Peso = socio.Peso;
                 existente.Altura = socio.Altura;
                 existente.Estado = socio.Estado;
-                context.SaveChanges();
+                context.GuardarCambios();
                 return existente;
             }
         }
 
         public Socio ObtenerPorId(int idSocio)
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
-                return context.Socios.Include(s => s.Membresias)
+                return context.Socios.Consultar("Membresias")
                     .SingleOrDefault(s => s.IdSocio == idSocio);
             }
         }
 
         public Socio ObtenerPorDni(string dni)
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
                 return context.Socios.SingleOrDefault(s => s.DNI == dni);
             }
@@ -73,7 +72,7 @@ namespace exxen2._0.capaLogica
 
         public List<Socio> ListarActivos()
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
                 return context.Socios.Where(s => s.Estado)
                     .OrderBy(s => s.Apellido).ThenBy(s => s.Nombre).ToList();
@@ -82,7 +81,7 @@ namespace exxen2._0.capaLogica
 
         public void DarDeBaja(int idSocio)
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
                 var socio = context.Socios.Find(idSocio);
                 if (socio == null)
@@ -91,7 +90,7 @@ namespace exxen2._0.capaLogica
                 }
 
                 socio.Estado = false;
-                context.SaveChanges();
+                context.GuardarCambios();
             }
         }
 
@@ -102,6 +101,8 @@ namespace exxen2._0.capaLogica
             {
                 throw new InvalidOperationException("Peso y altura positivos son necesarios para calcular el IMC.");
             }
+
+            ValidarAlturaFraccionaria(socio.Altura);
 
             return Math.Round(socio.Peso.Value / (socio.Altura.Value * socio.Altura.Value), 2);
         }
@@ -137,6 +138,17 @@ namespace exxen2._0.capaLogica
             if (socio.Altura.HasValue && socio.Altura.Value <= 0)
             {
                 throw new InvalidOperationException("La altura debe ser mayor que cero.");
+            }
+
+            ValidarAlturaFraccionaria(socio.Altura);
+        }
+
+        private static void ValidarAlturaFraccionaria(decimal? altura)
+        {
+            if (altura.HasValue && decimal.Truncate(altura.Value) == altura.Value)
+            {
+                throw new InvalidOperationException(
+                    "La altura debe incluir decimales, por ejemplo 1,80 m.");
             }
         }
     }

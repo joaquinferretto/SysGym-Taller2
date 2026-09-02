@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using exxen2._0.capaDatos.Contexto;
 using exxen2._0.capaDatos.Entidades;
+using exxen2._0.capaDatos.Repositorios;
 
 namespace exxen2._0.capaLogica
 {
@@ -13,12 +12,12 @@ namespace exxen2._0.capaLogica
         {
             ValidarMembresia(membresia);
 
-            using (var context = new GymContext())
-            using (var transaction = context.Database.BeginTransaction())
+            using (var context = new GymUnidadDeTrabajo())
+            using (var transaction = context.IniciarTransaccion())
             {
                 var socio = context.Socios.Find(membresia.IdSocio);
                 var plan = context.Planes.Find(membresia.IdPlan);
-                var usuario = context.UsuariosSistema.Include(u => u.Rol)
+                var usuario = context.UsuariosSistema.Consultar("Rol")
                     .SingleOrDefault(u => u.IdUsuarioSistema == membresia.IdUsuarioSistema);
 
                 ValidarReferenciasActivas(socio, plan, usuario);
@@ -44,11 +43,11 @@ namespace exxen2._0.capaLogica
                 }
 
                 context.Membresias.Add(membresia);
-                context.SaveChanges();
+                context.GuardarCambios();
 
                 CuotaMembresiaLogica.CrearPrimeraCuotaEnContexto(context, membresia, plan);
-                context.SaveChanges();
-                transaction.Commit();
+                context.GuardarCambios();
+                transaction.Confirmar();
                 return membresia;
             }
         }
@@ -60,7 +59,7 @@ namespace exxen2._0.capaLogica
                 throw new ArgumentNullException("membresia");
             }
 
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
                 var existente = context.Membresias.Find(membresia.IdMembresia);
                 if (existente == null)
@@ -101,30 +100,25 @@ namespace exxen2._0.capaLogica
                 existente.FechaInicio = membresia.FechaInicio;
                 existente.FechaVencimiento = membresia.FechaVencimiento;
                 existente.Estado = membresia.Estado;
-                context.SaveChanges();
+                context.GuardarCambios();
                 return existente;
             }
         }
 
         public Membresia ObtenerPorId(int idMembresia)
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
-                return context.Membresias
-                    .Include("Plan")
-                    .Include("Socio")
-                    .Include("UsuarioSistema")
-                    .Include("Cuotas.Pago")
-                    .Include("Entrenadores.Entrenador")
+                return context.Membresias.Consultar("Plan", "Socio", "UsuarioSistema", "Cuotas.Pago", "Entrenadores.Entrenador")
                     .SingleOrDefault(m => m.IdMembresia == idMembresia);
             }
         }
 
         public List<Membresia> ObtenerPorSocio(int idSocio)
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
-                return context.Membresias.Include(m => m.Plan)
+                return context.Membresias.Consultar("Plan")
                     .Where(m => m.IdSocio == idSocio)
                     .OrderByDescending(m => m.FechaInicio).ToList();
             }
@@ -132,17 +126,29 @@ namespace exxen2._0.capaLogica
 
         public List<Membresia> ListarHabilitadas()
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
-                return context.Membresias.Include(m => m.Plan).Include(m => m.Socio)
+                return context.Membresias.Consultar("Plan", "Socio")
                     .Where(m => m.Estado).OrderBy(m => m.FechaInicio).ToList();
+            }
+        }
+
+        public List<Membresia> ListarParaGestion()
+        {
+            using (var context = new GymUnidadDeTrabajo())
+            {
+                return context.Membresias.Consultar("Plan", "Socio")
+                    .OrderByDescending(m => m.Estado)
+                    .ThenBy(m => m.Socio.Apellido)
+                    .ThenBy(m => m.Socio.Nombre)
+                    .ToList();
             }
         }
 
         public void CambiarPlan(int idMembresia, int idPlan)
         {
-            using (var context = new GymContext())
-            using (var transaction = context.Database.BeginTransaction())
+            using (var context = new GymUnidadDeTrabajo())
+            using (var transaction = context.IniciarTransaccion())
             {
                 var membresia = context.Membresias.Find(idMembresia);
                 var plan = context.Planes.Find(idPlan);
@@ -165,16 +171,24 @@ namespace exxen2._0.capaLogica
                     {
                         asignacion.Estado = false;
                     }
+
+                    var rutinas = context.RutinaAsignaciones
+                        .Where(ra => ra.IdMembresia == idMembresia && ra.Estado).ToList();
+                    foreach (var asignacion in rutinas)
+                    {
+                        asignacion.Estado = false;
+                        asignacion.FechaFin = DateTime.Now;
+                    }
                 }
 
-                context.SaveChanges();
-                transaction.Commit();
+                context.GuardarCambios();
+                transaction.Confirmar();
             }
         }
 
         public void Habilitar(int idMembresia)
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
                 var membresia = context.Membresias.Find(idMembresia);
                 if (membresia == null)
@@ -188,7 +202,7 @@ namespace exxen2._0.capaLogica
                 }
 
                 membresia.Estado = true;
-                context.SaveChanges();
+                context.GuardarCambios();
             }
         }
 
@@ -204,7 +218,7 @@ namespace exxen2._0.capaLogica
 
         public bool TieneCuotaVencidaPendiente(int idMembresia)
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
                 return TieneCuotaVencidaPendienteEnContexto(context, idMembresia);
             }
@@ -217,14 +231,14 @@ namespace exxen2._0.capaLogica
 
         public void ActualizarEstadoPorDeuda(int idMembresia)
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
                 ActualizarEstadoPorDeudaEnContexto(context, idMembresia);
-                context.SaveChanges();
+                context.GuardarCambios();
             }
         }
 
-        internal static bool TieneCuotaVencidaPendienteEnContexto(GymContext context, int idMembresia)
+        internal static bool TieneCuotaVencidaPendienteEnContexto(IUnidadDeTrabajo context, int idMembresia)
         {
             var hoy = DateTime.Today;
             return context.CuotasMembresia.Any(c => c.IdMembresia == idMembresia
@@ -232,7 +246,7 @@ namespace exxen2._0.capaLogica
                 && c.FechaHasta < hoy);
         }
 
-        internal static void ActualizarEstadoPorDeudaEnContexto(GymContext context, int idMembresia)
+        internal static void ActualizarEstadoPorDeudaEnContexto(IUnidadDeTrabajo context, int idMembresia)
         {
             var membresia = context.Membresias.Find(idMembresia);
             if (membresia == null)
@@ -245,7 +259,7 @@ namespace exxen2._0.capaLogica
 
         private static void CambiarEstado(int idMembresia, bool estado)
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
                 var membresia = context.Membresias.Find(idMembresia);
                 if (membresia == null)
@@ -254,7 +268,17 @@ namespace exxen2._0.capaLogica
                 }
 
                 membresia.Estado = estado;
-                context.SaveChanges();
+                if (!estado)
+                {
+                    var rutinas = context.RutinaAsignaciones
+                        .Where(ra => ra.IdMembresia == idMembresia && ra.Estado).ToList();
+                    foreach (var asignacion in rutinas)
+                    {
+                        asignacion.Estado = false;
+                        asignacion.FechaFin = DateTime.Now;
+                    }
+                }
+                context.GuardarCambios();
             }
         }
 

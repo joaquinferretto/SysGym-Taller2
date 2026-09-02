@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using exxen2._0.capaDatos.Contexto;
 using exxen2._0.capaDatos.Entidades;
+using exxen2._0.capaDatos.Repositorios;
 
 namespace exxen2._0.capaLogica
 {
@@ -16,8 +15,8 @@ namespace exxen2._0.capaLogica
                 throw new ArgumentNullException("asistencia");
             }
 
-            using (var context = new GymContext())
-            using (var transaction = context.Database.BeginTransaction())
+            using (var context = new GymUnidadDeTrabajo())
+            using (var transaction = context.IniciarTransaccion())
             {
                 var socio = context.Socios.Find(asistencia.IdSocio);
                 if (socio == null || !socio.Estado)
@@ -52,15 +51,15 @@ namespace exxen2._0.capaLogica
                 asistencia.Fecha = fecha;
                 asistencia.Estado = true;
                 context.Asistencias.Add(asistencia);
-                context.SaveChanges();
-                transaction.Commit();
+                context.GuardarCambios();
+                transaction.Confirmar();
                 return asistencia;
             }
         }
 
         public List<Asistencia> ListarPorSocio(int idSocio)
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
                 return context.Asistencias.Where(a => a.IdSocio == idSocio && a.Estado)
                     .OrderByDescending(a => a.Fecha).ToList();
@@ -71,9 +70,9 @@ namespace exxen2._0.capaLogica
         {
             var inicio = fecha.Date;
             var fin = inicio.AddDays(1);
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
-                return context.Asistencias.Include(a => a.Socio)
+                return context.Asistencias.Consultar("Socio")
                     .Where(a => a.Estado && a.Fecha >= inicio && a.Fecha < fin)
                     .OrderBy(a => a.Fecha).ToList();
             }
@@ -81,7 +80,7 @@ namespace exxen2._0.capaLogica
 
         public void DarDeBaja(int idAsistencia)
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
                 var asistencia = context.Asistencias.Find(idAsistencia);
                 if (asistencia == null)
@@ -90,7 +89,7 @@ namespace exxen2._0.capaLogica
                 }
 
                 asistencia.Estado = false;
-                context.SaveChanges();
+                context.GuardarCambios();
             }
         }
     }

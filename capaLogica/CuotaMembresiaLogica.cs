@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using exxen2._0.capaDatos.Contexto;
 using exxen2._0.capaDatos.Entidades;
+using exxen2._0.capaDatos.Repositorios;
 
 namespace exxen2._0.capaLogica
 {
@@ -11,10 +10,10 @@ namespace exxen2._0.capaLogica
     {
         public CuotaMembresia CrearPrimeraCuota(int idMembresia)
         {
-            using (var context = new GymContext())
-            using (var transaction = context.Database.BeginTransaction())
+            using (var context = new GymUnidadDeTrabajo())
+            using (var transaction = context.IniciarTransaccion())
             {
-                var membresia = context.Membresias.Include(m => m.Plan)
+                var membresia = context.Membresias.Consultar("Plan")
                     .SingleOrDefault(m => m.IdMembresia == idMembresia);
                 if (membresia == null)
                 {
@@ -27,18 +26,18 @@ namespace exxen2._0.capaLogica
                 }
 
                 var cuota = CrearPrimeraCuotaEnContexto(context, membresia, membresia.Plan);
-                context.SaveChanges();
-                transaction.Commit();
+                context.GuardarCambios();
+                transaction.Confirmar();
                 return cuota;
             }
         }
 
         public CuotaMembresia GenerarSiguienteCuota(int idMembresia)
         {
-            using (var context = new GymContext())
-            using (var transaction = context.Database.BeginTransaction())
+            using (var context = new GymUnidadDeTrabajo())
+            using (var transaction = context.IniciarTransaccion())
             {
-                var membresia = context.Membresias.Include(m => m.Plan)
+                var membresia = context.Membresias.Consultar("Plan")
                     .SingleOrDefault(m => m.IdMembresia == idMembresia);
                 if (membresia == null)
                 {
@@ -62,27 +61,27 @@ namespace exxen2._0.capaLogica
                     cuota = CrearCuotaEnContexto(context, membresia, plan, desde);
                 }
 
-                context.SaveChanges();
-                transaction.Commit();
+                context.GuardarCambios();
+                transaction.Confirmar();
                 return cuota;
             }
         }
 
         public CuotaMembresia ObtenerPorId(int idCuotaMembresia)
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
-                return context.CuotasMembresia.Include(c => c.Membresia)
-                    .Include(c => c.Pago).SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);
+                return context.CuotasMembresia.Consultar("Membresia", "Pago")
+                    .SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);
             }
         }
 
         public CuotaMembresia ObtenerCuotaActual(int idMembresia)
         {
             var hoy = DateTime.Today;
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
-                return context.CuotasMembresia.Include(c => c.Pago)
+                return context.CuotasMembresia.Consultar("Pago")
                     .Where(c => c.IdMembresia == idMembresia
                         && c.EstadoPago != EstadosCuota.Anulada
                         && c.FechaDesde <= hoy && c.FechaHasta >= hoy)
@@ -92,7 +91,7 @@ namespace exxen2._0.capaLogica
 
         public List<CuotaMembresia> ListarPorMembresia(int idMembresia)
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
                 return context.CuotasMembresia
                     .Where(c => c.IdMembresia == idMembresia)
@@ -115,12 +114,27 @@ namespace exxen2._0.capaLogica
             return ListarPorEstado(EstadosCuota.Anulada);
         }
 
+        public List<CuotaMembresia> ListarParaGestion()
+        {
+            using (var context = new GymUnidadDeTrabajo())
+            {
+                return context.CuotasMembresia.Consultar(
+                        "Pago", "Membresia.Socio", "Membresia.Plan")
+                    .Where(c => c.EstadoPago == EstadosCuota.Pendiente
+                        || c.EstadoPago == EstadosCuota.Pagada)
+                    .OrderByDescending(c => c.FechaDesde)
+                    .ThenBy(c => c.Membresia.Socio.Apellido)
+                    .ThenBy(c => c.Membresia.Socio.Nombre)
+                    .ToList();
+            }
+        }
+
         public void AnularCuota(int idCuotaMembresia)
         {
-            using (var context = new GymContext())
-            using (var transaction = context.Database.BeginTransaction())
+            using (var context = new GymUnidadDeTrabajo())
+            using (var transaction = context.IniciarTransaccion())
             {
-                var cuota = context.CuotasMembresia.Include(c => c.Pago)
+                var cuota = context.CuotasMembresia.Consultar("Pago")
                     .SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);
                 if (cuota == null)
                 {
@@ -129,8 +143,8 @@ namespace exxen2._0.capaLogica
 
                 cuota.EstadoPago = EstadosCuota.Anulada;
                 MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(context, cuota.IdMembresia);
-                context.SaveChanges();
-                transaction.Commit();
+                context.GuardarCambios();
+                transaction.Confirmar();
             }
         }
 
@@ -142,9 +156,9 @@ namespace exxen2._0.capaLogica
 
         public decimal CalcularSaldo(int idCuotaMembresia)
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
-                var cuota = context.CuotasMembresia.Include(c => c.Pago)
+                var cuota = context.CuotasMembresia.Consultar("Pago")
                     .SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);
                 if (cuota == null)
                 {
@@ -162,9 +176,9 @@ namespace exxen2._0.capaLogica
                 throw new ArgumentNullException("cuota");
             }
 
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
-                var cuotaActual = context.CuotasMembresia.Include(c => c.Pago)
+                var cuotaActual = context.CuotasMembresia.Consultar("Pago")
                     .SingleOrDefault(c => c.IdCuotaMembresia == cuota.IdCuotaMembresia);
                 if (cuotaActual == null)
                 {
@@ -177,10 +191,10 @@ namespace exxen2._0.capaLogica
 
         public void RecalcularEstadoPago(int idCuotaMembresia)
         {
-            using (var context = new GymContext())
-            using (var transaction = context.Database.BeginTransaction())
+            using (var context = new GymUnidadDeTrabajo())
+            using (var transaction = context.IniciarTransaccion())
             {
-                var cuota = context.CuotasMembresia.Include(c => c.Pago)
+                var cuota = context.CuotasMembresia.Consultar("Pago")
                     .SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);
                 if (cuota == null)
                 {
@@ -189,12 +203,12 @@ namespace exxen2._0.capaLogica
 
                 RecalcularEstadoPagoEnContexto(context, cuota);
                 MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(context, cuota.IdMembresia);
-                context.SaveChanges();
-                transaction.Commit();
+                context.GuardarCambios();
+                transaction.Confirmar();
             }
         }
 
-        internal static CuotaMembresia CrearPrimeraCuotaEnContexto(GymContext context, Membresia membresia, Plan plan)
+        internal static CuotaMembresia CrearPrimeraCuotaEnContexto(IUnidadDeTrabajo context, Membresia membresia, Plan plan)
         {
             if (membresia == null || plan == null)
             {
@@ -205,7 +219,7 @@ namespace exxen2._0.capaLogica
             return CrearCuotaEnContexto(context, membresia, plan, membresia.FechaInicio);
         }
 
-        internal static void RecalcularEstadoPagoEnContexto(GymContext context, CuotaMembresia cuota)
+        internal static void RecalcularEstadoPagoEnContexto(IUnidadDeTrabajo context, CuotaMembresia cuota)
         {
             if (cuota.EstadoPago == EstadosCuota.Anulada)
             {
@@ -220,7 +234,7 @@ namespace exxen2._0.capaLogica
                 ? EstadosCuota.Pagada : EstadosCuota.Pendiente;
         }
 
-        internal static decimal CalcularSaldoEnContexto(GymContext context, CuotaMembresia cuota)
+        internal static decimal CalcularSaldoEnContexto(IUnidadDeTrabajo context, CuotaMembresia cuota)
         {
             if (cuota.EstadoPago == EstadosCuota.Anulada)
             {
@@ -234,7 +248,7 @@ namespace exxen2._0.capaLogica
             return Math.Max(0m, cuota.Importe - totalAprobado);
         }
 
-        private static CuotaMembresia CrearCuotaEnContexto(GymContext context, Membresia membresia, Plan plan, DateTime periodoDesde)
+        private static CuotaMembresia CrearCuotaEnContexto(IUnidadDeTrabajo context, Membresia membresia, Plan plan, DateTime periodoDesde)
         {
             var cuota = new CuotaMembresia
             {
@@ -255,9 +269,10 @@ namespace exxen2._0.capaLogica
 
         private List<CuotaMembresia> ListarPorEstado(string estado)
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
-                return context.CuotasMembresia.Include(c => c.Pago)
+                return context.CuotasMembresia.Consultar(
+                        "Pago", "Membresia.Socio", "Membresia.Plan")
                     .Where(c => c.EstadoPago == estado)
                     .OrderBy(c => c.FechaDesde).ToList();
             }

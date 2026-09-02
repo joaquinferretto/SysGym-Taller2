@@ -1,35 +1,28 @@
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using exxen2._0.capaDatos.Contexto;
 using exxen2._0.capaDatos.Entidades;
+using exxen2._0.capaDatos.Repositorios;
 
 namespace exxen2._0.capaLogica
 {
     public class RutinaLogica
     {
+        // Las rutinas son plantillas generales. No se guardan con un socio.
         public Rutina Crear(Rutina rutina)
         {
             ValidarDatos(rutina);
-            using (var context = new GymContext())
+            using (var datos = new GymUnidadDeTrabajo())
             {
-                var socio = context.Socios.Find(rutina.IdSocio);
-                var membresia = context.Membresias.Include(m => m.Plan)
-                    .Where(m => m.IdSocio == rutina.IdSocio && m.Estado)
-                    .OrderByDescending(m => m.FechaInicio).FirstOrDefault();
-                var entrenador = context.UsuariosSistema.Include(u => u.Rol)
-                    .SingleOrDefault(u => u.IdUsuarioSistema == rutina.IdEntrenador);
-                ValidarReferencias(socio, membresia, entrenador);
-
+                ValidarEntrenador(datos, rutina.IdEntrenador);
                 rutina.Estado = true;
                 if (rutina.FechaCreacion == default(DateTime))
                 {
                     rutina.FechaCreacion = DateTime.Now;
                 }
 
-                context.Rutinas.Add(rutina);
-                context.SaveChanges();
+                datos.Rutinas.Agregar(rutina);
+                datos.GuardarCambios();
                 return rutina;
             }
         }
@@ -37,81 +30,91 @@ namespace exxen2._0.capaLogica
         public Rutina Modificar(Rutina rutina)
         {
             ValidarDatos(rutina);
-            using (var context = new GymContext())
+            using (var datos = new GymUnidadDeTrabajo())
             {
-                var existente = context.Rutinas.Find(rutina.IdRutina);
+                var existente = datos.Rutinas.Buscar(rutina.IdRutina);
                 if (existente == null)
                 {
                     throw new InvalidOperationException("La rutina no existe.");
                 }
 
-                var entrenador = context.UsuariosSistema.Include(u => u.Rol)
-                    .SingleOrDefault(u => u.IdUsuarioSistema == rutina.IdEntrenador);
-                if (!ValidacionesGym.EsEntrenadorActivo(entrenador))
-                {
-                    throw new InvalidOperationException("El usuario no posee rol de Entrenador activo.");
-                }
-
+                ValidarEntrenador(datos, rutina.IdEntrenador);
                 existente.Nombre = rutina.Nombre;
                 existente.Descripcion = rutina.Descripcion;
                 existente.FechaInicio = rutina.FechaInicio;
                 existente.FechaFin = rutina.FechaFin;
                 existente.IdEntrenador = rutina.IdEntrenador;
                 existente.Estado = rutina.Estado;
-                context.SaveChanges();
+                datos.GuardarCambios();
                 return existente;
             }
         }
 
         public Rutina ObtenerPorId(int idRutina)
         {
-            using (var context = new GymContext())
+            using (var datos = new GymUnidadDeTrabajo())
             {
-                return context.Rutinas.Include(r => r.Socio).Include(r => r.Entrenador)
-                    .Include("Ejercicios.Ejercicio")
+                return datos.Rutinas.Consultar("Entrenador", "Ejercicios.Ejercicio", "Asignaciones.Membresia.Socio")
                     .SingleOrDefault(r => r.IdRutina == idRutina);
             }
         }
 
-        public List<Rutina> ListarPorSocio(int idSocio)
+        public List<Rutina> ListarGenerales()
         {
-            using (var context = new GymContext())
+            using (var datos = new GymUnidadDeTrabajo())
             {
-                return context.Rutinas.Include(r => r.Entrenador)
-                    .Where(r => r.IdSocio == idSocio).OrderByDescending(r => r.FechaCreacion).ToList();
+                return datos.Rutinas.Consultar("Entrenador", "Asignaciones")
+                    .Where(r => r.Estado)
+                    .OrderBy(r => r.Nombre).ToList();
             }
         }
 
         public List<Rutina> ListarPorEntrenador(int idEntrenador)
         {
-            using (var context = new GymContext())
+            using (var datos = new GymUnidadDeTrabajo())
             {
-                return context.Rutinas.Include(r => r.Socio)
-                    .Where(r => r.IdEntrenador == idEntrenador).OrderByDescending(r => r.FechaCreacion).ToList();
+                return datos.Rutinas.Consultar("Entrenador", "Asignaciones")
+                    .Where(r => r.IdEntrenador == idEntrenador)
+                    .OrderByDescending(r => r.FechaCreacion).ToList();
             }
         }
 
+        // Devuelve el catálogo, no una fila por cada socio asignado.
         public List<Rutina> ListarActivas()
         {
-            using (var context = new GymContext())
-            {
-                return context.Rutinas.Include(r => r.Socio).Include(r => r.Entrenador)
-                    .Where(r => r.Estado).OrderByDescending(r => r.FechaCreacion).ToList();
-            }
+            return ListarGenerales();
         }
 
         public void DarDeBaja(int idRutina)
         {
-            using (var context = new GymContext())
+            using (var datos = new GymUnidadDeTrabajo())
             {
-                var rutina = context.Rutinas.Find(idRutina);
+                var rutina = datos.Rutinas.Buscar(idRutina);
                 if (rutina == null)
                 {
                     throw new InvalidOperationException("La rutina no existe.");
                 }
 
                 rutina.Estado = false;
-                context.SaveChanges();
+                var asignaciones = datos.RutinaAsignaciones
+                    .Where(a => a.IdRutina == idRutina && a.Estado).ToList();
+                foreach (var asignacion in asignaciones)
+                {
+                    asignacion.Estado = false;
+                    asignacion.FechaFin = DateTime.Now;
+                }
+
+                datos.GuardarCambios();
+            }
+        }
+
+        private static void ValidarEntrenador(IUnidadDeTrabajo datos, int idEntrenador)
+        {
+            var entrenador = datos.UsuariosSistema.Consultar("Rol")
+                .SingleOrDefault(u => u.IdUsuarioSistema == idEntrenador);
+            if (!ValidacionesGym.EsEntrenadorActivo(entrenador))
+            {
+                throw new InvalidOperationException("El usuario no posee rol de Entrenador activo.");
             }
         }
 
@@ -131,25 +134,6 @@ namespace exxen2._0.capaLogica
                 && rutina.FechaFin.Value < rutina.FechaInicio.Value)
             {
                 throw new InvalidOperationException("La fecha de fin no puede ser anterior a la fecha de inicio.");
-            }
-        }
-
-        private static void ValidarReferencias(Socio socio, Membresia membresia, UsuarioSistema entrenador)
-        {
-            if (socio == null || !socio.Estado)
-            {
-                throw new InvalidOperationException("El socio no existe o está inactivo.");
-            }
-
-            if (membresia == null || membresia.Plan == null
-                || !membresia.Plan.Estado || !membresia.Plan.IncluyeRutinaPersonal)
-            {
-                throw new InvalidOperationException("El socio no tiene una membresía habilitada con rutina personalizada.");
-            }
-
-            if (!ValidacionesGym.EsEntrenadorActivo(entrenador))
-            {
-                throw new InvalidOperationException("El usuario no posee rol de Entrenador activo.");
             }
         }
     }

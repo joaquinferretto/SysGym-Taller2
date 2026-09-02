@@ -11,7 +11,6 @@ namespace exxen2._0.capaDatos.Entidades
         {
             Membresias = new HashSet<Membresia>();
             Asistencias = new HashSet<Asistencia>();
-            Rutinas = new HashSet<Rutina>();
             Estado = true;
         }
 
@@ -47,7 +46,5 @@ namespace exxen2._0.capaDatos.Entidades
         [InverseProperty("Socio")]
         public virtual ICollection<Asistencia> Asistencias { get; set; }
 
-        [InverseProperty("Socio")]
-        public virtual ICollection<Rutina> Rutinas { get; set; }
     }
 }

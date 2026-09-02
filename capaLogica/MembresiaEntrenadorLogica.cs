@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using exxen2._0.capaDatos.Contexto;
 using exxen2._0.capaDatos.Entidades;
+using exxen2._0.capaDatos.Repositorios;
 
 namespace exxen2._0.capaLogica
 {
@@ -11,8 +10,8 @@ namespace exxen2._0.capaLogica
     {
         public MembresiaEntrenador AsignarEntrenador(int idMembresia, int idEntrenador)
         {
-            using (var context = new GymContext())
-            using (var transaction = context.Database.BeginTransaction())
+            using (var context = new GymUnidadDeTrabajo())
+            using (var transaction = context.IniciarTransaccion())
             {
                 var membresia = ObtenerMembresiaConPlan(context, idMembresia);
                 ValidarAsignacion(membresia, context, idEntrenador);
@@ -28,16 +27,16 @@ namespace exxen2._0.capaLogica
                     Estado = true
                 };
                 context.MembresiasEntrenadores.Add(asignacion);
-                context.SaveChanges();
-                transaction.Commit();
+                context.GuardarCambios();
+                transaction.Confirmar();
                 return asignacion;
             }
         }
 
         public MembresiaEntrenador CambiarEntrenador(int idMembresia, int idEntrenador)
         {
-            using (var context = new GymContext())
-            using (var transaction = context.Database.BeginTransaction())
+            using (var context = new GymUnidadDeTrabajo())
+            using (var transaction = context.IniciarTransaccion())
             {
                 var membresia = ObtenerMembresiaConPlan(context, idMembresia);
                 ValidarAsignacion(membresia, context, idEntrenador);
@@ -55,17 +54,17 @@ namespace exxen2._0.capaLogica
                     Estado = true
                 };
                 context.MembresiasEntrenadores.Add(nueva);
-                context.SaveChanges();
-                transaction.Commit();
+                context.GuardarCambios();
+                transaction.Confirmar();
                 return nueva;
             }
         }
 
         public UsuarioSistema ObtenerEntrenadorActivo(int idMembresia)
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
-                return context.MembresiasEntrenadores.Include(me => me.Entrenador)
+                return context.MembresiasEntrenadores.Consultar("Entrenador")
                     .Where(me => me.IdMembresia == idMembresia && me.Estado)
                     .Select(me => me.Entrenador).SingleOrDefault();
             }
@@ -73,9 +72,9 @@ namespace exxen2._0.capaLogica
 
         public List<MembresiaEntrenador> ListarPorMembresia(int idMembresia)
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
-                return context.MembresiasEntrenadores.Include(me => me.Entrenador)
+                return context.MembresiasEntrenadores.Consultar("Entrenador")
                     .Where(me => me.IdMembresia == idMembresia)
                     .OrderByDescending(me => me.IdMembresiaEntrenador).ToList();
             }
@@ -83,7 +82,7 @@ namespace exxen2._0.capaLogica
 
         public void DarDeBajaAsignacion(int idMembresiaEntrenador)
         {
-            using (var context = new GymContext())
+            using (var context = new GymUnidadDeTrabajo())
             {
                 var asignacion = context.MembresiasEntrenadores.Find(idMembresiaEntrenador);
                 if (asignacion == null)
@@ -92,13 +91,13 @@ namespace exxen2._0.capaLogica
                 }
 
                 asignacion.Estado = false;
-                context.SaveChanges();
+                context.GuardarCambios();
             }
         }
 
-        private static Membresia ObtenerMembresiaConPlan(GymContext context, int idMembresia)
+        private static Membresia ObtenerMembresiaConPlan(IUnidadDeTrabajo context, int idMembresia)
         {
-            var membresia = context.Membresias.Include(m => m.Plan)
+            var membresia = context.Membresias.Consultar("Plan")
                 .SingleOrDefault(m => m.IdMembresia == idMembresia);
             if (membresia == null)
             {
@@ -108,7 +107,7 @@ namespace exxen2._0.capaLogica
             return membresia;
         }
 
-        private static void ValidarAsignacion(Membresia membresia, GymContext context, int idEntrenador)
+        private static void ValidarAsignacion(Membresia membresia, IUnidadDeTrabajo context, int idEntrenador)
         {
             if (!membresia.Estado)
             {
@@ -121,7 +120,7 @@ namespace exxen2._0.capaLogica
                 throw new InvalidOperationException("El plan actual no incluye entrenador.");
             }
 
-            var entrenador = context.UsuariosSistema.Include(u => u.Rol)
+            var entrenador = context.UsuariosSistema.Consultar("Rol")
                 .SingleOrDefault(u => u.IdUsuarioSistema == idEntrenador);
             if (!ValidacionesGym.EsEntrenadorActivo(entrenador))
             {
