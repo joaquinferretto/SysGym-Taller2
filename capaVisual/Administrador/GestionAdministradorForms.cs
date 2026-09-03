@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using exxen2._0.capaDatos.Entidades;
@@ -9,7 +10,9 @@ using exxen2._0.capaVisual.Compartido;
 
 namespace exxen2._0.capaVisual.Administrador
 {
-    public class ConsultaRutinasAdministradorFormBase : FormularioModuloBase
+    [System.ComponentModel.DesignerCategory("Code")]
+    [System.ComponentModel.DesignTimeVisible(false)]
+    public abstract class ConsultaRutinasAdministradorFormBase : FormularioModuloBase
     {
         private readonly RutinaLogica logica = new RutinaLogica();
 
@@ -39,7 +42,9 @@ namespace exxen2._0.capaVisual.Administrador
         }
     }
 
-    public class GestionUsuariosFormBase : FormularioModuloBase
+    [System.ComponentModel.DesignerCategory("Code")]
+    [System.ComponentModel.DesignTimeVisible(false)]
+    public abstract class GestionUsuariosFormBase : FormularioModuloBase
     {
         private readonly UsuarioSistemaLogica logica = new UsuarioSistemaLogica();
         private readonly RolLogica roles = new RolLogica();
@@ -49,13 +54,17 @@ namespace exxen2._0.capaVisual.Administrador
         private readonly TextBox dni;
         private readonly TextBox username;
         private readonly TextBox password;
+        private readonly TextBox salario;
         private readonly ComboBox rol;
         private readonly Button guardar;
         private readonly Button actualizar;
         private readonly Button darDeBaja;
+        private readonly Button reactivar;
+        private readonly ComboBox filtroEstado;
         private List<UsuarioSistema> usuariosCargados = new List<UsuarioSistema>();
         private int idSeleccionado;
         private bool cargandoTabla;
+        private bool estadoSeleccionado = true;
 
         public GestionUsuariosFormBase()
             : base("Usuarios y roles", "Administración del personal y sus permisos", Color.FromArgb(79, 70, 229))
@@ -68,25 +77,38 @@ namespace exxen2._0.capaVisual.Administrador
             username = vista.AgregarCampo("Usuario", CrearTexto());
             password = vista.AgregarCampo("Contraseña (obligatoria al crear)", CrearTexto());
             password.UseSystemPasswordChar = true;
+            salario = vista.AgregarCampo("Salario mensual", CrearTexto());
+            ConfigurarEntradaDecimal(salario);
             rol = vista.AgregarCampo("Rol", new ComboBox { DropDownStyle = ComboBoxStyle.DropDownList });
 
             guardar = vista.AgregarAccion("Guardar", GuardarNuevo, true);
             actualizar = vista.AgregarAccion("Actualizar", Actualizar);
             darDeBaja = vista.AgregarAccion("Dar de baja", DarDeBaja, false, true);
+            reactivar = vista.AgregarAccion("Reactivar", Reactivar);
+
+            filtroEstado = vista.AgregarFiltroListado("Estado", new ComboBox
+            {
+                DropDownStyle = ComboBoxStyle.DropDownList
+            });
+            filtroEstado.Items.AddRange(new object[] { "Todos", "Activos", "Inactivos" });
+            filtroEstado.SelectedIndex = 0;
 
             Tabla.Columns.Add("Id", "Id"); Tabla.Columns[0].Visible = false;
             Tabla.Columns.Add("Nombre", "Nombre");
             Tabla.Columns.Add("DNI", "DNI");
             Tabla.Columns.Add("Usuario", "Usuario");
             Tabla.Columns.Add("Rol", "Rol");
+            Tabla.Columns.Add("Salario", "Salario mensual");
             Tabla.Columns.Add("Estado", "Estado");
-            Tabla.Columns[1].FillWeight = 145;
+            Tabla.Columns[1].FillWeight = 130;
             Tabla.Columns[2].FillWeight = 85;
-            Tabla.Columns[3].FillWeight = 105;
+            Tabla.Columns[3].FillWeight = 95;
             Tabla.Columns[4].FillWeight = 90;
-            Tabla.Columns[5].FillWeight = 70;
+            Tabla.Columns[5].FillWeight = 90;
+            Tabla.Columns[6].FillWeight = 65;
             Tabla.SelectionChanged += Seleccionar;
             vista.Buscador.TextChanged += delegate { AplicarFiltro(); };
+            filtroEstado.SelectedIndexChanged += delegate { AplicarFiltro(); };
             AlCargarEnEjecucion(delegate { CargarRoles(); Cargar(); NuevoUsuario(null, EventArgs.Empty); });
         }
 
@@ -106,7 +128,7 @@ namespace exxen2._0.capaVisual.Administrador
         {
             try
             {
-                usuariosCargados = logica.ListarActivos();
+                usuariosCargados = logica.ListarParaGestion();
                 AplicarFiltro();
             }
             catch (Exception ex) { MostrarError(ex); }
@@ -115,7 +137,10 @@ namespace exxen2._0.capaVisual.Administrador
         private void AplicarFiltro()
         {
             var criterio = vista.Buscador.Text.Trim();
+            var estadoElegido = Convert.ToString(filtroEstado.SelectedItem);
             var filtrados = usuariosCargados.AsEnumerable();
+            if (estadoElegido == "Activos") filtrados = filtrados.Where(u => u.Estado);
+            else if (estadoElegido == "Inactivos") filtrados = filtrados.Where(u => !u.Estado);
             if (!string.IsNullOrWhiteSpace(criterio))
             {
                 filtrados = filtrados.Where(u =>
@@ -128,7 +153,8 @@ namespace exxen2._0.capaVisual.Administrador
             Tabla.Rows.Clear();
             foreach (var u in filtrados)
                 Tabla.Rows.Add(u.IdUsuarioSistema, u.Nombre + " " + u.Apellido, u.DNI,
-                    u.Username, u.Rol == null ? "-" : u.Rol.Descripcion, u.Estado ? "Activo" : "Inactivo");
+                    u.Username, u.Rol == null ? "-" : u.Rol.Descripcion,
+                    u.Salario.ToString("C", CultureInfo.CurrentCulture), u.Estado ? "Activo" : "Inactivo");
             Tabla.ClearSelection();
             cargandoTabla = false;
             Estado.Text = Tabla.Rows.Count + " usuario(s) encontrado(s)";
@@ -148,13 +174,15 @@ namespace exxen2._0.capaVisual.Administrador
                 idSeleccionado = Convert.ToInt32(Tabla.CurrentRow.Cells[0].Value);
                 var usuario = logica.ObtenerPorId(idSeleccionado);
                 if (usuario == null) return;
+                estadoSeleccionado = usuario.Estado;
                 nombre.Text = usuario.Nombre;
                 apellido.Text = usuario.Apellido;
                 dni.Text = usuario.DNI;
                 username.Text = usuario.Username;
                 password.Clear();
+                salario.Text = usuario.Salario.ToString("0.00", CultureInfo.CurrentCulture);
                 if (usuario.Rol != null) rol.SelectedValue = usuario.IdRol;
-                EstablecerModo(false);
+                EstablecerModo(false, usuario.Estado);
             }
             catch (Exception ex) { MostrarError(ex); }
         }
@@ -162,19 +190,21 @@ namespace exxen2._0.capaVisual.Administrador
         private void NuevoUsuario(object sender, EventArgs e)
         {
             idSeleccionado = 0;
-            nombre.Clear(); apellido.Clear(); dni.Clear(); username.Clear(); password.Clear();
+            estadoSeleccionado = true;
+            nombre.Clear(); apellido.Clear(); dni.Clear(); username.Clear(); password.Clear(); salario.Clear();
             if (rol.Items.Count > 0) rol.SelectedIndex = 0;
             Tabla.ClearSelection();
-            EstablecerModo(true);
+            EstablecerModo(true, true);
             nombre.Focus();
         }
 
-        private void EstablecerModo(bool nuevo)
+        private void EstablecerModo(bool nuevo, bool activo)
         {
             vista.TituloDetalle.Text = nuevo ? "Nuevo usuario" : "Editar usuario";
             guardar.Enabled = nuevo;
             actualizar.Enabled = !nuevo;
-            darDeBaja.Enabled = !nuevo;
+            darDeBaja.Enabled = !nuevo && activo;
+            reactivar.Enabled = !nuevo && !activo;
         }
 
         private UsuarioSistema LeerUsuario()
@@ -187,8 +217,9 @@ namespace exxen2._0.capaVisual.Administrador
                 Apellido = apellido.Text.Trim(),
                 DNI = dni.Text.Trim(),
                 Username = username.Text.Trim(),
+                Salario = DecimalPositivo(salario, "salario"),
                 IdRol = Convert.ToInt32(rol.SelectedValue),
-                Estado = true
+                Estado = estadoSeleccionado
             };
         }
 
@@ -229,9 +260,23 @@ namespace exxen2._0.capaVisual.Administrador
             }
             catch (Exception ex) { MostrarError(ex); }
         }
+
+        private void Reactivar(object sender, EventArgs e)
+        {
+            try
+            {
+                if (idSeleccionado == 0) throw new InvalidOperationException("Selecciona un usuario.");
+                logica.Reactivar(idSeleccionado);
+                Cargar(); NuevoUsuario(null, EventArgs.Empty);
+                MostrarExito("Usuario reactivado correctamente.");
+            }
+            catch (Exception ex) { MostrarError(ex); }
+        }
     }
 
-    public class GestionPlanesFormBase : FormularioModuloBase
+    [System.ComponentModel.DesignerCategory("Code")]
+    [System.ComponentModel.DesignTimeVisible(false)]
+    public abstract class GestionPlanesFormBase : FormularioModuloBase
     {
         private readonly PlanLogica logica = new PlanLogica();
         private readonly RutinaLogica rutinas = new RutinaLogica();
@@ -245,9 +290,12 @@ namespace exxen2._0.capaVisual.Administrador
         private readonly Button guardar;
         private readonly Button actualizar;
         private readonly Button darDeBaja;
+        private readonly Button reactivar;
+        private readonly ComboBox filtroEstado;
         private List<Plan> planesCargados = new List<Plan>();
         private int idSeleccionado;
         private bool cargandoTabla;
+        private bool estadoSeleccionado = true;
 
         public GestionPlanesFormBase()
             : base("Planes", "Configuración de los planes Básico y Premium", Color.FromArgb(79, 70, 229))
@@ -288,18 +336,28 @@ namespace exxen2._0.capaVisual.Administrador
             guardar = vista.AgregarAccion("Guardar", GuardarNuevo, true);
             actualizar = vista.AgregarAccion("Actualizar", Actualizar);
             darDeBaja = vista.AgregarAccion("Dar de baja", DarDeBaja, false, true);
+            reactivar = vista.AgregarAccion("Reactivar", Reactivar);
+
+            filtroEstado = vista.AgregarFiltroListado("Estado", new ComboBox
+            {
+                DropDownStyle = ComboBoxStyle.DropDownList
+            });
+            filtroEstado.Items.AddRange(new object[] { "Todos", "Activos", "Inactivos" });
+            filtroEstado.SelectedIndex = 0;
 
             Tabla.Columns.Add("Id", "Id"); Tabla.Columns[0].Visible = false;
             Tabla.Columns.Add("Nombre", "Nombre");
             Tabla.Columns.Add("Precio", "Precio mensual");
             Tabla.Columns.Add("Rutina", "Rutina base");
             Tabla.Columns.Add("Beneficios", "Beneficios");
+            Tabla.Columns.Add("Estado", "Estado");
             Tabla.Columns[1].FillWeight = 115;
             Tabla.Columns[2].FillWeight = 80;
             Tabla.Columns[3].FillWeight = 115;
             Tabla.Columns[4].FillWeight = 140;
             Tabla.SelectionChanged += Seleccionar;
             vista.Buscador.TextChanged += delegate { AplicarFiltro(); };
+            filtroEstado.SelectedIndexChanged += delegate { AplicarFiltro(); };
             AlCargarEnEjecucion(delegate { Inicializar(); });
         }
 
@@ -330,7 +388,7 @@ namespace exxen2._0.capaVisual.Administrador
         {
             try
             {
-                planesCargados = logica.ListarActivos();
+                planesCargados = logica.ListarParaGestion();
                 AplicarFiltro();
             }
             catch (Exception ex) { MostrarError(ex); }
@@ -339,7 +397,10 @@ namespace exxen2._0.capaVisual.Administrador
         private void AplicarFiltro()
         {
             var criterio = vista.Buscador.Text.Trim();
+            var estadoElegido = Convert.ToString(filtroEstado.SelectedItem);
             var filtrados = planesCargados.AsEnumerable();
+            if (estadoElegido == "Activos") filtrados = filtrados.Where(p => p.Estado);
+            else if (estadoElegido == "Inactivos") filtrados = filtrados.Where(p => !p.Estado);
             if (!string.IsNullOrWhiteSpace(criterio))
             {
                 filtrados = filtrados.Where(p => Contiene(p.Nombre, criterio)
@@ -352,7 +413,7 @@ namespace exxen2._0.capaVisual.Administrador
             {
                 Tabla.Rows.Add(plan.IdPlan, plan.Nombre, plan.Precio.ToString("C"),
                     plan.Rutina == null ? "Sin rutina" : plan.Rutina.Nombre,
-                    DescribirBeneficios(plan));
+                    DescribirBeneficios(plan), plan.Estado ? "Activo" : "Inactivo");
             }
             Tabla.ClearSelection();
             cargandoTabla = false;
@@ -382,13 +443,14 @@ namespace exxen2._0.capaVisual.Administrador
                 idSeleccionado = Convert.ToInt32(Tabla.CurrentRow.Cells[0].Value);
                 var plan = logica.ObtenerPorId(idSeleccionado);
                 if (plan == null) return;
+                estadoSeleccionado = plan.Estado;
                 nombre.Text = plan.Nombre;
                 descripcion.Text = plan.Descripcion;
                 precio.Text = plan.Precio.ToString("0.00");
                 rutina.SelectedValue = plan.IdRutina;
                 incluyeEntrenador.Checked = plan.IncluyeEntrenador;
                 incluyeRutina.Checked = plan.IncluyeRutinaPersonal;
-                EstablecerModo(false);
+                EstablecerModo(false, plan.Estado);
                 vista.TituloDetalle.Text = "Editar plan · Estado: Activo";
             }
             catch (Exception ex) { MostrarError(ex); }
@@ -397,21 +459,23 @@ namespace exxen2._0.capaVisual.Administrador
         private void NuevoPlan(object sender, EventArgs e)
         {
             idSeleccionado = 0;
+            estadoSeleccionado = true;
             nombre.Clear(); descripcion.Clear(); precio.Clear();
             incluyeEntrenador.Checked = false;
             incluyeRutina.Checked = false;
             if (rutina.Items.Count > 0) rutina.SelectedIndex = 0;
             Tabla.ClearSelection();
-            EstablecerModo(true);
+            EstablecerModo(true, true);
             nombre.Focus();
         }
 
-        private void EstablecerModo(bool nuevo)
+        private void EstablecerModo(bool nuevo, bool activo)
         {
             vista.TituloDetalle.Text = nuevo ? "Nuevo plan · Estado inicial: Activo" : "Editar plan";
             guardar.Enabled = nuevo;
             actualizar.Enabled = !nuevo;
-            darDeBaja.Enabled = !nuevo;
+            darDeBaja.Enabled = !nuevo && activo;
+            reactivar.Enabled = !nuevo && !activo;
         }
 
         private Plan LeerPlan()
@@ -428,7 +492,7 @@ namespace exxen2._0.capaVisual.Administrador
                 IdRutina = Convert.ToInt32(rutina.SelectedValue),
                 IncluyeEntrenador = incluyeEntrenador.Checked,
                 IncluyeRutinaPersonal = incluyeRutina.Checked,
-                Estado = true
+                Estado = estadoSeleccionado
             };
         }
 
@@ -469,9 +533,23 @@ namespace exxen2._0.capaVisual.Administrador
             }
             catch (Exception ex) { MostrarError(ex); }
         }
+
+        private void Reactivar(object sender, EventArgs e)
+        {
+            try
+            {
+                if (idSeleccionado == 0) throw new InvalidOperationException("Selecciona un plan.");
+                logica.Reactivar(idSeleccionado);
+                Cargar(); NuevoPlan(null, EventArgs.Empty);
+                MostrarExito("Plan reactivado correctamente.");
+            }
+            catch (Exception ex) { MostrarError(ex); }
+        }
     }
 
-    public class ReportesFormBase : FormularioModuloBase
+    [System.ComponentModel.DesignerCategory("Code")]
+    [System.ComponentModel.DesignTimeVisible(false)]
+    public abstract class ReportesFormBase : FormularioModuloBase
     {
         private readonly Label resumen = new Label();
         private readonly SocioLogica socios = new SocioLogica();

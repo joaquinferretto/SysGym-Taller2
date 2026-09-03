@@ -79,6 +79,17 @@ namespace exxen2._0.capaLogica
             }
         }
 
+        public List<Rutina> ListarPorEntrenadorParaGestion(int idEntrenador)
+        {
+            using (var datos = new GymUnidadDeTrabajo())
+            {
+                return datos.Rutinas.Consultar("Entrenador", "Asignaciones")
+                    .Where(r => r.IdEntrenador == idEntrenador)
+                    .OrderByDescending(r => r.Estado)
+                    .ThenByDescending(r => r.FechaCreacion).ToList();
+            }
+        }
+
         // Devuelve el catálogo, no una fila por cada socio asignado.
         public List<Rutina> ListarActivas()
         {
@@ -104,6 +115,22 @@ namespace exxen2._0.capaLogica
                     asignacion.FechaFin = DateTime.Now;
                 }
 
+                datos.GuardarCambios();
+            }
+        }
+
+        public void Reactivar(int idRutina)
+        {
+            using (var datos = new GymUnidadDeTrabajo())
+            {
+                var rutina = datos.Rutinas.Buscar(idRutina);
+                if (rutina == null)
+                {
+                    throw new InvalidOperationException("La rutina no existe.");
+                }
+
+                ValidarEntrenador(datos, rutina.IdEntrenador);
+                rutina.Estado = true;
                 datos.GuardarCambios();
             }
         }

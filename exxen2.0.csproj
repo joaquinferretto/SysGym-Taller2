@@ -46,6 +46,7 @@
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="EntityFramework">
@@ -101,6 +102,7 @@
     <Compile Include="capaDatos\Entidades\Socio.cs" />
     <Compile Include="capaDatos\Entidades\UsuarioSistema.cs" />
     <Compile Include="capaLogica\ClienteLogica.cs" />
+    <Compile Include="capaLogica\ClimaLogica.cs" />
     <Compile Include="capaLogica\AsistenciaLogica.cs" />
     <Compile Include="capaLogica\CuotaMembresiaLogica.cs" />
     <Compile Include="capaLogica\EjercicioLogica.cs" />
@@ -122,13 +124,13 @@
       <DependentUpon>Login.cs</DependentUpon>
     </Compile>
     <Compile Include="capaVisual\Compartido\DashboardBase.cs">
-      <SubType>Form</SubType>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="capaVisual\Compartido\FormularioModuloBase.cs">
-      <SubType>Form</SubType>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="capaVisual\Compartido\GestionFormularios.cs">
-      <SubType>Form</SubType>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="capaVisual\Compartido\GestionSociosForm.cs">
       <SubType>Form</SubType>
@@ -142,8 +144,11 @@
     <Compile Include="capaVisual\Administrador\DashboardAdministrador.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="capaVisual\Administrador\DashboardInicioAdministrador.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="capaVisual\Administrador\GestionAdministradorForms.cs">
-      <SubType>Form</SubType>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="capaVisual\Administrador\ConsultaRutinasAdministradorForm.cs">
       <SubType>Form</SubType>
@@ -161,7 +166,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="capaVisual\Recepcionista\GestionRecepcionistaForms.cs">
-      <SubType>Form</SubType>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="capaVisual\Recepcionista\GestionMembresiasForm.cs">
       <SubType>Form</SubType>
@@ -176,7 +181,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="capaVisual\Entrenador\GestionEntrenadorForms.cs">
-      <SubType>Form</SubType>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="capaVisual\Entrenador\RutinasEntrenadorForm.cs">
       <SubType>Form</SubType>

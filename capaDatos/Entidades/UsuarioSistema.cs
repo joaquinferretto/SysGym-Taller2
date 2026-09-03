@@ -36,6 +36,9 @@ namespace exxen2._0.capaDatos.Entidades
 
         public DateTime? FechaNacimiento { get; set; }
 
+        [Column(TypeName = "decimal")]
+        public decimal Salario { get; set; }
+
         [Required]
         [StringLength(50)]
         [Index("UX_UsuarioSistema_Username", IsUnique = true)]

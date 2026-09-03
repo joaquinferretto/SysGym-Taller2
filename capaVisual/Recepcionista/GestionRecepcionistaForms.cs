@@ -9,7 +9,9 @@ using exxen2._0.capaVisual.Compartido;
 
 namespace exxen2._0.capaVisual.Recepcionista
 {
-    public class GestionMembresiasFormBase : FormularioModuloBase
+    [System.ComponentModel.DesignerCategory("Code")]
+    [System.ComponentModel.DesignTimeVisible(false)]
+    public abstract class GestionMembresiasFormBase : FormularioModuloBase
     {
         private readonly UsuarioSistema usuario;
         private readonly MembresiaLogica logica = new MembresiaLogica();
@@ -324,7 +326,9 @@ namespace exxen2._0.capaVisual.Recepcionista
         }
     }
 
-    public class GestionPagosFormBase : FormularioModuloBase
+    [System.ComponentModel.DesignerCategory("Code")]
+    [System.ComponentModel.DesignTimeVisible(false)]
+    public abstract class GestionPagosFormBase : FormularioModuloBase
     {
         private readonly PagoLogica logica = new PagoLogica();
         private readonly CuotaMembresiaLogica cuotas = new CuotaMembresiaLogica();
@@ -683,7 +687,9 @@ namespace exxen2._0.capaVisual.Recepcionista
         }
     }
 
-    public class GestionAsignacionesFormBase : FormularioModuloBase
+    [System.ComponentModel.DesignerCategory("Code")]
+    [System.ComponentModel.DesignTimeVisible(false)]
+    public abstract class GestionAsignacionesFormBase : FormularioModuloBase
     {
         private readonly MembresiaEntrenadorLogica logica = new MembresiaEntrenadorLogica();
         private readonly UsuarioSistemaLogica usuarios = new UsuarioSistemaLogica();

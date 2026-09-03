@@ -58,6 +58,7 @@ namespace exxen2._0.capaDatos.Contexto
 
             modelBuilder.Entity<Socio>().Property(s => s.Peso).HasPrecision(6, 2);
             modelBuilder.Entity<Socio>().Property(s => s.Altura).HasPrecision(5, 2);
+            modelBuilder.Entity<UsuarioSistema>().Property(u => u.Salario).HasPrecision(18, 2);
             modelBuilder.Entity<Plan>().Property(p => p.Precio).HasPrecision(18, 2);
             modelBuilder.Entity<CuotaMembresia>().Property(c => c.Importe).HasPrecision(18, 2);
             modelBuilder.Entity<Pago>().Property(p => p.Importe).HasPrecision(18, 2);

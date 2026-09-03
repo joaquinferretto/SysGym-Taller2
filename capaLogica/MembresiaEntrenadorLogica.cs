@@ -95,6 +95,30 @@ namespace exxen2._0.capaLogica
             }
         }
 
+        public void ReactivarAsignacion(int idMembresiaEntrenador)
+        {
+            using (var context = new GymUnidadDeTrabajo())
+            {
+                var asignacion = context.MembresiasEntrenadores
+                    .Consultar("Membresia.Plan", "Entrenador.Rol")
+                    .SingleOrDefault(me => me.IdMembresiaEntrenador == idMembresiaEntrenador);
+                if (asignacion == null)
+                {
+                    throw new InvalidOperationException("La asignación no existe.");
+                }
+
+                ValidarAsignacion(asignacion.Membresia, context, asignacion.IdEntrenador);
+                if (context.MembresiasEntrenadores.Any(me => me.IdMembresia == asignacion.IdMembresia
+                    && me.Estado && me.IdMembresiaEntrenador != idMembresiaEntrenador))
+                {
+                    throw new InvalidOperationException("La membresía ya posee un entrenador activo.");
+                }
+
+                asignacion.Estado = true;
+                context.GuardarCambios();
+            }
+        }
+
         private static Membresia ObtenerMembresiaConPlan(IUnidadDeTrabajo context, int idMembresia)
         {
             var membresia = context.Membresias.Consultar("Plan")

@@ -63,6 +63,7 @@ namespace exxen2._0.capaLogica
                 existente.DNI = usuario.DNI;
                 existente.Telefono = usuario.Telefono;
                 existente.FechaNacimiento = usuario.FechaNacimiento;
+                existente.Salario = usuario.Salario;
                 existente.Username = usuario.Username;
                 existente.IdRol = rol.IdRol;
                 existente.Rol = rol;
@@ -115,6 +116,16 @@ namespace exxen2._0.capaLogica
             }
         }
 
+        public List<UsuarioSistema> ListarParaGestion()
+        {
+            using (var context = new GymUnidadDeTrabajo())
+            {
+                return context.UsuariosSistema.Consultar("Rol")
+                    .OrderByDescending(u => u.Estado)
+                    .ThenBy(u => u.Apellido).ThenBy(u => u.Nombre).ToList();
+            }
+        }
+
         public List<UsuarioSistema> ListarPorRol(string descripcionRol)
         {
             if (string.IsNullOrWhiteSpace(descripcionRol))
@@ -141,6 +152,27 @@ namespace exxen2._0.capaLogica
                 }
 
                 usuario.Estado = false;
+                context.GuardarCambios();
+            }
+        }
+
+        public void Reactivar(int idUsuarioSistema)
+        {
+            using (var context = new GymUnidadDeTrabajo())
+            {
+                var usuario = context.UsuariosSistema.Consultar("Rol")
+                    .SingleOrDefault(u => u.IdUsuarioSistema == idUsuarioSistema);
+                if (usuario == null)
+                {
+                    throw new InvalidOperationException("El usuario no existe.");
+                }
+
+                if (usuario.Rol == null || !usuario.Rol.Estado)
+                {
+                    throw new InvalidOperationException("No se puede reactivar el usuario porque su rol está inactivo.");
+                }
+
+                usuario.Estado = true;
                 context.GuardarCambios();
             }
         }
@@ -270,6 +302,11 @@ namespace exxen2._0.capaLogica
             if (string.IsNullOrWhiteSpace(usuario.DNI) || string.IsNullOrWhiteSpace(usuario.Username))
             {
                 throw new InvalidOperationException("DNI y username son obligatorios.");
+            }
+
+            if (usuario.Salario <= 0)
+            {
+                throw new InvalidOperationException("El salario debe ser mayor que cero.");
             }
         }
 

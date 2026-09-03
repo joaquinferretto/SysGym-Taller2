@@ -171,6 +171,69 @@ namespace exxen2._0.capaLogica
             }
         }
 
+        public void ActualizarPago(Pago pagoActualizado, int idCuotaMembresia)
+        {
+            ValidarDatos(pagoActualizado);
+            if (idCuotaMembresia <= 0)
+            {
+                throw new InvalidOperationException("La cuota es obligatoria.");
+            }
+
+            using (var context = new GymUnidadDeTrabajo())
+            using (var transaction = context.IniciarTransaccion())
+            {
+                var pago = context.Pagos.Find(pagoActualizado.IdRegistroPago);
+                if (pago == null)
+                {
+                    throw new InvalidOperationException("El pago no existe.");
+                }
+
+                var cuota = context.CuotasMembresia.Consultar("Pago")
+                    .SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia
+                        && c.IdRegistroPago == pagoActualizado.IdRegistroPago);
+                if (cuota == null)
+                {
+                    throw new InvalidOperationException("El pago no está asociado a la cuota seleccionada.");
+                }
+
+                if (cuota.EstadoPago == EstadosCuota.Anulada)
+                {
+                    throw new InvalidOperationException("La cuota se encuentra anulada. Reactivala antes de editar el pago.");
+                }
+
+                if (pago.Estado == EstadosTransaccionPago.Reembolsado
+                    && pagoActualizado.Estado != EstadosTransaccionPago.Reembolsado)
+                {
+                    throw new InvalidOperationException("Un pago reembolsado no puede volver a contabilizarse.");
+                }
+
+                if (pagoActualizado.Estado == EstadosTransaccionPago.Reembolsado
+                    && pago.Estado != EstadosTransaccionPago.Aprobado)
+                {
+                    throw new InvalidOperationException("Solo se puede reembolsar un pago aprobado.");
+                }
+
+                if (pagoActualizado.Estado == EstadosTransaccionPago.Aprobado
+                    && pagoActualizado.Importe > cuota.Importe)
+                {
+                    throw new InvalidOperationException("El pago supera el importe de la cuota.");
+                }
+
+                ValidarMetodoPago(context, pagoActualizado.IdMetodoPago);
+                pago.Importe = pagoActualizado.Importe;
+                pago.IdMetodoPago = pagoActualizado.IdMetodoPago;
+                pago.Estado = pagoActualizado.Estado;
+                pago.Descripcion = pagoActualizado.Descripcion;
+                pago.Fecha = pagoActualizado.Fecha;
+
+                cuota.Pago = pago;
+                CuotaMembresiaLogica.RecalcularEstadoPagoEnContexto(context, cuota);
+                MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(context, cuota.IdMembresia);
+                context.GuardarCambios();
+                transaction.Confirmar();
+            }
+        }
+
         public void AnularPago(int idRegistroPago)
         {
             CambiarEstadoPago(idRegistroPago, EstadosTransaccionPago.Anulado);

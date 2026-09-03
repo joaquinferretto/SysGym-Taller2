@@ -22,10 +22,14 @@ CREATE TABLE UsuarioSistema (
     DNI NVARCHAR(20) NOT NULL UNIQUE,
     Telefono NVARCHAR(30) NULL,
     FechaNacimiento DATETIME2 NULL,
+    Salario DECIMAL(18,2) NOT NULL CONSTRAINT DF_UsuarioSistema_Salario DEFAULT 0,
     Username NVARCHAR(50) NOT NULL UNIQUE,
     Password NVARCHAR(500) NOT NULL,
     Estado BIT NOT NULL DEFAULT 1,
     IdRol INT NOT NULL,
+
+    CONSTRAINT CK_UsuarioSistema_Salario
+        CHECK (Salario >= 0),
 
     CONSTRAINT FK_UsuarioSistema_Rol
         FOREIGN KEY (IdRol) REFERENCES Rol(IdRol)
@@ -337,13 +341,13 @@ VALUES
     ('Entrenador', 1);
 
 INSERT INTO UsuarioSistema
-    (Nombre, Apellido, DNI, Telefono, FechaNacimiento, Username, Password, Estado, IdRol)
+    (Nombre, Apellido, DNI, Telefono, FechaNacimiento, Salario, Username, Password, Estado, IdRol)
 VALUES
-    ('San', 'Martin', '30000001', NULL, NULL, 'SanMartin',
+    ('San', 'Martin', '30000001', NULL, NULL, 0, 'SanMartin',
         'ARGON2ID:19:65536:3:2:fk55JlSsiyw0cDMfppSqSg==:+OMMPicxIZ0iPl0t7h0mNrg59Ysq3F5HKt/gNrYPuqU=', 1, 1),
-    ('Recepcionista', 'SysGym', '30000002', NULL, NULL, 'recepcion',
+    ('Recepcionista', 'SysGym', '30000002', NULL, NULL, 0, 'recepcion',
         'ARGON2ID:19:65536:3:2:PxEAEGmIlOWwbIMiTQt6KQ==:GurlFqP0USkOFKzxDKBzefLcWrzcSwtb59QsBkwTAV4=', 1, 2),
-    ('San', 'Martin', '30000003', NULL, NULL, 'entrenador',
+    ('San', 'Martin', '30000003', NULL, NULL, 0, 'entrenador',
         'ARGON2ID:19:65536:3:2:f3gcWfMkxMhs7qrkxClS+Q==:c16O2cpT/vzSNPtQeZrgIrcc3RfQhekoOBuhEJxI3pI=', 1, 3);
 
 INSERT INTO Divisa (CambioHoy, Nombre, Estado)
@@ -378,7 +382,10 @@ WHERE u.Username = N'entrenador'
   AND r.Descripcion = N'Entrenador';
 
 IF @IdEntrenador IS NULL
-    THROW 50002, 'No se encontro un entrenador activo con el usuario indicado.', 1;
+BEGIN
+    RAISERROR(N'No se encontro un entrenador activo con el usuario indicado.', 16, 1);
+    RETURN;
+END;
 
 BEGIN TRY
     BEGIN TRANSACTION;
@@ -500,6 +507,10 @@ BEGIN TRY
 END TRY
 BEGIN CATCH
     IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
-    THROW;
+
+    DECLARE @MensajeError NVARCHAR(4000);
+    SELECT @MensajeError = ERROR_MESSAGE();
+
+    RAISERROR(N'%s', 16, 1, @MensajeError);
 END CATCH;
 GO

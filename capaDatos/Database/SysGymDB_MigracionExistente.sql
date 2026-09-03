@@ -16,6 +16,26 @@ SET XACT_ABORT ON;
 BEGIN TRY
     BEGIN TRANSACTION;
 
+    /* Los usuarios del sistema son empleados y deben registrar su salario mensual. */
+    IF COL_LENGTH(N'dbo.UsuarioSistema', N'Salario') IS NULL
+    BEGIN
+        ALTER TABLE dbo.UsuarioSistema
+            ADD Salario DECIMAL(18,2) NOT NULL
+                CONSTRAINT DF_UsuarioSistema_Salario DEFAULT 0 WITH VALUES;
+    END;
+
+    IF NOT EXISTS
+    (
+        SELECT 1
+        FROM sys.check_constraints
+        WHERE name = N'CK_UsuarioSistema_Salario'
+          AND parent_object_id = OBJECT_ID(N'dbo.UsuarioSistema')
+    )
+    BEGIN
+        EXEC(N'ALTER TABLE dbo.UsuarioSistema WITH CHECK
+            ADD CONSTRAINT CK_UsuarioSistema_Salario CHECK (Salario >= 0);');
+    END;
+
     /* Las rutinas actuales son plantillas generales, no pertenecen a un socio. */
     IF COL_LENGTH(N'dbo.Rutina', N'IdSocio') IS NOT NULL
     BEGIN

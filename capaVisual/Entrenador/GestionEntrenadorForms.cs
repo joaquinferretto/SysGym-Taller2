@@ -8,7 +8,9 @@ using exxen2._0.capaVisual.Compartido;
 
 namespace exxen2._0.capaVisual.Entrenador
 {
-    public class RutinasEntrenadorFormBase : FormularioModuloBase
+    [System.ComponentModel.DesignerCategory("Code")]
+    [System.ComponentModel.DesignTimeVisible(false)]
+    public abstract class RutinasEntrenadorFormBase : FormularioModuloBase
     {
         private readonly UsuarioSistema usuario;
         private readonly RutinaLogica rutinas = new RutinaLogica();
@@ -212,7 +214,9 @@ namespace exxen2._0.capaVisual.Entrenador
         }
     }
 
-    public class MisSociosFormBase : FormularioModuloBase
+    [System.ComponentModel.DesignerCategory("Code")]
+    [System.ComponentModel.DesignTimeVisible(false)]
+    public abstract class MisSociosFormBase : FormularioModuloBase
     {
         private readonly RutinaAsignacionLogica asignaciones = new RutinaAsignacionLogica();
         private readonly UsuarioSistema usuario;

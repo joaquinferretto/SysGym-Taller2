@@ -5,7 +5,9 @@ using exxen2._0.capaDatos.Entidades;
 
 namespace exxen2._0.capaVisual.Compartido
 {
-    public class DashboardBase : Form
+    [System.ComponentModel.DesignerCategory("Code")]
+    [System.ComponentModel.DesignTimeVisible(false)]
+    public abstract class DashboardBase : Form
     {
         private readonly FlowLayoutPanel panelOpciones;
         private readonly Panel panelContenido;
@@ -14,6 +16,8 @@ namespace exxen2._0.capaVisual.Compartido
         private Button botonSeccionActivo;
         private Button botonOpcionActivo;
         private Form formularioActual;
+        private Control contenidoInicio;
+        private Action actualizarContenidoInicio;
 
         protected UsuarioSistema UsuarioActual { get; private set; }
         public bool CambioCuentaSolicitado { get; private set; }
@@ -35,12 +39,12 @@ namespace exxen2._0.capaVisual.Compartido
             {
                 AutoScroll = true,
                 BackColor = Color.White,
-                Dock = DockStyle.Left,
+                Dock = DockStyle.Fill,
                 FlowDirection = FlowDirection.TopDown,
                 Padding = new Padding(14, 18, 14, 18),
-                Width = 260,
                 WrapContents = false
             };
+            var panelMenu = CrearMenuLateral(panelOpciones);
             panelContenido = new Panel
             {
                 BackColor = Color.FromArgb(226, 232, 240),
@@ -48,8 +52,53 @@ namespace exxen2._0.capaVisual.Compartido
             };
 
             Controls.Add(panelContenido);
-            Controls.Add(panelOpciones);
+            Controls.Add(panelMenu);
             Controls.Add(encabezado);
+        }
+
+        private Panel CrearMenuLateral(Control opciones)
+        {
+            var menu = new Panel
+            {
+                BackColor = Color.White,
+                Dock = DockStyle.Left,
+                Width = 260
+            };
+            var pie = new Panel
+            {
+                BackColor = Color.White,
+                Dock = DockStyle.Bottom,
+                Height = 70,
+                Padding = new Padding(14, 10, 14, 14)
+            };
+            var salir = new Button
+            {
+                BackColor = Color.FromArgb(254, 242, 242),
+                Dock = DockStyle.Fill,
+                FlatStyle = FlatStyle.Flat,
+                Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold),
+                ForeColor = Color.FromArgb(185, 28, 28),
+                Padding = new Padding(10, 0, 0, 0),
+                Text = "Salir",
+                TextAlign = ContentAlignment.MiddleLeft,
+                UseVisualStyleBackColor = false
+            };
+            salir.FlatAppearance.BorderColor = Color.FromArgb(254, 202, 202);
+            salir.Click += delegate
+            {
+                var respuesta = MessageBox.Show("¿Deseás salir de SysGym?", "Salir",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (respuesta == DialogResult.Yes)
+                {
+                    CambioCuentaSolicitado = false;
+                    Close();
+                }
+            };
+
+            pie.Controls.Add(salir);
+            menu.Controls.Add(opciones);
+            menu.Controls.Add(pie);
+            return menu;
         }
 
         private Panel CrearEncabezado(UsuarioSistema usuario, string titulo)
@@ -229,12 +278,44 @@ namespace exxen2._0.capaVisual.Compartido
             formulario.MinimumSize = Size.Empty;
             formulario.FormClosed += delegate
             {
-                if (ReferenceEquals(formularioActual, formulario)) formularioActual = null;
+                if (ReferenceEquals(formularioActual, formulario))
+                {
+                    formularioActual = null;
+                    MostrarContenidoInicio(true);
+                }
             };
-            panelContenido.Controls.Clear();
+            if (contenidoInicio != null) contenidoInicio.Visible = false;
             panelContenido.Controls.Add(formulario);
             formulario.Show();
             formulario.BringToFront();
+        }
+
+        protected void EstablecerContenidoInicio(Control control, Action actualizar)
+        {
+            if (control == null) throw new ArgumentNullException("control");
+
+            contenidoInicio = control;
+            actualizarContenidoInicio = actualizar;
+            contenidoInicio.Dock = DockStyle.Fill;
+            panelContenido.Controls.Clear();
+            panelContenido.Controls.Add(contenidoInicio);
+            contenidoInicio.Visible = true;
+        }
+
+        private void MostrarContenidoInicio(bool actualizar)
+        {
+            if (contenidoInicio == null || contenidoInicio.IsDisposed) return;
+
+            if (contenidoInicio.Parent != panelContenido)
+            {
+                panelContenido.Controls.Add(contenidoInicio);
+            }
+            contenidoInicio.Visible = true;
+            contenidoInicio.BringToFront();
+            if (actualizar && actualizarContenidoInicio != null)
+            {
+                actualizarContenidoInicio();
+            }
         }
 
         protected void MostrarModulo(string modulo)
@@ -242,5 +323,6 @@ namespace exxen2._0.capaVisual.Compartido
             MessageBox.Show("El modulo " + modulo + " se conectara con su formulario correspondiente.",
                 "SysGym", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
     }
 }

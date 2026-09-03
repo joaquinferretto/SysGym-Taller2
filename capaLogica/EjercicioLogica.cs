@@ -65,6 +65,15 @@ namespace exxen2._0.capaLogica
             }
         }
 
+        public List<Ejercicio> ListarParaGestion()
+        {
+            using (var datos = new GymUnidadDeTrabajo())
+            {
+                return datos.Ejercicios.Consultar()
+                    .OrderByDescending(e => e.Estado).ThenBy(e => e.Nombre).ToList();
+            }
+        }
+
         public void DarDeBaja(int idEjercicio)
         {
             using (var datos = new GymUnidadDeTrabajo())
@@ -76,6 +85,21 @@ namespace exxen2._0.capaLogica
                 }
 
                 ejercicio.Estado = false;
+                datos.GuardarCambios();
+            }
+        }
+
+        public void Reactivar(int idEjercicio)
+        {
+            using (var datos = new GymUnidadDeTrabajo())
+            {
+                var ejercicio = datos.Ejercicios.Buscar(idEjercicio);
+                if (ejercicio == null)
+                {
+                    throw new InvalidOperationException("El ejercicio no existe.");
+                }
+
+                ejercicio.Estado = true;
                 datos.GuardarCambios();
             }
         }

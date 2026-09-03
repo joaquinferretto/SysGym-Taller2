@@ -78,6 +78,18 @@ namespace exxen2._0.capaLogica
             }
         }
 
+        public List<Asistencia> ListarPorFechaParaGestion(DateTime fecha)
+        {
+            var inicio = fecha.Date;
+            var fin = inicio.AddDays(1);
+            using (var context = new GymUnidadDeTrabajo())
+            {
+                return context.Asistencias.Consultar("Socio")
+                    .Where(a => a.Fecha >= inicio && a.Fecha < fin)
+                    .OrderByDescending(a => a.Estado).ThenBy(a => a.Fecha).ToList();
+            }
+        }
+
         public void DarDeBaja(int idAsistencia)
         {
             using (var context = new GymUnidadDeTrabajo())
@@ -89,6 +101,21 @@ namespace exxen2._0.capaLogica
                 }
 
                 asistencia.Estado = false;
+                context.GuardarCambios();
+            }
+        }
+
+        public void Reactivar(int idAsistencia)
+        {
+            using (var context = new GymUnidadDeTrabajo())
+            {
+                var asistencia = context.Asistencias.Find(idAsistencia);
+                if (asistencia == null)
+                {
+                    throw new InvalidOperationException("La asistencia no existe.");
+                }
+
+                asistencia.Estado = true;
                 context.GuardarCambios();
             }
         }

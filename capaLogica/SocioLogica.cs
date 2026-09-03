@@ -79,6 +79,16 @@ namespace exxen2._0.capaLogica
             }
         }
 
+        public List<Socio> ListarParaGestion()
+        {
+            using (var context = new GymUnidadDeTrabajo())
+            {
+                return context.Socios
+                    .OrderByDescending(s => s.Estado)
+                    .ThenBy(s => s.Apellido).ThenBy(s => s.Nombre).ToList();
+            }
+        }
+
         public void DarDeBaja(int idSocio)
         {
             using (var context = new GymUnidadDeTrabajo())
@@ -90,6 +100,21 @@ namespace exxen2._0.capaLogica
                 }
 
                 socio.Estado = false;
+                context.GuardarCambios();
+            }
+        }
+
+        public void Reactivar(int idSocio)
+        {
+            using (var context = new GymUnidadDeTrabajo())
+            {
+                var socio = context.Socios.Find(idSocio);
+                if (socio == null)
+                {
+                    throw new InvalidOperationException("El socio no existe.");
+                }
+
+                socio.Estado = true;
                 context.GuardarCambios();
             }
         }

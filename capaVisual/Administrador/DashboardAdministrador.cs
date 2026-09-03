@@ -48,6 +48,9 @@ namespace exxen2._0.capaVisual.Administrador
 
             var consultas = AgregarSeccion("Consultas");
             AgregarOpcion(consultas, "Reportes", delegate { AbrirFormulario(new ReportesForm()); });
+
+            var inicio = new DashboardInicioAdministrador();
+            EstablecerContenidoInicio(inicio, inicio.Actualizar);
         }
     }
 }

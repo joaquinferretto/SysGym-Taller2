@@ -7,7 +7,9 @@ using System.Windows.Forms;
 
 namespace exxen2._0.capaVisual.Compartido
 {
-    public class FormularioModuloBase : Form
+    [System.ComponentModel.DesignerCategory("Code")]
+    [System.ComponentModel.DesignTimeVisible(false)]
+    public abstract class FormularioModuloBase : Form
     {
         protected readonly Color ColorPrimario;
         protected readonly DataGridView Tabla;
@@ -188,6 +190,32 @@ namespace exxen2._0.capaVisual.Compartido
             boton.Click += accion;
             BarraAcciones.Controls.Add(boton);
             return boton;
+        }
+
+        protected T AgregarFiltroListado<T>(string etiqueta, T control) where T : Control
+        {
+            var contenedor = new Panel
+            {
+                BackColor = Color.White,
+                Height = 50,
+                Margin = new Padding(4, 0, 12, 0),
+                Width = 190
+            };
+            contenedor.Controls.Add(new Label
+            {
+                AutoSize = true,
+                Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold),
+                ForeColor = Color.FromArgb(71, 85, 105),
+                Location = new Point(0, 0),
+                Text = etiqueta
+            });
+            control.Font = new Font("Segoe UI", 9.5F);
+            control.Location = new Point(0, 20);
+            control.Size = new Size(contenedor.ClientSize.Width, 28);
+            control.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
+            contenedor.Controls.Add(control);
+            BarraAcciones.Controls.Add(contenedor);
+            return control;
         }
 
         protected void AgregarPanelFormulario(Control panel)

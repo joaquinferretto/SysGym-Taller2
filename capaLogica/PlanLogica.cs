@@ -61,6 +61,15 @@ namespace exxen2._0.capaLogica
             }
         }
 
+        public List<Plan> ListarParaGestion()
+        {
+            using (var context = new GymUnidadDeTrabajo())
+            {
+                return context.Planes.Consultar("Rutina")
+                    .OrderByDescending(p => p.Estado).ThenBy(p => p.Nombre).ToList();
+            }
+        }
+
         public void DarDeBaja(int idPlan)
         {
             using (var context = new GymUnidadDeTrabajo())
@@ -72,6 +81,27 @@ namespace exxen2._0.capaLogica
                 }
 
                 plan.Estado = false;
+                context.GuardarCambios();
+            }
+        }
+
+        public void Reactivar(int idPlan)
+        {
+            using (var context = new GymUnidadDeTrabajo())
+            {
+                var plan = context.Planes.Find(idPlan);
+                if (plan == null)
+                {
+                    throw new InvalidOperationException("El plan no existe.");
+                }
+
+                var rutina = context.Rutinas.Find(plan.IdRutina);
+                if (rutina == null || !rutina.Estado)
+                {
+                    throw new InvalidOperationException("No se puede reactivar el plan porque su rutina está inactiva.");
+                }
+
+                plan.Estado = true;
                 context.GuardarCambios();
             }
         }

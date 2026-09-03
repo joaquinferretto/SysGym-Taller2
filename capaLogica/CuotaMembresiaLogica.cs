@@ -6,6 +6,21 @@ using exxen2._0.capaDatos.Repositorios;
 
 namespace exxen2._0.capaLogica
 {
+    public sealed class EstadoCuentaMembresia
+    {
+        public int IdMembresia { get; set; }
+        public string Socio { get; set; }
+        public string DNI { get; set; }
+        public string Plan { get; set; }
+        public DateTime? UltimaCuotaDesde { get; set; }
+        public DateTime? UltimaCuotaHasta { get; set; }
+        public string EstadoUltimaCuota { get; set; }
+        public decimal SaldoPendiente { get; set; }
+        public string Situacion { get; set; }
+        public bool AlDia { get; set; }
+        public bool TieneDeuda { get; set; }
+    }
+
     public class CuotaMembresiaLogica
     {
         public CuotaMembresia CrearPrimeraCuota(int idMembresia)
@@ -121,11 +136,131 @@ namespace exxen2._0.capaLogica
                 return context.CuotasMembresia.Consultar(
                         "Pago", "Membresia.Socio", "Membresia.Plan")
                     .Where(c => c.EstadoPago == EstadosCuota.Pendiente
-                        || c.EstadoPago == EstadosCuota.Pagada)
+                        || c.EstadoPago == EstadosCuota.Pagada
+                        || c.EstadoPago == EstadosCuota.Anulada)
                     .OrderByDescending(c => c.FechaDesde)
                     .ThenBy(c => c.Membresia.Socio.Apellido)
                     .ThenBy(c => c.Membresia.Socio.Nombre)
                     .ToList();
+            }
+        }
+
+        public List<EstadoCuentaMembresia> ListarEstadoCuentas()
+        {
+            using (var context = new GymUnidadDeTrabajo())
+            {
+                var membresias = context.Membresias.Consultar(
+                        "Socio", "Plan", "Cuotas.Pago")
+                    .OrderBy(m => m.Socio.Apellido)
+                    .ThenBy(m => m.Socio.Nombre)
+                    .ToList();
+
+                return membresias.Select(CrearEstadoCuenta).ToList();
+            }
+        }
+
+        private static EstadoCuentaMembresia CrearEstadoCuenta(Membresia membresia)
+        {
+            var hoy = DateTime.Today;
+            var cuotasValidas = membresia.Cuotas
+                .Where(c => c.EstadoPago != EstadosCuota.Anulada)
+                .OrderBy(c => c.FechaDesde).ToList();
+            var ultima = cuotasValidas.LastOrDefault();
+            var pendientes = cuotasValidas
+                .Where(c => c.EstadoPago == EstadosCuota.Pendiente).ToList();
+            var tieneVencida = pendientes.Any(c => c.FechaHasta.Date < hoy);
+            var faltaPeriodoActual = ultima != null && ultima.FechaHasta.Date < hoy;
+            var saldo = pendientes.Sum(CalcularSaldoSinContexto);
+
+            string situacion;
+            bool alDia;
+            bool tieneDeuda;
+            if (ultima == null)
+            {
+                situacion = "Sin cuota generada";
+                alDia = false;
+                tieneDeuda = true;
+            }
+            else if (tieneVencida)
+            {
+                situacion = "Con deuda vencida";
+                alDia = false;
+                tieneDeuda = true;
+            }
+            else if (pendientes.Count > 0)
+            {
+                situacion = "Pago pendiente";
+                alDia = false;
+                tieneDeuda = true;
+            }
+            else if (faltaPeriodoActual)
+            {
+                situacion = "Falta generar nueva cuota";
+                alDia = false;
+                tieneDeuda = true;
+            }
+            else if (!membresia.Estado)
+            {
+                situacion = "Membresía inhabilitada";
+                alDia = false;
+                tieneDeuda = false;
+            }
+            else
+            {
+                situacion = "Al día";
+                alDia = true;
+                tieneDeuda = false;
+            }
+
+            return new EstadoCuentaMembresia
+            {
+                IdMembresia = membresia.IdMembresia,
+                Socio = membresia.Socio == null
+                    ? "Socio no disponible"
+                    : membresia.Socio.Apellido + ", " + membresia.Socio.Nombre,
+                DNI = membresia.Socio == null ? "-" : membresia.Socio.DNI,
+                Plan = membresia.Plan == null ? "-" : membresia.Plan.Nombre,
+                UltimaCuotaDesde = ultima == null ? (DateTime?)null : ultima.FechaDesde,
+                UltimaCuotaHasta = ultima == null ? (DateTime?)null : ultima.FechaHasta,
+                EstadoUltimaCuota = ultima == null ? "Sin cuota" : ultima.EstadoPago,
+                SaldoPendiente = saldo,
+                Situacion = situacion,
+                AlDia = alDia,
+                TieneDeuda = tieneDeuda
+            };
+        }
+
+        private static decimal CalcularSaldoSinContexto(CuotaMembresia cuota)
+        {
+            var abonado = cuota.IdRegistroPago.HasValue
+                && cuota.Pago != null
+                && cuota.Pago.Estado == EstadosTransaccionPago.Aprobado
+                ? cuota.Pago.Importe : 0m;
+            return Math.Max(0m, cuota.Importe - abonado);
+        }
+
+        public void ReactivarCuota(int idCuotaMembresia)
+        {
+            using (var context = new GymUnidadDeTrabajo())
+            using (var transaction = context.IniciarTransaccion())
+            {
+                var cuota = context.CuotasMembresia.Consultar("Pago")
+                    .SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);
+                if (cuota == null)
+                {
+                    throw new InvalidOperationException("La cuota no existe.");
+                }
+
+                if (cuota.EstadoPago != EstadosCuota.Anulada)
+                {
+                    throw new InvalidOperationException("La cuota no está anulada.");
+                }
+
+                cuota.EstadoPago = EstadosCuota.Pendiente;
+                RecalcularEstadoPagoEnContexto(context, cuota);
+                MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(context, cuota.IdMembresia);
+                context.GuardarCambios();
+                transaction.Confirmar();
             }
         }
 
