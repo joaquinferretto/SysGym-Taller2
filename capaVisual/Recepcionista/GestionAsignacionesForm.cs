@@ -31,5 +31,10 @@ namespace exxen2._0.capaVisual.Recepcionista
         private void Consultar(object sender, EventArgs e) { try { var id = FormularioVisualHelper.Entero(membresia, "membresia"); var activo = logica.ObtenerEntrenadorActivo(id); MessageBox.Show(activo == null ? "No hay entrenador activo." : activo.Nombre + " " + activo.Apellido, "Entrenador actual", MessageBoxButtons.OK, MessageBoxIcon.Information); CargarLista(id); } catch (Exception ex) { FormularioVisualHelper.MostrarError(lblEstado, ex); } }
         private void CargarLista(int id) { tabla.Rows.Clear(); foreach (var a in logica.ListarPorMembresia(id)) tabla.Rows.Add(a.IdMembresiaEntrenador, a.IdMembresia, a.Entrenador == null ? a.IdEntrenador.ToString() : a.Entrenador.Nombre + " " + a.Entrenador.Apellido, a.Estado ? "Activo" : "Historico"); }
         private void DarDeBaja(object sender, EventArgs e) { try { if (idSeleccionado == 0) throw new InvalidOperationException("Selecciona una asignacion."); logica.DarDeBajaAsignacion(idSeleccionado); CargarLista(FormularioVisualHelper.Entero(membresia, "membresia")); FormularioVisualHelper.MostrarExito(lblEstado, "Asignacion dada de baja."); } catch (Exception ex) { FormularioVisualHelper.MostrarError(lblEstado, ex); } }
+
+        private void layoutFormulario_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

@@ -247,13 +247,13 @@ namespace exxen2._0.capaVisual.Administrador
             this.colRutina,
             this.colBeneficios,
             this.colEstado});
-            this.tabla.Location = new System.Drawing.Point(16, 128);
+            this.tabla.Location = new System.Drawing.Point(11, 121);
             this.tabla.MultiSelect = false;
             this.tabla.Name = "tabla";
             this.tabla.ReadOnly = true;
             this.tabla.RowHeadersVisible = false;
             this.tabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tabla.Size = new System.Drawing.Size(941, 732);
+            this.tabla.Size = new System.Drawing.Size(570, 364);
             this.tabla.TabIndex = 3;
             // 
             // colId
@@ -300,9 +300,9 @@ namespace exxen2._0.capaVisual.Administrador
             this.panelFiltro.Controls.Add(this.filtroEstado);
             this.panelFiltro.Controls.Add(this.lblFiltro);
             this.panelFiltro.Controls.Add(this.buscador);
-            this.panelFiltro.Location = new System.Drawing.Point(16, 68);
+            this.panelFiltro.Location = new System.Drawing.Point(11, 68);
             this.panelFiltro.Name = "panelFiltro";
-            this.panelFiltro.Size = new System.Drawing.Size(945, 54);
+            this.panelFiltro.Size = new System.Drawing.Size(573, 54);
             this.panelFiltro.TabIndex = 2;
             // 
             // filtroEstado
@@ -314,7 +314,7 @@ namespace exxen2._0.capaVisual.Administrador
             "Inactivos"});
             this.filtroEstado.Location = new System.Drawing.Point(310, 22);
             this.filtroEstado.Name = "filtroEstado";
-            this.filtroEstado.Size = new System.Drawing.Size(190, 25);
+            this.filtroEstado.Size = new System.Drawing.Size(139, 25);
             this.filtroEstado.TabIndex = 2;
             // 
             // lblFiltro
@@ -333,9 +333,9 @@ namespace exxen2._0.capaVisual.Administrador
             this.buscador.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buscador.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.buscador.Location = new System.Drawing.Point(0, 22);
+            this.buscador.Location = new System.Drawing.Point(9, 22);
             this.buscador.Name = "buscador";
-            this.buscador.Size = new System.Drawing.Size(670, 24);
+            this.buscador.Size = new System.Drawing.Size(274, 24);
             this.buscador.TabIndex = 0;
             // 
             // lblAyuda
@@ -374,6 +374,7 @@ namespace exxen2._0.capaVisual.Administrador
             // layoutDetalle
             // 
             this.layoutDetalle.ColumnCount = 1;
+            this.layoutDetalle.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.layoutDetalle.Controls.Add(this.lblFormulario, 0, 0);
             this.layoutDetalle.Controls.Add(this.layoutCampos, 0, 1);
             this.layoutDetalle.Controls.Add(this.panelAcciones, 0, 2);
@@ -422,7 +423,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.layoutCampos.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.layoutCampos.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.layoutCampos.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.layoutCampos.Size = new System.Drawing.Size(439, 200);
+            this.layoutCampos.Size = new System.Drawing.Size(439, 219);
             this.layoutCampos.TabIndex = 1;
             // 
             // lblNombre
@@ -519,7 +520,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.lblBeneficios.AutoSize = true;
             this.lblBeneficios.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
             this.lblBeneficios.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.lblBeneficios.Location = new System.Drawing.Point(3, 172);
+            this.lblBeneficios.Location = new System.Drawing.Point(3, 182);
             this.lblBeneficios.Name = "lblBeneficios";
             this.lblBeneficios.Size = new System.Drawing.Size(64, 15);
             this.lblBeneficios.TabIndex = 8;
@@ -532,7 +533,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.panelBeneficios.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelBeneficios.Location = new System.Drawing.Point(178, 163);
             this.panelBeneficios.Name = "panelBeneficios";
-            this.panelBeneficios.Size = new System.Drawing.Size(258, 34);
+            this.panelBeneficios.Size = new System.Drawing.Size(258, 53);
             this.panelBeneficios.TabIndex = 8;
             // 
             // incluyeRutina

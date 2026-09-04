@@ -14,25 +14,545 @@ namespace exxen2._0.capaVisual.Recepcionista
 
         private void InitializeComponent()
         {
-            components = new Container(); panelEncabezado = new Panel(); lblTitulo = new Label(); lblDescripcion = new Label(); btnVolver = new Button(); barraAcciones = new FlowLayoutPanel(); lblEstado = new Label(); panelContenido = new Panel(); layoutContenido = new TableLayoutPanel(); panelListado = new Panel(); lblListado = new Label(); lblAyuda = new Label(); buscador = new TextBox(); panelDetalle = new Panel(); layoutDetalle = new TableLayoutPanel(); lblFormulario = new Label(); layoutCampos = new TableLayoutPanel(); panelAcciones = new Panel(); lblSocio = new Label(); lblPlan = new Label(); lblInicio = new Label(); lblVencimiento = new Label(); socio = new ComboBox(); plan = new ComboBox(); inicio = new DateTimePicker(); vencimiento = new DateTimePicker(); nuevo = new Button(); crear = new Button(); actualizar = new Button(); habilitar = new Button(); deshabilitar = new Button(); generarCuota = new Button(); tabla = new DataGridView(); colId = new DataGridViewTextBoxColumn(); colSocio = new DataGridViewTextBoxColumn(); colDni = new DataGridViewTextBoxColumn(); colPlan = new DataGridViewTextBoxColumn(); colInicio = new DataGridViewTextBoxColumn(); colVencimiento = new DataGridViewTextBoxColumn(); colEstado = new DataGridViewTextBoxColumn(); panelEncabezado.SuspendLayout(); panelContenido.SuspendLayout(); layoutContenido.SuspendLayout(); panelListado.SuspendLayout(); ((ISupportInitialize)(tabla)).BeginInit(); panelDetalle.SuspendLayout(); layoutDetalle.SuspendLayout(); layoutCampos.SuspendLayout(); panelAcciones.SuspendLayout(); SuspendLayout();
-            panelEncabezado.BackColor = Color.FromArgb(5, 150, 105); panelEncabezado.Dock = DockStyle.Top; panelEncabezado.Height = 80; panelEncabezado.Controls.Add(lblDescripcion); panelEncabezado.Controls.Add(lblTitulo); panelEncabezado.Controls.Add(btnVolver); lblTitulo.AutoSize = true; lblTitulo.Font = new Font("Segoe UI", 18F, FontStyle.Bold); lblTitulo.ForeColor = Color.White; lblTitulo.Location = new Point(22, 10); lblTitulo.Text = "Membresias"; lblDescripcion.AutoSize = true; lblDescripcion.ForeColor = Color.FromArgb(226, 232, 240); lblDescripcion.Location = new Point(24, 47); lblDescripcion.Text = "Asignacion de planes a socios, vigencia y cuotas"; btnVolver.Anchor = AnchorStyles.Top | AnchorStyles.Right; btnVolver.BackColor = Color.White; btnVolver.FlatStyle = FlatStyle.Flat; btnVolver.FlatAppearance.BorderSize = 0; btnVolver.ForeColor = Color.FromArgb(5, 150, 105); btnVolver.Location = new Point(930, 22); btnVolver.Size = new Size(92, 34); btnVolver.Text = "Volver"; btnVolver.UseVisualStyleBackColor = false;
-            lblEstado.AutoSize = false; lblEstado.BackColor = Color.FromArgb(226, 232, 240); lblEstado.Dock = DockStyle.Bottom; lblEstado.ForeColor = Color.FromArgb(51, 65, 85); lblEstado.Height = 32; lblEstado.Padding = new Padding(18, 8, 8, 0); lblEstado.Text = "Listo"; panelContenido.BackColor = Color.FromArgb(248, 250, 252); panelContenido.Dock = DockStyle.Fill; panelContenido.Padding = new Padding(12); panelContenido.Controls.Add(layoutContenido); layoutContenido.ColumnCount = 2; layoutContenido.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 57F)); layoutContenido.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 43F)); layoutContenido.Dock = DockStyle.Fill; layoutContenido.Controls.Add(panelListado, 0, 0); layoutContenido.Controls.Add(panelDetalle, 1, 0);
-            panelListado.BackColor = Color.White; panelListado.BorderStyle = BorderStyle.FixedSingle; panelListado.Dock = DockStyle.Fill; panelListado.Padding = new Padding(16); panelListado.Controls.Add(tabla); panelListado.Controls.Add(buscador); panelListado.Controls.Add(lblAyuda); panelListado.Controls.Add(lblListado); lblListado.AutoSize = true; lblListado.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold); lblListado.ForeColor = Color.FromArgb(30, 41, 59); lblListado.Location = new Point(16, 14); lblListado.Text = "Membresias"; lblAyuda.AutoSize = true; lblAyuda.ForeColor = Color.FromArgb(100, 116, 139); lblAyuda.Location = new Point(16, 42); lblAyuda.Text = "Busca por socio, DNI o plan"; buscador.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right; buscador.BorderStyle = BorderStyle.FixedSingle; buscador.Location = new Point(16, 70); buscador.Size = new Size(560, 26);
-            tabla.AllowUserToAddRows = false; tabla.AllowUserToDeleteRows = false; tabla.AllowUserToResizeRows = false; tabla.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; tabla.BackgroundColor = Color.White; tabla.BorderStyle = BorderStyle.None; tabla.ColumnHeadersHeight = 38; tabla.Dock = DockStyle.Fill; tabla.MultiSelect = false; tabla.ReadOnly = true; tabla.RowHeadersVisible = false; tabla.SelectionMode = DataGridViewSelectionMode.FullRowSelect; tabla.Columns.AddRange(new DataGridViewColumn[] { colId, colSocio, colDni, colPlan, colInicio, colVencimiento, colEstado }); colId.HeaderText = "Id"; colId.Name = "colId"; colId.Visible = false; colSocio.HeaderText = "Socio"; colSocio.Name = "colSocio"; colDni.HeaderText = "DNI"; colDni.Name = "colDni"; colPlan.HeaderText = "Plan"; colPlan.Name = "colPlan"; colInicio.HeaderText = "Inicio"; colInicio.Name = "colInicio"; colVencimiento.HeaderText = "Vencimiento"; colVencimiento.Name = "colVencimiento"; colEstado.HeaderText = "Estado"; colEstado.Name = "colEstado";
-            panelDetalle.BackColor = Color.White; panelDetalle.BorderStyle = BorderStyle.FixedSingle; panelDetalle.Dock = DockStyle.Fill; panelDetalle.Padding = new Padding(16); panelDetalle.Controls.Add(layoutDetalle); layoutDetalle.ColumnCount = 1; layoutDetalle.Dock = DockStyle.Fill; layoutDetalle.RowCount = 3; layoutDetalle.RowStyles.Add(new RowStyle(SizeType.Absolute, 34F)); layoutDetalle.RowStyles.Add(new RowStyle(SizeType.Percent, 100F)); layoutDetalle.RowStyles.Add(new RowStyle(SizeType.Absolute, 160F)); layoutDetalle.Controls.Add(lblFormulario, 0, 0); layoutDetalle.Controls.Add(layoutCampos, 0, 1); layoutDetalle.Controls.Add(panelAcciones, 0, 2); lblFormulario.AutoSize = true; lblFormulario.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold); lblFormulario.ForeColor = Color.FromArgb(30, 41, 59); lblFormulario.Text = "Nueva membresia";
-            layoutCampos.ColumnCount = 2; layoutCampos.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 42F)); layoutCampos.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 58F)); layoutCampos.Dock = DockStyle.Top; layoutCampos.RowCount = 4; layoutCampos.RowStyles.Add(new RowStyle(SizeType.Absolute, 44F)); layoutCampos.RowStyles.Add(new RowStyle(SizeType.Absolute, 44F)); layoutCampos.RowStyles.Add(new RowStyle(SizeType.Absolute, 44F)); layoutCampos.RowStyles.Add(new RowStyle(SizeType.Absolute, 44F)); layoutCampos.Controls.Add(lblSocio, 0, 0); layoutCampos.Controls.Add(socio, 1, 0); layoutCampos.Controls.Add(lblPlan, 0, 1); layoutCampos.Controls.Add(plan, 1, 1); layoutCampos.Controls.Add(lblInicio, 0, 2); layoutCampos.Controls.Add(inicio, 1, 2); layoutCampos.Controls.Add(lblVencimiento, 0, 3); layoutCampos.Controls.Add(vencimiento, 1, 3); socio.DropDownStyle = ComboBoxStyle.DropDownList; socio.Dock = DockStyle.Fill; plan.DropDownStyle = ComboBoxStyle.DropDownList; plan.Dock = DockStyle.Fill; inicio.Format = DateTimePickerFormat.Short; inicio.Dock = DockStyle.Fill; vencimiento.Format = DateTimePickerFormat.Short; vencimiento.Dock = DockStyle.Fill;
-            panelAcciones.Dock = DockStyle.Fill; panelAcciones.Controls.Add(nuevo); panelAcciones.Controls.Add(crear); panelAcciones.Controls.Add(actualizar); panelAcciones.Controls.Add(habilitar); panelAcciones.Controls.Add(deshabilitar); panelAcciones.Controls.Add(generarCuota);
-            panelEncabezado.Location = new Point(0, 0); panelEncabezado.Name = "panelEncabezado"; panelEncabezado.Size = new Size(1100, 80); panelEncabezado.TabIndex = 0; lblTitulo.Name = "lblTitulo"; lblTitulo.Size = new Size(171, 32); lblTitulo.TabIndex = 0; lblDescripcion.Name = "lblDescripcion"; lblDescripcion.Size = new Size(317, 17); lblDescripcion.TabIndex = 1; btnVolver.Name = "btnVolver"; btnVolver.TabIndex = 2;
-            barraAcciones.BackColor = Color.White; barraAcciones.Dock = DockStyle.Top; barraAcciones.Location = new Point(0, 80); barraAcciones.Name = "barraAcciones"; barraAcciones.Padding = new Padding(16, 8, 16, 8); barraAcciones.Size = new Size(1100, 52); barraAcciones.TabIndex = 1; barraAcciones.WrapContents = false;
-            lblEstado.Location = new Point(0, 648); lblEstado.Name = "lblEstado"; lblEstado.Size = new Size(1100, 32); lblEstado.TabIndex = 3; panelContenido.Location = new Point(0, 132); panelContenido.Name = "panelContenido"; panelContenido.Size = new Size(1100, 516); panelContenido.TabIndex = 2; layoutContenido.Location = new Point(12, 12); layoutContenido.Name = "layoutContenido"; layoutContenido.RowCount = 1; layoutContenido.RowStyles.Add(new RowStyle(SizeType.Percent, 100F)); layoutContenido.Size = new Size(1076, 492); layoutContenido.TabIndex = 0;
-            panelListado.Name = "panelListado"; panelListado.TabIndex = 0; lblListado.Name = "lblListado"; lblListado.Size = new Size(91, 20); lblListado.TabIndex = 0; lblAyuda.Name = "lblAyuda"; lblAyuda.Size = new Size(178, 17); lblAyuda.TabIndex = 1; buscador.Name = "buscador"; buscador.TabIndex = 2;
-            tabla.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right; tabla.Dock = DockStyle.None; tabla.Location = new Point(16, 106); tabla.Name = "tabla"; tabla.Size = new Size(577, 368); tabla.TabIndex = 3; colId.Width = 50; colSocio.Width = 135; colDni.Width = 85; colPlan.Width = 90; colInicio.Width = 85; colVencimiento.Width = 95; colEstado.Width = 100;
-            panelDetalle.Name = "panelDetalle"; panelDetalle.TabIndex = 1; layoutDetalle.Name = "layoutDetalle"; layoutDetalle.TabIndex = 0; lblFormulario.Name = "lblFormulario"; lblFormulario.Size = new Size(160, 21); lblFormulario.TabIndex = 0; layoutCampos.Name = "layoutCampos"; layoutCampos.Size = new Size(414, 176); layoutCampos.TabIndex = 1; panelAcciones.Name = "panelAcciones"; panelAcciones.TabIndex = 2;
-            lblSocio.Anchor = AnchorStyles.Left; lblSocio.AutoSize = true; lblSocio.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblSocio.ForeColor = Color.FromArgb(51, 65, 85); lblSocio.Name = "lblSocio"; lblSocio.Text = "Socio:"; lblPlan.Anchor = AnchorStyles.Left; lblPlan.AutoSize = true; lblPlan.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblPlan.ForeColor = Color.FromArgb(51, 65, 85); lblPlan.Name = "lblPlan"; lblPlan.Text = "Plan:"; lblInicio.Anchor = AnchorStyles.Left; lblInicio.AutoSize = true; lblInicio.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblInicio.ForeColor = Color.FromArgb(51, 65, 85); lblInicio.Name = "lblInicio"; lblInicio.Text = "Inicio:"; lblVencimiento.Anchor = AnchorStyles.Left; lblVencimiento.AutoSize = true; lblVencimiento.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblVencimiento.ForeColor = Color.FromArgb(51, 65, 85); lblVencimiento.Name = "lblVencimiento"; lblVencimiento.Text = "Vencimiento:";
-            socio.Margin = new Padding(0, 4, 0, 4); socio.Name = "socio"; plan.Margin = new Padding(0, 4, 0, 4); plan.Name = "plan"; inicio.Margin = new Padding(0, 4, 0, 4); inicio.Name = "inicio"; vencimiento.Margin = new Padding(0, 4, 0, 4); vencimiento.Name = "vencimiento";
-            nuevo.BackColor = Color.FromArgb(5, 150, 105); nuevo.FlatAppearance.BorderSize = 0; nuevo.FlatStyle = FlatStyle.Flat; nuevo.ForeColor = Color.White; nuevo.Location = new Point(0, 2); nuevo.Name = "nuevo"; nuevo.Size = new Size(100, 32); nuevo.Text = "+ Nueva"; nuevo.UseVisualStyleBackColor = false; crear.BackColor = Color.FromArgb(5, 150, 105); crear.FlatAppearance.BorderSize = 0; crear.FlatStyle = FlatStyle.Flat; crear.ForeColor = Color.White; crear.Location = new Point(0, 42); crear.Name = "crear"; crear.Size = new Size(100, 32); crear.Text = "Crear"; crear.UseVisualStyleBackColor = false; actualizar.BackColor = Color.FromArgb(226, 232, 240); actualizar.FlatAppearance.BorderSize = 0; actualizar.FlatStyle = FlatStyle.Flat; actualizar.ForeColor = Color.FromArgb(30, 41, 59); actualizar.Location = new Point(104, 42); actualizar.Name = "actualizar"; actualizar.Size = new Size(100, 32); actualizar.Text = "Actualizar"; actualizar.UseVisualStyleBackColor = false; habilitar.BackColor = Color.FromArgb(226, 232, 240); habilitar.FlatAppearance.BorderSize = 0; habilitar.FlatStyle = FlatStyle.Flat; habilitar.ForeColor = Color.FromArgb(30, 41, 59); habilitar.Location = new Point(0, 82); habilitar.Name = "habilitar"; habilitar.Size = new Size(100, 32); habilitar.Text = "Habilitar"; habilitar.UseVisualStyleBackColor = false; deshabilitar.BackColor = Color.FromArgb(254, 242, 242); deshabilitar.FlatAppearance.BorderSize = 0; deshabilitar.FlatStyle = FlatStyle.Flat; deshabilitar.ForeColor = Color.FromArgb(185, 28, 28); deshabilitar.Location = new Point(104, 82); deshabilitar.Name = "deshabilitar"; deshabilitar.Size = new Size(100, 32); deshabilitar.Text = "Deshabilitar"; deshabilitar.UseVisualStyleBackColor = false; generarCuota.BackColor = Color.FromArgb(226, 232, 240); generarCuota.FlatAppearance.BorderSize = 0; generarCuota.FlatStyle = FlatStyle.Flat; generarCuota.ForeColor = Color.FromArgb(30, 41, 59); generarCuota.Location = new Point(0, 122); generarCuota.Name = "generarCuota"; generarCuota.Size = new Size(100, 32); generarCuota.Text = "Generar cuota"; generarCuota.UseVisualStyleBackColor = false;
-            Controls.Add(panelContenido); Controls.Add(lblEstado); Controls.Add(barraAcciones); Controls.Add(panelEncabezado); AutoScaleMode = AutoScaleMode.Font; BackColor = Color.FromArgb(241, 245, 249); ClientSize = new Size(1100, 680); Font = new Font("Segoe UI", 9.5F); MinimumSize = new Size(760, 540); Name = "GestionMembresiasForm"; StartPosition = FormStartPosition.CenterParent; Text = "SysGym | Membresias"; nuevo.Click += NuevaMembresia; crear.Click += Crear; actualizar.Click += Actualizar; habilitar.Click += Habilitar; deshabilitar.Click += Deshabilitar; generarCuota.Click += GenerarCuota;
-            panelEncabezado.ResumeLayout(false); panelEncabezado.PerformLayout(); panelContenido.ResumeLayout(false); layoutContenido.ResumeLayout(false); panelListado.ResumeLayout(false); panelListado.PerformLayout(); ((ISupportInitialize)(tabla)).EndInit(); panelDetalle.ResumeLayout(false); layoutDetalle.ResumeLayout(false); layoutDetalle.PerformLayout(); layoutCampos.ResumeLayout(false); layoutCampos.PerformLayout(); panelAcciones.ResumeLayout(false); ResumeLayout(false);
+            this.panelEncabezado = new System.Windows.Forms.Panel();
+            this.lblDescripcion = new System.Windows.Forms.Label();
+            this.lblTitulo = new System.Windows.Forms.Label();
+            this.btnVolver = new System.Windows.Forms.Button();
+            this.barraAcciones = new System.Windows.Forms.FlowLayoutPanel();
+            this.lblEstado = new System.Windows.Forms.Label();
+            this.panelContenido = new System.Windows.Forms.Panel();
+            this.layoutContenido = new System.Windows.Forms.TableLayoutPanel();
+            this.panelListado = new System.Windows.Forms.Panel();
+            this.tabla = new System.Windows.Forms.DataGridView();
+            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSocio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDni = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPlan = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colInicio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colVencimiento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.buscador = new System.Windows.Forms.TextBox();
+            this.lblAyuda = new System.Windows.Forms.Label();
+            this.lblListado = new System.Windows.Forms.Label();
+            this.panelDetalle = new System.Windows.Forms.Panel();
+            this.layoutDetalle = new System.Windows.Forms.TableLayoutPanel();
+            this.lblFormulario = new System.Windows.Forms.Label();
+            this.layoutCampos = new System.Windows.Forms.TableLayoutPanel();
+            this.lblSocio = new System.Windows.Forms.Label();
+            this.socio = new System.Windows.Forms.ComboBox();
+            this.lblPlan = new System.Windows.Forms.Label();
+            this.plan = new System.Windows.Forms.ComboBox();
+            this.lblInicio = new System.Windows.Forms.Label();
+            this.inicio = new System.Windows.Forms.DateTimePicker();
+            this.lblVencimiento = new System.Windows.Forms.Label();
+            this.vencimiento = new System.Windows.Forms.DateTimePicker();
+            this.panelAcciones = new System.Windows.Forms.Panel();
+            this.nuevo = new System.Windows.Forms.Button();
+            this.crear = new System.Windows.Forms.Button();
+            this.actualizar = new System.Windows.Forms.Button();
+            this.habilitar = new System.Windows.Forms.Button();
+            this.deshabilitar = new System.Windows.Forms.Button();
+            this.generarCuota = new System.Windows.Forms.Button();
+            this.panelEncabezado.SuspendLayout();
+            this.panelContenido.SuspendLayout();
+            this.layoutContenido.SuspendLayout();
+            this.panelListado.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tabla)).BeginInit();
+            this.panelDetalle.SuspendLayout();
+            this.layoutDetalle.SuspendLayout();
+            this.layoutCampos.SuspendLayout();
+            this.panelAcciones.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // panelEncabezado
+            // 
+            this.panelEncabezado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(150)))), ((int)(((byte)(105)))));
+            this.panelEncabezado.Controls.Add(this.lblDescripcion);
+            this.panelEncabezado.Controls.Add(this.lblTitulo);
+            this.panelEncabezado.Controls.Add(this.btnVolver);
+            this.panelEncabezado.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelEncabezado.Location = new System.Drawing.Point(0, 0);
+            this.panelEncabezado.Name = "panelEncabezado";
+            this.panelEncabezado.Size = new System.Drawing.Size(940, 80);
+            this.panelEncabezado.TabIndex = 0;
+            // 
+            // lblDescripcion
+            // 
+            this.lblDescripcion.AutoSize = true;
+            this.lblDescripcion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.lblDescripcion.Location = new System.Drawing.Point(24, 47);
+            this.lblDescripcion.Name = "lblDescripcion";
+            this.lblDescripcion.Size = new System.Drawing.Size(290, 17);
+            this.lblDescripcion.TabIndex = 1;
+            this.lblDescripcion.Text = "Asignacion de planes a socios, vigencia y cuotas";
+            // 
+            // lblTitulo
+            // 
+            this.lblTitulo.AutoSize = true;
+            this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+            this.lblTitulo.ForeColor = System.Drawing.Color.White;
+            this.lblTitulo.Location = new System.Drawing.Point(22, 10);
+            this.lblTitulo.Name = "lblTitulo";
+            this.lblTitulo.Size = new System.Drawing.Size(152, 32);
+            this.lblTitulo.TabIndex = 0;
+            this.lblTitulo.Text = "Membresias";
+            // 
+            // btnVolver
+            // 
+            this.btnVolver.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnVolver.BackColor = System.Drawing.Color.White;
+            this.btnVolver.FlatAppearance.BorderSize = 0;
+            this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnVolver.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(150)))), ((int)(((byte)(105)))));
+            this.btnVolver.Location = new System.Drawing.Point(770, 22);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(92, 34);
+            this.btnVolver.TabIndex = 2;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = false;
+            // 
+            // barraAcciones
+            // 
+            this.barraAcciones.BackColor = System.Drawing.Color.White;
+            this.barraAcciones.Dock = System.Windows.Forms.DockStyle.Top;
+            this.barraAcciones.Location = new System.Drawing.Point(0, 80);
+            this.barraAcciones.Name = "barraAcciones";
+            this.barraAcciones.Padding = new System.Windows.Forms.Padding(16, 8, 16, 8);
+            this.barraAcciones.Size = new System.Drawing.Size(940, 52);
+            this.barraAcciones.TabIndex = 1;
+            this.barraAcciones.WrapContents = false;
+            // 
+            // lblEstado
+            // 
+            this.lblEstado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.lblEstado.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblEstado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.lblEstado.Location = new System.Drawing.Point(0, 648);
+            this.lblEstado.Name = "lblEstado";
+            this.lblEstado.Padding = new System.Windows.Forms.Padding(18, 8, 8, 0);
+            this.lblEstado.Size = new System.Drawing.Size(940, 32);
+            this.lblEstado.TabIndex = 3;
+            this.lblEstado.Text = "Listo";
+            // 
+            // panelContenido
+            // 
+            this.panelContenido.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.panelContenido.Controls.Add(this.layoutContenido);
+            this.panelContenido.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelContenido.Location = new System.Drawing.Point(0, 132);
+            this.panelContenido.Name = "panelContenido";
+            this.panelContenido.Padding = new System.Windows.Forms.Padding(12);
+            this.panelContenido.Size = new System.Drawing.Size(940, 516);
+            this.panelContenido.TabIndex = 2;
+            // 
+            // layoutContenido
+            // 
+            this.layoutContenido.ColumnCount = 2;
+            this.layoutContenido.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 57F));
+            this.layoutContenido.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 43F));
+            this.layoutContenido.Controls.Add(this.panelListado, 0, 0);
+            this.layoutContenido.Controls.Add(this.panelDetalle, 1, 0);
+            this.layoutContenido.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layoutContenido.Location = new System.Drawing.Point(12, 12);
+            this.layoutContenido.Name = "layoutContenido";
+            this.layoutContenido.RowCount = 1;
+            this.layoutContenido.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layoutContenido.Size = new System.Drawing.Size(916, 492);
+            this.layoutContenido.TabIndex = 0;
+            // 
+            // panelListado
+            // 
+            this.panelListado.BackColor = System.Drawing.Color.White;
+            this.panelListado.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelListado.Controls.Add(this.tabla);
+            this.panelListado.Controls.Add(this.buscador);
+            this.panelListado.Controls.Add(this.lblAyuda);
+            this.panelListado.Controls.Add(this.lblListado);
+            this.panelListado.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelListado.Location = new System.Drawing.Point(3, 3);
+            this.panelListado.Name = "panelListado";
+            this.panelListado.Padding = new System.Windows.Forms.Padding(16);
+            this.panelListado.Size = new System.Drawing.Size(516, 486);
+            this.panelListado.TabIndex = 0;
+            // 
+            // tabla
+            // 
+            this.tabla.AllowUserToAddRows = false;
+            this.tabla.AllowUserToDeleteRows = false;
+            this.tabla.AllowUserToResizeRows = false;
+            this.tabla.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabla.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.tabla.BackgroundColor = System.Drawing.Color.White;
+            this.tabla.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tabla.ColumnHeadersHeight = 38;
+            this.tabla.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colId,
+            this.colSocio,
+            this.colDni,
+            this.colPlan,
+            this.colInicio,
+            this.colVencimiento,
+            this.colEstado});
+            this.tabla.Location = new System.Drawing.Point(16, 101);
+            this.tabla.MultiSelect = false;
+            this.tabla.Name = "tabla";
+            this.tabla.ReadOnly = true;
+            this.tabla.RowHeadersVisible = false;
+            this.tabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.tabla.Size = new System.Drawing.Size(479, 384);
+            this.tabla.TabIndex = 3;
+            this.tabla.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tabla_CellContentClick);
+            // 
+            // colId
+            // 
+            this.colId.HeaderText = "Id";
+            this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
+            this.colId.Visible = false;
+            // 
+            // colSocio
+            // 
+            this.colSocio.HeaderText = "Socio";
+            this.colSocio.Name = "colSocio";
+            this.colSocio.ReadOnly = true;
+            // 
+            // colDni
+            // 
+            this.colDni.HeaderText = "DNI";
+            this.colDni.Name = "colDni";
+            this.colDni.ReadOnly = true;
+            // 
+            // colPlan
+            // 
+            this.colPlan.HeaderText = "Plan";
+            this.colPlan.Name = "colPlan";
+            this.colPlan.ReadOnly = true;
+            // 
+            // colInicio
+            // 
+            this.colInicio.HeaderText = "Inicio";
+            this.colInicio.Name = "colInicio";
+            this.colInicio.ReadOnly = true;
+            // 
+            // colVencimiento
+            // 
+            this.colVencimiento.HeaderText = "Vencimiento";
+            this.colVencimiento.Name = "colVencimiento";
+            this.colVencimiento.ReadOnly = true;
+            // 
+            // colEstado
+            // 
+            this.colEstado.HeaderText = "Estado";
+            this.colEstado.Name = "colEstado";
+            this.colEstado.ReadOnly = true;
+            // 
+            // buscador
+            // 
+            this.buscador.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buscador.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.buscador.Location = new System.Drawing.Point(16, 70);
+            this.buscador.Name = "buscador";
+            this.buscador.Size = new System.Drawing.Size(479, 24);
+            this.buscador.TabIndex = 2;
+            // 
+            // lblAyuda
+            // 
+            this.lblAyuda.AutoSize = true;
+            this.lblAyuda.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
+            this.lblAyuda.Location = new System.Drawing.Point(16, 42);
+            this.lblAyuda.Name = "lblAyuda";
+            this.lblAyuda.Size = new System.Drawing.Size(171, 17);
+            this.lblAyuda.TabIndex = 1;
+            this.lblAyuda.Text = "Busca por socio, DNI o plan";
+            // 
+            // lblListado
+            // 
+            this.lblListado.AutoSize = true;
+            this.lblListado.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
+            this.lblListado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.lblListado.Location = new System.Drawing.Point(16, 14);
+            this.lblListado.Name = "lblListado";
+            this.lblListado.Size = new System.Drawing.Size(91, 20);
+            this.lblListado.TabIndex = 0;
+            this.lblListado.Text = "Membresias";
+            // 
+            // panelDetalle
+            // 
+            this.panelDetalle.BackColor = System.Drawing.Color.White;
+            this.panelDetalle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelDetalle.Controls.Add(this.layoutDetalle);
+            this.panelDetalle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelDetalle.Location = new System.Drawing.Point(525, 3);
+            this.panelDetalle.Name = "panelDetalle";
+            this.panelDetalle.Padding = new System.Windows.Forms.Padding(16);
+            this.panelDetalle.Size = new System.Drawing.Size(388, 486);
+            this.panelDetalle.TabIndex = 1;
+            // 
+            // layoutDetalle
+            // 
+            this.layoutDetalle.ColumnCount = 1;
+            this.layoutDetalle.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.layoutDetalle.Controls.Add(this.lblFormulario, 0, 0);
+            this.layoutDetalle.Controls.Add(this.layoutCampos, 0, 1);
+            this.layoutDetalle.Controls.Add(this.panelAcciones, 0, 2);
+            this.layoutDetalle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layoutDetalle.Location = new System.Drawing.Point(16, 16);
+            this.layoutDetalle.Name = "layoutDetalle";
+            this.layoutDetalle.RowCount = 3;
+            this.layoutDetalle.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
+            this.layoutDetalle.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layoutDetalle.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 160F));
+            this.layoutDetalle.Size = new System.Drawing.Size(354, 452);
+            this.layoutDetalle.TabIndex = 0;
+            // 
+            // lblFormulario
+            // 
+            this.lblFormulario.AutoSize = true;
+            this.lblFormulario.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.lblFormulario.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.lblFormulario.Location = new System.Drawing.Point(3, 0);
+            this.lblFormulario.Name = "lblFormulario";
+            this.lblFormulario.Size = new System.Drawing.Size(141, 21);
+            this.lblFormulario.TabIndex = 0;
+            this.lblFormulario.Text = "Nueva membresia";
+            // 
+            // layoutCampos
+            // 
+            this.layoutCampos.ColumnCount = 2;
+            this.layoutCampos.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 42F));
+            this.layoutCampos.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 58F));
+            this.layoutCampos.Controls.Add(this.lblSocio, 0, 0);
+            this.layoutCampos.Controls.Add(this.socio, 1, 0);
+            this.layoutCampos.Controls.Add(this.lblPlan, 0, 1);
+            this.layoutCampos.Controls.Add(this.plan, 1, 1);
+            this.layoutCampos.Controls.Add(this.lblInicio, 0, 2);
+            this.layoutCampos.Controls.Add(this.inicio, 1, 2);
+            this.layoutCampos.Controls.Add(this.lblVencimiento, 0, 3);
+            this.layoutCampos.Controls.Add(this.vencimiento, 1, 3);
+            this.layoutCampos.Dock = System.Windows.Forms.DockStyle.Top;
+            this.layoutCampos.Location = new System.Drawing.Point(3, 37);
+            this.layoutCampos.Name = "layoutCampos";
+            this.layoutCampos.RowCount = 4;
+            this.layoutCampos.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
+            this.layoutCampos.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
+            this.layoutCampos.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
+            this.layoutCampos.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
+            this.layoutCampos.Size = new System.Drawing.Size(348, 176);
+            this.layoutCampos.TabIndex = 1;
+            // 
+            // lblSocio
+            // 
+            this.lblSocio.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblSocio.AutoSize = true;
+            this.lblSocio.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.lblSocio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.lblSocio.Location = new System.Drawing.Point(3, 14);
+            this.lblSocio.Name = "lblSocio";
+            this.lblSocio.Size = new System.Drawing.Size(40, 15);
+            this.lblSocio.TabIndex = 0;
+            this.lblSocio.Text = "Socio:";
+            // 
+            // socio
+            // 
+            this.socio.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.socio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.socio.Location = new System.Drawing.Point(146, 4);
+            this.socio.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.socio.Name = "socio";
+            this.socio.Size = new System.Drawing.Size(202, 25);
+            this.socio.TabIndex = 1;
+            // 
+            // lblPlan
+            // 
+            this.lblPlan.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblPlan.AutoSize = true;
+            this.lblPlan.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.lblPlan.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.lblPlan.Location = new System.Drawing.Point(3, 58);
+            this.lblPlan.Name = "lblPlan";
+            this.lblPlan.Size = new System.Drawing.Size(33, 15);
+            this.lblPlan.TabIndex = 2;
+            this.lblPlan.Text = "Plan:";
+            // 
+            // plan
+            // 
+            this.plan.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.plan.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.plan.Location = new System.Drawing.Point(146, 48);
+            this.plan.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.plan.Name = "plan";
+            this.plan.Size = new System.Drawing.Size(202, 25);
+            this.plan.TabIndex = 3;
+            // 
+            // lblInicio
+            // 
+            this.lblInicio.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblInicio.AutoSize = true;
+            this.lblInicio.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.lblInicio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.lblInicio.Location = new System.Drawing.Point(3, 102);
+            this.lblInicio.Name = "lblInicio";
+            this.lblInicio.Size = new System.Drawing.Size(40, 15);
+            this.lblInicio.TabIndex = 4;
+            this.lblInicio.Text = "Inicio:";
+            // 
+            // inicio
+            // 
+            this.inicio.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.inicio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.inicio.Location = new System.Drawing.Point(146, 92);
+            this.inicio.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.inicio.Name = "inicio";
+            this.inicio.Size = new System.Drawing.Size(202, 24);
+            this.inicio.TabIndex = 5;
+            // 
+            // lblVencimiento
+            // 
+            this.lblVencimiento.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblVencimiento.AutoSize = true;
+            this.lblVencimiento.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.lblVencimiento.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.lblVencimiento.Location = new System.Drawing.Point(3, 146);
+            this.lblVencimiento.Name = "lblVencimiento";
+            this.lblVencimiento.Size = new System.Drawing.Size(77, 15);
+            this.lblVencimiento.TabIndex = 6;
+            this.lblVencimiento.Text = "Vencimiento:";
+            // 
+            // vencimiento
+            // 
+            this.vencimiento.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vencimiento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.vencimiento.Location = new System.Drawing.Point(146, 136);
+            this.vencimiento.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
+            this.vencimiento.Name = "vencimiento";
+            this.vencimiento.Size = new System.Drawing.Size(202, 24);
+            this.vencimiento.TabIndex = 7;
+            // 
+            // panelAcciones
+            // 
+            this.panelAcciones.Controls.Add(this.nuevo);
+            this.panelAcciones.Controls.Add(this.crear);
+            this.panelAcciones.Controls.Add(this.actualizar);
+            this.panelAcciones.Controls.Add(this.habilitar);
+            this.panelAcciones.Controls.Add(this.deshabilitar);
+            this.panelAcciones.Controls.Add(this.generarCuota);
+            this.panelAcciones.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelAcciones.Location = new System.Drawing.Point(3, 295);
+            this.panelAcciones.Name = "panelAcciones";
+            this.panelAcciones.Size = new System.Drawing.Size(348, 154);
+            this.panelAcciones.TabIndex = 2;
+            // 
+            // nuevo
+            // 
+            this.nuevo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(150)))), ((int)(((byte)(105)))));
+            this.nuevo.FlatAppearance.BorderSize = 0;
+            this.nuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.nuevo.ForeColor = System.Drawing.Color.White;
+            this.nuevo.Location = new System.Drawing.Point(0, 2);
+            this.nuevo.Name = "nuevo";
+            this.nuevo.Size = new System.Drawing.Size(100, 32);
+            this.nuevo.TabIndex = 0;
+            this.nuevo.Text = "+ Nueva";
+            this.nuevo.UseVisualStyleBackColor = false;
+            // 
+            // crear
+            // 
+            this.crear.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(150)))), ((int)(((byte)(105)))));
+            this.crear.FlatAppearance.BorderSize = 0;
+            this.crear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.crear.ForeColor = System.Drawing.Color.White;
+            this.crear.Location = new System.Drawing.Point(0, 42);
+            this.crear.Name = "crear";
+            this.crear.Size = new System.Drawing.Size(100, 32);
+            this.crear.TabIndex = 1;
+            this.crear.Text = "Crear";
+            this.crear.UseVisualStyleBackColor = false;
+            // 
+            // actualizar
+            // 
+            this.actualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.actualizar.FlatAppearance.BorderSize = 0;
+            this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.actualizar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.actualizar.Location = new System.Drawing.Point(104, 42);
+            this.actualizar.Name = "actualizar";
+            this.actualizar.Size = new System.Drawing.Size(100, 32);
+            this.actualizar.TabIndex = 2;
+            this.actualizar.Text = "Actualizar";
+            this.actualizar.UseVisualStyleBackColor = false;
+            // 
+            // habilitar
+            // 
+            this.habilitar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.habilitar.FlatAppearance.BorderSize = 0;
+            this.habilitar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.habilitar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.habilitar.Location = new System.Drawing.Point(0, 82);
+            this.habilitar.Name = "habilitar";
+            this.habilitar.Size = new System.Drawing.Size(100, 32);
+            this.habilitar.TabIndex = 3;
+            this.habilitar.Text = "Habilitar";
+            this.habilitar.UseVisualStyleBackColor = false;
+            // 
+            // deshabilitar
+            // 
+            this.deshabilitar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.deshabilitar.FlatAppearance.BorderSize = 0;
+            this.deshabilitar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.deshabilitar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.deshabilitar.Location = new System.Drawing.Point(104, 82);
+            this.deshabilitar.Name = "deshabilitar";
+            this.deshabilitar.Size = new System.Drawing.Size(100, 32);
+            this.deshabilitar.TabIndex = 4;
+            this.deshabilitar.Text = "Deshabilitar";
+            this.deshabilitar.UseVisualStyleBackColor = false;
+            // 
+            // generarCuota
+            // 
+            this.generarCuota.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.generarCuota.FlatAppearance.BorderSize = 0;
+            this.generarCuota.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.generarCuota.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.generarCuota.Location = new System.Drawing.Point(0, 122);
+            this.generarCuota.Name = "generarCuota";
+            this.generarCuota.Size = new System.Drawing.Size(100, 32);
+            this.generarCuota.TabIndex = 5;
+            this.generarCuota.Text = "Generar cuota";
+            this.generarCuota.UseVisualStyleBackColor = false;
+            // 
+            // GestionMembresiasForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
+            this.ClientSize = new System.Drawing.Size(940, 680);
+            this.Controls.Add(this.panelContenido);
+            this.Controls.Add(this.lblEstado);
+            this.Controls.Add(this.barraAcciones);
+            this.Controls.Add(this.panelEncabezado);
+            this.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.MinimumSize = new System.Drawing.Size(760, 540);
+            this.Name = "GestionMembresiasForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "SysGym | Membresias";
+            this.panelEncabezado.ResumeLayout(false);
+            this.panelEncabezado.PerformLayout();
+            this.panelContenido.ResumeLayout(false);
+            this.layoutContenido.ResumeLayout(false);
+            this.panelListado.ResumeLayout(false);
+            this.panelListado.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tabla)).EndInit();
+            this.panelDetalle.ResumeLayout(false);
+            this.layoutDetalle.ResumeLayout(false);
+            this.layoutDetalle.PerformLayout();
+            this.layoutCampos.ResumeLayout(false);
+            this.layoutCampos.PerformLayout();
+            this.panelAcciones.ResumeLayout(false);
+            this.ResumeLayout(false);
+
         }
 
     }

@@ -131,5 +131,10 @@ namespace exxen2._0.capaVisual.Recepcionista
             public int IdSocio { get; set; }
             public string Texto { get; set; }
         }
+
+        private void tabla_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

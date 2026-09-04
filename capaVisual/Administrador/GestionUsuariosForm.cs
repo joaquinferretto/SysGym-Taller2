@@ -158,5 +158,10 @@ namespace exxen2._0.capaVisual.Administrador
         {
 
         }
+
+        private void lblFormulario_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
