@@ -215,5 +215,10 @@ namespace exxen2._0.capaVisual.Compartido
             }
             catch (Exception ex) { FormularioVisualHelper.MostrarError(lblEstado, ex); }
         }
+
+        private void tabla_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

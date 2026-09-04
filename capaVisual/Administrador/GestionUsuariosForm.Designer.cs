@@ -88,7 +88,6 @@ namespace exxen2._0.capaVisual.Administrador
             this.lblListado = new System.Windows.Forms.Label();
             this.panelDetalle = new System.Windows.Forms.Panel();
             this.layoutDetalle = new System.Windows.Forms.TableLayoutPanel();
-            this.lblFormulario = new System.Windows.Forms.Label();
             this.layoutCampos = new System.Windows.Forms.TableLayoutPanel();
             this.lblNombre = new System.Windows.Forms.Label();
             this.nombre = new System.Windows.Forms.TextBox();
@@ -110,6 +109,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.actualizar = new System.Windows.Forms.Button();
             this.darDeBaja = new System.Windows.Forms.Button();
             this.reactivar = new System.Windows.Forms.Button();
+            this.lblFormulario = new System.Windows.Forms.Label();
             this.panelEncabezado.SuspendLayout();
             this.panelContenido.SuspendLayout();
             this.layoutContenido.SuspendLayout();
@@ -259,7 +259,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.tabla.ReadOnly = true;
             this.tabla.RowHeadersVisible = false;
             this.tabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tabla.Size = new System.Drawing.Size(941, 732);
+            this.tabla.Size = new System.Drawing.Size(555, 357);
             this.tabla.TabIndex = 3;
             // 
             // colId
@@ -314,7 +314,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.panelFiltro.Controls.Add(this.buscador);
             this.panelFiltro.Location = new System.Drawing.Point(16, 68);
             this.panelFiltro.Name = "panelFiltro";
-            this.panelFiltro.Size = new System.Drawing.Size(945, 54);
+            this.panelFiltro.Size = new System.Drawing.Size(555, 54);
             this.panelFiltro.TabIndex = 2;
             // 
             // filtroEstado
@@ -345,9 +345,9 @@ namespace exxen2._0.capaVisual.Administrador
             this.buscador.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buscador.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.buscador.Location = new System.Drawing.Point(0, 22);
+            this.buscador.Location = new System.Drawing.Point(4, 22);
             this.buscador.Name = "buscador";
-            this.buscador.Size = new System.Drawing.Size(670, 24);
+            this.buscador.Size = new System.Drawing.Size(276, 24);
             this.buscador.TabIndex = 0;
             // 
             // lblAyuda
@@ -386,29 +386,19 @@ namespace exxen2._0.capaVisual.Administrador
             // layoutDetalle
             // 
             this.layoutDetalle.ColumnCount = 1;
-            this.layoutDetalle.Controls.Add(this.lblFormulario, 0, 0);
+            this.layoutDetalle.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 445F));
             this.layoutDetalle.Controls.Add(this.layoutCampos, 0, 1);
             this.layoutDetalle.Controls.Add(this.panelAcciones, 0, 2);
+            this.layoutDetalle.Controls.Add(this.lblFormulario, 0, 0);
             this.layoutDetalle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.layoutDetalle.Location = new System.Drawing.Point(16, 16);
             this.layoutDetalle.Name = "layoutDetalle";
             this.layoutDetalle.RowCount = 3;
             this.layoutDetalle.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
             this.layoutDetalle.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.layoutDetalle.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 118F));
+            this.layoutDetalle.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 132F));
             this.layoutDetalle.Size = new System.Drawing.Size(445, 452);
             this.layoutDetalle.TabIndex = 0;
-            // 
-            // lblFormulario
-            // 
-            this.lblFormulario.AutoSize = true;
-            this.lblFormulario.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.lblFormulario.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.lblFormulario.Location = new System.Drawing.Point(3, 0);
-            this.lblFormulario.Name = "lblFormulario";
-            this.lblFormulario.Size = new System.Drawing.Size(115, 21);
-            this.lblFormulario.TabIndex = 0;
-            this.lblFormulario.Text = "Nuevo usuario";
             // 
             // layoutCampos
             // 
@@ -440,7 +430,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.layoutCampos.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
             this.layoutCampos.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
             this.layoutCampos.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
-            this.layoutCampos.Size = new System.Drawing.Size(439, 266);
+            this.layoutCampos.Size = new System.Drawing.Size(439, 270);
             this.layoutCampos.TabIndex = 1;
             // 
             // lblNombre
@@ -583,7 +573,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.lblRol.AutoSize = true;
             this.lblRol.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
             this.lblRol.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.lblRol.Location = new System.Drawing.Point(3, 239);
+            this.lblRol.Location = new System.Drawing.Point(3, 241);
             this.lblRol.Name = "lblRol";
             this.lblRol.Size = new System.Drawing.Size(27, 15);
             this.lblRol.TabIndex = 12;
@@ -607,9 +597,9 @@ namespace exxen2._0.capaVisual.Administrador
             this.panelAcciones.Controls.Add(this.darDeBaja);
             this.panelAcciones.Controls.Add(this.reactivar);
             this.panelAcciones.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelAcciones.Location = new System.Drawing.Point(3, 337);
+            this.panelAcciones.Location = new System.Drawing.Point(3, 323);
             this.panelAcciones.Name = "panelAcciones";
-            this.panelAcciones.Size = new System.Drawing.Size(439, 112);
+            this.panelAcciones.Size = new System.Drawing.Size(439, 126);
             this.panelAcciones.TabIndex = 2;
             // 
             // nuevo
@@ -676,6 +666,18 @@ namespace exxen2._0.capaVisual.Administrador
             this.reactivar.TabIndex = 4;
             this.reactivar.Text = "Reactivar";
             this.reactivar.UseVisualStyleBackColor = false;
+            // 
+            // lblFormulario
+            // 
+            this.lblFormulario.AutoSize = true;
+            this.lblFormulario.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.lblFormulario.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.lblFormulario.Location = new System.Drawing.Point(3, 0);
+            this.lblFormulario.Name = "lblFormulario";
+            this.lblFormulario.Size = new System.Drawing.Size(115, 21);
+            this.lblFormulario.TabIndex = 0;
+            this.lblFormulario.Text = "Nuevo usuario";
+            this.lblFormulario.Click += new System.EventHandler(this.lblFormulario_Click);
             // 
             // GestionUsuariosForm
             // 

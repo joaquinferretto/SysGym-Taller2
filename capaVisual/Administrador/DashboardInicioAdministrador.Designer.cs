@@ -329,15 +329,14 @@ namespace exxen2._0.capaVisual.Administrador
             this.colEstadoCuota,
             this.colSaldo,
             this.colSituacion});
-            this.tablaCuotas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tablaCuotas.Location = new System.Drawing.Point(0, 44);
+            this.tablaCuotas.Location = new System.Drawing.Point(-1, 44);
             this.tablaCuotas.MultiSelect = false;
             this.tablaCuotas.Name = "tablaCuotas";
             this.tablaCuotas.ReadOnly = true;
             this.tablaCuotas.RowHeadersVisible = false;
             this.tablaCuotas.RowTemplate.Height = 32;
             this.tablaCuotas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tablaCuotas.Size = new System.Drawing.Size(1510, 198);
+            this.tablaCuotas.Size = new System.Drawing.Size(1508, 198);
             this.tablaCuotas.TabIndex = 1;
             // 
             // colIdMembresia

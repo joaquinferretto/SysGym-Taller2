@@ -47,5 +47,10 @@ namespace exxen2._0.capaVisual.Recepcionista
                 ? predeterminado
                 : usuarioActual.Rol.Descripcion;
         }
+
+        private void panelOpciones_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

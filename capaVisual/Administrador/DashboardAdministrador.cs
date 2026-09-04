@@ -51,5 +51,10 @@ namespace exxen2._0.capaVisual.Administrador
                 ? predeterminado
                 : usuarioActual.Rol.Descripcion;
         }
+
+        private void dashboardInicio_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
