@@ -1,43 +1,49 @@
-using System.ComponentModel;
+using System;
 using System.Drawing;
+using System.Windows.Forms;
 using exxen2._0.capaDatos.Entidades;
 using exxen2._0.capaVisual.Compartido;
 
 namespace exxen2._0.capaVisual.Entrenador
 {
-    [DesignerCategory("Form")]
-    public class DashboardEntrenador : DashboardEntrenadorBase
+    [System.ComponentModel.DesignerCategory("Form")]
+    public partial class DashboardEntrenador : Form, IDashboardSesion
     {
+        private readonly UsuarioSistema usuario;
+        private readonly DashboardController navegacion;
+
+        [System.ComponentModel.Browsable(false)]
+        [System.ComponentModel.DesignerSerializationVisibility(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public bool CambioCuentaSolicitado
+        {
+            get { return navegacion != null && navegacion.CambioCuentaSolicitado; }
+        }
+
         public DashboardEntrenador()
-            : base()
+            : this(new UsuarioSistema { Nombre = "Entrenador", Apellido = "de diseno" })
         {
         }
 
         public DashboardEntrenador(UsuarioSistema usuario)
-            : base(usuario)
         {
+            if (usuario == null) throw new ArgumentNullException("usuario");
+            this.usuario = usuario;
+            InitializeComponent();
+            lblUsuarioRol.Text = "Usuario: " + usuario.Nombre + " " + usuario.Apellido + "    |    Rol: " + NombreRol(usuario, "Entrenador");
+            navegacion = new DashboardController(this, panelContenido);
+            btnCambiarCuenta.Click += delegate { navegacion.CambiarCuenta(); };
+            btnSalir.Click += delegate { navegacion.Salir(); };
+            btnSocios.Click += delegate { navegacion.AbrirFormulario(new MisSociosForm(usuario)); };
+            btnRutinas.Click += delegate { navegacion.AbrirFormulario(new RutinasEntrenadorForm(usuario)); };
+            btnEjercicios.Click += delegate { navegacion.AbrirFormulario(new GestionEjerciciosForm(Color.FromArgb(14, 116, 144))); };
+            btnAsistencias.Click += delegate { navegacion.AbrirFormulario(new GestionAsistenciasForm(Color.FromArgb(14, 116, 144))); };
         }
-    }
 
-    public class DashboardEntrenadorBase : DashboardBase
-    {
-        public DashboardEntrenadorBase()
-            : this(new UsuarioSistema { Nombre = "Entrenador", Apellido = "de diseño" })
+        private static string NombreRol(UsuarioSistema usuarioActual, string predeterminado)
         {
-        }
-
-        public DashboardEntrenadorBase(UsuarioSistema usuario)
-            : base(usuario, "SysGym - Entrenador", Color.FromArgb(14, 116, 144))
-        {
-            var trabajo = AgregarSeccion("Mi trabajo");
-            AgregarOpcion(trabajo, "Mis socios", delegate { AbrirFormulario(new MisSociosForm(usuario)); });
-            AgregarOpcion(trabajo, "Rutinas", delegate { AbrirFormulario(new RutinasEntrenadorForm(usuario)); });
-
-            var catalogo = AgregarSeccion("Catálogo");
-            AgregarOpcion(catalogo, "Ejercicios", delegate { AbrirFormulario(new GestionEjerciciosForm(Color.FromArgb(14, 116, 144))); });
-
-            var control = AgregarSeccion("Control de acceso");
-            AgregarOpcion(control, "Asistencias", delegate { AbrirFormulario(new GestionAsistenciasForm(Color.FromArgb(14, 116, 144))); });
+            return usuarioActual.Rol == null || string.IsNullOrWhiteSpace(usuarioActual.Rol.Descripcion)
+                ? predeterminado
+                : usuarioActual.Rol.Descripcion;
         }
     }
 }

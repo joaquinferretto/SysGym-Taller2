@@ -1,122 +1,44 @@
+using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
+
 namespace exxen2._0.capaVisual.Autenticacion
 {
     partial class Login
     {
-        private System.ComponentModel.IContainer components = null;
-        private System.Windows.Forms.Label lblTitulo;
-        private System.Windows.Forms.Label lblUsername;
-        private System.Windows.Forms.Label lblPassword;
-        private System.Windows.Forms.TextBox txtUsername;
-        private System.Windows.Forms.TextBox txtPassword;
-        private System.Windows.Forms.Button btnIngresar;
-        private System.Windows.Forms.Button btnSalir;
+        private IContainer components;
+        private Label lblTitulo;
+        private Label lblSubtitulo;
+        private Label lblUsername;
+        private Label lblPassword;
+        private Label lblPasswordVisible;
+        private TextBox txtUsername;
+        private TextBox txtPassword;
+        private Button btnIngresar;
+        private Button btnSalir;
+        private Panel barraSuperior;
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-
+            if (disposing && components != null) components.Dispose();
             base.Dispose(disposing);
         }
 
         private void InitializeComponent()
         {
-            this.lblTitulo = new System.Windows.Forms.Label();
-            this.lblUsername = new System.Windows.Forms.Label();
-            this.lblPassword = new System.Windows.Forms.Label();
-            this.txtUsername = new System.Windows.Forms.TextBox();
-            this.txtPassword = new System.Windows.Forms.TextBox();
-            this.btnIngresar = new System.Windows.Forms.Button();
-            this.btnSalir = new System.Windows.Forms.Button();
-            this.SuspendLayout();
-            // 
-            // lblTitulo
-            // 
-            this.lblTitulo.AutoSize = true;
-            this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
-            this.lblTitulo.Location = new System.Drawing.Point(102, 35);
-            this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(161, 45);
-            this.lblTitulo.TabIndex = 0;
-            this.lblTitulo.Text = "SYSGYM";
-            // 
-            // lblUsername
-            // 
-            this.lblUsername.AutoSize = true;
-            this.lblUsername.Location = new System.Drawing.Point(48, 115);
-            this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(122, 15);
-            this.lblUsername.TabIndex = 1;
-            this.lblUsername.Text = "Nombre de usuario:";
-            // 
-            // lblPassword
-            // 
-            this.lblPassword.AutoSize = true;
-            this.lblPassword.Location = new System.Drawing.Point(48, 160);
-            this.lblPassword.Name = "lblPassword";
-            this.lblPassword.Size = new System.Drawing.Size(73, 15);
-            this.lblPassword.TabIndex = 2;
-            this.lblPassword.Text = "Contraseña:";
-            // 
-            // txtUsername
-            // 
-            this.txtUsername.Location = new System.Drawing.Point(176, 112);
-            this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(188, 23);
-            this.txtUsername.TabIndex = 3;
-            // 
-            // txtPassword
-            // 
-            this.txtPassword.Location = new System.Drawing.Point(176, 157);
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(188, 23);
-            this.txtPassword.TabIndex = 4;
-            this.txtPassword.UseSystemPasswordChar = true;
-            // 
-            // btnIngresar
-            // 
-            this.btnIngresar.Location = new System.Drawing.Point(176, 207);
-            this.btnIngresar.Name = "btnIngresar";
-            this.btnIngresar.Size = new System.Drawing.Size(88, 30);
-            this.btnIngresar.TabIndex = 5;
-            this.btnIngresar.Text = "Ingresar";
-            this.btnIngresar.UseVisualStyleBackColor = true;
-            this.btnIngresar.Click += new System.EventHandler(this.btnIngresar_Click);
-            // 
-            // btnSalir
-            // 
-            this.btnSalir.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnSalir.Location = new System.Drawing.Point(276, 207);
-            this.btnSalir.Name = "btnSalir";
-            this.btnSalir.Size = new System.Drawing.Size(88, 30);
-            this.btnSalir.TabIndex = 6;
-            this.btnSalir.Text = "Salir";
-            this.btnSalir.UseVisualStyleBackColor = true;
-            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
-            // 
-            // Login
-            // 
-            this.AcceptButton = this.btnIngresar;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.btnSalir;
-            this.ClientSize = new System.Drawing.Size(420, 285);
-            this.Controls.Add(this.btnSalir);
-            this.Controls.Add(this.btnIngresar);
-            this.Controls.Add(this.txtPassword);
-            this.Controls.Add(this.txtUsername);
-            this.Controls.Add(this.lblPassword);
-            this.Controls.Add(this.lblUsername);
-            this.Controls.Add(this.lblTitulo);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
-            this.Name = "Login";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Inicio de sesión";
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            components = new Container(); lblTitulo = new Label(); lblSubtitulo = new Label(); lblUsername = new Label(); lblPassword = new Label(); lblPasswordVisible = new Label(); txtUsername = new TextBox(); txtPassword = new TextBox(); btnIngresar = new Button(); btnSalir = new Button(); barraSuperior = new Panel(); SuspendLayout();
+            BackColor = Color.FromArgb(15, 23, 42); ClientSize = new Size(520, 385); Font = new Font("Segoe UI", 10F); FormBorderStyle = FormBorderStyle.FixedSingle; MaximizeBox = false; Name = "Login"; StartPosition = FormStartPosition.CenterScreen; Text = "SysGym | Inicio de sesion";
+            lblTitulo.AutoSize = true; lblTitulo.Font = new Font("Segoe UI", 28F, FontStyle.Bold); lblTitulo.ForeColor = Color.White; lblTitulo.Location = new Point(168, 18); lblTitulo.Name = "lblTitulo"; lblTitulo.Size = new Size(184, 51); lblTitulo.TabIndex = 0; lblTitulo.Text = "SYSGYM";
+            lblSubtitulo.AutoSize = true; lblSubtitulo.Font = new Font("Segoe UI", 10F); lblSubtitulo.ForeColor = Color.FromArgb(186, 230, 253); lblSubtitulo.Location = new Point(148, 72); lblSubtitulo.Name = "lblSubtitulo"; lblSubtitulo.Size = new Size(224, 19); lblSubtitulo.TabIndex = 1; lblSubtitulo.Text = "Gestion simple, segura y organizada";
+            lblUsername.AutoSize = true; lblUsername.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold); lblUsername.ForeColor = Color.FromArgb(226, 232, 240); lblUsername.Location = new Point(100, 121); lblUsername.Name = "lblUsername"; lblUsername.Size = new Size(57, 19); lblUsername.TabIndex = 2; lblUsername.Text = "Usuario";
+            txtUsername.BackColor = Color.White; txtUsername.BorderStyle = BorderStyle.FixedSingle; txtUsername.Font = new Font("Segoe UI", 11F); txtUsername.ForeColor = Color.FromArgb(15, 23, 42); txtUsername.Location = new Point(100, 145); txtUsername.Name = "txtUsername"; txtUsername.Size = new Size(320, 27); txtUsername.TabIndex = 0;
+            lblPassword.AutoSize = true; lblPassword.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold); lblPassword.ForeColor = Color.FromArgb(226, 232, 240); lblPassword.Location = new Point(100, 213); lblPassword.Name = "lblPassword"; lblPassword.Size = new Size(83, 19); lblPassword.TabIndex = 3; lblPassword.Text = "Contrasena";
+            txtPassword.BackColor = Color.White; txtPassword.BorderStyle = BorderStyle.FixedSingle; txtPassword.Font = new Font("Segoe UI", 11F); txtPassword.ForeColor = Color.FromArgb(15, 23, 42); txtPassword.Location = new Point(100, 237); txtPassword.Name = "txtPassword"; txtPassword.Size = new Size(320, 27); txtPassword.TabIndex = 1; txtPassword.UseSystemPasswordChar = true;
+            lblPasswordVisible.AutoSize = true; lblPasswordVisible.Font = new Font("Segoe UI", 8.5F); lblPasswordVisible.ForeColor = Color.FromArgb(148, 163, 184); lblPasswordVisible.Location = new Point(100, 271); lblPasswordVisible.Name = "lblPasswordVisible"; lblPasswordVisible.Size = new Size(0, 17); lblPasswordVisible.TabIndex = 4; lblPasswordVisible.Text = string.Empty;
+            btnIngresar.BackColor = Color.FromArgb(20, 184, 166); btnIngresar.FlatStyle = FlatStyle.Flat; btnIngresar.FlatAppearance.BorderSize = 0; btnIngresar.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold); btnIngresar.ForeColor = Color.White; btnIngresar.Location = new Point(100, 298); btnIngresar.Name = "btnIngresar"; btnIngresar.Size = new Size(155, 38); btnIngresar.TabIndex = 2; btnIngresar.Text = "Ingresar"; btnIngresar.UseVisualStyleBackColor = false; btnIngresar.Click += btnIngresar_Click;
+            btnSalir.BackColor = Color.FromArgb(51, 65, 85); btnSalir.DialogResult = DialogResult.Cancel; btnSalir.FlatStyle = FlatStyle.Flat; btnSalir.FlatAppearance.BorderSize = 0; btnSalir.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold); btnSalir.ForeColor = Color.FromArgb(226, 232, 240); btnSalir.Location = new Point(265, 298); btnSalir.Name = "btnSalir"; btnSalir.Size = new Size(155, 38); btnSalir.TabIndex = 3; btnSalir.Text = "Salir"; btnSalir.UseVisualStyleBackColor = false; btnSalir.Click += btnSalir_Click;
+            barraSuperior.BackColor = Color.FromArgb(20, 184, 166); barraSuperior.Dock = DockStyle.Top; barraSuperior.Height = 7; barraSuperior.Location = new Point(0, 0); barraSuperior.Name = "barraSuperior"; barraSuperior.Size = new Size(520, 7); barraSuperior.TabIndex = 5;
+            Controls.Add(btnSalir); Controls.Add(btnIngresar); Controls.Add(lblPasswordVisible); Controls.Add(txtPassword); Controls.Add(lblPassword); Controls.Add(txtUsername); Controls.Add(lblUsername); Controls.Add(lblSubtitulo); Controls.Add(lblTitulo); Controls.Add(barraSuperior); AcceptButton = btnIngresar; CancelButton = btnSalir; ResumeLayout(false); PerformLayout();
         }
     }
 }

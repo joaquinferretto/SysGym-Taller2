@@ -10,5 +10,5 @@ bin/
 obj/
 
 # Local Codex documentation
-AGENTS.md
-docs/
+#AGENTS.md
+#docs/

@@ -123,74 +123,115 @@
     <Compile Include="capaVisual\Autenticacion\Login.Designer.cs">
       <DependentUpon>Login.cs</DependentUpon>
     </Compile>
-    <Compile Include="capaVisual\Compartido\DashboardBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="capaVisual\Compartido\FormularioModuloBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="capaVisual\Compartido\GestionFormularios.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="capaVisual\Compartido\DashboardBase.cs" />
+    <Compile Include="capaVisual\Compartido\FormularioModuloBase.cs" />
     <Compile Include="capaVisual\Compartido\GestionSociosForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="capaVisual\Compartido\GestionSociosForm.Designer.cs">
+      <DependentUpon>GestionSociosForm.cs</DependentUpon>
     </Compile>
     <Compile Include="capaVisual\Compartido\GestionEjerciciosForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="capaVisual\Compartido\GestionEjerciciosForm.Designer.cs">
+      <DependentUpon>GestionEjerciciosForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="capaVisual\Compartido\GestionAsistenciasForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="capaVisual\Compartido\GestionAsistenciasForm.Designer.cs">
+      <DependentUpon>GestionAsistenciasForm.cs</DependentUpon>
     </Compile>
     <Compile Include="capaVisual\Administrador\DashboardAdministrador.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="capaVisual\Administrador\DashboardInicioAdministrador.cs">
-      <SubType>Code</SubType>
+    <Compile Include="capaVisual\Administrador\DashboardAdministrador.Designer.cs">
+      <DependentUpon>DashboardAdministrador.cs</DependentUpon>
     </Compile>
-    <Compile Include="capaVisual\Administrador\GestionAdministradorForms.cs">
-      <SubType>Code</SubType>
+    <Compile Include="capaVisual\Administrador\DashboardInicioAdministrador.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="capaVisual\Administrador\DashboardInicioAdministrador.Designer.cs">
+      <DependentUpon>DashboardInicioAdministrador.cs</DependentUpon>
     </Compile>
     <Compile Include="capaVisual\Administrador\ConsultaRutinasAdministradorForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="capaVisual\Administrador\ConsultaRutinasAdministradorForm.Designer.cs">
+      <DependentUpon>ConsultaRutinasAdministradorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="capaVisual\Administrador\GestionUsuariosForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="capaVisual\Administrador\GestionUsuariosForm.Designer.cs">
+      <DependentUpon>GestionUsuariosForm.cs</DependentUpon>
     </Compile>
     <Compile Include="capaVisual\Administrador\GestionPlanesForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="capaVisual\Administrador\GestionPlanesForm.Designer.cs">
+      <DependentUpon>GestionPlanesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="capaVisual\Administrador\ReportesForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="capaVisual\Administrador\ReportesForm.Designer.cs">
+      <DependentUpon>ReportesForm.cs</DependentUpon>
     </Compile>
     <Compile Include="capaVisual\Recepcionista\DashboardRecepcionista.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="capaVisual\Recepcionista\GestionRecepcionistaForms.cs">
-      <SubType>Code</SubType>
+    <Compile Include="capaVisual\Recepcionista\DashboardRecepcionista.Designer.cs">
+      <DependentUpon>DashboardRecepcionista.cs</DependentUpon>
     </Compile>
     <Compile Include="capaVisual\Recepcionista\GestionMembresiasForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="capaVisual\Recepcionista\GestionMembresiasForm.Designer.cs">
+      <DependentUpon>GestionMembresiasForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="capaVisual\Recepcionista\GestionPagosForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="capaVisual\Recepcionista\GestionPagosForm.Designer.cs">
+      <DependentUpon>GestionPagosForm.cs</DependentUpon>
     </Compile>
     <Compile Include="capaVisual\Recepcionista\GestionAsignacionesForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="capaVisual\Recepcionista\GestionAsignacionesForm.Designer.cs">
+      <DependentUpon>GestionAsignacionesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="capaVisual\Entrenador\DashboardEntrenador.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="capaVisual\Entrenador\GestionEntrenadorForms.cs">
-      <SubType>Code</SubType>
+    <Compile Include="capaVisual\Entrenador\DashboardEntrenador.Designer.cs">
+      <DependentUpon>DashboardEntrenador.cs</DependentUpon>
     </Compile>
     <Compile Include="capaVisual\Entrenador\RutinasEntrenadorForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="capaVisual\Entrenador\RutinasEntrenadorForm.Designer.cs">
+      <DependentUpon>RutinasEntrenadorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="capaVisual\Entrenador\MisSociosForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="capaVisual\Entrenador\MisSociosForm.Designer.cs">
+      <DependentUpon>MisSociosForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="capaVisual\Administrador\DashboardAdministrador.resx">
+      <DependentUpon>DashboardAdministrador.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="capaVisual\Administrador\GestionPlanesForm.resx">
+      <DependentUpon>GestionPlanesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="capaVisual\Administrador\GestionUsuariosForm.resx">
+      <DependentUpon>GestionUsuariosForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="capaVisual\Autenticacion\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
