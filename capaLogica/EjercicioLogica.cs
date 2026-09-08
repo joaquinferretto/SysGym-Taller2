@@ -13,7 +13,7 @@ namespace exxen2._0.capaLogica
         public Ejercicio Crear(Ejercicio ejercicio)
         {
             ValidarDatos(ejercicio);
-            using (var datos = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 if (datos.Ejercicios.Existe(e => e.Nombre == ejercicio.Nombre))
                 {
@@ -31,7 +31,7 @@ namespace exxen2._0.capaLogica
         public Ejercicio Modificar(Ejercicio ejercicio)
         {
             ValidarDatos(ejercicio);
-            using (var datos = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 var existente = datos.Ejercicios.Buscar(ejercicio.IdEjercicio);
                 if (existente == null)
@@ -55,7 +55,7 @@ namespace exxen2._0.capaLogica
         /* Busca el registro de ejercicios por identificador y devuelve los datos disponibles. */
         public Ejercicio ObtenerPorId(int idEjercicio)
         {
-            using (var datos = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 return datos.Ejercicios.ConsultarSoloLectura().SingleOrDefault(e => e.IdEjercicio == idEjercicio);
             }
@@ -64,7 +64,7 @@ namespace exxen2._0.capaLogica
         /* Consulta ejercicios activos para devolver los datos a la capa visual. */
         public List<Ejercicio> ListarActivos()
         {
-            using (var datos = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 return datos.Ejercicios.ConsultarSoloLectura().Where(e => e.Estado).OrderBy(e => e.Nombre).ToList();
             }
@@ -73,7 +73,7 @@ namespace exxen2._0.capaLogica
         /* Consulta ejercicios activos e inactivos para su gestión para devolver los datos a la capa visual. */
         public List<Ejercicio> ListarParaGestion()
         {
-            using (var datos = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 return datos.Ejercicios.ConsultarSoloLectura().OrderByDescending(e => e.Estado).ThenBy(e => e.Nombre).ToList();
             }
@@ -82,7 +82,7 @@ namespace exxen2._0.capaLogica
         /* Desactiva el registro de ejercicios sin eliminar su historial. */
         public void DarDeBaja(int idEjercicio)
         {
-            using (var datos = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 var ejercicio = datos.Ejercicios.Buscar(idEjercicio);
                 if (ejercicio == null)
@@ -98,7 +98,7 @@ namespace exxen2._0.capaLogica
         /* Recupera el estado activo del registro de ejercicios según las validaciones de la operación. */
         public void Reactivar(int idEjercicio)
         {
-            using (var datos = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 var ejercicio = datos.Ejercicios.Buscar(idEjercicio);
                 if (ejercicio == null)

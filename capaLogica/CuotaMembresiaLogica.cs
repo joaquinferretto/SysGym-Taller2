@@ -28,23 +28,23 @@ namespace exxen2._0.capaLogica
         /* Genera la cuota inicial si la membresía todavía no posee cuotas. */
         public CuotaMembresia CrearPrimeraCuota(int idMembresia)
         {
-            using (var context = new GymUnidadDeTrabajo())
-            using (var transaction = context.IniciarTransaccion())
+            using (var datos = new UnidadDeTrabajoGimnasio())
+            using (var transaccion = datos.IniciarTransaccion())
             {
-                var membresia = context.Membresias.Consultar("Plan").SingleOrDefault(m => m.IdMembresia == idMembresia);
+                var membresia = datos.Membresias.Consultar("Plan").SingleOrDefault(m => m.IdMembresia == idMembresia);
                 if (membresia == null)
                 {
                     throw new InvalidOperationException("La membresía no existe.");
                 }
 
-                if (context.CuotasMembresia.Any(c => c.IdMembresia == idMembresia))
+                if (datos.CuotasMembresia.Any(c => c.IdMembresia == idMembresia))
                 {
                     throw new InvalidOperationException("La membresía ya posee una cuota.");
                 }
 
-                var cuota = CrearPrimeraCuotaEnContexto(context, membresia, membresia.Plan);
-                context.GuardarCambios();
-                transaction.Confirmar();
+                var cuota = CrearPrimeraCuotaEnContexto(datos, membresia, membresia.Plan);
+                datos.GuardarCambios();
+                transaccion.Confirmar();
                 return cuota;
             }
         }
@@ -52,31 +52,31 @@ namespace exxen2._0.capaLogica
         /* Crea el siguiente período mensual con el precio actual del plan activo. */
         public CuotaMembresia GenerarSiguienteCuota(int idMembresia)
         {
-            using (var context = new GymUnidadDeTrabajo())
-            using (var transaction = context.IniciarTransaccion())
+            using (var datos = new UnidadDeTrabajoGimnasio())
+            using (var transaccion = datos.IniciarTransaccion())
             {
-                var membresia = context.Membresias.Consultar("Plan").SingleOrDefault(m => m.IdMembresia == idMembresia);
+                var membresia = datos.Membresias.Consultar("Plan").SingleOrDefault(m => m.IdMembresia == idMembresia);
                 if (membresia == null)
                 {
                     throw new InvalidOperationException("La membresía no existe.");
                 }
 
-                var ultima = context.CuotasMembresia.Where(c => c.IdMembresia == idMembresia && c.EstadoPago != EstadosCuota.Anulada).OrderByDescending(c => c.FechaHasta).FirstOrDefault();
+                var ultima = datos.CuotasMembresia.Where(c => c.IdMembresia == idMembresia && c.EstadoPago != EstadosCuota.Anulada).OrderByDescending(c => c.FechaHasta).FirstOrDefault();
                 CuotaMembresia cuota;
                 if (ultima == null)
                 {
-                    cuota = CrearPrimeraCuotaEnContexto(context, membresia, membresia.Plan);
+                    cuota = CrearPrimeraCuotaEnContexto(datos, membresia, membresia.Plan);
                 }
                 else
                 {
-                    var plan = context.Planes.Buscar(membresia.IdPlan);
+                    var plan = datos.Planes.Buscar(membresia.IdPlan);
                     ValidarPlanActivo(plan);
                     var desde = ultima.FechaHasta.AddDays(1);
-                    cuota = CrearCuotaEnContexto(context, membresia, plan, desde);
+                    cuota = CrearCuotaEnContexto(datos, membresia, plan, desde);
                 }
 
-                context.GuardarCambios();
-                transaction.Confirmar();
+                datos.GuardarCambios();
+                transaccion.Confirmar();
                 return cuota;
             }
         }
@@ -84,9 +84,9 @@ namespace exxen2._0.capaLogica
         /* Busca el registro de cuotas de membresía por identificador y devuelve los datos disponibles. */
         public CuotaMembresia ObtenerPorId(int idCuotaMembresia)
         {
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return context.CuotasMembresia.ConsultarSoloLectura("Membresia", "Pago").SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);
+                return datos.CuotasMembresia.ConsultarSoloLectura("Membresia", "Pago").SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);
             }
         }
 
@@ -94,18 +94,18 @@ namespace exxen2._0.capaLogica
         public CuotaMembresia ObtenerCuotaActual(int idMembresia)
         {
             var hoy = DateTime.Today;
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return context.CuotasMembresia.ConsultarSoloLectura("Pago").Where(c => c.IdMembresia == idMembresia && c.EstadoPago != EstadosCuota.Anulada && c.FechaDesde <= hoy && c.FechaHasta >= hoy).SingleOrDefault();
+                return datos.CuotasMembresia.ConsultarSoloLectura("Pago").Where(c => c.IdMembresia == idMembresia && c.EstadoPago != EstadosCuota.Anulada && c.FechaDesde <= hoy && c.FechaHasta >= hoy).SingleOrDefault();
             }
         }
 
         /* Consulta cuotas de membresía de la membresía indicada para devolver los datos a la capa visual. */
         public List<CuotaMembresia> ListarPorMembresia(int idMembresia)
         {
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return context.CuotasMembresia.ConsultarSoloLectura().Where(c => c.IdMembresia == idMembresia).OrderBy(c => c.FechaDesde).ToList();
+                return datos.CuotasMembresia.ConsultarSoloLectura().Where(c => c.IdMembresia == idMembresia).OrderBy(c => c.FechaDesde).ToList();
             }
         }
 
@@ -130,18 +130,18 @@ namespace exxen2._0.capaLogica
         /* Consulta cuotas de membresía activos e inactivos para su gestión para devolver los datos a la capa visual. */
         public List<CuotaMembresia> ListarParaGestion()
         {
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return context.CuotasMembresia.ConsultarSoloLectura("Pago", "Membresia.Socio", "Membresia.Plan").Where(c => c.EstadoPago == EstadosCuota.Pendiente || c.EstadoPago == EstadosCuota.Pagada || c.EstadoPago == EstadosCuota.Anulada).OrderByDescending(c => c.FechaDesde).ThenBy(c => c.Membresia.Socio.Apellido).ThenBy(c => c.Membresia.Socio.Nombre).ToList();
+                return datos.CuotasMembresia.ConsultarSoloLectura("Pago", "Membresia.Socio", "Membresia.Plan").Where(c => c.EstadoPago == EstadosCuota.Pendiente || c.EstadoPago == EstadosCuota.Pagada || c.EstadoPago == EstadosCuota.Anulada).OrderByDescending(c => c.FechaDesde).ThenBy(c => c.Membresia.Socio.Apellido).ThenBy(c => c.Membresia.Socio.Nombre).ToList();
             }
         }
 
         /* Consulta cuotas de membresía con su situación de deuda para devolver los datos a la capa visual. */
         public List<EstadoCuentaMembresia> ListarEstadoCuentas()
         {
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                var membresias = context.Membresias.ConsultarSoloLectura("Socio", "Plan", "Cuotas.Pago").OrderBy(m => m.Socio.Apellido).ThenBy(m => m.Socio.Nombre).ToList();
+                var membresias = datos.Membresias.ConsultarSoloLectura("Socio", "Plan", "Cuotas.Pago").OrderBy(m => m.Socio.Apellido).ThenBy(m => m.Socio.Nombre).ToList();
                 return membresias.Select(CrearEstadoCuenta).ToList();
             }
         }
@@ -222,10 +222,10 @@ namespace exxen2._0.capaLogica
         /* Recupera una cuota anulada y recalcula su estado y la deuda dentro de una transacción. */
         public void ReactivarCuota(int idCuotaMembresia)
         {
-            using (var context = new GymUnidadDeTrabajo())
-            using (var transaction = context.IniciarTransaccion())
+            using (var datos = new UnidadDeTrabajoGimnasio())
+            using (var transaccion = datos.IniciarTransaccion())
             {
-                var cuota = context.CuotasMembresia.Consultar("Pago").SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);
+                var cuota = datos.CuotasMembresia.Consultar("Pago").SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);
                 if (cuota == null)
                 {
                     throw new InvalidOperationException("La cuota no existe.");
@@ -237,31 +237,31 @@ namespace exxen2._0.capaLogica
                 }
 
                 cuota.EstadoPago = EstadosCuota.Pendiente;
-                RecalcularEstadoPagoEnContexto(context, cuota);
-                context.GuardarCambios();
-                MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(context, cuota.IdMembresia);
-                context.GuardarCambios();
-                transaction.Confirmar();
+                RecalcularEstadoPagoEnContexto(datos, cuota);
+                datos.GuardarCambios();
+                MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(datos, cuota.IdMembresia);
+                datos.GuardarCambios();
+                transaccion.Confirmar();
             }
         }
 
         /* Anula la cuota sin borrar su historia y actualiza la deuda de la membresía. */
         public void AnularCuota(int idCuotaMembresia)
         {
-            using (var context = new GymUnidadDeTrabajo())
-            using (var transaction = context.IniciarTransaccion())
+            using (var datos = new UnidadDeTrabajoGimnasio())
+            using (var transaccion = datos.IniciarTransaccion())
             {
-                var cuota = context.CuotasMembresia.Consultar("Pago").SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);
+                var cuota = datos.CuotasMembresia.Consultar("Pago").SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);
                 if (cuota == null)
                 {
                     throw new InvalidOperationException("La cuota no existe.");
                 }
 
                 cuota.EstadoPago = EstadosCuota.Anulada;
-                context.GuardarCambios();
-                MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(context, cuota.IdMembresia);
-                context.GuardarCambios();
-                transaction.Confirmar();
+                datos.GuardarCambios();
+                MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(datos, cuota.IdMembresia);
+                datos.GuardarCambios();
+                transaccion.Confirmar();
             }
         }
 
@@ -274,15 +274,15 @@ namespace exxen2._0.capaLogica
         /* Calcula el importe pendiente de la cuota utilizando su pago aprobado, si existe. */
         public decimal CalcularSaldo(int idCuotaMembresia)
         {
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                var cuota = context.CuotasMembresia.ConsultarSoloLectura("Pago").SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);
+                var cuota = datos.CuotasMembresia.ConsultarSoloLectura("Pago").SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);
                 if (cuota == null)
                 {
                     throw new InvalidOperationException("La cuota no existe.");
                 }
 
-                return CalcularSaldoEnContexto(context, cuota);
+                return CalcularSaldoEnContexto(datos, cuota);
             }
         }
 
@@ -294,40 +294,40 @@ namespace exxen2._0.capaLogica
                 throw new ArgumentNullException("cuota");
             }
 
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                var cuotaActual = context.CuotasMembresia.ConsultarSoloLectura("Pago").SingleOrDefault(c => c.IdCuotaMembresia == cuota.IdCuotaMembresia);
+                var cuotaActual = datos.CuotasMembresia.ConsultarSoloLectura("Pago").SingleOrDefault(c => c.IdCuotaMembresia == cuota.IdCuotaMembresia);
                 if (cuotaActual == null)
                 {
                     throw new InvalidOperationException("La cuota no existe.");
                 }
 
-                return CalcularSaldoEnContexto(context, cuotaActual);
+                return CalcularSaldoEnContexto(datos, cuotaActual);
             }
         }
 
         /* Actualiza el estado de la cuota y la deuda de su membresía en una transacción. */
         public void RecalcularEstadoPago(int idCuotaMembresia)
         {
-            using (var context = new GymUnidadDeTrabajo())
-            using (var transaction = context.IniciarTransaccion())
+            using (var datos = new UnidadDeTrabajoGimnasio())
+            using (var transaccion = datos.IniciarTransaccion())
             {
-                var cuota = context.CuotasMembresia.Consultar("Pago").SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);
+                var cuota = datos.CuotasMembresia.Consultar("Pago").SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);
                 if (cuota == null)
                 {
                     throw new InvalidOperationException("La cuota no existe.");
                 }
 
-                RecalcularEstadoPagoEnContexto(context, cuota);
-                context.GuardarCambios();
-                MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(context, cuota.IdMembresia);
-                context.GuardarCambios();
-                transaction.Confirmar();
+                RecalcularEstadoPagoEnContexto(datos, cuota);
+                datos.GuardarCambios();
+                MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(datos, cuota.IdMembresia);
+                datos.GuardarCambios();
+                transaccion.Confirmar();
             }
         }
 
         /* Agrega la primera cuota utilizando la misma unidad de trabajo del alta de membresía. */
-        internal static CuotaMembresia CrearPrimeraCuotaEnContexto(IUnidadDeTrabajo context, Membresia membresia, Plan plan)
+        internal static CuotaMembresia CrearPrimeraCuotaEnContexto(IUnidadDeTrabajo datos, Membresia membresia, Plan plan)
         {
             if (membresia == null || plan == null)
             {
@@ -335,11 +335,11 @@ namespace exxen2._0.capaLogica
             }
 
             ValidarPlanActivo(plan);
-            return CrearCuotaEnContexto(context, membresia, plan, membresia.FechaInicio);
+            return CrearCuotaEnContexto(datos, membresia, plan, membresia.FechaInicio);
         }
 
         /* Determina si la cuota está pagada según el importe aprobado y respeta las anulaciones. */
-        internal static void RecalcularEstadoPagoEnContexto(IUnidadDeTrabajo context, CuotaMembresia cuota)
+        internal static void RecalcularEstadoPagoEnContexto(IUnidadDeTrabajo datos, CuotaMembresia cuota)
         {
             if (cuota.EstadoPago == EstadosCuota.Anulada)
             {
@@ -351,7 +351,7 @@ namespace exxen2._0.capaLogica
         }
 
         /* Calcula el saldo de la cuota cargada, considerando cero para cuotas anuladas. */
-        internal static decimal CalcularSaldoEnContexto(IUnidadDeTrabajo context, CuotaMembresia cuota)
+        internal static decimal CalcularSaldoEnContexto(IUnidadDeTrabajo datos, CuotaMembresia cuota)
         {
             if (cuota.EstadoPago == EstadosCuota.Anulada)
             {
@@ -363,7 +363,7 @@ namespace exxen2._0.capaLogica
         }
 
         /* Agrega una cuota mensual pendiente conservando el precio histórico del plan. */
-        private static CuotaMembresia CrearCuotaEnContexto(IUnidadDeTrabajo context, Membresia membresia, Plan plan, DateTime periodoDesde)
+        private static CuotaMembresia CrearCuotaEnContexto(IUnidadDeTrabajo datos, Membresia membresia, Plan plan, DateTime periodoDesde)
         {
             var cuota = new CuotaMembresia
             {
@@ -373,7 +373,7 @@ namespace exxen2._0.capaLogica
                 Importe = plan.Precio,
                 EstadoPago = EstadosCuota.Pendiente
             };
-            context.CuotasMembresia.Agregar(cuota);
+            datos.CuotasMembresia.Agregar(cuota);
             return cuota;
         }
 
@@ -386,9 +386,9 @@ namespace exxen2._0.capaLogica
         /* Consulta cuotas de membresía con el estado solicitado para devolver los datos a la capa visual. */
         private List<CuotaMembresia> ListarPorEstado(string estado)
         {
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return context.CuotasMembresia.ConsultarSoloLectura("Pago", "Membresia.Socio", "Membresia.Plan").Where(c => c.EstadoPago == estado).OrderBy(c => c.FechaDesde).ToList();
+                return datos.CuotasMembresia.ConsultarSoloLectura("Pago", "Membresia.Socio", "Membresia.Plan").Where(c => c.EstadoPago == estado).OrderBy(c => c.FechaDesde).ToList();
             }
         }
 

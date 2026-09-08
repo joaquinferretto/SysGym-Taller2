@@ -4,11 +4,14 @@ using System.Globalization;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
+using System.IO;
+using System.Text;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 
 namespace exxen2._0.capaLogica
 {
-    /* Transporta los datos de un día de pronóstico para presentarlos en el dashboard. */
+    /* Transporta los datos de un día de pronóstico para presentarlos en el panel principal. */
     public sealed class PronosticoDia
     {
         public DateTime Fecha { get; set; }
@@ -35,18 +38,23 @@ namespace exxen2._0.capaLogica
         }
 
         /* Consulta y transforma los siete días de pronóstico, conservando la causa si falla el servicio. */
-        public async Task<List<PronosticoDia>> ObtenerPronosticoSemanalAsync()
+        public async Task<List<PronosticoDia>> ObtenerPronosticoSemanalAsincrono()
         {
             try
             {
                 var json = await Cliente.GetStringAsync(UrlPronostico).ConfigureAwait(false);
-                var respuesta = new JavaScriptSerializer().Deserialize<RespuestaClima>(json);
+                RespuestaClima respuesta;
+                using (var contenido = new MemoryStream(Encoding.UTF8.GetBytes(json)))
+                {
+                    var serializador = new DataContractJsonSerializer(typeof(RespuestaClima));
+                    respuesta = (RespuestaClima)serializador.ReadObject(contenido);
+                }
                 ValidarRespuesta(respuesta);
                 var dias = new List<PronosticoDia>();
                 for (var indice = 0; indice < 7; indice++)
                 {
-                    var codigo = respuesta.daily.weather_code[indice];
-                    dias.Add(new PronosticoDia { Fecha = DateTime.ParseExact(respuesta.daily.time[indice], "yyyy-MM-dd", CultureInfo.InvariantCulture), TemperaturaMaxima = respuesta.daily.temperature_2m_max[indice], TemperaturaMinima = respuesta.daily.temperature_2m_min[indice], ProbabilidadLluvia = respuesta.daily.precipitation_probability_max[indice], CodigoClima = codigo, Descripcion = DescribirClima(codigo), Icono = ObtenerIcono(codigo) });
+                    var codigo = respuesta.Dias.CodigosClima[indice];
+                    dias.Add(new PronosticoDia { Fecha = DateTime.ParseExact(respuesta.Dias.Fechas[indice], "yyyy-MM-dd", CultureInfo.InvariantCulture), TemperaturaMaxima = respuesta.Dias.TemperaturasMaximas[indice], TemperaturaMinima = respuesta.Dias.TemperaturasMinimas[indice], ProbabilidadLluvia = respuesta.Dias.ProbabilidadesLluvia[indice], CodigoClima = codigo, Descripcion = DescribirClima(codigo), Icono = ObtenerIcono(codigo) });
                 }
 
                 return dias;
@@ -61,16 +69,16 @@ namespace exxen2._0.capaLogica
         private static HttpClient CrearCliente()
         {
             ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
-            var proxy = WebRequest.DefaultWebProxy;
-            if (proxy != null)
+            var intermediario = WebRequest.DefaultWebProxy;
+            if (intermediario != null)
             {
-                proxy.Credentials = CredentialCache.DefaultCredentials;
+                intermediario.Credentials = CredentialCache.DefaultCredentials;
             }
 
             var manejador = new HttpClientHandler
             {
-                Proxy = proxy,
-                UseProxy = proxy != null
+                Proxy = intermediario,
+                UseProxy = intermediario != null
             };
             var cliente = new HttpClient(manejador)
             {
@@ -83,7 +91,7 @@ namespace exxen2._0.capaLogica
         /* Rechaza respuestas del servicio que no contienen los siete días completos. */
         private static void ValidarRespuesta(RespuestaClima respuesta)
         {
-            if (respuesta == null || respuesta.daily == null || respuesta.daily.time == null || respuesta.daily.time.Length < 7 || respuesta.daily.weather_code == null || respuesta.daily.weather_code.Length < 7 || respuesta.daily.temperature_2m_max == null || respuesta.daily.temperature_2m_max.Length < 7 || respuesta.daily.temperature_2m_min == null || respuesta.daily.temperature_2m_min.Length < 7 || respuesta.daily.precipitation_probability_max == null || respuesta.daily.precipitation_probability_max.Length < 7)
+            if (respuesta == null || respuesta.Dias == null || respuesta.Dias.Fechas == null || respuesta.Dias.Fechas.Length < 7 || respuesta.Dias.CodigosClima == null || respuesta.Dias.CodigosClima.Length < 7 || respuesta.Dias.TemperaturasMaximas == null || respuesta.Dias.TemperaturasMaximas.Length < 7 || respuesta.Dias.TemperaturasMinimas == null || respuesta.Dias.TemperaturasMinimas.Length < 7 || respuesta.Dias.ProbabilidadesLluvia == null || respuesta.Dias.ProbabilidadesLluvia.Length < 7)
             {
                 throw new InvalidOperationException("El servicio de clima devolvió datos incompletos.");
             }
@@ -136,19 +144,27 @@ namespace exxen2._0.capaLogica
         }
 
         /* Representa la respuesta JSON del servicio de pronóstico. */
+        [DataContract]
         private sealed class RespuestaClima
         {
-            public DatosDiarios daily { get; set; }
+            [DataMember(Name = "daily")]
+            public DatosDiarios Dias { get; set; }
         }
 
         /* Representa las series diarias recibidas del servicio meteorológico. */
+        [DataContract]
         private sealed class DatosDiarios
         {
-            public string[] time { get; set; }
-            public int[] weather_code { get; set; }
-            public double[] temperature_2m_max { get; set; }
-            public double[] temperature_2m_min { get; set; }
-            public int[] precipitation_probability_max { get; set; }
+            [DataMember(Name = "time")]
+            public string[] Fechas { get; set; }
+            [DataMember(Name = "weather_code")]
+            public int[] CodigosClima { get; set; }
+            [DataMember(Name = "temperature_2m_max")]
+            public double[] TemperaturasMaximas { get; set; }
+            [DataMember(Name = "temperature_2m_min")]
+            public double[] TemperaturasMinimas { get; set; }
+            [DataMember(Name = "precipitation_probability_max")]
+            public int[] ProbabilidadesLluvia { get; set; }
         }
     }
 }

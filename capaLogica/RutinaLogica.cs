@@ -13,7 +13,7 @@ namespace exxen2._0.capaLogica
         public Rutina Crear(Rutina rutina)
         {
             ValidarDatos(rutina);
-            using (var datos = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 ValidarEntrenador(datos, rutina.IdEntrenador);
                 rutina.Estado = true;
@@ -32,7 +32,7 @@ namespace exxen2._0.capaLogica
         public Rutina Modificar(Rutina rutina)
         {
             ValidarDatos(rutina);
-            using (var datos = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 var existente = datos.Rutinas.Buscar(rutina.IdRutina);
                 if (existente == null)
@@ -55,7 +55,7 @@ namespace exxen2._0.capaLogica
         /* Busca el registro de plantillas de rutina por identificador y devuelve los datos disponibles. */
         public Rutina ObtenerPorId(int idRutina)
         {
-            using (var datos = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 return datos.Rutinas.ConsultarSoloLectura("Entrenador", "Ejercicios.Ejercicio", "Asignaciones.Membresia.Socio").SingleOrDefault(r => r.IdRutina == idRutina);
             }
@@ -64,7 +64,7 @@ namespace exxen2._0.capaLogica
         /* Consulta plantillas de rutina del catálogo reutilizable para devolver los datos a la capa visual. */
         public List<Rutina> ListarGenerales()
         {
-            using (var datos = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 return datos.Rutinas.ConsultarSoloLectura("Entrenador", "Asignaciones").Where(r => r.Estado).OrderBy(r => r.Nombre).ToList();
             }
@@ -73,7 +73,7 @@ namespace exxen2._0.capaLogica
         /* Consulta plantillas de rutina del entrenador indicado para devolver los datos a la capa visual. */
         public List<Rutina> ListarPorEntrenador(int idEntrenador)
         {
-            using (var datos = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 return datos.Rutinas.ConsultarSoloLectura("Entrenador", "Asignaciones").Where(r => r.IdEntrenador == idEntrenador).OrderByDescending(r => r.FechaCreacion).ToList();
             }
@@ -82,7 +82,7 @@ namespace exxen2._0.capaLogica
         /* Consulta plantillas de rutina del entrenador indicado, incluyendo bajas para devolver los datos a la capa visual. */
         public List<Rutina> ListarPorEntrenadorParaGestion(int idEntrenador)
         {
-            using (var datos = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 return datos.Rutinas.ConsultarSoloLectura("Entrenador", "Asignaciones").Where(r => r.IdEntrenador == idEntrenador).OrderByDescending(r => r.Estado).ThenByDescending(r => r.FechaCreacion).ToList();
             }
@@ -97,7 +97,7 @@ namespace exxen2._0.capaLogica
         /* Desactiva el registro de plantillas de rutina sin eliminar su historial. */
         public void DarDeBaja(int idRutina)
         {
-            using (var datos = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 var rutina = datos.Rutinas.Buscar(idRutina);
                 if (rutina == null)
@@ -120,7 +120,7 @@ namespace exxen2._0.capaLogica
         /* Recupera el estado activo del registro de plantillas de rutina según las validaciones de la operación. */
         public void Reactivar(int idRutina)
         {
-            using (var datos = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 var rutina = datos.Rutinas.Buscar(idRutina);
                 if (rutina == null)
@@ -138,7 +138,7 @@ namespace exxen2._0.capaLogica
         private static void ValidarEntrenador(IUnidadDeTrabajo datos, int idEntrenador)
         {
             var entrenador = datos.UsuariosSistema.Consultar("Rol").SingleOrDefault(u => u.IdUsuarioSistema == idEntrenador);
-            if (!ValidacionesGym.EsEntrenadorActivo(entrenador))
+            if (!ValidacionesGimnasio.EsEntrenadorActivo(entrenador))
             {
                 throw new InvalidOperationException("El usuario no posee rol de Entrenador activo.");
             }

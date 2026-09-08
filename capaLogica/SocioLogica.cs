@@ -13,16 +13,16 @@ namespace exxen2._0.capaLogica
         public Socio Crear(Socio socio)
         {
             ValidarDatos(socio);
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                if (context.Socios.Any(s => s.DNI == socio.DNI))
+                if (datos.Socios.Any(s => s.DNI == socio.DNI))
                 {
                     throw new InvalidOperationException("El DNI ya está registrado.");
                 }
 
                 socio.Estado = true;
-                context.Socios.Agregar(socio);
-                context.GuardarCambios();
+                datos.Socios.Agregar(socio);
+                datos.GuardarCambios();
                 return socio;
             }
         }
@@ -31,15 +31,15 @@ namespace exxen2._0.capaLogica
         public Socio Modificar(Socio socio)
         {
             ValidarDatos(socio);
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                var existente = context.Socios.Buscar(socio.IdSocio);
+                var existente = datos.Socios.Buscar(socio.IdSocio);
                 if (existente == null)
                 {
                     throw new InvalidOperationException("El socio no existe.");
                 }
 
-                if (context.Socios.Any(s => s.DNI == socio.DNI && s.IdSocio != socio.IdSocio))
+                if (datos.Socios.Any(s => s.DNI == socio.DNI && s.IdSocio != socio.IdSocio))
                 {
                     throw new InvalidOperationException("El DNI ya está registrado.");
                 }
@@ -51,7 +51,7 @@ namespace exxen2._0.capaLogica
                 existente.Peso = socio.Peso;
                 existente.Altura = socio.Altura;
                 existente.Estado = socio.Estado;
-                context.GuardarCambios();
+                datos.GuardarCambios();
                 return existente;
             }
         }
@@ -59,68 +59,68 @@ namespace exxen2._0.capaLogica
         /* Busca el registro de socios por identificador y devuelve los datos disponibles. */
         public Socio ObtenerPorId(int idSocio)
         {
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return context.Socios.ConsultarSoloLectura("Membresias").SingleOrDefault(s => s.IdSocio == idSocio);
+                return datos.Socios.ConsultarSoloLectura("Membresias").SingleOrDefault(s => s.IdSocio == idSocio);
             }
         }
 
         /* Busca el registro de socios por DNI y devuelve los datos disponibles. */
         public Socio ObtenerPorDni(string dni)
         {
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return context.Socios.ConsultarSoloLectura().SingleOrDefault(s => s.DNI == dni);
+                return datos.Socios.ConsultarSoloLectura().SingleOrDefault(s => s.DNI == dni);
             }
         }
 
         /* Consulta socios activos para devolver los datos a la capa visual. */
         public List<Socio> ListarActivos()
         {
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return context.Socios.ConsultarSoloLectura().Where(s => s.Estado).OrderBy(s => s.Apellido).ThenBy(s => s.Nombre).ToList();
+                return datos.Socios.ConsultarSoloLectura().Where(s => s.Estado).OrderBy(s => s.Apellido).ThenBy(s => s.Nombre).ToList();
             }
         }
 
         /* Consulta socios activos e inactivos para su gestión para devolver los datos a la capa visual. */
         public List<Socio> ListarParaGestion()
         {
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return context.Socios.ConsultarSoloLectura().OrderByDescending(s => s.Estado).ThenBy(s => s.Apellido).ThenBy(s => s.Nombre).ToList();
+                return datos.Socios.ConsultarSoloLectura().OrderByDescending(s => s.Estado).ThenBy(s => s.Apellido).ThenBy(s => s.Nombre).ToList();
             }
         }
 
         /* Desactiva el registro de socios sin eliminar su historial. */
         public void DarDeBaja(int idSocio)
         {
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                var socio = context.Socios.Buscar(idSocio);
+                var socio = datos.Socios.Buscar(idSocio);
                 if (socio == null)
                 {
                     throw new InvalidOperationException("El socio no existe.");
                 }
 
                 socio.Estado = false;
-                context.GuardarCambios();
+                datos.GuardarCambios();
             }
         }
 
         /* Recupera el estado activo del registro de socios según las validaciones de la operación. */
         public void Reactivar(int idSocio)
         {
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                var socio = context.Socios.Buscar(idSocio);
+                var socio = datos.Socios.Buscar(idSocio);
                 if (socio == null)
                 {
                     throw new InvalidOperationException("El socio no existe.");
                 }
 
                 socio.Estado = true;
-                context.GuardarCambios();
+                datos.GuardarCambios();
             }
         }
 

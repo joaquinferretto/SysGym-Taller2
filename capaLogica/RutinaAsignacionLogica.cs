@@ -17,7 +17,7 @@ namespace exxen2._0.capaLogica
                 throw new InvalidOperationException("La rutina y la membresía son obligatorias.");
             }
 
-            using (var datos = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 var rutina = datos.Rutinas.Buscar(idRutina);
                 var membresia = datos.Membresias.Consultar("Plan", "Socio").SingleOrDefault(m => m.IdMembresia == idMembresia);
@@ -27,7 +27,7 @@ namespace exxen2._0.capaLogica
                 }
 
                 var entrenador = datos.UsuariosSistema.ConsultarSoloLectura("Rol").SingleOrDefault(u => u.IdUsuarioSistema == rutina.IdEntrenador);
-                if (!ValidacionesGym.EsEntrenadorActivo(entrenador))
+                if (!ValidacionesGimnasio.EsEntrenadorActivo(entrenador))
                 {
                     throw new InvalidOperationException("La rutina requiere un entrenador activo.");
                 }
@@ -74,7 +74,7 @@ namespace exxen2._0.capaLogica
         /* Consulta asignaciones de rutina activas para devolver los datos a la capa visual. */
         public List<RutinaAsignacion> ListarActivas()
         {
-            using (var datos = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 return datos.RutinaAsignaciones.ConsultarSoloLectura("Rutina.Entrenador", "Membresia.Socio", "Membresia.Plan").Where(a => a.Estado && a.Rutina.Estado && a.Membresia.Estado).OrderByDescending(a => a.FechaAsignacion).ToList();
             }
@@ -83,7 +83,7 @@ namespace exxen2._0.capaLogica
         /* Consulta asignaciones de rutina del entrenador indicado para devolver los datos a la capa visual. */
         public List<RutinaAsignacion> ListarPorEntrenador(int idEntrenador)
         {
-            using (var datos = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 return datos.RutinaAsignaciones.ConsultarSoloLectura("Rutina.Entrenador", "Membresia.Socio").Where(a => a.Estado && a.Rutina.Estado && a.Rutina.IdEntrenador == idEntrenador && a.Membresia.Estado).OrderByDescending(a => a.FechaAsignacion).ToList();
             }
@@ -92,7 +92,7 @@ namespace exxen2._0.capaLogica
         /* Finaliza la asignación de rutina y conserva su fecha de cierre. */
         public void Desasignar(int idRutinaAsignacion)
         {
-            using (var datos = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 var asignacion = datos.RutinaAsignaciones.Buscar(idRutinaAsignacion);
                 if (asignacion == null)

@@ -13,7 +13,7 @@ namespace exxen2._0.capaLogica
         public RutinaEjercicio AgregarEjercicio(RutinaEjercicio rutinaEjercicio)
         {
             ValidarDatos(rutinaEjercicio);
-            using (var datos = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 var rutina = datos.Rutinas.Buscar(rutinaEjercicio.IdRutina);
                 var ejercicio = datos.Ejercicios.Buscar(rutinaEjercicio.IdEjercicio);
@@ -38,7 +38,7 @@ namespace exxen2._0.capaLogica
         public RutinaEjercicio Modificar(RutinaEjercicio rutinaEjercicio)
         {
             ValidarDatos(rutinaEjercicio);
-            using (var datos = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 var existente = datos.RutinaEjercicios.Buscar(rutinaEjercicio.IdRutinaEjercicio);
                 if (existente == null)
@@ -73,7 +73,7 @@ namespace exxen2._0.capaLogica
         /* Da de baja el ejercicio de la rutina sin eliminar su registro. */
         public void Quitar(int idRutinaEjercicio)
         {
-            using (var datos = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 var rutinaEjercicio = datos.RutinaEjercicios.Buscar(idRutinaEjercicio);
                 if (rutinaEjercicio == null)
@@ -89,7 +89,7 @@ namespace exxen2._0.capaLogica
         /* Consulta ejercicios de una rutina de la rutina indicada, ordenados para entrenar para devolver los datos a la capa visual. */
         public List<RutinaEjercicio> ListarPorRutina(int idRutina)
         {
-            using (var datos = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 return datos.RutinaEjercicios.ConsultarSoloLectura("Ejercicio").Where(re => re.IdRutina == idRutina && re.Estado).OrderBy(re => re.Orden).ToList();
             }

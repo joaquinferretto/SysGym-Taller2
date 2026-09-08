@@ -43,11 +43,13 @@ namespace exxen2._0.capaDatos.Entidades
         [Required]
         [StringLength(50)]
         [Index("UX_UsuarioSistema_Username", IsUnique = true)]
-        public string Username { get; set; }
+        [Column("Username")]
+        public string NombreUsuario { get; set; }
 
         [Required]
         [StringLength(500)]
-        public string Password { get; set; }
+        [Column("Password")]
+        public string Clave { get; set; }
         public bool Estado { get; set; }
         public int IdRol { get; set; }
 

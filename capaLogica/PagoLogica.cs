@@ -18,10 +18,10 @@ namespace exxen2._0.capaLogica
                 throw new InvalidOperationException("La cuota es obligatoria.");
             }
 
-            using (var context = new GymUnidadDeTrabajo())
-            using (var transaction = context.IniciarTransaccion())
+            using (var datos = new UnidadDeTrabajoGimnasio())
+            using (var transaccion = datos.IniciarTransaccion())
             {
-                var cuota = context.CuotasMembresia.Consultar("Pago").SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);
+                var cuota = datos.CuotasMembresia.Consultar("Pago").SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);
                 if (cuota == null)
                 {
                     throw new InvalidOperationException("La cuota no existe.");
@@ -37,21 +37,21 @@ namespace exxen2._0.capaLogica
                     throw new InvalidOperationException("La cuota ya está asociada a un pago.");
                 }
 
-                ValidarMetodoPago(context, pago.IdMetodoPago);
+                ValidarMetodoPago(datos, pago.IdMetodoPago);
                 if (pago.Estado == EstadosTransaccionPago.Aprobado)
                 {
                     ValidarImporteAprobado(cuota, pago.Importe);
                 }
 
-                context.Pagos.Agregar(pago);
-                context.GuardarCambios();
+                datos.Pagos.Agregar(pago);
+                datos.GuardarCambios();
                 cuota.IdRegistroPago = pago.IdRegistroPago;
                 cuota.Pago = pago;
-                CuotaMembresiaLogica.RecalcularEstadoPagoEnContexto(context, cuota);
-                context.GuardarCambios();
-                MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(context, cuota.IdMembresia);
-                context.GuardarCambios();
-                transaction.Confirmar();
+                CuotaMembresiaLogica.RecalcularEstadoPagoEnContexto(datos, cuota);
+                datos.GuardarCambios();
+                MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(datos, cuota.IdMembresia);
+                datos.GuardarCambios();
+                transaccion.Confirmar();
                 return pago;
             }
         }
@@ -59,60 +59,60 @@ namespace exxen2._0.capaLogica
         /* Busca el registro de pagos por identificador y devuelve los datos disponibles. */
         public Pago ObtenerPorId(int idRegistroPago)
         {
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return context.Pagos.ConsultarSoloLectura("MetodoPago", "Cuotas").SingleOrDefault(p => p.IdRegistroPago == idRegistroPago);
+                return datos.Pagos.ConsultarSoloLectura("MetodoPago", "Cuotas").SingleOrDefault(p => p.IdRegistroPago == idRegistroPago);
             }
         }
 
         /* Consulta pagos asociados a la cuota indicada para devolver los datos a la capa visual. */
         public List<Pago> ListarPorCuota(int idCuotaMembresia)
         {
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return context.CuotasMembresia.ConsultarSoloLectura("Pago").Where(c => c.IdCuotaMembresia == idCuotaMembresia && c.IdRegistroPago.HasValue && c.Pago != null).Select(c => c.Pago).ToList();
+                return datos.CuotasMembresia.ConsultarSoloLectura("Pago").Where(c => c.IdCuotaMembresia == idCuotaMembresia && c.IdRegistroPago.HasValue && c.Pago != null).Select(c => c.Pago).ToList();
             }
         }
 
         /* Consulta pagos de la membresía indicada para devolver los datos a la capa visual. */
         public List<Pago> ListarPorMembresia(int idMembresia)
         {
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return context.CuotasMembresia.ConsultarSoloLectura("Pago").Where(c => c.IdMembresia == idMembresia && c.IdRegistroPago.HasValue && c.Pago != null).Select(c => c.Pago).Distinct().OrderBy(p => p.Fecha).ThenBy(p => p.IdRegistroPago).ToList();
+                return datos.CuotasMembresia.ConsultarSoloLectura("Pago").Where(c => c.IdMembresia == idMembresia && c.IdRegistroPago.HasValue && c.Pago != null).Select(c => c.Pago).Distinct().OrderBy(p => p.Fecha).ThenBy(p => p.IdRegistroPago).ToList();
             }
         }
 
         /* Consulta pagos disponibles para registrar un cobro para devolver los datos a la capa visual. */
         public List<MetodoPago> ListarMetodosPagoActivos()
         {
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return context.MetodosPago.ConsultarSoloLectura().Where(m => m.Estado).OrderBy(m => m.Observaciones).ToList();
+                return datos.MetodosPago.ConsultarSoloLectura().Where(m => m.Estado).OrderBy(m => m.Observaciones).ToList();
             }
         }
 
         /* Obtiene el importe contabilizado de la cuota; los pagos no aprobados aportan cero. */
         public decimal CalcularTotalAprobado(int idCuotaMembresia)
         {
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return context.CuotasMembresia.ConsultarSoloLectura().Where(c => c.IdCuotaMembresia == idCuotaMembresia && c.IdRegistroPago.HasValue && c.Pago.Estado == EstadosTransaccionPago.Aprobado).Select(c => (decimal? )c.Pago.Importe).SingleOrDefault() ?? 0m;
+                return datos.CuotasMembresia.ConsultarSoloLectura().Where(c => c.IdCuotaMembresia == idCuotaMembresia && c.IdRegistroPago.HasValue && c.Pago.Estado == EstadosTransaccionPago.Aprobado).Select(c => (decimal? )c.Pago.Importe).SingleOrDefault() ?? 0m;
             }
         }
 
         /* Obtiene la cuota y calcula cuánto falta abonar descontando únicamente pagos aprobados. */
         public decimal CalcularSaldoPendiente(int idCuotaMembresia)
         {
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                var cuota = context.CuotasMembresia.ConsultarSoloLectura("Pago").SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);
+                var cuota = datos.CuotasMembresia.ConsultarSoloLectura("Pago").SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);
                 if (cuota == null)
                 {
                     throw new InvalidOperationException("La cuota no existe.");
                 }
 
-                return CuotaMembresiaLogica.CalcularSaldoEnContexto(context, cuota);
+                return CuotaMembresiaLogica.CalcularSaldoEnContexto(datos, cuota);
             }
         }
 
@@ -124,16 +124,16 @@ namespace exxen2._0.capaLogica
                 throw new InvalidOperationException("El estado de pago no es válido.");
             }
 
-            using (var context = new GymUnidadDeTrabajo())
-            using (var transaction = context.IniciarTransaccion())
+            using (var datos = new UnidadDeTrabajoGimnasio())
+            using (var transaccion = datos.IniciarTransaccion())
             {
-                var pago = context.Pagos.Buscar(idRegistroPago);
+                var pago = datos.Pagos.Buscar(idRegistroPago);
                 if (pago == null)
                 {
                     throw new InvalidOperationException("El pago no existe.");
                 }
 
-                var cuotas = context.CuotasMembresia.Where(c => c.IdRegistroPago == idRegistroPago).ToList();
+                var cuotas = datos.CuotasMembresia.Where(c => c.IdRegistroPago == idRegistroPago).ToList();
                 if (cuotas.Count == 0)
                 {
                     throw new InvalidOperationException("El pago no está asociado a ninguna cuota.");
@@ -161,13 +161,13 @@ namespace exxen2._0.capaLogica
                 foreach (var cuota in cuotas)
                 {
                     cuota.Pago = pago;
-                    CuotaMembresiaLogica.RecalcularEstadoPagoEnContexto(context, cuota);
-                    context.GuardarCambios();
-                    MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(context, cuota.IdMembresia);
+                    CuotaMembresiaLogica.RecalcularEstadoPagoEnContexto(datos, cuota);
+                    datos.GuardarCambios();
+                    MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(datos, cuota.IdMembresia);
                 }
 
-                context.GuardarCambios();
-                transaction.Confirmar();
+                datos.GuardarCambios();
+                transaccion.Confirmar();
             }
         }
 
@@ -180,16 +180,16 @@ namespace exxen2._0.capaLogica
                 throw new InvalidOperationException("La cuota es obligatoria.");
             }
 
-            using (var context = new GymUnidadDeTrabajo())
-            using (var transaction = context.IniciarTransaccion())
+            using (var datos = new UnidadDeTrabajoGimnasio())
+            using (var transaccion = datos.IniciarTransaccion())
             {
-                var pago = context.Pagos.Buscar(pagoActualizado.IdRegistroPago);
+                var pago = datos.Pagos.Buscar(pagoActualizado.IdRegistroPago);
                 if (pago == null)
                 {
                     throw new InvalidOperationException("El pago no existe.");
                 }
 
-                var cuota = context.CuotasMembresia.Consultar("Pago").SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia && c.IdRegistroPago == pagoActualizado.IdRegistroPago);
+                var cuota = datos.CuotasMembresia.Consultar("Pago").SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia && c.IdRegistroPago == pagoActualizado.IdRegistroPago);
                 if (cuota == null)
                 {
                     throw new InvalidOperationException("El pago no está asociado a la cuota seleccionada.");
@@ -215,18 +215,18 @@ namespace exxen2._0.capaLogica
                     ValidarImporteAprobado(cuota, pagoActualizado.Importe);
                 }
 
-                ValidarMetodoPago(context, pagoActualizado.IdMetodoPago);
+                ValidarMetodoPago(datos, pagoActualizado.IdMetodoPago);
                 pago.Importe = pagoActualizado.Importe;
                 pago.IdMetodoPago = pagoActualizado.IdMetodoPago;
                 pago.Estado = pagoActualizado.Estado;
                 pago.Descripcion = pagoActualizado.Descripcion;
                 pago.Fecha = pagoActualizado.Fecha;
                 cuota.Pago = pago;
-                CuotaMembresiaLogica.RecalcularEstadoPagoEnContexto(context, cuota);
-                context.GuardarCambios();
-                MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(context, cuota.IdMembresia);
-                context.GuardarCambios();
-                transaction.Confirmar();
+                CuotaMembresiaLogica.RecalcularEstadoPagoEnContexto(datos, cuota);
+                datos.GuardarCambios();
+                MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(datos, cuota.IdMembresia);
+                datos.GuardarCambios();
+                transaccion.Confirmar();
             }
         }
 
@@ -272,9 +272,9 @@ namespace exxen2._0.capaLogica
         }
 
         /* Exige un método activo con exactamente un detalle de efectivo o Mercado Pago. */
-        private static void ValidarMetodoPago(IUnidadDeTrabajo context, int idMetodoPago)
+        private static void ValidarMetodoPago(IUnidadDeTrabajo datos, int idMetodoPago)
         {
-            var metodo = context.MetodosPago.Buscar(idMetodoPago);
+            var metodo = datos.MetodosPago.Buscar(idMetodoPago);
             if (metodo == null || !metodo.Estado)
             {
                 throw new InvalidOperationException("El método de pago no existe o está inactivo.");

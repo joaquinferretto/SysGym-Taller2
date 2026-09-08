@@ -13,11 +13,11 @@ namespace exxen2._0.capaLogica
         public Plan Crear(Plan plan)
         {
             ValidarDatos(plan);
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 plan.Estado = true;
-                context.Planes.Agregar(plan);
-                context.GuardarCambios();
+                datos.Planes.Agregar(plan);
+                datos.GuardarCambios();
                 return plan;
             }
         }
@@ -26,9 +26,9 @@ namespace exxen2._0.capaLogica
         public Plan Modificar(Plan plan)
         {
             ValidarDatos(plan);
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                var existente = context.Planes.Buscar(plan.IdPlan);
+                var existente = datos.Planes.Buscar(plan.IdPlan);
                 if (existente == null)
                 {
                     throw new InvalidOperationException("El plan no existe.");
@@ -41,7 +41,7 @@ namespace exxen2._0.capaLogica
                 existente.IncluyeRutinaPersonal = plan.IncluyeRutinaPersonal;
                 existente.Estado = plan.Estado;
                 existente.IdRutina = plan.IdRutina;
-                context.GuardarCambios();
+                datos.GuardarCambios();
                 return existente;
             }
         }
@@ -49,65 +49,65 @@ namespace exxen2._0.capaLogica
         /* Busca el registro de planes por identificador y devuelve los datos disponibles. */
         public Plan ObtenerPorId(int idPlan)
         {
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return context.Planes.ConsultarSoloLectura("Rutina").SingleOrDefault(p => p.IdPlan == idPlan);
+                return datos.Planes.ConsultarSoloLectura("Rutina").SingleOrDefault(p => p.IdPlan == idPlan);
             }
         }
 
         /* Consulta planes activos para devolver los datos a la capa visual. */
         public List<Plan> ListarActivos()
         {
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return context.Planes.ConsultarSoloLectura("Rutina").Where(p => p.Estado).OrderBy(p => p.Nombre).ToList();
+                return datos.Planes.ConsultarSoloLectura("Rutina").Where(p => p.Estado).OrderBy(p => p.Nombre).ToList();
             }
         }
 
         /* Consulta planes activos e inactivos para su gestión para devolver los datos a la capa visual. */
         public List<Plan> ListarParaGestion()
         {
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return context.Planes.ConsultarSoloLectura("Rutina").OrderByDescending(p => p.Estado).ThenBy(p => p.Nombre).ToList();
+                return datos.Planes.ConsultarSoloLectura("Rutina").OrderByDescending(p => p.Estado).ThenBy(p => p.Nombre).ToList();
             }
         }
 
         /* Desactiva el registro de planes sin eliminar su historial. */
         public void DarDeBaja(int idPlan)
         {
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                var plan = context.Planes.Buscar(idPlan);
+                var plan = datos.Planes.Buscar(idPlan);
                 if (plan == null)
                 {
                     throw new InvalidOperationException("El plan no existe.");
                 }
 
                 plan.Estado = false;
-                context.GuardarCambios();
+                datos.GuardarCambios();
             }
         }
 
         /* Recupera el estado activo del registro de planes según las validaciones de la operación. */
         public void Reactivar(int idPlan)
         {
-            using (var context = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                var plan = context.Planes.Buscar(idPlan);
+                var plan = datos.Planes.Buscar(idPlan);
                 if (plan == null)
                 {
                     throw new InvalidOperationException("El plan no existe.");
                 }
 
-                var rutina = context.Rutinas.Buscar(plan.IdRutina);
+                var rutina = datos.Rutinas.Buscar(plan.IdRutina);
                 if (rutina == null || !rutina.Estado)
                 {
                     throw new InvalidOperationException("No se puede reactivar el plan porque su rutina está inactiva.");
                 }
 
                 plan.Estado = true;
-                context.GuardarCambios();
+                datos.GuardarCambios();
             }
         }
 
