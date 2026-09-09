@@ -337,7 +337,134 @@ En `capaLogica/UsuarioSistemaLogica.cs`, `capaLogica/SocioLogica.cs` o `capaLogi
 
 Actualizar `docs/DATABASE.md` con las columnas nuevas y `docs/BUSINESS_RULES.md` con el limite de tamano y los valores admitidos de `Sexo`. Poner la fecha de ultima actualizacion en ambos.
 
-## Paso 7 — Codigo fuera del disenador
+## Paso 7 — Rutina semanal por socio (lunes a viernes)
+
+Cada socio debe tener una rutina general repartida de lunes a viernes, y se debe poder consultar que hace cada dia.
+
+### 7.1 Decision de modelo
+
+El modelo actual ya alcanza; falta una sola columna.
+
+- `Rutina` es la plantilla general (por ejemplo "Fuerza"). No cambia.
+- `RutinaEjercicio` son los ejercicios de esa plantilla, con `Series`, `Repeticiones`, `Peso`, `Descanso` y `Orden`. **Aca se agrega el dia.**
+- `RutinaAsignacion` vincula una `Rutina` con una `Membresia`, y la membresia con el `Socio`. No cambia: el socio sigue teniendo una sola rutina general asignada, y esa rutina ya contiene la semana entera.
+
+Agregar a `capaDatos/Entidades/RutinaEjercicio.cs`:
+
+```csharp
+public int? DiaSemana { get; set; }
+```
+
+Valores: `1` lunes, `2` martes, `3` miercoles, `4` jueves, `5` viernes. Nulo significa ejercicio sin dia asignado, para no romper las rutinas ya cargadas.
+
+`Orden` pasa a ser el orden **dentro** del dia, no dentro de toda la rutina.
+
+Migracion en `capaDatos/Database/SysGymDB.sql` y en `capaDatos/Database/SysGymDB_MigracionExistente.sql`:
+
+```sql
+ALTER TABLE RutinaEjercicio ADD DiaSemana int NULL;
+```
+
+No se agrega tabla nueva ni se toca `RutinaAsignacion`. La alternativa de asignar una rutina distinta por dia (cinco `RutinaAsignacion` por socio) queda descartada: multiplica las asignaciones y contradice la idea de una rutina general.
+
+### 7.2 capaLogica
+
+En `capaLogica/RutinaEjercicioLogica.cs`:
+
+- Validar en `AgregarEjercicio` y en `Modificar` que `DiaSemana` sea nulo o este entre 1 y 5. Si no, lanzar `InvalidOperationException`.
+- Ordenar `ListarPorRutina` por `DiaSemana` y luego por `Orden`. Los de dia nulo van al final.
+- Agregar:
+
+```csharp
+/* Devuelve los ejercicios activos de la rutina vigente del socio, ordenados por dia y orden. */
+public List<RutinaEjercicio> ListarSemanaPorSocio(int idSocio)
+```
+
+Resuelve la membresia activa del socio, su `RutinaAsignacion` activa y devuelve los `RutinaEjercicio` activos de esa rutina con `Ejercicio` incluido. Si el socio no tiene membresia activa o no tiene rutina asignada, devuelve una lista vacia; no lanzar excepcion.
+
+En `capaLogica/ValidacionesGimnasio.cs`, agregar el nombre del dia:
+
+```csharp
+/* Traduce el numero de dia de la rutina al nombre que se muestra en pantalla. */
+public static string NombreDia(int? dia)
+```
+
+Devuelve `"Lunes"` a `"Viernes"`, o `"Sin dia"` cuando es nulo. Va en `capaLogica` porque es una regla del dominio, no formato visual.
+
+### 7.3 Cargar la semana — RutinasEntrenadorFormulario
+
+Es donde el entrenador arma la rutina. Hoy tiene los campos del ejercicio pero no muestra los ejercicios ya cargados, asi que no se puede armar una semana a ciegas.
+
+- Agregar un `ComboBox` `dia` junto a `series`, `repeticiones`, `peso`, `descanso` y `orden`, con `DropDownStyle = DropDownList` y los items `Lunes`, `Martes`, `Miercoles`, `Jueves`, `Viernes`. Mapear a 1..5 al leer y escribir; no guardar el texto.
+- Agregar un segundo `DataGridView` `tablaEjercicios` que liste los ejercicios de la rutina seleccionada, con `ListarPorRutina`. Columnas: `colDia`, `colOrden`, `colEjercicio`, `colSeries`, `colRepeticiones`, `colPeso`, `colDescanso`. Misma configuracion que el resto de las grillas del paso 4.
+- Ubicacion: `tabla` (rutinas) y `tablaEjercicios` reparten el alto de `panelContenido`; ambas con `Anchor = Top, Bottom, Left, Right`. `tablaEjercicios` se recarga al cambiar la seleccion de `tabla`.
+- Al seleccionar una fila de `tablaEjercicios`, cargar sus valores en los campos para poder modificarla o quitarla.
+
+### 7.4 Ver la semana — RutinaSemanalFormulario
+
+Formulario nuevo en `capaVisual/Compartido/RutinaSemanalFormulario.cs`, con su `.Designer.cs`. Sigue la estructura del paso 2: `panelEncabezado` arriba, `lblEstado` abajo, `panelContenido` con `Dock = Fill`.
+
+Recibe el socio por constructor:
+
+```csharp
+public RutinaSemanalFormulario(int idSocio, string nombreSocio, Color colorPrimario)
+```
+
+Contenido: un unico `DataGridView` `tablaSemana` con `Anchor = Top, Bottom, Left, Right`, armado como grilla de la semana:
+
+- Cinco columnas fijas declaradas en el disenador: `colLunes`, `colMartes`, `colMiercoles`, `colJueves`, `colViernes`, con `HeaderText` "Lunes" a "Viernes".
+- Las filas son las posiciones de la rutina. La cantidad de filas es la del dia con mas ejercicios.
+- Cada celda muestra el ejercicio y su carga en una linea, por ejemplo `Press banca  4x10  60 kg`. Cuando el dia no tiene ejercicio en esa posicion, la celda queda vacia.
+- `AllowUserToAddRows = false`, `ReadOnly = true`, `RowHeadersVisible = false`, `AutoSizeColumnsMode = Fill`, `RowTemplate.Height = 34`.
+
+Armado en el `Load`, a partir de `ListarSemanaPorSocio`:
+
+```csharp
+/* Distribuye los ejercicios de la semana en columnas por dia y filas por posicion. */
+private void MostrarSemana(List<RutinaEjercicio> ejercicios)
+{
+    var porDia = new List<RutinaEjercicio>[5];
+    for (var dia = 0; dia < 5; dia++)
+        porDia[dia] = ejercicios.FindAll(e => e.DiaSemana == dia + 1);
+
+    var filas = 0;
+    for (var dia = 0; dia < 5; dia++)
+        if (porDia[dia].Count > filas)
+            filas = porDia[dia].Count;
+
+    tablaSemana.Rows.Clear();
+    for (var fila = 0; fila < filas; fila++)
+    {
+        tablaSemana.Rows.Add();
+        for (var dia = 0; dia < 5; dia++)
+            if (fila < porDia[dia].Count)
+                tablaSemana.Rows[fila].Cells[dia].Value = Describir(porDia[dia][fila]);
+    }
+
+    lblEstado.Text = filas == 0
+        ? "El socio no tiene una rutina semanal cargada."
+        : "Rutina semanal de " + nombreSocio;
+}
+```
+
+`Describir` arma el texto de la celda con el nombre del ejercicio, `Series` x `Repeticiones` y el peso cuando esta cargado. Los ejercicios con `DiaSemana` nulo no entran en la grilla; informarlos en `lblEstado` si existen.
+
+### 7.5 Desde donde se abre
+
+- `MisSociosFormulario` (entrenador): boton `verRutina` en `barraAcciones` que abre `RutinaSemanalFormulario` con el socio seleccionado en la grilla.
+- `GestionSociosFormulario`: mismo boton, para que administrador y recepcionista tambien puedan consultarla.
+
+Se abren con `ShowDialog`, no por `ControladorNavegacion`, porque son una consulta puntual sobre un socio y no un modulo del menu.
+
+### 7.6 Alta del formulario en el proyecto
+
+Agregar a `exxen2.0.csproj` las entradas `Compile` de `RutinaSemanalFormulario.cs` y `RutinaSemanalFormulario.Designer.cs` con su `DependentUpon`, siguiendo el formato de los demas formularios.
+
+### 7.7 Documentacion
+
+Actualizar `docs/DATABASE.md` con la columna `DiaSemana` y `docs/BUSINESS_RULES.md` con la regla de que la rutina de un socio se organiza de lunes a viernes y que `DiaSemana` admite 1 a 5 o nulo. Poner la fecha de ultima actualizacion en ambos.
+
+## Paso 8 — Codigo fuera del disenador
 
 - `capaVisual/Recepcionista/PanelRecepcionista.cs` y `capaVisual/Entrenador/PanelEntrenador.cs` tienen una linea `navegacion.EstablecerContenidoInicio(lblBienvenida, null);` en su `Load`. Si se conserva `lblBienvenida`, mantenerla; si se elimina la etiqueta del disenador, eliminar tambien esa linea.
 - No tocar `ControladorNavegacion.cs`: sigue acoplando el formulario abierto al area de contenido con `Dock = Fill` solo en ejecucion.
@@ -365,6 +492,9 @@ Actualizar `docs/DATABASE.md` con las columnas nuevas y `docs/BUSINESS_RULES.md`
 9. Todos los listados siguen mostrandose en un `DataGridView` con encabezado de columnas y una fila por registro, y las columnas ocupan todo el ancho disponible.
 10. Al dar de alta un usuario y un socio se puede cargar una imagen, y al no cargarla se ve la imagen por defecto segun el sexo elegido.
 11. La foto se guarda y se recupera de la base, y el listado sigue cargando igual de rapido porque no trae los binarios.
+12. El entrenador puede asignarle un dia de lunes a viernes a cada ejercicio de una rutina y ver los ejercicios ya cargados.
+13. Seleccionando un socio se abre su rutina semanal en una grilla con cinco columnas, una por dia, y se ve que hace cada dia.
+14. Un socio sin rutina asignada muestra la grilla vacia y un mensaje en `lblEstado`, sin error.
 
 ## Actualizar documentacion
 

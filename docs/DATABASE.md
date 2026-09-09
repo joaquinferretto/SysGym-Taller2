@@ -6,6 +6,8 @@ El motor es SQL Server y el esquema fuente está en `capaDatos/Database/SysGymDB
 
 Las entidades principales son Rol, UsuarioSistema, Socio, Plan, Membresia, MembresiaEntrenador, CuotaMembresia, Pago, MetodoPago, MercadoPago, PagoEfectivo, Divisa, Asistencia, Rutina, RutinaEjercicio, RutinaAsignacion y Ejercicio.
 
+`RutinaEjercicio.DiaSemana` es un `INT NULL` que ubica el ejercicio en la semana: 1 lunes a 5 viernes, con `CK_RutinaEjercicio_DiaSemana` verificando el rango. Nulo significa ejercicio sin dia asignado. `Orden` pasa a ser el orden dentro del dia y no dentro de toda la rutina. Asi una misma plantilla contiene el entrenamiento completo del socio de lunes a viernes. La migracion agrega la columna y reparte los detalles existentes con `((Orden - 1) % 5) + 1`.
+
 `Membresia` contiene `FechaInicio`, `FechaVencimiento`, `IdPlan`, `IdSocio` e `IdUsuarioSistema`. `CuotaMembresia` contiene `FechaDesde`, `FechaHasta`, `Importe`, `EstadoPago`, `IdMembresia` e `IdRegistroPago` nullable. `Pago` usa `IdRegistroPago` como clave y `IdMetodoPago` como FK.
 
 `MetodoPago.IdNroPagoMP` y `MetodoPago.IdPagoEfectivo` son nullable y apuntan a sus detalles específicos. Los importes usan `DECIMAL(18,2)`.

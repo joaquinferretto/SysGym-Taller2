@@ -206,3 +206,26 @@ Se amplían únicamente las dos casillas del panel de beneficios a 222 píxeles 
 Se reemplaza el marcado automático al cambiar la base por ItemCheck de rutinasDisponibles. El combo solo ofrece rutinas marcadas, conserva una base válida y elimina la selección cuando se desmarca; sin opciones queda deshabilitado. Nuevo limpia ambos selectores. Las suscripciones permanecen declaradas en Designer y la lógica conserva su validación.
 
 Verificación en memoria sobre el ensamblado recién compilado en obj/Debug: marcado, filtro, conservación y retiro de la base, deshabilitación del combo vacío y medición de ambos textos correctos. La reconstrucción completa no pudo copiar el ejecutable a bin/Debug porque SysGym estaba abierto (MSB3021); falta cerrar la aplicación y repetir Rebuild. No se cerró el proceso del usuario ni se crearon carpetas auxiliares. Pendiente la inspección final en el diseñador real.
+
+## Rutina semanal de lunes a viernes - 9 de septiembre de 2026
+
+Se agrega `DiaSemana` a `RutinaEjercicio` en la entidad, en `SysGymDB.sql` con su restriccion de rango y en la migracion, que ademas reparte los detalles ya cargados con `((Orden - 1) % 5) + 1`. Las inserciones del catalogo pasan a describir una semana completa: las seis plantillas generales reparten 76 detalles de lunes a viernes y las veinte plantillas de un solo ejercicio quedan ubicadas el lunes. La guarda de duplicados ahora compara tambien el dia, de modo que un mismo ejercicio puede repetirse en dias distintos.
+
+`RutinaEjercicioLogica` valida el dia, ordena por dia y luego por orden, y suma `ListarSemanaPorSocio`. `ValidacionesGimnasio` aporta `ValidarDiaRutina` y `NombreDia`.
+
+En `RutinasEntrenadorFormulario` se agregan el combo `dia`, la grilla `tablaEjercicios` con los ejercicios de la plantilla seleccionada y el boton `quitarEjercicio`. El formulario nuevo `RutinaSemanalFormulario` presenta la semana del socio en una grilla de cinco columnas, una por dia, y se abre desde `MisSociosFormulario` y desde `GestionSociosFormulario`.
+
+Verificaciones: Rebuild con 0 errores y 0 advertencias; columna aplicada a la base local y 44 detalles existentes repartidos; capturas de las pantallas del entrenador, de socios y de la rutina semanal de un socio con asignacion vigente. Se corrigieron los anchos de `agregarEjercicio` y `asignar`, que cortaban su texto, y se reubico `verRutina` en `GestionSociosFormulario` porque se superponia con los controles de foto.
+
+## Semana completa por rutina - 9 de septiembre de 2026
+
+Las plantillas tenian uno o cuatro ejercicios sueltos, de modo que la consulta semanal mostraba una sola celda. Se agregan 21 ejercicios al catalogo, hasta 45, para poder armar dias por grupo muscular, y se reemplazan las inserciones de detalle por una seccion que reparte siete ejercicios por dia en las 26 rutinas: 910 filas, 182 por dia.
+
+Cada dia combina dos grupos, cuatro ejercicios del primero y tres del segundo: pecho con biceps, espalda con triceps, piernas, hombros con zona media y una jornada mixta. El enfoque de la rutina decide con que dia arranca la semana; los ejercicios pueden repetirse en dias distintos porque la guarda de duplicados compara rutina, ejercicio y dia.
+
+El script conserva el estilo del resto del archivo: veintiseis `INSERT INTO RutinaEjercicio` literales, uno por plantilla, con sus treinta y cinco filas y subconsultas por nombre. No se usan variables de tabla ni `INSERT ... SELECT` generados. Se agregan ademas diez `RutinaAsignacion`, de modo que los dieciocho socios activos tienen plantilla asignada y semana completa.
+
+Verificaciones: script aplicado a la base local con 910 detalles activos y 182 por dia; captura de la rutina semanal de un socio con las cinco columnas completas. Se activo el ajuste de linea en las celdas para que los nombres largos no se recorten.
+
+Verificacion adicional: las secciones nuevas pasan `SET PARSEONLY ON` contra SQL Server sin errores; en la base local los dieciocho socios activos devuelven 35 ejercicios en 5 dias cada uno.
+

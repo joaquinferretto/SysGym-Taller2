@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using exxen2._0.capaDatos.Entidades;
@@ -64,6 +64,7 @@ namespace exxen2._0.capaLogica
                 existente.Peso = rutinaEjercicio.Peso;
                 existente.Descanso = rutinaEjercicio.Descanso;
                 existente.Orden = rutinaEjercicio.Orden;
+                existente.DiaSemana = rutinaEjercicio.DiaSemana;
                 existente.Estado = rutinaEjercicio.Estado;
                 datos.GuardarCambios();
                 return existente;
@@ -91,7 +92,23 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return datos.RutinaEjercicios.ConsultarSoloLectura("Ejercicio").Where(re => re.IdRutina == idRutina && re.Estado).OrderBy(re => re.Orden).ToList();
+                return datos.RutinaEjercicios.ConsultarSoloLectura("Ejercicio").Where(re => re.IdRutina == idRutina && re.Estado).OrderBy(re => re.DiaSemana.HasValue ? re.DiaSemana.Value : int.MaxValue).ThenBy(re => re.Orden).ToList();
+            }
+        }
+
+        /* Consulta los ejercicios de la rutina vigente del socio, ordenados por día y por orden dentro del día. */
+        public List<RutinaEjercicio> ListarSemanaPorSocio(int idSocio)
+        {
+            using (var datos = new UnidadDeTrabajoGimnasio())
+            {
+                var asignaciones = datos.RutinaAsignaciones.ConsultarSoloLectura("Membresia").Where(a => a.Estado && a.Membresia.IdSocio == idSocio && a.Membresia.Estado).OrderByDescending(a => a.FechaAsignacion).ToList();
+                if (asignaciones.Count == 0)
+                {
+                    return new List<RutinaEjercicio>();
+                }
+
+                var idRutina = asignaciones[0].IdRutina;
+                return datos.RutinaEjercicios.ConsultarSoloLectura("Ejercicio").Where(re => re.IdRutina == idRutina && re.Estado).OrderBy(re => re.DiaSemana.HasValue ? re.DiaSemana.Value : int.MaxValue).ThenBy(re => re.Orden).ToList();
             }
         }
 
@@ -127,6 +144,8 @@ namespace exxen2._0.capaLogica
             {
                 throw new InvalidOperationException("El orden debe ser mayor que cero.");
             }
+
+            ValidacionesGimnasio.ValidarDiaRutina(rutinaEjercicio.DiaSemana);
         }
     }
 }

@@ -26,6 +26,22 @@ BEGIN TRY
     IF COL_LENGTH(N'dbo.Socio', N'Sexo') IS NULL
         ALTER TABLE dbo.Socio ADD Sexo CHAR(1) NULL;
 
+    /* Día de la semana de cada ejercicio; los detalles existentes quedan sin día asignado. */
+    IF COL_LENGTH(N'dbo.RutinaEjercicio', N'DiaSemana') IS NULL
+    BEGIN
+        ALTER TABLE dbo.RutinaEjercicio ADD DiaSemana INT NULL;
+
+        EXEC(N'ALTER TABLE dbo.RutinaEjercicio WITH CHECK
+            ADD CONSTRAINT CK_RutinaEjercicio_DiaSemana
+            CHECK (DiaSemana IS NULL OR DiaSemana BETWEEN 1 AND 5);');
+
+        /* Las rutinas existentes reparten su orden de lunes a viernes como punto de partida.
+           El entrenador puede reasignar los días desde el catálogo de rutinas. */
+        EXEC(N'UPDATE dbo.RutinaEjercicio
+               SET DiaSemana = ((Orden - 1) % 5) + 1
+               WHERE DiaSemana IS NULL AND Orden > 0;');
+    END;
+
     /* Los usuarios del sistema son empleados y deben registrar su salario mensual. */
     IF COL_LENGTH(N'dbo.UsuarioSistema', N'Salario') IS NULL
     BEGIN

@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace exxen2._0.capaDatos.Entidades
@@ -23,6 +23,7 @@ namespace exxen2._0.capaDatos.Entidades
         public decimal? Peso { get; set; }
         public int Descanso { get; set; }
         public int Orden { get; set; }
+        public int? DiaSemana { get; set; }
         public bool Estado { get; set; }
 
         [ForeignKey("IdRutina")]

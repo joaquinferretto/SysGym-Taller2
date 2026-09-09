@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
@@ -68,6 +68,22 @@ namespace exxen2._0.capaVisual.Entrenador
         private void btnVolver_Click(object origen, EventArgs e)
         {
             Close();
+        }
+
+        /* Al hacer clic en verRutina, abre la rutina semanal del socio seleccionado en la grilla. */
+        private void verRutina_Click(object origen, EventArgs e)
+        {
+            try
+            {
+                if (tabla.CurrentRow == null || tabla.CurrentRow.Cells[0].Value == null)
+                    throw new InvalidOperationException("Selecciona un socio.");
+                using (var semana = new RutinaSemanalFormulario(Convert.ToInt32(tabla.CurrentRow.Cells[0].Value), Convert.ToString(tabla.CurrentRow.Cells[1].Value), Color.FromArgb(14, 116, 144)))
+                    semana.ShowDialog(this);
+            }
+            catch (Exception ex)
+            {
+                AyudaFormularioVisual.MostrarError(lblEstado, ex);
+            }
         }
 
         /* Al hacer clic en actualizar, vuelve a consultar y mostrar los registros del módulo. */

@@ -65,3 +65,11 @@ FIX-01 y FIX-04 continúan pendientes de confirmación. No se implementan los de
 - Quitar una rutina del catálogo finaliza sus asignaciones activas a membresías del plan, con FechaFin, sin borrar historial. Los cambios y los vínculos se guardan en una misma operación atómica.
 - Cambiar de plan conserva las asignaciones de rutinas que el nuevo plan mantiene disponibles y activas; finaliza las restantes. Las asignaciones de entrenador siguen dependiendo de IncluyeEntrenador.
 - La migración inicial incorpora las rutinas base y las asignaciones activas existentes, sin eliminar datos ni habilitar automáticamente todo el catálogo.
+
+## Rutina semanal del socio
+
+La rutina de un socio se organiza de lunes a viernes. El socio conserva una unica plantilla asignada a su membresia y esa plantilla contiene la semana completa: cada `RutinaEjercicio` indica su dia en `DiaSemana`, con 1 para lunes y 5 para viernes, y su posicion dentro de ese dia en `Orden`.
+
+`DiaSemana` admite nulo para los ejercicios que todavia no tienen dia asignado; esos ejercicios no aparecen en la consulta semanal y se informan en la barra de estado. `ValidacionesGimnasio.ValidarDiaRutina` rechaza cualquier valor fuera del rango y `ValidacionesGimnasio.NombreDia` traduce el numero al nombre que se muestra.
+
+`RutinaEjercicioLogica.ListarSemanaPorSocio` resuelve la membresia activa del socio y su asignacion vigente mas reciente. Si el socio no tiene membresia activa o no tiene rutina asignada devuelve una lista vacia, sin lanzar excepcion.

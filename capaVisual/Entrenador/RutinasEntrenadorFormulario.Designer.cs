@@ -8,16 +8,19 @@ namespace exxen2._0.capaVisual.Entrenador
     {
         private IContainer components;
         private Panel panelEncabezado; private Label lblTitulo; private Label lblDescripcion; private Button btnVolver; private Panel barraAcciones; private Label lblEstado; private Panel panelContenido; private Panel panelFormulario; private Panel contenedorFormulario; private Label lblNombre; private Label lblDescripcionRutina; private Label lblEjercicio; private Label lblSeries; private Label lblRepeticiones; private Label lblPeso; private Label lblDescanso; private Label lblOrden; private Label lblMembresia; private DataGridView tabla; private DataGridViewTextBoxColumn colId; private DataGridViewTextBoxColumn colRutina; private DataGridViewTextBoxColumn colCreador; private DataGridViewTextBoxColumn colAsignados; private DataGridViewTextBoxColumn colCreacion;
+        private Label lblDia; private ComboBox dia; private Button quitarEjercicio;
+        private DataGridView tablaEjercicios;
+        private DataGridViewTextBoxColumn colDetalleId; private DataGridViewTextBoxColumn colDetalleDia; private DataGridViewTextBoxColumn colDetalleOrden; private DataGridViewTextBoxColumn colDetalleEjercicio; private DataGridViewTextBoxColumn colDetalleSeries; private DataGridViewTextBoxColumn colDetalleRepeticiones; private DataGridViewTextBoxColumn colDetallePeso; private DataGridViewTextBoxColumn colDetalleDescanso;
         private ComboBox membresia; private ComboBox ejercicio; private TextBox nombre; private TextBox descripcion; private TextBox series; private TextBox repeticiones; private TextBox peso; private TextBox descanso; private TextBox orden; private Button nuevaRutina; private Button guardarRutina; private Button actualizar; private Button agregarEjercicio; private Button asignar; private Button darDeBaja;
         protected override void Dispose(bool liberarRecursos) { if (liberarRecursos && components != null) components.Dispose(); base.Dispose(liberarRecursos); }
 
         private void InitializeComponent()
         {
-            components = new Container(); panelEncabezado = new Panel(); lblTitulo = new Label(); lblDescripcion = new Label(); btnVolver = new Button(); barraAcciones = new Panel(); nuevaRutina = new Button(); guardarRutina = new Button(); actualizar = new Button(); agregarEjercicio = new Button(); asignar = new Button(); darDeBaja = new Button(); lblEstado = new Label(); panelContenido = new Panel(); panelFormulario = new Panel(); contenedorFormulario = new Panel(); lblNombre = new Label(); nombre = new TextBox(); lblDescripcionRutina = new Label(); descripcion = new TextBox(); lblEjercicio = new Label(); ejercicio = new ComboBox(); lblSeries = new Label(); series = new TextBox(); lblRepeticiones = new Label(); repeticiones = new TextBox(); lblPeso = new Label(); peso = new TextBox(); lblDescanso = new Label(); descanso = new TextBox(); lblOrden = new Label(); orden = new TextBox(); lblMembresia = new Label(); membresia = new ComboBox(); tabla = new DataGridView(); colId = new DataGridViewTextBoxColumn(); colRutina = new DataGridViewTextBoxColumn(); colCreador = new DataGridViewTextBoxColumn(); colAsignados = new DataGridViewTextBoxColumn(); colCreacion = new DataGridViewTextBoxColumn(); panelEncabezado.SuspendLayout(); barraAcciones.SuspendLayout(); panelContenido.SuspendLayout(); panelFormulario.SuspendLayout(); contenedorFormulario.SuspendLayout(); ((ISupportInitialize)(tabla)).BeginInit(); SuspendLayout();
+            components = new Container(); panelEncabezado = new Panel(); lblTitulo = new Label(); lblDescripcion = new Label(); btnVolver = new Button(); barraAcciones = new Panel(); nuevaRutina = new Button(); guardarRutina = new Button(); actualizar = new Button(); agregarEjercicio = new Button(); asignar = new Button(); darDeBaja = new Button(); lblEstado = new Label(); panelContenido = new Panel(); panelFormulario = new Panel(); contenedorFormulario = new Panel(); lblNombre = new Label(); nombre = new TextBox(); lblDescripcionRutina = new Label(); descripcion = new TextBox(); lblEjercicio = new Label(); ejercicio = new ComboBox(); lblSeries = new Label(); series = new TextBox(); lblRepeticiones = new Label(); repeticiones = new TextBox(); lblPeso = new Label(); peso = new TextBox(); lblDescanso = new Label(); descanso = new TextBox(); lblOrden = new Label(); orden = new TextBox(); lblMembresia = new Label(); membresia = new ComboBox(); tabla = new DataGridView(); colId = new DataGridViewTextBoxColumn(); colRutina = new DataGridViewTextBoxColumn(); colCreador = new DataGridViewTextBoxColumn(); colAsignados = new DataGridViewTextBoxColumn(); colCreacion = new DataGridViewTextBoxColumn(); lblDia = new Label(); dia = new ComboBox(); quitarEjercicio = new Button(); tablaEjercicios = new DataGridView(); colDetalleId = new DataGridViewTextBoxColumn(); colDetalleDia = new DataGridViewTextBoxColumn(); colDetalleOrden = new DataGridViewTextBoxColumn(); colDetalleEjercicio = new DataGridViewTextBoxColumn(); colDetalleSeries = new DataGridViewTextBoxColumn(); colDetalleRepeticiones = new DataGridViewTextBoxColumn(); colDetallePeso = new DataGridViewTextBoxColumn(); colDetalleDescanso = new DataGridViewTextBoxColumn(); panelEncabezado.SuspendLayout(); barraAcciones.SuspendLayout(); panelContenido.SuspendLayout(); panelFormulario.SuspendLayout(); contenedorFormulario.SuspendLayout(); ((ISupportInitialize)(tabla)).BeginInit(); ((ISupportInitialize)(tablaEjercicios)).BeginInit(); SuspendLayout();
             panelEncabezado.BackColor = Color.FromArgb(14, 116, 144);   panelEncabezado.Controls.Add(lblDescripcion); panelEncabezado.Controls.Add(lblTitulo); panelEncabezado.Controls.Add(btnVolver);   lblTitulo.Font = new Font("Segoe UI", 18F, FontStyle.Bold); lblTitulo.ForeColor = Color.White;  lblTitulo.Text = "Catalogo de rutinas";  lblDescripcion.ForeColor = Color.FromArgb(226, 232, 240);  lblDescripcion.Text = "Crea plantillas y asigna ejercicios a tus socios";  btnVolver.BackColor = Color.White; btnVolver.FlatStyle = FlatStyle.Flat; btnVolver.FlatAppearance.BorderSize = 0; btnVolver.ForeColor = Color.FromArgb(14, 116, 144);   btnVolver.Text = "Volver"; btnVolver.UseVisualStyleBackColor = false;
-            barraAcciones.BackColor = Color.White;   barraAcciones.Padding = new Padding(16, 8, 16, 8);  barraAcciones.Controls.Add(nuevaRutina); barraAcciones.Controls.Add(guardarRutina); barraAcciones.Controls.Add(actualizar); barraAcciones.Controls.Add(agregarEjercicio); barraAcciones.Controls.Add(asignar); barraAcciones.Controls.Add(darDeBaja);
-             lblEstado.BackColor = Color.FromArgb(226, 232, 240);  lblEstado.ForeColor = Color.FromArgb(51, 65, 85);  lblEstado.Padding = new Padding(18, 8, 8, 0); lblEstado.Text = "Listo"; panelContenido.BackColor = Color.FromArgb(248, 250, 252);  panelContenido.Padding = new Padding(20); panelContenido.Controls.Add(tabla); panelContenido.Controls.Add(panelFormulario); panelFormulario.BackColor = Color.White; panelFormulario.BorderStyle = BorderStyle.FixedSingle;   panelFormulario.Padding = new Padding(12); panelFormulario.Controls.Add(contenedorFormulario);
-            contenedorFormulario.Controls.Add(lblNombre); contenedorFormulario.Controls.Add(nombre); contenedorFormulario.Controls.Add(lblDescripcionRutina); contenedorFormulario.Controls.Add(descripcion); contenedorFormulario.Controls.Add(lblEjercicio); contenedorFormulario.Controls.Add(ejercicio); contenedorFormulario.Controls.Add(lblSeries); contenedorFormulario.Controls.Add(series); contenedorFormulario.Controls.Add(lblRepeticiones); contenedorFormulario.Controls.Add(repeticiones); contenedorFormulario.Controls.Add(lblPeso); contenedorFormulario.Controls.Add(peso); contenedorFormulario.Controls.Add(lblDescanso); contenedorFormulario.Controls.Add(descanso); contenedorFormulario.Controls.Add(lblOrden); contenedorFormulario.Controls.Add(orden); contenedorFormulario.Controls.Add(lblMembresia); contenedorFormulario.Controls.Add(membresia);    ejercicio.DropDownStyle = ComboBoxStyle.DropDownList;       membresia.DropDownStyle = ComboBoxStyle.DropDownList;
+            barraAcciones.BackColor = Color.White;   barraAcciones.Padding = new Padding(16, 8, 16, 8);  barraAcciones.Controls.Add(nuevaRutina); barraAcciones.Controls.Add(guardarRutina); barraAcciones.Controls.Add(actualizar); barraAcciones.Controls.Add(agregarEjercicio); barraAcciones.Controls.Add(asignar); barraAcciones.Controls.Add(darDeBaja); barraAcciones.Controls.Add(quitarEjercicio);
+             lblEstado.BackColor = Color.FromArgb(226, 232, 240);  lblEstado.ForeColor = Color.FromArgb(51, 65, 85);  lblEstado.Padding = new Padding(18, 8, 8, 0); lblEstado.Text = "Listo"; panelContenido.BackColor = Color.FromArgb(248, 250, 252);  panelContenido.Padding = new Padding(20); panelContenido.Controls.Add(tabla); panelContenido.Controls.Add(tablaEjercicios); panelContenido.Controls.Add(panelFormulario); panelFormulario.BackColor = Color.White; panelFormulario.BorderStyle = BorderStyle.FixedSingle;   panelFormulario.Padding = new Padding(12); panelFormulario.Controls.Add(contenedorFormulario);
+            contenedorFormulario.Controls.Add(lblNombre); contenedorFormulario.Controls.Add(nombre); contenedorFormulario.Controls.Add(lblDescripcionRutina); contenedorFormulario.Controls.Add(descripcion); contenedorFormulario.Controls.Add(lblEjercicio); contenedorFormulario.Controls.Add(ejercicio); contenedorFormulario.Controls.Add(lblSeries); contenedorFormulario.Controls.Add(series); contenedorFormulario.Controls.Add(lblRepeticiones); contenedorFormulario.Controls.Add(repeticiones); contenedorFormulario.Controls.Add(lblPeso); contenedorFormulario.Controls.Add(peso); contenedorFormulario.Controls.Add(lblDescanso); contenedorFormulario.Controls.Add(descanso); contenedorFormulario.Controls.Add(lblOrden); contenedorFormulario.Controls.Add(orden); contenedorFormulario.Controls.Add(lblMembresia); contenedorFormulario.Controls.Add(membresia); contenedorFormulario.Controls.Add(lblDia); contenedorFormulario.Controls.Add(dia);    ejercicio.DropDownStyle = ComboBoxStyle.DropDownList;       membresia.DropDownStyle = ComboBoxStyle.DropDownList;
 
                 tabla.BackgroundColor = Color.White; tabla.BorderStyle = BorderStyle.None;       tabla.Columns.AddRange(new DataGridViewColumn[] { colId, colRutina, colCreador, colAsignados, colCreacion }); colId.HeaderText = "Id"; colId.Name = "colId"; colId.Visible = false; colRutina.HeaderText = "Rutina"; colRutina.Name = "colRutina"; colCreador.HeaderText = "Entrenador"; colCreador.Name = "colCreador"; colAsignados.HeaderText = "Socios asignados"; colAsignados.Name = "colAsignados"; colCreacion.HeaderText = "Creacion"; colCreacion.Name = "colCreacion";
              panelEncabezado.Name = "panelEncabezado";  panelEncabezado.TabIndex = 0;
@@ -29,6 +32,19 @@ namespace exxen2._0.capaVisual.Entrenador
              agregarEjercicio.BackColor = Color.FromArgb(14, 116, 144); agregarEjercicio.FlatAppearance.BorderSize = 0; agregarEjercicio.FlatStyle = FlatStyle.Flat; agregarEjercicio.ForeColor = Color.White;  agregarEjercicio.Margin = new Padding(4, 0, 4, 0); agregarEjercicio.Name = "agregarEjercicio"; agregarEjercicio.Padding = new Padding(10, 0, 10, 0); agregarEjercicio.Text = "Agregar ejercicio"; agregarEjercicio.UseVisualStyleBackColor = false;
              asignar.BackColor = Color.FromArgb(14, 116, 144); asignar.FlatAppearance.BorderSize = 0; asignar.FlatStyle = FlatStyle.Flat; asignar.ForeColor = Color.White;  asignar.Margin = new Padding(4, 0, 4, 0); asignar.Name = "asignar"; asignar.Padding = new Padding(10, 0, 10, 0); asignar.Text = "Asignar a socio"; asignar.UseVisualStyleBackColor = false;
              darDeBaja.BackColor = Color.FromArgb(254, 242, 242); darDeBaja.FlatAppearance.BorderSize = 0; darDeBaja.FlatStyle = FlatStyle.Flat; darDeBaja.ForeColor = Color.FromArgb(185, 28, 28);  darDeBaja.Margin = new Padding(4, 0, 4, 0); darDeBaja.Name = "darDeBaja"; darDeBaja.Padding = new Padding(10, 0, 10, 0); darDeBaja.Text = "Dar de baja"; darDeBaja.UseVisualStyleBackColor = false;
+             lblDia.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblDia.ForeColor = Color.FromArgb(30, 41, 59); lblDia.Name = "lblDia"; lblDia.Text = "Dia:";
+             dia.DropDownStyle = ComboBoxStyle.DropDownList; dia.Margin = new Padding(0, 4, 8, 4); dia.Name = "dia"; dia.Items.AddRange(new object[] { "Lunes", "Martes", "Miercoles", "Jueves", "Viernes" }); dia.SelectedIndex = 0;
+             quitarEjercicio.BackColor = Color.FromArgb(254, 242, 242); quitarEjercicio.FlatAppearance.BorderSize = 0; quitarEjercicio.FlatStyle = FlatStyle.Flat; quitarEjercicio.ForeColor = Color.FromArgb(185, 28, 28);  quitarEjercicio.Margin = new Padding(4, 0, 4, 0); quitarEjercicio.Name = "quitarEjercicio"; quitarEjercicio.Padding = new Padding(10, 0, 10, 0); quitarEjercicio.Text = "Quitar ejercicio"; quitarEjercicio.UseVisualStyleBackColor = false;
+             tablaEjercicios.BackgroundColor = Color.White; tablaEjercicios.BorderStyle = BorderStyle.None; tablaEjercicios.Name = "tablaEjercicios"; tablaEjercicios.TabIndex = 2;
+             tablaEjercicios.Columns.AddRange(new DataGridViewColumn[] { colDetalleId, colDetalleDia, colDetalleOrden, colDetalleEjercicio, colDetalleSeries, colDetalleRepeticiones, colDetallePeso, colDetalleDescanso });
+             colDetalleId.HeaderText = "Id"; colDetalleId.Name = "colDetalleId"; colDetalleId.Visible = false; colDetalleId.FillWeight = 60;
+             colDetalleDia.HeaderText = "Dia"; colDetalleDia.Name = "colDetalleDia"; colDetalleDia.FillWeight = 120; colDetalleDia.MinimumWidth = 90;
+             colDetalleOrden.HeaderText = "Orden"; colDetalleOrden.Name = "colDetalleOrden"; colDetalleOrden.FillWeight = 80; colDetalleOrden.MinimumWidth = 70;
+             colDetalleEjercicio.HeaderText = "Ejercicio"; colDetalleEjercicio.Name = "colDetalleEjercicio"; colDetalleEjercicio.FillWeight = 300; colDetalleEjercicio.MinimumWidth = 120;
+             colDetalleSeries.HeaderText = "Series"; colDetalleSeries.Name = "colDetalleSeries"; colDetalleSeries.FillWeight = 90; colDetalleSeries.MinimumWidth = 70;
+             colDetalleRepeticiones.HeaderText = "Repeticiones"; colDetalleRepeticiones.Name = "colDetalleRepeticiones"; colDetalleRepeticiones.FillWeight = 120; colDetalleRepeticiones.MinimumWidth = 90;
+             colDetallePeso.HeaderText = "Peso"; colDetallePeso.Name = "colDetallePeso"; colDetallePeso.FillWeight = 90; colDetallePeso.MinimumWidth = 70;
+             colDetalleDescanso.HeaderText = "Descanso"; colDetalleDescanso.Name = "colDetalleDescanso"; colDetalleDescanso.FillWeight = 110; colDetalleDescanso.MinimumWidth = 80;
              lblEstado.Name = "lblEstado";  lblEstado.TabIndex = 3;  panelContenido.Name = "panelContenido";  panelContenido.TabIndex = 2;  panelFormulario.Name = "panelFormulario";  panelFormulario.TabIndex = 0;  contenedorFormulario.Name = "contenedorFormulario";  contenedorFormulario.TabIndex = 0;
               lblNombre.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblNombre.ForeColor = Color.FromArgb(30, 41, 59); lblNombre.Name = "lblNombre"; lblNombre.Text = "Nombre:";
               lblDescripcionRutina.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblDescripcionRutina.ForeColor = Color.FromArgb(30, 41, 59); lblDescripcionRutina.Name = "lblDescripcionRutina"; lblDescripcionRutina.Text = "Descripcion:";
@@ -182,14 +198,14 @@ namespace exxen2._0.capaVisual.Entrenador
             this.panelFormulario.AutoSize = false;
             this.panelFormulario.Dock = System.Windows.Forms.DockStyle.None;
             this.panelFormulario.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.panelFormulario.Location = new System.Drawing.Point(16, 354);
-            this.panelFormulario.Size = new System.Drawing.Size(1068, 144);
+            this.panelFormulario.Location = new System.Drawing.Point(16, 316);
+            this.panelFormulario.Size = new System.Drawing.Size(1068, 182);
             this.panelFormulario.AutoScroll = false;
             this.contenedorFormulario.AutoSize = false;
             this.contenedorFormulario.Dock = System.Windows.Forms.DockStyle.None;
             this.contenedorFormulario.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.contenedorFormulario.Location = new System.Drawing.Point(16, 14);
-            this.contenedorFormulario.Size = new System.Drawing.Size(1034, 114);
+            this.contenedorFormulario.Size = new System.Drawing.Size(1034, 152);
             this.contenedorFormulario.AutoScroll = false;
             this.lblNombre.AutoSize = false;
             this.lblNombre.Dock = System.Windows.Forms.DockStyle.None;
@@ -238,9 +254,9 @@ namespace exxen2._0.capaVisual.Entrenador
             this.lblMembresia.Size = new System.Drawing.Size(102, 30);
             this.tabla.AutoSize = false;
             this.tabla.Dock = System.Windows.Forms.DockStyle.None;
-            this.tabla.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.tabla.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.tabla.Location = new System.Drawing.Point(16, 16);
-            this.tabla.Size = new System.Drawing.Size(1068, 322);
+            this.tabla.Size = new System.Drawing.Size(1068, 140);
             this.tabla.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.tabla.ReadOnly = true;
             this.tabla.AllowUserToAddRows = false;
@@ -250,6 +266,21 @@ namespace exxen2._0.capaVisual.Entrenador
             this.tabla.MultiSelect = false;
             this.tabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.tabla.ColumnHeadersHeight = 46;
+            this.tablaEjercicios.AutoSize = false;
+            this.tablaEjercicios.Dock = System.Windows.Forms.DockStyle.None;
+            this.tablaEjercicios.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.tablaEjercicios.Location = new System.Drawing.Point(16, 164);
+            this.tablaEjercicios.Size = new System.Drawing.Size(1068, 144);
+            this.tablaEjercicios.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.tablaEjercicios.ReadOnly = true;
+            this.tablaEjercicios.AllowUserToAddRows = false;
+            this.tablaEjercicios.AllowUserToDeleteRows = false;
+            this.tablaEjercicios.AllowUserToResizeRows = false;
+            this.tablaEjercicios.RowHeadersVisible = false;
+            this.tablaEjercicios.MultiSelect = false;
+            this.tablaEjercicios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.tablaEjercicios.ColumnHeadersHeight = 46;
+            this.tablaEjercicios.RowTemplate.Height = 30;
             this.membresia.AutoSize = false;
             this.membresia.Dock = System.Windows.Forms.DockStyle.None;
             this.membresia.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
@@ -295,6 +326,16 @@ namespace exxen2._0.capaVisual.Entrenador
             this.orden.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.orden.Location = new System.Drawing.Point(454, 80);
             this.orden.Size = new System.Drawing.Size(222, 26);
+            this.lblDia.AutoSize = false;
+            this.lblDia.Dock = System.Windows.Forms.DockStyle.None;
+            this.lblDia.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.lblDia.Location = new System.Drawing.Point(0, 114);
+            this.lblDia.Size = new System.Drawing.Size(102, 30);
+            this.dia.AutoSize = false;
+            this.dia.Dock = System.Windows.Forms.DockStyle.None;
+            this.dia.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.dia.Location = new System.Drawing.Point(110, 118);
+            this.dia.Size = new System.Drawing.Size(222, 26);
             this.nuevaRutina.AutoSize = false;
             this.nuevaRutina.Dock = System.Windows.Forms.DockStyle.None;
             this.nuevaRutina.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
@@ -314,18 +355,23 @@ namespace exxen2._0.capaVisual.Entrenador
             this.agregarEjercicio.Dock = System.Windows.Forms.DockStyle.None;
             this.agregarEjercicio.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.agregarEjercicio.Location = new System.Drawing.Point(405, 8);
-            this.agregarEjercicio.Size = new System.Drawing.Size(136, 34);
+            this.agregarEjercicio.Size = new System.Drawing.Size(152, 34);
             this.asignar.AutoSize = false;
             this.asignar.Dock = System.Windows.Forms.DockStyle.None;
             this.asignar.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.asignar.Location = new System.Drawing.Point(549, 8);
-            this.asignar.Size = new System.Drawing.Size(126, 34);
+            this.asignar.Location = new System.Drawing.Point(565, 8);
+            this.asignar.Size = new System.Drawing.Size(140, 34);
             this.darDeBaja.AutoSize = false;
             this.darDeBaja.Dock = System.Windows.Forms.DockStyle.None;
             this.darDeBaja.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.darDeBaja.Location = new System.Drawing.Point(683, 8);
+            this.darDeBaja.Location = new System.Drawing.Point(713, 8);
             this.darDeBaja.Size = new System.Drawing.Size(120, 34);
-            panelEncabezado.ResumeLayout(false); panelEncabezado.PerformLayout(); barraAcciones.ResumeLayout(false); barraAcciones.PerformLayout(); panelContenido.ResumeLayout(false); panelFormulario.ResumeLayout(false); contenedorFormulario.ResumeLayout(false); contenedorFormulario.PerformLayout(); ((ISupportInitialize)(tabla)).EndInit(); ResumeLayout(false);
+            this.quitarEjercicio.AutoSize = false;
+            this.quitarEjercicio.Dock = System.Windows.Forms.DockStyle.None;
+            this.quitarEjercicio.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.quitarEjercicio.Location = new System.Drawing.Point(841, 8);
+            this.quitarEjercicio.Size = new System.Drawing.Size(140, 34);
+            panelEncabezado.ResumeLayout(false); panelEncabezado.PerformLayout(); barraAcciones.ResumeLayout(false); barraAcciones.PerformLayout(); panelContenido.ResumeLayout(false); panelFormulario.ResumeLayout(false); contenedorFormulario.ResumeLayout(false); contenedorFormulario.PerformLayout(); ((ISupportInitialize)(tabla)).EndInit(); ((ISupportInitialize)(tablaEjercicios)).EndInit(); ResumeLayout(false);
 
             this.Load += new System.EventHandler(this.RutinasEntrenadorFormulario_Load);
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
@@ -337,6 +383,8 @@ namespace exxen2._0.capaVisual.Entrenador
             this.agregarEjercicio.Click += new System.EventHandler(this.agregarEjercicio_Click);
             this.asignar.Click += new System.EventHandler(this.asignar_Click);
             this.darDeBaja.Click += new System.EventHandler(this.darDeBaja_Click);
+            this.quitarEjercicio.Click += new System.EventHandler(this.quitarEjercicio_Click);
+            this.tablaEjercicios.SelectionChanged += new System.EventHandler(this.tablaEjercicios_SelectionChanged);
                 }
 
     }

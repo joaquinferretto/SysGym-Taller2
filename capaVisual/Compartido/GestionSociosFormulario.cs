@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -19,6 +19,7 @@ namespace exxen2._0.capaVisual.Compartido
         private int idSeleccionado;
         private bool cargandoTabla;
         private bool estadoSeleccionado = true;
+        private readonly Color colorPrimario;
         private byte[] fotoSeleccionada;
         /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
         public GestionSociosFormulario() : this(Color.FromArgb(79, 70, 229))
@@ -29,6 +30,7 @@ namespace exxen2._0.capaVisual.Compartido
         public GestionSociosFormulario(Color colorPrimario, bool permitirEdicion = true)
         {
             this.permitirEdicion = permitirEdicion;
+            this.colorPrimario = colorPrimario;
             InitializeComponent();
             if (!permitirEdicion)
             {
@@ -261,6 +263,22 @@ namespace exxen2._0.capaVisual.Compartido
                     Altura = AyudaFormularioVisual.DecimalPositivo(altura, "altura")
                 };
                 MessageBox.Show("IMC: " + logica.CalcularIMC(socio).ToString("0.00"), "Indice de masa corporal", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                AyudaFormularioVisual.MostrarError(lblEstado, ex);
+            }
+        }
+
+        /* Al hacer clic en verRutina, abre la rutina semanal del socio seleccionado en la grilla. */
+        private void verRutina_Click(object origen, EventArgs e)
+        {
+            try
+            {
+                if (idSeleccionado == 0)
+                    throw new InvalidOperationException("Selecciona un socio.");
+                using (var semana = new RutinaSemanalFormulario(idSeleccionado, apellido.Text.Trim() + ", " + nombre.Text.Trim(), colorPrimario))
+                    semana.ShowDialog(this);
             }
             catch (Exception ex)
             {

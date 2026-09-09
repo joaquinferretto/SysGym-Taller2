@@ -31,6 +31,7 @@ namespace exxen2._0.capaVisual.Compartido
         private Button darDeBaja;
         private Button reactivar;
         private Button calcularImc;
+        private Button verRutina;
         private ComboBox filtroEstado;
         private TextBox buscador;
         private Panel panelContenido;
@@ -117,6 +118,7 @@ namespace exxen2._0.capaVisual.Compartido
             darDeBaja = new Button();
             reactivar = new Button();
             calcularImc = new Button();
+            verRutina = new Button();
             panelEncabezado.SuspendLayout();
             panelContenido.SuspendLayout();
             contenedorContenido.SuspendLayout();
@@ -249,7 +251,7 @@ namespace exxen2._0.capaVisual.Compartido
             panelDetalle.Name = "panelDetalle"; panelDetalle.TabIndex = 1; contenedorDetalle.Name = "contenedorDetalle"; contenedorDetalle.TabIndex = 0; lblFormulario.Name = "lblFormulario";  lblFormulario.TabIndex = 0; contenedorCampos.Name = "contenedorCampos";  contenedorCampos.TabIndex = 1; panelAcciones.Name = "panelAcciones"; panelAcciones.TabIndex = 2;
               lblNombre.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblNombre.ForeColor = Color.FromArgb(51, 65, 85); lblNombre.Name = "lblNombre"; lblNombre.Text = "Nombre:";   lblApellido.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblApellido.ForeColor = Color.FromArgb(51, 65, 85); lblApellido.Name = "lblApellido"; lblApellido.Text = "Apellido:";   lblDni.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblDni.ForeColor = Color.FromArgb(51, 65, 85); lblDni.Name = "lblDni"; lblDni.Text = "DNI:";   lblFechaNacimiento.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblFechaNacimiento.ForeColor = Color.FromArgb(51, 65, 85); lblFechaNacimiento.Name = "lblFechaNacimiento"; lblFechaNacimiento.Text = "Nacimiento:";   lblPeso.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblPeso.ForeColor = Color.FromArgb(51, 65, 85); lblPeso.Name = "lblPeso"; lblPeso.Text = "Peso (kg):";   lblAltura.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblAltura.ForeColor = Color.FromArgb(51, 65, 85); lblAltura.Name = "lblAltura"; lblAltura.Text = "Altura (m):";
             nombre.BorderStyle = BorderStyle.FixedSingle;  nombre.Name = "nombre"; apellido.BorderStyle = BorderStyle.FixedSingle;  apellido.Name = "apellido"; dni.BorderStyle = BorderStyle.FixedSingle;  dni.Name = "dni"; fechaNacimiento.Name = "fechaNacimiento"; peso.BorderStyle = BorderStyle.FixedSingle;  peso.Name = "peso"; altura.BorderStyle = BorderStyle.FixedSingle;  altura.Name = "altura";
-            nuevo.BackColor = Color.FromArgb(79, 70, 229); nuevo.FlatAppearance.BorderSize = 0; nuevo.FlatStyle = FlatStyle.Flat; nuevo.ForeColor = Color.White;  nuevo.Name = "nuevo";  nuevo.Text = "+ Nuevo socio"; nuevo.UseVisualStyleBackColor = false; guardar.BackColor = Color.FromArgb(79, 70, 229); guardar.FlatAppearance.BorderSize = 0; guardar.FlatStyle = FlatStyle.Flat; guardar.ForeColor = Color.White;  guardar.Name = "guardar";  guardar.Text = "Guardar"; guardar.UseVisualStyleBackColor = false; actualizar.BackColor = Color.FromArgb(226, 232, 240); actualizar.FlatAppearance.BorderSize = 0; actualizar.FlatStyle = FlatStyle.Flat; actualizar.ForeColor = Color.FromArgb(30, 41, 59);  actualizar.Name = "actualizar";  actualizar.Text = "Actualizar"; actualizar.UseVisualStyleBackColor = false; darDeBaja.BackColor = Color.FromArgb(254, 242, 242); darDeBaja.FlatAppearance.BorderSize = 0; darDeBaja.FlatStyle = FlatStyle.Flat; darDeBaja.ForeColor = Color.FromArgb(185, 28, 28);  darDeBaja.Name = "darDeBaja";  darDeBaja.Text = "Dar de baja"; darDeBaja.UseVisualStyleBackColor = false; reactivar.BackColor = Color.FromArgb(226, 232, 240); reactivar.FlatAppearance.BorderSize = 0; reactivar.FlatStyle = FlatStyle.Flat; reactivar.ForeColor = Color.FromArgb(30, 41, 59);  reactivar.Name = "reactivar";  reactivar.Text = "Reactivar"; reactivar.UseVisualStyleBackColor = false; calcularImc.BackColor = Color.FromArgb(226, 232, 240); calcularImc.FlatAppearance.BorderSize = 0; calcularImc.FlatStyle = FlatStyle.Flat; calcularImc.ForeColor = Color.FromArgb(30, 41, 59);  calcularImc.Name = "calcularImc";  calcularImc.Text = "Calcular IMC"; calcularImc.UseVisualStyleBackColor = false;
+            nuevo.BackColor = Color.FromArgb(79, 70, 229); nuevo.FlatAppearance.BorderSize = 0; nuevo.FlatStyle = FlatStyle.Flat; nuevo.ForeColor = Color.White;  nuevo.Name = "nuevo";  nuevo.Text = "+ Nuevo socio"; nuevo.UseVisualStyleBackColor = false; guardar.BackColor = Color.FromArgb(79, 70, 229); guardar.FlatAppearance.BorderSize = 0; guardar.FlatStyle = FlatStyle.Flat; guardar.ForeColor = Color.White;  guardar.Name = "guardar";  guardar.Text = "Guardar"; guardar.UseVisualStyleBackColor = false; actualizar.BackColor = Color.FromArgb(226, 232, 240); actualizar.FlatAppearance.BorderSize = 0; actualizar.FlatStyle = FlatStyle.Flat; actualizar.ForeColor = Color.FromArgb(30, 41, 59);  actualizar.Name = "actualizar";  actualizar.Text = "Actualizar"; actualizar.UseVisualStyleBackColor = false; darDeBaja.BackColor = Color.FromArgb(254, 242, 242); darDeBaja.FlatAppearance.BorderSize = 0; darDeBaja.FlatStyle = FlatStyle.Flat; darDeBaja.ForeColor = Color.FromArgb(185, 28, 28);  darDeBaja.Name = "darDeBaja";  darDeBaja.Text = "Dar de baja"; darDeBaja.UseVisualStyleBackColor = false; reactivar.BackColor = Color.FromArgb(226, 232, 240); reactivar.FlatAppearance.BorderSize = 0; reactivar.FlatStyle = FlatStyle.Flat; reactivar.ForeColor = Color.FromArgb(30, 41, 59);  reactivar.Name = "reactivar";  reactivar.Text = "Reactivar"; reactivar.UseVisualStyleBackColor = false; calcularImc.BackColor = Color.FromArgb(226, 232, 240); calcularImc.FlatAppearance.BorderSize = 0; calcularImc.FlatStyle = FlatStyle.Flat; calcularImc.ForeColor = Color.FromArgb(30, 41, 59);  calcularImc.Name = "calcularImc";  calcularImc.Text = "Calcular IMC"; calcularImc.UseVisualStyleBackColor = false; verRutina.BackColor = Color.FromArgb(226, 232, 240); verRutina.FlatAppearance.BorderSize = 0; verRutina.FlatStyle = FlatStyle.Flat; verRutina.ForeColor = Color.FromArgb(30, 41, 59);  verRutina.Name = "verRutina";  verRutina.Text = "Ver rutina semanal"; verRutina.UseVisualStyleBackColor = false;
             Controls.Add(panelContenido);
             Controls.Add(lblEstado);
             Controls.Add(barraAcciones);
@@ -585,6 +587,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.panelDetalle.Controls.Add(this.fotoSocio);
             this.panelDetalle.Controls.Add(this.btnSeleccionarFoto);
             this.panelDetalle.Controls.Add(this.btnQuitarFoto);
+            this.panelDetalle.Controls.Add(this.verRutina);
             this.contenedorCampos.Controls.Add(this.lblSexo);
             this.contenedorCampos.Controls.Add(this.sexo);
             this.fotoSocio.Name = "fotoSocio";
@@ -604,6 +607,11 @@ namespace exxen2._0.capaVisual.Compartido
             this.btnQuitarFoto.Text = "Quitar foto";
             this.btnQuitarFoto.Location = new System.Drawing.Point(152, 498);
             this.btnQuitarFoto.Size = new System.Drawing.Size(180, 36);
+            this.verRutina.AutoSize = false;
+            this.verRutina.Dock = System.Windows.Forms.DockStyle.None;
+            this.verRutina.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.verRutina.Location = new System.Drawing.Point(16, 590);
+            this.verRutina.Size = new System.Drawing.Size(316, 38);
             this.btnQuitarFoto.Click += new System.EventHandler(this.btnQuitarFoto_Click);
             this.lblSexo.Name = "lblSexo";
             this.lblSexo.Text = "Sexo:";
@@ -637,6 +645,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.darDeBaja.Click += new System.EventHandler(this.darDeBaja_Click);
             this.reactivar.Click += new System.EventHandler(this.reactivar_Click);
             this.calcularImc.Click += new System.EventHandler(this.calcularImc_Click);
+            this.verRutina.Click += new System.EventHandler(this.verRutina_Click);
                     this.peso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.peso_KeyPress);
             this.altura.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.altura_KeyPress);
         }

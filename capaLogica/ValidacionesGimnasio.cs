@@ -24,6 +24,26 @@ namespace exxen2._0.capaLogica
                 throw new InvalidOperationException("La foto debe tener formato PNG, JPG o BMP válido.");
         }
 
+        public const int PrimerDiaRutina = 1;
+        public const int UltimoDiaRutina = 5;
+
+        private static readonly string[] DiasRutina = { "Lunes", "Martes", "Miercoles", "Jueves", "Viernes" };
+
+        /* Valida que el día de la rutina quede sin asignar o dentro de la semana de lunes a viernes. */
+        public static void ValidarDiaRutina(int? dia)
+        {
+            if (dia.HasValue && (dia.Value < PrimerDiaRutina || dia.Value > UltimoDiaRutina))
+                throw new InvalidOperationException("El dia de la rutina debe estar entre lunes y viernes.");
+        }
+
+        /* Traduce el número de día de la rutina al nombre que se muestra en pantalla. */
+        public static string NombreDia(int? dia)
+        {
+            if (!dia.HasValue || dia.Value < PrimerDiaRutina || dia.Value > UltimoDiaRutina)
+                return "Sin dia";
+            return DiasRutina[dia.Value - PrimerDiaRutina];
+        }
+
         /* Comprueba si el usuario activo tiene rol de administrador o recepcionista. */
         public static bool PuedeRegistrarMembresia(UsuarioSistema usuario)
         {

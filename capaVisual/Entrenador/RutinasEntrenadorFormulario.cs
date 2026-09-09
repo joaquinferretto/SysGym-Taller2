@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
@@ -19,6 +19,8 @@ namespace exxen2._0.capaVisual.Entrenador
         private readonly RutinaEjercicioLogica ejerciciosRutina = new RutinaEjercicioLogica();
         private readonly EjercicioLogica ejercicios = new EjercicioLogica();
         private int idRutina;
+        private int idRutinaEjercicio;
+        private bool cargandoDetalle;
         /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
         public RutinasEntrenadorFormulario() : this(new UsuarioSistema { Nombre = "Entrenador", Apellido = "de diseno" })
         {
@@ -101,6 +103,7 @@ namespace exxen2._0.capaVisual.Entrenador
                 nombre.Text = rutina.Nombre;
                 descripcion.Text = rutina.Descripcion ?? string.Empty;
                 CargarMembresias();
+                CargarDetalleDeRutina();
             }
             catch (Exception ex)
             {
@@ -108,14 +111,96 @@ namespace exxen2._0.capaVisual.Entrenador
             }
         }
 
+        /* Presenta los ejercicios de la rutina seleccionada repartidos por día de la semana. */
+        private void CargarDetalleDeRutina()
+        {
+            cargandoDetalle = true;
+            try
+            {
+                tablaEjercicios.Rows.Clear();
+                if (idRutina == 0)
+                    return;
+                foreach (var detalle in ejerciciosRutina.ListarPorRutina(idRutina))
+                {
+                    tablaEjercicios.Rows.Add(
+                        detalle.IdRutinaEjercicio,
+                        ValidacionesGimnasio.NombreDia(detalle.DiaSemana),
+                        detalle.Orden,
+                        detalle.Ejercicio == null ? "-" : detalle.Ejercicio.Nombre,
+                        detalle.Series.HasValue ? detalle.Series.Value.ToString() : "-",
+                        detalle.Repeticiones.HasValue ? detalle.Repeticiones.Value.ToString() : "-",
+                        detalle.Peso.HasValue ? detalle.Peso.Value.ToString("0.##") : "-",
+                        detalle.Descanso + "s");
+                }
+
+                tablaEjercicios.ClearSelection();
+                idRutinaEjercicio = 0;
+            }
+            finally
+            {
+                cargandoDetalle = false;
+            }
+        }
+
+        /* Al elegir un ejercicio de la rutina, carga sus valores para revisarlos o quitarlo. */
+        private void tablaEjercicios_SelectionChanged(object origen, EventArgs e)
+        {
+            if (cargandoDetalle || tablaEjercicios.CurrentRow == null || !tablaEjercicios.CurrentRow.Selected)
+                return;
+            var fila = tablaEjercicios.CurrentRow;
+            if (fila.Cells[0].Value == null)
+                return;
+            idRutinaEjercicio = Convert.ToInt32(fila.Cells[0].Value);
+            var nombreDia = Convert.ToString(fila.Cells[1].Value);
+            var indiceDia = dia.Items.IndexOf(nombreDia);
+            if (indiceDia >= 0)
+                dia.SelectedIndex = indiceDia;
+            orden.Text = Convert.ToString(fila.Cells[2].Value);
+            var nombreEjercicio = Convert.ToString(fila.Cells[3].Value);
+            for (var indice = 0; indice < ejercicio.Items.Count; indice++)
+            {
+                var opcion = ejercicio.Items[indice] as Ejercicio;
+                if (opcion != null && opcion.Nombre == nombreEjercicio)
+                {
+                    ejercicio.SelectedIndex = indice;
+                    break;
+                }
+            }
+        }
+
+        /* Al hacer clic en quitarEjercicio, da de baja el ejercicio elegido de la plantilla. */
+        private void quitarEjercicio_Click(object origen, EventArgs e)
+        {
+            try
+            {
+                if (idRutinaEjercicio == 0)
+                    throw new InvalidOperationException("Selecciona un ejercicio de la rutina.");
+                ejerciciosRutina.Quitar(idRutinaEjercicio);
+                CargarDetalleDeRutina();
+                AyudaFormularioVisual.MostrarExito(lblEstado, "Ejercicio quitado de la plantilla.");
+            }
+            catch (Exception ex)
+            {
+                AyudaFormularioVisual.MostrarError(lblEstado, ex);
+            }
+        }
+
+        /* Traduce el día elegido en el combo al número que guarda la rutina. */
+        private int? DiaSeleccionado()
+        {
+            return dia.SelectedIndex < 0 ? (int? )null : dia.SelectedIndex + ValidacionesGimnasio.PrimerDiaRutina;
+        }
+
         /* Al hacer clic en nuevaRutina, limpia la selección para crear una plantilla de rutina. */
         private void nuevaRutina_Click(object origen, EventArgs e)
         {
             idRutina = 0;
+            idRutinaEjercicio = 0;
             nombre.Clear();
             descripcion.Clear();
             tabla.ClearSelection();
             CargarMembresias();
+            CargarDetalleDeRutina();
         }
 
         /* Al hacer clic en guardarRutina, crea o actualiza la plantilla mediante RutinaLogica. */
@@ -164,8 +249,9 @@ namespace exxen2._0.capaVisual.Entrenador
                         return;
                 }
 
-                ejerciciosRutina.AgregarEjercicio(new RutinaEjercicio { IdRutina = idRutina, IdEjercicio = Convert.ToInt32(ejercicio.SelectedValue), Series = EnteroOpcional(series), Repeticiones = EnteroOpcional(repeticiones), Peso = DecimalOpcional(peso), Descanso = EnteroOpcional(descanso) ?? 0, Orden = EnteroOpcional(orden) ?? 1 });
-                AyudaFormularioVisual.MostrarExito(lblEstado, "Ejercicio agregado a la plantilla.");
+                ejerciciosRutina.AgregarEjercicio(new RutinaEjercicio { IdRutina = idRutina, IdEjercicio = Convert.ToInt32(ejercicio.SelectedValue), Series = EnteroOpcional(series), Repeticiones = EnteroOpcional(repeticiones), Peso = DecimalOpcional(peso), Descanso = EnteroOpcional(descanso) ?? 0, Orden = EnteroOpcional(orden) ?? 1, DiaSemana = DiaSeleccionado() });
+                CargarDetalleDeRutina();
+                AyudaFormularioVisual.MostrarExito(lblEstado, "Ejercicio agregado al " + ValidacionesGimnasio.NombreDia(DiaSeleccionado()) + " de la plantilla.");
             }
             catch (Exception ex)
             {
@@ -253,6 +339,7 @@ namespace exxen2._0.capaVisual.Entrenador
         {
             Cargar();
             CargarMembresias();
+            CargarDetalleDeRutina();
         }
     }
 }
