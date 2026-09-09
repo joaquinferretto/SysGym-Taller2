@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -6,7 +6,7 @@ namespace exxen2._0.capaVisual.Administrador
 {
     partial class ConsultaRutinasAdministradorFormulario
     {
-        private IContainer components;
+        private IContainer components = null;
         private Panel panelEncabezado;
         private Label lblTitulo;
         private Label lblDescripcion;
@@ -30,79 +30,219 @@ namespace exxen2._0.capaVisual.Administrador
 
         private void InitializeComponent()
         {
-            components = new Container(); panelEncabezado = new Panel(); lblTitulo = new Label(); lblDescripcion = new Label(); btnVolver = new Button(); barraAcciones = new Panel(); actualizar = new Button(); lblEstado = new Label(); panelContenido = new Panel(); tabla = new DataGridView(); colId = new DataGridViewTextBoxColumn(); colRutina = new DataGridViewTextBoxColumn(); colDescripcion = new DataGridViewTextBoxColumn(); colEntrenador = new DataGridViewTextBoxColumn(); colAsignados = new DataGridViewTextBoxColumn();
-            panelEncabezado.SuspendLayout(); barraAcciones.SuspendLayout(); panelContenido.SuspendLayout(); ((ISupportInitialize)(tabla)).BeginInit(); SuspendLayout();
-            panelEncabezado.BackColor = Color.FromArgb(79, 70, 229);   panelEncabezado.Controls.Add(lblDescripcion); panelEncabezado.Controls.Add(lblTitulo); panelEncabezado.Controls.Add(btnVolver);
-             panelEncabezado.Name = "panelEncabezado";  panelEncabezado.TabIndex = 0;
-             lblTitulo.Font = new Font("Segoe UI", 18F, FontStyle.Bold); lblTitulo.ForeColor = Color.White;  lblTitulo.Text = "Catalogo de rutinas";
-            lblTitulo.Name = "lblTitulo";  lblTitulo.TabIndex = 0;
-             lblDescripcion.ForeColor = Color.FromArgb(226, 232, 240);  lblDescripcion.Text = "Plantillas reutilizables y cantidad de socios asignados";
-            lblDescripcion.Name = "lblDescripcion";  lblDescripcion.TabIndex = 1;
-             btnVolver.BackColor = Color.White; btnVolver.FlatStyle = FlatStyle.Flat; btnVolver.FlatAppearance.BorderSize = 0; btnVolver.ForeColor = Color.FromArgb(79, 70, 229);   btnVolver.Text = "Volver"; btnVolver.UseVisualStyleBackColor = false;
-            btnVolver.Name = "btnVolver"; btnVolver.TabIndex = 2;
-            barraAcciones.BackColor = Color.White;   barraAcciones.Padding = new Padding(16, 8, 16, 8); 
-             barraAcciones.Name = "barraAcciones";  barraAcciones.TabIndex = 1;
-             actualizar.BackColor = Color.FromArgb(79, 70, 229); actualizar.FlatStyle = FlatStyle.Flat; actualizar.FlatAppearance.BorderSize = 0; actualizar.ForeColor = Color.White;  actualizar.Margin = new Padding(4, 0, 4, 0); actualizar.Padding = new Padding(12, 0, 12, 0); actualizar.Text = "Actualizar"; actualizar.UseVisualStyleBackColor = false; barraAcciones.Controls.Add(actualizar);
-             actualizar.Name = "actualizar";  actualizar.TabIndex = 0;
-             lblEstado.BackColor = Color.FromArgb(226, 232, 240);  lblEstado.ForeColor = Color.FromArgb(51, 65, 85);  lblEstado.Padding = new Padding(18, 8, 8, 0); lblEstado.Text = "Listo";
-             lblEstado.Name = "lblEstado";  lblEstado.TabIndex = 3;
-            panelContenido.BackColor = Color.FromArgb(248, 250, 252);  panelContenido.Padding = new Padding(20); panelContenido.Controls.Add(tabla);
-             panelContenido.Name = "panelContenido";  panelContenido.TabIndex = 2;
-            tabla.AllowUserToAddRows = false; tabla.AllowUserToDeleteRows = false; tabla.AllowUserToResizeRows = false; tabla.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; tabla.BackgroundColor = Color.White; tabla.BorderStyle = BorderStyle.None; tabla.ColumnHeadersHeight = 38;  tabla.MultiSelect = false; tabla.ReadOnly = true; tabla.RowHeadersVisible = false; tabla.SelectionMode = DataGridViewSelectionMode.FullRowSelect; tabla.Columns.AddRange(new DataGridViewColumn[] { colId, colRutina, colDescripcion, colEntrenador, colAsignados });
-             tabla.Name = "tabla";  tabla.TabIndex = 0;
-            colId.HeaderText = "Id"; colId.Name = "colId"; colId.Visible = false; colId.Width = 60; colRutina.HeaderText = "Rutina"; colRutina.Name = "colRutina"; colRutina.Width = 190; colDescripcion.HeaderText = "Descripcion"; colDescripcion.Name = "colDescripcion"; colDescripcion.Width = 360; colEntrenador.HeaderText = "Creada por"; colEntrenador.Name = "colEntrenador"; colEntrenador.Width = 230; colAsignados.HeaderText = "Socios asignados"; colAsignados.Name = "colAsignados"; colAsignados.Width = 140;
-            Controls.Add(panelContenido); Controls.Add(lblEstado); Controls.Add(barraAcciones); Controls.Add(panelEncabezado); AutoScaleMode = AutoScaleMode.Font; this.AutoScroll = true; BackColor = Color.FromArgb(241, 245, 249); ClientSize = new Size(1100, 680); Font = new Font("Segoe UI", 9.5F); MinimumSize = new Size(760, 540); this.Name = "ConsultaRutinasAdministradorFormulario"; StartPosition = FormStartPosition.CenterParent; Text = "SysGym | Catalogo de rutinas";
-
-            this.panelEncabezado.AutoSize = false;
-            this.panelEncabezado.Dock = System.Windows.Forms.DockStyle.None;
-            this.panelEncabezado.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.panelEncabezado = new System.Windows.Forms.Panel();
+            this.lblDescripcion = new System.Windows.Forms.Label();
+            this.lblTitulo = new System.Windows.Forms.Label();
+            this.btnVolver = new System.Windows.Forms.Button();
+            this.barraAcciones = new System.Windows.Forms.Panel();
+            this.actualizar = new System.Windows.Forms.Button();
+            this.lblEstado = new System.Windows.Forms.Label();
+            this.panelContenido = new System.Windows.Forms.Panel();
+            this.tabla = new System.Windows.Forms.DataGridView();
+            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colRutina = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEntrenador = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAsignados = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panelEncabezado.SuspendLayout();
+            this.barraAcciones.SuspendLayout();
+            this.panelContenido.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tabla)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // panelEncabezado
+            // 
+            this.panelEncabezado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.panelEncabezado.Controls.Add(this.lblDescripcion);
+            this.panelEncabezado.Controls.Add(this.lblTitulo);
+            this.panelEncabezado.Controls.Add(this.btnVolver);
+            this.panelEncabezado.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelEncabezado.Location = new System.Drawing.Point(0, 0);
-            this.panelEncabezado.Size = new System.Drawing.Size(1100, 80);
-            this.lblTitulo.AutoSize = false;
-            this.lblTitulo.Dock = System.Windows.Forms.DockStyle.None;
-            this.lblTitulo.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.lblTitulo.Location = new System.Drawing.Point(22, 10);
-            this.lblTitulo.Size = new System.Drawing.Size(236, 38);
-            this.lblDescripcion.AutoSize = false;
-            this.lblDescripcion.Dock = System.Windows.Forms.DockStyle.None;
-            this.lblDescripcion.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.lblDescripcion.Location = new System.Drawing.Point(24, 47);
-            this.lblDescripcion.Size = new System.Drawing.Size(309, 22);
-            this.btnVolver.AutoSize = false;
-            this.btnVolver.Dock = System.Windows.Forms.DockStyle.None;
-            this.btnVolver.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.btnVolver.Location = new System.Drawing.Point(930, 22);
-            this.btnVolver.Size = new System.Drawing.Size(92, 34);
-            this.barraAcciones.AutoSize = false;
-            this.barraAcciones.Dock = System.Windows.Forms.DockStyle.None;
-            this.barraAcciones.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.barraAcciones.Location = new System.Drawing.Point(0, 80);
-            this.barraAcciones.Size = new System.Drawing.Size(1100, 52);
-            this.actualizar.AutoSize = false;
-            this.actualizar.Dock = System.Windows.Forms.DockStyle.None;
-            this.actualizar.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.actualizar.Location = new System.Drawing.Point(20, 8);
-            this.actualizar.Size = new System.Drawing.Size(95, 36);
-            this.lblEstado.AutoSize = false;
-            this.lblEstado.Dock = System.Windows.Forms.DockStyle.None;
-            this.lblEstado.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.lblEstado.Location = new System.Drawing.Point(0, 648);
-            this.lblEstado.Size = new System.Drawing.Size(1100, 32);
-            this.panelContenido.AutoSize = false;
-            this.panelContenido.Dock = System.Windows.Forms.DockStyle.None;
-            this.panelContenido.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.panelContenido.Location = new System.Drawing.Point(0, 132);
-            this.panelContenido.Size = new System.Drawing.Size(1100, 516);
-            this.tabla.AutoSize = false;
-            this.tabla.Dock = System.Windows.Forms.DockStyle.None;
-            this.tabla.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.tabla.Location = new System.Drawing.Point(20, 20);
-            this.tabla.Size = new System.Drawing.Size(1060, 476);
-            panelEncabezado.ResumeLayout(false); panelEncabezado.PerformLayout(); barraAcciones.ResumeLayout(false); barraAcciones.PerformLayout(); panelContenido.ResumeLayout(false); ((ISupportInitialize)(tabla)).EndInit(); ResumeLayout(false);
-
-            this.Load += new System.EventHandler(this.ConsultaRutinasAdministradorFormulario_Load);
+            this.panelEncabezado.Name = "panelEncabezado";
+            this.panelEncabezado.Padding = new System.Windows.Forms.Padding(22, 8, 22, 8);
+            this.panelEncabezado.Size = new System.Drawing.Size(1100, 84);
+            this.panelEncabezado.TabIndex = 0;
+            // 
+            // lblDescripcion
+            // 
+            this.lblDescripcion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.lblDescripcion.Location = new System.Drawing.Point(24, 48);
+            this.lblDescripcion.Margin = new System.Windows.Forms.Padding(0);
+            this.lblDescripcion.Name = "lblDescripcion";
+            this.lblDescripcion.Size = new System.Drawing.Size(890, 26);
+            this.lblDescripcion.TabIndex = 1;
+            this.lblDescripcion.Text = "Plantillas reutilizables y cantidad de socios asignados";
+            // 
+            // lblTitulo
+            // 
+            this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+            this.lblTitulo.ForeColor = System.Drawing.Color.White;
+            this.lblTitulo.Location = new System.Drawing.Point(22, 8);
+            this.lblTitulo.Margin = new System.Windows.Forms.Padding(0);
+            this.lblTitulo.Name = "lblTitulo";
+            this.lblTitulo.Size = new System.Drawing.Size(890, 36);
+            this.lblTitulo.TabIndex = 0;
+            this.lblTitulo.Text = "Catalogo de rutinas";
+            this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // btnVolver
+            // 
+            this.btnVolver.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnVolver.BackColor = System.Drawing.Color.White;
+            this.btnVolver.FlatAppearance.BorderSize = 0;
+            this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnVolver.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.btnVolver.Location = new System.Drawing.Point(974, 24);
+            this.btnVolver.Margin = new System.Windows.Forms.Padding(16, 0, 0, 0);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(104, 38);
+            this.btnVolver.TabIndex = 2;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = false;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
+            // 
+            // barraAcciones
+            // 
+            this.barraAcciones.BackColor = System.Drawing.Color.White;
+            this.barraAcciones.Controls.Add(this.actualizar);
+            this.barraAcciones.Dock = System.Windows.Forms.DockStyle.Top;
+            this.barraAcciones.Location = new System.Drawing.Point(0, 84);
+            this.barraAcciones.Name = "barraAcciones";
+            this.barraAcciones.Padding = new System.Windows.Forms.Padding(16, 8, 16, 8);
+            this.barraAcciones.Size = new System.Drawing.Size(1100, 52);
+            this.barraAcciones.TabIndex = 1;
+            // 
+            // actualizar
+            // 
+            this.actualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.actualizar.FlatAppearance.BorderSize = 0;
+            this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.actualizar.ForeColor = System.Drawing.Color.White;
+            this.actualizar.Location = new System.Drawing.Point(16, 8);
+            this.actualizar.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
+            this.actualizar.MinimumSize = new System.Drawing.Size(120, 34);
+            this.actualizar.Name = "actualizar";
+            this.actualizar.Padding = new System.Windows.Forms.Padding(12, 0, 12, 0);
+            this.actualizar.Size = new System.Drawing.Size(120, 34);
+            this.actualizar.TabIndex = 0;
+            this.actualizar.Text = "Actualizar";
+            this.actualizar.UseVisualStyleBackColor = false;
             this.actualizar.Click += new System.EventHandler(this.actualizar_Click);
+            // 
+            // lblEstado
+            // 
+            this.lblEstado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.lblEstado.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblEstado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.lblEstado.Location = new System.Drawing.Point(0, 650);
+            this.lblEstado.Name = "lblEstado";
+            this.lblEstado.Padding = new System.Windows.Forms.Padding(18, 0, 12, 0);
+            this.lblEstado.Size = new System.Drawing.Size(1100, 30);
+            this.lblEstado.TabIndex = 3;
+            this.lblEstado.Text = "Listo";
+            this.lblEstado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // panelContenido
+            // 
+            this.panelContenido.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.panelContenido.Controls.Add(this.tabla);
+            this.panelContenido.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelContenido.Location = new System.Drawing.Point(0, 136);
+            this.panelContenido.Name = "panelContenido";
+            this.panelContenido.Padding = new System.Windows.Forms.Padding(16);
+            this.panelContenido.Size = new System.Drawing.Size(1100, 514);
+            this.panelContenido.TabIndex = 2;
+            // 
+            // tabla
+            // 
+            this.tabla.AllowUserToAddRows = false;
+            this.tabla.AllowUserToDeleteRows = false;
+            this.tabla.AllowUserToResizeRows = false;
+            this.tabla.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabla.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.tabla.BackgroundColor = System.Drawing.Color.White;
+            this.tabla.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tabla.ColumnHeadersHeight = 46;
+            this.tabla.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colId,
+            this.colRutina,
+            this.colDescripcion,
+            this.colEntrenador,
+            this.colAsignados});
+            this.tabla.Location = new System.Drawing.Point(13, 13);
+            this.tabla.MultiSelect = false;
+            this.tabla.Name = "tabla";
+            this.tabla.ReadOnly = true;
+            this.tabla.RowHeadersVisible = false;
+            this.tabla.RowTemplate.Height = 30;
+            this.tabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.tabla.Size = new System.Drawing.Size(1068, 482);
+            this.tabla.TabIndex = 0;
+            // 
+            // colId
+            // 
+            this.colId.FillWeight = 60F;
+            this.colId.HeaderText = "Id";
+            this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
+            this.colId.Visible = false;
+            // 
+            // colRutina
+            // 
+            this.colRutina.FillWeight = 190F;
+            this.colRutina.HeaderText = "Rutina";
+            this.colRutina.MinimumWidth = 90;
+            this.colRutina.Name = "colRutina";
+            this.colRutina.ReadOnly = true;
+            // 
+            // colDescripcion
+            // 
+            this.colDescripcion.FillWeight = 360F;
+            this.colDescripcion.HeaderText = "Descripcion";
+            this.colDescripcion.MinimumWidth = 90;
+            this.colDescripcion.Name = "colDescripcion";
+            this.colDescripcion.ReadOnly = true;
+            // 
+            // colEntrenador
+            // 
+            this.colEntrenador.FillWeight = 230F;
+            this.colEntrenador.HeaderText = "Creada por";
+            this.colEntrenador.MinimumWidth = 90;
+            this.colEntrenador.Name = "colEntrenador";
+            this.colEntrenador.ReadOnly = true;
+            // 
+            // colAsignados
+            // 
+            this.colAsignados.FillWeight = 140F;
+            this.colAsignados.HeaderText = "Socios asignados";
+            this.colAsignados.MinimumWidth = 90;
+            this.colAsignados.Name = "colAsignados";
+            this.colAsignados.ReadOnly = true;
+            // 
+            // ConsultaRutinasAdministradorFormulario
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
+            this.ClientSize = new System.Drawing.Size(1100, 680);
+            this.Controls.Add(this.panelContenido);
+            this.Controls.Add(this.lblEstado);
+            this.Controls.Add(this.barraAcciones);
+            this.Controls.Add(this.panelEncabezado);
+            this.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.MinimumSize = new System.Drawing.Size(900, 560);
+            this.Name = "ConsultaRutinasAdministradorFormulario";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "SysGym | Catalogo de rutinas";
+            this.Load += new System.EventHandler(this.ConsultaRutinasAdministradorFormulario_Load);
+            this.panelEncabezado.ResumeLayout(false);
+            this.barraAcciones.ResumeLayout(false);
+            this.panelContenido.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.tabla)).EndInit();
+            this.ResumeLayout(false);
+
                 }
     }
 }

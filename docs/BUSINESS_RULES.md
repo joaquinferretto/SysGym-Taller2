@@ -1,6 +1,6 @@
 # Reglas de negocio
 
-Última actualización: 8 de septiembre de 2026.
+Última actualización: 9 de septiembre de 2026.
 
 ## Membresías y cuotas
 
@@ -25,7 +25,7 @@ La asignación de rutinas comprueba explícitamente que el entrenador esté acti
 - Administradores y recepcionistas activos pueden registrar membresías.
 - Las asignaciones de entrenador y las rutinas requieren un usuario activo con rol Entrenador.
 - Un cambio a un plan sin entrenador desactiva las asignaciones activas sin borrar la historia.
-- Un plan sin rutina personalizada no permite nuevas asignaciones de rutinas.
+- Las rutinas que pueden asignarse se definen en el catálogo del plan, según la ampliación autorizada del 9 de septiembre.
 
 ## Datos físicos del socio
 
@@ -35,7 +35,7 @@ La asignación de rutinas comprueba explícitamente que el entrenador esté acti
 
 - El entrenador puede crear ejercicios mediante `EjercicioLogica`.
 - El entrenador crea una rutina general mediante `RutinaLogica`; la plantilla no pertenece a un socio y puede reutilizarse.
-- `RutinaAsignacionLogica` asigna una plantilla a una membresía activa cuyo plan incluya rutina personalizada. La misma plantilla puede asignarse a muchos socios.
+- `RutinaAsignacionLogica` asigna una plantilla a una membresía activa cuyo plan tenga habilitada esa rutina en su catálogo. La misma plantilla puede asignarse a muchos socios.
 - Los ejercicios se incorporan a la rutina mediante `RutinaEjercicioLogica`, con series, repeticiones, peso, descanso y orden.
 
 ## Correcciones implementadas — 8 de septiembre de 2026
@@ -44,4 +44,24 @@ La asignación de rutinas comprueba explícitamente que el entrenador esté acti
 - **FIX-03:** la asistencia compara la vigencia de la cuota por día calendario, incluyendo todo su último día. Para el día solicitado se consulta `FechaDesde < siguienteDia` y `FechaHasta >= inicioDia`, con límites calculados fuera de la consulta para mantener compatibilidad con EF6. Se conserva la hora real registrada y las demás validaciones de membresía/cuota pagada.
 - El recálculo de deuda posterior a cambios de pagos/cuotas considera los estados recién guardados dentro de la misma transacción.
 
-FIX-01 y FIX-04 continúan pendientes de confirmación. No se implementan funciones futuras ni se modifica el DER.
+FIX-01 y FIX-04 continúan pendientes de confirmación. No se implementan los demás fixes ni las funciones futuras de la revisión sin autorización. La ampliación opcional de foto y sexo fue autorizada posteriormente en FIX_LAYOUT_CODEX.md.
+
+## Foto y sexo — 9 de septiembre de 2026
+
+- Socios y usuarios pueden guardar una foto opcional de hasta 2 MB (2.097.152 bytes), en PNG, JPEG o BMP. La lógica comprueba tamaño y firma del formato; la interfaz además decodifica la imagen antes de aceptarla.
+- Sexo admite únicamente M, F o NULL y se usa para resolver el avatar. No se asigna un sexo por defecto; Nuevo deja el combo sin selección.
+- La foto guardada tiene prioridad sobre el avatar por sexo. Sin foto ni sexo se busca avatarGenerico; si faltan recursos se muestra el fondo gris claro, sin inventar imágenes.
+- Quitar foto conserva el sexo elegido y vuelve al avatar disponible. Guardar o actualizar persiste Foto y Sexo.
+- Los listados de gestión de socios y usuarios no descargan Foto; la selección recupera el registro completo mediante ObtenerPorId.
+- Las validaciones de tamaño, formato y sexo y la persistencia de ambas entidades fueron comprobadas en una base separada, sin conservar registros de prueba.
+
+## Rutinas disponibles por plan — 9 de septiembre de 2026
+
+- El administrador elige explícitamente el catálogo de cada plan. Una rutina puede estar habilitada en Normal, Premium o ambos, sin duplicar la plantilla.
+- Todo plan tiene al menos una rutina disponible; su rutina base debe pertenecer a esa selección. Las rutinas elegidas y sus entrenadores deben estar activos al guardar.
+- En la interfaz, primero se marcan las rutinas disponibles y luego se elige la base entre ellas. Desmarcar la base limpia esa elección y exige seleccionar otra; Nuevo no marca rutinas automáticamente. La validación de lógica sigue impidiendo guardar una base fuera del catálogo.
+- Las asignaciones se autorizan por PlanRutina, no por el nombre del plan ni por IncluyeRutinaPersonal. Esto permite asignar a socios de Normal las rutinas seleccionadas para Normal. El indicador de rutina personalizada se conserva como descripción del beneficio, no como permiso del catálogo.
+- Premium puede tener todas las rutinas seleccionadas, pero no incorpora automáticamente las futuras. Las nuevas se habilitan desde Gestión de planes.
+- Quitar una rutina del catálogo finaliza sus asignaciones activas a membresías del plan, con FechaFin, sin borrar historial. Los cambios y los vínculos se guardan en una misma operación atómica.
+- Cambiar de plan conserva las asignaciones de rutinas que el nuevo plan mantiene disponibles y activas; finaliza las restantes. Las asignaciones de entrenador siguen dependiendo de IncluyeEntrenador.
+- La migración inicial incorpora las rutinas base y las asignaciones activas existentes, sin eliminar datos ni habilitar automáticamente todo el catálogo.

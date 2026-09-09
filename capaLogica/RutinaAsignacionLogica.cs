@@ -42,9 +42,9 @@ namespace exxen2._0.capaLogica
                     throw new InvalidOperationException("El plan de la membresía no está activo.");
                 }
 
-                if (!membresia.Plan.IncluyeRutinaPersonal)
+                if (!datos.Planes.Any(p => p.IdPlan == membresia.IdPlan && p.RutinasDisponibles.Any(r => r.IdRutina == idRutina)))
                 {
-                    throw new InvalidOperationException("El plan de la membresía no incluye rutinas.");
+                    throw new InvalidOperationException("La rutina seleccionada no está disponible para el plan de esta membresía.");
                 }
 
                 if (datos.RutinaAsignaciones.Any(a => a.IdRutina == idRutina && a.IdMembresia == idMembresia && a.Estado))
@@ -68,6 +68,20 @@ namespace exxen2._0.capaLogica
                 asignacion.Estado = true;
                 datos.GuardarCambios();
                 return asignacion;
+            }
+        }
+
+        /* Devuelve las membresías cuyo plan permite la rutina seleccionada para evitar opciones inválidas. */
+        public List<Membresia> ListarMembresiasDisponibles(int idRutina)
+        {
+            using (var datos = new UnidadDeTrabajoGimnasio())
+            {
+                return datos.Membresias.ConsultarSoloLectura("Plan", "Socio")
+                    .Where(m => m.Estado && m.Socio.Estado && m.Plan.Estado &&
+                        m.Plan.RutinasDisponibles.Any(r => r.IdRutina == idRutina && r.Estado &&
+                            r.Entrenador.Estado && r.Entrenador.Rol.Estado &&
+                            r.Entrenador.Rol.Descripcion == "Entrenador"))
+                    .OrderBy(m => m.Socio.Apellido).ThenBy(m => m.Socio.Nombre).ToList();
             }
         }
 

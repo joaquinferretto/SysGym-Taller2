@@ -11,6 +11,7 @@ namespace exxen2._0.capaDatos.Entidades
         public Plan()
         {
             Membresias = new HashSet<Membresia>();
+            RutinasDisponibles = new HashSet<Rutina>();
             Estado = true;
         }
 
@@ -33,6 +34,7 @@ namespace exxen2._0.capaDatos.Entidades
 
         [ForeignKey("IdRutina")]
         public virtual Rutina Rutina { get; set; }
+        public virtual ICollection<Rutina> RutinasDisponibles { get; set; }
         public virtual ICollection<Membresia> Membresias { get; set; }
     }
 }

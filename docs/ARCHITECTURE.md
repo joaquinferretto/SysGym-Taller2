@@ -1,6 +1,6 @@
 # Arquitectura
 
-Última actualización: 8 de septiembre de 2026.
+Última actualización: 9 de septiembre de 2026.
 
 El flujo permitido es:
 
@@ -29,19 +29,26 @@ En cada tarea se deben actualizar los documentos existentes afectados, indicando
 - `InitializeComponent` es un método de instancia declarativo y serializable por el diseñador, no un método `static` de C#. Se conservan `components`, `Dispose` y los archivos parciales asociados.
 - Los renombrados mantienen posiciones, tamaños, colores, fuentes, textos y composición de los controles.
 
-### Movimiento libre autorizado — 8 de septiembre de 2026
+### Distribución libre y adaptación al tamaño — 9 de septiembre de 2026
 
-Por pedido posterior se reemplazaron 36 contenedores `TableLayoutPanel`/`FlowLayoutPanel` por `Panel` estándar en los 17 diseñadores. Se reutilizan los contenedores existentes, sin agregar formularios ni clases visuales. Esta modificación estructural es una excepción autorizada a la restricción anterior de no modificar Designer.
+Se aplica el encargo `FIX_LAYOUT_CODEX.md`: los contenedores de distribución pasan a `Panel` estándar. Se eliminan `tablaOpciones` de los tres paneles de rol y `contenido` de InicioSesion, conservando sus hijos.
 
-Los 392 controles declarados conservan coordenadas y tamaños explícitos como punto de partida, con `Dock = None`, `AutoSize = false` y anclaje superior izquierdo. Sus posiciones no son recalculadas por tablas ni flujos. Como contrapartida, no se redistribuyen ni estiran automáticamente al redimensionar la ventana; cualquier adaptación posterior debe acordarse sin volver a impedir su edición libre.
+- El armazón usa `Dock`: encabezado superior, menú izquierdo, pie del menú inferior, opciones y contenido con Fill. Los módulos conservan encabezado, barra superior, estado inferior y contenido Fill.
+- Los demás controles tienen `Dock = None`, `Location` y `Size` explícitos. Se pueden mover individualmente desde el diseñador; no hay celdas ni flujos que reorganicen sus vecinos.
+- `Anchor` adapta cada control: grillas y listado a los cuatro bordes; detalle de ancho 396 a arriba, abajo y derecha; campos y buscadores a arriba, izquierda y derecha; Volver a arriba y derecha. Los formularios bajo las grillas se anclan abajo.
+- Los paneles estructurales acoplados no se arrastran: se ajustan mediante Height/Width. Los campos sí se arrastran dentro de su padre. ComboBox, DateTimePicker y TextBox de una línea conservan las restricciones de altura estándar de Windows Forms.
+- No se usa AutoScroll en ventanas. Solo lo tienen panelOpciones, panelDetalle y listaClima. Se adopta esta lista del criterio de aceptación ante la indicación contradictoria de habilitarlo también en principal.
+- Grillas con `AutoSizeColumnsMode = Fill`, proporciones con `FillWeight` y límites con `MinimumWidth`. No asignar `Column.Width` en este modo. Son de solo lectura, selección de fila completa y columnas declaradas en Designer.
+- Se mantienen colores, fuentes y textos existentes. Cambian contenedores, posiciones y anclajes por autorización expresa; no se afirma identidad píxel a píxel. No se crean formularios ni clases visuales propias.
+- La tarjeta de ejemplo meteorológica conserva sus coordenadas y sirve de plantilla en ejecución. La navegación continúa acoplando el módulo abierto con Fill, sin modificar ControladorNavegacion.
 
-Se ajustaron los límites iniciales de grillas, filtros, beneficios, acciones y selección de membresía que quedaban fuera de sus paneles. Las pantallas permiten desplazamiento cuando su contenido fijo supera el área disponible. Esto mantiene accesibles los controles sin introducir un evento que vuelva a imponer sus posiciones.
+Los 17 componentes se inicializaron y redimensionaron en memoria; se comprobó que mover btnVolver en Planes no mueve los títulos. Esto no sustituye la inspección final en el diseñador real de Visual Studio, que sigue pendiente.
 
-El movimiento es dentro del contenedor padre. Para seleccionar un contenedor detrás de sus hijos se utiliza el Esquema del documento de Visual Studio. Los elementos internos de `InicioPanelAdministrador` se editan abriendo su propio diseñador, no desde el formulario que lo contiene. Las columnas de grilla siguen siendo columnas estándar, no controles independientes con coordenadas.
+### Fotos de socios y usuarios
 
-El pronóstico mantiene su tarjeta de ejemplo en el diseñador. Las tarjetas de datos creadas en ejecución copian sus posiciones, tamaños y estilos; por lo tanto, la plantilla editable controla su presentación. La navegación sigue acoplando el formulario abierto al área de contenido únicamente en ejecución.
+Los dos formularios de gestión incorporan PictureBox estándar, selección y eliminación de foto y selección opcional de sexo. Sus eventos se suscriben en InitializeComponent. AyudaFormularioVisual comparte la selección y presentación; la lógica valida bytes y sexo y la persistencia guarda los campos opcionales. Se clonan imágenes y recursos antes de mostrarlos y se liberan las copias reemplazadas o descartadas.
 
-Los nombres propios de contenedores usan `contenedorCampos`, `contenedorDetalle`, `contenedorContenido` y `contenedorFormulario`. Se conservan nombres exigidos por el framework y contratos SQL/JSON existentes; traducir estos últimos exige una migración separada, no reemplazos de texto indiscriminados.
+Los avatares deben ser aportados por el usuario y registrados desde Visual Studio como avatarHombre, avatarMujer y avatarGenerico. Mientras falten, el control queda vacío con fondo gris claro. No se modificaron recursos ni se descargaron imágenes.
 
 ## Repositorios y nombres
 
@@ -50,3 +57,15 @@ Los nombres propios de contenedores usan `contenedorCampos`, `contenedorDetalle`
 Los nombres propios de clases, métodos, parámetros y archivos se escriben en español. Se mantienen nombres obligatorios de C#/.NET (`Main`, `Dispose`, `InitializeComponent`, `OnModelCreating`, eventos y miembros de interfaces del framework), nombres de paquetes y contratos externos. Las columnas SQL y las claves JSON conservan sus nombres mediante mapeos explícitos, sin cambiar la base ni el servicio.
 
 Cada clase, constructor y método no generado lleva un comentario de bloque `/* */`, conciso y en castellano. Los comentarios de eventos indican qué acción los dispara y su propósito. No se agregan comentarios de esta convención a los `.Designer.cs` ni se usan comentarios XML para sustituirla.
+
+## Catálogo de rutinas por plan — 9 de septiembre de 2026
+
+Cambio de relación y selector visual autorizado por el usuario. Plan.RutinasDisponibles es una colección de Rutina; EF6 la persiste en PlanRutina mediante un mapeo muchos a muchos unidireccional, sin una clase visual ni un formulario nuevos. Se conserva IdRutina como rutina base por compatibilidad.
+
+GestionPlanesFormulario conserva sus campos y agrega un CheckedListBox estándar con casillas, editable en el diseñador. Las acciones se desplazan hacia abajo dentro del detalle con desplazamiento. El combo de rutina base contiene únicamente las rutinas marcadas. ItemCheck usa NewValue para actualizarlo sin tareas diferidas: conserva la base si continúa disponible y limpia la selección si se desmarca. Sin rutinas marcadas el combo queda vacío y deshabilitado. El evento se suscribe en InitializeComponent. La grilla muestra los nombres disponibles.
+
+Ajuste del 9 de septiembre: las casillas «Rutina personalizada» e «Incluye entrenador» ocupan el ancho del panel de beneficios para mostrar sus textos completos. Solo se amplían esos controles, manteniendo sus posiciones y estilos.
+
+La pantalla del entrenador mantiene el catálogo para crear/editar rutinas. Al seleccionar una, su selector de membresía se filtra mediante RutinaAsignacionLogica.ListarMembresiasDisponibles: solo planes que la habilitan, con socio, membresía, plan, rutina y entrenador activos. La lógica vuelve a validar al asignar, independientemente del filtro visual. La capa visual no accede al contexto.
+
+No se alteran otros diseños. La inicialización del formulario se verifica en memoria; queda pendiente la inspección manual en el diseñador real de Visual Studio.

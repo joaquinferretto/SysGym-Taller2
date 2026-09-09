@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
 using exxen2._0.capaDatos.Entidades;
@@ -86,6 +86,7 @@ namespace exxen2._0.capaVisual.Entrenador
             if (AyudaFormularioVisual.EnModoDisenio(this))
                 return;
             lblUsuarioRol.Text = "Usuario: " + usuario.Nombre + " " + usuario.Apellido + "    |    Rol: " + NombreRol(usuario, "Entrenador");
+            navegacion.EstablecerContenidoInicio(lblBienvenida, null);
         }
     }
 }

@@ -66,6 +66,8 @@ namespace exxen2._0.capaLogica
                 existente.IdRol = rol.IdRol;
                 existente.Rol = rol;
                 existente.Estado = usuario.Estado;
+                existente.Foto = usuario.Foto;
+                existente.Sexo = usuario.Sexo;
                 if (!string.IsNullOrWhiteSpace(nuevaClave))
                 {
                     existente.Clave = GenerarClave(nuevaClave);
@@ -108,7 +110,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return datos.UsuariosSistema.ConsultarSoloLectura("Rol").Where(u => u.Estado && u.Rol.Estado).OrderBy(u => u.Apellido).ThenBy(u => u.Nombre).ToList();
+                return ListarSinFotos(datos.UsuariosSistema.ConsultarSoloLectura().Where(u => u.Estado && u.Rol.Estado).OrderBy(u => u.Apellido).ThenBy(u => u.Nombre));
             }
         }
 
@@ -117,7 +119,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return datos.UsuariosSistema.ConsultarSoloLectura("Rol").OrderByDescending(u => u.Estado).ThenBy(u => u.Apellido).ThenBy(u => u.Nombre).ToList();
+                return ListarSinFotos(datos.UsuariosSistema.ConsultarSoloLectura().OrderByDescending(u => u.Estado).ThenBy(u => u.Apellido).ThenBy(u => u.Nombre));
             }
         }
 
@@ -131,8 +133,24 @@ namespace exxen2._0.capaLogica
 
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return datos.UsuariosSistema.ConsultarSoloLectura("Rol").Where(u => u.Estado && u.Rol.Estado && u.Rol.Descripcion == descripcionRol).OrderBy(u => u.Apellido).ThenBy(u => u.Nombre).ToList();
+                return ListarSinFotos(datos.UsuariosSistema.ConsultarSoloLectura().Where(u => u.Estado && u.Rol.Estado && u.Rol.Descripcion == descripcionRol).OrderBy(u => u.Apellido).ThenBy(u => u.Nombre));
             }
+        }
+
+        /* Proyecta personal y rol sin descargar fotos ni contraseñas para los listados. */
+        private static List<UsuarioSistema> ListarSinFotos(IQueryable<UsuarioSistema> consulta)
+        {
+            return consulta.Select(u => new
+            {
+                u.IdUsuarioSistema, u.Nombre, u.Apellido, u.DNI, u.Telefono,
+                u.FechaNacimiento, u.Salario, u.NombreUsuario, u.Estado, u.IdRol, u.Rol, u.Sexo
+            }).ToList().Select(u => new UsuarioSistema
+            {
+                IdUsuarioSistema = u.IdUsuarioSistema, Nombre = u.Nombre, Apellido = u.Apellido,
+                DNI = u.DNI, Telefono = u.Telefono, FechaNacimiento = u.FechaNacimiento,
+                Salario = u.Salario, NombreUsuario = u.NombreUsuario, Estado = u.Estado,
+                IdRol = u.IdRol, Rol = u.Rol, Sexo = u.Sexo
+            }).ToList();
         }
 
         /* Desactiva el registro de usuarios del sistema sin eliminar su historial. */
@@ -301,6 +319,7 @@ namespace exxen2._0.capaLogica
             {
                 throw new InvalidOperationException("El salario debe ser mayor que cero.");
             }
+            ValidacionesGimnasio.ValidarFotoYSexo(usuario.Foto, usuario.Sexo);
         }
 
         /* Obtiene el rol requerido y rechaza roles inexistentes o inactivos. */

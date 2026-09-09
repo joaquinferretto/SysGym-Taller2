@@ -1,6 +1,6 @@
 # SysGym: resumen, fixes y features futuras
 
-Revisión inicial: 7 de septiembre de 2026. Última actualización: 8 de septiembre de 2026.
+Revisión inicial: 7 de septiembre de 2026. Última actualización: 9 de septiembre de 2026.
 
 Estado actual: FIX-02 y FIX-03 implementados. FIX-01, FIX-04 y FIX-05 continúan pendientes; las funciones futuras no se implementaron. Los apartados de evidencia y propuesta siguientes describen los hallazgos originales; el cierre de esta actualización se registra al final.
 
@@ -155,3 +155,54 @@ No se atribuye un evento faltante a las pantallas que solo requirieron normaliza
 - `.designer-check.ps1` está eliminado; no se recrearon scripts, carpetas de auditoría ni capturas. La eliminación sigue siendo recuperable desde Git.
 - Las imágenes de socios/usuarios y la decisión de almacenamiento para una o varias computadoras quedan pospuestas por el usuario. En esta pasada no se modificó el esquema SQL ni se implementó carga de fotos.
 - Se actualizaron los documentos existentes; continúa vigente la obligación de actualizarlos en cada tarea.
+
+## Encargo FIX_LAYOUT_CODEX — 9 de septiembre de 2026
+
+Esta sección sustituye para el estado actual las decisiones anteriores de distribución fija y de posponer las fotos.
+
+- Se convirtieron los contenedores de los 17 Designer a Panel estándar, se eliminaron tablaOpciones y contenido de InicioSesion conservando sus hijos y se adoptó Dock solo en el armazón, con Anchor y coordenadas individuales en los demás controles.
+- Las grillas crecen con el contenido y usan FillWeight/MinimumWidth sin Column.Width. Se conserva la identidad de colores, fuentes y textos. Sí hay cambios autorizados de distribución y nuevos controles de foto/sexo; no se afirma que los Designer no hayan cambiado visualmente.
+- Usuarios y Socios incorporan selección y eliminación de foto, selector de sexo, presentación compartida con liberación de imágenes y persistencia de Foto/Sexo. Se actualizan ambos scripts SQL. Los listados directos excluyen el binario y la selección obtiene el detalle.
+- Se comprobaron rechazo por tamaño, sexo y formato, así como alta, lectura, listado sin fotos y eliminación para ambas entidades en la base de verificación. Los registros se revirtieron. La base comercial no fue modificada.
+- Los 17 componentes se inicializaron y redimensionaron en memoria; mover btnVolver en Planes no desplazó título ni descripción. La automatización del diseñador real no produjo evidencia suficiente para certificar su renderizado; queda pendiente esa inspección y el recorrido manual completo de los tres roles.
+- No se crearon carpetas auxiliares ni se recreó .designer-check.ps1. No se modificaron deliberadamente recursos, archivo de proyecto ni ControladorNavegacion; se preservaron cambios preexistentes del usuario.
+- Pendientes de entrega: aportar avatarHombre/avatarMujer y opcional avatarGenerico mediante recursos de Visual Studio; aplicar la migración existente en la base comercial antes de usar esta versión.
+- FIX-02 y FIX-03 conservan su estado implementado. FIX-01, FIX-04 y FIX-05 siguen pendientes; no se implementan otras features de la revisión.
+- Se actualizan ARCHITECTURE, DATABASE, BUSINESS_RULES, ENTITY_FRAMEWORK, PROJECT_CONTEXT y esta revisión. Sigue vigente actualizar documentación en cada tarea.
+- Cierre del 9 de septiembre: reconstrucción Debug con 0 errores y 0 advertencias; 89 botones con Click suscrito y diff sin errores de espacios. Sin TableLayoutPanel/FlowLayoutPanel, referencias Windows Forms en lógica/datos ni acceso al contexto desde visual.
+
+## Inserciones manuales para practicar — 9 de septiembre de 2026
+
+Se agrega al final de SysGymDB.sql un bloque de datos ficticios con INSERT INTO ... VALUES explícitos, separado por comentarios de tabla. Por solicitud del usuario se retiró la primera propuesta con WHILE: el bloque final no usa ciclos, procedimientos ni funciones propias de inserción. Se conservó intacto el catálogo inicial anterior a esta tarea.
+
+Incluye veinte registros en las principales tablas operativas y solo los planes Normal/Premium; los catálogos y asignaciones tienen las cantidades justificadas en DATABASE.md. Permite probar roles, estados de pago, filtros diarios, bajas y reactivaciones. Fechas fijas de septiembre de 2026 y credenciales de prueba documentadas. Las imágenes quedan nulas para probar su carga desde la interfaz.
+
+Las sentencias se ejecutaron correctamente en SysGym_Verificacion_20260908 y la transacción se revirtió. No se cargó SysGymDB ni se modificaron formularios, lógica, esquema o reglas de negocio durante esta tarea. Se actualizan los documentos existentes, sin crear carpetas auxiliares.
+
+### Datos variados y consulta de rutinas por plan — 9 de septiembre de 2026
+
+Se sustituyeron los usernames numerados, nombres genéricos de rutinas, teléfonos consecutivos y descripciones de pagos/asistencias por valores variados. Los 40 DNI nuevos son únicos y no consecutivos entre 30 y 50 millones, conservando las referencias en todos los INSERT manuales. Los pagos continúan siendo ficticios y no producen operaciones externas. La contraseña compartida de práctica no cambia.
+
+Se revisó la petición de varias rutinas por plan: el modelo actual distingue una rutina base del plan de múltiples asignaciones a membresías Premium. Queda pendiente confirmar si se desea un catálogo por plan antes de ampliar esa relación. No se implementó ni se presenta como completada esa nueva funcionalidad.
+
+## Selección de rutinas por plan — 9 de septiembre de 2026
+
+El usuario confirmó el cambio de esquema y el selector en el formulario existente. Se implementó PlanRutina, colección EF6 sin cascada, selección mediante CheckedListBox estándar y validación de asignaciones contra el catálogo. El selector de membresías del entrenador solo ofrece las compatibles con la rutina elegida.
+
+Normal y Premium tienen selecciones independientes; una plantilla puede compartirse. Se conserva la rutina base. Al retirar una rutina se finalizan sus asignaciones activas sin borrarlas, y al cambiar el plan se conservan las compatibles. La migración inicial conserva vínculos previos y no vuelve a agregarlos en ejecuciones posteriores.
+
+Se actualizan scripts base/migración y los INSERT manuales (Normal: tres rutinas; Premium: las 26 actuales). No se crean carpetas de pruebas, formularios ni dependencias.
+
+Verificación: reconstrucción Debug con 0 errores y 0 advertencias. En la base separada se probaron alta/lectura de dos rutinas por plan, filtro de membresías, asignación válida, rechazo de una no habilitada, retiro de vínculo con finalización de asignación y rechazo de catálogo vacío sin modificar el plan. Todas esas modificaciones temporales se revirtieron. El cambio de plan fue revisado en código; falta su recorrido manual completo.
+
+Se actualizan los seis documentos existentes afectados. Pendientes: aplicar migración en la base comercial y revisar el formulario con el diseñador real de Visual Studio. No se declara completado ese recorrido manual.
+
+Verificaciones adicionales: el selector estándar se inicializó en memoria, marcó la rutina base por evento, devolvió ambas selecciones y conservó movimiento independiente. Los INSERT manuales se ejecutaron y revirtieron en la base separada, confirmando tres rutinas para Normal y 26 para Premium. También se actualizó INSERTS_EJERCICIOS_RUTINAS.md para que su asignación opcional respete PlanRutina, sin sustituir el catálogo elegido por el administrador.
+
+## Beneficios legibles y base limitada al catálogo — 9 de septiembre de 2026
+
+Se amplían únicamente las dos casillas del panel de beneficios a 222 píxeles con anclaje horizontal: «Rutina personalizada» describe el beneficio y «Incluye entrenador» permite la asignación de entrenador. No sustituyen la selección del catálogo de rutinas.
+
+Se reemplaza el marcado automático al cambiar la base por ItemCheck de rutinasDisponibles. El combo solo ofrece rutinas marcadas, conserva una base válida y elimina la selección cuando se desmarca; sin opciones queda deshabilitado. Nuevo limpia ambos selectores. Las suscripciones permanecen declaradas en Designer y la lógica conserva su validación.
+
+Verificación en memoria sobre el ensamblado recién compilado en obj/Debug: marcado, filtro, conservación y retiro de la base, deshabilitación del combo vacío y medición de ambos textos correctos. La reconstrucción completa no pudo copiar el ejecutable a bin/Debug porque SysGym estaba abierto (MSB3021); falta cerrar la aplicación y repetir Rebuild. No se cerró el proceso del usuario ni se crearon carpetas auxiliares. Pendiente la inspección final en el diseñador real.

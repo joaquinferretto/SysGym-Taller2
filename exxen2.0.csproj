@@ -223,6 +223,9 @@
     </Compile>
     <Compile Include="Programa.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="capaVisual\Administrador\ConsultaRutinasAdministradorFormulario.resx">
+      <DependentUpon>ConsultaRutinasAdministradorFormulario.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="capaVisual\Administrador\PanelAdministrador.resx">
       <DependentUpon>PanelAdministrador.cs</DependentUpon>
     </EmbeddedResource>

@@ -51,6 +51,8 @@ namespace exxen2._0.capaLogica
                 existente.Peso = socio.Peso;
                 existente.Altura = socio.Altura;
                 existente.Estado = socio.Estado;
+                existente.Foto = socio.Foto;
+                existente.Sexo = socio.Sexo;
                 datos.GuardarCambios();
                 return existente;
             }
@@ -79,7 +81,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return datos.Socios.ConsultarSoloLectura().Where(s => s.Estado).OrderBy(s => s.Apellido).ThenBy(s => s.Nombre).ToList();
+                return ListarSinFotos(datos.Socios.ConsultarSoloLectura().Where(s => s.Estado).OrderBy(s => s.Apellido).ThenBy(s => s.Nombre));
             }
         }
 
@@ -88,8 +90,23 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return datos.Socios.ConsultarSoloLectura().OrderByDescending(s => s.Estado).ThenBy(s => s.Apellido).ThenBy(s => s.Nombre).ToList();
+                return ListarSinFotos(datos.Socios.ConsultarSoloLectura().OrderByDescending(s => s.Estado).ThenBy(s => s.Apellido).ThenBy(s => s.Nombre));
             }
+        }
+
+        /* Proyecta solo datos del listado en SQL, sin transferir los binarios de las fotos. */
+        private static List<Socio> ListarSinFotos(IQueryable<Socio> consulta)
+        {
+            return consulta.Select(s => new
+            {
+                s.IdSocio, s.DNI, s.Nombre, s.Apellido, s.FechaNacimiento,
+                s.Peso, s.Altura, s.Estado, s.Sexo
+            }).ToList().Select(s => new Socio
+            {
+                IdSocio = s.IdSocio, DNI = s.DNI, Nombre = s.Nombre, Apellido = s.Apellido,
+                FechaNacimiento = s.FechaNacimiento, Peso = s.Peso, Altura = s.Altura,
+                Estado = s.Estado, Sexo = s.Sexo
+            }).ToList();
         }
 
         /* Desactiva el registro de socios sin eliminar su historial. */
@@ -172,6 +189,7 @@ namespace exxen2._0.capaLogica
             }
 
             ValidarAlturaFraccionaria(socio.Altura);
+            ValidacionesGimnasio.ValidarFotoYSexo(socio.Foto, socio.Sexo);
         }
 
         /* Exige que la altura en metros tenga parte decimal según la regla del proyecto. */

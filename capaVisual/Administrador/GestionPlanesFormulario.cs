@@ -20,6 +20,7 @@ namespace exxen2._0.capaVisual.Administrador
         private List<Plan> planesCargados = new List<Plan>();
         private int idSeleccionado;
         private bool cargandoTabla;
+        private bool cargandoRutinas;
         private bool estadoSeleccionado = true;
         /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
         public GestionPlanesFormulario()
@@ -45,9 +46,14 @@ namespace exxen2._0.capaVisual.Administrador
         /* Carga las plantillas activas que pueden elegirse como rutina base del plan. */
         private void CargarRutinas()
         {
-            rutina.DataSource = rutinas.ListarActivas();
+            var disponibles = rutinas.ListarActivas();
+            rutinasDisponibles.Items.Clear();
+            rutinasDisponibles.DisplayMember = "Nombre";
+            foreach (var disponible in disponibles)
+                rutinasDisponibles.Items.Add(disponible);
             rutina.DisplayMember = "Nombre";
             rutina.ValueMember = "IdRutina";
+            ActualizarRutinasBase();
         }
 
         /* Consulta los registros del módulo y actualiza la grilla, informando los errores de carga. */
@@ -79,7 +85,7 @@ namespace exxen2._0.capaVisual.Administrador
             cargandoTabla = true;
             tabla.Rows.Clear();
             foreach (var plan in filtrados)
-                tabla.Rows.Add(plan.IdPlan, plan.Nombre, plan.Precio.ToString("C"), plan.Rutina == null ? "Sin rutina" : plan.Rutina.Nombre, DescribirBeneficios(plan), plan.Estado ? "Activo" : "Inactivo");
+                tabla.Rows.Add(plan.IdPlan, plan.Nombre, plan.Precio.ToString("C"), string.Join(", ", plan.RutinasDisponibles.Select(r => r.Nombre)), DescribirBeneficios(plan), plan.Estado ? "Activo" : "Inactivo");
             tabla.ClearSelection();
             cargandoTabla = false;
             lblEstado.Text = tabla.Rows.Count + " plan(es) encontrado(s)";
@@ -118,7 +124,18 @@ namespace exxen2._0.capaVisual.Administrador
                 nombre.Text = plan.Nombre;
                 descripcion.Text = plan.Descripcion;
                 precio.Text = plan.Precio.ToString("0.00");
-                rutina.SelectedValue = plan.IdRutina;
+                cargandoRutinas = true;
+                try
+                {
+                    for (var indice = 0; indice < rutinasDisponibles.Items.Count; indice++)
+                    {
+                        var disponible = (Rutina)rutinasDisponibles.Items[indice];
+                        rutinasDisponibles.SetItemChecked(indice,
+                            plan.RutinasDisponibles.Any(r => r.IdRutina == disponible.IdRutina));
+                    }
+                }
+                finally { cargandoRutinas = false; }
+                ActualizarRutinasBase(idBase: plan.IdRutina);
                 incluyeEntrenador.Checked = plan.IncluyeEntrenador;
                 incluyeRutina.Checked = plan.IncluyeRutinaPersonal;
                 EstablecerModo(false, plan.Estado);
@@ -139,8 +156,14 @@ namespace exxen2._0.capaVisual.Administrador
             precio.Clear();
             incluyeEntrenador.Checked = false;
             incluyeRutina.Checked = false;
-            if (rutina.Items.Count > 0)
-                rutina.SelectedIndex = 0;
+            cargandoRutinas = true;
+            try
+            {
+                for (var indice = 0; indice < rutinasDisponibles.Items.Count; indice++)
+                    rutinasDisponibles.SetItemChecked(indice, false);
+            }
+            finally { cargandoRutinas = false; }
+            ActualizarRutinasBase();
             tabla.ClearSelection();
             EstablecerModo(true, true);
             nombre.Focus();
@@ -168,6 +191,7 @@ namespace exxen2._0.capaVisual.Administrador
                 Descripcion = descripcion.Text.Trim(),
                 Precio = AyudaFormularioVisual.DecimalPositivo(precio, "precio"),
                 IdRutina = Convert.ToInt32(rutina.SelectedValue),
+                RutinasDisponibles = rutinasDisponibles.CheckedItems.Cast<Rutina>().ToList(),
                 IncluyeEntrenador = incluyeEntrenador.Checked,
                 IncluyeRutinaPersonal = incluyeRutina.Checked,
                 Estado = estadoSeleccionado
@@ -279,6 +303,37 @@ namespace exxen2._0.capaVisual.Administrador
         private void filtroEstado_SelectedIndexChanged(object origen, EventArgs e)
         {
             AplicarFiltro();
+        }
+
+        /* Al marcar o desmarcar una rutina, actualiza las opciones permitidas como base. */
+        private void rutinasDisponibles_ItemCheck(object origen, ItemCheckEventArgs e)
+        {
+            if (cargandoRutinas)
+                return;
+            ActualizarRutinasBase(e.Index, e.NewValue);
+        }
+
+        /* Filtra el combo usando el nuevo estado de la casilla, antes de que ItemCheck lo aplique.
+           Conserva la base si sigue disponible; de lo contrario exige elegir otra. */
+        private void ActualizarRutinasBase(int indiceModificado = -1, CheckState nuevoEstado = CheckState.Unchecked, int idBase = 0)
+        {
+            var anterior = rutina.SelectedItem as Rutina;
+            if (idBase == 0 && anterior != null)
+                idBase = anterior.IdRutina;
+            var seleccionadas = new List<Rutina>();
+            for (var indice = 0; indice < rutinasDisponibles.Items.Count; indice++)
+            {
+                var marcada = indice == indiceModificado
+                    ? nuevoEstado == CheckState.Checked
+                    : rutinasDisponibles.GetItemChecked(indice);
+                if (marcada)
+                    seleccionadas.Add((Rutina)rutinasDisponibles.Items[indice]);
+            }
+            rutina.DataSource = seleccionadas;
+            rutina.SelectedIndex = -1;
+            if (seleccionadas.Any(r => r.IdRutina == idBase))
+                rutina.SelectedValue = idBase;
+            rutina.Enabled = seleccionadas.Count > 0;
         }
 
         /* Al escribir en el campo, permite números y un único separador decimal mediante la validación visual compartida. */

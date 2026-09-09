@@ -147,7 +147,7 @@ namespace exxen2._0.capaLogica
             using (var transaccion = datos.IniciarTransaccion())
             {
                 var membresia = datos.Membresias.Buscar(idMembresia);
-                var plan = datos.Planes.Buscar(idPlan);
+                var plan = datos.Planes.Consultar("RutinasDisponibles").SingleOrDefault(p => p.IdPlan == idPlan);
                 if (membresia == null)
                 {
                     throw new InvalidOperationException("La membresía no existe.");
@@ -167,12 +167,14 @@ namespace exxen2._0.capaLogica
                         asignacion.Estado = false;
                     }
 
-                    var rutinas = datos.RutinaAsignaciones.Where(ra => ra.IdMembresia == idMembresia && ra.Estado).ToList();
-                    foreach (var asignacion in rutinas)
-                    {
-                        asignacion.Estado = false;
-                        asignacion.FechaFin = DateTime.Now;
-                    }
+                }
+                var permitidas = plan.RutinasDisponibles.Where(r => r.Estado).Select(r => r.IdRutina).ToList();
+                var rutinas = datos.RutinaAsignaciones.Where(ra => ra.IdMembresia == idMembresia &&
+                    ra.Estado && !permitidas.Contains(ra.IdRutina)).ToList();
+                foreach (var asignacion in rutinas)
+                {
+                    asignacion.Estado = false;
+                    asignacion.FechaFin = DateTime.Now;
                 }
 
                 datos.GuardarCambios();

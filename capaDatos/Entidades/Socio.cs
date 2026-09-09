@@ -40,6 +40,13 @@ namespace exxen2._0.capaDatos.Entidades
         public decimal? Altura { get; set; }
         public bool Estado { get; set; }
 
+        [Column(TypeName = "varbinary(max)")]
+        public byte[] Foto { get; set; }
+
+        [StringLength(1)]
+        [Column(TypeName = "char")]
+        public string Sexo { get; set; }
+
         [InverseProperty("Socio")]
         public virtual ICollection<Membresia> Membresias { get; set; }
 

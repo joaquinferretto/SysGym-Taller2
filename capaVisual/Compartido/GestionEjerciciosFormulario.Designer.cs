@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -97,7 +97,7 @@ namespace exxen2._0.capaVisual.Compartido
             panelFormulario.Controls.Add(contenedorFormulario);
 
             contenedorFormulario.Controls.Add(lblNombre); contenedorFormulario.Controls.Add(nombre); contenedorFormulario.Controls.Add(lblDescripcionEjercicio); contenedorFormulario.Controls.Add(descripcion);
-            tabla.AllowUserToAddRows = false; tabla.AllowUserToDeleteRows = false; tabla.AllowUserToResizeRows = false; tabla.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; tabla.BackgroundColor = Color.White; tabla.BorderStyle = BorderStyle.None; tabla.ColumnHeadersHeight = 38;  tabla.MultiSelect = false; tabla.ReadOnly = true; tabla.RowHeadersVisible = false; tabla.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                tabla.BackgroundColor = Color.White; tabla.BorderStyle = BorderStyle.None;
             tabla.Columns.AddRange(new DataGridViewColumn[] { colId, colNombre, colDescripcion, colEstado });
             colId.HeaderText = "Id"; colId.Name = "colId"; colId.Visible = false; colNombre.HeaderText = "Nombre"; colNombre.Name = "colNombre"; colNombre.FillWeight = 32; colDescripcion.HeaderText = "Descripcion"; colDescripcion.Name = "colDescripcion"; colDescripcion.FillWeight = 53; colEstado.HeaderText = "Estado"; colEstado.Name = "colEstado"; colEstado.FillWeight = 15;
 
@@ -109,111 +109,184 @@ namespace exxen2._0.capaVisual.Compartido
              reactivar.BackColor = Color.FromArgb(226, 232, 240); reactivar.FlatAppearance.BorderSize = 0; reactivar.FlatStyle = FlatStyle.Flat; reactivar.ForeColor = Color.FromArgb(30, 41, 59);  reactivar.Margin = new Padding(4, 0, 4, 0); reactivar.Name = "reactivar"; reactivar.Padding = new Padding(12, 0, 12, 0); reactivar.Text = "Reactivar"; reactivar.UseVisualStyleBackColor = false;
             lblEstadoFiltro.Name = "lblEstadoFiltro";  lblEstadoFiltro.TabIndex = 4; filtroEstado.Name = "filtroEstado"; filtroEstado.TabIndex = 5;
              lblEstado.Name = "lblEstado";  lblEstado.TabIndex = 3;  panelContenido.Name = "panelContenido";  panelContenido.TabIndex = 2;  panelFormulario.Name = "panelFormulario";  panelFormulario.TabIndex = 0;  contenedorFormulario.Name = "contenedorFormulario";   contenedorFormulario.TabIndex = 0;
-              lblNombre.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblNombre.ForeColor = Color.FromArgb(30, 41, 59); lblNombre.Name = "lblNombre"; lblNombre.Text = "Nombre:"; nombre.BorderStyle = BorderStyle.FixedSingle; nombre.Margin = new Padding(0, 4, 8, 4); nombre.Name = "nombre";    lblDescripcionEjercicio.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblDescripcionEjercicio.ForeColor = Color.FromArgb(30, 41, 59); lblDescripcionEjercicio.Name = "lblDescripcionEjercicio"; lblDescripcionEjercicio.Text = "Descripcion:"; descripcion.BorderStyle = BorderStyle.FixedSingle; descripcion.Margin = new Padding(0, 4, 0, 4); descripcion.Name = "descripcion"; 
-             tabla.Name = "tabla";  tabla.TabIndex = 1; colId.Width = 60; colNombre.Width = 300; colDescripcion.Width = 550; colEstado.Width = 150;
+              lblNombre.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblNombre.ForeColor = Color.FromArgb(30, 41, 59); lblNombre.Name = "lblNombre"; lblNombre.Text = "Nombre:"; nombre.BorderStyle = BorderStyle.FixedSingle; nombre.Margin = new Padding(0, 4, 8, 4); nombre.Name = "nombre";    lblDescripcionEjercicio.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblDescripcionEjercicio.ForeColor = Color.FromArgb(30, 41, 59); lblDescripcionEjercicio.Name = "lblDescripcionEjercicio"; lblDescripcionEjercicio.Text = "Descripcion:"; descripcion.BorderStyle = BorderStyle.FixedSingle; descripcion.Margin = new Padding(0, 4, 0, 4); descripcion.Name = "descripcion";
+             tabla.Name = "tabla";  tabla.TabIndex = 1; colId.FillWeight = 60; colNombre.FillWeight = 300; colNombre.MinimumWidth = 90; colDescripcion.FillWeight = 550; colDescripcion.MinimumWidth = 90; colEstado.FillWeight = 150; colEstado.MinimumWidth = 90;
             Controls.Add(panelContenido); Controls.Add(lblEstado); Controls.Add(barraAcciones); Controls.Add(panelEncabezado);
-            AutoScaleMode = AutoScaleMode.Font; this.AutoScroll = true; BackColor = Color.FromArgb(241, 245, 249); ClientSize = new Size(1100, 680); Font = new Font("Segoe UI", 9.5F); MinimumSize = new Size(760, 540); this.Name = "GestionEjerciciosFormulario"; StartPosition = FormStartPosition.CenterParent; Text = "SysGym | Ejercicios";
+            AutoScaleMode = AutoScaleMode.Font;  BackColor = Color.FromArgb(241, 245, 249); ClientSize = new Size(1100, 680); Font = new Font("Segoe UI", 9.5F); MinimumSize = new Size(900, 560); this.Name = "GestionEjerciciosFormulario"; StartPosition = FormStartPosition.CenterParent; Text = "SysGym | Ejercicios";
 
+            // Encabezado: titulo y descripcion a la izquierda, accion de regreso a la derecha.
+
+            this.panelEncabezado.Padding = new Padding(22, 8, 22, 8);
+
+            this.lblTitulo.Margin = new Padding(0);
+            this.lblTitulo.TextAlign = ContentAlignment.BottomLeft;
+
+            this.lblDescripcion.Margin = new Padding(0);
+            this.lblDescripcion.TextAlign = ContentAlignment.TopLeft;
+
+            this.btnVolver.Margin = new Padding(16, 0, 0, 0);
+            // Barra de acciones: los controles se reacomodan cuando el ancho disminuye.
+
+            this.barraAcciones.Padding = new Padding(16, 8, 16, 8);
+
+            this.guardar.MinimumSize = new Size(120, 34);
+            this.guardar.Margin = new Padding(0, 0, 8, 0);
+            this.guardar.Padding = new Padding(12, 0, 12, 0);
+
+            this.actualizar.MinimumSize = new Size(120, 34);
+            this.actualizar.Margin = new Padding(0, 0, 8, 0);
+            this.actualizar.Padding = new Padding(12, 0, 12, 0);
+
+            this.darDeBaja.MinimumSize = new Size(120, 34);
+            this.darDeBaja.Margin = new Padding(0, 0, 8, 0);
+            this.darDeBaja.Padding = new Padding(12, 0, 12, 0);
+
+            this.reactivar.MinimumSize = new Size(120, 34);
+            this.reactivar.Margin = new Padding(0, 0, 8, 0);
+            this.reactivar.Padding = new Padding(12, 0, 12, 0);
+
+            this.lblEstadoFiltro.Margin = new Padding(16, 9, 6, 0);
+
+            this.filtroEstado.Margin = new Padding(0, 5, 0, 0);
+            // Barra de estado inferior.
+
+            this.lblEstado.Padding = new Padding(18, 0, 12, 0);
+            this.lblEstado.TextAlign = ContentAlignment.MiddleLeft;
+            // Area de trabajo: la grilla ocupa el alto disponible y el formulario queda debajo.
+
+            this.panelContenido.Padding = new Padding(16);
+
+            this.tabla.Margin = new Padding(0, 0, 0, 16);
+            this.tabla.RowTemplate.Height = 30;
+
+            this.panelFormulario.Margin = new Padding(0);
+            this.panelFormulario.Padding = new Padding(16, 14, 16, 14);
+
+            this.lblNombre.Margin = new Padding(0, 0, 8, 8);
+            this.lblNombre.TextAlign = ContentAlignment.MiddleLeft;
+
+            this.nombre.Margin = new Padding(0, 3, 16, 8);
+
+            this.lblDescripcionEjercicio.Margin = new Padding(0, 0, 8, 8);
+            this.lblDescripcionEjercicio.TextAlign = ContentAlignment.MiddleLeft;
+
+            this.descripcion.Margin = new Padding(0, 3, 16, 8);
+
+            this.AutoScroll = false;
             this.panelEncabezado.AutoSize = false;
-            this.panelEncabezado.Dock = System.Windows.Forms.DockStyle.None;
+            this.panelEncabezado.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelEncabezado.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.panelEncabezado.Location = new System.Drawing.Point(0, 0);
-            this.panelEncabezado.Size = new System.Drawing.Size(1100, 80);
+            this.panelEncabezado.Size = new System.Drawing.Size(1100, 84);
+            this.panelEncabezado.AutoScroll = false;
             this.lblTitulo.AutoSize = false;
             this.lblTitulo.Dock = System.Windows.Forms.DockStyle.None;
             this.lblTitulo.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.lblTitulo.Location = new System.Drawing.Point(22, 10);
-            this.lblTitulo.Size = new System.Drawing.Size(116, 38);
+            this.lblTitulo.Location = new System.Drawing.Point(22, 8);
+            this.lblTitulo.Size = new System.Drawing.Size(890, 36);
             this.lblDescripcion.AutoSize = false;
             this.lblDescripcion.Dock = System.Windows.Forms.DockStyle.None;
             this.lblDescripcion.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.lblDescripcion.Location = new System.Drawing.Point(24, 47);
-            this.lblDescripcion.Size = new System.Drawing.Size(291, 22);
+            this.lblDescripcion.Location = new System.Drawing.Point(24, 48);
+            this.lblDescripcion.Size = new System.Drawing.Size(890, 26);
             this.btnVolver.AutoSize = false;
             this.btnVolver.Dock = System.Windows.Forms.DockStyle.None;
-            this.btnVolver.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.btnVolver.Location = new System.Drawing.Point(930, 22);
-            this.btnVolver.Size = new System.Drawing.Size(92, 34);
+            this.btnVolver.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            this.btnVolver.Location = new System.Drawing.Point(974, 24);
+            this.btnVolver.Size = new System.Drawing.Size(104, 38);
             this.barraAcciones.AutoSize = false;
-            this.barraAcciones.Dock = System.Windows.Forms.DockStyle.None;
+            this.barraAcciones.Dock = System.Windows.Forms.DockStyle.Top;
             this.barraAcciones.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.barraAcciones.Location = new System.Drawing.Point(0, 80);
+            this.barraAcciones.Location = new System.Drawing.Point(0, 84);
             this.barraAcciones.Size = new System.Drawing.Size(1100, 52);
+            this.barraAcciones.AutoScroll = false;
             this.lblEstadoFiltro.AutoSize = false;
             this.lblEstadoFiltro.Dock = System.Windows.Forms.DockStyle.None;
             this.lblEstadoFiltro.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.lblEstadoFiltro.Location = new System.Drawing.Point(442, 17);
-            this.lblEstadoFiltro.Size = new System.Drawing.Size(46, 22);
+            this.lblEstadoFiltro.Location = new System.Drawing.Point(528, 8);
+            this.lblEstadoFiltro.Size = new System.Drawing.Size(80, 34);
             this.nombre.AutoSize = false;
             this.nombre.Dock = System.Windows.Forms.DockStyle.None;
             this.nombre.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.nombre.Location = new System.Drawing.Point(80, 4);
-            this.nombre.Size = new System.Drawing.Size(312, 24);
+            this.nombre.Location = new System.Drawing.Point(110, 4);
+            this.nombre.Size = new System.Drawing.Size(395, 26);
             this.descripcion.AutoSize = false;
             this.descripcion.Dock = System.Windows.Forms.DockStyle.None;
             this.descripcion.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.descripcion.Location = new System.Drawing.Point(510, 4);
-            this.descripcion.Size = new System.Drawing.Size(524, 24);
+            this.descripcion.Location = new System.Drawing.Point(627, 4);
+            this.descripcion.Size = new System.Drawing.Size(395, 26);
             this.filtroEstado.AutoSize = false;
             this.filtroEstado.Dock = System.Windows.Forms.DockStyle.None;
             this.filtroEstado.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.filtroEstado.Location = new System.Drawing.Point(494, 10);
-            this.filtroEstado.Size = new System.Drawing.Size(130, 25);
+            this.filtroEstado.Location = new System.Drawing.Point(616, 8);
+            this.filtroEstado.Size = new System.Drawing.Size(160, 34);
             this.guardar.AutoSize = false;
             this.guardar.Dock = System.Windows.Forms.DockStyle.None;
             this.guardar.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.guardar.Location = new System.Drawing.Point(20, 8);
-            this.guardar.Size = new System.Drawing.Size(85, 36);
+            this.guardar.Location = new System.Drawing.Point(16, 8);
+            this.guardar.Size = new System.Drawing.Size(120, 34);
             this.actualizar.AutoSize = false;
             this.actualizar.Dock = System.Windows.Forms.DockStyle.None;
             this.actualizar.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.actualizar.Location = new System.Drawing.Point(325, 8);
-            this.actualizar.Size = new System.Drawing.Size(95, 36);
+            this.actualizar.Location = new System.Drawing.Point(400, 8);
+            this.actualizar.Size = new System.Drawing.Size(120, 34);
             this.darDeBaja.AutoSize = false;
             this.darDeBaja.Dock = System.Windows.Forms.DockStyle.None;
             this.darDeBaja.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.darDeBaja.Location = new System.Drawing.Point(113, 8);
-            this.darDeBaja.Size = new System.Drawing.Size(105, 36);
+            this.darDeBaja.Location = new System.Drawing.Point(144, 8);
+            this.darDeBaja.Size = new System.Drawing.Size(120, 34);
             this.reactivar.AutoSize = false;
             this.reactivar.Dock = System.Windows.Forms.DockStyle.None;
             this.reactivar.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.reactivar.Location = new System.Drawing.Point(226, 8);
-            this.reactivar.Size = new System.Drawing.Size(91, 36);
+            this.reactivar.Location = new System.Drawing.Point(272, 8);
+            this.reactivar.Size = new System.Drawing.Size(120, 34);
             this.lblEstado.AutoSize = false;
-            this.lblEstado.Dock = System.Windows.Forms.DockStyle.None;
+            this.lblEstado.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblEstado.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.lblEstado.Location = new System.Drawing.Point(0, 648);
-            this.lblEstado.Size = new System.Drawing.Size(1100, 32);
+            this.lblEstado.Location = new System.Drawing.Point(0, 650);
+            this.lblEstado.Size = new System.Drawing.Size(1100, 30);
             this.panelContenido.AutoSize = false;
-            this.panelContenido.Dock = System.Windows.Forms.DockStyle.None;
+            this.panelContenido.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelContenido.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.panelContenido.Location = new System.Drawing.Point(0, 132);
-            this.panelContenido.Size = new System.Drawing.Size(1100, 516);
+            this.panelContenido.Location = new System.Drawing.Point(0, 136);
+            this.panelContenido.Size = new System.Drawing.Size(1100, 514);
+            this.panelContenido.AutoScroll = false;
             this.panelFormulario.AutoSize = false;
             this.panelFormulario.Dock = System.Windows.Forms.DockStyle.None;
-            this.panelFormulario.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.panelFormulario.Location = new System.Drawing.Point(20, 20);
-            this.panelFormulario.Size = new System.Drawing.Size(1060, 94);
+            this.panelFormulario.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.panelFormulario.Location = new System.Drawing.Point(16, 430);
+            this.panelFormulario.Size = new System.Drawing.Size(1068, 68);
+            this.panelFormulario.AutoScroll = false;
             this.contenedorFormulario.AutoSize = false;
             this.contenedorFormulario.Dock = System.Windows.Forms.DockStyle.None;
-            this.contenedorFormulario.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.contenedorFormulario.Location = new System.Drawing.Point(12, 12);
-            this.contenedorFormulario.Size = new System.Drawing.Size(1034, 68);
+            this.contenedorFormulario.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.contenedorFormulario.Location = new System.Drawing.Point(16, 14);
+            this.contenedorFormulario.Size = new System.Drawing.Size(1034, 38);
+            this.contenedorFormulario.AutoScroll = false;
             this.lblNombre.AutoSize = false;
             this.lblNombre.Dock = System.Windows.Forms.DockStyle.None;
             this.lblNombre.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.lblNombre.Location = new System.Drawing.Point(3, 23);
-            this.lblNombre.Size = new System.Drawing.Size(54, 21);
+            this.lblNombre.Location = new System.Drawing.Point(0, 0);
+            this.lblNombre.Size = new System.Drawing.Size(102, 30);
             this.lblDescripcionEjercicio.AutoSize = false;
             this.lblDescripcionEjercicio.Dock = System.Windows.Forms.DockStyle.None;
             this.lblDescripcionEjercicio.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.lblDescripcionEjercicio.Location = new System.Drawing.Point(403, 23);
-            this.lblDescripcionEjercicio.Size = new System.Drawing.Size(73, 21);
+            this.lblDescripcionEjercicio.Location = new System.Drawing.Point(517, 0);
+            this.lblDescripcionEjercicio.Size = new System.Drawing.Size(102, 30);
             this.tabla.AutoSize = false;
             this.tabla.Dock = System.Windows.Forms.DockStyle.None;
-            this.tabla.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.tabla.Location = new System.Drawing.Point(20, 114);
-            this.tabla.Size = new System.Drawing.Size(1060, 382);
+            this.tabla.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.tabla.Location = new System.Drawing.Point(16, 16);
+            this.tabla.Size = new System.Drawing.Size(1068, 398);
+            this.tabla.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.tabla.ReadOnly = true;
+            this.tabla.AllowUserToAddRows = false;
+            this.tabla.AllowUserToDeleteRows = false;
+            this.tabla.AllowUserToResizeRows = false;
+            this.tabla.RowHeadersVisible = false;
+            this.tabla.MultiSelect = false;
+            this.tabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.tabla.ColumnHeadersHeight = 46;
             panelEncabezado.ResumeLayout(false); panelEncabezado.PerformLayout(); barraAcciones.ResumeLayout(false); barraAcciones.PerformLayout(); panelContenido.ResumeLayout(false); panelFormulario.ResumeLayout(false); contenedorFormulario.ResumeLayout(false); contenedorFormulario.PerformLayout(); ((ISupportInitialize)(tabla)).EndInit(); ResumeLayout(false);
 
             this.Load += new System.EventHandler(this.GestionEjerciciosFormulario_Load);

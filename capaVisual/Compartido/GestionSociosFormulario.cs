@@ -19,6 +19,7 @@ namespace exxen2._0.capaVisual.Compartido
         private int idSeleccionado;
         private bool cargandoTabla;
         private bool estadoSeleccionado = true;
+        private byte[] fotoSeleccionada;
         /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
         public GestionSociosFormulario() : this(Color.FromArgb(79, 70, 229))
         {
@@ -41,6 +42,9 @@ namespace exxen2._0.capaVisual.Compartido
                 peso.ReadOnly = true;
                 altura.ReadOnly = true;
                 fechaNacimiento.Enabled = false;
+                sexo.Enabled = false;
+                btnSeleccionarFoto.Enabled = false;
+                btnQuitarFoto.Enabled = false;
             }
         }
 
@@ -103,6 +107,9 @@ namespace exxen2._0.capaVisual.Compartido
                 if (socio == null)
                     return;
                 estadoSeleccionado = socio.Estado;
+                fotoSeleccionada = socio.Foto;
+                sexo.SelectedIndex = socio.Sexo == "M" ? 0 : socio.Sexo == "F" ? 1 : -1;
+                AyudaFormularioVisual.MostrarFoto(fotoSocio, fotoSeleccionada, socio.Sexo);
                 nombre.Text = socio.Nombre;
                 apellido.Text = socio.Apellido;
                 dni.Text = socio.DNI;
@@ -125,6 +132,9 @@ namespace exxen2._0.capaVisual.Compartido
         {
             idSeleccionado = 0;
             estadoSeleccionado = true;
+            fotoSeleccionada = null;
+            sexo.SelectedIndex = -1;
+            AyudaFormularioVisual.MostrarFoto(fotoSocio, null, null);
             nombre.Clear();
             apellido.Clear();
             dni.Clear();
@@ -160,7 +170,9 @@ namespace exxen2._0.capaVisual.Compartido
                 FechaNacimiento = fechaNacimiento.Checked ? (DateTime? )fechaNacimiento.Value.Date : null,
                 Peso = string.IsNullOrWhiteSpace(peso.Text) ? (decimal? )null : AyudaFormularioVisual.DecimalPositivo(peso, "peso"),
                 Altura = string.IsNullOrWhiteSpace(altura.Text) ? (decimal? )null : AyudaFormularioVisual.DecimalPositivo(altura, "altura"),
-                Estado = estadoSeleccionado
+                Estado = estadoSeleccionado,
+                Foto = fotoSeleccionada,
+                Sexo = SexoSeleccionado()
             };
         }
 
@@ -301,5 +313,61 @@ namespace exxen2._0.capaVisual.Compartido
         {
             AyudaFormularioVisual.ValidarEntradaDecimal(altura, e);
         }
+
+        /* Devuelve el código del sexo seleccionado sin inventar un valor para registros sin selección. */
+        private string SexoSeleccionado()
+        {
+            return sexo.SelectedIndex == 0 ? "M" : sexo.SelectedIndex == 1 ? "F" : null;
+        }
+
+        /* Al elegir una foto, valida el archivo y actualiza la vista antes de aceptar sus bytes. */
+        private void btnSeleccionarFoto_Click(object origen, EventArgs e)
+        {
+            try
+            {
+                var contenido = AyudaFormularioVisual.SeleccionarFoto(this, SexoSeleccionado());
+                if (contenido == null)
+                    return;
+                AyudaFormularioVisual.MostrarFoto(fotoSocio, contenido, SexoSeleccionado());
+                fotoSeleccionada = contenido;
+            }
+            catch (Exception ex)
+            {
+                AyudaFormularioVisual.MostrarError(lblEstado, ex);
+            }
+        }
+
+        /* Al quitar la foto, conserva el sexo y vuelve al avatar disponible para ese valor. */
+        private void btnQuitarFoto_Click(object origen, EventArgs e)
+        {
+            fotoSeleccionada = null;
+            sexo_SelectedIndexChanged(origen, e);
+        }
+
+        /* Al cambiar el sexo sin foto propia, actualiza el avatar de la vista previa. */
+        private void sexo_SelectedIndexChanged(object origen, EventArgs e)
+        {
+            if (fotoSeleccionada != null)
+                return;
+            try
+            {
+                AyudaFormularioVisual.MostrarFoto(fotoSocio, null, SexoSeleccionado());
+            }
+            catch (Exception ex)
+            {
+                AyudaFormularioVisual.MostrarError(lblEstado, ex);
+            }
+        }
+
+        /* Libera la copia de la imagen cuando se destruye el control de vista previa. */
+        private void fotoSocio_Disposed(object origen, EventArgs e)
+        {
+            if (fotoSocio.Image != null)
+            {
+                fotoSocio.Image.Dispose();
+                fotoSocio.Image = null;
+            }
+        }
+
     }
 }

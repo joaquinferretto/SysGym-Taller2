@@ -51,6 +51,13 @@ namespace exxen2._0.capaDatos.Entidades
         [Column("Password")]
         public string Clave { get; set; }
         public bool Estado { get; set; }
+
+        [Column(TypeName = "varbinary(max)")]
+        public byte[] Foto { get; set; }
+
+        [StringLength(1)]
+        [Column(TypeName = "char")]
+        public string Sexo { get; set; }
         public int IdRol { get; set; }
 
         [ForeignKey("IdRol")]

@@ -42,6 +42,13 @@ namespace exxen2._0.capaDatos.Contexto
         protected override void OnModelCreating(DbModelBuilder modelo)
         {
             base.OnModelCreating(modelo);
+            modelo.Conventions.Remove<System.Data.Entity.ModelConfiguration.Conventions.ManyToManyCascadeDeleteConvention>();
+            modelo.Entity<Plan>().HasMany(p => p.RutinasDisponibles).WithMany().Map(relacion =>
+            {
+                relacion.ToTable("PlanRutina");
+                relacion.MapLeftKey("IdPlan");
+                relacion.MapRightKey("IdRutina");
+            });
             modelo.Properties<System.DateTime>().Configure(p => p.HasColumnType("datetime2"));
             modelo.Entity<Rol>().ToTable("Rol");
             modelo.Entity<UsuarioSistema>().ToTable("UsuarioSistema");

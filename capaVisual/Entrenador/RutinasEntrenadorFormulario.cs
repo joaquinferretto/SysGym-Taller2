@@ -18,7 +18,6 @@ namespace exxen2._0.capaVisual.Entrenador
         private readonly RutinaAsignacionLogica asignaciones = new RutinaAsignacionLogica();
         private readonly RutinaEjercicioLogica ejerciciosRutina = new RutinaEjercicioLogica();
         private readonly EjercicioLogica ejercicios = new EjercicioLogica();
-        private readonly MembresiaLogica membresias = new MembresiaLogica();
         private int idRutina;
         /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
         public RutinasEntrenadorFormulario() : this(new UsuarioSistema { Nombre = "Entrenador", Apellido = "de diseno" })
@@ -45,9 +44,19 @@ namespace exxen2._0.capaVisual.Entrenador
         /* Carga las membresías disponibles y sus datos de presentación para seleccionarlas. */
         private void CargarMembresias()
         {
-            membresia.DataSource = membresias.ListarHabilitadas();
-            membresia.DisplayMember = "IdMembresia";
-            membresia.ValueMember = "IdMembresia";
+            try
+            {
+                membresia.DataSource = null;
+                if (idRutina == 0)
+                    return;
+                membresia.DataSource = asignaciones.ListarMembresiasDisponibles(idRutina);
+                membresia.DisplayMember = "IdMembresia";
+                membresia.ValueMember = "IdMembresia";
+            }
+            catch (Exception ex)
+            {
+                AyudaFormularioVisual.MostrarError(lblEstado, ex);
+            }
         }
 
         /* Al mostrar una opción de membresía, presenta el nombre del socio y su plan. */
@@ -81,14 +90,22 @@ namespace exxen2._0.capaVisual.Entrenador
         /* Al cambiar la fila seleccionada, toma su identificador y actualiza los datos o acciones del registro. */
         private void tabla_SelectionChanged(object origen, EventArgs e)
         {
-            if (tabla.CurrentRow == null || tabla.CurrentRow.Cells[0].Value == null)
-                return;
-            idRutina = Convert.ToInt32(tabla.CurrentRow.Cells[0].Value);
-            var rutina = rutinas.ObtenerPorId(idRutina);
-            if (rutina == null)
-                return;
-            nombre.Text = rutina.Nombre;
-            descripcion.Text = rutina.Descripcion ?? string.Empty;
+            try
+            {
+                if (tabla.CurrentRow == null || tabla.CurrentRow.Cells[0].Value == null)
+                    return;
+                idRutina = Convert.ToInt32(tabla.CurrentRow.Cells[0].Value);
+                var rutina = rutinas.ObtenerPorId(idRutina);
+                if (rutina == null)
+                    return;
+                nombre.Text = rutina.Nombre;
+                descripcion.Text = rutina.Descripcion ?? string.Empty;
+                CargarMembresias();
+            }
+            catch (Exception ex)
+            {
+                AyudaFormularioVisual.MostrarError(lblEstado, ex);
+            }
         }
 
         /* Al hacer clic en nuevaRutina, limpia la selección para crear una plantilla de rutina. */
@@ -98,6 +115,7 @@ namespace exxen2._0.capaVisual.Entrenador
             nombre.Clear();
             descripcion.Clear();
             tabla.ClearSelection();
+            CargarMembresias();
         }
 
         /* Al hacer clic en guardarRutina, crea o actualiza la plantilla mediante RutinaLogica. */
@@ -234,6 +252,7 @@ namespace exxen2._0.capaVisual.Entrenador
         private void actualizar_Click(object origen, EventArgs e)
         {
             Cargar();
+            CargarMembresias();
         }
     }
 }

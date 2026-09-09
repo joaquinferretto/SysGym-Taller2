@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -25,7 +25,9 @@ namespace exxen2._0.capaVisual.Recepcionista
         private Button btnAsistencias;
         private Panel panelPie;
         private Button btnSalir;
+
         private Panel panelContenido;
+        private Label lblBienvenida;
 
         protected override void Dispose(bool liberarRecursos)
         {
@@ -41,6 +43,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             btnCambiarCuenta = new Button();
             panelMenu = new Panel();
             panelOpciones = new Panel();
+
             lblClientes = new Label();
             btnSocios = new Button();
             btnMembresias = new Button();
@@ -54,9 +57,11 @@ namespace exxen2._0.capaVisual.Recepcionista
             panelPie = new Panel();
             btnSalir = new Button();
             panelContenido = new Panel();
+            lblBienvenida = new Label();
             panelEncabezado.SuspendLayout();
             panelMenu.SuspendLayout();
             panelOpciones.SuspendLayout();
+
             panelPie.SuspendLayout();
             SuspendLayout();
 
@@ -103,7 +108,6 @@ namespace exxen2._0.capaVisual.Recepcionista
 
             panelMenu.TabIndex = 1;
 
-            panelOpciones.AutoScroll = true;
             panelOpciones.BackColor = Color.White;
             panelOpciones.Controls.Add(lblClientes);
             panelOpciones.Controls.Add(btnSocios);
@@ -135,120 +139,188 @@ namespace exxen2._0.capaVisual.Recepcionista
             panelPie.BackColor = Color.White; panelPie.Controls.Add(btnSalir);   panelPie.Name = "panelPie"; panelPie.Padding = new Padding(14, 10, 14, 14);  panelPie.TabIndex = 1;
             btnSalir.BackColor = Color.FromArgb(254, 242, 242);  btnSalir.FlatAppearance.BorderColor = Color.FromArgb(254, 202, 202); btnSalir.FlatStyle = FlatStyle.Flat; btnSalir.ForeColor = Color.FromArgb(185, 28, 28);  btnSalir.Name = "btnSalir";  btnSalir.TabIndex = 0; btnSalir.Text = "Salir"; btnSalir.TextAlign = ContentAlignment.MiddleLeft; btnSalir.UseVisualStyleBackColor = false;
 
-            panelContenido.BackColor = Color.FromArgb(226, 232, 240);   panelContenido.Name = "panelContenido";  panelContenido.TabIndex = 2;
+            panelContenido.BackColor = Color.FromArgb(226, 232, 240); panelContenido.Controls.Add(lblBienvenida);
+            lblBienvenida.Name = "lblBienvenida"; lblBienvenida.TabIndex = 0; lblBienvenida.Font = new Font("Segoe UI", 12F); lblBienvenida.ForeColor = Color.FromArgb(100, 116, 139); lblBienvenida.Text = "Panel de recepcion\r\n\r\nElegi una opcion del menu lateral para comenzar a trabajar.";   panelContenido.Name = "panelContenido";  panelContenido.TabIndex = 2;
 
             AutoScaleDimensions = new SizeF(7F, 17F);
-            AutoScaleMode = AutoScaleMode.Font; this.AutoScroll = true;
+            AutoScaleMode = AutoScaleMode.Font;
+
             BackColor = Color.FromArgb(241, 245, 249);
             ClientSize = new Size(1200, 760);
             Controls.Add(panelContenido);
             Controls.Add(panelMenu);
             Controls.Add(panelEncabezado);
             Font = new Font("Segoe UI", 10F);
-            MinimumSize = new Size(900, 600);
+            MinimumSize = new Size(1100, 700);
             this.Name = "PanelRecepcionista";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "SysGym - Recepcionista";
             WindowState = FormWindowState.Maximized;
 
+            // Distribucion general: encabezado superior, menu lateral fijo y contenido que ocupa el resto de la ventana.
+
+            panelEncabezado.Padding = new Padding(24, 8, 24, 8);
+
+            lblMarca.Margin = new Padding(0);
+            lblMarca.TextAlign = ContentAlignment.BottomLeft;
+
+            lblUsuarioRol.Margin = new Padding(0);
+            lblUsuarioRol.TextAlign = ContentAlignment.TopLeft;
+
+            btnCambiarCuenta.Margin = new Padding(16, 0, 0, 0);
+
+            panelMenu.MinimumSize = new Size(264, 0);
+
+            panelPie.Padding = new Padding(14, 12, 14, 16);
+
+            btnSalir.Padding = new Padding(12, 0, 0, 0);
+
+            panelOpciones.Padding = new Padding(14, 10, 14, 10);
+
+            lblClientes.Margin = new Padding(0, 8, 0, 2);
+            lblClientes.TextAlign = ContentAlignment.MiddleLeft;
+
+            btnSocios.Margin = new Padding(0, 0, 0, 5);
+            btnSocios.Padding = new Padding(12, 0, 0, 0);
+
+            btnMembresias.Margin = new Padding(0, 0, 0, 5);
+            btnMembresias.Padding = new Padding(12, 0, 0, 0);
+
+            lblCaja.Margin = new Padding(0, 8, 0, 2);
+            lblCaja.TextAlign = ContentAlignment.MiddleLeft;
+
+            btnPagos.Margin = new Padding(0, 0, 0, 5);
+            btnPagos.Padding = new Padding(12, 0, 0, 0);
+
+            lblEntrenadores.Margin = new Padding(0, 8, 0, 2);
+            lblEntrenadores.TextAlign = ContentAlignment.MiddleLeft;
+
+            btnAsignar.Margin = new Padding(0, 0, 0, 5);
+            btnAsignar.Padding = new Padding(12, 0, 0, 0);
+
+            btnConsultar.Margin = new Padding(0, 0, 0, 5);
+            btnConsultar.Padding = new Padding(12, 0, 0, 0);
+
+            lblControl.Margin = new Padding(0, 8, 0, 2);
+            lblControl.TextAlign = ContentAlignment.MiddleLeft;
+
+            btnAsistencias.Margin = new Padding(0, 0, 0, 5);
+            btnAsistencias.Padding = new Padding(12, 0, 0, 0);
+
+            panelContenido.Padding = new Padding(0);
+
+            lblBienvenida.TextAlign = ContentAlignment.MiddleCenter;
+
+            this.AutoScroll = false;
             this.panelEncabezado.AutoSize = false;
-            this.panelEncabezado.Dock = System.Windows.Forms.DockStyle.None;
+            this.panelEncabezado.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelEncabezado.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.panelEncabezado.Location = new System.Drawing.Point(0, 0);
-            this.panelEncabezado.Size = new System.Drawing.Size(1200, 82);
+            this.panelEncabezado.Size = new System.Drawing.Size(1200, 90);
+            this.panelEncabezado.AutoScroll = false;
             this.lblMarca.AutoSize = false;
             this.lblMarca.Dock = System.Windows.Forms.DockStyle.None;
             this.lblMarca.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.lblMarca.Location = new System.Drawing.Point(24, 8);
-            this.lblMarca.Size = new System.Drawing.Size(119, 42);
+            this.lblMarca.Location = new System.Drawing.Point(22, 8);
+            this.lblMarca.Size = new System.Drawing.Size(990, 36);
             this.lblUsuarioRol.AutoSize = false;
             this.lblUsuarioRol.Dock = System.Windows.Forms.DockStyle.None;
             this.lblUsuarioRol.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.lblUsuarioRol.Location = new System.Drawing.Point(27, 48);
-            this.lblUsuarioRol.Size = new System.Drawing.Size(347, 23);
+            this.lblUsuarioRol.Location = new System.Drawing.Point(24, 48);
+            this.lblUsuarioRol.Size = new System.Drawing.Size(990, 26);
             this.btnCambiarCuenta.AutoSize = false;
             this.btnCambiarCuenta.Dock = System.Windows.Forms.DockStyle.None;
-            this.btnCambiarCuenta.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.btnCambiarCuenta.Location = new System.Drawing.Point(1018, 23);
-            this.btnCambiarCuenta.Size = new System.Drawing.Size(158, 34);
+            this.btnCambiarCuenta.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            this.btnCambiarCuenta.Location = new System.Drawing.Point(1002, 24);
+            this.btnCambiarCuenta.Size = new System.Drawing.Size(176, 38);
             this.panelMenu.AutoSize = false;
-            this.panelMenu.Dock = System.Windows.Forms.DockStyle.None;
+            this.panelMenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelMenu.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.panelMenu.Location = new System.Drawing.Point(0, 82);
-            this.panelMenu.Size = new System.Drawing.Size(260, 678);
+            this.panelMenu.Location = new System.Drawing.Point(0, 90);
+            this.panelMenu.Size = new System.Drawing.Size(264, 670);
+            this.panelMenu.AutoScroll = false;
             this.panelOpciones.AutoSize = false;
-            this.panelOpciones.Dock = System.Windows.Forms.DockStyle.None;
+            this.panelOpciones.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelOpciones.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.panelOpciones.Location = new System.Drawing.Point(0, 0);
-            this.panelOpciones.Size = new System.Drawing.Size(260, 608);
+            this.panelOpciones.Size = new System.Drawing.Size(264, 594);
+            this.panelOpciones.AutoScroll = true;
             this.lblClientes.AutoSize = false;
             this.lblClientes.Dock = System.Windows.Forms.DockStyle.None;
             this.lblClientes.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.lblClientes.Location = new System.Drawing.Point(14, 26);
-            this.lblClientes.Size = new System.Drawing.Size(214, 24);
+            this.lblClientes.Location = new System.Drawing.Point(14, 18);
+            this.lblClientes.Size = new System.Drawing.Size(236, 22);
             this.btnSocios.AutoSize = false;
             this.btnSocios.Dock = System.Windows.Forms.DockStyle.None;
             this.btnSocios.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.btnSocios.Location = new System.Drawing.Point(14, 54);
-            this.btnSocios.Size = new System.Drawing.Size(214, 40);
+            this.btnSocios.Location = new System.Drawing.Point(14, 42);
+            this.btnSocios.Size = new System.Drawing.Size(236, 38);
             this.btnMembresias.AutoSize = false;
             this.btnMembresias.Dock = System.Windows.Forms.DockStyle.None;
             this.btnMembresias.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.btnMembresias.Location = new System.Drawing.Point(14, 99);
-            this.btnMembresias.Size = new System.Drawing.Size(214, 40);
+            this.btnMembresias.Location = new System.Drawing.Point(14, 85);
+            this.btnMembresias.Size = new System.Drawing.Size(236, 38);
             this.lblCaja.AutoSize = false;
             this.lblCaja.Dock = System.Windows.Forms.DockStyle.None;
             this.lblCaja.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.lblCaja.Location = new System.Drawing.Point(14, 152);
-            this.lblCaja.Size = new System.Drawing.Size(214, 24);
+            this.lblCaja.Location = new System.Drawing.Point(14, 136);
+            this.lblCaja.Size = new System.Drawing.Size(236, 22);
             this.btnPagos.AutoSize = false;
             this.btnPagos.Dock = System.Windows.Forms.DockStyle.None;
             this.btnPagos.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.btnPagos.Location = new System.Drawing.Point(14, 180);
-            this.btnPagos.Size = new System.Drawing.Size(214, 40);
+            this.btnPagos.Location = new System.Drawing.Point(14, 160);
+            this.btnPagos.Size = new System.Drawing.Size(236, 38);
             this.lblEntrenadores.AutoSize = false;
             this.lblEntrenadores.Dock = System.Windows.Forms.DockStyle.None;
             this.lblEntrenadores.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.lblEntrenadores.Location = new System.Drawing.Point(14, 233);
-            this.lblEntrenadores.Size = new System.Drawing.Size(214, 24);
+            this.lblEntrenadores.Location = new System.Drawing.Point(14, 211);
+            this.lblEntrenadores.Size = new System.Drawing.Size(236, 22);
             this.btnAsignar.AutoSize = false;
             this.btnAsignar.Dock = System.Windows.Forms.DockStyle.None;
             this.btnAsignar.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.btnAsignar.Location = new System.Drawing.Point(14, 261);
-            this.btnAsignar.Size = new System.Drawing.Size(214, 40);
+            this.btnAsignar.Location = new System.Drawing.Point(14, 235);
+            this.btnAsignar.Size = new System.Drawing.Size(236, 38);
             this.btnConsultar.AutoSize = false;
             this.btnConsultar.Dock = System.Windows.Forms.DockStyle.None;
             this.btnConsultar.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.btnConsultar.Location = new System.Drawing.Point(14, 306);
-            this.btnConsultar.Size = new System.Drawing.Size(214, 40);
+            this.btnConsultar.Location = new System.Drawing.Point(14, 278);
+            this.btnConsultar.Size = new System.Drawing.Size(236, 38);
             this.lblControl.AutoSize = false;
             this.lblControl.Dock = System.Windows.Forms.DockStyle.None;
             this.lblControl.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.lblControl.Location = new System.Drawing.Point(14, 359);
-            this.lblControl.Size = new System.Drawing.Size(214, 24);
+            this.lblControl.Location = new System.Drawing.Point(14, 329);
+            this.lblControl.Size = new System.Drawing.Size(236, 22);
             this.btnAsistencias.AutoSize = false;
             this.btnAsistencias.Dock = System.Windows.Forms.DockStyle.None;
             this.btnAsistencias.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.btnAsistencias.Location = new System.Drawing.Point(14, 387);
-            this.btnAsistencias.Size = new System.Drawing.Size(214, 40);
+            this.btnAsistencias.Location = new System.Drawing.Point(14, 353);
+            this.btnAsistencias.Size = new System.Drawing.Size(236, 38);
             this.panelPie.AutoSize = false;
-            this.panelPie.Dock = System.Windows.Forms.DockStyle.None;
+            this.panelPie.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelPie.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.panelPie.Location = new System.Drawing.Point(0, 608);
-            this.panelPie.Size = new System.Drawing.Size(260, 70);
+            this.panelPie.Location = new System.Drawing.Point(0, 594);
+            this.panelPie.Size = new System.Drawing.Size(264, 76);
+            this.panelPie.AutoScroll = false;
             this.btnSalir.AutoSize = false;
             this.btnSalir.Dock = System.Windows.Forms.DockStyle.None;
-            this.btnSalir.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.btnSalir.Location = new System.Drawing.Point(14, 10);
-            this.btnSalir.Size = new System.Drawing.Size(232, 46);
+            this.btnSalir.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.btnSalir.Location = new System.Drawing.Point(14, 14);
+            this.btnSalir.Size = new System.Drawing.Size(236, 46);
             this.panelContenido.AutoSize = false;
-            this.panelContenido.Dock = System.Windows.Forms.DockStyle.None;
+            this.panelContenido.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelContenido.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.panelContenido.Location = new System.Drawing.Point(260, 82);
-            this.panelContenido.Size = new System.Drawing.Size(940, 678);
+            this.panelContenido.Location = new System.Drawing.Point(264, 90);
+            this.panelContenido.Size = new System.Drawing.Size(936, 670);
+            this.panelContenido.AutoScroll = false;
+            this.lblBienvenida.AutoSize = false;
+            this.lblBienvenida.Dock = System.Windows.Forms.DockStyle.None;
+            this.lblBienvenida.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.lblBienvenida.Location = new System.Drawing.Point(0, 0);
+            this.lblBienvenida.Size = new System.Drawing.Size(936, 670);
             panelEncabezado.ResumeLayout(false);
             panelEncabezado.PerformLayout();
             panelMenu.ResumeLayout(false);
+
             panelOpciones.ResumeLayout(false);
             panelPie.ResumeLayout(false);
             ResumeLayout(false);

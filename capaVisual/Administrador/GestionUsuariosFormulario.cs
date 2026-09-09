@@ -21,6 +21,7 @@ namespace exxen2._0.capaVisual.Administrador
         private int idSeleccionado;
         private bool cargandoTabla;
         private bool estadoSeleccionado = true;
+        private byte[] fotoSeleccionada;
         /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
         public GestionUsuariosFormulario()
         {
@@ -94,6 +95,9 @@ namespace exxen2._0.capaVisual.Administrador
                 if (usuario == null)
                     return;
                 estadoSeleccionado = usuario.Estado;
+                fotoSeleccionada = usuario.Foto;
+                sexo.SelectedIndex = usuario.Sexo == "M" ? 0 : usuario.Sexo == "F" ? 1 : -1;
+                AyudaFormularioVisual.MostrarFoto(fotoUsuario, fotoSeleccionada, usuario.Sexo);
                 nombre.Text = usuario.Nombre;
                 apellido.Text = usuario.Apellido;
                 dni.Text = usuario.DNI;
@@ -115,6 +119,9 @@ namespace exxen2._0.capaVisual.Administrador
         {
             idSeleccionado = 0;
             estadoSeleccionado = true;
+            fotoSeleccionada = null;
+            sexo.SelectedIndex = -1;
+            AyudaFormularioVisual.MostrarFoto(fotoUsuario, null, null);
             nombre.Clear();
             apellido.Clear();
             dni.Clear();
@@ -152,7 +159,9 @@ namespace exxen2._0.capaVisual.Administrador
                 NombreUsuario = nombreUsuario.Text.Trim(),
                 Salario = AyudaFormularioVisual.DecimalPositivo(salario, "salario"),
                 IdRol = Convert.ToInt32(rol.SelectedValue),
-                Estado = estadoSeleccionado
+                Estado = estadoSeleccionado,
+                Foto = fotoSeleccionada,
+                Sexo = SexoSeleccionado()
             };
         }
 
@@ -276,5 +285,61 @@ namespace exxen2._0.capaVisual.Administrador
         {
             AyudaFormularioVisual.ValidarEntradaDecimal(salario, e);
         }
+
+        /* Devuelve el código del sexo seleccionado sin inventar un valor para registros sin selección. */
+        private string SexoSeleccionado()
+        {
+            return sexo.SelectedIndex == 0 ? "M" : sexo.SelectedIndex == 1 ? "F" : null;
+        }
+
+        /* Al elegir una foto, valida el archivo y actualiza la vista antes de aceptar sus bytes. */
+        private void btnSeleccionarFoto_Click(object origen, EventArgs e)
+        {
+            try
+            {
+                var contenido = AyudaFormularioVisual.SeleccionarFoto(this, SexoSeleccionado());
+                if (contenido == null)
+                    return;
+                AyudaFormularioVisual.MostrarFoto(fotoUsuario, contenido, SexoSeleccionado());
+                fotoSeleccionada = contenido;
+            }
+            catch (Exception ex)
+            {
+                AyudaFormularioVisual.MostrarError(lblEstado, ex);
+            }
+        }
+
+        /* Al quitar la foto, conserva el sexo y vuelve al avatar disponible para ese valor. */
+        private void btnQuitarFoto_Click(object origen, EventArgs e)
+        {
+            fotoSeleccionada = null;
+            sexo_SelectedIndexChanged(origen, e);
+        }
+
+        /* Al cambiar el sexo sin foto propia, actualiza el avatar de la vista previa. */
+        private void sexo_SelectedIndexChanged(object origen, EventArgs e)
+        {
+            if (fotoSeleccionada != null)
+                return;
+            try
+            {
+                AyudaFormularioVisual.MostrarFoto(fotoUsuario, null, SexoSeleccionado());
+            }
+            catch (Exception ex)
+            {
+                AyudaFormularioVisual.MostrarError(lblEstado, ex);
+            }
+        }
+
+        /* Libera la copia de la imagen cuando se destruye el control de vista previa. */
+        private void fotoUsuario_Disposed(object origen, EventArgs e)
+        {
+            if (fotoUsuario.Image != null)
+            {
+                fotoUsuario.Image.Dispose();
+                fotoUsuario.Image = null;
+            }
+        }
+
     }
 }
