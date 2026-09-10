@@ -31,6 +31,11 @@ namespace exxen2._0.capaVisual.Entrenador
             this.usuario = usuario;
             InitializeComponent();
             btnVolver.Click += delegate { Close(); };
+            FormularioVisualHelper.ConfigurarEntradaEntero(series);
+            FormularioVisualHelper.ConfigurarEntradaEntero(repeticiones);
+            FormularioVisualHelper.ConfigurarEntradaDecimal(peso);
+            FormularioVisualHelper.ConfigurarEntradaEntero(descanso);
+            FormularioVisualHelper.ConfigurarEntradaEntero(orden);
             membresia.Format += FormatearMembresia;
             tabla.SelectionChanged += Seleccionar;
             FormularioVisualHelper.AlCargarEnEjecucion(this, delegate { CargarEjercicios(); CargarMembresias(); Cargar(); NuevaRutina(null, EventArgs.Empty); });
@@ -66,7 +71,7 @@ namespace exxen2._0.capaVisual.Entrenador
         {
             try
             {
-                var rutina = new Rutina { IdRutina = idRutina, Nombre = nombre.Text.Trim(), Descripcion = descripcion.Text.Trim(), IdEntrenador = usuario.IdUsuarioSistema, FechaCreacion = DateTime.Now, Estado = true };
+                var rutina = new Rutina { IdRutina = idRutina, Nombre = FormularioVisualHelper.TextoObligatorio(nombre, "nombre"), Descripcion = descripcion.Text.Trim(), IdEntrenador = usuario.IdUsuarioSistema, FechaCreacion = DateTime.Now, Estado = true };
                 if (idRutina == 0) { rutinas.Crear(rutina); idRutina = rutina.IdRutina; FormularioVisualHelper.MostrarExito(lblEstado, "Plantilla creada. Ahora podes agregarle ejercicios y asignarla a socios."); } else { rutinas.Modificar(rutina); FormularioVisualHelper.MostrarExito(lblEstado, "Plantilla actualizada."); }
                 Cargar();
             }
@@ -78,14 +83,15 @@ namespace exxen2._0.capaVisual.Entrenador
             try
             {
                 if (idRutina == 0) { CrearOActualizar(null, EventArgs.Empty); if (idRutina == 0) return; }
-                ejerciciosRutina.AgregarEjercicio(new RutinaEjercicio { IdRutina = idRutina, IdEjercicio = Convert.ToInt32(ejercicio.SelectedValue), Series = EnteroOpcional(series), Repeticiones = EnteroOpcional(repeticiones), Peso = DecimalOpcional(peso), Descanso = EnteroOpcional(descanso) ?? 0, Orden = EnteroOpcional(orden) ?? 1 }); FormularioVisualHelper.MostrarExito(lblEstado, "Ejercicio agregado a la plantilla.");
+                FormularioVisualHelper.ValidarComboSeleccionado(ejercicio, "un ejercicio");
+                ejerciciosRutina.AgregarEjercicio(new RutinaEjercicio { IdRutina = idRutina, IdEjercicio = Convert.ToInt32(ejercicio.SelectedValue), Series = FormularioVisualHelper.EnteroOpcional(series, "series"), Repeticiones = FormularioVisualHelper.EnteroOpcional(repeticiones, "repeticiones"), Peso = FormularioVisualHelper.DecimalOpcional(peso, "peso"), Descanso = FormularioVisualHelper.EnteroNoNegativoOpcional(descanso, "descanso", 0), Orden = FormularioVisualHelper.EnteroOpcional(orden, "orden", 1) }); FormularioVisualHelper.MostrarExito(lblEstado, "Ejercicio agregado a la plantilla.");
             }
             catch (Exception ex) { FormularioVisualHelper.MostrarError(lblEstado, ex); }
         }
 
         private void Asignar(object sender, EventArgs e)
         {
-            try { if (idRutina == 0) throw new InvalidOperationException("Selecciona o crea una rutina primero."); if (membresia.SelectedValue == null) throw new InvalidOperationException("Selecciona una membresia."); asignaciones.Asignar(idRutina, Convert.ToInt32(membresia.SelectedValue)); Cargar(); FormularioVisualHelper.MostrarExito(lblEstado, "Rutina asignada al socio. La misma plantilla puede asignarse a otros socios."); }
+            try { if (idRutina == 0) throw new InvalidOperationException("Selecciona o crea una rutina primero."); FormularioVisualHelper.ValidarComboSeleccionado(membresia, "una membresia"); asignaciones.Asignar(idRutina, Convert.ToInt32(membresia.SelectedValue)); Cargar(); FormularioVisualHelper.MostrarExito(lblEstado, "Rutina asignada al socio. La misma plantilla puede asignarse a otros socios."); }
             catch (Exception ex) { FormularioVisualHelper.MostrarError(lblEstado, ex); }
         }
 
@@ -95,7 +101,5 @@ namespace exxen2._0.capaVisual.Entrenador
             catch (Exception ex) { FormularioVisualHelper.MostrarError(lblEstado, ex); }
         }
 
-        private static int? EnteroOpcional(TextBox campo) { int valor; return string.IsNullOrWhiteSpace(campo.Text) ? (int?)null : (int.TryParse(campo.Text, out valor) ? valor : throw new InvalidOperationException("Revisa los valores numericos del ejercicio.")); }
-        private static decimal? DecimalOpcional(TextBox campo) { decimal valor; return string.IsNullOrWhiteSpace(campo.Text) ? (decimal?)null : (decimal.TryParse(campo.Text, out valor) ? valor : throw new InvalidOperationException("Revisa el peso del ejercicio.")); }
     }
 }

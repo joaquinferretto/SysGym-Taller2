@@ -73,7 +73,7 @@ namespace exxen2._0.capaVisual.Recepcionista
 
         private void Registrar(object sender, EventArgs e)
         {
-            try { if (idCuotaSeleccionada <= 0) throw new InvalidOperationException("Selecciona una cuota pendiente."); if (metodo.SelectedValue == null) throw new InvalidOperationException("Selecciona un metodo de pago."); logica.RegistrarPago(new Pago { Importe = FormularioVisualHelper.DecimalPositivo(importe, "importe"), IdMetodoPago = Convert.ToInt32(metodo.SelectedValue), Estado = Convert.ToString(estado.SelectedItem), Fecha = DateTime.Now, Descripcion = "Pago registrado en recepcion" }, idCuotaSeleccionada); Cargar(); NuevoPago(null, EventArgs.Empty); FormularioVisualHelper.MostrarExito(lblEstado, "Pago registrado correctamente."); }
+            try { if (idCuotaSeleccionada <= 0) throw new InvalidOperationException("Selecciona una cuota pendiente."); FormularioVisualHelper.ValidarComboSeleccionado(membresia, "una membresia"); FormularioVisualHelper.ValidarComboSeleccionado(metodo, "un metodo de pago"); FormularioVisualHelper.ValidarComboSeleccionado(estado, "un estado de pago"); logica.RegistrarPago(new Pago { Importe = FormularioVisualHelper.DecimalPositivo(importe, "importe"), IdMetodoPago = Convert.ToInt32(metodo.SelectedValue), Estado = Convert.ToString(estado.SelectedItem), Fecha = DateTime.Now, Descripcion = "Pago registrado en recepcion" }, idCuotaSeleccionada); Cargar(); NuevoPago(null, EventArgs.Empty); FormularioVisualHelper.MostrarExito(lblEstado, "Pago registrado correctamente."); }
             catch (Exception ex) { FormularioVisualHelper.MostrarError(lblEstado, ex); }
         }
 

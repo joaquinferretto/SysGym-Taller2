@@ -65,7 +65,7 @@ namespace exxen2._0.capaVisual.Compartido
                 var ejercicio = new Ejercicio
                 {
                     IdEjercicio = idSeleccionado,
-                    Nombre = nombre.Text.Trim(),
+                    Nombre = FormularioVisualHelper.TextoObligatorio(nombre, "nombre"),
                     Descripcion = descripcion.Text.Trim(),
                     Estado = estadoSeleccionado
                 };
