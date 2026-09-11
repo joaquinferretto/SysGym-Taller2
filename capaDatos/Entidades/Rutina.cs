@@ -5,8 +5,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace exxen2._0.capaDatos.Entidades
 {
+    /* Representa plantillas de rutina y sus relaciones persistidas en SQL Server. */
     public class Rutina
     {
+        /* Inicializa los valores y colecciones necesarios para crear plantillas de rutina. */
         public Rutina()
         {
             Ejercicios = new HashSet<RutinaEjercicio>();
@@ -24,24 +26,16 @@ namespace exxen2._0.capaDatos.Entidades
 
         [StringLength(500)]
         public string Descripcion { get; set; }
-
         public DateTime FechaCreacion { get; set; }
-
         public DateTime? FechaInicio { get; set; }
-
         public DateTime? FechaFin { get; set; }
-
         public bool Estado { get; set; }
-
         public int IdEntrenador { get; set; }
 
         [ForeignKey("IdEntrenador")]
         public virtual UsuarioSistema Entrenador { get; set; }
-
         public virtual ICollection<RutinaEjercicio> Ejercicios { get; set; }
-
         public virtual ICollection<Plan> Planes { get; set; }
-
         public virtual ICollection<RutinaAsignacion> Asignaciones { get; set; }
     }
 }

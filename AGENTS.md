@@ -1,5 +1,7 @@
 # Instrucciones del proyecto
 
+Última actualización: 8 de septiembre de 2026.
+
 ## Proyecto
 
 Aplicación de escritorio en C# con Windows Forms. La base de datos prevista es SQL Server y el ORM obligatorio es Entity Framework.
@@ -71,6 +73,7 @@ Después de cambios:
 2. Revisar errores y warnings relevantes.
 3. Verificar los formularios afectados.
 4. Verificar las dependencias entre capas.
+5. Actualizar los documentos existentes de `docs/` afectados en cada tarea, con fecha de última actualización, decisiones, cambios y verificaciones pendientes. Mantener consistentes código, esquema SQL, reglas de negocio y documentación; no crear documentos adicionales si el contenido cabe en los existentes.
 
 Para el detalle del estado actual y las decisiones pendientes, consultar:
 

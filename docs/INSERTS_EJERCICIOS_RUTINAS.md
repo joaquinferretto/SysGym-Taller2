@@ -8,6 +8,8 @@
 -- Si @DniSocio tiene una membresia activa, tambien se asignan a ese socio.
 -- Cambiar @UsernameEntrenador y @DniSocio antes de ejecutar si corresponde.
 
+/* Ultima actualizacion: 9 de septiembre de 2026.
+   La asignacion opcional respeta el catalogo PlanRutina del plan de la membresia. */
 USE SysGymDB;
 GO
 
@@ -39,7 +41,7 @@ SELECT TOP (1) @IdMembresia = m.IdMembresia
 FROM Membresia AS m
 INNER JOIN [Plan] AS p ON p.IdPlan = m.IdPlan
 WHERE m.IdSocio = @IdSocio AND m.Estado = 1
-  AND p.Estado = 1 AND p.IncluyeRutinaPersonal = 1
+  AND p.Estado = 1
 ORDER BY m.FechaInicio DESC, m.IdMembresia DESC;
 
 BEGIN TRY
@@ -178,6 +180,12 @@ BEGIN TRY
         (
             SELECT 1 FROM RutinaAsignacion AS ra
             WHERE ra.IdRutina = r.IdRutina AND ra.IdMembresia = @IdMembresia AND ra.Estado = 1
+        )
+        AND EXISTS
+        (
+            SELECT 1 FROM PlanRutina pr
+            INNER JOIN Membresia m ON m.IdPlan = pr.IdPlan
+            WHERE m.IdMembresia = @IdMembresia AND pr.IdRutina = r.IdRutina
         );
     END;
 

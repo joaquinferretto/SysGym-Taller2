@@ -4,11 +4,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace exxen2._0.capaDatos.Entidades
 {
+    /* Representa planes y sus relaciones persistidas en SQL Server. */
     public class Plan
     {
+        /* Inicializa los valores y colecciones necesarios para crear planes. */
         public Plan()
         {
             Membresias = new HashSet<Membresia>();
+            RutinasDisponibles = new HashSet<Rutina>();
             Estado = true;
         }
 
@@ -24,18 +27,14 @@ namespace exxen2._0.capaDatos.Entidades
 
         [Column(TypeName = "decimal")]
         public decimal Precio { get; set; }
-
         public bool IncluyeEntrenador { get; set; }
-
         public bool IncluyeRutinaPersonal { get; set; }
-
         public bool Estado { get; set; }
-
         public int IdRutina { get; set; }
 
         [ForeignKey("IdRutina")]
         public virtual Rutina Rutina { get; set; }
-
+        public virtual ICollection<Rutina> RutinasDisponibles { get; set; }
         public virtual ICollection<Membresia> Membresias { get; set; }
     }
 }

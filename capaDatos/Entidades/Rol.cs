@@ -4,8 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace exxen2._0.capaDatos.Entidades
 {
+    /* Representa roles y sus relaciones persistidas en SQL Server. */
     public class Rol
     {
+        /* Inicializa los valores y colecciones necesarios para crear roles. */
         public Rol()
         {
             Usuarios = new HashSet<UsuarioSistema>();
@@ -19,9 +21,7 @@ namespace exxen2._0.capaDatos.Entidades
         [StringLength(50)]
         [Index("UX_Rol_Descripcion", IsUnique = true)]
         public string Descripcion { get; set; }
-
         public bool Estado { get; set; }
-
         public virtual ICollection<UsuarioSistema> Usuarios { get; set; }
     }
 }

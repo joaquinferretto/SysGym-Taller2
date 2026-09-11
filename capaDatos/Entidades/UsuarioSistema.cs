@@ -5,8 +5,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace exxen2._0.capaDatos.Entidades
 {
+    /* Representa usuarios del sistema y sus relaciones persistidas en SQL Server. */
     public class UsuarioSistema
     {
+        /* Inicializa los valores y colecciones necesarios para crear usuarios del sistema. */
         public UsuarioSistema()
         {
             MembresiasRegistradas = new HashSet<Membresia>();
@@ -33,7 +35,6 @@ namespace exxen2._0.capaDatos.Entidades
 
         [StringLength(30)]
         public string Telefono { get; set; }
-
         public DateTime? FechaNacimiento { get; set; }
 
         [Column(TypeName = "decimal")]
@@ -42,14 +43,21 @@ namespace exxen2._0.capaDatos.Entidades
         [Required]
         [StringLength(50)]
         [Index("UX_UsuarioSistema_Username", IsUnique = true)]
-        public string Username { get; set; }
+        [Column("Username")]
+        public string NombreUsuario { get; set; }
 
         [Required]
         [StringLength(500)]
-        public string Password { get; set; }
-
+        [Column("Password")]
+        public string Clave { get; set; }
         public bool Estado { get; set; }
 
+        [Column(TypeName = "varbinary(max)")]
+        public byte[] Foto { get; set; }
+
+        [StringLength(1)]
+        [Column(TypeName = "char")]
+        public string Sexo { get; set; }
         public int IdRol { get; set; }
 
         [ForeignKey("IdRol")]

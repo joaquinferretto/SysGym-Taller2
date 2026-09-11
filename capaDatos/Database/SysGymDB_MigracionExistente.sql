@@ -16,6 +16,32 @@ SET XACT_ABORT ON;
 BEGIN TRY
     BEGIN TRANSACTION;
 
+    /* Fotos y sexo opcionales; los registros existentes conservan valores nulos. */
+    IF COL_LENGTH(N'dbo.UsuarioSistema', N'Foto') IS NULL
+        ALTER TABLE dbo.UsuarioSistema ADD Foto VARBINARY(MAX) NULL;
+    IF COL_LENGTH(N'dbo.UsuarioSistema', N'Sexo') IS NULL
+        ALTER TABLE dbo.UsuarioSistema ADD Sexo CHAR(1) NULL;
+    IF COL_LENGTH(N'dbo.Socio', N'Foto') IS NULL
+        ALTER TABLE dbo.Socio ADD Foto VARBINARY(MAX) NULL;
+    IF COL_LENGTH(N'dbo.Socio', N'Sexo') IS NULL
+        ALTER TABLE dbo.Socio ADD Sexo CHAR(1) NULL;
+
+    /* Día de la semana de cada ejercicio; los detalles existentes quedan sin día asignado. */
+    IF COL_LENGTH(N'dbo.RutinaEjercicio', N'DiaSemana') IS NULL
+    BEGIN
+        ALTER TABLE dbo.RutinaEjercicio ADD DiaSemana INT NULL;
+
+        EXEC(N'ALTER TABLE dbo.RutinaEjercicio WITH CHECK
+            ADD CONSTRAINT CK_RutinaEjercicio_DiaSemana
+            CHECK (DiaSemana IS NULL OR DiaSemana BETWEEN 1 AND 5);');
+
+        /* Las rutinas existentes reparten su orden de lunes a viernes como punto de partida.
+           El entrenador puede reasignar los días desde el catálogo de rutinas. */
+        EXEC(N'UPDATE dbo.RutinaEjercicio
+               SET DiaSemana = ((Orden - 1) % 5) + 1
+               WHERE DiaSemana IS NULL AND Orden > 0;');
+    END;
+
     /* Los usuarios del sistema son empleados y deben registrar su salario mensual. */
     IF COL_LENGTH(N'dbo.UsuarioSistema', N'Salario') IS NULL
     BEGIN
@@ -85,6 +111,28 @@ BEGIN TRY
     BEGIN
         CREATE INDEX IX_RutinaAsignacion_Activas
             ON dbo.RutinaAsignacion(IdRutina, Estado);
+    END;
+
+    /* Catalogo por plan. La carga inicial conserva la rutina base y las
+       rutinas ya asignadas a sus membresias; no se repite al volver a migrar. */
+    IF OBJECT_ID(N'dbo.PlanRutina', N'U') IS NULL
+    BEGIN
+        CREATE TABLE dbo.PlanRutina
+        (
+            IdPlan INT NOT NULL,
+            IdRutina INT NOT NULL,
+            CONSTRAINT PK_PlanRutina PRIMARY KEY (IdPlan, IdRutina),
+            CONSTRAINT FK_PlanRutina_Plan FOREIGN KEY (IdPlan) REFERENCES dbo.[Plan](IdPlan),
+            CONSTRAINT FK_PlanRutina_Rutina FOREIGN KEY (IdRutina) REFERENCES dbo.Rutina(IdRutina)
+        );
+
+        INSERT INTO dbo.PlanRutina (IdPlan, IdRutina)
+        SELECT IdPlan, IdRutina FROM dbo.[Plan]
+        UNION
+        SELECT m.IdPlan, a.IdRutina
+        FROM dbo.RutinaAsignacion a
+        INNER JOIN dbo.Membresia m ON m.IdMembresia = a.IdMembresia
+        WHERE a.Estado = 1;
     END;
 
     COMMIT TRANSACTION;

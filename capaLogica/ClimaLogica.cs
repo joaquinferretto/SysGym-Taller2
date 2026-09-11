@@ -4,10 +4,14 @@ using System.Globalization;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
+using System.IO;
+using System.Text;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 
 namespace exxen2._0.capaLogica
 {
+    /* Transporta los datos de un día de pronóstico para presentarlos en el panel principal. */
     public sealed class PronosticoDia
     {
         public DateTime Fecha { get; set; }
@@ -19,43 +23,38 @@ namespace exxen2._0.capaLogica
         public string Icono { get; set; }
     }
 
+    /* Consulta y transforma el pronóstico semanal para la capa visual. */
     public class ClimaLogica
     {
-        private const string UrlPronostico =
-            "https://api.open-meteo.com/v1/forecast?latitude=-34.6037&longitude=-58.3816"
-            + "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max"
-            + "&timezone=America%2FArgentina%2FBuenos_Aires&forecast_days=7";
-
+        private const string UrlPronostico = "https://api.open-meteo.com/v1/forecast?latitude=-34.6037&longitude=-58.3816" + "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max" + "&timezone=America%2FArgentina%2FBuenos_Aires&forecast_days=7";
         private static readonly HttpClient Cliente = CrearCliente();
-
         public string Ciudad
         {
-            get { return "Buenos Aires"; }
+            /* Indica la ciudad para la que se solicita el pronóstico configurado. */
+            get
+            {
+                return "Buenos Aires";
+            }
         }
 
-        public async Task<List<PronosticoDia>> ObtenerPronosticoSemanalAsync()
+        /* Consulta y transforma los siete días de pronóstico, conservando la causa si falla el servicio. */
+        public async Task<List<PronosticoDia>> ObtenerPronosticoSemanalAsincrono()
         {
             try
             {
                 var json = await Cliente.GetStringAsync(UrlPronostico).ConfigureAwait(false);
-                var respuesta = new JavaScriptSerializer().Deserialize<RespuestaClima>(json);
+                RespuestaClima respuesta;
+                using (var contenido = new MemoryStream(Encoding.UTF8.GetBytes(json)))
+                {
+                    var serializador = new DataContractJsonSerializer(typeof(RespuestaClima));
+                    respuesta = (RespuestaClima)serializador.ReadObject(contenido);
+                }
                 ValidarRespuesta(respuesta);
-
                 var dias = new List<PronosticoDia>();
                 for (var indice = 0; indice < 7; indice++)
                 {
-                    var codigo = respuesta.daily.weather_code[indice];
-                    dias.Add(new PronosticoDia
-                    {
-                        Fecha = DateTime.ParseExact(respuesta.daily.time[indice], "yyyy-MM-dd",
-                            CultureInfo.InvariantCulture),
-                        TemperaturaMaxima = respuesta.daily.temperature_2m_max[indice],
-                        TemperaturaMinima = respuesta.daily.temperature_2m_min[indice],
-                        ProbabilidadLluvia = respuesta.daily.precipitation_probability_max[indice],
-                        CodigoClima = codigo,
-                        Descripcion = DescribirClima(codigo),
-                        Icono = ObtenerIcono(codigo)
-                    });
+                    var codigo = respuesta.Dias.CodigosClima[indice];
+                    dias.Add(new PronosticoDia { Fecha = DateTime.ParseExact(respuesta.Dias.Fechas[indice], "yyyy-MM-dd", CultureInfo.InvariantCulture), TemperaturaMaxima = respuesta.Dias.TemperaturasMaximas[indice], TemperaturaMinima = respuesta.Dias.TemperaturasMinimas[indice], ProbabilidadLluvia = respuesta.Dias.ProbabilidadesLluvia[indice], CodigoClima = codigo, Descripcion = DescribirClima(codigo), Icono = ObtenerIcono(codigo) });
                 }
 
                 return dias;
@@ -66,79 +65,106 @@ namespace exxen2._0.capaLogica
             }
         }
 
+        /* Prepara el cliente HTTP con proxy, TLS y tiempo de espera para consultar el clima. */
         private static HttpClient CrearCliente()
         {
             ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
-
-            var proxy = WebRequest.DefaultWebProxy;
-            if (proxy != null)
+            var intermediario = WebRequest.DefaultWebProxy;
+            if (intermediario != null)
             {
-                proxy.Credentials = CredentialCache.DefaultCredentials;
+                intermediario.Credentials = CredentialCache.DefaultCredentials;
             }
 
             var manejador = new HttpClientHandler
             {
-                Proxy = proxy,
-                UseProxy = proxy != null
+                Proxy = intermediario,
+                UseProxy = intermediario != null
             };
-            var cliente = new HttpClient(manejador) { Timeout = TimeSpan.FromSeconds(12) };
+            var cliente = new HttpClient(manejador)
+            {
+                Timeout = TimeSpan.FromSeconds(12)
+            };
             cliente.DefaultRequestHeaders.UserAgent.ParseAdd("SysGym-WinForms/1.0");
             return cliente;
         }
 
+        /* Rechaza respuestas del servicio que no contienen los siete días completos. */
         private static void ValidarRespuesta(RespuestaClima respuesta)
         {
-            if (respuesta == null || respuesta.daily == null
-                || respuesta.daily.time == null || respuesta.daily.time.Length < 7
-                || respuesta.daily.weather_code == null || respuesta.daily.weather_code.Length < 7
-                || respuesta.daily.temperature_2m_max == null || respuesta.daily.temperature_2m_max.Length < 7
-                || respuesta.daily.temperature_2m_min == null || respuesta.daily.temperature_2m_min.Length < 7
-                || respuesta.daily.precipitation_probability_max == null
-                || respuesta.daily.precipitation_probability_max.Length < 7)
+            if (respuesta == null || respuesta.Dias == null || respuesta.Dias.Fechas == null || respuesta.Dias.Fechas.Length < 7 || respuesta.Dias.CodigosClima == null || respuesta.Dias.CodigosClima.Length < 7 || respuesta.Dias.TemperaturasMaximas == null || respuesta.Dias.TemperaturasMaximas.Length < 7 || respuesta.Dias.TemperaturasMinimas == null || respuesta.Dias.TemperaturasMinimas.Length < 7 || respuesta.Dias.ProbabilidadesLluvia == null || respuesta.Dias.ProbabilidadesLluvia.Length < 7)
             {
                 throw new InvalidOperationException("El servicio de clima devolvió datos incompletos.");
             }
         }
 
+        /* Traduce el código meteorológico a la descripción usada por la aplicación. */
         private static string DescribirClima(int codigo)
         {
-            if (codigo == 0) return "Despejado";
-            if (codigo == 1 || codigo == 2) return "Parcial nublado";
-            if (codigo == 3) return "Nublado";
-            if (codigo == 45 || codigo == 48) return "Niebla";
-            if (codigo >= 51 && codigo <= 57) return "Llovizna";
-            if (codigo >= 61 && codigo <= 67) return "Lluvia";
-            if (codigo >= 71 && codigo <= 77) return "Nieve";
-            if (codigo >= 80 && codigo <= 82) return "Chaparrones";
-            if (codigo >= 85 && codigo <= 86) return "Nieve intensa";
-            if (codigo >= 95) return "Tormenta";
+            if (codigo == 0)
+                return "Despejado";
+            if (codigo == 1 || codigo == 2)
+                return "Parcial nublado";
+            if (codigo == 3)
+                return "Nublado";
+            if (codigo == 45 || codigo == 48)
+                return "Niebla";
+            if (codigo >= 51 && codigo <= 57)
+                return "Llovizna";
+            if (codigo >= 61 && codigo <= 67)
+                return "Lluvia";
+            if (codigo >= 71 && codigo <= 77)
+                return "Nieve";
+            if (codigo >= 80 && codigo <= 82)
+                return "Chaparrones";
+            if (codigo >= 85 && codigo <= 86)
+                return "Nieve intensa";
+            if (codigo >= 95)
+                return "Tormenta";
             return "Variable";
         }
 
+        /* Selecciona el símbolo asociado al código del pronóstico. */
         private static string ObtenerIcono(int codigo)
         {
-            if (codigo == 0) return "☀";
-            if (codigo <= 2) return "⛅";
-            if (codigo == 3) return "☁";
-            if (codigo == 45 || codigo == 48) return "≋";
-            if (codigo >= 71 && codigo <= 77) return "❄";
-            if (codigo >= 85 && codigo <= 86) return "❄";
-            if (codigo >= 95) return "⚡";
+            if (codigo == 0)
+                return "☀";
+            if (codigo <= 2)
+                return "⛅";
+            if (codigo == 3)
+                return "☁";
+            if (codigo == 45 || codigo == 48)
+                return "≋";
+            if (codigo >= 71 && codigo <= 77)
+                return "❄";
+            if (codigo >= 85 && codigo <= 86)
+                return "❄";
+            if (codigo >= 95)
+                return "⚡";
             return "☂";
         }
 
+        /* Representa la respuesta JSON del servicio de pronóstico. */
+        [DataContract]
         private sealed class RespuestaClima
         {
-            public DatosDiarios daily { get; set; }
+            [DataMember(Name = "daily")]
+            public DatosDiarios Dias { get; set; }
         }
 
+        /* Representa las series diarias recibidas del servicio meteorológico. */
+        [DataContract]
         private sealed class DatosDiarios
         {
-            public string[] time { get; set; }
-            public int[] weather_code { get; set; }
-            public double[] temperature_2m_max { get; set; }
-            public double[] temperature_2m_min { get; set; }
-            public int[] precipitation_probability_max { get; set; }
+            [DataMember(Name = "time")]
+            public string[] Fechas { get; set; }
+            [DataMember(Name = "weather_code")]
+            public int[] CodigosClima { get; set; }
+            [DataMember(Name = "temperature_2m_max")]
+            public double[] TemperaturasMaximas { get; set; }
+            [DataMember(Name = "temperature_2m_min")]
+            public double[] TemperaturasMinimas { get; set; }
+            [DataMember(Name = "precipitation_probability_max")]
+            public int[] ProbabilidadesLluvia { get; set; }
         }
     }
 }

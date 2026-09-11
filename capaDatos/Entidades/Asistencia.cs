@@ -4,8 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace exxen2._0.capaDatos.Entidades
 {
+    /* Representa asistencias y sus relaciones persistidas en SQL Server. */
     public class Asistencia
     {
+        /* Inicializa los valores y colecciones necesarios para crear asistencias. */
         public Asistencia()
         {
             Estado = true;
@@ -13,14 +15,11 @@ namespace exxen2._0.capaDatos.Entidades
 
         [Key]
         public int IdAsistencia { get; set; }
-
         public DateTime Fecha { get; set; }
 
         [StringLength(500)]
         public string Descripcion { get; set; }
-
         public bool Estado { get; set; }
-
         public int IdSocio { get; set; }
 
         [ForeignKey("IdSocio")]

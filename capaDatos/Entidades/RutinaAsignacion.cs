@@ -4,19 +4,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace exxen2._0.capaDatos.Entidades
 {
+    /* Representa asignaciones de rutina y sus relaciones persistidas en SQL Server. */
     public class RutinaAsignacion
     {
         [Key]
         public int IdRutinaAsignacion { get; set; }
-
         public DateTime FechaAsignacion { get; set; }
-
         public DateTime? FechaFin { get; set; }
-
         public bool Estado { get; set; }
-
         public int IdRutina { get; set; }
-
         public int IdMembresia { get; set; }
 
         [ForeignKey("IdRutina")]
