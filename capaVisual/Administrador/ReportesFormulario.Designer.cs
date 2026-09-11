@@ -77,12 +77,12 @@ namespace exxen2._0.capaVisual.Administrador
             this.panelEncabezado.AutoScroll = false;
             this.lblTitulo.AutoSize = false;
             this.lblTitulo.Dock = System.Windows.Forms.DockStyle.None;
-            this.lblTitulo.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.lblTitulo.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.lblTitulo.Location = new System.Drawing.Point(22, 8);
             this.lblTitulo.Size = new System.Drawing.Size(890, 36);
             this.lblDescripcion.AutoSize = false;
             this.lblDescripcion.Dock = System.Windows.Forms.DockStyle.None;
-            this.lblDescripcion.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.lblDescripcion.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.lblDescripcion.Location = new System.Drawing.Point(24, 48);
             this.lblDescripcion.Size = new System.Drawing.Size(890, 26);
             this.btnVolver.AutoSize = false;

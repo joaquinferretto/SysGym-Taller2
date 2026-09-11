@@ -21,6 +21,7 @@ namespace exxen2._0.capaVisual.Compartido
         private bool estadoSeleccionado = true;
         private readonly Color colorPrimario;
         private byte[] fotoSeleccionada;
+        private readonly int idSocioInicial;
         /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
         public GestionSociosFormulario() : this(Color.FromArgb(79, 70, 229))
         {
@@ -48,6 +49,15 @@ namespace exxen2._0.capaVisual.Compartido
                 btnSeleccionarFoto.Enabled = false;
                 btnQuitarFoto.Enabled = false;
             }
+        }
+
+        /* Inicializa la gestión de socios enfocada en un registro proveniente de otra pantalla. */
+        public GestionSociosFormulario(Color colorPrimario, int idSocioInicial, bool permitirEdicion = true)
+            : this(colorPrimario, permitirEdicion)
+        {
+            if (idSocioInicial <= 0)
+                throw new ArgumentException("El socio seleccionado no es válido.", "idSocioInicial");
+            this.idSocioInicial = idSocioInicial;
         }
 
         /* Consulta los registros del módulo y actualiza la grilla, informando los errores de carga. */
@@ -158,6 +168,21 @@ namespace exxen2._0.capaVisual.Compartido
             actualizar.Enabled = permitirEdicion && !nuevoRegistro;
             darDeBaja.Enabled = permitirEdicion && !nuevoRegistro && activo;
             reactivar.Enabled = permitirEdicion && !nuevoRegistro && !activo;
+        }
+
+        /* Selecciona en la grilla el socio solicitado por una pantalla de origen. */
+        private void SeleccionarSocioInicial()
+        {
+            for (var indice = 0; indice < tabla.Rows.Count; indice++)
+            {
+                if (Convert.ToInt32(tabla.Rows[indice].Cells[0].Value) != idSocioInicial)
+                    continue;
+                tabla.CurrentCell = tabla.Rows[indice].Cells[1];
+                tabla.Rows[indice].Selected = true;
+                return;
+            }
+
+            lblEstado.Text = "El socio seleccionado no está disponible.";
         }
 
         /* Recoge los datos personales y físicos ingresados, validando su formato. */
@@ -294,7 +319,10 @@ namespace exxen2._0.capaVisual.Compartido
             try
             {
                 Cargar();
-                nuevo_Click(null, EventArgs.Empty);
+                if (idSocioInicial > 0)
+                    SeleccionarSocioInicial();
+                else
+                    nuevo_Click(null, EventArgs.Empty);
             }
             catch (Exception ex)
             {

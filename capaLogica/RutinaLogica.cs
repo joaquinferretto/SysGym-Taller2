@@ -28,6 +28,62 @@ namespace exxen2._0.capaLogica
             }
         }
 
+        /* Crea una rutina única, la asigna al socio y confirma ambas operaciones juntas. */
+        public Rutina CrearPersonalizada(Rutina rutina, int idMembresia)
+        {
+            ValidarDatos(rutina);
+            if (idMembresia <= 0)
+            {
+                throw new InvalidOperationException("La membresía del socio es obligatoria.");
+            }
+
+            using (var datos = new UnidadDeTrabajoGimnasio())
+            using (var transaccion = datos.IniciarTransaccion())
+            {
+                ValidarEntrenador(datos, rutina.IdEntrenador);
+                var membresia = datos.Membresias.Consultar("Plan", "Socio")
+                    .SingleOrDefault(m => m.IdMembresia == idMembresia);
+                if (membresia == null || !membresia.Estado || membresia.Socio == null || !membresia.Socio.Estado)
+                {
+                    throw new InvalidOperationException("La membresía seleccionada no está habilitada.");
+                }
+
+                if (membresia.Plan == null || !membresia.Plan.Estado || !membresia.Plan.IncluyeRutinaPersonal)
+                {
+                    throw new InvalidOperationException("El plan del socio no incluye una rutina personalizada.");
+                }
+
+                var creador = datos.UsuariosSistema.ConsultarSoloLectura("Rol")
+                    .SingleOrDefault(u => u.IdUsuarioSistema == rutina.IdEntrenador);
+                var esAdministrador = ValidacionesGimnasio.EsAdministradorActivo(creador);
+                if (!esAdministrador && !datos.MembresiasEntrenadores.Any(me =>
+                    me.IdMembresia == idMembresia && me.IdEntrenador == rutina.IdEntrenador && me.Estado))
+                {
+                    throw new InvalidOperationException("El socio no está asignado a este entrenador.");
+                }
+
+                rutina.Estado = true;
+                if (rutina.FechaCreacion == default(DateTime))
+                {
+                    rutina.FechaCreacion = DateTime.Now;
+                }
+
+                datos.Rutinas.Agregar(rutina);
+                datos.GuardarCambios();
+
+                datos.RutinaAsignaciones.Agregar(new RutinaAsignacion
+                {
+                    FechaAsignacion = DateTime.Now,
+                    Estado = true,
+                    IdRutina = rutina.IdRutina,
+                    IdMembresia = idMembresia
+                });
+                datos.GuardarCambios();
+                transaccion.Confirmar();
+                return rutina;
+            }
+        }
+
         /* Valida y guarda los cambios de plantillas de rutina sobre el registro existente. */
         public Rutina Modificar(Rutina rutina)
         {
@@ -58,6 +114,30 @@ namespace exxen2._0.capaLogica
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 return datos.Rutinas.ConsultarSoloLectura("Entrenador", "Ejercicios.Ejercicio", "Asignaciones.Membresia.Socio").SingleOrDefault(r => r.IdRutina == idRutina);
+            }
+        }
+
+        /* Consulta todas las plantillas para que el administrador pueda editarlas. */
+        public List<Rutina> ListarParaGestion()
+        {
+            using (var datos = new UnidadDeTrabajoGimnasio())
+            {
+                return datos.Rutinas.ConsultarSoloLectura("Entrenador", "Ejercicios.Ejercicio", "Asignaciones")
+                    .OrderByDescending(r => r.Estado)
+                    .ThenByDescending(r => r.FechaCreacion)
+                    .ToList();
+            }
+        }
+
+        /* Busca la membresía activa de un socio para iniciar una rutina personalizada. */
+        public Membresia ObtenerMembresiaActivaParaSocio(int idSocio)
+        {
+            using (var datos = new UnidadDeTrabajoGimnasio())
+            {
+                return datos.Membresias.ConsultarSoloLectura("Socio", "Plan")
+                    .Where(m => m.IdSocio == idSocio && m.Estado && m.Socio.Estado && m.Plan.Estado)
+                    .OrderByDescending(m => m.FechaInicio)
+                    .FirstOrDefault();
             }
         }
 
@@ -138,9 +218,9 @@ namespace exxen2._0.capaLogica
         private static void ValidarEntrenador(IUnidadDeTrabajo datos, int idEntrenador)
         {
             var entrenador = datos.UsuariosSistema.Consultar("Rol").SingleOrDefault(u => u.IdUsuarioSistema == idEntrenador);
-            if (!ValidacionesGimnasio.EsEntrenadorActivo(entrenador))
+            if (!ValidacionesGimnasio.PuedeGestionarRutinas(entrenador))
             {
-                throw new InvalidOperationException("El usuario no posee rol de Entrenador activo.");
+                throw new InvalidOperationException("El usuario no posee rol de Entrenador o Administrador activo.");
             }
         }
 

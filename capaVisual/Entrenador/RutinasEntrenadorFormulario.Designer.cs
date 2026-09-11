@@ -74,15 +74,15 @@ namespace exxen2._0.capaVisual.Entrenador
 
             this.barraAcciones.Padding = new Padding(16, 8, 16, 8);
 
-            this.nuevaRutina.MinimumSize = new Size(120, 34);
+            this.nuevaRutina.MinimumSize = new Size(110, 34);
             this.nuevaRutina.Margin = new Padding(0, 0, 8, 0);
             this.nuevaRutina.Padding = new Padding(12, 0, 12, 0);
 
-            this.guardarRutina.MinimumSize = new Size(120, 34);
+            this.guardarRutina.MinimumSize = new Size(110, 34);
             this.guardarRutina.Margin = new Padding(0, 0, 8, 0);
             this.guardarRutina.Padding = new Padding(12, 0, 12, 0);
 
-            this.actualizar.MinimumSize = new Size(120, 34);
+            this.actualizar.MinimumSize = new Size(110, 34);
             this.actualizar.Margin = new Padding(0, 0, 8, 0);
             this.actualizar.Padding = new Padding(12, 0, 12, 0);
 
@@ -94,7 +94,7 @@ namespace exxen2._0.capaVisual.Entrenador
             this.asignar.Margin = new Padding(0, 0, 8, 0);
             this.asignar.Padding = new Padding(12, 0, 12, 0);
 
-            this.darDeBaja.MinimumSize = new Size(120, 34);
+            this.darDeBaja.MinimumSize = new Size(110, 34);
             this.darDeBaja.Margin = new Padding(0, 0, 8, 0);
             this.darDeBaja.Padding = new Padding(12, 0, 12, 0);
             // Barra de estado inferior.
@@ -165,12 +165,12 @@ namespace exxen2._0.capaVisual.Entrenador
             this.panelEncabezado.AutoScroll = false;
             this.lblTitulo.AutoSize = false;
             this.lblTitulo.Dock = System.Windows.Forms.DockStyle.None;
-            this.lblTitulo.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.lblTitulo.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.lblTitulo.Location = new System.Drawing.Point(22, 8);
             this.lblTitulo.Size = new System.Drawing.Size(890, 36);
             this.lblDescripcion.AutoSize = false;
             this.lblDescripcion.Dock = System.Windows.Forms.DockStyle.None;
-            this.lblDescripcion.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.lblDescripcion.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.lblDescripcion.Location = new System.Drawing.Point(24, 48);
             this.lblDescripcion.Size = new System.Drawing.Size(890, 26);
             this.btnVolver.AutoSize = false;
@@ -219,7 +219,7 @@ namespace exxen2._0.capaVisual.Entrenador
             this.lblDescripcionRutina.Size = new System.Drawing.Size(102, 30);
             this.lblEjercicio.AutoSize = false;
             this.lblEjercicio.Dock = System.Windows.Forms.DockStyle.None;
-            this.lblEjercicio.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.lblEjercicio.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             this.lblEjercicio.Location = new System.Drawing.Point(688, 0);
             this.lblEjercicio.Size = new System.Drawing.Size(102, 30);
             this.lblSeries.AutoSize = false;
@@ -234,7 +234,7 @@ namespace exxen2._0.capaVisual.Entrenador
             this.lblRepeticiones.Size = new System.Drawing.Size(102, 30);
             this.lblPeso.AutoSize = false;
             this.lblPeso.Dock = System.Windows.Forms.DockStyle.None;
-            this.lblPeso.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.lblPeso.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             this.lblPeso.Location = new System.Drawing.Point(688, 38);
             this.lblPeso.Size = new System.Drawing.Size(102, 30);
             this.lblDescanso.AutoSize = false;
@@ -249,7 +249,7 @@ namespace exxen2._0.capaVisual.Entrenador
             this.lblOrden.Size = new System.Drawing.Size(102, 30);
             this.lblMembresia.AutoSize = false;
             this.lblMembresia.Dock = System.Windows.Forms.DockStyle.None;
-            this.lblMembresia.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.lblMembresia.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             this.lblMembresia.Location = new System.Drawing.Point(688, 76);
             this.lblMembresia.Size = new System.Drawing.Size(102, 30);
             this.tabla.AutoSize = false;
@@ -283,12 +283,12 @@ namespace exxen2._0.capaVisual.Entrenador
             this.tablaEjercicios.RowTemplate.Height = 30;
             this.membresia.AutoSize = false;
             this.membresia.Dock = System.Windows.Forms.DockStyle.None;
-            this.membresia.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.membresia.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             this.membresia.Location = new System.Drawing.Point(798, 80);
             this.membresia.Size = new System.Drawing.Size(222, 26);
             this.ejercicio.AutoSize = false;
             this.ejercicio.Dock = System.Windows.Forms.DockStyle.None;
-            this.ejercicio.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.ejercicio.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             this.ejercicio.Location = new System.Drawing.Point(798, 4);
             this.ejercicio.Size = new System.Drawing.Size(222, 26);
             this.nombre.AutoSize = false;
@@ -313,7 +313,7 @@ namespace exxen2._0.capaVisual.Entrenador
             this.repeticiones.Size = new System.Drawing.Size(222, 26);
             this.peso.AutoSize = false;
             this.peso.Dock = System.Windows.Forms.DockStyle.None;
-            this.peso.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.peso.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             this.peso.Location = new System.Drawing.Point(798, 42);
             this.peso.Size = new System.Drawing.Size(222, 26);
             this.descanso.AutoSize = false;
@@ -340,37 +340,37 @@ namespace exxen2._0.capaVisual.Entrenador
             this.nuevaRutina.Dock = System.Windows.Forms.DockStyle.None;
             this.nuevaRutina.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.nuevaRutina.Location = new System.Drawing.Point(16, 8);
-            this.nuevaRutina.Size = new System.Drawing.Size(125, 34);
+            this.nuevaRutina.Size = new System.Drawing.Size(110, 34);
             this.guardarRutina.AutoSize = false;
             this.guardarRutina.Dock = System.Windows.Forms.DockStyle.None;
             this.guardarRutina.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.guardarRutina.Location = new System.Drawing.Point(149, 8);
-            this.guardarRutina.Size = new System.Drawing.Size(120, 34);
+            this.guardarRutina.Location = new System.Drawing.Point(134, 8);
+            this.guardarRutina.Size = new System.Drawing.Size(110, 34);
             this.actualizar.AutoSize = false;
             this.actualizar.Dock = System.Windows.Forms.DockStyle.None;
             this.actualizar.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.actualizar.Location = new System.Drawing.Point(277, 8);
-            this.actualizar.Size = new System.Drawing.Size(120, 34);
+            this.actualizar.Location = new System.Drawing.Point(252, 8);
+            this.actualizar.Size = new System.Drawing.Size(110, 34);
             this.agregarEjercicio.AutoSize = false;
             this.agregarEjercicio.Dock = System.Windows.Forms.DockStyle.None;
             this.agregarEjercicio.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.agregarEjercicio.Location = new System.Drawing.Point(405, 8);
-            this.agregarEjercicio.Size = new System.Drawing.Size(152, 34);
+            this.agregarEjercicio.Location = new System.Drawing.Point(370, 8);
+            this.agregarEjercicio.Size = new System.Drawing.Size(125, 34);
             this.asignar.AutoSize = false;
             this.asignar.Dock = System.Windows.Forms.DockStyle.None;
             this.asignar.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.asignar.Location = new System.Drawing.Point(565, 8);
-            this.asignar.Size = new System.Drawing.Size(140, 34);
+            this.asignar.Location = new System.Drawing.Point(503, 8);
+            this.asignar.Size = new System.Drawing.Size(120, 34);
             this.darDeBaja.AutoSize = false;
             this.darDeBaja.Dock = System.Windows.Forms.DockStyle.None;
             this.darDeBaja.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.darDeBaja.Location = new System.Drawing.Point(713, 8);
-            this.darDeBaja.Size = new System.Drawing.Size(120, 34);
+            this.darDeBaja.Location = new System.Drawing.Point(631, 8);
+            this.darDeBaja.Size = new System.Drawing.Size(110, 34);
             this.quitarEjercicio.AutoSize = false;
             this.quitarEjercicio.Dock = System.Windows.Forms.DockStyle.None;
             this.quitarEjercicio.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.quitarEjercicio.Location = new System.Drawing.Point(841, 8);
-            this.quitarEjercicio.Size = new System.Drawing.Size(140, 34);
+            this.quitarEjercicio.Location = new System.Drawing.Point(749, 8);
+            this.quitarEjercicio.Size = new System.Drawing.Size(110, 34);
             panelEncabezado.ResumeLayout(false); panelEncabezado.PerformLayout(); barraAcciones.ResumeLayout(false); barraAcciones.PerformLayout(); panelContenido.ResumeLayout(false); panelFormulario.ResumeLayout(false); contenedorFormulario.ResumeLayout(false); contenedorFormulario.PerformLayout(); ((ISupportInitialize)(tabla)).EndInit(); ((ISupportInitialize)(tablaEjercicios)).EndInit(); ResumeLayout(false);
 
             this.Load += new System.EventHandler(this.RutinasEntrenadorFormulario_Load);

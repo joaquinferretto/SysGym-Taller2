@@ -6,14 +6,13 @@ namespace exxen2._0.capaDatos.Contexto
     /* Mapea las entidades del gimnasio a SQL Server mediante Entity Framework 6. */
     public class ContextoGimnasio : DbContext
     {
-        /* Configura el contexto sin proxies ni carga diferida para exigir relaciones explícitas. */
         static ContextoGimnasio()
         {
             // La base se crea y versiona mediante el script SQL del proyecto.
             Database.SetInitializer<ContextoGimnasio>(null);
         }
 
-        /* Configura el contexto sin proxies ni carga diferida para exigir relaciones explícitas. */
+        /* Configura el contexto para exigir relaciones explícitas. */
         public ContextoGimnasio() : base("name=GymContext")
         {
             Configuration.LazyLoadingEnabled = false;

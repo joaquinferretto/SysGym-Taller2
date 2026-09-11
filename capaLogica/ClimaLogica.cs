@@ -12,28 +12,39 @@ using System.Runtime.Serialization.Json;
 namespace exxen2._0.capaLogica
 {
     /* Transporta los datos de un día de pronóstico para presentarlos en el panel principal. */
+    [DataContract]
     public sealed class PronosticoDia
     {
+        [DataMember]
         public DateTime Fecha { get; set; }
+        [DataMember]
         public double TemperaturaMaxima { get; set; }
+        [DataMember]
         public double TemperaturaMinima { get; set; }
+        [DataMember]
         public int ProbabilidadLluvia { get; set; }
+        [DataMember]
         public int CodigoClima { get; set; }
+        [DataMember]
         public string Descripcion { get; set; }
+        [DataMember]
         public string Icono { get; set; }
     }
 
     /* Consulta y transforma el pronóstico semanal para la capa visual. */
     public class ClimaLogica
     {
-        private const string UrlPronostico = "https://api.open-meteo.com/v1/forecast?latitude=-34.6037&longitude=-58.3816" + "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max" + "&timezone=America%2FArgentina%2FBuenos_Aires&forecast_days=7";
+        public const int DiasPronostico = 8;
+        private const string UrlPronostico = "https://api.open-meteo.com/v1/forecast?latitude=-27.4692&longitude=-58.8306" + "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max" + "&timezone=America%2FArgentina%2FBuenos_Aires&forecast_days=8";
+        private static readonly string RutaCache = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SysGym", "pronostico-corrientes.json");
         private static readonly HttpClient Cliente = CrearCliente();
+        public bool UltimaConsultaUsoCache { get; private set; }
         public string Ciudad
         {
             /* Indica la ciudad para la que se solicita el pronóstico configurado. */
             get
             {
-                return "Buenos Aires";
+                return "Corrientes, Corrientes";
             }
         }
 
@@ -51,17 +62,73 @@ namespace exxen2._0.capaLogica
                 }
                 ValidarRespuesta(respuesta);
                 var dias = new List<PronosticoDia>();
-                for (var indice = 0; indice < 7; indice++)
+                for (var indice = 0; indice < DiasPronostico; indice++)
                 {
                     var codigo = respuesta.Dias.CodigosClima[indice];
                     dias.Add(new PronosticoDia { Fecha = DateTime.ParseExact(respuesta.Dias.Fechas[indice], "yyyy-MM-dd", CultureInfo.InvariantCulture), TemperaturaMaxima = respuesta.Dias.TemperaturasMaximas[indice], TemperaturaMinima = respuesta.Dias.TemperaturasMinimas[indice], ProbabilidadLluvia = respuesta.Dias.ProbabilidadesLluvia[indice], CodigoClima = codigo, Descripcion = DescribirClima(codigo), Icono = ObtenerIcono(codigo) });
                 }
 
+                GuardarCache(dias);
+                UltimaConsultaUsoCache = false;
                 return dias;
             }
             catch (Exception ex)
             {
+                var respaldo = LeerCache();
+                if (respaldo != null)
+                {
+                    UltimaConsultaUsoCache = true;
+                    return respaldo;
+                }
+                UltimaConsultaUsoCache = false;
                 throw new InvalidOperationException("No se pudo obtener el pronóstico semanal.", ex);
+            }
+        }
+
+        /* Guarda el pronóstico descargado para poder mostrarlo sin conexión. */
+        private static void GuardarCache(List<PronosticoDia> dias)
+        {
+            var directorio = Path.GetDirectoryName(RutaCache);
+            var temporal = RutaCache + ".tmp";
+            try
+            {
+                Directory.CreateDirectory(directorio);
+                using (var archivo = File.Create(temporal))
+                {
+                    new DataContractJsonSerializer(typeof(List<PronosticoDia>)).WriteObject(archivo, dias);
+                }
+                File.Copy(temporal, RutaCache, true);
+                File.Delete(temporal);
+            }
+            catch
+            {
+                try
+                {
+                    if (File.Exists(temporal))
+                        File.Delete(temporal);
+                }
+                catch
+                {
+                }
+            }
+        }
+
+        /* Lee el último pronóstico válido guardado en el equipo. */
+        private static List<PronosticoDia> LeerCache()
+        {
+            try
+            {
+                if (!File.Exists(RutaCache))
+                    return null;
+                using (var archivo = File.OpenRead(RutaCache))
+                {
+                    var dias = new DataContractJsonSerializer(typeof(List<PronosticoDia>)).ReadObject(archivo) as List<PronosticoDia>;
+                    return dias == null || dias.Count < DiasPronostico ? null : dias.GetRange(0, DiasPronostico);
+                }
+            }
+            catch
+            {
+                return null;
             }
         }
 
@@ -91,7 +158,7 @@ namespace exxen2._0.capaLogica
         /* Rechaza respuestas del servicio que no contienen los siete días completos. */
         private static void ValidarRespuesta(RespuestaClima respuesta)
         {
-            if (respuesta == null || respuesta.Dias == null || respuesta.Dias.Fechas == null || respuesta.Dias.Fechas.Length < 7 || respuesta.Dias.CodigosClima == null || respuesta.Dias.CodigosClima.Length < 7 || respuesta.Dias.TemperaturasMaximas == null || respuesta.Dias.TemperaturasMaximas.Length < 7 || respuesta.Dias.TemperaturasMinimas == null || respuesta.Dias.TemperaturasMinimas.Length < 7 || respuesta.Dias.ProbabilidadesLluvia == null || respuesta.Dias.ProbabilidadesLluvia.Length < 7)
+            if (respuesta == null || respuesta.Dias == null || respuesta.Dias.Fechas == null || respuesta.Dias.Fechas.Length < DiasPronostico || respuesta.Dias.CodigosClima == null || respuesta.Dias.CodigosClima.Length < DiasPronostico || respuesta.Dias.TemperaturasMaximas == null || respuesta.Dias.TemperaturasMaximas.Length < DiasPronostico || respuesta.Dias.TemperaturasMinimas == null || respuesta.Dias.TemperaturasMinimas.Length < DiasPronostico || respuesta.Dias.ProbabilidadesLluvia == null || respuesta.Dias.ProbabilidadesLluvia.Length < DiasPronostico)
             {
                 throw new InvalidOperationException("El servicio de clima devolvió datos incompletos.");
             }

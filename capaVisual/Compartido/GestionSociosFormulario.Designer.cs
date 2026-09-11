@@ -374,12 +374,12 @@ namespace exxen2._0.capaVisual.Compartido
             this.panelEncabezado.AutoScroll = false;
             this.lblTitulo.AutoSize = false;
             this.lblTitulo.Dock = System.Windows.Forms.DockStyle.None;
-            this.lblTitulo.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.lblTitulo.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.lblTitulo.Location = new System.Drawing.Point(22, 8);
             this.lblTitulo.Size = new System.Drawing.Size(890, 36);
             this.lblDescripcion.AutoSize = false;
             this.lblDescripcion.Dock = System.Windows.Forms.DockStyle.None;
-            this.lblDescripcion.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.lblDescripcion.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.lblDescripcion.Location = new System.Drawing.Point(24, 48);
             this.lblDescripcion.Size = new System.Drawing.Size(890, 26);
             this.btnVolver.AutoSize = false;
@@ -488,12 +488,12 @@ namespace exxen2._0.capaVisual.Compartido
             this.panelListado.AutoScroll = false;
             this.lblListado.AutoSize = false;
             this.lblListado.Dock = System.Windows.Forms.DockStyle.None;
-            this.lblListado.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.lblListado.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.lblListado.Location = new System.Drawing.Point(16, 16);
             this.lblListado.Size = new System.Drawing.Size(622, 28);
             this.lblAyuda.AutoSize = false;
             this.lblAyuda.Dock = System.Windows.Forms.DockStyle.None;
-            this.lblAyuda.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.lblAyuda.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.lblAyuda.Location = new System.Drawing.Point(16, 44);
             this.lblAyuda.Size = new System.Drawing.Size(622, 24);
             this.panelFiltro.AutoSize = false;
@@ -517,7 +517,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.contenedorDetalle.Dock = System.Windows.Forms.DockStyle.None;
             this.contenedorDetalle.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.contenedorDetalle.Location = new System.Drawing.Point(16, 16);
-            this.contenedorDetalle.Size = new System.Drawing.Size(362, 422);
+            this.contenedorDetalle.Size = new System.Drawing.Size(362, 438);
             this.contenedorDetalle.AutoScroll = false;
             this.contenedorCampos.AutoSize = false;
             this.contenedorCampos.Dock = System.Windows.Forms.DockStyle.None;
@@ -583,7 +583,7 @@ namespace exxen2._0.capaVisual.Compartido
 
             this.contenedorCampos.Size = new System.Drawing.Size(362, 272);
             this.panelAcciones.Location = new System.Drawing.Point(0, 330);
-            this.contenedorDetalle.Size = new System.Drawing.Size(362, 422);
+            this.contenedorDetalle.Size = new System.Drawing.Size(362, 438);
             this.panelDetalle.Controls.Add(this.fotoSocio);
             this.panelDetalle.Controls.Add(this.btnSeleccionarFoto);
             this.panelDetalle.Controls.Add(this.btnQuitarFoto);

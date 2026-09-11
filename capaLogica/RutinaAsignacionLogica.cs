@@ -6,6 +6,17 @@ using exxen2._0.capaDatos.Repositorios;
 
 namespace exxen2._0.capaLogica
 {
+    /* Resume un socio con membresía y cantidad de rutinas para la pantalla del entrenador. */
+    public sealed class SocioRutinaItem
+    {
+        public int IdSocio { get; set; }
+        public int IdMembresia { get; set; }
+        public string NombreSocio { get; set; }
+        public string NombrePlan { get; set; }
+        public int RutinasAsignadas { get; set; }
+        public bool IncluyeRutinaPersonal { get; set; }
+    }
+
     /* Coordina las operaciones y validaciones de negocio de asignaciones de rutina. */
     public class RutinaAsignacionLogica
     {
@@ -27,9 +38,9 @@ namespace exxen2._0.capaLogica
                 }
 
                 var entrenador = datos.UsuariosSistema.ConsultarSoloLectura("Rol").SingleOrDefault(u => u.IdUsuarioSistema == rutina.IdEntrenador);
-                if (!ValidacionesGimnasio.EsEntrenadorActivo(entrenador))
+                if (!ValidacionesGimnasio.PuedeGestionarRutinas(entrenador))
                 {
-                    throw new InvalidOperationException("La rutina requiere un entrenador activo.");
+                    throw new InvalidOperationException("La rutina requiere un entrenador o administrador activo.");
                 }
 
                 if (membresia == null || !membresia.Estado || membresia.Socio == null || !membresia.Socio.Estado)
@@ -80,9 +91,46 @@ namespace exxen2._0.capaLogica
                     .Where(m => m.Estado && m.Socio.Estado && m.Plan.Estado &&
                         m.Plan.RutinasDisponibles.Any(r => r.IdRutina == idRutina && r.Estado &&
                             r.Entrenador.Estado && r.Entrenador.Rol.Estado &&
-                            r.Entrenador.Rol.Descripcion == "Entrenador"))
+                            (r.Entrenador.Rol.Descripcion == "Entrenador" || r.Entrenador.Rol.Descripcion == "Administrador")))
                     .OrderBy(m => m.Socio.Apellido).ThenBy(m => m.Socio.Nombre).ToList();
             }
+        }
+
+        /* Consulta los socios del entrenador con un inner join para mostrarlos en la grilla. */
+        public List<SocioRutinaItem> ListarSociosPorEntrenador(int idEntrenador)
+        {
+            using (var datos = new UnidadDeTrabajoGimnasio())
+            {
+                var consulta =
+                    from asignacionEntrenador in datos.MembresiasEntrenadores
+                    join membresia in datos.Membresias on asignacionEntrenador.IdMembresia equals membresia.IdMembresia
+                    join socio in datos.Socios on membresia.IdSocio equals socio.IdSocio
+                    join plan in datos.Planes on membresia.IdPlan equals plan.IdPlan
+                    join asignacionRutina in datos.RutinaAsignaciones
+                        on membresia.IdMembresia equals asignacionRutina.IdMembresia into rutinasSocio
+                    where (idEntrenador <= 0 || asignacionEntrenador.IdEntrenador == idEntrenador)
+                        && asignacionEntrenador.Estado
+                        && membresia.Estado
+                        && socio.Estado
+                        && plan.Estado
+                    select new SocioRutinaItem
+                    {
+                        IdSocio = socio.IdSocio,
+                        IdMembresia = membresia.IdMembresia,
+                        NombreSocio = socio.Apellido + ", " + socio.Nombre,
+                        NombrePlan = plan.Nombre,
+                        RutinasAsignadas = rutinasSocio.Count(r => r.Estado),
+                        IncluyeRutinaPersonal = plan.IncluyeRutinaPersonal
+                    };
+
+                return consulta.OrderBy(s => s.NombreSocio).ToList();
+            }
+        }
+
+        /* Consulta todos los socios con entrenador activo para la gestión del administrador. */
+        public List<SocioRutinaItem> ListarSociosParaAdministracion()
+        {
+            return ListarSociosPorEntrenador(0);
         }
 
         /* Consulta asignaciones de rutina activas para devolver los datos a la capa visual. */

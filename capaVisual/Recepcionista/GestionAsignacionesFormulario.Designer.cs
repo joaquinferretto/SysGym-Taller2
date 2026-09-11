@@ -8,15 +8,15 @@ namespace exxen2._0.capaVisual.Recepcionista
     {
         private IContainer components;
         private Panel panelEncabezado; private Label lblTitulo; private Label lblDescripcion; private Button btnVolver; private Panel barraAcciones; private Label lblEstado; private Panel panelContenido; private Panel panelFormulario; private Panel contenedorFormulario; private Label lblMembresia; private Label lblEntrenador; private DataGridView tabla; private DataGridViewTextBoxColumn colId; private DataGridViewTextBoxColumn colMembresia; private DataGridViewTextBoxColumn colEntrenador; private DataGridViewTextBoxColumn colEstado;
-        private TextBox membresia; private ComboBox entrenador; private Button asignar; private Button cambiar; private Button consultar; private Button darDeBaja;
+        private ComboBox membresia; private ComboBox entrenador; private Button asignar; private Button cambiar; private Button consultar; private Button darDeBaja;
         protected override void Dispose(bool liberarRecursos) { if (liberarRecursos && components != null) components.Dispose(); base.Dispose(liberarRecursos); }
 
         private void InitializeComponent()
         {
-            components = new Container(); panelEncabezado = new Panel(); lblTitulo = new Label(); lblDescripcion = new Label(); btnVolver = new Button(); barraAcciones = new Panel(); asignar = new Button(); cambiar = new Button(); consultar = new Button(); darDeBaja = new Button(); lblEstado = new Label(); panelContenido = new Panel(); panelFormulario = new Panel(); contenedorFormulario = new Panel(); lblMembresia = new Label(); membresia = new TextBox(); lblEntrenador = new Label(); entrenador = new ComboBox(); tabla = new DataGridView(); colId = new DataGridViewTextBoxColumn(); colMembresia = new DataGridViewTextBoxColumn(); colEntrenador = new DataGridViewTextBoxColumn(); colEstado = new DataGridViewTextBoxColumn(); panelEncabezado.SuspendLayout(); barraAcciones.SuspendLayout(); panelContenido.SuspendLayout(); panelFormulario.SuspendLayout(); contenedorFormulario.SuspendLayout(); ((ISupportInitialize)(tabla)).BeginInit(); SuspendLayout();
+            components = new Container(); panelEncabezado = new Panel(); lblTitulo = new Label(); lblDescripcion = new Label(); btnVolver = new Button(); barraAcciones = new Panel(); asignar = new Button(); cambiar = new Button(); consultar = new Button(); darDeBaja = new Button(); lblEstado = new Label(); panelContenido = new Panel(); panelFormulario = new Panel(); contenedorFormulario = new Panel(); lblMembresia = new Label(); membresia = new ComboBox(); lblEntrenador = new Label(); entrenador = new ComboBox(); tabla = new DataGridView(); colId = new DataGridViewTextBoxColumn(); colMembresia = new DataGridViewTextBoxColumn(); colEntrenador = new DataGridViewTextBoxColumn(); colEstado = new DataGridViewTextBoxColumn(); panelEncabezado.SuspendLayout(); barraAcciones.SuspendLayout(); panelContenido.SuspendLayout(); panelFormulario.SuspendLayout(); contenedorFormulario.SuspendLayout(); ((ISupportInitialize)(tabla)).BeginInit(); SuspendLayout();
             panelEncabezado.BackColor = Color.FromArgb(5, 150, 105);   panelEncabezado.Controls.Add(lblDescripcion); panelEncabezado.Controls.Add(lblTitulo); panelEncabezado.Controls.Add(btnVolver);   lblTitulo.Font = new Font("Segoe UI", 18F, FontStyle.Bold); lblTitulo.ForeColor = Color.White;  lblTitulo.Text = "Asignar entrenador";  lblDescripcion.ForeColor = Color.FromArgb(226, 232, 240);  lblDescripcion.Text = "Vinculacion de entrenadores con membresias";  btnVolver.BackColor = Color.White; btnVolver.FlatStyle = FlatStyle.Flat; btnVolver.FlatAppearance.BorderSize = 0; btnVolver.ForeColor = Color.FromArgb(5, 150, 105);   btnVolver.Text = "Volver"; btnVolver.UseVisualStyleBackColor = false;
             barraAcciones.BackColor = Color.White;   barraAcciones.Padding = new Padding(16, 8, 16, 8);  barraAcciones.Controls.Add(asignar); barraAcciones.Controls.Add(cambiar); barraAcciones.Controls.Add(consultar); barraAcciones.Controls.Add(darDeBaja);
-             lblEstado.BackColor = Color.FromArgb(226, 232, 240);  lblEstado.ForeColor = Color.FromArgb(51, 65, 85);  lblEstado.Padding = new Padding(18, 8, 8, 0); lblEstado.Text = "Listo"; panelContenido.BackColor = Color.FromArgb(248, 250, 252);  panelContenido.Padding = new Padding(20); panelContenido.Controls.Add(tabla); panelContenido.Controls.Add(panelFormulario); panelFormulario.BackColor = Color.White; panelFormulario.BorderStyle = BorderStyle.FixedSingle;   panelFormulario.Padding = new Padding(12); panelFormulario.Controls.Add(contenedorFormulario);       contenedorFormulario.Controls.Add(lblMembresia); contenedorFormulario.Controls.Add(membresia); contenedorFormulario.Controls.Add(lblEntrenador); contenedorFormulario.Controls.Add(entrenador);  membresia.BorderStyle = BorderStyle.FixedSingle;  entrenador.DropDownStyle = ComboBoxStyle.DropDownList;
+             lblEstado.BackColor = Color.FromArgb(226, 232, 240);  lblEstado.ForeColor = Color.FromArgb(51, 65, 85);  lblEstado.Padding = new Padding(18, 8, 8, 0); lblEstado.Text = "Listo"; panelContenido.BackColor = Color.FromArgb(248, 250, 252);  panelContenido.Padding = new Padding(20); panelContenido.Controls.Add(tabla); panelContenido.Controls.Add(panelFormulario); panelFormulario.BackColor = Color.White; panelFormulario.BorderStyle = BorderStyle.FixedSingle;   panelFormulario.Padding = new Padding(12); panelFormulario.Controls.Add(contenedorFormulario);       contenedorFormulario.Controls.Add(lblMembresia); contenedorFormulario.Controls.Add(membresia); contenedorFormulario.Controls.Add(lblEntrenador); contenedorFormulario.Controls.Add(entrenador);  membresia.DropDownStyle = ComboBoxStyle.DropDownList; membresia.FormattingEnabled = true;  entrenador.DropDownStyle = ComboBoxStyle.DropDownList;
                 tabla.BackgroundColor = Color.White; tabla.BorderStyle = BorderStyle.None;       tabla.Columns.AddRange(new DataGridViewColumn[] { colId, colMembresia, colEntrenador, colEstado }); colId.HeaderText = "Id"; colId.Name = "colId"; colId.Visible = false; colMembresia.HeaderText = "Membresia"; colMembresia.Name = "colMembresia"; colEntrenador.HeaderText = "Entrenador"; colEntrenador.Name = "colEntrenador"; colEstado.HeaderText = "Estado"; colEstado.Name = "colEstado";
              panelEncabezado.Name = "panelEncabezado";  panelEncabezado.TabIndex = 0;
             lblTitulo.Name = "lblTitulo";  lblTitulo.TabIndex = 0;
@@ -101,12 +101,12 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.panelEncabezado.AutoScroll = false;
             this.lblTitulo.AutoSize = false;
             this.lblTitulo.Dock = System.Windows.Forms.DockStyle.None;
-            this.lblTitulo.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.lblTitulo.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.lblTitulo.Location = new System.Drawing.Point(22, 8);
             this.lblTitulo.Size = new System.Drawing.Size(890, 36);
             this.lblDescripcion.AutoSize = false;
             this.lblDescripcion.Dock = System.Windows.Forms.DockStyle.None;
-            this.lblDescripcion.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.lblDescripcion.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.lblDescripcion.Location = new System.Drawing.Point(24, 48);
             this.lblDescripcion.Size = new System.Drawing.Size(890, 26);
             this.btnVolver.AutoSize = false;
@@ -134,14 +134,14 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.panelFormulario.AutoSize = false;
             this.panelFormulario.Dock = System.Windows.Forms.DockStyle.None;
             this.panelFormulario.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.panelFormulario.Location = new System.Drawing.Point(16, 430);
-            this.panelFormulario.Size = new System.Drawing.Size(1068, 68);
+            this.panelFormulario.Location = new System.Drawing.Point(16, 388);
+            this.panelFormulario.Size = new System.Drawing.Size(1068, 110);
             this.panelFormulario.AutoScroll = false;
             this.contenedorFormulario.AutoSize = false;
             this.contenedorFormulario.Dock = System.Windows.Forms.DockStyle.None;
             this.contenedorFormulario.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.contenedorFormulario.Location = new System.Drawing.Point(16, 14);
-            this.contenedorFormulario.Size = new System.Drawing.Size(1034, 38);
+            this.contenedorFormulario.Size = new System.Drawing.Size(1034, 80);
             this.contenedorFormulario.AutoScroll = false;
             this.lblMembresia.AutoSize = false;
             this.lblMembresia.Dock = System.Windows.Forms.DockStyle.None;
@@ -151,13 +151,13 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.lblEntrenador.AutoSize = false;
             this.lblEntrenador.Dock = System.Windows.Forms.DockStyle.None;
             this.lblEntrenador.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.lblEntrenador.Location = new System.Drawing.Point(517, 0);
+            this.lblEntrenador.Location = new System.Drawing.Point(0, 38);
             this.lblEntrenador.Size = new System.Drawing.Size(102, 30);
             this.tabla.AutoSize = false;
             this.tabla.Dock = System.Windows.Forms.DockStyle.None;
             this.tabla.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.tabla.Location = new System.Drawing.Point(16, 16);
-            this.tabla.Size = new System.Drawing.Size(1068, 398);
+            this.tabla.Size = new System.Drawing.Size(1068, 356);
             this.tabla.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.tabla.ReadOnly = true;
             this.tabla.AllowUserToAddRows = false;
@@ -168,15 +168,17 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.tabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.tabla.ColumnHeadersHeight = 46;
             this.membresia.AutoSize = false;
+            this.membresia.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.membresia.FormattingEnabled = true;
             this.membresia.Dock = System.Windows.Forms.DockStyle.None;
-            this.membresia.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.membresia.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.membresia.Location = new System.Drawing.Point(110, 4);
-            this.membresia.Size = new System.Drawing.Size(395, 26);
+            this.membresia.Size = new System.Drawing.Size(908, 26);
             this.entrenador.AutoSize = false;
             this.entrenador.Dock = System.Windows.Forms.DockStyle.None;
-            this.entrenador.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.entrenador.Location = new System.Drawing.Point(627, 4);
-            this.entrenador.Size = new System.Drawing.Size(395, 26);
+            this.entrenador.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.entrenador.Location = new System.Drawing.Point(110, 42);
+            this.entrenador.Size = new System.Drawing.Size(908, 26);
             this.asignar.AutoSize = false;
             this.asignar.Dock = System.Windows.Forms.DockStyle.None;
             this.asignar.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;

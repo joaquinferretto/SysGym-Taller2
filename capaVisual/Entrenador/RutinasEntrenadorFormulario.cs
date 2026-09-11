@@ -21,6 +21,10 @@ namespace exxen2._0.capaVisual.Entrenador
         private int idRutina;
         private int idRutinaEjercicio;
         private bool cargandoDetalle;
+        private readonly int idSocioObjetivo;
+        private readonly bool esRutinaPersonalizada;
+        private readonly bool modoAdministrador;
+        private int idEntrenadorRutina;
         /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
         public RutinasEntrenadorFormulario() : this(new UsuarioSistema { Nombre = "Entrenador", Apellido = "de diseno" })
         {
@@ -33,6 +37,39 @@ namespace exxen2._0.capaVisual.Entrenador
                 throw new ArgumentNullException("usuario");
             this.usuario = usuario;
             InitializeComponent();
+        }
+
+        /* Inicializa el editor para crear una rutina exclusiva del socio indicado. */
+        public RutinasEntrenadorFormulario(UsuarioSistema usuario, int idSocio)
+            : this(usuario)
+        {
+            if (idSocio <= 0)
+                throw new ArgumentException("El socio seleccionado no es válido.", "idSocio");
+            idSocioObjetivo = idSocio;
+            esRutinaPersonalizada = true;
+            Text = "SysGym | Rutina personalizada";
+            lblTitulo.Text = "Rutina personalizada";
+            lblDescripcion.Text = "Crea una rutina exclusiva para el socio seleccionado";
+        }
+
+        /* Inicializa el editor personalizado permitiendo que el administrador gestione cualquier socio. */
+        public RutinasEntrenadorFormulario(UsuarioSistema usuario, int idSocio, bool modoAdministrador)
+            : this(usuario, idSocio)
+        {
+            this.modoAdministrador = modoAdministrador;
+        }
+
+        /* Inicializa el editor completo de rutinas para la gestión global del administrador. */
+        public RutinasEntrenadorFormulario(UsuarioSistema usuario, bool modoAdministrador)
+            : this(usuario)
+        {
+            this.modoAdministrador = modoAdministrador;
+            if (modoAdministrador)
+            {
+                Text = "SysGym | Gestionar rutinas";
+                lblTitulo.Text = "Gestionar rutinas";
+                lblDescripcion.Text = "Crea, edita y asigna rutinas a los socios";
+            }
         }
 
         /* Carga el catálogo de ejercicios activos para incorporarlos a una rutina. */
@@ -49,11 +86,26 @@ namespace exxen2._0.capaVisual.Entrenador
             try
             {
                 membresia.DataSource = null;
+                membresia.DisplayMember = "IdMembresia";
+                membresia.ValueMember = "IdMembresia";
+                if (esRutinaPersonalizada)
+                {
+                    var membresiaObjetivo = rutinas.ObtenerMembresiaActivaParaSocio(idSocioObjetivo);
+                    if (membresiaObjetivo != null)
+                    {
+                        membresia.DataSource = new[] { membresiaObjetivo };
+                    }
+
+                    membresia.Enabled = false;
+                    asignar.Enabled = false;
+                    return;
+                }
+
+                membresia.Enabled = true;
+                asignar.Enabled = true;
                 if (idRutina == 0)
                     return;
                 membresia.DataSource = asignaciones.ListarMembresiasDisponibles(idRutina);
-                membresia.DisplayMember = "IdMembresia";
-                membresia.ValueMember = "IdMembresia";
             }
             catch (Exception ex)
             {
@@ -75,7 +127,10 @@ namespace exxen2._0.capaVisual.Entrenador
             try
             {
                 tabla.Rows.Clear();
-                foreach (var rutina in rutinas.ListarPorEntrenador(usuario.IdUsuarioSistema))
+                var lista = modoAdministrador
+                    ? rutinas.ListarParaGestion()
+                    : rutinas.ListarPorEntrenador(usuario.IdUsuarioSistema);
+                foreach (var rutina in lista)
                 {
                     var asignados = rutina.Asignaciones == null ? 0 : rutina.Asignaciones.Count(a => a.Estado);
                     tabla.Rows.Add(rutina.IdRutina, rutina.Nombre, rutina.Entrenador == null ? "-" : rutina.Entrenador.Nombre + " " + rutina.Entrenador.Apellido, asignados, rutina.FechaCreacion.ToString("dd/MM/yyyy"));
@@ -100,6 +155,7 @@ namespace exxen2._0.capaVisual.Entrenador
                 var rutina = rutinas.ObtenerPorId(idRutina);
                 if (rutina == null)
                     return;
+                idEntrenadorRutina = rutina.IdEntrenador;
                 nombre.Text = rutina.Nombre;
                 descripcion.Text = rutina.Descripcion ?? string.Empty;
                 CargarMembresias();
@@ -196,6 +252,7 @@ namespace exxen2._0.capaVisual.Entrenador
         {
             idRutina = 0;
             idRutinaEjercicio = 0;
+            idEntrenadorRutina = usuario.IdUsuarioSistema;
             nombre.Clear();
             descripcion.Clear();
             tabla.ClearSelection();
@@ -213,15 +270,27 @@ namespace exxen2._0.capaVisual.Entrenador
                     IdRutina = idRutina,
                     Nombre = nombre.Text.Trim(),
                     Descripcion = descripcion.Text.Trim(),
-                    IdEntrenador = usuario.IdUsuarioSistema,
+                    IdEntrenador = idRutina == 0 || !modoAdministrador ? usuario.IdUsuarioSistema : idEntrenadorRutina,
                     FechaCreacion = DateTime.Now,
                     Estado = true
                 };
                 if (idRutina == 0)
                 {
-                    rutinas.Crear(rutina);
+                    if (esRutinaPersonalizada)
+                    {
+                        if (membresia.SelectedValue == null)
+                            throw new InvalidOperationException("El socio no posee una membresía activa seleccionable.");
+                        rutinas.CrearPersonalizada(rutina, Convert.ToInt32(membresia.SelectedValue));
+                    }
+                    else
+                    {
+                        rutinas.Crear(rutina);
+                    }
+
                     idRutina = rutina.IdRutina;
-                    AyudaFormularioVisual.MostrarExito(lblEstado, "Plantilla creada. Ahora podes agregarle ejercicios y asignarla a socios.");
+                    AyudaFormularioVisual.MostrarExito(lblEstado, esRutinaPersonalizada
+                        ? "Rutina personalizada creada y asignada al socio."
+                        : "Plantilla creada. Ahora podes agregarle ejercicios y asignarla a socios.");
                 }
                 else
                 {

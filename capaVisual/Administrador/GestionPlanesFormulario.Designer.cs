@@ -138,6 +138,7 @@ namespace exxen2._0.capaVisual.Administrador
             // 
             this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
             this.lblTitulo.ForeColor = System.Drawing.Color.White;
+            this.lblTitulo.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.lblTitulo.Location = new System.Drawing.Point(22, 8);
             this.lblTitulo.Margin = new System.Windows.Forms.Padding(0);
             this.lblTitulo.Name = "lblTitulo";
@@ -149,6 +150,7 @@ namespace exxen2._0.capaVisual.Administrador
             // lblDescripcion
             // 
             this.lblDescripcion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.lblDescripcion.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.lblDescripcion.Location = new System.Drawing.Point(24, 48);
             this.lblDescripcion.Margin = new System.Windows.Forms.Padding(0);
             this.lblDescripcion.Name = "lblDescripcion";
@@ -262,7 +264,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.tabla.RowHeadersVisible = false;
             this.tabla.RowTemplate.Height = 30;
             this.tabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tabla.Size = new System.Drawing.Size(639, 391);
+            this.tabla.Size = new System.Drawing.Size(638, 391);
             this.tabla.TabIndex = 3;
             this.tabla.SelectionChanged += new System.EventHandler(this.tabla_SelectionChanged);
             // 
@@ -359,6 +361,7 @@ namespace exxen2._0.capaVisual.Administrador
             // lblAyuda
             // 
             this.lblAyuda.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
+            this.lblAyuda.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.lblAyuda.Location = new System.Drawing.Point(16, 44);
             this.lblAyuda.Margin = new System.Windows.Forms.Padding(0, 0, 0, 6);
             this.lblAyuda.Name = "lblAyuda";
@@ -371,6 +374,7 @@ namespace exxen2._0.capaVisual.Administrador
             // 
             this.lblListado.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
             this.lblListado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.lblListado.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.lblListado.Location = new System.Drawing.Point(16, 16);
             this.lblListado.Margin = new System.Windows.Forms.Padding(0);
             this.lblListado.Name = "lblListado";

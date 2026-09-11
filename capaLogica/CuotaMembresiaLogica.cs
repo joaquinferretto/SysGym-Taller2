@@ -10,6 +10,7 @@ namespace exxen2._0.capaLogica
     public sealed class EstadoCuentaMembresia
     {
         public int IdMembresia { get; set; }
+        public int IdSocio { get; set; }
         public string Socio { get; set; }
         public string DNI { get; set; }
         public string Plan { get; set; }
@@ -199,6 +200,7 @@ namespace exxen2._0.capaLogica
             return new EstadoCuentaMembresia
             {
                 IdMembresia = membresia.IdMembresia,
+                IdSocio = membresia.IdSocio,
                 Socio = membresia.Socio == null ? "Socio no disponible" : membresia.Socio.Apellido + ", " + membresia.Socio.Nombre,
                 DNI = membresia.Socio == null ? "-" : membresia.Socio.DNI,
                 Plan = membresia.Plan == null ? "-" : membresia.Plan.Nombre,

@@ -1,6 +1,17 @@
 # Reglas de negocio
 
-Última actualización: 9 de septiembre de 2026.
+## Identidad y habilitacion de entrenador - 11 de septiembre de 2026
+
+- `UsuarioSistema` y `Socio` son entidades distintas. Pueden compartir nombre o apellido en los datos de prueba, pero se distinguen por su rol, clave e identidad (DNI).
+- La asignacion se realiza sobre una `Membresia` seleccionada por `IdMembresia`; el entrenador se selecciona por `IdUsuarioSistema`. La interfaz muestra nombre completo y DNI para evitar confusiones.
+- El cambio de plan desde Gestion de membresias conserva la historia de la membresia. Al pasar a un plan con `IncluyeEntrenador`, se puede usar Asignar o Cambiar; al pasar a uno sin ese beneficio se desactivan las asignaciones activas.
+- Registrar asistencia requiere socio activo, membresia habilitada y una cuota pagada vigente para la fecha elegida. La pantalla identifica al socio por nombre completo y DNI; no se elimina esa validacion.
+
+## Rutinas personalizadas — 11 de septiembre de 2026
+
+Una rutina personalizada se crea para una membresía activa cuyo plan incluya rutina personal. Puede crearla el entrenador activo asignado a ese socio o un administrador activo. La rutina y su asignación se guardan juntas; los ejercicios se agregan después mediante `RutinaEjercicioLogica`, indicando un día entre lunes y viernes.
+
+Última actualización: 11 de septiembre de 2026.
 
 ## Membresías y cuotas
 

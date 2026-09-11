@@ -1,6 +1,32 @@
 # Arquitectura
 
-Última actualización: 9 de septiembre de 2026.
+## Identidad en asignaciones y asistencias - 11 de septiembre de 2026
+
+Las pantallas activas usan `IdMembresia`, `IdUsuarioSistema` e `IdSocio` como claves de las operaciones. Los combos de asignacion y asistencia muestran nombre completo y DNI, pero conservan esas claves en `ValueMember`; no se identifican personas por apellido. La pantalla de asignaciones obtiene las membresias desde `MembresiaLogica` y no exige escribir un entero manualmente.
+
+El cambio de plan desde la gestion de membresias utiliza `MembresiaLogica.CambiarPlan`. La regla de negocio sigue siendo la misma: solo un plan activo con `IncluyeEntrenador` permite asignar o cambiar entrenador. La carga inicial de combos continua en `Load`, nunca en `InitializeComponent` ni en el diseñador.
+
+## Correccion de equivalencia de dashboards - 11 de septiembre de 2026
+
+Se corrigio la regresion visual de los paneles de Administrador, Recepcionista y Entrenador. El layout base queda en 1200x760, con encabezado superior de 90 px, menu lateral fijo de 264 px y contenido con `Dock=Fill`, sin `WindowState=Maximized` en el disenador. El estado inicial de las secciones colapsables tambien queda representado en Designer; solo `Load` configura datos y conecta el comportamiento.
+
+`InicioPanelAdministrador` conserva la tarjeta meteorologica de ejemplo sin consultar servicios en tiempo de diseno. Sus bloques estaticos usan `Dock`; el listado meteorologico utiliza `FlowLayoutPanel` con flujo horizontal y desplazamiento contenido, y las tarjetas dinamicas ya no calculan coordenadas. La grilla de cuotas llena su contenedor y sus columnas visibles usan `FillWeight` y `MinimumWidth`.
+
+Las compilaciones Debug y Release fueron exitosas sin errores ni warnings reportados. La apertura manual en Visual Studio 2022 y la prueba funcional contra una base disponible quedan pendientes de verificacion.
+
+## Rutinas personalizadas — 11 de septiembre de 2026
+
+El entrenador puede iniciar una rutina exclusiva desde “Mis socios”. El administrador también puede acceder a “Gestionar rutinas” y “Socios y rutinas” para crear, editar, asignar y consultar rutinas globalmente. La capa visual solicita a `RutinaLogica.CrearPersonalizada` la creación de la plantilla y su `RutinaAsignacion`; la operación se confirma en una única transacción y no se accede a `DbContext` desde la interfaz.
+
+Última actualización: 11 de septiembre de 2026.
+
+## Navegación desde el estado de cuenta — 11 de septiembre de 2026
+
+La grilla del estado de cuenta conserva `IdMembresia` e `IdSocio` en columnas ocultas. El doble clic emite un evento desde `InicioPanelAdministrador`; `PanelAdministrador` recibe el identificador y abre `GestionSociosFormulario` con edición habilitada y el socio seleccionado. La navegación continúa dentro del flujo visual y no agrega acceso directo a datos desde el control.
+
+## Menú lateral y respaldo meteorológico — 11 de septiembre de 2026
+
+Los encabezados del menú lateral funcionan como secciones expandibles en los paneles de administrador, recepcionista y entrenador. `MenuDesplegableHelper` reacomoda los controles visibles y conserva el desplazamiento cuando el contenido supera el alto disponible. `ClimaLogica` consulta Corrientes capital y guarda ocho días en el almacenamiento local de la aplicación para utilizarlos si el servicio no responde.
 
 El flujo permitido es:
 
@@ -22,7 +48,7 @@ En cada tarea se deben actualizar los documentos existentes afectados, indicando
 
 ## Eventos y diseñador
 
-- Los 16 formularios heredan directamente de `Form`. `InicioPanelAdministrador` conserva el único `UserControl` existente. `ControladorNavegacion` y `AyudaFormularioVisual` son auxiliares, no clases base visuales.
+- Los 17 formularios heredan directamente de `Form`. `InicioPanelAdministrador` conserva el único `UserControl` existente. `ControladorNavegacion` y `AyudaFormularioVisual` son auxiliares, no clases base visuales.
 - Los controles son estándar de Windows Forms, excepto ese UserControl existente integrado en el panel del administrador. No se agregan pantallas ni controles propios.
 - Los handlers siguen `NombreControl_Evento`, por ejemplo `guardar_Click` o `GestionSociosFormulario_Load`. Las suscripciones de controles existentes están en `InitializeComponent`; `FormClosed` de ventanas creadas durante la navegación se suscribe al crearlas.
 - Los constructores inicializan componentes y dependencias; las consultas iniciales se ejecutan desde `Load`. Los filtros usan `TextChanged`/`SelectedIndexChanged` y las grillas `SelectionChanged`.
@@ -42,7 +68,17 @@ Se aplica el encargo `FIX_LAYOUT_CODEX.md`: los contenedores de distribución pa
 - Se mantienen colores, fuentes y textos existentes. Cambian contenedores, posiciones y anclajes por autorización expresa; no se afirma identidad píxel a píxel. No se crean formularios ni clases visuales propias.
 - La tarjeta de ejemplo meteorológica conserva sus coordenadas y sirve de plantilla en ejecución. La navegación continúa acoplando el módulo abierto con Fill, sin modificar ControladorNavegacion.
 
-Los 17 componentes se inicializaron y redimensionaron en memoria; se comprobó que mover btnVolver en Planes no mueve los títulos. Esto no sustituye la inspección final en el diseñador real de Visual Studio, que sigue pendiente.
+Los 18 componentes visuales se inicializaron y redimensionaron en memoria; se comprobó que mover btnVolver en Planes no mueve los títulos. Esto no sustituye la inspección final en el diseñador real de Visual Studio, que sigue pendiente.
+
+## Auditoría de diseñadores — 11 de septiembre de 2026
+
+Se revisaron los 17 formularios y el `UserControl` de `capaVisual` que forman parte del proyecto. La verificación estructural creó cada componente con su constructor predeterminado, ejecutó `PerformLayout` en su tamaño mínimo y revisó controles fuera de los límites, superposiciones, `Dock`, `Anchor`, `AutoScroll`, `AutoScaleMode`, `InitializeComponent`, `Dispose` y balances de `SuspendLayout`/`ResumeLayout` e `ISupportInitialize`. No quedaron errores estructurales en esa pasada.
+
+Se ajustaron encabezados y títulos de listado para respetar el ancho disponible, alturas de contenedores de detalle para evitar recortes de acciones, los formularios inferiores de asistencias/ejercicios/asignaciones a una distribución vertical, y el editor de rutinas para que sus campos y acciones respondan al ancho mínimo. El menú lateral mantiene sus controles en Designer y solo cambia su visibilidad durante `Load`, fuera del modo de diseño.
+
+La solución utiliza `Panel` estándar con `Dock` y `Anchor`; el listado meteorológico del dashboard administrador utiliza `FlowLayoutPanel` con flujo horizontal y desplazamiento contenido. No hay `TableLayoutPanel` que requiera configuración de filas o columnas. Los diez archivos legados `*Form.cs` no tienen `Designer.cs` y no están incluidos en `exxen2.0.csproj`; se conservan fuera del flujo activo y requieren una decisión independiente si deben volver a ser pantallas del proyecto.
+
+La apertura manual mediante «Ver diseñador» en Visual Studio 2022 sigue siendo la verificación final pendiente, porque no puede ejecutarse desde MSBuild o una consola sin iniciar el IDE.
 
 ### Fotos de socios y usuarios
 

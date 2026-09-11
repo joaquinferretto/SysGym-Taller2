@@ -15,6 +15,7 @@ namespace exxen2._0.capaVisual.Entrenador
     {
         private readonly RutinaAsignacionLogica asignaciones = new RutinaAsignacionLogica();
         private readonly UsuarioSistema usuario;
+        private readonly bool modoAdministrador;
         /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
         public MisSociosFormulario() : this(new UsuarioSistema { Nombre = "Entrenador", Apellido = "de diseno" })
         {
@@ -29,19 +30,34 @@ namespace exxen2._0.capaVisual.Entrenador
             InitializeComponent();
         }
 
+        /* Inicializa la pantalla de socios para la gestión global del administrador. */
+        public MisSociosFormulario(UsuarioSistema usuario, bool modoAdministrador)
+            : this(usuario)
+        {
+            this.modoAdministrador = modoAdministrador;
+            if (modoAdministrador)
+            {
+                Text = "SysGym | Socios y rutinas";
+                lblTitulo.Text = "Socios y rutinas";
+                lblDescripcion.Text = "Gestiona las rutinas de todos los socios asignados";
+            }
+        }
+
         /* Consulta los registros del módulo y actualiza la grilla, informando los errores de carga. */
         private void Cargar()
         {
             try
             {
                 tabla.Rows.Clear();
-                foreach (var grupo in asignaciones.ListarPorEntrenador(usuario.IdUsuarioSistema).GroupBy(a => a.Membresia.IdSocio))
+                var socios = modoAdministrador
+                    ? asignaciones.ListarSociosParaAdministracion()
+                    : asignaciones.ListarSociosPorEntrenador(usuario.IdUsuarioSistema);
+                foreach (var socio in socios)
                 {
-                    var primera = grupo.First();
-                    tabla.Rows.Add(grupo.Key, primera.Membresia.Socio.Apellido + ", " + primera.Membresia.Socio.Nombre, grupo.Count());
+                    tabla.Rows.Add(socio.IdSocio, socio.NombreSocio, socio.RutinasAsignadas);
                 }
 
-                lblEstado.Text = tabla.Rows.Count + " socio(s) con rutinas asignadas";
+                lblEstado.Text = tabla.Rows.Count + " socio(s) asignado(s) a este entrenador";
             }
             catch (Exception ex)
             {
@@ -79,6 +95,23 @@ namespace exxen2._0.capaVisual.Entrenador
                     throw new InvalidOperationException("Selecciona un socio.");
                 using (var semana = new RutinaSemanalFormulario(Convert.ToInt32(tabla.CurrentRow.Cells[0].Value), Convert.ToString(tabla.CurrentRow.Cells[1].Value), Color.FromArgb(14, 116, 144)))
                     semana.ShowDialog(this);
+            }
+            catch (Exception ex)
+            {
+                AyudaFormularioVisual.MostrarError(lblEstado, ex);
+            }
+        }
+
+        /* Al hacer clic en crearPersonalizada, abre el editor para el socio seleccionado. */
+        private void crearPersonalizada_Click(object origen, EventArgs e)
+        {
+            try
+            {
+                if (tabla.CurrentRow == null || tabla.CurrentRow.Cells[0].Value == null)
+                    throw new InvalidOperationException("Selecciona un socio.");
+                using (var formulario = new RutinasEntrenadorFormulario(usuario, Convert.ToInt32(tabla.CurrentRow.Cells[0].Value), modoAdministrador))
+                    formulario.ShowDialog(this);
+                Cargar();
             }
             catch (Exception ex)
             {

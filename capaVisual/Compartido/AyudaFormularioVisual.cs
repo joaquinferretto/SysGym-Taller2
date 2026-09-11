@@ -85,6 +85,24 @@ namespace exxen2._0.capaVisual.Compartido
             return resultado;
         }
 
+        /* Comprueba que un combo enlazado tenga una opción válida antes de usar su clave. */
+        internal static void ValidarComboSeleccionado(ComboBox combo, string nombre)
+        {
+            if (combo == null || combo.SelectedIndex < 0)
+                throw new InvalidOperationException("Selecciona " + nombre + ".");
+
+            var requiereValor = combo.DataSource != null || !string.IsNullOrWhiteSpace(combo.ValueMember);
+            if (requiereValor && combo.SelectedValue == null)
+                throw new InvalidOperationException("Selecciona " + nombre + ".");
+        }
+
+        /* Comprueba que la fecha final no sea anterior a la fecha inicial. */
+        internal static void ValidarRangoFechas(DateTimePicker desde, DateTimePicker hasta, string nombreDesde, string nombreHasta)
+        {
+            if (desde != null && hasta != null && hasta.Value.Date < desde.Value.Date)
+                throw new InvalidOperationException("El campo " + nombreHasta + " no puede ser anterior a " + nombreDesde + ".");
+        }
+
         /* Interpreta coma o punto decimal y valida el rango permitido del campo. */
         internal static decimal DecimalPositivo(TextBox campo, string nombre, bool permitirCero = false)
         {

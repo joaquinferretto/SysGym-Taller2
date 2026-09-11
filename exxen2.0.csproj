@@ -125,6 +125,7 @@
     </Compile>
     <Compile Include="capaVisual\Compartido\ControladorNavegacion.cs" />
     <Compile Include="capaVisual\Compartido\AyudaFormularioVisual.cs" />
+    <Compile Include="capaVisual\Compartido\MenuDesplegableHelper.cs" />
     <Compile Include="capaVisual\Compartido\GestionSociosFormulario.cs">
       <SubType>Form</SubType>
     </Compile>

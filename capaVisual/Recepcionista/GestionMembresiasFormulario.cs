@@ -112,7 +112,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             inicio.Value = membresiaSeleccionada.FechaInicio;
             vencimiento.Value = membresiaSeleccionada.FechaVencimiento;
             socio.Enabled = false;
-            plan.Enabled = false;
+            plan.Enabled = true;
             EstablecerModo(false);
             lblFormulario.Text = "Membresia de " + NombreSocio(membresiaSeleccionada) + " - " + (membresiaSeleccionada.Estado ? "Habilitada" : "Deshabilitada");
         }
@@ -172,7 +172,12 @@ namespace exxen2._0.capaVisual.Recepcionista
             {
                 if (membresiaSeleccionada == null)
                     throw new InvalidOperationException("Selecciona una membresia.");
-                logica.Modificar(new Membresia { IdMembresia = membresiaSeleccionada.IdMembresia, IdSocio = membresiaSeleccionada.IdSocio, IdPlan = membresiaSeleccionada.IdPlan, IdUsuarioSistema = membresiaSeleccionada.IdUsuarioSistema, FechaInicio = inicio.Value.Date, FechaVencimiento = vencimiento.Value.Date, Estado = membresiaSeleccionada.Estado });
+                AyudaFormularioVisual.ValidarComboSeleccionado(plan, "un plan");
+                AyudaFormularioVisual.ValidarRangoFechas(inicio, vencimiento, "fecha de inicio", "fecha de vencimiento");
+                var idPlan = Convert.ToInt32(plan.SelectedValue);
+                if (idPlan != membresiaSeleccionada.IdPlan)
+                    logica.CambiarPlan(membresiaSeleccionada.IdMembresia, idPlan);
+                logica.Modificar(new Membresia { IdMembresia = membresiaSeleccionada.IdMembresia, IdSocio = membresiaSeleccionada.IdSocio, IdPlan = idPlan, IdUsuarioSistema = membresiaSeleccionada.IdUsuarioSistema, FechaInicio = inicio.Value.Date, FechaVencimiento = vencimiento.Value.Date, Estado = membresiaSeleccionada.Estado });
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Membresia actualizada.");

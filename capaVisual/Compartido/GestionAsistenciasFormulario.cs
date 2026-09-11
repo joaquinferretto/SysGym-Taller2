@@ -28,11 +28,16 @@ namespace exxen2._0.capaVisual.Compartido
             InitializeComponent();
         }
 
-        /* Carga los socios activos disponibles para registrar una asistencia. */
+        /* Carga los socios activos mostrando nombre y DNI para evitar confundir personas. */
         private void CargarSocios()
         {
-            socio.DataSource = socios.ListarActivos();
-            socio.DisplayMember = "Apellido";
+            socio.DataSource = socios.ListarActivos()
+                .Select(s => new OpcionSocio
+                {
+                    IdSocio = s.IdSocio,
+                    Texto = s.Apellido + ", " + s.Nombre + " - DNI " + s.DNI
+                }).ToList();
+            socio.DisplayMember = "Texto";
             socio.ValueMember = "IdSocio";
         }
 
@@ -66,6 +71,7 @@ namespace exxen2._0.capaVisual.Compartido
         {
             try
             {
+                AyudaFormularioVisual.ValidarComboSeleccionado(socio, "un socio");
                 logica.Registrar(new Asistencia { IdSocio = Convert.ToInt32(socio.SelectedValue), Fecha = fecha.Value, Descripcion = "Ingreso registrado" });
                 Cargar();
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Asistencia registrada.");
@@ -155,6 +161,13 @@ namespace exxen2._0.capaVisual.Compartido
             estadoSeleccionado = Convert.ToString(tabla.CurrentRow.Cells[4].Value) == "Activo";
             darDeBaja.Enabled = estadoSeleccionado;
             reactivar.Enabled = !estadoSeleccionado;
+        }
+
+        /* Conserva la clave del socio y separa el texto visible de la identidad persistida. */
+        private sealed class OpcionSocio
+        {
+            public int IdSocio { get; set; }
+            public string Texto { get; set; }
         }
 
         /* Al hacer clic en actualizar, vuelve a consultar y mostrar los registros del módulo. */

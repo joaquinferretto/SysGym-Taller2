@@ -56,6 +56,18 @@ namespace exxen2._0.capaLogica
             return TieneRolActivo(usuario, "Entrenador");
         }
 
+        /* Comprueba que el usuario activo pueda crear y gestionar rutinas. */
+        public static bool PuedeGestionarRutinas(UsuarioSistema usuario)
+        {
+            return EsEntrenadorActivo(usuario) || EsAdministradorActivo(usuario);
+        }
+
+        /* Comprueba que el usuario activo tenga rol de administrador. */
+        public static bool EsAdministradorActivo(UsuarioSistema usuario)
+        {
+            return TieneRolActivo(usuario, "Administrador");
+        }
+
         /* Valida el estado del usuario y del rol, comparando su descripción sin distinguir mayúsculas. */
         private static bool TieneRolActivo(UsuarioSistema usuario, string descripcionRol)
         {

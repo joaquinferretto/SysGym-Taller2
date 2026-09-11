@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -8,10 +7,23 @@ using exxen2._0.capaLogica;
 
 namespace exxen2._0.capaVisual.Administrador
 {
+    /* Transporta el socio elegido desde el estado de cuenta hasta el panel administrador. */
+    public sealed class SocioEstadoCuentaEventArgs : EventArgs
+    {
+        /* Inicializa los datos del socio que se abrirá en la gestión. */
+        public SocioEstadoCuentaEventArgs(int idSocio)
+        {
+            IdSocio = idSocio;
+        }
+
+        public int IdSocio { get; private set; }
+    }
+
     /* Presenta el pronóstico y el estado de cuotas en el UserControl existente. */
     [DesignerCategory("Component")]
     public sealed partial class InicioPanelAdministrador : UserControl
     {
+        public event EventHandler<SocioEstadoCuentaEventArgs> SocioDobleClic;
         private ClimaLogica clima;
         private CuotaMembresiaLogica cuotas;
         private bool cargando;
@@ -54,7 +66,7 @@ namespace exxen2._0.capaVisual.Administrador
                 LimpiarClima();
                 foreach (var dia in pronostico)
                     AgregarDiaClima(dia);
-                estadoClima.Text = "Datos: Open-Meteo";
+                estadoClima.Text = clima.UltimaConsultaUsoCache ? "Respaldo local (sin internet)" : "Datos: Open-Meteo";
             }
             catch (Exception ex)
             {
@@ -80,7 +92,7 @@ namespace exxen2._0.capaVisual.Administrador
         private void MostrarClimaSinConexion()
         {
             LimpiarClima();
-            for (var indice = 0; indice < 7; indice++)
+            for (var indice = 0; indice < ClimaLogica.DiasPronostico; indice++)
                 AgregarDiaClima(new PronosticoDia { Fecha = DateTime.Today.AddDays(indice), Descripcion = "Sin datos", Icono = "-" }, false);
         }
 
@@ -96,17 +108,14 @@ namespace exxen2._0.capaVisual.Administrador
             }
         }
 
-        /* Ubica cada día junto al anterior sin imponer una distribución automática al panel editable. */
+        /* Agrega cada día al flujo horizontal del contenedor definido en el diseñador. */
         private void AgregarDiaClima(PronosticoDia dia, bool tieneDatos = true)
         {
             var tarjeta = CrearDiaClima(dia, tieneDatos);
-            tarjeta.Location = new Point(
-                tarjetaClimaEjemplo.Left + listaClima.Controls.Count * (tarjeta.Width + tarjetaClimaEjemplo.Margin.Horizontal),
-                tarjetaClimaEjemplo.Top);
             listaClima.Controls.Add(tarjeta);
         }
 
-        /* Compone cada día copiando las posiciones y estilos de la tarjeta editable en el diseñador. */
+        /* Compone cada día copiando el tamaño y los estilos de la tarjeta editable en el diseñador. */
         private Control CrearDiaClima(PronosticoDia dia, bool tieneDatos = true)
         {
             var tarjeta = new Panel
@@ -151,7 +160,7 @@ namespace exxen2._0.capaVisual.Administrador
                 foreach (var estado in estados)
                 {
                     var periodo = estado.UltimaCuotaDesde.HasValue && estado.UltimaCuotaHasta.HasValue ? estado.UltimaCuotaDesde.Value.ToString("dd/MM/yyyy") + " - " + estado.UltimaCuotaHasta.Value.ToString("dd/MM/yyyy") : "Sin cuota";
-                    tablaCuotas.Rows.Add(estado.IdMembresia, estado.Socio, estado.DNI, estado.Plan, periodo, estado.EstadoUltimaCuota, estado.SaldoPendiente.ToString("C"), estado.Situacion);
+                    tablaCuotas.Rows.Add(estado.IdMembresia, estado.IdSocio, estado.Socio, estado.DNI, estado.Plan, periodo, estado.EstadoUltimaCuota, estado.SaldoPendiente.ToString("C"), estado.Situacion);
                 }
 
                 var alDia = estados.FindAll(e => e.AlDia).Count;
@@ -166,6 +175,19 @@ namespace exxen2._0.capaVisual.Administrador
         }
 
         /* Al cargar la pantalla en ejecución, prepara sus datos iniciales sin realizar consultas desde el diseñador. */
+        /* Al hacer doble clic en una cuenta, solicita abrir el socio correspondiente en su gestión. */
+        private void tablaCuotas_CellDoubleClick(object origen, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+                return;
+            int idSocio;
+            if (!int.TryParse(Convert.ToString(tablaCuotas.Rows[e.RowIndex].Cells["colIdSocio"].Value), out idSocio) || idSocio <= 0)
+                return;
+            var evento = SocioDobleClic;
+            if (evento != null)
+                evento(this, new SocioEstadoCuentaEventArgs(idSocio));
+        }
+
         private void InicioPanelAdministrador_Load(object origen, EventArgs e)
         {
             if (EnModoDisenio)

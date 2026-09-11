@@ -1,6 +1,10 @@
 # Integración de Entity Framework
 
-Última actualización: 9 de septiembre de 2026.
+## Rutinas personalizadas — 11 de septiembre de 2026
+
+La consulta de “Mis socios” usa LINQ sobre los repositorios de EF6 y realiza `INNER JOIN` entre las entidades relacionadas, proyectando solo los datos que necesita la grilla. El administrador puede solicitar la misma consulta sin filtrar por entrenador. `CrearPersonalizada` usa la unidad de trabajo y una transacción de EF6 para insertar `Rutina` y `RutinaAsignacion` de forma atómica.
+
+Última actualización: 11 de septiembre de 2026.
 
 El proyecto utiliza Entity Framework 6.4.4 sobre .NET Framework 4.8 con SQL Server. `capaDatos/Contexto/ContextoGimnasio.cs` contiene los `DbSet`, el mapeo explícito de tablas y las relaciones. `capaDatos/Repositorios/UnidadDeTrabajoGimnasio.cs` encapsula las operaciones de persistencia para que la capa lógica no cree ni use `ContextoGimnasio` directamente.
 

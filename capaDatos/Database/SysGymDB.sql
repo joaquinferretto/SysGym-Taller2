@@ -1851,8 +1851,16 @@ VALUES
 COMMIT TRANSACTION;
 END TRY
 BEGIN CATCH
+    DECLARE @MensajeError NVARCHAR(4000);
+    DECLARE @SeveridadError INT;
+    DECLARE @EstadoError INT;
+
+    SELECT @MensajeError = ERROR_MESSAGE(),
+           @SeveridadError = ERROR_SEVERITY(),
+           @EstadoError = ERROR_STATE();
+
     IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
-    THROW;
+    RAISERROR(N'%s', @SeveridadError, @EstadoError, @MensajeError);
 END CATCH;
 GO
 

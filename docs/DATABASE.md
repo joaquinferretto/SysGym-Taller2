@@ -1,6 +1,12 @@
 # Base de datos
 
-Última actualización: 9 de septiembre de 2026.
+## Compatibilidad con SQL Server 2008 — 11 de septiembre de 2026
+
+La creación de rutinas personalizadas no requiere una tabla nueva: utiliza `Rutina` y `RutinaAsignacion`. La aplicación crea ambos registros dentro de una transacción de Entity Framework.
+
+Los scripts son compatibles con SQL Server 2008. En los bloques `CATCH` se usa `RAISERROR` en lugar de `THROW`, ya que `THROW` fue incorporado en SQL Server 2012. La transacción se revierte antes de volver a informar el error. El esquema conserva `DATETIME2`, `VARBINARY(MAX)`, índices filtrados y las demás características disponibles en SQL Server 2008.
+
+Última actualización: 11 de septiembre de 2026.
 
 El motor es SQL Server y el esquema fuente está en `capaDatos/Database/SysGymDB.sql`. Ese único script crea `SysGymDB`, tablas, claves, índices, restricciones, usuarios iniciales, métodos de pago y el catálogo inicial de ejercicios y rutinas.
 

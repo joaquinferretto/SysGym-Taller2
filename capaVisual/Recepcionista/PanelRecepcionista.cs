@@ -12,6 +12,10 @@ namespace exxen2._0.capaVisual.Recepcionista
     {
         private readonly UsuarioSistema usuario;
         private readonly ControladorNavegacion navegacion;
+        private bool clientesExpandida = true;
+        private bool cajaExpandida;
+        private bool entrenadoresExpandida;
+        private bool controlExpandida;
         [System.ComponentModel.Browsable(false)]
         [System.ComponentModel.DesignerSerializationVisibility(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public bool CambioCuentaSolicitado
@@ -36,6 +40,55 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.usuario = usuario;
             InitializeComponent();
             navegacion = new ControladorNavegacion(this, panelContenido);
+        }
+
+        /* Configura las secciones del menú lateral para que puedan expandirse y contraerse. */
+        private void ConfigurarMenuDesplegable()
+        {
+            lblClientes.Click += clientes_Click;
+            lblCaja.Click += caja_Click;
+            lblEntrenadores.Click += entrenadores_Click;
+            lblControl.Click += control_Click;
+            AplicarMenuDesplegable();
+        }
+
+        /* Actualiza la visibilidad y posición de todas las secciones del menú recepcionista. */
+        private void AplicarMenuDesplegable()
+        {
+            var posicionY = 18;
+            posicionY = MenuDesplegableHelper.ColocarSeccion(lblClientes, clientesExpandida, posicionY, btnSocios, btnMembresias);
+            posicionY = MenuDesplegableHelper.ColocarSeccion(lblCaja, cajaExpandida, posicionY, btnPagos);
+            posicionY = MenuDesplegableHelper.ColocarSeccion(lblEntrenadores, entrenadoresExpandida, posicionY, btnAsignar, btnConsultar);
+            posicionY = MenuDesplegableHelper.ColocarSeccion(lblControl, controlExpandida, posicionY, btnAsistencias);
+            panelOpciones.AutoScrollMinSize = new Size(0, posicionY);
+        }
+
+        /* Al hacer clic en clientes, muestra u oculta sus opciones. */
+        private void clientes_Click(object origen, EventArgs e)
+        {
+            clientesExpandida = !clientesExpandida;
+            AplicarMenuDesplegable();
+        }
+
+        /* Al hacer clic en caja, muestra u oculta sus opciones. */
+        private void caja_Click(object origen, EventArgs e)
+        {
+            cajaExpandida = !cajaExpandida;
+            AplicarMenuDesplegable();
+        }
+
+        /* Al hacer clic en entrenadores, muestra u oculta sus opciones. */
+        private void entrenadores_Click(object origen, EventArgs e)
+        {
+            entrenadoresExpandida = !entrenadoresExpandida;
+            AplicarMenuDesplegable();
+        }
+
+        /* Al hacer clic en control de acceso, muestra u oculta sus opciones. */
+        private void control_Click(object origen, EventArgs e)
+        {
+            controlExpandida = !controlExpandida;
+            AplicarMenuDesplegable();
         }
 
         /* Obtiene la descripción del rol o utiliza el nombre predeterminado cuando no está disponible. */
@@ -97,6 +150,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         {
             if (AyudaFormularioVisual.EnModoDisenio(this))
                 return;
+            ConfigurarMenuDesplegable();
             lblUsuarioRol.Text = "Usuario: " + usuario.Nombre + " " + usuario.Apellido + "    |    Rol: " + NombreRol(usuario, "Recepcionista");
             navegacion.EstablecerContenidoInicio(lblBienvenida, null);
         }

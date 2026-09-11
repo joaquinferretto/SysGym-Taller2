@@ -15,7 +15,7 @@ namespace exxen2._0.capaVisual.Administrador
         private Panel cabeceraClima;
         private Label tituloClima;
         private Label estadoClima;
-        private Panel listaClima;
+        private FlowLayoutPanel listaClima;
         private Panel tarjetaSuscripcion;
         private Label lblSuscripcion;
         private Panel tarjetaCuotas;
@@ -31,6 +31,7 @@ namespace exxen2._0.capaVisual.Administrador
         private Label lblTemperaturaEjemplo;
         private Label lblLluviaEjemplo;
         private DataGridViewTextBoxColumn colIdMembresia;
+        private DataGridViewTextBoxColumn colIdSocio;
         private DataGridViewTextBoxColumn colSocio;
         private DataGridViewTextBoxColumn colDni;
         private DataGridViewTextBoxColumn colPlan;
@@ -53,7 +54,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.lblResumen = new System.Windows.Forms.Label();
             this.lblFecha = new System.Windows.Forms.Label();
             this.tarjetaClima = new System.Windows.Forms.Panel();
-            this.listaClima = new System.Windows.Forms.Panel();
+            this.listaClima = new System.Windows.Forms.FlowLayoutPanel();
             this.tarjetaClimaEjemplo = new System.Windows.Forms.Panel();
             this.lblLluviaEjemplo = new System.Windows.Forms.Label();
             this.lblTemperaturaEjemplo = new System.Windows.Forms.Label();
@@ -68,6 +69,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.tarjetaCuotas = new System.Windows.Forms.Panel();
             this.tablaCuotas = new System.Windows.Forms.DataGridView();
             this.colIdMembresia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colIdSocio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSocio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDni = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPlan = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -95,10 +97,10 @@ namespace exxen2._0.capaVisual.Administrador
             //
             this.principal.BackColor = System.Drawing.Color.Transparent;
 
-            this.principal.Controls.Add(this.panelCabecera);
-            this.principal.Controls.Add(this.tarjetaClima);
-            this.principal.Controls.Add(this.tarjetaSuscripcion);
             this.principal.Controls.Add(this.tarjetaCuotas);
+            this.principal.Controls.Add(this.tarjetaSuscripcion);
+            this.principal.Controls.Add(this.tarjetaClima);
+            this.principal.Controls.Add(this.panelCabecera);
 
             this.principal.Name = "principal";
             this.principal.Padding = new System.Windows.Forms.Padding(20);
@@ -108,8 +110,8 @@ namespace exxen2._0.capaVisual.Administrador
             // panelCabecera
             //
             this.panelCabecera.BackColor = System.Drawing.Color.Transparent;
-            this.panelCabecera.Controls.Add(this.lblResumen);
             this.panelCabecera.Controls.Add(this.lblFecha);
+            this.panelCabecera.Controls.Add(this.lblResumen);
 
             this.panelCabecera.Name = "panelCabecera";
 
@@ -305,6 +307,7 @@ namespace exxen2._0.capaVisual.Administrador
 
             this.tablaCuotas.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colIdMembresia,
+            this.colIdSocio,
             this.colSocio,
             this.colDni,
             this.colPlan,
@@ -324,6 +327,13 @@ namespace exxen2._0.capaVisual.Administrador
             this.colIdMembresia.HeaderText = "N.";
             this.colIdMembresia.Name = "colIdMembresia";
             this.colIdMembresia.ReadOnly = true;
+            //
+            // colIdSocio
+            //
+            this.colIdSocio.HeaderText = "Id socio";
+            this.colIdSocio.Name = "colIdSocio";
+            this.colIdSocio.ReadOnly = true;
+            this.colIdSocio.Visible = false;
             //
             // colSocio
             //
@@ -408,7 +418,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.Name = "InicioPanelAdministrador";
             this.MinimumSize = new System.Drawing.Size(640, 460);
-            this.Size = new System.Drawing.Size(1100, 640);
+            this.Size = new System.Drawing.Size(936, 670);
 
             // Columna unica: titulo, pronostico, aviso de cuotas y grilla que ocupa el resto del alto.
 
@@ -471,87 +481,55 @@ namespace exxen2._0.capaVisual.Administrador
             this.AutoScroll = false;
             this.principal.AutoSize = false;
             this.principal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.principal.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.principal.Location = new System.Drawing.Point(0, 0);
-            this.principal.Size = new System.Drawing.Size(1100, 640);
-            this.principal.AutoScroll = false;
+            this.principal.Padding = new System.Windows.Forms.Padding(20);
             this.panelCabecera.AutoSize = false;
-            this.panelCabecera.Dock = System.Windows.Forms.DockStyle.None;
-            this.panelCabecera.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.panelCabecera.Location = new System.Drawing.Point(20, 20);
-            this.panelCabecera.Size = new System.Drawing.Size(1060, 60);
-            this.panelCabecera.AutoScroll = false;
+            this.panelCabecera.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelCabecera.Height = 60;
+            this.panelCabecera.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
             this.lblResumen.AutoSize = false;
-            this.lblResumen.Dock = System.Windows.Forms.DockStyle.None;
-            this.lblResumen.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.lblResumen.Location = new System.Drawing.Point(0, 0);
-            this.lblResumen.Size = new System.Drawing.Size(1060, 37);
+            this.lblResumen.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblResumen.Height = 37;
             this.lblFecha.AutoSize = false;
-            this.lblFecha.Dock = System.Windows.Forms.DockStyle.None;
-            this.lblFecha.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.lblFecha.Location = new System.Drawing.Point(0, 37);
-            this.lblFecha.Size = new System.Drawing.Size(1060, 23);
+            this.lblFecha.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tarjetaClima.AutoSize = false;
-            this.tarjetaClima.Dock = System.Windows.Forms.DockStyle.None;
-            this.tarjetaClima.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.tarjetaClima.Location = new System.Drawing.Point(20, 88);
-            this.tarjetaClima.Size = new System.Drawing.Size(1060, 174);
-            this.tarjetaClima.AutoScroll = false;
+            this.tarjetaClima.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tarjetaClima.Height = 174;
+            this.tarjetaClima.Margin = new System.Windows.Forms.Padding(0, 0, 0, 12);
             this.cabeceraClima.AutoSize = false;
-            this.cabeceraClima.Dock = System.Windows.Forms.DockStyle.None;
-            this.cabeceraClima.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.cabeceraClima.Location = new System.Drawing.Point(0, 0);
-            this.cabeceraClima.Size = new System.Drawing.Size(1058, 44);
-            this.cabeceraClima.AutoScroll = false;
+            this.cabeceraClima.Dock = System.Windows.Forms.DockStyle.Top;
+            this.cabeceraClima.Height = 44;
+            this.cabeceraClima.Padding = new System.Windows.Forms.Padding(16, 0, 16, 0);
             this.tituloClima.AutoSize = false;
-            this.tituloClima.Dock = System.Windows.Forms.DockStyle.None;
-            this.tituloClima.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.tituloClima.Location = new System.Drawing.Point(16, 0);
-            this.tituloClima.Size = new System.Drawing.Size(480, 44);
+            this.tituloClima.Dock = System.Windows.Forms.DockStyle.Fill;
             this.estadoClima.AutoSize = false;
-            this.estadoClima.Dock = System.Windows.Forms.DockStyle.None;
-            this.estadoClima.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            this.estadoClima.Location = new System.Drawing.Point(624, 11);
-            this.estadoClima.Size = new System.Drawing.Size(420, 22);
+            this.estadoClima.Dock = System.Windows.Forms.DockStyle.Right;
+            this.estadoClima.Width = 240;
             this.listaClima.AutoSize = false;
-            this.listaClima.Dock = System.Windows.Forms.DockStyle.None;
-            this.listaClima.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.listaClima.Location = new System.Drawing.Point(0, 44);
-            this.listaClima.Size = new System.Drawing.Size(1058, 128);
+            this.listaClima.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listaClima.AutoScroll = true;
+            this.listaClima.FlowDirection = System.Windows.Forms.FlowDirection.LeftToRight;
+            this.listaClima.WrapContents = false;
+            this.listaClima.Padding = new System.Windows.Forms.Padding(10, 4, 10, 8);
+            this.tarjetaClimaEjemplo.Margin = new System.Windows.Forms.Padding(6, 2, 6, 2);
             this.tarjetaSuscripcion.AutoSize = false;
-            this.tarjetaSuscripcion.Dock = System.Windows.Forms.DockStyle.None;
-            this.tarjetaSuscripcion.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.tarjetaSuscripcion.Location = new System.Drawing.Point(20, 274);
-            this.tarjetaSuscripcion.Size = new System.Drawing.Size(1060, 92);
-            this.tarjetaSuscripcion.AutoScroll = false;
+            this.tarjetaSuscripcion.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tarjetaSuscripcion.Height = 92;
+            this.tarjetaSuscripcion.Margin = new System.Windows.Forms.Padding(0, 0, 0, 12);
             this.lblSuscripcion.AutoSize = false;
-            this.lblSuscripcion.Dock = System.Windows.Forms.DockStyle.None;
-            this.lblSuscripcion.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.lblSuscripcion.Location = new System.Drawing.Point(0, 0);
-            this.lblSuscripcion.Size = new System.Drawing.Size(1058, 90);
+            this.lblSuscripcion.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tarjetaCuotas.AutoSize = false;
-            this.tarjetaCuotas.Dock = System.Windows.Forms.DockStyle.None;
-            this.tarjetaCuotas.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.tarjetaCuotas.Location = new System.Drawing.Point(20, 378);
-            this.tarjetaCuotas.Size = new System.Drawing.Size(1060, 242);
-            this.tarjetaCuotas.AutoScroll = false;
+            this.tarjetaCuotas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cabeceraCuotas.AutoSize = false;
-            this.cabeceraCuotas.Dock = System.Windows.Forms.DockStyle.None;
-            this.cabeceraCuotas.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.cabeceraCuotas.Location = new System.Drawing.Point(0, 0);
-            this.cabeceraCuotas.Size = new System.Drawing.Size(1058, 44);
-            this.cabeceraCuotas.AutoScroll = false;
+            this.cabeceraCuotas.Dock = System.Windows.Forms.DockStyle.Top;
+            this.cabeceraCuotas.Height = 44;
+            this.cabeceraCuotas.Padding = new System.Windows.Forms.Padding(16, 0, 16, 0);
+            this.lblTituloCuotas.AutoSize = false;
+            this.lblTituloCuotas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.resumenCuotas.AutoSize = false;
-            this.resumenCuotas.Dock = System.Windows.Forms.DockStyle.None;
-            this.resumenCuotas.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            this.resumenCuotas.Location = new System.Drawing.Point(494, 11);
-            this.resumenCuotas.Size = new System.Drawing.Size(550, 22);
+            this.resumenCuotas.Dock = System.Windows.Forms.DockStyle.Right;
+            this.resumenCuotas.Width = 520;
             this.tablaCuotas.AutoSize = false;
-            this.tablaCuotas.Dock = System.Windows.Forms.DockStyle.None;
-            this.tablaCuotas.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.tablaCuotas.Location = new System.Drawing.Point(0, 44);
-            this.tablaCuotas.Size = new System.Drawing.Size(1058, 196);
+            this.tablaCuotas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tablaCuotas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.tablaCuotas.ReadOnly = true;
             this.tablaCuotas.AllowUserToAddRows = false;
@@ -561,11 +539,28 @@ namespace exxen2._0.capaVisual.Administrador
             this.tablaCuotas.MultiSelect = false;
             this.tablaCuotas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.tablaCuotas.ColumnHeadersHeight = 46;
-            this.lblTituloCuotas.AutoSize = false;
-            this.lblTituloCuotas.Dock = System.Windows.Forms.DockStyle.None;
-            this.lblTituloCuotas.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.lblTituloCuotas.Location = new System.Drawing.Point(16, 0);
-            this.lblTituloCuotas.Size = new System.Drawing.Size(360, 44);
+            this.colSocio.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colSocio.FillWeight = 125F;
+            this.colSocio.MinimumWidth = 80;
+            this.colDni.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colDni.FillWeight = 80F;
+            this.colDni.MinimumWidth = 60;
+            this.colPlan.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colPlan.FillWeight = 110F;
+            this.colPlan.MinimumWidth = 70;
+            this.colPeriodo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colPeriodo.FillWeight = 150F;
+            this.colPeriodo.MinimumWidth = 100;
+            this.colEstadoCuota.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colEstadoCuota.FillWeight = 120F;
+            this.colEstadoCuota.MinimumWidth = 90;
+            this.colSaldo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colSaldo.FillWeight = 110F;
+            this.colSaldo.MinimumWidth = 80;
+            this.colSituacion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colSituacion.FillWeight = 120F;
+            this.colSituacion.MinimumWidth = 90;
+            this.tablaCuotas.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tablaCuotas_CellDoubleClick);
             this.principal.ResumeLayout(false);
             this.panelCabecera.ResumeLayout(false);
             this.panelCabecera.PerformLayout();

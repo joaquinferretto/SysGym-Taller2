@@ -12,6 +12,9 @@ namespace exxen2._0.capaVisual.Entrenador
     {
         private readonly UsuarioSistema usuario;
         private readonly ControladorNavegacion navegacion;
+        private bool trabajoExpandida = true;
+        private bool catalogoExpandida;
+        private bool controlExpandida;
         [System.ComponentModel.Browsable(false)]
         [System.ComponentModel.DesignerSerializationVisibility(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public bool CambioCuentaSolicitado
@@ -36,6 +39,46 @@ namespace exxen2._0.capaVisual.Entrenador
             this.usuario = usuario;
             InitializeComponent();
             navegacion = new ControladorNavegacion(this, panelContenido);
+        }
+
+        /* Configura las secciones del menú lateral para que puedan expandirse y contraerse. */
+        private void ConfigurarMenuDesplegable()
+        {
+            lblTrabajo.Click += trabajo_Click;
+            lblCatalogo.Click += catalogo_Click;
+            lblControl.Click += control_Click;
+            AplicarMenuDesplegable();
+        }
+
+        /* Actualiza la visibilidad y posición de todas las secciones del menú entrenador. */
+        private void AplicarMenuDesplegable()
+        {
+            var posicionY = 18;
+            posicionY = MenuDesplegableHelper.ColocarSeccion(lblTrabajo, trabajoExpandida, posicionY, btnSocios, btnRutinas);
+            posicionY = MenuDesplegableHelper.ColocarSeccion(lblCatalogo, catalogoExpandida, posicionY, btnEjercicios);
+            posicionY = MenuDesplegableHelper.ColocarSeccion(lblControl, controlExpandida, posicionY, btnAsistencias);
+            panelOpciones.AutoScrollMinSize = new Size(0, posicionY);
+        }
+
+        /* Al hacer clic en mi trabajo, muestra u oculta sus opciones. */
+        private void trabajo_Click(object origen, EventArgs e)
+        {
+            trabajoExpandida = !trabajoExpandida;
+            AplicarMenuDesplegable();
+        }
+
+        /* Al hacer clic en catálogo, muestra u oculta sus opciones. */
+        private void catalogo_Click(object origen, EventArgs e)
+        {
+            catalogoExpandida = !catalogoExpandida;
+            AplicarMenuDesplegable();
+        }
+
+        /* Al hacer clic en control de acceso, muestra u oculta sus opciones. */
+        private void control_Click(object origen, EventArgs e)
+        {
+            controlExpandida = !controlExpandida;
+            AplicarMenuDesplegable();
         }
 
         /* Obtiene la descripción del rol o utiliza el nombre predeterminado cuando no está disponible. */
@@ -85,6 +128,7 @@ namespace exxen2._0.capaVisual.Entrenador
         {
             if (AyudaFormularioVisual.EnModoDisenio(this))
                 return;
+            ConfigurarMenuDesplegable();
             lblUsuarioRol.Text = "Usuario: " + usuario.Nombre + " " + usuario.Apellido + "    |    Rol: " + NombreRol(usuario, "Entrenador");
             navegacion.EstablecerContenidoInicio(lblBienvenida, null);
         }
