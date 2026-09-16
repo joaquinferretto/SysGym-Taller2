@@ -50,7 +50,6 @@ namespace exxen2._0.capaLogica
                 existente.FechaNacimiento = socio.FechaNacimiento;
                 existente.Peso = socio.Peso;
                 existente.Altura = socio.Altura;
-                existente.Estado = socio.Estado;
                 existente.Foto = socio.Foto;
                 existente.Sexo = socio.Sexo;
                 datos.GuardarCambios();
@@ -110,36 +109,8 @@ namespace exxen2._0.capaLogica
         }
 
         /* Desactiva el registro de socios sin eliminar su historial. */
-        public void DarDeBaja(int idSocio)
-        {
-            using (var datos = new UnidadDeTrabajoGimnasio())
-            {
-                var socio = datos.Socios.Buscar(idSocio);
-                if (socio == null)
-                {
-                    throw new InvalidOperationException("El socio no existe.");
-                }
-
-                socio.Estado = false;
-                datos.GuardarCambios();
-            }
-        }
 
         /* Recupera el estado activo del registro de socios según las validaciones de la operación. */
-        public void Reactivar(int idSocio)
-        {
-            using (var datos = new UnidadDeTrabajoGimnasio())
-            {
-                var socio = datos.Socios.Buscar(idSocio);
-                if (socio == null)
-                {
-                    throw new InvalidOperationException("El socio no existe.");
-                }
-
-                socio.Estado = true;
-                datos.GuardarCambios();
-            }
-        }
 
         /* Calcula el índice a partir del peso y la altura registrados, validando los datos requeridos. */
         public decimal CalcularIMC(Socio socio)

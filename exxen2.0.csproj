@@ -82,7 +82,6 @@
     <Compile Include="capaDatos\Conexion.cs" />
     <Compile Include="capaDatos\Contexto\ContextoGimnasio.cs" />
     <Compile Include="capaDatos\Repositorios\UnidadDeTrabajoGimnasio.cs" />
-    <Compile Include="capaDatos\Entidades\Asistencia.cs" />
     <Compile Include="capaDatos\Entidades\Ejercicio.cs" />
     <Compile Include="capaDatos\Entidades\CuotaMembresia.cs" />
     <Compile Include="capaDatos\Entidades\EstadosCuota.cs" />
@@ -97,13 +96,11 @@
     <Compile Include="capaDatos\Entidades\Divisa.cs" />
     <Compile Include="capaDatos\Entidades\Rol.cs" />
     <Compile Include="capaDatos\Entidades\Rutina.cs" />
-    <Compile Include="capaDatos\Entidades\RutinaAsignacion.cs" />
     <Compile Include="capaDatos\Entidades\RutinaEjercicio.cs" />
     <Compile Include="capaDatos\Entidades\Socio.cs" />
     <Compile Include="capaDatos\Entidades\UsuarioSistema.cs" />
     <Compile Include="capaLogica\ClienteLogica.cs" />
     <Compile Include="capaLogica\ClimaLogica.cs" />
-    <Compile Include="capaLogica\AsistenciaLogica.cs" />
     <Compile Include="capaLogica\CuotaMembresiaLogica.cs" />
     <Compile Include="capaLogica\EjercicioLogica.cs" />
     <Compile Include="capaLogica\MembresiaEntrenadorLogica.cs" />
@@ -113,7 +110,6 @@
     <Compile Include="capaLogica\RolLogica.cs" />
     <Compile Include="capaLogica\RutinaEjercicioLogica.cs" />
     <Compile Include="capaLogica\RutinaLogica.cs" />
-    <Compile Include="capaLogica\RutinaAsignacionLogica.cs" />
     <Compile Include="capaLogica\SocioLogica.cs" />
     <Compile Include="capaLogica\UsuarioSistemaLogica.cs" />
     <Compile Include="capaLogica\ValidacionesGimnasio.cs" />
@@ -143,12 +139,6 @@
     </Compile>
     <Compile Include="capaVisual\Compartido\GestionEjerciciosFormulario.Designer.cs">
       <DependentUpon>GestionEjerciciosFormulario.cs</DependentUpon>
-    </Compile>
-    <Compile Include="capaVisual\Compartido\GestionAsistenciasFormulario.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="capaVisual\Compartido\GestionAsistenciasFormulario.Designer.cs">
-      <DependentUpon>GestionAsistenciasFormulario.cs</DependentUpon>
     </Compile>
     <Compile Include="capaVisual\Administrador\PanelAdministrador.cs">
       <SubType>Form</SubType>

@@ -254,20 +254,6 @@ CREATE TABLE CuotaMembresia (
 );
 GO
 
-/* Asistencias */
-
-CREATE TABLE Asistencia (
-    IdAsistencia INT IDENTITY(1,1) PRIMARY KEY,
-    Fecha DATETIME2 NOT NULL,
-    Descripcion NVARCHAR(500) NULL,
-    Estado BIT NOT NULL DEFAULT 1,
-    IdSocio INT NOT NULL,
-
-    CONSTRAINT FK_Asistencia_Socio
-        FOREIGN KEY (IdSocio) REFERENCES Socio(IdSocio)
-);
-GO
-
 /* Asociación entre rutinas y ejercicios */
 
 CREATE TABLE RutinaEjercicio (
@@ -334,9 +320,6 @@ GO
 
 CREATE INDEX IX_Membresia_IdSocio
     ON Membresia(IdSocio);
-
-CREATE INDEX IX_Asistencia_IdSocio
-    ON Asistencia(IdSocio);
 
 CREATE INDEX IX_RutinaAsignacion_IdMembresia
     ON RutinaAsignacion(IdMembresia);
@@ -1823,30 +1806,6 @@ VALUES
     ('20260901', NULL, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Isquiotibiales'), (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'43189256') AND FechaInicio = '20260901')),
     ('20260901', NULL, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Gluteos en banco'), (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'48231694') AND FechaInicio = '20260901')),
     ('20260901', NULL, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Piernas unilaterales'), (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'49607215') AND FechaInicio = '20260901'));
-
-/* Inserciones de Asistencia: 20 asistencias de socios con cuota pagada; diez por cada dia */
-INSERT INTO Asistencia (Fecha, Descripcion, Estado, IdSocio)
-VALUES
-    ('20260908 09:00:00', N'Entrenamiento de fuerza', 1, (SELECT IdSocio FROM Socio WHERE DNI = N'39827416')),
-    ('20260908 09:00:00', N'Sesion de movilidad', 1, (SELECT IdSocio FROM Socio WHERE DNI = N'45160382')),
-    ('20260908 09:00:00', N'Entrenamiento de piernas', 1, (SELECT IdSocio FROM Socio WHERE DNI = N'32791854')),
-    ('20260908 09:00:00', N'Trabajo de tren superior', 1, (SELECT IdSocio FROM Socio WHERE DNI = N'47306219')),
-    ('20260908 09:00:00', N'Sesion de acondicionamiento', 1, (SELECT IdSocio FROM Socio WHERE DNI = N'36548207')),
-    ('20260908 09:00:00', N'Entrenamiento de fuerza', 1, (SELECT IdSocio FROM Socio WHERE DNI = N'41893562')),
-    ('20260908 09:00:00', N'Sesion de movilidad', 1, (SELECT IdSocio FROM Socio WHERE DNI = N'30674198')),
-    ('20260908 09:00:00', N'Entrenamiento de piernas', 1, (SELECT IdSocio FROM Socio WHERE DNI = N'44250731')),
-    ('20260908 09:00:00', N'Trabajo de tren superior', 1, (SELECT IdSocio FROM Socio WHERE DNI = N'38912645')),
-    ('20260908 09:00:00', N'Sesion de acondicionamiento', 1, (SELECT IdSocio FROM Socio WHERE DNI = N'46783520')),
-    ('20260909 09:00:00', N'Entrenamiento de fuerza', 1, (SELECT IdSocio FROM Socio WHERE DNI = N'39827416')),
-    ('20260909 09:00:00', N'Sesion de movilidad', 1, (SELECT IdSocio FROM Socio WHERE DNI = N'45160382')),
-    ('20260909 09:00:00', N'Entrenamiento de piernas', 1, (SELECT IdSocio FROM Socio WHERE DNI = N'32791854')),
-    ('20260909 09:00:00', N'Trabajo de tren superior', 1, (SELECT IdSocio FROM Socio WHERE DNI = N'47306219')),
-    ('20260909 09:00:00', N'Sesion de acondicionamiento', 1, (SELECT IdSocio FROM Socio WHERE DNI = N'36548207')),
-    ('20260909 09:00:00', N'Entrenamiento de fuerza', 1, (SELECT IdSocio FROM Socio WHERE DNI = N'41893562')),
-    ('20260909 09:00:00', N'Sesion de movilidad', 1, (SELECT IdSocio FROM Socio WHERE DNI = N'30674198')),
-    ('20260909 09:00:00', N'Entrenamiento de piernas', 1, (SELECT IdSocio FROM Socio WHERE DNI = N'44250731')),
-    ('20260909 09:00:00', N'Trabajo de tren superior', 1, (SELECT IdSocio FROM Socio WHERE DNI = N'38912645')),
-    ('20260909 09:00:00', N'Sesion de acondicionamiento', 1, (SELECT IdSocio FROM Socio WHERE DNI = N'46783520'));
 
 COMMIT TRANSACTION;
 END TRY

@@ -1,8 +1,22 @@
 # Arquitectura
 
-## Identidad en asignaciones y asistencias - 11 de septiembre de 2026
+## Rediseño master/detail de tres módulos — 11 de septiembre de 2026
 
-Las pantallas activas usan `IdMembresia`, `IdUsuarioSistema` e `IdSocio` como claves de las operaciones. Los combos de asignacion y asistencia muestran nombre completo y DNI, pero conservan esas claves en `ValueMember`; no se identifican personas por apellido. La pantalla de asignaciones obtiene las membresias desde `MembresiaLogica` y no exige escribir un entero manualmente.
+Se reorganizaron únicamente `GestionEjerciciosFormulario`, `GestionAsignacionesFormulario` y `MisSociosFormulario` con controles nativos de Windows Forms. Las tres pantallas usan `SplitContainer`: listado filtrable a la izquierda y ficha contextual a la derecha. Los formularios mantienen header, navegación y capas existentes; la carga y las operaciones continúan pasando por `capaLogica`.
+
+## Corrección de layout master/detail — 11 de septiembre de 2026
+
+Se corrigió la regresión visual sin modificar funcionalidad: los paneles `panelListado` y `panelDetalle`, que son los hijos directos de cada `SplitContainer`, ahora usan `Dock=Fill`. También se establecieron mínimos de panel y distancias de splitter coherentes con las proporciones objetivo: Ejercicios 56/44, Asignaciones 55/45 y Socios/Rutinas 33/67. Los `DataGridView` principales y las fichas mantienen `Dock=Fill`, `AutoSize=false` en los `TableLayoutPanel` y columnas `Fill`; el contenido vacío no altera sus límites.
+
+El catálogo de ejercicios conserva exclusivamente Nombre, Descripción y Estado. Asignaciones muestra socio, DNI, plan, vencimiento, entrenador actual y estado, usando un resumen agregado por `MembresiaEntrenadorLogica`. Socios y rutinas muestra el contexto disponible de la membresía y la semana vigente dentro de la misma pantalla mediante `RutinaEjercicioLogica.ListarSemanaPorSocio`. No se agregaron tablas, columnas SQL, campos de dominio ni reglas de negocio.
+
+Las grillas son de solo lectura, selección única y fila completa. La selección reemplaza la consulta redundante y habilita solo acciones válidas: alta/actualización/baja/reactivación de ejercicios, asignar/cambiar/finalizar entrenador y crear/editar/desactivar rutina. Los `TableLayoutPanel`, `GroupBox`, `Panel`, `FlowLayoutPanel` y `DataGridView` principales están declarados en los `Designer.cs`; `Load` solo consulta datos y atiende eventos, mientras el layout queda declarado en Designer.
+
+Debug y Release deben verificarse después de esta reorganización. La apertura manual con «Ver diseñador» en Visual Studio y el recorrido contra una base disponible continúan siendo verificaciones pendientes.
+
+## Identidad en asignaciones - 11 de septiembre de 2026
+
+Las pantallas activas usan `IdMembresia`, `IdUsuarioSistema` e `IdSocio` como claves de las operaciones. Los combos de asignacion muestran nombre completo y DNI, pero conservan esas claves en `ValueMember`; no se identifican personas por apellido. La pantalla de asignaciones obtiene las membresias desde `MembresiaLogica` y no exige escribir un entero manualmente.
 
 El cambio de plan desde la gestion de membresias utiliza `MembresiaLogica.CambiarPlan`. La regla de negocio sigue siendo la misma: solo un plan activo con `IncluyeEntrenador` permite asignar o cambiar entrenador. La carga inicial de combos continua en `Load`, nunca en `InitializeComponent` ni en el diseñador.
 
@@ -10,7 +24,7 @@ El cambio de plan desde la gestion de membresias utiliza `MembresiaLogica.Cambia
 
 Se corrigio la regresion visual de los paneles de Administrador, Recepcionista y Entrenador. El layout base queda en 1200x760, con encabezado superior de 90 px, menu lateral fijo de 264 px y contenido con `Dock=Fill`, sin `WindowState=Maximized` en el disenador. El estado inicial de las secciones colapsables tambien queda representado en Designer; solo `Load` configura datos y conecta el comportamiento.
 
-`InicioPanelAdministrador` conserva la tarjeta meteorologica de ejemplo sin consultar servicios en tiempo de diseno. Sus bloques estaticos usan `Dock`; el listado meteorologico utiliza `FlowLayoutPanel` con flujo horizontal y desplazamiento contenido, y las tarjetas dinamicas ya no calculan coordenadas. La grilla de cuotas llena su contenedor y sus columnas visibles usan `FillWeight` y `MinimumWidth`.
+`InicioPanelAdministrador` muestra el pronostico y el estado de cuenta sin bloques de muestra. Sus bloques estaticos usan `Dock`; el listado meteorologico utiliza `FlowLayoutPanel` con flujo horizontal y desplazamiento contenido, y las tarjetas dinamicas no dependen de una tarjeta ficticia. La grilla de cuotas llena su contenedor y sus columnas visibles usan `FillWeight` y `MinimumWidth`.
 
 Las compilaciones Debug y Release fueron exitosas sin errores ni warnings reportados. La apertura manual en Visual Studio 2022 y la prueba funcional contra una base disponible quedan pendientes de verificacion.
 
@@ -18,7 +32,7 @@ Las compilaciones Debug y Release fueron exitosas sin errores ni warnings report
 
 El entrenador puede iniciar una rutina exclusiva desde “Mis socios”. El administrador también puede acceder a “Gestionar rutinas” y “Socios y rutinas” para crear, editar, asignar y consultar rutinas globalmente. La capa visual solicita a `RutinaLogica.CrearPersonalizada` la creación de la plantilla y su `RutinaAsignacion`; la operación se confirma en una única transacción y no se accede a `DbContext` desde la interfaz.
 
-Última actualización: 11 de septiembre de 2026.
+Última actualización: 16 de septiembre de 2026.
 
 ## Navegación desde el estado de cuenta — 11 de septiembre de 2026
 
@@ -66,7 +80,7 @@ Se aplica el encargo `FIX_LAYOUT_CODEX.md`: los contenedores de distribución pa
 - No se usa AutoScroll en ventanas. Solo lo tienen panelOpciones, panelDetalle y listaClima. Se adopta esta lista del criterio de aceptación ante la indicación contradictoria de habilitarlo también en principal.
 - Grillas con `AutoSizeColumnsMode = Fill`, proporciones con `FillWeight` y límites con `MinimumWidth`. No asignar `Column.Width` en este modo. Son de solo lectura, selección de fila completa y columnas declaradas en Designer.
 - Se mantienen colores, fuentes y textos existentes. Cambian contenedores, posiciones y anclajes por autorización expresa; no se afirma identidad píxel a píxel. No se crean formularios ni clases visuales propias.
-- La tarjeta de ejemplo meteorológica conserva sus coordenadas y sirve de plantilla en ejecución. La navegación continúa acoplando el módulo abierto con Fill, sin modificar ControladorNavegacion.
+- El dashboard conserva el pronostico y el estado de cuenta como contenido principal. La navegación continúa acoplando el módulo abierto con Fill, sin modificar ControladorNavegacion.
 
 Los 18 componentes visuales se inicializaron y redimensionaron en memoria; se comprobó que mover btnVolver en Planes no mueve los títulos. Esto no sustituye la inspección final en el diseñador real de Visual Studio, que sigue pendiente.
 
@@ -74,7 +88,7 @@ Los 18 componentes visuales se inicializaron y redimensionaron en memoria; se co
 
 Se revisaron los 17 formularios y el `UserControl` de `capaVisual` que forman parte del proyecto. La verificación estructural creó cada componente con su constructor predeterminado, ejecutó `PerformLayout` en su tamaño mínimo y revisó controles fuera de los límites, superposiciones, `Dock`, `Anchor`, `AutoScroll`, `AutoScaleMode`, `InitializeComponent`, `Dispose` y balances de `SuspendLayout`/`ResumeLayout` e `ISupportInitialize`. No quedaron errores estructurales en esa pasada.
 
-Se ajustaron encabezados y títulos de listado para respetar el ancho disponible, alturas de contenedores de detalle para evitar recortes de acciones, los formularios inferiores de asistencias/ejercicios/asignaciones a una distribución vertical, y el editor de rutinas para que sus campos y acciones respondan al ancho mínimo. El menú lateral mantiene sus controles en Designer y solo cambia su visibilidad durante `Load`, fuera del modo de diseño.
+Se ajustaron encabezados y títulos de listado para respetar el ancho disponible, alturas de contenedores de detalle para evitar recortes de acciones, los formularios inferiores de ejercicios/asignaciones a una distribución vertical, y el editor de rutinas para que sus campos y acciones respondan al ancho mínimo. El menú lateral mantiene sus controles en Designer y solo cambia su visibilidad durante `Load`, fuera del modo de diseño.
 
 La solución utiliza `Panel` estándar con `Dock` y `Anchor`; el listado meteorológico del dashboard administrador utiliza `FlowLayoutPanel` con flujo horizontal y desplazamiento contenido. No hay `TableLayoutPanel` que requiera configuración de filas o columnas. Los diez archivos legados `*Form.cs` no tienen `Designer.cs` y no están incluidos en `exxen2.0.csproj`; se conservan fuera del flujo activo y requieren una decisión independiente si deben volver a ser pantallas del proyecto.
 
@@ -105,3 +119,9 @@ Ajuste del 9 de septiembre: las casillas «Rutina personalizada» e «Incluye en
 La pantalla del entrenador mantiene el catálogo para crear/editar rutinas. Al seleccionar una, su selector de membresía se filtra mediante RutinaAsignacionLogica.ListarMembresiasDisponibles: solo planes que la habilitan, con socio, membresía, plan, rutina y entrenador activos. La lógica vuelve a validar al asignar, independientemente del filtro visual. La capa visual no accede al contexto.
 
 No se alteran otros diseños. La inicialización del formulario se verifica en memoria; queda pendiente la inspección manual en el diseñador real de Visual Studio.
+
+## Ajuste puntual de layout master/detail - 16 de septiembre de 2026
+
+Se corrigió exclusivamente la distribución de GestionEjerciciosFormulario, GestionAsignacionesFormulario y MisSociosFormulario. Los tres mantienen SplitContainer con ambos paneles en `Dock=Fill`; sus proporciones base son aproximadamente 56/44, 55/45 y 33/67 respectivamente. La grilla principal de cada listado conserva `ReadOnly`, `FullRowSelect`, selección única, sin encabezado de filas y columnas en modo `Fill`.
+
+La ficha de asignaciones usa filas `Percent` para aprovechar la altura completa. El listado de socios reduce sus `MinimumWidth` para que sus seis columnas visibles entren en el panel de un tercio sin scroll horizontal accidental. `SplitterDistance` queda declarado en Designer y no se reasigna desde constructor o `Load`. No se modificaron lógica, DER, SQL ni Entity Framework. Debug y Release fueron compilados correctamente; queda pendiente la apertura manual en Visual Studio y la prueba funcional contra una base disponible.

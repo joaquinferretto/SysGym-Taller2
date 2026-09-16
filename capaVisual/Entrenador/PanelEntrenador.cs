@@ -14,7 +14,6 @@ namespace exxen2._0.capaVisual.Entrenador
         private readonly ControladorNavegacion navegacion;
         private bool trabajoExpandida = true;
         private bool catalogoExpandida;
-        private bool controlExpandida;
         [System.ComponentModel.Browsable(false)]
         [System.ComponentModel.DesignerSerializationVisibility(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public bool CambioCuentaSolicitado
@@ -46,7 +45,6 @@ namespace exxen2._0.capaVisual.Entrenador
         {
             lblTrabajo.Click += trabajo_Click;
             lblCatalogo.Click += catalogo_Click;
-            lblControl.Click += control_Click;
             AplicarMenuDesplegable();
         }
 
@@ -56,7 +54,6 @@ namespace exxen2._0.capaVisual.Entrenador
             var posicionY = 18;
             posicionY = MenuDesplegableHelper.ColocarSeccion(lblTrabajo, trabajoExpandida, posicionY, btnSocios, btnRutinas);
             posicionY = MenuDesplegableHelper.ColocarSeccion(lblCatalogo, catalogoExpandida, posicionY, btnEjercicios);
-            posicionY = MenuDesplegableHelper.ColocarSeccion(lblControl, controlExpandida, posicionY, btnAsistencias);
             panelOpciones.AutoScrollMinSize = new Size(0, posicionY);
         }
 
@@ -71,13 +68,6 @@ namespace exxen2._0.capaVisual.Entrenador
         private void catalogo_Click(object origen, EventArgs e)
         {
             catalogoExpandida = !catalogoExpandida;
-            AplicarMenuDesplegable();
-        }
-
-        /* Al hacer clic en control de acceso, muestra u oculta sus opciones. */
-        private void control_Click(object origen, EventArgs e)
-        {
-            controlExpandida = !controlExpandida;
             AplicarMenuDesplegable();
         }
 
@@ -115,12 +105,6 @@ namespace exxen2._0.capaVisual.Entrenador
         private void btnEjercicios_Click(object origen, EventArgs e)
         {
             navegacion.AbrirFormulario(new GestionEjerciciosFormulario(Color.FromArgb(14, 116, 144)));
-        }
-
-        /* Al hacer clic en btnAsistencias, abre el módulo correspondiente dentro del panel principal. */
-        private void btnAsistencias_Click(object origen, EventArgs e)
-        {
-            navegacion.AbrirFormulario(new GestionAsistenciasFormulario(Color.FromArgb(14, 116, 144)));
         }
 
         /* Al cargar la pantalla en ejecución, prepara sus datos iniciales sin realizar consultas desde el diseñador. */

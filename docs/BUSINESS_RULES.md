@@ -5,7 +5,6 @@
 - `UsuarioSistema` y `Socio` son entidades distintas. Pueden compartir nombre o apellido en los datos de prueba, pero se distinguen por su rol, clave e identidad (DNI).
 - La asignacion se realiza sobre una `Membresia` seleccionada por `IdMembresia`; el entrenador se selecciona por `IdUsuarioSistema`. La interfaz muestra nombre completo y DNI para evitar confusiones.
 - El cambio de plan desde Gestion de membresias conserva la historia de la membresia. Al pasar a un plan con `IncluyeEntrenador`, se puede usar Asignar o Cambiar; al pasar a uno sin ese beneficio se desactivan las asignaciones activas.
-- Registrar asistencia requiere socio activo, membresia habilitada y una cuota pagada vigente para la fecha elegida. La pantalla identifica al socio por nombre completo y DNI; no se elimina esa validacion.
 
 ## Rutinas personalizadas — 11 de septiembre de 2026
 
@@ -52,7 +51,6 @@ La asignación de rutinas comprueba explícitamente que el entrenador esté acti
 ## Correcciones implementadas — 8 de septiembre de 2026
 
 - **FIX-02:** el importe de un pago aprobado debe ser mayor que cero y no superar el importe histórico de su cuota. Registro, actualización y cambio de estado comparten `ValidarImporteAprobado`. Aprobar un pendiente excesivo falla antes de modificar su estado. No se cambia la regla pendiente sobre completar pagos parciales.
-- **FIX-03:** la asistencia compara la vigencia de la cuota por día calendario, incluyendo todo su último día. Para el día solicitado se consulta `FechaDesde < siguienteDia` y `FechaHasta >= inicioDia`, con límites calculados fuera de la consulta para mantener compatibilidad con EF6. Se conserva la hora real registrada y las demás validaciones de membresía/cuota pagada.
 - El recálculo de deuda posterior a cambios de pagos/cuotas considera los estados recién guardados dentro de la misma transacción.
 
 FIX-01 y FIX-04 continúan pendientes de confirmación. No se implementan los demás fixes ni las funciones futuras de la revisión sin autorización. La ampliación opcional de foto y sexo fue autorizada posteriormente en FIX_LAYOUT_CODEX.md.

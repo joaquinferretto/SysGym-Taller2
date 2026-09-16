@@ -60,13 +60,9 @@ namespace exxen2._0.capaDatos.Repositorios
 
         IRepositorio<Divisa> Divisas { get; }
 
-        IRepositorio<Asistencia> Asistencias { get; }
-
         IRepositorio<Rutina> Rutinas { get; }
 
         IRepositorio<RutinaEjercicio> RutinaEjercicios { get; }
-
-        IRepositorio<RutinaAsignacion> RutinaAsignaciones { get; }
 
         IRepositorio<Ejercicio> Ejercicios { get; }
 
@@ -96,10 +92,8 @@ namespace exxen2._0.capaDatos.Repositorios
             MercadosPago = CrearRepositorio<MercadoPago>();
             PagosEfectivo = CrearRepositorio<PagoEfectivo>();
             Divisas = CrearRepositorio<Divisa>();
-            Asistencias = CrearRepositorio<Asistencia>();
             Rutinas = CrearRepositorio<Rutina>();
             RutinaEjercicios = CrearRepositorio<RutinaEjercicio>();
-            RutinaAsignaciones = CrearRepositorio<RutinaAsignacion>();
             Ejercicios = CrearRepositorio<Ejercicio>();
         }
 
@@ -115,10 +109,8 @@ namespace exxen2._0.capaDatos.Repositorios
         public IRepositorio<MercadoPago> MercadosPago { get; private set; }
         public IRepositorio<PagoEfectivo> PagosEfectivo { get; private set; }
         public IRepositorio<Divisa> Divisas { get; private set; }
-        public IRepositorio<Asistencia> Asistencias { get; private set; }
         public IRepositorio<Rutina> Rutinas { get; private set; }
         public IRepositorio<RutinaEjercicio> RutinaEjercicios { get; private set; }
-        public IRepositorio<RutinaAsignacion> RutinaAsignaciones { get; private set; }
         public IRepositorio<Ejercicio> Ejercicios { get; private set; }
 
         /* Persiste los cambios y conserva la excepción original al informar errores de validación o actualización. */

@@ -10,7 +10,7 @@ Los scripts son compatibles con SQL Server 2008. En los bloques `CATCH` se usa `
 
 El motor es SQL Server y el esquema fuente está en `capaDatos/Database/SysGymDB.sql`. Ese único script crea `SysGymDB`, tablas, claves, índices, restricciones, usuarios iniciales, métodos de pago y el catálogo inicial de ejercicios y rutinas.
 
-Las entidades principales son Rol, UsuarioSistema, Socio, Plan, Membresia, MembresiaEntrenador, CuotaMembresia, Pago, MetodoPago, MercadoPago, PagoEfectivo, Divisa, Asistencia, Rutina, RutinaEjercicio, RutinaAsignacion y Ejercicio.
+Las entidades principales son Rol, UsuarioSistema, Socio, Plan, Membresia, MembresiaEntrenador, CuotaMembresia, Pago, MetodoPago, MercadoPago, PagoEfectivo, Divisa, Rutina, RutinaEjercicio, RutinaAsignacion y Ejercicio.
 
 `RutinaEjercicio.DiaSemana` es un `INT NULL` que ubica el ejercicio en la semana: 1 lunes a 5 viernes, con `CK_RutinaEjercicio_DiaSemana` verificando el rango. Nulo significa ejercicio sin dia asignado. `Orden` pasa a ser el orden dentro del dia y no dentro de toda la rutina. Asi una misma plantilla contiene el entrenamiento completo del socio de lunes a viernes. La migracion agrega la columna y reparte los detalles existentes con `((Orden - 1) % 5) + 1`.
 
@@ -36,11 +36,11 @@ La migración de estas cuatro columnas se verificó en la base separada SysGym_V
 
 Al final de `SysGymDB.sql`, desde `/* Inserciones manuales de prueba. */`, hay INSERT INTO ... VALUES con cada fila explícita, sin ciclos, procedimientos ni funciones propias. Los bloques se identifican con comentarios `/* Inserciones de NombreTabla */`.
 
-- Agregan 20 usuarios, socios, rutinas, detalles de rutina, membresías, métodos de pago, pagos, cuotas y asistencias; solo dos planes nuevos: Normal (15.000) y Premium (25.000).
+- Agregan 20 usuarios, socios, rutinas, detalles de rutina, membresías, métodos de pago, pagos y cuotas; solo dos planes nuevos: Normal (15.000) y Premium (25.000).
 - Incluyen 10 referencias ficticias de Mercado Pago, 10 asignaciones de entrenador y 10 de rutina, estas últimas solo para Premium. Reutilizan los tres roles, la divisa, el detalle de efectivo y los 24 ejercicios del catálogo inicial; no duplican catálogos para alcanzar veinte filas.
 - Usernames variados basados en nombres ficticios: `lucia.garcia` (administradora), `mateo_lopez` (recepcionista), `benja.fernandez` (entrenador), entre otros. La contraseña común sigue siendo `Prueba123!`, almacenada con Argon2id. `matias.navarro` está de baja. Son credenciales públicas de prueba, no de producción.
-- Los 40 DNI nuevos son distintos, no consecutivos y están entre 30.000.000 y 50.000.000. Son valores ficticios, no identidades verificadas. Se sincronizaron todas las referencias SQL. Rutinas, teléfonos, pagos y asistencias tienen nombres y descripciones variados, sin etiquetas numeradas de prueba en los datos visibles.
-- Cuotas y membresías del 1 al 30 de septiembre de 2026. Las 20 asistencias corresponden al 8 y 9 de septiembre, únicamente a los diez socios con cuota pagada. Hay diez pagos aprobados, cinco pendientes, tres rechazados y dos anulados. Socios 19 y 20 y sus membresías están de baja.
+- Los 40 DNI nuevos son distintos, no consecutivos y están entre 30.000.000 y 50.000.000. Son valores ficticios, no identidades verificadas. Se sincronizaron todas las referencias SQL. Rutinas, teléfonos y pagos tienen nombres y descripciones variados, sin etiquetas numeradas de prueba en los datos visibles.
+- Cuotas y membresías del 1 al 30 de septiembre de 2026. Hay diez pagos aprobados, cinco pendientes, tres rechazados y dos anulados. Socios 19 y 20 y sus membresías están de baja.
 - Ejecutar una sola vez, con los nombres y DNI indicados en el comentario libres y sin planes Normal/Premium previos. Si ya existen otros planes, no se borran ni renombran. No volver a ejecutar el archivo completo sobre una base existente: seleccionar solo este bloque después de aplicar la migración y el catálogo inicial.
 - Una transacción evita cargas parciales; errores se propagan con THROW. Las opciones SET requeridas por el índice filtrado quedan explícitas. Se verificó la ejecución en la base separada y se revirtió la transacción; no se conservaron registros ni se cargó la base comercial. La repetición no es idempotente: requiere un destino sin esos datos de prueba.
 

@@ -28,9 +28,9 @@ namespace exxen2._0.capaVisual.Administrador
             try
             {
                 tabla.Rows.Clear();
-                foreach (var rutina in logica.ListarGenerales())
+                foreach (var rutina in logica.ListarActivas())
                 {
-                    tabla.Rows.Add(rutina.IdRutina, rutina.Nombre, rutina.Descripcion ?? "-", rutina.Entrenador == null ? "-" : rutina.Entrenador.Nombre + " " + rutina.Entrenador.Apellido, rutina.Asignaciones == null ? 0 : rutina.Asignaciones.Count(a => a.Estado));
+                    tabla.Rows.Add(rutina.IdRutina, rutina.Nombre, rutina.Descripcion ?? "-", rutina.Entrenador == null ? "-" : rutina.Entrenador.Nombre + " " + rutina.Entrenador.Apellido, rutina.Membresias == null ? 0 : rutina.Membresias.Count(m => m.Estado));
                 }
 
                 lblEstado.Text = tabla.Rows.Count + " plantilla(s) activa(s)";

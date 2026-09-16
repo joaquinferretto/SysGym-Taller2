@@ -20,7 +20,7 @@ Tabla: `Membresia`
 Columnas: `IdSocio`  
 Tipo: índice normal.
 
-Se mantiene porque las membresías se consultan por socio en `MembresiaLogica.ObtenerPorSocio` y también se busca la membresía de un socio al registrar una asistencia.
+Se mantiene porque las membresías se consultan por socio en `MembresiaLogica.ObtenerPorSocio`.
 
 Consulta que ayuda:
 
@@ -31,24 +31,6 @@ WHERE IdSocio = 10;
 ```
 
 Sin este índice, SQL Server puede tener que recorrer muchas filas de `Membresia` para encontrar las de un socio concreto.
-
-### IX_Asistencia_IdSocio
-
-Tabla: `Asistencia`  
-Columnas: `IdSocio`  
-Tipo: índice normal.
-
-Se mantiene porque `AsistenciaLogica.ListarPorSocio` consulta directamente las asistencias de un socio.
-
-Consulta que ayuda:
-
-```sql
-SELECT *
-FROM Asistencia
-WHERE IdSocio = 10;
-```
-
-Sin este índice, SQL Server puede necesitar revisar todas las asistencias para devolver las de un socio.
 
 ### UX_CuotaMembresia_IdRegistroPago
 
@@ -116,7 +98,6 @@ Se evaluó porque la lógica consulta las cuotas por `IdMembresia`. No se mantie
 Los índices manuales definidos en `capaDatos/Database/SysGymDB.sql` son:
 
 1. `IX_Membresia_IdSocio`
-2. `IX_Asistencia_IdSocio`
-3. `UX_CuotaMembresia_IdRegistroPago`
+2. `UX_CuotaMembresia_IdRegistroPago`
 
-Los dos primeros ayudan a consultas habituales. El último garantiza que un pago no se reutilice en dos cuotas y permite múltiples valores `NULL`.
+El primero ayuda a consultas habituales. El segundo garantiza que un pago no se reutilice en dos cuotas y permite múltiples valores `NULL`.

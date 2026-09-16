@@ -60,7 +60,7 @@ namespace exxen2._0.capaVisual.Administrador
         {
             var posicionY = 18;
             posicionY = MenuDesplegableHelper.ColocarSeccion(lblAdministracion, administracionExpandida, posicionY, btnUsuarios, btnSocios);
-            posicionY = MenuDesplegableHelper.ColocarSeccion(lblOperacion, operacionExpandida, posicionY, btnPlanes, btnMembresias, btnPagos, btnAsignaciones, btnAsistencias);
+            posicionY = MenuDesplegableHelper.ColocarSeccion(lblOperacion, operacionExpandida, posicionY, btnPlanes, btnMembresias, btnPagos, btnAsignaciones);
             posicionY = MenuDesplegableHelper.ColocarSeccion(lblRutinas, rutinasExpandida, posicionY, btnEjercicios, btnRutinas, btnMisSocios);
             posicionY = MenuDesplegableHelper.ColocarSeccion(lblConsultas, consultasExpandida, posicionY, btnReportes);
             panelOpciones.AutoScrollMinSize = new Size(0, posicionY);
@@ -158,12 +158,6 @@ namespace exxen2._0.capaVisual.Administrador
         private void btnAsignaciones_Click(object origen, EventArgs e)
         {
             navegacion.AbrirFormulario(new GestionAsignacionesFormulario());
-        }
-
-        /* Al hacer clic en btnAsistencias, abre la gestión de accesos de los socios. */
-        private void btnAsistencias_Click(object origen, EventArgs e)
-        {
-            navegacion.AbrirFormulario(new GestionAsistenciasFormulario(Color.FromArgb(79, 70, 229)));
         }
 
         /* Al hacer clic en btnMisSocios, abre la gestión global de socios y rutinas. */

@@ -1,200 +1,176 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using exxen2._0.capaDatos.Entidades;
 using exxen2._0.capaLogica;
 using exxen2._0.capaVisual.Compartido;
 
 namespace exxen2._0.capaVisual.Recepcionista
 {
-    /* Presenta asignaciones y atiende sus acciones mediante eventos de Windows Forms. */
+    /* Presenta membresías y su ficha de vinculación con entrenador mediante un flujo master/detail. */
     [DesignerCategory("Form")]
     public partial class GestionAsignacionesFormulario : Form
     {
         private readonly MembresiaEntrenadorLogica logica = new MembresiaEntrenadorLogica();
-        private readonly MembresiaLogica membresias = new MembresiaLogica();
         private readonly UsuarioSistemaLogica usuarios = new UsuarioSistemaLogica();
+        private List<MembresiaAsignacionItem> membresiasCargadas = new List<MembresiaAsignacionItem>();
         private int idSeleccionado;
+        private int idAsignacionSeleccionada;
+        private bool cargandoTabla;
+
         /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
         public GestionAsignacionesFormulario()
         {
             InitializeComponent();
         }
 
-        /* Carga los usuarios activos con rol de entrenador mostrando una identidad inequívoca. */
+        /* Carga entrenadores activos mostrando nombre completo y DNI como identidad visible. */
         private void CargarEntrenadores()
         {
             entrenador.DataSource = usuarios.ListarPorRol("Entrenador")
-                .Select(u => new OpcionEntrenador
-                {
-                    IdEntrenador = u.IdUsuarioSistema,
-                    Texto = u.Apellido + ", " + u.Nombre + " - DNI " + u.DNI
-                }).ToList();
+                .Select(u => new OpcionEntrenador { IdEntrenador = u.IdUsuarioSistema, Texto = u.Apellido + ", " + u.Nombre + " - DNI " + u.DNI }).ToList();
             entrenador.DisplayMember = "Texto";
             entrenador.ValueMember = "IdEntrenador";
+            entrenador.SelectedIndex = -1;
         }
 
-        /* Carga las membresías para seleccionar su identificador sin exigir escritura manual. */
-        private void CargarMembresias()
+        /* Consulta y filtra el listado de membresías que se pueden seleccionar para vinculación. */
+        private void CargarListado()
         {
-            membresia.DataSource = membresias.ListarParaGestion()
-                .Select(m => new OpcionMembresia
-                {
-                    IdMembresia = m.IdMembresia,
-                    Texto = "#" + m.IdMembresia + " - " + NombreSocio(m) + " - DNI " + DniSocio(m)
-                        + " - Plan " + NombrePlan(m) + (m.Estado ? string.Empty : " - Deshabilitada")
-                }).ToList();
-            membresia.DisplayMember = "Texto";
-            membresia.ValueMember = "IdMembresia";
-            membresia.SelectedIndex = -1;
+            try
+            {
+                membresiasCargadas = logica.ListarParaGestion();
+                AplicarFiltro();
+            }
+            catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex); }
         }
 
-        /* Obtiene la membresía seleccionada usando su clave persistida. */
-        private int ObtenerIdMembresiaSeleccionada()
+        /* Aplica búsqueda simple por socio/DNI y filtro de asignación sin modificar reglas de negocio. */
+        private void AplicarFiltro()
         {
-            AyudaFormularioVisual.ValidarComboSeleccionado(membresia, "una membresía");
-            return Convert.ToInt32(membresia.SelectedValue);
+            var criterio = buscador.Text.Trim();
+            var estado = Convert.ToString(filtroEstado.SelectedItem);
+            var listado = membresiasCargadas.AsEnumerable();
+            if (!string.IsNullOrWhiteSpace(criterio))
+                listado = listado.Where(m => Contiene(m.NombreSocio, criterio) || Contiene(m.DNI, criterio));
+            if (estado == "Asignados") listado = listado.Where(m => m.Asignado);
+            else if (estado == "Sin asignar") listado = listado.Where(m => !m.Asignado);
+
+            cargandoTabla = true;
+            tabla.Rows.Clear();
+            foreach (var m in listado)
+                tabla.Rows.Add(m.IdMembresia, m.NombreSocio, m.NombrePlan, m.NombreEntrenador, m.EstadoMembresia ? "Vigente" : "Inactiva");
+            tabla.ClearSelection();
+            cargandoTabla = false;
+            PrepararFichaVacia();
+            lblEstado.Text = tabla.Rows.Count + " membresía(s) encontrada(s)";
         }
 
-        /* Obtiene el entrenador seleccionado usando su clave persistida. */
-        private int ObtenerIdEntrenadorSeleccionado()
+        /* Compara texto visible sin distinguir mayúsculas y admite valores vacíos. */
+        private static bool Contiene(string valor, string criterio)
         {
-            AyudaFormularioVisual.ValidarComboSeleccionado(entrenador, "un entrenador");
-            return Convert.ToInt32(entrenador.SelectedValue);
+            return !string.IsNullOrEmpty(valor) && valor.IndexOf(criterio, StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
-        /* Al hacer clic en asignar, valida la selección y registra la asignación mediante la capa lógica. */
+        /* Al seleccionar una membresía, carga su contexto y las acciones posibles sobre ella. */
+        private void tabla_SelectionChanged(object origen, EventArgs e)
+        {
+            if (cargandoTabla || tabla.CurrentRow == null || !tabla.CurrentRow.Selected || tabla.CurrentRow.Cells[0].Value == null)
+                return;
+            idSeleccionado = Convert.ToInt32(tabla.CurrentRow.Cells[0].Value);
+            var item = membresiasCargadas.FirstOrDefault(m => m.IdMembresia == idSeleccionado);
+            if (item == null) return;
+            idAsignacionSeleccionada = item.IdMembresiaEntrenador;
+            lblSocioValor.Text = item.NombreSocio;
+            lblDniValor.Text = item.DNI;
+            lblPlanValor.Text = item.NombrePlan;
+            lblVencimientoValor.Text = item.FechaVencimiento.ToString("dd/MM/yyyy");
+            lblEstadoMembresiaValor.Text = item.EstadoMembresia ? "Vigente" : "Inactiva";
+            lblEntrenadorActualValor.Text = item.NombreEntrenador;
+            if (item.Asignado && entrenador.Items.Count > 0) entrenador.SelectedValue = item.IdEntrenador; else entrenador.SelectedIndex = -1;
+            asignar.Visible = !item.Asignado;
+            cambiar.Visible = item.Asignado;
+            darDeBaja.Visible = item.Asignado;
+            asignar.Enabled = item.EstadoMembresia;
+            cambiar.Enabled = item.EstadoMembresia;
+            entrenador.Enabled = item.EstadoMembresia;
+            darDeBaja.Enabled = item.EstadoMembresia;
+            lblDetalleTitulo.Text = "Vinculación de la membresía";
+        }
+
+        /* Deja la ficha sin acciones hasta que el usuario elija una membresía inequívoca. */
+        private void PrepararFichaVacia()
+        {
+            idSeleccionado = 0; idAsignacionSeleccionada = 0;
+            lblSocioValor.Text = "Seleccioná una membresía"; lblDniValor.Text = "-"; lblPlanValor.Text = "-"; lblVencimientoValor.Text = "-"; lblEstadoMembresiaValor.Text = "-"; lblEntrenadorActualValor.Text = "Sin asignar";
+            entrenador.SelectedIndex = -1; entrenador.Enabled = false;
+            asignar.Visible = false; cambiar.Visible = false; darDeBaja.Visible = false;
+        }
+
+        /* Al hacer clic en asignar, vincula el entrenador elegido a la membresía seleccionada. */
         private void asignar_Click(object origen, EventArgs e)
         {
-            try
-            {
-                var id = ObtenerIdMembresiaSeleccionada();
-                var a = logica.AsignarEntrenador(id, ObtenerIdEntrenadorSeleccionado());
-                idSeleccionado = a.IdMembresiaEntrenador;
-                CargarLista(id);
-                AyudaFormularioVisual.MostrarExito(lblEstado, "Entrenador asignado.");
-            }
-            catch (Exception ex)
-            {
-                AyudaFormularioVisual.MostrarError(lblEstado, ex);
-            }
+            EjecutarAsignacion(false);
         }
 
-        /* Al hacer clic en cambiar, reemplaza el entrenador de la membresía mediante la capa lógica. */
+        /* Al hacer clic en cambiar, finaliza la asignación activa y registra la nueva. */
         private void cambiar_Click(object origen, EventArgs e)
         {
-            try
-            {
-                var id = ObtenerIdMembresiaSeleccionada();
-                var a = logica.CambiarEntrenador(id, ObtenerIdEntrenadorSeleccionado());
-                idSeleccionado = a.IdMembresiaEntrenador;
-                CargarLista(id);
-                AyudaFormularioVisual.MostrarExito(lblEstado, "Entrenador cambiado.");
-            }
-            catch (Exception ex)
-            {
-                AyudaFormularioVisual.MostrarError(lblEstado, ex);
-            }
+            EjecutarAsignacion(true);
         }
 
-        /* Al hacer clic en consultar, consulta el entrenador activo y actualiza el historial de asignaciones. */
-        private void consultar_Click(object origen, EventArgs e)
+        /* Ejecuta la operación contextual sin permitir una membresía distinta a la ficha visible. */
+        private void EjecutarAsignacion(bool cambiarEntrenador)
         {
             try
             {
-                var id = ObtenerIdMembresiaSeleccionada();
-                var activo = logica.ObtenerEntrenadorActivo(id);
-                MessageBox.Show(activo == null ? "No hay entrenador activo." : activo.Apellido + ", " + activo.Nombre + " - DNI " + activo.DNI, "Entrenador actual", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                CargarLista(id);
+                if (idSeleccionado == 0) throw new InvalidOperationException("Seleccioná una membresía.");
+                AyudaFormularioVisual.ValidarComboSeleccionado(entrenador, "un entrenador");
+                if (cambiarEntrenador) logica.CambiarEntrenador(idSeleccionado, Convert.ToInt32(entrenador.SelectedValue));
+                else logica.AsignarEntrenador(idSeleccionado, Convert.ToInt32(entrenador.SelectedValue));
+                CargarListado();
+                AyudaFormularioVisual.MostrarExito(lblEstado, cambiarEntrenador ? "Entrenador cambiado." : "Entrenador asignado.");
             }
-            catch (Exception ex)
-            {
-                AyudaFormularioVisual.MostrarError(lblEstado, ex);
-            }
+            catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex); }
         }
 
-        /* Consulta las asignaciones de la membresía y muestra el entrenador y su estado histórico. */
-        private void CargarLista(int id)
-        {
-            tabla.Rows.Clear();
-            foreach (var a in logica.ListarPorMembresia(id))
-                tabla.Rows.Add(a.IdMembresiaEntrenador, a.IdMembresia, a.Entrenador == null ? a.IdEntrenador.ToString() : a.Entrenador.Apellido + ", " + a.Entrenador.Nombre + " - DNI " + a.Entrenador.DNI, a.Estado ? "Activo" : "Historico");
-        }
-
-        /* Al hacer clic en darDeBaja, solicita la baja lógica del registro seleccionado y actualiza el listado. */
+        /* Al hacer clic en dar de baja, finaliza la vinculación activa y conserva su historial. */
         private void darDeBaja_Click(object origen, EventArgs e)
         {
             try
             {
-                if (idSeleccionado == 0)
-                    throw new InvalidOperationException("Selecciona una asignacion.");
-                logica.DarDeBajaAsignacion(idSeleccionado);
-                CargarLista(ObtenerIdMembresiaSeleccionada());
-                AyudaFormularioVisual.MostrarExito(lblEstado, "Asignacion dada de baja.");
+                if (idAsignacionSeleccionada == 0) throw new InvalidOperationException("La membresía no tiene una asignación activa.");
+                logica.DarDeBajaAsignacion(idAsignacionSeleccionada); CargarListado();
+                AyudaFormularioVisual.MostrarExito(lblEstado, "Asignación dada de baja.");
             }
-            catch (Exception ex)
-            {
-                AyudaFormularioVisual.MostrarError(lblEstado, ex);
-            }
+            catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex); }
         }
 
-        /* Al cargar la pantalla en ejecución, prepara sus datos iniciales sin realizar consultas desde el diseñador. */
+        /* Al cargar la pantalla en ejecución, prepara combos y datos fuera del diseñador. */
         private void GestionAsignacionesFormulario_Load(object origen, EventArgs e)
         {
-            if (AyudaFormularioVisual.EnModoDisenio(this))
-                return;
-            try
-            {
-                CargarMembresias();
-                CargarEntrenadores();
-            }
-            catch (Exception ex)
-            {
-                AyudaFormularioVisual.MostrarError(lblEstado, ex);
-            }
+            if (AyudaFormularioVisual.EnModoDisenio(this)) return;
+            try { CargarEntrenadores(); CargarListado(); } catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex); }
         }
 
-        /* Al hacer clic en btnVolver, cierra el módulo y devuelve el control al panel principal. */
-        private void btnVolver_Click(object origen, EventArgs e)
+        /* Al hacer clic en volver, cierra el módulo y devuelve el control al panel principal. */
+        private void btnVolver_Click(object origen, EventArgs e) { Close(); }
+
+        /* Al cambiar el texto de búsqueda, aplica el filtro sobre el listado cargado. */
+        private void buscador_TextChanged(object origen, EventArgs e) { AplicarFiltro(); }
+
+        /* Al cambiar el filtro de asignación, actualiza la lista visible. */
+        private void filtroEstado_SelectedIndexChanged(object origen, EventArgs e)
         {
-            Close();
+            if (!AyudaFormularioVisual.EnModoDisenio(this)) AplicarFiltro();
         }
 
-        /* Al cambiar la fila seleccionada, toma su identificador y actualiza los datos o acciones del registro. */
-        private void tabla_SelectionChanged(object origen, EventArgs e)
-        {
-            idSeleccionado = tabla.CurrentRow == null || tabla.CurrentRow.Cells[0].Value == null ? 0 : Convert.ToInt32(tabla.CurrentRow.Cells[0].Value);
-        }
+        /* Al hacer clic en actualizar, vuelve a consultar membresías y entrenadores. */
+        private void actualizar_Click(object origen, EventArgs e) { CargarEntrenadores(); CargarListado(); }
 
-        /* Devuelve el nombre completo del socio asociado a una membresía. */
-        private static string NombreSocio(Membresia membresiaActual)
-        {
-            return membresiaActual.Socio == null ? "Socio no disponible" : membresiaActual.Socio.Apellido + ", " + membresiaActual.Socio.Nombre;
-        }
-
-        /* Devuelve el DNI del socio asociado a una membresía. */
-        private static string DniSocio(Membresia membresiaActual)
-        {
-            return membresiaActual.Socio == null ? "no disponible" : membresiaActual.Socio.DNI;
-        }
-
-        /* Devuelve el nombre del plan asociado a una membresía. */
-        private static string NombrePlan(Membresia membresiaActual)
-        {
-            return membresiaActual.Plan == null ? "no disponible" : membresiaActual.Plan.Nombre;
-        }
-
-        /* Proyecta una membresía a un texto visible sin perder su clave persistida. */
-        private sealed class OpcionMembresia
-        {
-            public int IdMembresia { get; set; }
-            public string Texto { get; set; }
-        }
-
-        /* Proyecta un entrenador a un texto visible sin usar el apellido como identificador. */
+        /* Proyecta un entrenador a un texto visible sin usar apellido como identificador. */
         private sealed class OpcionEntrenador
         {
             public int IdEntrenador { get; set; }

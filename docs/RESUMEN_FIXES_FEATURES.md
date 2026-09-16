@@ -1,8 +1,8 @@
 # SysGym: resumen, fixes y features futuras
 
-Revisión inicial: 7 de septiembre de 2026. Última actualización: 9 de septiembre de 2026.
+Revisión inicial: 7 de septiembre de 2026. Última actualización: 16 de septiembre de 2026.
 
-Estado actual: FIX-02 y FIX-03 implementados. FIX-01, FIX-04 y FIX-05 continúan pendientes; las funciones futuras no se implementaron. Los apartados de evidencia y propuesta siguientes describen los hallazgos originales; el cierre de esta actualización se registra al final.
+Estado actual: FIX-02 implementado. FIX-01, FIX-04 y FIX-05 continúan pendientes; las funciones futuras no se implementaron. El antiguo módulo de control de acceso quedó fuera del alcance y fue retirado. Los apartados de evidencia y propuesta siguientes describen los hallazgos originales; el cierre de esta actualización se registra al final.
 
 ## Resumen general
 
@@ -16,7 +16,6 @@ El flujo de persistencia pasa por `capaVisual → capaLogica → capaDatos → E
 | Socios | Gestión de datos personales y físicos, bajas/reactivaciones y cálculo de IMC. |
 | Planes y membresías | Planes con beneficios, altas y cambios de membresía, cuotas mensuales y consulta de deuda. |
 | Pagos | Registro manual, estados, anulación, reembolso y cálculo de saldo. El modelo contiene efectivo y Mercado Pago; no hay integración real de cobro con Mercado Pago dentro del alcance documentado. |
-| Asistencias | Registro y consulta por socio o fecha, con comprobación de membresía y cuota pagada. |
 | Entrenamiento | Ejercicios, plantillas de rutinas reutilizables, ejercicios ordenados, asignaciones a membresías y consulta de socios del entrenador. |
 | Administración | Dashboard y reporte básico con contadores de socios, usuarios, membresías, rutinas y ejercicios. |
 | Base de datos | Script para instalación nueva y script de migración de bases existentes; relaciones explícitas y bajas lógicas para conservar historia. |
@@ -41,13 +40,6 @@ Los siguientes hallazgos surgieron de la lectura inicial del código. La verific
 - Propuesta: compartir la validación del importe entre registro, actualización y cambio de estado, antes de guardar.
 - Aceptación: registrar un pendiente mayor a la cuota e intentar aprobarlo debe fallar sin cambiar el estado persistido; un importe permitido debe seguir funcionando.
 
-### FIX-03 — Alta: incluir todo el último día de la cuota en asistencias
-
-- Evidencia: `AsistenciaLogica.Registrar` compara `FechaHasta >= fecha`, donde `fecha` puede incluir hora. `CuotaMembresiaLogica.CalcularPeriodoHasta` calcula el final mensual conservando la hora del inicio recibido.
-- Problema: si la cuota termina a las 00:00, una asistencia a las 18:00 de ese mismo día queda fuera del intervalo.
-- Propuesta: comparar el período por día calendario y conservar por separado la hora real de asistencia; mantener la consulta compatible con EF6.
-- Aceptación: una cuota pagada con vencimiento el día 7 permite ingresar el día 7 a las 18:00 y rechaza el día 8 si no existe otra cuota habilitante.
-
 ### FIX-04 — Media: mostrar el importe real del pago seleccionado
 
 - Evidencia: `GestionPagosFormulario.MostrarCuota` coloca `seleccionada.Importe` en el campo importe incluso cuando existe `seleccionada.Pago`.
@@ -69,7 +61,7 @@ Estas propuestas amplían el producto y no son requisitos ya aprobados. En parti
 | --- | --- | --- | --- |
 | 1 | Estado de cuenta detallado | Ver cuotas, pagos y saldo por socio, con filtros por período. | Visual y lógica; aprovechar consultas existentes y completar FIX-01/FIX-04. |
 | 2 | Alertas de vencimiento | Identificar membresías próximas a vencer y deudas desde el dashboard. | Lógica calcula fechas; visual muestra resultados. Acordar ventana de aviso. |
-| 3 | Reportes y exportación | Consultar cobros aprobados, deuda y asistencias por período; exportar resultados. | Agregaciones en datos/lógica y presentación en visual. Definir formato de exportación. |
+| 3 | Reportes y exportación | Consultar cobros aprobados y deuda por período; exportar resultados. | Agregaciones en datos/lógica y presentación en visual. Definir formato de exportación. |
 | 4 | Historial de cambios | Consultar quién modificó una membresía o cambió el estado de un pago. | Requiere diseño de auditoría y migración aprobada del esquema. |
 | 5 | Progreso del socio | Consultar evolución de medidas y entrenamiento a lo largo del tiempo. | Requiere definir registros históricos y su persistencia. |
 | 6 | Cobros reales con Mercado Pago | Conciliar el estado real de una transacción y evitar registros duplicados. | Requiere ampliar alcance, diseñar integración y recepción segura de notificaciones; resolver primero el ciclo de pagos. |
@@ -95,7 +87,6 @@ Estas propuestas amplían el producto y no son requisitos ya aprobados. En parti
 ### Correcciones y datos
 
 - FIX-02 implementado: `PagoLogica.ValidarImporteAprobado` se comparte entre registro, actualización y cambio de estado. Un pendiente mayor que su cuota no puede aprobarse.
-- FIX-03 implementado: `AsistenciaLogica.Registrar` consulta por límites de día calendario, conservando la hora de asistencia y la traducción a SQL de EF6.
 - FIX-01, FIX-04 y FIX-05 pendientes. No se agregaron funciones futuras ni se cambió el DER. Sigue pendiente el desacoplamiento de las entidades usadas como tipos por la capa visual.
 - Repositorio genérico con operaciones uniformes en español; consultas de lectura sin seguimiento e inclusiones explícitas. Contexto sin carga diferida ni proxies, fechas `datetime2`, relaciones y precisión conservadas.
 - Se mantiene la transacción de membresía con primera cuota y se corrige el orden de guardado de estados antes de recalcular deuda. Los errores de EF conservan su causa original.
@@ -117,7 +108,6 @@ Hay 16 clases que heredan directamente de `Form` y un `UserControl`, `InicioPane
 | GestionAsignacionesFormulario | Faltaba SelectionChanged de tabla para identificar la asignación seleccionada. |
 | GestionSociosFormulario | Carga, filtros, selección, acciones y entradas decimales normalizados en Designer. |
 | GestionEjerciciosFormulario | Carga, selección y acciones con handlers nombrados; selección vacía tras recargar. |
-| GestionAsistenciasFormulario | Carga, filtros, selección y acciones con handlers nombrados. |
 | GestionMembresiasFormulario | Carga, selección, cambios de opciones y acciones con handlers nombrados. |
 | GestionPagosFormulario | Carga, selección, acciones y entrada decimal con handlers nombrados; sin implementar FIX-01/FIX-04. |
 | ConsultaRutinasAdministradorFormulario | Carga y botones con handlers nombrados. |
@@ -149,7 +139,7 @@ No se atribuye un evento faltante a las pantallas que solo requirieron normaliza
 - El movimiento se comprobó en memoria sobre 392 controles de las 17 pantallas: `Location` editable mediante el descriptor de propiedades de .NET, cambio efectivo de posición y ausencia de retorno a la posición anterior tras `PerformLayout`. Esta comprobación no equivale a una inspección visual de los 17 diseñadores de Visual Studio.
 - La distribución pasa a ser manual. No se promete identidad píxel a píxel con el diseño anterior ni adaptación automática a distintos tamaños de ventana. Los colores, fuentes y textos de los controles estáticos no se rediseñaron.
 - Se corrigieron recortes en grillas/filtros de gestión, botones de baja/reactivación, beneficios de Planes y selección de membresía en Rutinas. Los mensajes del panel inicial se ubicaron dentro de sus cabeceras. Se habilitó desplazamiento de la pantalla para acceder al contenido fijo cuando no cabe en el área disponible. Las mediciones y el renderizado se realizaron en memoria, sin guardar capturas ni crear carpetas.
-- El pronóstico usa la tarjeta de ejemplo del diseñador como plantilla de posiciones y estilos para sus siete días. Los controles temporales se liberan al actualizar los datos; la plantilla se conserva y se libera con los componentes de la pantalla.
+- El pronóstico crea sus tarjetas a partir de los datos obtenidos y libera los controles temporales al actualizar la consulta; no conserva una tarjeta de muestra en el dashboard.
 - Segunda pasada de español: `layout*` pasó a `contenedor*`; `MembresiaPagoItem`/`SocioMembresiaItem` a `OpcionMembresiaPago`/`OpcionSocioMembresia`; la variable `item` y los mensajes de acceso/usuario pendientes también se tradujeron. Se sincronizaron los nombres internos de controles con sus campos. Los nombres requeridos por .NET y los contratos de columnas SQL/JSON se mantienen.
 - Se comprobaron 85 botones con suscripciones Click y los métodos correspondientes, sin faltantes. La solución reconstruye en Debug con 0 errores y 0 advertencias.
 - `.designer-check.ps1` está eliminado; no se recrearon scripts, carpetas de auditoría ni capturas. La eliminación sigue siendo recuperable desde Git.
@@ -181,7 +171,7 @@ Las sentencias se ejecutaron correctamente en SysGym_Verificacion_20260908 y la 
 
 ### Datos variados y consulta de rutinas por plan — 9 de septiembre de 2026
 
-Se sustituyeron los usernames numerados, nombres genéricos de rutinas, teléfonos consecutivos y descripciones de pagos/asistencias por valores variados. Los 40 DNI nuevos son únicos y no consecutivos entre 30 y 50 millones, conservando las referencias en todos los INSERT manuales. Los pagos continúan siendo ficticios y no producen operaciones externas. La contraseña compartida de práctica no cambia.
+Se sustituyeron los usernames numerados, nombres genéricos de rutinas, teléfonos consecutivos y descripciones de pagos por valores variados. Los 40 DNI nuevos son únicos y no consecutivos entre 30 y 50 millones, conservando las referencias en todos los INSERT manuales. Los pagos continúan siendo ficticios y no producen operaciones externas. La contraseña compartida de práctica no cambia.
 
 Se revisó la petición de varias rutinas por plan: el modelo actual distingue una rutina base del plan de múltiples asignaciones a membresías Premium. Queda pendiente confirmar si se desea un catálogo por plan antes de ampliar esa relación. No se implementó ni se presenta como completada esa nueva funcionalidad.
 

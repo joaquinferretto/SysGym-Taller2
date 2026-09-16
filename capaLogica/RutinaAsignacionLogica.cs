@@ -11,9 +11,15 @@ namespace exxen2._0.capaLogica
     {
         public int IdSocio { get; set; }
         public int IdMembresia { get; set; }
+        public int IdRutinaAsignacion { get; set; }
+        public int IdRutina { get; set; }
         public string NombreSocio { get; set; }
+        public string DNI { get; set; }
         public string NombrePlan { get; set; }
+        public DateTime FechaVencimiento { get; set; }
+        public string NombreEntrenador { get; set; }
         public int RutinasAsignadas { get; set; }
+        public string NombreRutina { get; set; }
         public bool IncluyeRutinaPersonal { get; set; }
     }
 
@@ -106,6 +112,7 @@ namespace exxen2._0.capaLogica
                     join membresia in datos.Membresias on asignacionEntrenador.IdMembresia equals membresia.IdMembresia
                     join socio in datos.Socios on membresia.IdSocio equals socio.IdSocio
                     join plan in datos.Planes on membresia.IdPlan equals plan.IdPlan
+                    join entrenador in datos.UsuariosSistema on asignacionEntrenador.IdEntrenador equals entrenador.IdUsuarioSistema
                     join asignacionRutina in datos.RutinaAsignaciones
                         on membresia.IdMembresia equals asignacionRutina.IdMembresia into rutinasSocio
                     where (idEntrenador <= 0 || asignacionEntrenador.IdEntrenador == idEntrenador)
@@ -117,9 +124,15 @@ namespace exxen2._0.capaLogica
                     {
                         IdSocio = socio.IdSocio,
                         IdMembresia = membresia.IdMembresia,
+                        IdRutinaAsignacion = rutinasSocio.Where(r => r.Estado).OrderByDescending(r => r.FechaAsignacion).Select(r => r.IdRutinaAsignacion).FirstOrDefault(),
+                        IdRutina = rutinasSocio.Where(r => r.Estado).OrderByDescending(r => r.FechaAsignacion).Select(r => r.IdRutina).FirstOrDefault(),
                         NombreSocio = socio.Apellido + ", " + socio.Nombre,
+                        DNI = socio.DNI,
                         NombrePlan = plan.Nombre,
+                        FechaVencimiento = membresia.FechaVencimiento,
+                        NombreEntrenador = entrenador.Apellido + ", " + entrenador.Nombre + " - DNI " + entrenador.DNI,
                         RutinasAsignadas = rutinasSocio.Count(r => r.Estado),
+                        NombreRutina = rutinasSocio.Where(r => r.Estado).OrderByDescending(r => r.FechaAsignacion).Select(r => r.Rutina.Nombre).FirstOrDefault(),
                         IncluyeRutinaPersonal = plan.IncluyeRutinaPersonal
                     };
 
@@ -131,6 +144,18 @@ namespace exxen2._0.capaLogica
         public List<SocioRutinaItem> ListarSociosParaAdministracion()
         {
             return ListarSociosPorEntrenador(0);
+        }
+
+        /* Obtiene la asignacion vigente mas reciente de un socio para editarla o finalizarla desde su ficha. */
+        public RutinaAsignacion ObtenerActivaPorSocio(int idSocio)
+        {
+            using (var datos = new UnidadDeTrabajoGimnasio())
+            {
+                return datos.RutinaAsignaciones.ConsultarSoloLectura("Rutina", "Membresia")
+                    .Where(a => a.Estado && a.Membresia.IdSocio == idSocio && a.Membresia.Estado)
+                    .OrderByDescending(a => a.FechaAsignacion)
+                    .FirstOrDefault();
+            }
         }
 
         /* Consulta asignaciones de rutina activas para devolver los datos a la capa visual. */

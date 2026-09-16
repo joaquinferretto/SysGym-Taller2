@@ -56,7 +56,6 @@ Contenedores a revertir por archivo:
 | `Autenticacion/InicioSesion.Designer.cs` | `contenido` |
 | `Compartido/GestionSociosFormulario.Designer.cs` | `panelEncabezado`, `contenedorContenido`, `panelListado`, `panelFiltro`, `contenedorDetalle`, `contenedorCampos`, `panelAcciones` |
 | `Compartido/GestionEjerciciosFormulario.Designer.cs` | `panelEncabezado`, `barraAcciones`, `panelContenido`, `contenedorFormulario` |
-| `Compartido/GestionAsistenciasFormulario.Designer.cs` | `panelEncabezado`, `barraAcciones`, `panelContenido`, `contenedorFormulario` |
 | `Recepcionista/PanelRecepcionista.Designer.cs` | `panelEncabezado` |
 | `Recepcionista/GestionMembresiasFormulario.Designer.cs` | `panelEncabezado`, `contenedorContenido`, `panelListado`, `contenedorDetalle`, `contenedorCampos`, `panelAcciones` |
 | `Recepcionista/GestionPagosFormulario.Designer.cs` | `panelEncabezado`, `contenedorContenido`, `panelListado`, `panelFiltro`, `contenedorDetalle`, `contenedorCampos`, `panelAcciones` |
@@ -88,7 +87,7 @@ En `InicioPanelAdministrador`:
 
 - `principal` → `Dock = Fill`, `AutoScroll = true`
 
-En los formularios de modulo (Socios, Usuarios, Planes, Membresias, Pagos, Ejercicios, Asistencias, Asignaciones, Rutinas, Mis socios, Consulta de rutinas, Reportes):
+En los formularios de modulo (Socios, Usuarios, Planes, Membresias, Pagos, Ejercicios, Asignaciones, Rutinas, Mis socios, Consulta de rutinas, Reportes):
 
 - `panelEncabezado` → `Dock = Top`, `Height = 84`
 - `barraAcciones` → `Dock = Top`, `Height = 52`; donde no tiene botones propios (Socios, Usuarios, Planes, Membresias, Pagos) dejarla en `Height = 1` como separador
@@ -124,7 +123,7 @@ Todo lo que este dentro de los paneles del paso 2 lleva `Dock = None`, `Location
 - dentro de `contenedorCampos`: cada etiqueta en `Top, Left`; cada campo en `Top, Left, Right`
 - dentro de `panelAcciones`: los botones en `Top, Left`, con `Location` y `Size` propios
 
-**Pantallas con barra de acciones** (Ejercicios, Asistencias, Asignaciones, Rutinas), dentro de `panelContenido`:
+**Pantallas con barra de acciones** (Ejercicios, Asignaciones, Rutinas), dentro de `panelContenido`:
 
 - `tabla` → `Anchor = Top, Bottom, Left, Right`
 - `panelFormulario` → `Anchor = Bottom, Left, Right`, con el alto que necesiten sus campos

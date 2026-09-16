@@ -12,7 +12,6 @@ namespace exxen2._0.capaDatos.Entidades
         public Socio()
         {
             Membresias = new HashSet<Membresia>();
-            Asistencias = new HashSet<Asistencia>();
             Estado = true;
         }
 
@@ -50,7 +49,5 @@ namespace exxen2._0.capaDatos.Entidades
         [InverseProperty("Socio")]
         public virtual ICollection<Membresia> Membresias { get; set; }
 
-        [InverseProperty("Socio")]
-        public virtual ICollection<Asistencia> Asistencias { get; set; }
     }
 }

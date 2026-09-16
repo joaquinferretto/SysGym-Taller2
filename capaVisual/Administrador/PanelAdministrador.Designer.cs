@@ -8,7 +8,7 @@ namespace exxen2._0.capaVisual.Administrador
     {
         private IContainer components = null;
         private Panel panelEncabezado; private Label lblMarca; private Label lblUsuarioRol; private Button btnCambiarCuenta; private Panel panelMenu; private Panel panelOpciones; private Panel panelPie; private Button btnSalir; private Panel panelContenido;
-        private Label lblAdministracion; private Label lblOperacion; private Label lblRutinas; private Label lblConsultas; private Button btnUsuarios; private Button btnSocios; private Button btnPlanes; private Button btnMembresias; private Button btnPagos; private Button btnAsignaciones; private Button btnAsistencias; private Button btnEjercicios; private Button btnRutinas; private Button btnMisSocios; private Button btnReportes;
+        private Label lblAdministracion; private Label lblOperacion; private Label lblRutinas; private Label lblConsultas; private Button btnUsuarios; private Button btnSocios; private Button btnPlanes; private Button btnMembresias; private Button btnPagos; private Button btnAsignaciones; private Button btnEjercicios; private Button btnRutinas; private Button btnMisSocios; private Button btnReportes;
 
         private InicioPanelAdministrador inicioPanel;
 
@@ -29,7 +29,6 @@ namespace exxen2._0.capaVisual.Administrador
             this.btnMembresias = new System.Windows.Forms.Button();
             this.btnPagos = new System.Windows.Forms.Button();
             this.btnAsignaciones = new System.Windows.Forms.Button();
-            this.btnAsistencias = new System.Windows.Forms.Button();
             this.lblRutinas = new System.Windows.Forms.Label();
             this.btnEjercicios = new System.Windows.Forms.Button();
             this.btnRutinas = new System.Windows.Forms.Button();
@@ -122,7 +121,6 @@ namespace exxen2._0.capaVisual.Administrador
             this.panelOpciones.Controls.Add(this.btnMembresias);
             this.panelOpciones.Controls.Add(this.btnPagos);
             this.panelOpciones.Controls.Add(this.btnAsignaciones);
-            this.panelOpciones.Controls.Add(this.btnAsistencias);
             this.panelOpciones.Controls.Add(this.lblRutinas);
             this.panelOpciones.Controls.Add(this.btnEjercicios);
             this.panelOpciones.Controls.Add(this.btnRutinas);
@@ -267,22 +265,6 @@ namespace exxen2._0.capaVisual.Administrador
             this.btnAsignaciones.UseVisualStyleBackColor = false;
             this.btnAsignaciones.Click += new System.EventHandler(this.btnAsignaciones_Click);
             // 
-            // btnAsistencias
-            // 
-            this.btnAsistencias.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            this.btnAsistencias.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
-            this.btnAsistencias.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAsistencias.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.btnAsistencias.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.btnAsistencias.Location = new System.Drawing.Point(14, 332);
-            this.btnAsistencias.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
-            this.btnAsistencias.Name = "btnAsistencias";
-            this.btnAsistencias.Size = new System.Drawing.Size(236, 38);
-            this.btnAsistencias.TabIndex = 8;
-            this.btnAsistencias.Text = "Asistencias";
-            this.btnAsistencias.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAsistencias.UseVisualStyleBackColor = false;
-            this.btnAsistencias.Click += new System.EventHandler(this.btnAsistencias_Click);
             // 
             // lblRutinas
             // 
@@ -469,7 +451,6 @@ namespace exxen2._0.capaVisual.Administrador
             this.btnMembresias.Visible = false;
             this.btnPagos.Visible = false;
             this.btnAsignaciones.Visible = false;
-            this.btnAsistencias.Visible = false;
             this.btnEjercicios.Visible = false;
             this.btnRutinas.Visible = false;
             this.btnMisSocios.Visible = false;

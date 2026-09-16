@@ -6,6 +6,21 @@ using exxen2._0.capaDatos.Repositorios;
 
 namespace exxen2._0.capaLogica
 {
+    /* Resume una membresía y su entrenador vigente para la pantalla de asignaciones. */
+    public sealed class MembresiaAsignacionItem
+    {
+        public int IdMembresia { get; set; }
+        public int IdMembresiaEntrenador { get; set; }
+        public string NombreSocio { get; set; }
+        public string DNI { get; set; }
+        public string NombrePlan { get; set; }
+        public DateTime FechaVencimiento { get; set; }
+        public string NombreEntrenador { get; set; }
+        public int IdEntrenador { get; set; }
+        public bool EstadoMembresia { get; set; }
+        public bool Asignado { get; set; }
+    }
+
     /* Coordina las operaciones y validaciones de negocio de asignaciones de entrenador. */
     public class MembresiaEntrenadorLogica
     {
@@ -80,6 +95,37 @@ namespace exxen2._0.capaLogica
             }
         }
 
+        /* Consulta membresías activas e históricas con el contexto mínimo para asignar entrenador. */
+        public List<MembresiaAsignacionItem> ListarParaGestion()
+        {
+            using (var datos = new UnidadDeTrabajoGimnasio())
+            {
+                return datos.Membresias.ConsultarSoloLectura("Socio", "Plan", "Entrenadores.Entrenador")
+                    .OrderByDescending(m => m.Estado)
+                    .ThenBy(m => m.Socio.Apellido)
+                    .ThenBy(m => m.Socio.Nombre)
+                    .ToList()
+                    .Select(m =>
+                    {
+                        var activo = m.Entrenadores == null ? null : m.Entrenadores.FirstOrDefault(e => e.Estado);
+                        return new MembresiaAsignacionItem
+                        {
+                            IdMembresia = m.IdMembresia,
+                            IdMembresiaEntrenador = activo == null ? 0 : activo.IdMembresiaEntrenador,
+                            NombreSocio = m.Socio == null ? "Socio no disponible" : m.Socio.Apellido + ", " + m.Socio.Nombre,
+                            DNI = m.Socio == null ? "-" : m.Socio.DNI,
+                            NombrePlan = m.Plan == null ? "-" : m.Plan.Nombre,
+                            FechaVencimiento = m.FechaVencimiento,
+                            NombreEntrenador = activo == null || activo.Entrenador == null ? "Sin asignar" : activo.Entrenador.Apellido + ", " + activo.Entrenador.Nombre + " - DNI " + activo.Entrenador.DNI,
+                            IdEntrenador = activo == null ? 0 : activo.IdEntrenador,
+                            EstadoMembresia = m.Estado,
+                            Asignado = activo != null
+                        };
+                    })
+                    .ToList();
+            }
+        }
+
         /* Desactiva la asignación del entrenador conservando el registro histórico. */
         public void DarDeBajaAsignacion(int idMembresiaEntrenador)
         {
@@ -138,9 +184,9 @@ namespace exxen2._0.capaLogica
                 throw new InvalidOperationException("La membresía no está habilitada.");
             }
 
-            if (membresia.Plan == null || !membresia.Plan.Estado || !membresia.Plan.IncluyeEntrenador)
+            if (membresia.Plan == null || !membresia.Plan.Estado)
             {
-                throw new InvalidOperationException("El plan actual no incluye entrenador.");
+                throw new InvalidOperationException("El plan actual no esta habilitado.");
             }
 
             var entrenador = datos.UsuariosSistema.Consultar("Rol").SingleOrDefault(u => u.IdUsuarioSistema == idEntrenador);

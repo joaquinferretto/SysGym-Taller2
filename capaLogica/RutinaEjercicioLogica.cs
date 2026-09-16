@@ -101,13 +101,16 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                var asignaciones = datos.RutinaAsignaciones.ConsultarSoloLectura("Membresia").Where(a => a.Estado && a.Membresia.IdSocio == idSocio && a.Membresia.Estado).OrderByDescending(a => a.FechaAsignacion).ToList();
-                if (asignaciones.Count == 0)
+                var membresia = datos.Membresias.ConsultarSoloLectura("Rutina")
+                    .Where(m => m.IdSocio == idSocio && m.Estado && m.IdRutina.HasValue)
+                    .OrderByDescending(m => m.FechaInicio)
+                    .FirstOrDefault();
+                if (membresia == null || !membresia.IdRutina.HasValue)
                 {
                     return new List<RutinaEjercicio>();
                 }
 
-                var idRutina = asignaciones[0].IdRutina;
+                var idRutina = membresia.IdRutina.Value;
                 return datos.RutinaEjercicios.ConsultarSoloLectura("Ejercicio").Where(re => re.IdRutina == idRutina && re.Estado).OrderBy(re => re.DiaSemana.HasValue ? re.DiaSemana.Value : int.MaxValue).ThenBy(re => re.Orden).ToList();
             }
         }

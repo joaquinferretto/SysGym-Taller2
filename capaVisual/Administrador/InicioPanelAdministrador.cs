@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -10,7 +11,6 @@ namespace exxen2._0.capaVisual.Administrador
     /* Transporta el socio elegido desde el estado de cuenta hasta el panel administrador. */
     public sealed class SocioEstadoCuentaEventArgs : EventArgs
     {
-        /* Inicializa los datos del socio que se abrirá en la gestión. */
         public SocioEstadoCuentaEventArgs(int idSocio)
         {
             IdSocio = idSocio;
@@ -19,7 +19,7 @@ namespace exxen2._0.capaVisual.Administrador
         public int IdSocio { get; private set; }
     }
 
-    /* Presenta el pronóstico y el estado de cuotas en el UserControl existente. */
+    /* Presenta el pronostico y el estado de cuotas en el panel de inicio. */
     [DesignerCategory("Component")]
     public sealed partial class InicioPanelAdministrador : UserControl
     {
@@ -27,33 +27,25 @@ namespace exxen2._0.capaVisual.Administrador
         private ClimaLogica clima;
         private CuotaMembresiaLogica cuotas;
         private bool cargando;
-        private bool EnModoDisenio => DesignMode || LicenseManager.UsageMode == LicenseUsageMode.Designtime;
+        private bool EnModoDisenio { get { return DesignMode || LicenseManager.UsageMode == LicenseUsageMode.Designtime; } }
 
-        /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
         public InicioPanelAdministrador()
         {
             InitializeComponent();
-            components.Add(tarjetaClimaEjemplo);
         }
 
-        /* Actualiza el estado de cuotas y el pronóstico, evitando cargas simultáneas. */
         public async void Actualizar()
         {
-            if (cargando || EnModoDisenio || clima == null || cuotas == null)
-                return;
+            if (cargando || EnModoDisenio || clima == null || cuotas == null) return;
             cargando = true;
             try
             {
                 CargarEstadoCuotas();
                 await CargarClimaAsincrono();
             }
-            finally
-            {
-                cargando = false;
-            }
+            finally { cargando = false; }
         }
 
-        /* Consulta el pronóstico sin bloquear la espera de red y muestra una alternativa si falla. */
         private async Task CargarClimaAsincrono()
         {
             estadoClima.Text = "Actualizando...";
@@ -61,17 +53,14 @@ namespace exxen2._0.capaVisual.Administrador
             try
             {
                 var pronostico = await clima.ObtenerPronosticoSemanalAsincrono();
-                if (IsDisposed)
-                    return;
+                if (IsDisposed) return;
                 LimpiarClima();
-                foreach (var dia in pronostico)
-                    AgregarDiaClima(dia);
+                foreach (var dia in pronostico) AgregarDiaClima(dia);
                 estadoClima.Text = clima.UltimaConsultaUsoCache ? "Respaldo local (sin internet)" : "Datos: Open-Meteo";
             }
             catch (Exception ex)
             {
-                if (IsDisposed)
-                    return;
+                if (IsDisposed) return;
                 MostrarClimaSinConexion();
                 var detalle = ObtenerDetalleError(ex);
                 estadoClima.Text = detalle.Length > 48 ? "No disponible: " + detalle.Substring(0, 45) + "..." : "No disponible: " + detalle;
@@ -79,16 +68,13 @@ namespace exxen2._0.capaVisual.Administrador
             }
         }
 
-        /* Recupera la causa del error y traduce el tiempo de espera a un mensaje legible. */
         private static string ObtenerDetalleError(Exception excepcion)
         {
             var detalle = excepcion;
-            while (detalle.InnerException != null)
-                detalle = detalle.InnerException;
+            while (detalle.InnerException != null) detalle = detalle.InnerException;
             return detalle is TaskCanceledException ? "El servicio demoro demasiado en responder." : detalle.Message;
         }
 
-        /* Presenta los siete días sin datos cuando el servicio de pronóstico no responde. */
         private void MostrarClimaSinConexion()
         {
             LimpiarClima();
@@ -96,61 +82,52 @@ namespace exxen2._0.capaVisual.Administrador
                 AgregarDiaClima(new PronosticoDia { Fecha = DateTime.Today.AddDays(indice), Descripcion = "Sin datos", Icono = "-" }, false);
         }
 
-        /* Retira las tarjetas anteriores y libera sus recursos, conservando la plantilla del diseñador. */
         private void LimpiarClima()
         {
             while (listaClima.Controls.Count > 0)
             {
                 var tarjeta = listaClima.Controls[0];
                 listaClima.Controls.Remove(tarjeta);
-                if (tarjeta != tarjetaClimaEjemplo)
-                    tarjeta.Dispose();
+                tarjeta.Dispose();
             }
         }
 
-        /* Agrega cada día al flujo horizontal del contenedor definido en el diseñador. */
         private void AgregarDiaClima(PronosticoDia dia, bool tieneDatos = true)
         {
-            var tarjeta = CrearDiaClima(dia, tieneDatos);
-            listaClima.Controls.Add(tarjeta);
+            listaClima.Controls.Add(CrearDiaClima(dia, tieneDatos));
         }
 
-        /* Compone cada día copiando el tamaño y los estilos de la tarjeta editable en el diseñador. */
-        private Control CrearDiaClima(PronosticoDia dia, bool tieneDatos = true)
+        private static Control CrearDiaClima(PronosticoDia dia, bool tieneDatos = true)
         {
             var tarjeta = new Panel
             {
-                BackColor = tarjetaClimaEjemplo.BackColor,
-                Size = tarjetaClimaEjemplo.Size,
-                Margin = tarjetaClimaEjemplo.Margin,
-                Font = tarjetaClimaEjemplo.Font
+                BackColor = Color.FromArgb(248, 250, 252),
+                Size = new Size(148, 108),
+                Margin = new Padding(6, 2, 6, 2)
             };
-            tarjeta.Controls.Add(CrearEtiquetaClima(lblDiaEjemplo, dia.Fecha.Date == DateTime.Today ? "HOY" : dia.Fecha.ToString("ddd dd", new CultureInfo("es-AR")).ToUpperInvariant()));
-            tarjeta.Controls.Add(CrearEtiquetaClima(lblIconoEjemplo, dia.Icono));
-            tarjeta.Controls.Add(CrearEtiquetaClima(lblDescripcionClimaEjemplo, dia.Descripcion));
-            tarjeta.Controls.Add(CrearEtiquetaClima(lblTemperaturaEjemplo, tieneDatos ? Math.Round(dia.TemperaturaMinima) + "° / " + Math.Round(dia.TemperaturaMaxima) + "°" : "-"));
-            tarjeta.Controls.Add(CrearEtiquetaClima(lblLluviaEjemplo, tieneDatos ? "Lluvia: " + dia.ProbabilidadLluvia + "%" : "Pronostico no disponible"));
+            tarjeta.Controls.Add(CrearEtiquetaClima(dia.Fecha.Date == DateTime.Today ? "HOY" : dia.Fecha.ToString("ddd dd", new CultureInfo("es-AR")).ToUpperInvariant(), new Point(0, 4), new Size(148, 22), new Font("Segoe UI Semibold", 9F, FontStyle.Bold), Color.FromArgb(51, 65, 85)));
+            tarjeta.Controls.Add(CrearEtiquetaClima(dia.Icono, new Point(8, 24), new Size(132, 34), new Font("Segoe UI Symbol", 20F), Color.FromArgb(79, 70, 229)));
+            tarjeta.Controls.Add(CrearEtiquetaClima(dia.Descripcion, new Point(5, 58), new Size(138, 18), new Font("Segoe UI", 9F), Color.FromArgb(71, 85, 105)));
+            tarjeta.Controls.Add(CrearEtiquetaClima(tieneDatos ? Math.Round(dia.TemperaturaMinima) + "° / " + Math.Round(dia.TemperaturaMaxima) + "°" : "-", new Point(5, 76), new Size(138, 18), new Font("Segoe UI Semibold", 9F, FontStyle.Bold), Color.FromArgb(30, 41, 59)));
+            tarjeta.Controls.Add(CrearEtiquetaClima(tieneDatos ? "Lluvia: " + dia.ProbabilidadLluvia + "%" : "Pronostico no disponible", new Point(5, 92), new Size(138, 14), new Font("Segoe UI", 8F), Color.FromArgb(100, 116, 139)));
             return tarjeta;
         }
 
-        /* Copia la presentación de una etiqueta de ejemplo y coloca el dato del día correspondiente. */
-        private static Label CrearEtiquetaClima(Label modelo, string texto)
+        private static Label CrearEtiquetaClima(string texto, Point ubicacion, Size tamano, Font fuente, Color color)
         {
             return new Label
             {
                 AutoSize = false,
-                Location = modelo.Location,
-                Size = modelo.Size,
-                Font = modelo.Font,
-                ForeColor = modelo.ForeColor,
-                BackColor = modelo.BackColor,
-                TextAlign = modelo.TextAlign,
-                Padding = modelo.Padding,
+                Location = ubicacion,
+                Size = tamano,
+                Font = fuente,
+                ForeColor = color,
+                BackColor = Color.Transparent,
+                TextAlign = ContentAlignment.MiddleCenter,
                 Text = texto
             };
         }
 
-        /* Presenta el saldo y la situación de cada membresía y resume cuántas tienen deuda. */
         private void CargarEstadoCuotas()
         {
             try
@@ -159,7 +136,9 @@ namespace exxen2._0.capaVisual.Administrador
                 tablaCuotas.Rows.Clear();
                 foreach (var estado in estados)
                 {
-                    var periodo = estado.UltimaCuotaDesde.HasValue && estado.UltimaCuotaHasta.HasValue ? estado.UltimaCuotaDesde.Value.ToString("dd/MM/yyyy") + " - " + estado.UltimaCuotaHasta.Value.ToString("dd/MM/yyyy") : "Sin cuota";
+                    var periodo = estado.UltimaCuotaDesde.HasValue && estado.UltimaCuotaHasta.HasValue
+                        ? estado.UltimaCuotaDesde.Value.ToString("dd/MM/yyyy") + " - " + estado.UltimaCuotaHasta.Value.ToString("dd/MM/yyyy")
+                        : "Sin cuota";
                     tablaCuotas.Rows.Add(estado.IdMembresia, estado.IdSocio, estado.Socio, estado.DNI, estado.Plan, periodo, estado.EstadoUltimaCuota, estado.SaldoPendiente.ToString("C"), estado.Situacion);
                 }
 
@@ -174,27 +153,21 @@ namespace exxen2._0.capaVisual.Administrador
             }
         }
 
-        /* Al cargar la pantalla en ejecución, prepara sus datos iniciales sin realizar consultas desde el diseñador. */
-        /* Al hacer doble clic en una cuenta, solicita abrir el socio correspondiente en su gestión. */
         private void tablaCuotas_CellDoubleClick(object origen, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0)
-                return;
+            if (e.RowIndex < 0) return;
             int idSocio;
-            if (!int.TryParse(Convert.ToString(tablaCuotas.Rows[e.RowIndex].Cells["colIdSocio"].Value), out idSocio) || idSocio <= 0)
-                return;
+            if (!int.TryParse(Convert.ToString(tablaCuotas.Rows[e.RowIndex].Cells["colIdSocio"].Value), out idSocio) || idSocio <= 0) return;
             var evento = SocioDobleClic;
-            if (evento != null)
-                evento(this, new SocioEstadoCuentaEventArgs(idSocio));
+            if (evento != null) evento(this, new SocioEstadoCuentaEventArgs(idSocio));
         }
 
         private void InicioPanelAdministrador_Load(object origen, EventArgs e)
         {
-            if (EnModoDisenio)
-                return;
+            if (EnModoDisenio) return;
             clima = new ClimaLogica();
             cuotas = new CuotaMembresiaLogica();
-            tituloClima.Text = "Pronostico semanal - " + clima.Ciudad;
+            tituloClima.Text = "Pronóstico semanal - " + clima.Ciudad;
             Actualizar();
         }
     }

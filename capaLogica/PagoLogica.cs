@@ -49,8 +49,6 @@ namespace exxen2._0.capaLogica
                 cuota.Pago = pago;
                 CuotaMembresiaLogica.RecalcularEstadoPagoEnContexto(datos, cuota);
                 datos.GuardarCambios();
-                MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(datos, cuota.IdMembresia);
-                datos.GuardarCambios();
                 transaccion.Confirmar();
                 return pago;
             }
@@ -163,7 +161,6 @@ namespace exxen2._0.capaLogica
                     cuota.Pago = pago;
                     CuotaMembresiaLogica.RecalcularEstadoPagoEnContexto(datos, cuota);
                     datos.GuardarCambios();
-                    MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(datos, cuota.IdMembresia);
                 }
 
                 datos.GuardarCambios();
@@ -223,8 +220,6 @@ namespace exxen2._0.capaLogica
                 pago.Fecha = pagoActualizado.Fecha;
                 cuota.Pago = pago;
                 CuotaMembresiaLogica.RecalcularEstadoPagoEnContexto(datos, cuota);
-                datos.GuardarCambios();
-                MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(datos, cuota.IdMembresia);
                 datos.GuardarCambios();
                 transaccion.Confirmar();
             }

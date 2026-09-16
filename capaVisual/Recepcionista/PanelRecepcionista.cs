@@ -15,7 +15,6 @@ namespace exxen2._0.capaVisual.Recepcionista
         private bool clientesExpandida = true;
         private bool cajaExpandida;
         private bool entrenadoresExpandida;
-        private bool controlExpandida;
         [System.ComponentModel.Browsable(false)]
         [System.ComponentModel.DesignerSerializationVisibility(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public bool CambioCuentaSolicitado
@@ -48,7 +47,6 @@ namespace exxen2._0.capaVisual.Recepcionista
             lblClientes.Click += clientes_Click;
             lblCaja.Click += caja_Click;
             lblEntrenadores.Click += entrenadores_Click;
-            lblControl.Click += control_Click;
             AplicarMenuDesplegable();
         }
 
@@ -59,7 +57,6 @@ namespace exxen2._0.capaVisual.Recepcionista
             posicionY = MenuDesplegableHelper.ColocarSeccion(lblClientes, clientesExpandida, posicionY, btnSocios, btnMembresias);
             posicionY = MenuDesplegableHelper.ColocarSeccion(lblCaja, cajaExpandida, posicionY, btnPagos);
             posicionY = MenuDesplegableHelper.ColocarSeccion(lblEntrenadores, entrenadoresExpandida, posicionY, btnAsignar, btnConsultar);
-            posicionY = MenuDesplegableHelper.ColocarSeccion(lblControl, controlExpandida, posicionY, btnAsistencias);
             panelOpciones.AutoScrollMinSize = new Size(0, posicionY);
         }
 
@@ -81,13 +78,6 @@ namespace exxen2._0.capaVisual.Recepcionista
         private void entrenadores_Click(object origen, EventArgs e)
         {
             entrenadoresExpandida = !entrenadoresExpandida;
-            AplicarMenuDesplegable();
-        }
-
-        /* Al hacer clic en control de acceso, muestra u oculta sus opciones. */
-        private void control_Click(object origen, EventArgs e)
-        {
-            controlExpandida = !controlExpandida;
             AplicarMenuDesplegable();
         }
 
@@ -137,12 +127,6 @@ namespace exxen2._0.capaVisual.Recepcionista
         private void btnConsultar_Click(object origen, EventArgs e)
         {
             navegacion.AbrirFormulario(new GestionAsignacionesFormulario());
-        }
-
-        /* Al hacer clic en btnAsistencias, abre el módulo correspondiente dentro del panel principal. */
-        private void btnAsistencias_Click(object origen, EventArgs e)
-        {
-            navegacion.AbrirFormulario(new GestionAsistenciasFormulario(Color.FromArgb(5, 150, 105)));
         }
 
         /* Al cargar la pantalla en ejecución, prepara sus datos iniciales sin realizar consultas desde el diseñador. */

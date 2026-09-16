@@ -241,8 +241,6 @@ namespace exxen2._0.capaLogica
                 cuota.EstadoPago = EstadosCuota.Pendiente;
                 RecalcularEstadoPagoEnContexto(datos, cuota);
                 datos.GuardarCambios();
-                MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(datos, cuota.IdMembresia);
-                datos.GuardarCambios();
                 transaccion.Confirmar();
             }
         }
@@ -260,8 +258,6 @@ namespace exxen2._0.capaLogica
                 }
 
                 cuota.EstadoPago = EstadosCuota.Anulada;
-                datos.GuardarCambios();
-                MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(datos, cuota.IdMembresia);
                 datos.GuardarCambios();
                 transaccion.Confirmar();
             }
@@ -321,8 +317,6 @@ namespace exxen2._0.capaLogica
                 }
 
                 RecalcularEstadoPagoEnContexto(datos, cuota);
-                datos.GuardarCambios();
-                MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(datos, cuota.IdMembresia);
                 datos.GuardarCambios();
                 transaccion.Confirmar();
             }

@@ -38,7 +38,6 @@ namespace exxen2._0.capaVisual.Compartido
                 nuevo.Visible = false;
                 guardar.Visible = false;
                 actualizar.Visible = false;
-                darDeBaja.Visible = false;
                 nombre.ReadOnly = true;
                 apellido.ReadOnly = true;
                 dni.ReadOnly = true;
@@ -166,8 +165,6 @@ namespace exxen2._0.capaVisual.Compartido
             lblFormulario.Text = nuevoRegistro ? "Nuevo socio - Estado inicial: Activo" : "Editar socio";
             guardar.Enabled = permitirEdicion && nuevoRegistro;
             actualizar.Enabled = permitirEdicion && !nuevoRegistro;
-            darDeBaja.Enabled = permitirEdicion && !nuevoRegistro && activo;
-            reactivar.Enabled = permitirEdicion && !nuevoRegistro && !activo;
         }
 
         /* Selecciona en la grilla el socio solicitado por una pantalla de origen. */
@@ -197,7 +194,6 @@ namespace exxen2._0.capaVisual.Compartido
                 FechaNacimiento = fechaNacimiento.Checked ? (DateTime? )fechaNacimiento.Value.Date : null,
                 Peso = string.IsNullOrWhiteSpace(peso.Text) ? (decimal? )null : AyudaFormularioVisual.DecimalPositivo(peso, "peso"),
                 Altura = string.IsNullOrWhiteSpace(altura.Text) ? (decimal? )null : AyudaFormularioVisual.DecimalPositivo(altura, "altura"),
-                Estado = estadoSeleccionado,
                 Foto = fotoSeleccionada,
                 Sexo = SexoSeleccionado()
             };
@@ -232,44 +228,6 @@ namespace exxen2._0.capaVisual.Compartido
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Socio actualizado correctamente.");
-            }
-            catch (Exception ex)
-            {
-                AyudaFormularioVisual.MostrarError(lblEstado, ex);
-            }
-        }
-
-        /* Al hacer clic en darDeBaja, solicita la baja lógica del registro seleccionado y actualiza el listado. */
-        private void darDeBaja_Click(object origen, EventArgs e)
-        {
-            try
-            {
-                if (!permitirEdicion || idSeleccionado == 0)
-                    throw new InvalidOperationException("Selecciona un socio.");
-                if (MessageBox.Show("Dar de baja al socio seleccionado?", "Confirmar baja", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
-                    return;
-                logica.DarDeBaja(idSeleccionado);
-                Cargar();
-                nuevo_Click(null, EventArgs.Empty);
-                AyudaFormularioVisual.MostrarExito(lblEstado, "Socio dado de baja.");
-            }
-            catch (Exception ex)
-            {
-                AyudaFormularioVisual.MostrarError(lblEstado, ex);
-            }
-        }
-
-        /* Al hacer clic en reactivar, solicita la reactivación del registro seleccionado y actualiza el listado. */
-        private void reactivar_Click(object origen, EventArgs e)
-        {
-            try
-            {
-                if (!permitirEdicion || idSeleccionado == 0)
-                    throw new InvalidOperationException("Selecciona un socio.");
-                logica.Reactivar(idSeleccionado);
-                Cargar();
-                nuevo_Click(null, EventArgs.Empty);
-                AyudaFormularioVisual.MostrarExito(lblEstado, "Socio reactivado correctamente.");
             }
             catch (Exception ex)
             {

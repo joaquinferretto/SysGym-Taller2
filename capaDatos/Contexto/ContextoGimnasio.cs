@@ -31,23 +31,15 @@ namespace exxen2._0.capaDatos.Contexto
         public DbSet<MercadoPago> MercadoPagos { get; set; }
         public DbSet<PagoEfectivo> PagosEfectivo { get; set; }
         public DbSet<Divisa> Divisas { get; set; }
-        public DbSet<Asistencia> Asistencias { get; set; }
         public DbSet<Rutina> Rutinas { get; set; }
         public DbSet<Ejercicio> Ejercicios { get; set; }
         public DbSet<RutinaEjercicio> RutinaEjercicios { get; set; }
-        public DbSet<RutinaAsignacion> RutinaAsignaciones { get; set; }
 
         /* Configura tablas, tipos, precisión decimal y relaciones sin borrado en cascada. */
         protected override void OnModelCreating(DbModelBuilder modelo)
         {
             base.OnModelCreating(modelo);
             modelo.Conventions.Remove<System.Data.Entity.ModelConfiguration.Conventions.ManyToManyCascadeDeleteConvention>();
-            modelo.Entity<Plan>().HasMany(p => p.RutinasDisponibles).WithMany().Map(relacion =>
-            {
-                relacion.ToTable("PlanRutina");
-                relacion.MapLeftKey("IdPlan");
-                relacion.MapRightKey("IdRutina");
-            });
             modelo.Properties<System.DateTime>().Configure(p => p.HasColumnType("datetime2"));
             modelo.Entity<Rol>().ToTable("Rol");
             modelo.Entity<UsuarioSistema>().ToTable("UsuarioSistema");
@@ -61,11 +53,9 @@ namespace exxen2._0.capaDatos.Contexto
             modelo.Entity<MercadoPago>().ToTable("MercadoPago");
             modelo.Entity<PagoEfectivo>().ToTable("PagoEfectivo");
             modelo.Entity<Divisa>().ToTable("Divisa");
-            modelo.Entity<Asistencia>().ToTable("Asistencia");
             modelo.Entity<Rutina>().ToTable("Rutina");
             modelo.Entity<Ejercicio>().ToTable("Ejercicio");
             modelo.Entity<RutinaEjercicio>().ToTable("RutinaEjercicio");
-            modelo.Entity<RutinaAsignacion>().ToTable("RutinaAsignacion");
             modelo.Entity<Socio>().Property(s => s.Peso).HasPrecision(6, 2);
             modelo.Entity<Socio>().Property(s => s.Altura).HasPrecision(5, 2);
             modelo.Entity<UsuarioSistema>().Property(u => u.Salario).HasPrecision(18, 2);
@@ -78,6 +68,7 @@ namespace exxen2._0.capaDatos.Contexto
             modelo.Entity<Membresia>().HasRequired(m => m.Plan).WithMany(p => p.Membresias).HasForeignKey(m => m.IdPlan).WillCascadeOnDelete(false);
             modelo.Entity<Membresia>().HasRequired(m => m.Socio).WithMany(s => s.Membresias).HasForeignKey(m => m.IdSocio).WillCascadeOnDelete(false);
             modelo.Entity<Membresia>().HasRequired(m => m.UsuarioSistema).WithMany(u => u.MembresiasRegistradas).HasForeignKey(m => m.IdUsuarioSistema).WillCascadeOnDelete(false);
+            modelo.Entity<Membresia>().HasOptional(m => m.Rutina).WithMany(r => r.Membresias).HasForeignKey(m => m.IdRutina).WillCascadeOnDelete(false);
             modelo.Entity<MembresiaEntrenador>().HasRequired(me => me.Membresia).WithMany(m => m.Entrenadores).HasForeignKey(me => me.IdMembresia).WillCascadeOnDelete(false);
             modelo.Entity<MembresiaEntrenador>().HasRequired(me => me.Entrenador).WithMany(u => u.MembresiasComoEntrenador).HasForeignKey(me => me.IdEntrenador).WillCascadeOnDelete(false);
             modelo.Entity<CuotaMembresia>().HasRequired(c => c.Membresia).WithMany(m => m.Cuotas).HasForeignKey(c => c.IdMembresia).WillCascadeOnDelete(false);
@@ -86,13 +77,9 @@ namespace exxen2._0.capaDatos.Contexto
             modelo.Entity<MetodoPago>().HasOptional(mp => mp.MercadoPago).WithMany(mp => mp.MetodosPago).HasForeignKey(mp => mp.IdNroPagoMP).WillCascadeOnDelete(false);
             modelo.Entity<MetodoPago>().HasOptional(mp => mp.PagoEfectivo).WithMany(pe => pe.MetodosPago).HasForeignKey(mp => mp.IdPagoEfectivo).WillCascadeOnDelete(false);
             modelo.Entity<PagoEfectivo>().HasRequired(pe => pe.Divisa).WithMany(d => d.PagosEfectivo).HasForeignKey(pe => pe.IdDivisa).WillCascadeOnDelete(false);
-            modelo.Entity<Asistencia>().HasRequired(a => a.Socio).WithMany(s => s.Asistencias).HasForeignKey(a => a.IdSocio).WillCascadeOnDelete(false);
             modelo.Entity<Rutina>().HasRequired(r => r.Entrenador).WithMany(u => u.RutinasComoEntrenador).HasForeignKey(r => r.IdEntrenador).WillCascadeOnDelete(false);
             modelo.Entity<RutinaEjercicio>().HasRequired(re => re.Rutina).WithMany(r => r.Ejercicios).HasForeignKey(re => re.IdRutina).WillCascadeOnDelete(false);
             modelo.Entity<RutinaEjercicio>().HasRequired(re => re.Ejercicio).WithMany(e => e.Rutinas).HasForeignKey(re => re.IdEjercicio).WillCascadeOnDelete(false);
-            modelo.Entity<RutinaAsignacion>().HasRequired(ra => ra.Rutina).WithMany(r => r.Asignaciones).HasForeignKey(ra => ra.IdRutina).WillCascadeOnDelete(false);
-            modelo.Entity<RutinaAsignacion>().HasRequired(ra => ra.Membresia).WithMany(m => m.Rutinas).HasForeignKey(ra => ra.IdMembresia).WillCascadeOnDelete(false);
-            modelo.Entity<Plan>().HasRequired(p => p.Rutina).WithMany(r => r.Planes).HasForeignKey(p => p.IdRutina).WillCascadeOnDelete(false);
         }
     }
 }
