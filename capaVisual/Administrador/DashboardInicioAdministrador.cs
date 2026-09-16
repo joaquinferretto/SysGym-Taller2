@@ -80,6 +80,5 @@ namespace exxen2._0.capaVisual.Administrador
             }
             catch (Exception ex) { tablaCuotas.Rows.Clear(); resumenCuotas.Text = "No se pudo cargar: " + ex.Message; }
         }
-
     }
 }

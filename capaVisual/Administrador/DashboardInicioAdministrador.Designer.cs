@@ -18,26 +18,13 @@ namespace exxen2._0.capaVisual.Administrador
         private FlowLayoutPanel listaClima;
         private Panel tarjetaSuscripcion;
         private Label lblSuscripcion;
-        private Panel tarjetaCuotas;
-        private Panel cabeceraCuotas;
-        private Label resumenCuotas;
-        private DataGridView tablaCuotas;
         private ToolTip ayudaClima;
-        private Label lblTituloCuotas;
         private Panel tarjetaClimaEjemplo;
         private Label lblDiaEjemplo;
         private Label lblIconoEjemplo;
         private Label lblDescripcionClimaEjemplo;
         private Label lblTemperaturaEjemplo;
         private Label lblLluviaEjemplo;
-        private DataGridViewTextBoxColumn colIdMembresia;
-        private DataGridViewTextBoxColumn colSocio;
-        private DataGridViewTextBoxColumn colDni;
-        private DataGridViewTextBoxColumn colPlan;
-        private DataGridViewTextBoxColumn colPeriodo;
-        private DataGridViewTextBoxColumn colEstadoCuota;
-        private DataGridViewTextBoxColumn colSaldo;
-        private DataGridViewTextBoxColumn colSituacion;
 
         protected override void Dispose(bool disposing)
         {
@@ -65,20 +52,20 @@ namespace exxen2._0.capaVisual.Administrador
             this.estadoClima = new System.Windows.Forms.Label();
             this.tarjetaSuscripcion = new System.Windows.Forms.Panel();
             this.lblSuscripcion = new System.Windows.Forms.Label();
-            this.tarjetaCuotas = new System.Windows.Forms.Panel();
-            this.tablaCuotas = new System.Windows.Forms.DataGridView();
-            this.colIdMembresia = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSocio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDni = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPlan = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPeriodo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEstadoCuota = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSaldo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSituacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cabeceraCuotas = new System.Windows.Forms.Panel();
-            this.lblTituloCuotas = new System.Windows.Forms.Label();
-            this.resumenCuotas = new System.Windows.Forms.Label();
             this.ayudaClima = new System.Windows.Forms.ToolTip(this.components);
+            this.tablaCuotas = new System.Windows.Forms.DataGridView();
+            this.colSituacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSaldo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEstadoCuota = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPeriodo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPlan = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDni = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSocio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colIdMembresia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tarjetaCuotas = new System.Windows.Forms.Panel();
+            this.resumenCuotas = new System.Windows.Forms.Label();
+            this.lblTituloCuotas = new System.Windows.Forms.Label();
+            this.cabeceraCuotas = new System.Windows.Forms.Panel();
             this.principal.SuspendLayout();
             this.panelCabecera.SuspendLayout();
             this.tarjetaClima.SuspendLayout();
@@ -86,21 +73,22 @@ namespace exxen2._0.capaVisual.Administrador
             this.tarjetaClimaEjemplo.SuspendLayout();
             this.cabeceraClima.SuspendLayout();
             this.tarjetaSuscripcion.SuspendLayout();
-            this.tarjetaCuotas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tablaCuotas)).BeginInit();
+            this.tarjetaCuotas.SuspendLayout();
             this.cabeceraCuotas.SuspendLayout();
             this.SuspendLayout();
             // 
             // principal
             // 
+            this.principal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.principal.BackColor = System.Drawing.Color.Transparent;
             this.principal.ColumnCount = 1;
-            this.principal.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.principal.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 1474F));
             this.principal.Controls.Add(this.panelCabecera, 0, 0);
             this.principal.Controls.Add(this.tarjetaClima, 0, 1);
             this.principal.Controls.Add(this.tarjetaSuscripcion, 0, 2);
             this.principal.Controls.Add(this.tarjetaCuotas, 0, 3);
-            this.principal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.principal.Location = new System.Drawing.Point(0, 0);
             this.principal.Name = "principal";
             this.principal.Padding = new System.Windows.Forms.Padding(20);
@@ -298,19 +286,6 @@ namespace exxen2._0.capaVisual.Administrador
     "al debe tener una cuota. El socio esta al dia cuando no posee cuotas pendientes " +
     "y el periodo vigente ya fue generado.";
             // 
-            // tarjetaCuotas
-            // 
-            this.tarjetaCuotas.BackColor = System.Drawing.Color.White;
-            this.tarjetaCuotas.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tarjetaCuotas.Controls.Add(this.tablaCuotas);
-            this.tarjetaCuotas.Controls.Add(this.cabeceraCuotas);
-            this.tarjetaCuotas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tarjetaCuotas.Location = new System.Drawing.Point(20, 362);
-            this.tarjetaCuotas.Margin = new System.Windows.Forms.Padding(0);
-            this.tarjetaCuotas.Name = "tarjetaCuotas";
-            this.tarjetaCuotas.Size = new System.Drawing.Size(1512, 244);
-            this.tarjetaCuotas.TabIndex = 3;
-            // 
             // tablaCuotas
             // 
             this.tablaCuotas.AllowUserToAddRows = false;
@@ -336,50 +311,8 @@ namespace exxen2._0.capaVisual.Administrador
             this.tablaCuotas.RowHeadersVisible = false;
             this.tablaCuotas.RowTemplate.Height = 32;
             this.tablaCuotas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tablaCuotas.Size = new System.Drawing.Size(1508, 198);
+            this.tablaCuotas.Size = new System.Drawing.Size(1431, 198);
             this.tablaCuotas.TabIndex = 1;
-            // 
-            // colIdMembresia
-            // 
-            this.colIdMembresia.HeaderText = "N.";
-            this.colIdMembresia.Name = "colIdMembresia";
-            this.colIdMembresia.ReadOnly = true;
-            // 
-            // colSocio
-            // 
-            this.colSocio.HeaderText = "Socio";
-            this.colSocio.Name = "colSocio";
-            this.colSocio.ReadOnly = true;
-            // 
-            // colDni
-            // 
-            this.colDni.HeaderText = "DNI";
-            this.colDni.Name = "colDni";
-            this.colDni.ReadOnly = true;
-            // 
-            // colPlan
-            // 
-            this.colPlan.HeaderText = "Plan";
-            this.colPlan.Name = "colPlan";
-            this.colPlan.ReadOnly = true;
-            // 
-            // colPeriodo
-            // 
-            this.colPeriodo.HeaderText = "Ultimo periodo";
-            this.colPeriodo.Name = "colPeriodo";
-            this.colPeriodo.ReadOnly = true;
-            // 
-            // colEstadoCuota
-            // 
-            this.colEstadoCuota.HeaderText = "Ultima cuota";
-            this.colEstadoCuota.Name = "colEstadoCuota";
-            this.colEstadoCuota.ReadOnly = true;
-            // 
-            // colSaldo
-            // 
-            this.colSaldo.HeaderText = "Saldo pendiente";
-            this.colSaldo.Name = "colSaldo";
-            this.colSaldo.ReadOnly = true;
             // 
             // colSituacion
             // 
@@ -387,16 +320,71 @@ namespace exxen2._0.capaVisual.Administrador
             this.colSituacion.Name = "colSituacion";
             this.colSituacion.ReadOnly = true;
             // 
-            // cabeceraCuotas
+            // colSaldo
             // 
-            this.cabeceraCuotas.BackColor = System.Drawing.Color.White;
-            this.cabeceraCuotas.Controls.Add(this.lblTituloCuotas);
-            this.cabeceraCuotas.Controls.Add(this.resumenCuotas);
-            this.cabeceraCuotas.Dock = System.Windows.Forms.DockStyle.Top;
-            this.cabeceraCuotas.Location = new System.Drawing.Point(0, 0);
-            this.cabeceraCuotas.Name = "cabeceraCuotas";
-            this.cabeceraCuotas.Size = new System.Drawing.Size(1510, 44);
-            this.cabeceraCuotas.TabIndex = 0;
+            this.colSaldo.HeaderText = "Saldo pendiente";
+            this.colSaldo.Name = "colSaldo";
+            this.colSaldo.ReadOnly = true;
+            // 
+            // colEstadoCuota
+            // 
+            this.colEstadoCuota.HeaderText = "Ultima cuota";
+            this.colEstadoCuota.Name = "colEstadoCuota";
+            this.colEstadoCuota.ReadOnly = true;
+            // 
+            // colPeriodo
+            // 
+            this.colPeriodo.HeaderText = "Ultimo periodo";
+            this.colPeriodo.Name = "colPeriodo";
+            this.colPeriodo.ReadOnly = true;
+            // 
+            // colPlan
+            // 
+            this.colPlan.HeaderText = "Plan";
+            this.colPlan.Name = "colPlan";
+            this.colPlan.ReadOnly = true;
+            // 
+            // colDni
+            // 
+            this.colDni.HeaderText = "DNI";
+            this.colDni.Name = "colDni";
+            this.colDni.ReadOnly = true;
+            // 
+            // colSocio
+            // 
+            this.colSocio.HeaderText = "Socio";
+            this.colSocio.Name = "colSocio";
+            this.colSocio.ReadOnly = true;
+            // 
+            // colIdMembresia
+            // 
+            this.colIdMembresia.HeaderText = "N.";
+            this.colIdMembresia.Name = "colIdMembresia";
+            this.colIdMembresia.ReadOnly = true;
+            // 
+            // tarjetaCuotas
+            // 
+            this.tarjetaCuotas.BackColor = System.Drawing.Color.White;
+            this.tarjetaCuotas.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tarjetaCuotas.Controls.Add(this.tablaCuotas);
+            this.tarjetaCuotas.Controls.Add(this.cabeceraCuotas);
+            this.tarjetaCuotas.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tarjetaCuotas.Location = new System.Drawing.Point(20, 362);
+            this.tarjetaCuotas.Margin = new System.Windows.Forms.Padding(0);
+            this.tarjetaCuotas.Name = "tarjetaCuotas";
+            this.tarjetaCuotas.Size = new System.Drawing.Size(1512, 244);
+            this.tarjetaCuotas.TabIndex = 3;
+            // 
+            // resumenCuotas
+            // 
+            this.resumenCuotas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.resumenCuotas.AutoSize = true;
+            this.resumenCuotas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
+            this.resumenCuotas.Location = new System.Drawing.Point(1960, 15);
+            this.resumenCuotas.Name = "resumenCuotas";
+            this.resumenCuotas.Size = new System.Drawing.Size(121, 17);
+            this.resumenCuotas.TabIndex = 1;
+            this.resumenCuotas.Text = "Sin datos cargados";
             // 
             // lblTituloCuotas
             // 
@@ -409,16 +397,16 @@ namespace exxen2._0.capaVisual.Administrador
             this.lblTituloCuotas.TabIndex = 0;
             this.lblTituloCuotas.Text = "Estado de cuenta de socios";
             // 
-            // resumenCuotas
+            // cabeceraCuotas
             // 
-            this.resumenCuotas.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.resumenCuotas.AutoSize = true;
-            this.resumenCuotas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
-            this.resumenCuotas.Location = new System.Drawing.Point(1960, 15);
-            this.resumenCuotas.Name = "resumenCuotas";
-            this.resumenCuotas.Size = new System.Drawing.Size(121, 17);
-            this.resumenCuotas.TabIndex = 1;
-            this.resumenCuotas.Text = "Sin datos cargados";
+            this.cabeceraCuotas.BackColor = System.Drawing.Color.White;
+            this.cabeceraCuotas.Controls.Add(this.lblTituloCuotas);
+            this.cabeceraCuotas.Controls.Add(this.resumenCuotas);
+            this.cabeceraCuotas.Dock = System.Windows.Forms.DockStyle.Top;
+            this.cabeceraCuotas.Location = new System.Drawing.Point(0, 0);
+            this.cabeceraCuotas.Name = "cabeceraCuotas";
+            this.cabeceraCuotas.Size = new System.Drawing.Size(1510, 44);
+            this.cabeceraCuotas.TabIndex = 0;
             // 
             // DashboardInicioAdministrador
             // 
@@ -438,13 +426,26 @@ namespace exxen2._0.capaVisual.Administrador
             this.cabeceraClima.ResumeLayout(false);
             this.cabeceraClima.PerformLayout();
             this.tarjetaSuscripcion.ResumeLayout(false);
-            this.tarjetaCuotas.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tablaCuotas)).EndInit();
+            this.tarjetaCuotas.ResumeLayout(false);
             this.cabeceraCuotas.ResumeLayout(false);
             this.cabeceraCuotas.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
+        private Panel tarjetaCuotas;
+        private DataGridView tablaCuotas;
+        private DataGridViewTextBoxColumn colIdMembresia;
+        private DataGridViewTextBoxColumn colSocio;
+        private DataGridViewTextBoxColumn colDni;
+        private DataGridViewTextBoxColumn colPlan;
+        private DataGridViewTextBoxColumn colPeriodo;
+        private DataGridViewTextBoxColumn colEstadoCuota;
+        private DataGridViewTextBoxColumn colSaldo;
+        private DataGridViewTextBoxColumn colSituacion;
+        private Panel cabeceraCuotas;
+        private Label lblTituloCuotas;
+        private Label resumenCuotas;
     }
 }

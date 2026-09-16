@@ -244,6 +244,9 @@
     <EmbeddedResource Include="capaVisual\Entrenador\DashboardEntrenador.resx">
       <DependentUpon>DashboardEntrenador.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="capaVisual\Entrenador\MisSociosForm.resx">
+      <DependentUpon>MisSociosForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="capaVisual\Recepcionista\DashboardRecepcionista.resx">
       <DependentUpon>DashboardRecepcionista.cs</DependentUpon>
     </EmbeddedResource>
