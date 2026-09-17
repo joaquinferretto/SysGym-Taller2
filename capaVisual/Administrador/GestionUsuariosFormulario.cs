@@ -26,6 +26,8 @@ namespace exxen2._0.capaVisual.Administrador
         public GestionUsuariosFormulario()
         {
             InitializeComponent();
+            fechaNacimiento.MaxDate = DateTime.Today.AddYears(-18);
+            fechaNacimiento.Value = fechaNacimiento.MaxDate;
         }
 
         /* Carga los roles activos disponibles para crear o modificar personal. */
@@ -101,6 +103,7 @@ namespace exxen2._0.capaVisual.Administrador
                 nombre.Text = usuario.Nombre;
                 apellido.Text = usuario.Apellido;
                 dni.Text = usuario.DNI;
+                fechaNacimiento.Value = usuario.FechaNacimiento ?? fechaNacimiento.MaxDate;
                 nombreUsuario.Text = usuario.NombreUsuario;
                 clave.Clear();
                 salario.Text = usuario.Salario.ToString("0.00", CultureInfo.CurrentCulture);
@@ -125,6 +128,7 @@ namespace exxen2._0.capaVisual.Administrador
             nombre.Clear();
             apellido.Clear();
             dni.Clear();
+            fechaNacimiento.Value = fechaNacimiento.MaxDate;
             nombreUsuario.Clear();
             clave.Clear();
             salario.Clear();
@@ -156,6 +160,7 @@ namespace exxen2._0.capaVisual.Administrador
                 Nombre = nombre.Text.Trim(),
                 Apellido = apellido.Text.Trim(),
                 DNI = dni.Text.Trim(),
+                FechaNacimiento = fechaNacimiento.Value.Date,
                 NombreUsuario = nombreUsuario.Text.Trim(),
                 Salario = AyudaFormularioVisual.DecimalPositivo(salario, "salario"),
                 IdRol = Convert.ToInt32(rol.SelectedValue),
@@ -284,6 +289,24 @@ namespace exxen2._0.capaVisual.Administrador
         private void salario_KeyPress(object origen, KeyPressEventArgs e)
         {
             AyudaFormularioVisual.ValidarEntradaDecimal(salario, e);
+        }
+
+        /* Al escribir el nombre, bloquea caracteres que no pertenecen a un nombre humano. */
+        private void nombre_KeyPress(object origen, KeyPressEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarEntradaNombre(e);
+        }
+
+        /* Al escribir el apellido, bloquea números y símbolos no permitidos. */
+        private void apellido_KeyPress(object origen, KeyPressEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarEntradaNombre(e);
+        }
+
+        /* Al escribir el DNI, permite únicamente dígitos y teclas de control. */
+        private void dni_KeyPress(object origen, KeyPressEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarEntradaDni(e);
         }
 
         /* Devuelve el código del sexo seleccionado sin inventar un valor para registros sin selección. */

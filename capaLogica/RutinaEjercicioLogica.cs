@@ -101,6 +101,8 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
+                MembresiaLogica.ActualizarEstadosPorDeudaEnContexto(datos);
+                datos.GuardarCambios();
                 var membresia = datos.Membresias.ConsultarSoloLectura("Rutina")
                     .Where(m => m.IdSocio == idSocio && m.Estado && m.IdRutina.HasValue)
                     .OrderByDescending(m => m.FechaInicio)
@@ -123,12 +125,32 @@ namespace exxen2._0.capaLogica
                 throw new ArgumentNullException("rutinaEjercicio");
             }
 
-            if (rutinaEjercicio.Series.HasValue && rutinaEjercicio.Series.Value <= 0)
+            if (rutinaEjercicio.IdRutina <= 0)
+            {
+                throw new InvalidOperationException("Seleccione una rutina.");
+            }
+
+            if (rutinaEjercicio.IdEjercicio <= 0)
+            {
+                throw new InvalidOperationException("Seleccione un ejercicio.");
+            }
+
+            if (!rutinaEjercicio.Series.HasValue)
+            {
+                throw new InvalidOperationException("Las series son obligatorias.");
+            }
+
+            if (rutinaEjercicio.Series.Value <= 0)
             {
                 throw new InvalidOperationException("Las series deben ser mayores que cero.");
             }
 
-            if (rutinaEjercicio.Repeticiones.HasValue && rutinaEjercicio.Repeticiones.Value <= 0)
+            if (!rutinaEjercicio.Repeticiones.HasValue)
+            {
+                throw new InvalidOperationException("Las repeticiones son obligatorias.");
+            }
+
+            if (rutinaEjercicio.Repeticiones.Value <= 0)
             {
                 throw new InvalidOperationException("Las repeticiones deben ser mayores que cero.");
             }
@@ -146,6 +168,11 @@ namespace exxen2._0.capaLogica
             if (rutinaEjercicio.Orden <= 0)
             {
                 throw new InvalidOperationException("El orden debe ser mayor que cero.");
+            }
+
+            if (!rutinaEjercicio.DiaSemana.HasValue)
+            {
+                throw new InvalidOperationException("Seleccione el dia de la rutina.");
             }
 
             ValidacionesGimnasio.ValidarDiaRutina(rutinaEjercicio.DiaSemana);

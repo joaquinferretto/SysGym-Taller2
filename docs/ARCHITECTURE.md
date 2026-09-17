@@ -18,7 +18,7 @@ Debug y Release deben verificarse después de esta reorganización. La apertura 
 
 Las pantallas activas usan `IdMembresia`, `IdUsuarioSistema` e `IdSocio` como claves de las operaciones. Los combos de asignacion muestran nombre completo y DNI, pero conservan esas claves en `ValueMember`; no se identifican personas por apellido. La pantalla de asignaciones obtiene las membresias desde `MembresiaLogica` y no exige escribir un entero manualmente.
 
-El cambio de plan desde la gestion de membresias utiliza `MembresiaLogica.CambiarPlan`. La regla de negocio sigue siendo la misma: solo un plan activo con `IncluyeEntrenador` permite asignar o cambiar entrenador. La carga inicial de combos continua en `Load`, nunca en `InitializeComponent` ni en el diseñador.
+El cambio de plan desde la gestión de membresías utiliza `MembresiaLogica.CambiarPlan`. Todos los planes incluyen entrenador; la asignación vigente se registra en `MembresiaEntrenador`, no en una propiedad del plan. La carga inicial de combos continúa en `Load`, nunca en `InitializeComponent` ni en el diseñador.
 
 ## Correccion de equivalencia de dashboards - 11 de septiembre de 2026
 
@@ -30,9 +30,15 @@ Las compilaciones Debug y Release fueron exitosas sin errores ni warnings report
 
 ## Rutinas personalizadas — 11 de septiembre de 2026
 
-El entrenador puede iniciar una rutina exclusiva desde “Mis socios”. El administrador también puede acceder a “Gestionar rutinas” y “Socios y rutinas” para crear, editar, asignar y consultar rutinas globalmente. La capa visual solicita a `RutinaLogica.CrearPersonalizada` la creación de la plantilla y su `RutinaAsignacion`; la operación se confirma en una única transacción y no se accede a `DbContext` desde la interfaz.
+El entrenador puede crear rutinas reutilizables desde “Gestionar rutinas” y asignarlas desde “Mis socios”. El administrador también puede crear, editar, asignar y consultar rutinas. Cada membresía conserva cero o una rutina mediante `Membresia.IdRutina`; crear una rutina personalizada la vincula a la membresía seleccionada sin una entidad de asignación adicional. La capa visual solicita las operaciones a `RutinaLogica` y no accede a `DbContext`.
 
 Última actualización: 16 de septiembre de 2026.
+
+## Estabilización de validaciones y rutinas — 17 de septiembre de 2026
+
+Las reglas reutilizables de nombres, DNI y edad se centralizan en `ValidacionesGimnasio`; la capa visual agrega restricciones inmediatas de teclado y mensajes de advertencia, pero la capa lógica sigue siendo la validación definitiva. El formulario de usuarios incluye la fecha de nacimiento para aplicar el mínimo de 18 años.
+
+`RutinasEntrenadorFormulario` mantiene el catálogo arriba y concentra en un detalle inferior la grilla de ejercicios y el formulario de edición. La estructura permanece en `Designer.cs`; las acciones de reactivación, actualización y baja de ejercicios llaman a `RutinaLogica` y `RutinaEjercicioLogica` sin cambiar el modelo de rutinas.
 
 ## Navegación desde el estado de cuenta — 11 de septiembre de 2026
 
@@ -71,7 +77,7 @@ En cada tarea se deben actualizar los documentos existentes afectados, indicando
 
 ### Distribución libre y adaptación al tamaño — 9 de septiembre de 2026
 
-Se aplica el encargo `FIX_LAYOUT_CODEX.md`: los contenedores de distribución pasan a `Panel` estándar. Se eliminan `tablaOpciones` de los tres paneles de rol y `contenido` de InicioSesion, conservando sus hijos.
+Los contenedores de distribución de los paneles de rol usan `Panel` estándar. Se eliminan `tablaOpciones` de los tres paneles y `contenido` de InicioSesion, conservando sus hijos.
 
 - El armazón usa `Dock`: encabezado superior, menú izquierdo, pie del menú inferior, opciones y contenido con Fill. Los módulos conservan encabezado, barra superior, estado inferior y contenido Fill.
 - Los demás controles tienen `Dock = None`, `Location` y `Size` explícitos. Se pueden mover individualmente desde el diseñador; no hay celdas ni flujos que reorganicen sus vecinos.
@@ -90,7 +96,7 @@ Se revisaron los 17 formularios y el `UserControl` de `capaVisual` que forman pa
 
 Se ajustaron encabezados y títulos de listado para respetar el ancho disponible, alturas de contenedores de detalle para evitar recortes de acciones, los formularios inferiores de ejercicios/asignaciones a una distribución vertical, y el editor de rutinas para que sus campos y acciones respondan al ancho mínimo. El menú lateral mantiene sus controles en Designer y solo cambia su visibilidad durante `Load`, fuera del modo de diseño.
 
-La solución utiliza `Panel` estándar con `Dock` y `Anchor`; el listado meteorológico del dashboard administrador utiliza `FlowLayoutPanel` con flujo horizontal y desplazamiento contenido. No hay `TableLayoutPanel` que requiera configuración de filas o columnas. Los diez archivos legados `*Form.cs` no tienen `Designer.cs` y no están incluidos en `exxen2.0.csproj`; se conservan fuera del flujo activo y requieren una decisión independiente si deben volver a ser pantallas del proyecto.
+La solución utiliza `Panel` estándar con `Dock` y `Anchor`; el listado meteorológico del dashboard administrador utiliza `FlowLayoutPanel` con flujo horizontal y desplazamiento contenido. `RutinasEntrenadorFormulario` usa `TableLayoutPanel` para separar el listado superior del detalle y distribuir la grilla de ejercicios y sus campos. Las variantes antiguas `*Form.cs` se eliminaron tras comprobar que estaban excluidas del proyecto, no tenían consumidores y contaban con reemplazos activos.
 
 La apertura manual mediante «Ver diseñador» en Visual Studio 2022 sigue siendo la verificación final pendiente, porque no puede ejecutarse desde MSBuild o una consola sin iniciar el IDE.
 
@@ -108,17 +114,11 @@ Los nombres propios de clases, métodos, parámetros y archivos se escriben en e
 
 Cada clase, constructor y método no generado lleva un comentario de bloque `/* */`, conciso y en castellano. Los comentarios de eventos indican qué acción los dispara y su propósito. No se agregan comentarios de esta convención a los `.Designer.cs` ni se usan comentarios XML para sustituirla.
 
-## Catálogo de rutinas por plan — 9 de septiembre de 2026
+## Modelo de rutinas — 16 de septiembre de 2026
 
-Cambio de relación y selector visual autorizado por el usuario. Plan.RutinasDisponibles es una colección de Rutina; EF6 la persiste en PlanRutina mediante un mapeo muchos a muchos unidireccional, sin una clase visual ni un formulario nuevos. Se conserva IdRutina como rutina base por compatibilidad.
+`Membresia.IdRutina` es nullable: una membresía puede no tener rutina o tener una. La FK desde `Membresia` permite reutilizar una misma plantilla `Rutina` en varias membresías. `RutinaEjercicio` continúa asociando cada plantilla con sus ejercicios. La selección y el cambio de rutina actualizan únicamente `Membresia.IdRutina`; no eliminan la rutina anterior ni sus ejercicios. Los planes no mantienen catálogos, rutinas base ni indicadores de beneficios.
 
-GestionPlanesFormulario conserva sus campos y agrega un CheckedListBox estándar con casillas, editable en el diseñador. Las acciones se desplazan hacia abajo dentro del detalle con desplazamiento. El combo de rutina base contiene únicamente las rutinas marcadas. ItemCheck usa NewValue para actualizarlo sin tareas diferidas: conserva la base si continúa disponible y limpia la selección si se desmarca. Sin rutinas marcadas el combo queda vacío y deshabilitado. El evento se suscribe en InitializeComponent. La grilla muestra los nombres disponibles.
-
-Ajuste del 9 de septiembre: las casillas «Rutina personalizada» e «Incluye entrenador» ocupan el ancho del panel de beneficios para mostrar sus textos completos. Solo se amplían esos controles, manteniendo sus posiciones y estilos.
-
-La pantalla del entrenador mantiene el catálogo para crear/editar rutinas. Al seleccionar una, su selector de membresía se filtra mediante RutinaAsignacionLogica.ListarMembresiasDisponibles: solo planes que la habilitan, con socio, membresía, plan, rutina y entrenador activos. La lógica vuelve a validar al asignar, independientemente del filtro visual. La capa visual no accede al contexto.
-
-No se alteran otros diseños. La inicialización del formulario se verifica en memoria; queda pendiente la inspección manual en el diseñador real de Visual Studio.
+La relación se configura en EF6 y en el DDL limpio de `capaDatos/Database/SysGymDB.sql`. No hay una entidad intermedia para asignar rutinas.
 
 ## Ajuste puntual de layout master/detail - 16 de septiembre de 2026
 

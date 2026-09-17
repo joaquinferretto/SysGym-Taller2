@@ -305,15 +305,12 @@ namespace exxen2._0.capaLogica
                 throw new ArgumentNullException("usuario");
             }
 
-            if (string.IsNullOrWhiteSpace(usuario.Nombre) || string.IsNullOrWhiteSpace(usuario.Apellido))
-            {
-                throw new InvalidOperationException("Nombre y apellido son obligatorios.");
-            }
-
-            if (string.IsNullOrWhiteSpace(usuario.DNI) || string.IsNullOrWhiteSpace(usuario.NombreUsuario))
-            {
-                throw new InvalidOperationException("DNI y nombre de usuario son obligatorios.");
-            }
+            ValidacionesGimnasio.ValidarNombre(usuario.Nombre, "nombre");
+            ValidacionesGimnasio.ValidarNombre(usuario.Apellido, "apellido");
+            ValidacionesGimnasio.ValidarDni(usuario.DNI);
+            if (string.IsNullOrWhiteSpace(usuario.NombreUsuario))
+                throw new InvalidOperationException("El nombre de usuario es obligatorio.");
+            ValidacionesGimnasio.ValidarEdadMinima(usuario.FechaNacimiento, 18, "El usuario debe tener al menos 18 años.");
 
             if (usuario.Salario <= 0)
             {

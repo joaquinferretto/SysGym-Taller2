@@ -64,9 +64,12 @@ namespace exxen2._0.capaVisual.Compartido
         /* Informa el error en la pantalla y en un mensaje para que el usuario pueda corregir la operación. */
         internal static void MostrarError(Label estado, Exception excepcion)
         {
+            var mensaje = excepcion is InvalidOperationException || excepcion is ArgumentException
+                ? excepcion.Message
+                : "No se pudo completar la operación.";
             if (estado != null)
-                estado.Text = excepcion.Message;
-            MessageBox.Show(excepcion.Message, "SysGym", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                estado.Text = mensaje;
+            MessageBox.Show(mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         /* Actualiza el mensaje de estado después de completar una operación. */
@@ -109,8 +112,12 @@ namespace exxen2._0.capaVisual.Compartido
             decimal resultado;
             var texto = campo.Text.Trim();
             var esValido = decimal.TryParse(texto.Replace(',', '.'), NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out resultado);
-            if (!esValido || (permitirCero ? resultado < 0 : resultado <= 0))
-                throw new InvalidOperationException("El campo " + nombre + " debe ser numerico.");
+            if (!esValido)
+                throw new InvalidOperationException("El campo " + nombre + " debe ser numérico.");
+            if (permitirCero && resultado < 0)
+                throw new InvalidOperationException("El campo " + nombre + " no puede ser negativo.");
+            if (!permitirCero && resultado <= 0)
+                throw new InvalidOperationException("El campo " + nombre + " debe ser mayor que cero.");
             return resultado;
         }
 
@@ -132,6 +139,28 @@ namespace exxen2._0.capaVisual.Compartido
             }
 
             e.Handled = true;
+        }
+
+        /* Permite escribir letras y los separadores habituales de nombres sin reemplazar la validación final. */
+        internal static void ValidarEntradaNombre(KeyPressEventArgs e)
+        {
+            if (char.IsControl(e.KeyChar) || char.IsLetter(e.KeyChar) || e.KeyChar == ' ' || e.KeyChar == '\'' || e.KeyChar == '-')
+                return;
+            e.Handled = true;
+        }
+
+        /* Permite escribir únicamente dígitos en campos de DNI y conserva las teclas de control. */
+        internal static void ValidarEntradaDni(KeyPressEventArgs e)
+        {
+            if (char.IsControl(e.KeyChar) || (e.KeyChar >= '0' && e.KeyChar <= '9'))
+                return;
+            e.Handled = true;
+        }
+
+        /* Permite escribir únicamente dígitos en cantidades enteras. */
+        internal static void ValidarEntradaEntero(KeyPressEventArgs e)
+        {
+            ValidarEntradaDni(e);
         }
     }
 }

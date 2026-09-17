@@ -33,6 +33,8 @@ namespace exxen2._0.capaVisual.Compartido
             this.permitirEdicion = permitirEdicion;
             this.colorPrimario = colorPrimario;
             InitializeComponent();
+            fechaNacimiento.MaxDate = DateTime.Today.AddYears(-13);
+            fechaNacimiento.Value = fechaNacimiento.MaxDate;
             if (!permitirEdicion)
             {
                 nuevo.Visible = false;
@@ -151,8 +153,8 @@ namespace exxen2._0.capaVisual.Compartido
             dni.Clear();
             peso.Clear();
             altura.Clear();
-            fechaNacimiento.Value = DateTime.Today.AddYears(-18);
-            fechaNacimiento.Checked = false;
+            fechaNacimiento.Value = fechaNacimiento.MaxDate;
+            fechaNacimiento.Checked = true;
             tabla.ClearSelection();
             EstablecerModo(true, true);
             if (permitirEdicion)
@@ -316,6 +318,24 @@ namespace exxen2._0.capaVisual.Compartido
         private void altura_KeyPress(object origen, KeyPressEventArgs e)
         {
             AyudaFormularioVisual.ValidarEntradaDecimal(altura, e);
+        }
+
+        /* Al escribir el nombre, bloquea caracteres que no pertenecen a un nombre humano. */
+        private void nombre_KeyPress(object origen, KeyPressEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarEntradaNombre(e);
+        }
+
+        /* Al escribir el apellido, bloquea números y símbolos no permitidos. */
+        private void apellido_KeyPress(object origen, KeyPressEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarEntradaNombre(e);
+        }
+
+        /* Al escribir el DNI, permite únicamente dígitos y teclas de control. */
+        private void dni_KeyPress(object origen, KeyPressEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarEntradaDni(e);
         }
 
         /* Devuelve el código del sexo seleccionado sin inventar un valor para registros sin selección. */

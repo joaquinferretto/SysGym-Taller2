@@ -62,6 +62,8 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
+                MembresiaLogica.ActualizarEstadosPorDeudaEnContexto(datos);
+                datos.GuardarCambios();
                 return datos.Socios.ConsultarSoloLectura("Membresias").SingleOrDefault(s => s.IdSocio == idSocio);
             }
         }
@@ -71,6 +73,8 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
+                MembresiaLogica.ActualizarEstadosPorDeudaEnContexto(datos);
+                datos.GuardarCambios();
                 return datos.Socios.ConsultarSoloLectura().SingleOrDefault(s => s.DNI == dni);
             }
         }
@@ -80,6 +84,8 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
+                MembresiaLogica.ActualizarEstadosPorDeudaEnContexto(datos);
+                datos.GuardarCambios();
                 return ListarSinFotos(datos.Socios.ConsultarSoloLectura().Where(s => s.Estado).OrderBy(s => s.Apellido).ThenBy(s => s.Nombre));
             }
         }
@@ -89,6 +95,8 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
+                MembresiaLogica.ActualizarEstadosPorDeudaEnContexto(datos);
+                datos.GuardarCambios();
                 return ListarSinFotos(datos.Socios.ConsultarSoloLectura().OrderByDescending(s => s.Estado).ThenBy(s => s.Apellido).ThenBy(s => s.Nombre));
             }
         }
@@ -139,15 +147,10 @@ namespace exxen2._0.capaLogica
                 throw new ArgumentNullException("socio");
             }
 
-            if (string.IsNullOrWhiteSpace(socio.DNI))
-            {
-                throw new InvalidOperationException("El DNI es obligatorio.");
-            }
-
-            if (string.IsNullOrWhiteSpace(socio.Nombre) || string.IsNullOrWhiteSpace(socio.Apellido))
-            {
-                throw new InvalidOperationException("Nombre y apellido son obligatorios.");
-            }
+            ValidacionesGimnasio.ValidarDni(socio.DNI);
+            ValidacionesGimnasio.ValidarNombre(socio.Nombre, "nombre");
+            ValidacionesGimnasio.ValidarNombre(socio.Apellido, "apellido");
+            ValidacionesGimnasio.ValidarEdadMinima(socio.FechaNacimiento, 13, "El socio debe tener al menos 13 años.");
 
             if (socio.Peso.HasValue && socio.Peso.Value <= 0)
             {

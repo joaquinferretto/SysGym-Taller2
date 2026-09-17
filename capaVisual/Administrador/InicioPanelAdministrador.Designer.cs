@@ -14,7 +14,7 @@ namespace exxen2._0.capaVisual.Administrador
         private Panel cabeceraClima;
         private Label tituloClima;
         private Label estadoClima;
-        private FlowLayoutPanel listaClima;
+        private TableLayoutPanel listaClima;
         private Panel tarjetaCuotas;
         private Panel cabeceraCuotas;
         private Label lblTituloCuotas;
@@ -41,7 +41,7 @@ namespace exxen2._0.capaVisual.Administrador
         {
             components = new Container();
             principal = new Panel(); panelCabecera = new Panel(); lblResumen = new Label();
-            tarjetaClima = new Panel(); cabeceraClima = new Panel(); tituloClima = new Label(); estadoClima = new Label(); listaClima = new FlowLayoutPanel();
+            tarjetaClima = new Panel(); cabeceraClima = new Panel(); tituloClima = new Label(); estadoClima = new Label(); listaClima = new TableLayoutPanel();
             tarjetaCuotas = new Panel(); cabeceraCuotas = new Panel(); lblTituloCuotas = new Label(); resumenCuotas = new Label(); tablaCuotas = new DataGridView(); ayudaClima = new ToolTip(components);
             colIdMembresia = new DataGridViewTextBoxColumn(); colIdSocio = new DataGridViewTextBoxColumn(); colSocio = new DataGridViewTextBoxColumn(); colDni = new DataGridViewTextBoxColumn(); colPlan = new DataGridViewTextBoxColumn(); colPeriodo = new DataGridViewTextBoxColumn(); colEstadoCuota = new DataGridViewTextBoxColumn(); colSaldo = new DataGridViewTextBoxColumn(); colSituacion = new DataGridViewTextBoxColumn();
             ((ISupportInitialize)(tablaCuotas)).BeginInit(); principal.SuspendLayout(); panelCabecera.SuspendLayout(); tarjetaClima.SuspendLayout(); cabeceraClima.SuspendLayout(); listaClima.SuspendLayout(); tarjetaCuotas.SuspendLayout(); cabeceraCuotas.SuspendLayout(); SuspendLayout();
@@ -54,25 +54,27 @@ namespace exxen2._0.capaVisual.Administrador
             cabeceraClima.BackColor = Color.White; cabeceraClima.Dock = DockStyle.Top; cabeceraClima.Height = 44; cabeceraClima.Padding = new Padding(16, 0, 16, 0); cabeceraClima.Controls.Add(tituloClima); cabeceraClima.Controls.Add(estadoClima);
             tituloClima.AutoSize = false; tituloClima.Dock = DockStyle.Fill; tituloClima.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold); tituloClima.ForeColor = Color.FromArgb(30, 41, 59); tituloClima.Text = "Pronóstico semanal - Corrientes Capital"; tituloClima.TextAlign = ContentAlignment.MiddleLeft;
             estadoClima.AutoSize = false; estadoClima.Dock = DockStyle.Right; estadoClima.Width = 240; estadoClima.ForeColor = Color.FromArgb(100, 116, 139); estadoClima.Text = ""; estadoClima.TextAlign = ContentAlignment.MiddleRight;
-            listaClima.BackColor = Color.White; listaClima.Dock = DockStyle.Fill; listaClima.AutoScroll = true; listaClima.FlowDirection = FlowDirection.LeftToRight; listaClima.WrapContents = false; listaClima.Padding = new Padding(10, 4, 10, 8);
+            listaClima.BackColor = Color.White; listaClima.Dock = DockStyle.Fill; listaClima.AutoScroll = false; listaClima.AutoSize = false; listaClima.ColumnCount = 7; listaClima.RowCount = 1; listaClima.Padding = new Padding(8, 4, 8, 8); listaClima.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
+            listaClima.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.2857F)); listaClima.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.2857F)); listaClima.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.2857F)); listaClima.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.2857F)); listaClima.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.2857F)); listaClima.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.2857F)); listaClima.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.2857F)); listaClima.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
 
             tarjetaCuotas.BackColor = Color.White; tarjetaCuotas.BorderStyle = BorderStyle.FixedSingle; tarjetaCuotas.Dock = DockStyle.Fill; tarjetaCuotas.Margin = new Padding(0); tarjetaCuotas.Controls.Add(tablaCuotas); tarjetaCuotas.Controls.Add(cabeceraCuotas);
             cabeceraCuotas.BackColor = Color.White; cabeceraCuotas.Dock = DockStyle.Top; cabeceraCuotas.Height = 44; cabeceraCuotas.Padding = new Padding(16, 0, 16, 0); cabeceraCuotas.Controls.Add(lblTituloCuotas); cabeceraCuotas.Controls.Add(resumenCuotas);
             lblTituloCuotas.AutoSize = false; lblTituloCuotas.Dock = DockStyle.Fill; lblTituloCuotas.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold); lblTituloCuotas.ForeColor = Color.FromArgb(30, 41, 59); lblTituloCuotas.Text = "Estado de cuenta de socios"; lblTituloCuotas.TextAlign = ContentAlignment.MiddleLeft;
             resumenCuotas.AutoSize = false; resumenCuotas.Dock = DockStyle.Right; resumenCuotas.Width = 520; resumenCuotas.ForeColor = Color.FromArgb(71, 85, 105); resumenCuotas.Text = ""; resumenCuotas.TextAlign = ContentAlignment.MiddleRight;
             tablaCuotas.Dock = DockStyle.Fill; tablaCuotas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; tablaCuotas.BackgroundColor = Color.White; tablaCuotas.BorderStyle = BorderStyle.None; tablaCuotas.AllowUserToAddRows = false; tablaCuotas.AllowUserToDeleteRows = false; tablaCuotas.AllowUserToResizeRows = false; tablaCuotas.ReadOnly = true; tablaCuotas.MultiSelect = false; tablaCuotas.RowHeadersVisible = false; tablaCuotas.SelectionMode = DataGridViewSelectionMode.FullRowSelect; tablaCuotas.RowTemplate.Height = 32; tablaCuotas.ColumnHeadersHeight = 38; tablaCuotas.Columns.AddRange(new DataGridViewColumn[] { colIdMembresia, colIdSocio, colSocio, colDni, colPlan, colPeriodo, colEstadoCuota, colSaldo, colSituacion }); tablaCuotas.CellDoubleClick += new DataGridViewCellEventHandler(tablaCuotas_CellDoubleClick);
-            colIdMembresia.HeaderText = "N."; colIdMembresia.Name = "colIdMembresia"; colIdMembresia.ReadOnly = true; colIdMembresia.FillWeight = 8; colIdMembresia.MinimumWidth = 42;
+            colIdMembresia.HeaderText = "N."; colIdMembresia.Name = "colIdMembresia"; colIdMembresia.ReadOnly = true; colIdMembresia.MinimumWidth = 44;
             colIdSocio.HeaderText = "Id socio"; colIdSocio.Name = "colIdSocio"; colIdSocio.ReadOnly = true; colIdSocio.Visible = false;
-            colSocio.HeaderText = "Socio"; colSocio.Name = "colSocio"; colSocio.ReadOnly = true; colSocio.FillWeight = 22; colSocio.MinimumWidth = 100;
-            colDni.HeaderText = "DNI"; colDni.Name = "colDni"; colDni.ReadOnly = true; colDni.FillWeight = 12; colDni.MinimumWidth = 65;
-            colPlan.HeaderText = "Plan"; colPlan.Name = "colPlan"; colPlan.ReadOnly = true; colPlan.FillWeight = 16; colPlan.MinimumWidth = 75;
-            colPeriodo.HeaderText = "Ultimo periodo"; colPeriodo.Name = "colPeriodo"; colPeriodo.ReadOnly = true; colPeriodo.FillWeight = 20; colPeriodo.MinimumWidth = 110;
-            colEstadoCuota.HeaderText = "Ultima cuota"; colEstadoCuota.Name = "colEstadoCuota"; colEstadoCuota.ReadOnly = true; colEstadoCuota.FillWeight = 16; colEstadoCuota.MinimumWidth = 90;
-            colSaldo.HeaderText = "Saldo pendiente"; colSaldo.Name = "colSaldo"; colSaldo.ReadOnly = true; colSaldo.FillWeight = 15; colSaldo.MinimumWidth = 90;
-            colSituacion.HeaderText = "Situacion"; colSituacion.Name = "colSituacion"; colSituacion.ReadOnly = true; colSituacion.FillWeight = 16; colSituacion.MinimumWidth = 90;
+            colSocio.HeaderText = "Socio"; colSocio.Name = "colSocio"; colSocio.ReadOnly = true; colSocio.MinimumWidth = 110;
+            colDni.HeaderText = "DNI"; colDni.Name = "colDni"; colDni.ReadOnly = true; colDni.MinimumWidth = 70;
+            colPlan.HeaderText = "Plan"; colPlan.Name = "colPlan"; colPlan.ReadOnly = true; colPlan.MinimumWidth = 80;
+            colPeriodo.HeaderText = "Ultimo periodo"; colPeriodo.Name = "colPeriodo"; colPeriodo.ReadOnly = true; colPeriodo.MinimumWidth = 125;
+            colEstadoCuota.HeaderText = "Ultima cuota"; colEstadoCuota.Name = "colEstadoCuota"; colEstadoCuota.ReadOnly = true; colEstadoCuota.MinimumWidth = 92;
+            colSaldo.HeaderText = "Saldo pendiente"; colSaldo.Name = "colSaldo"; colSaldo.ReadOnly = true; colSaldo.MinimumWidth = 124;
+            colSituacion.HeaderText = "Situacion"; colSituacion.Name = "colSituacion"; colSituacion.ReadOnly = true; colSituacion.MinimumWidth = 92;
 
             Controls.Add(principal); AutoScaleMode = AutoScaleMode.Font; BackColor = Color.FromArgb(241, 245, 249); Font = new Font("Segoe UI", 9.5F); MinimumSize = new Size(640, 460); Size = new Size(936, 670); Name = "InicioPanelAdministrador";
-            cabeceraCuotas.ResumeLayout(false); tarjetaCuotas.ResumeLayout(false); listaClima.ResumeLayout(false); cabeceraClima.ResumeLayout(false); tarjetaClima.ResumeLayout(false); panelCabecera.ResumeLayout(false); principal.ResumeLayout(false); ((ISupportInitialize)(tablaCuotas)).EndInit(); ResumeLayout(false);
+            cabeceraCuotas.ResumeLayout(false); tarjetaCuotas.ResumeLayout(false); listaClima.ResumeLayout(false); cabeceraClima.ResumeLayout(false); tarjetaClima.ResumeLayout(false); panelCabecera.ResumeLayout(false); principal.ResumeLayout(false); ((ISupportInitialize)(tablaCuotas)).EndInit(); ResumeLayout(false); PerformLayout();
+            colIdMembresia.FillWeight = 7; colSocio.FillWeight = 19; colDni.FillWeight = 9; colPlan.FillWeight = 12; colPeriodo.FillWeight = 17; colEstadoCuota.FillWeight = 13; colSaldo.FillWeight = 13; colSituacion.FillWeight = 10;
             Load += new System.EventHandler(InicioPanelAdministrador_Load);
         }
     }

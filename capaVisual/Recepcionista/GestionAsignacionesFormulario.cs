@@ -128,6 +128,8 @@ namespace exxen2._0.capaVisual.Recepcionista
             {
                 if (idSeleccionado == 0) throw new InvalidOperationException("Seleccioná una membresía.");
                 AyudaFormularioVisual.ValidarComboSeleccionado(entrenador, "un entrenador");
+                if (cambiarEntrenador && MessageBox.Show("¿Reemplazar el entrenador actual de la membresía?", "Confirmar cambio", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                    return;
                 if (cambiarEntrenador) logica.CambiarEntrenador(idSeleccionado, Convert.ToInt32(entrenador.SelectedValue));
                 else logica.AsignarEntrenador(idSeleccionado, Convert.ToInt32(entrenador.SelectedValue));
                 CargarListado();
@@ -142,6 +144,8 @@ namespace exxen2._0.capaVisual.Recepcionista
             try
             {
                 if (idAsignacionSeleccionada == 0) throw new InvalidOperationException("La membresía no tiene una asignación activa.");
+                if (MessageBox.Show("¿Dar de baja la asignación seleccionada?", "Confirmar baja", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                    return;
                 logica.DarDeBajaAsignacion(idAsignacionSeleccionada); CargarListado();
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Asignación dada de baja.");
             }

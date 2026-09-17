@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Threading.Tasks;
@@ -94,7 +95,9 @@ namespace exxen2._0.capaVisual.Administrador
 
         private void AgregarDiaClima(PronosticoDia dia, bool tieneDatos = true)
         {
-            listaClima.Controls.Add(CrearDiaClima(dia, tieneDatos));
+            var columna = listaClima.Controls.Count;
+            if (columna >= listaClima.ColumnCount) return;
+            listaClima.Controls.Add(CrearDiaClima(dia, tieneDatos), columna, 0);
         }
 
         private static Control CrearDiaClima(PronosticoDia dia, bool tieneDatos = true)
@@ -102,8 +105,8 @@ namespace exxen2._0.capaVisual.Administrador
             var tarjeta = new Panel
             {
                 BackColor = Color.FromArgb(248, 250, 252),
-                Size = new Size(148, 108),
-                Margin = new Padding(6, 2, 6, 2)
+                Dock = DockStyle.Fill,
+                Margin = new Padding(3, 2, 3, 2)
             };
             tarjeta.Controls.Add(CrearEtiquetaClima(dia.Fecha.Date == DateTime.Today ? "HOY" : dia.Fecha.ToString("ddd dd", new CultureInfo("es-AR")).ToUpperInvariant(), new Point(0, 4), new Size(148, 22), new Font("Segoe UI Semibold", 9F, FontStyle.Bold), Color.FromArgb(51, 65, 85)));
             tarjeta.Controls.Add(CrearEtiquetaClima(dia.Icono, new Point(8, 24), new Size(132, 34), new Font("Segoe UI Symbol", 20F), Color.FromArgb(79, 70, 229)));
@@ -120,6 +123,8 @@ namespace exxen2._0.capaVisual.Administrador
                 AutoSize = false,
                 Location = ubicacion,
                 Size = tamano,
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+                AutoEllipsis = true,
                 Font = fuente,
                 ForeColor = color,
                 BackColor = Color.Transparent,
@@ -148,8 +153,9 @@ namespace exxen2._0.capaVisual.Administrador
             }
             catch (Exception ex)
             {
+                Trace.TraceError("No se pudo cargar el estado de cuenta del dashboard: " + ex);
                 tablaCuotas.Rows.Clear();
-                resumenCuotas.Text = "No se pudo cargar: " + ex.Message;
+                resumenCuotas.Text = "No se pudo cargar el estado de cuenta.";
             }
         }
 

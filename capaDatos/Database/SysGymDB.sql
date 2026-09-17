@@ -95,26 +95,10 @@ CREATE TABLE [Plan] (
     Nombre NVARCHAR(100) NOT NULL,
     Descripcion NVARCHAR(500) NULL,
     Precio DECIMAL(18,2) NOT NULL,
-    IncluyeEntrenador BIT NOT NULL DEFAULT 0,
-    IncluyeRutinaPersonal BIT NOT NULL DEFAULT 0,
     Estado BIT NOT NULL DEFAULT 1,
-    IdRutina INT NOT NULL,
 
     CONSTRAINT CK_Plan_Precio
-        CHECK (Precio > 0),
-
-    CONSTRAINT FK_Plan_Rutina
-        FOREIGN KEY (IdRutina) REFERENCES Rutina(IdRutina)
-);
-GO
-
-/* Catalogo de rutinas disponibles por plan, sin duplicados ni borrado en cascada. */
-CREATE TABLE PlanRutina (
-    IdPlan INT NOT NULL,
-    IdRutina INT NOT NULL,
-    CONSTRAINT PK_PlanRutina PRIMARY KEY (IdPlan, IdRutina),
-    CONSTRAINT FK_PlanRutina_Plan FOREIGN KEY (IdPlan) REFERENCES [Plan](IdPlan),
-    CONSTRAINT FK_PlanRutina_Rutina FOREIGN KEY (IdRutina) REFERENCES Rutina(IdRutina)
+        CHECK (Precio > 0)
 );
 GO
 
@@ -126,6 +110,7 @@ CREATE TABLE Membresia (
     IdPlan INT NOT NULL,
     IdSocio INT NOT NULL,
     IdUsuarioSistema INT NOT NULL,
+    IdRutina INT NULL,
 
     CONSTRAINT CK_Membresia_Fechas
         CHECK (FechaVencimiento >= FechaInicio),
@@ -137,7 +122,10 @@ CREATE TABLE Membresia (
         FOREIGN KEY (IdSocio) REFERENCES Socio(IdSocio),
 
     CONSTRAINT FK_Membresia_UsuarioSistema
-        FOREIGN KEY (IdUsuarioSistema) REFERENCES UsuarioSistema(IdUsuarioSistema)
+        FOREIGN KEY (IdUsuarioSistema) REFERENCES UsuarioSistema(IdUsuarioSistema),
+
+    CONSTRAINT FK_Membresia_Rutina
+        FOREIGN KEY (IdRutina) REFERENCES Rutina(IdRutina)
 );
 GO
 
@@ -295,37 +283,10 @@ CREATE TABLE RutinaEjercicio (
 );
 GO
 
-/* Una misma plantilla de rutina puede asignarse a muchas membresías */
-
-CREATE TABLE RutinaAsignacion (
-    IdRutinaAsignacion INT IDENTITY(1,1) PRIMARY KEY,
-    FechaAsignacion DATETIME2 NOT NULL,
-    FechaFin DATETIME2 NULL,
-    Estado BIT NOT NULL DEFAULT 1,
-    IdRutina INT NOT NULL,
-    IdMembresia INT NOT NULL,
-
-    CONSTRAINT CK_RutinaAsignacion_Fechas
-        CHECK (FechaFin IS NULL OR FechaFin >= FechaAsignacion),
-
-    CONSTRAINT FK_RutinaAsignacion_Rutina
-        FOREIGN KEY (IdRutina) REFERENCES Rutina(IdRutina),
-
-    CONSTRAINT FK_RutinaAsignacion_Membresia
-        FOREIGN KEY (IdMembresia) REFERENCES Membresia(IdMembresia)
-);
-GO
-
 /* Índices de consultas habituales */
 
 CREATE INDEX IX_Membresia_IdSocio
     ON Membresia(IdSocio);
-
-CREATE INDEX IX_RutinaAsignacion_IdMembresia
-    ON RutinaAsignacion(IdMembresia);
-
-CREATE INDEX IX_RutinaAsignacion_Activas
-    ON RutinaAsignacion(IdRutina, Estado);
 
 /* Un pago no puede asociarse a dos cuotas, pero las cuotas pendientes pueden tener NULL */
 
@@ -467,7 +428,7 @@ BEGIN CATCH
 END CATCH;
 GO
 
-/* Inserciones manuales de prueba. Ultima actualizacion: 9 de septiembre de 2026.
+/* Inserciones manuales de prueba. Ultima actualizacion: 16 de septiembre de 2026.
    Ejecutar este bloque UNA SOLA VEZ, despues del esquema y catalogo inicial.
    En una base existente, seleccionar solo desde este comentario hasta el GO final.
    Los usernames y DNI ficticios escritos abajo deben estar libres. Normal y Premium tampoco deben existir: no se borran planes.
@@ -1611,44 +1572,10 @@ VALUES
     (3, 30, NULL, 45, 7, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Piernas unilaterales'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Escaladores' AND Estado = 1 ORDER BY IdEjercicio));
 
 /* Inserciones de Plan: solo 2 planes: Normal y Premium */
-INSERT INTO [Plan] (Nombre, Descripcion, Precio, IncluyeEntrenador, IncluyeRutinaPersonal, Estado, IdRutina)
+INSERT INTO [Plan] (Nombre, Descripcion, Precio, Estado)
 VALUES
-    (N'Normal', N'Acceso al gimnasio con rutina base.', 15000, 0, 0, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Pecho con barra')),
-    (N'Premium', N'Acceso, entrenador y rutina personalizada.', 25000, 1, 1, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Pecho inclinado'));
-
-/* Inserciones de PlanRutina: Normal dispone de tres rutinas y Premium de las
-   26 del catalogo inicial y manual. Las futuras se seleccionan desde Planes. */
-INSERT INTO PlanRutina (IdPlan, IdRutina)
-VALUES
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Normal'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Pecho con barra')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Normal'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Pecho inclinado')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Normal'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Aperturas de pecho')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Premium'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Pecho con barra')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Premium'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Pecho inclinado')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Premium'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Aperturas de pecho')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Premium'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Fondos de tren superior')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Premium'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Espalda en polea')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Premium'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Remo de fuerza')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Premium'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Espalda controlada')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Premium'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Estabilidad de hombros')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Premium'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Press de hombros')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Premium'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Hombros laterales')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Premium'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Biceps con barra')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Premium'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Brazos con mancuernas')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Premium'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Triceps en polea')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Premium'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Sentadilla inicial')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Premium'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Piernas en prensa')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Premium'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Cadena posterior')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Premium'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Cuadriceps en maquina')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Premium'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Isquiotibiales')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Premium'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Gluteos en banco')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Premium'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Piernas unilaterales')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Premium'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Comienzo 1')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Premium'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Hipertrofia 1')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Premium'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Hipertrofia 2')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Premium'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Fuerza')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Premium'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Powerlifting')),
-    ((SELECT IdPlan FROM [Plan] WHERE Nombre = N'Premium'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Cardio'));
+    (N'Normal', N'Acceso al gimnasio.', 15000, 1),
+    (N'Premium', N'Acceso al gimnasio.', 25000, 1);
 
 
 /* Inserciones de Membresia: 20 membresias; diez Premium y diez Normal */
@@ -1778,34 +1705,35 @@ VALUES
     (1, (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'38912645') AND FechaInicio = '20260901'), (SELECT IdUsuarioSistema FROM UsuarioSistema WHERE Username = N'benja.fernandez')),
     (1, (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'46783520') AND FechaInicio = '20260901'), (SELECT IdUsuarioSistema FROM UsuarioSistema WHERE Username = N'benja.fernandez'));
 
-/* Inserciones de RutinaAsignacion: 10 asignaciones, solo para Premium */
-INSERT INTO RutinaAsignacion (FechaAsignacion, FechaFin, Estado, IdRutina, IdMembresia)
-VALUES
-    ('20260901', NULL, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Pecho con barra'), (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'39827416') AND FechaInicio = '20260901')),
-    ('20260901', NULL, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Pecho inclinado'), (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'45160382') AND FechaInicio = '20260901')),
-    ('20260901', NULL, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Aperturas de pecho'), (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'32791854') AND FechaInicio = '20260901')),
-    ('20260901', NULL, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Fondos de tren superior'), (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'47306219') AND FechaInicio = '20260901')),
-    ('20260901', NULL, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Espalda en polea'), (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'36548207') AND FechaInicio = '20260901')),
-    ('20260901', NULL, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Remo de fuerza'), (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'41893562') AND FechaInicio = '20260901')),
-    ('20260901', NULL, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Espalda controlada'), (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'30674198') AND FechaInicio = '20260901')),
-    ('20260901', NULL, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Estabilidad de hombros'), (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'44250731') AND FechaInicio = '20260901')),
-    ('20260901', NULL, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Press de hombros'), (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'38912645') AND FechaInicio = '20260901')),
-    ('20260901', NULL, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Hombros laterales'), (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'46783520') AND FechaInicio = '20260901'));
-
-/* Inserciones de RutinaAsignacion: los diez socios restantes tambien reciben plantilla,
-   de modo que los veinte socios tienen rutina semanal */
-INSERT INTO RutinaAsignacion (FechaAsignacion, FechaFin, Estado, IdRutina, IdMembresia)
-VALUES
-    ('20260901', NULL, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Biceps con barra'), (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'31946873') AND FechaInicio = '20260901')),
-    ('20260901', NULL, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Brazos con mancuernas'), (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'34197086') AND FechaInicio = '20260901')),
-    ('20260901', NULL, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Triceps en polea'), (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'34821597') AND FechaInicio = '20260901')),
-    ('20260901', NULL, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Sentadilla inicial'), (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'35760428') AND FechaInicio = '20260901')),
-    ('20260901', NULL, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Piernas en prensa'), (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'37651940') AND FechaInicio = '20260901')),
-    ('20260901', NULL, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Cadena posterior'), (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'40925817') AND FechaInicio = '20260901')),
-    ('20260901', NULL, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Cuadriceps en maquina'), (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'42378069') AND FechaInicio = '20260901')),
-    ('20260901', NULL, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Isquiotibiales'), (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'43189256') AND FechaInicio = '20260901')),
-    ('20260901', NULL, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Gluteos en banco'), (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'48231694') AND FechaInicio = '20260901')),
-    ('20260901', NULL, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Piernas unilaterales'), (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'49607215') AND FechaInicio = '20260901'));
+/* Asignación inicial de rutinas directamente a las membresías. */
+UPDATE membresia
+SET IdRutina = rutina.IdRutina
+FROM Membresia AS membresia
+INNER JOIN Socio AS socio ON socio.IdSocio = membresia.IdSocio
+INNER JOIN (VALUES
+    (N'39827416', N'Pecho con barra'),
+    (N'45160382', N'Pecho inclinado'),
+    (N'32791854', N'Aperturas de pecho'),
+    (N'47306219', N'Fondos de tren superior'),
+    (N'36548207', N'Espalda en polea'),
+    (N'41893562', N'Remo de fuerza'),
+    (N'30674198', N'Espalda controlada'),
+    (N'44250731', N'Estabilidad de hombros'),
+    (N'38912645', N'Press de hombros'),
+    (N'46783520', N'Hombros laterales'),
+    (N'31946873', N'Biceps con barra'),
+    (N'34197086', N'Brazos con mancuernas'),
+    (N'34821597', N'Triceps en polea'),
+    (N'35760428', N'Sentadilla inicial'),
+    (N'37651940', N'Piernas en prensa'),
+    (N'40925817', N'Cadena posterior'),
+    (N'42378069', N'Cuadriceps en maquina'),
+    (N'43189256', N'Isquiotibiales'),
+    (N'48231694', N'Gluteos en banco'),
+    (N'49607215', N'Piernas unilaterales')
+) AS asignacion(DNI, NombreRutina) ON asignacion.DNI = socio.DNI
+INNER JOIN Rutina AS rutina ON rutina.Nombre = asignacion.NombreRutina
+WHERE membresia.FechaInicio = '20260901';
 
 COMMIT TRANSACTION;
 END TRY

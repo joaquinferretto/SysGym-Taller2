@@ -16,7 +16,6 @@ namespace exxen2._0.capaVisual.Recepcionista
     {
         private readonly UsuarioSistema usuario;
         private readonly MembresiaLogica logica = new MembresiaLogica();
-        private readonly SocioLogica socios = new SocioLogica();
         private readonly PlanLogica planes = new PlanLogica();
         private readonly CuotaMembresiaLogica cuotas = new CuotaMembresiaLogica();
         private List<Membresia> membresiasCargadas = new List<Membresia>();
@@ -57,15 +56,35 @@ namespace exxen2._0.capaVisual.Recepcionista
             }
         }
 
-        /* Carga los socios y planes activos que pueden seleccionarse al registrar una membresía. */
+        /* Carga los planes activos para el alta de una membresía. */
         private void CargarCombos()
         {
-            socio.DataSource = socios.ListarActivos().Select(s => new OpcionSocioMembresia { IdSocio = s.IdSocio, Texto = s.Apellido + ", " + s.Nombre + " - DNI " + s.DNI }).ToList();
-            socio.DisplayMember = "Texto";
-            socio.ValueMember = "IdSocio";
             plan.DataSource = planes.ListarActivos();
             plan.DisplayMember = "Nombre";
             plan.ValueMember = "IdPlan";
+        }
+
+        /* Solo ofrece para nuevas altas socios sin ninguna membresía histórica. */
+        private void CargarSociosDisponiblesParaAlta()
+        {
+            socio.DataSource = logica.ListarSociosDisponiblesParaAlta()
+                .Select(s => new OpcionSocioMembresia { IdSocio = s.IdSocio, Texto = s.Apellido + ", " + s.Nombre + " - DNI " + s.DNI })
+                .ToList();
+            socio.DisplayMember = "Texto";
+            socio.ValueMember = "IdSocio";
+        }
+
+        /* Mantiene seleccionable en modo consulta al socio de la membresía histórica. */
+        private void CargarSocioDeMembresia(Membresia membresia)
+        {
+            var opciones = logica.ListarSociosDisponiblesParaAlta()
+                .Select(s => new OpcionSocioMembresia { IdSocio = s.IdSocio, Texto = s.Apellido + ", " + s.Nombre + " - DNI " + s.DNI })
+                .ToList();
+            if (membresia.Socio != null && !opciones.Any(o => o.IdSocio == membresia.IdSocio))
+                opciones.Add(new OpcionSocioMembresia { IdSocio = membresia.IdSocio, Texto = membresia.Socio.Apellido + ", " + membresia.Socio.Nombre + " - DNI " + membresia.Socio.DNI });
+            socio.DataSource = opciones;
+            socio.DisplayMember = "Texto";
+            socio.ValueMember = "IdSocio";
         }
 
         /* Consulta los registros del módulo y actualiza la grilla, informando los errores de carga. */
@@ -92,7 +111,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             cargandoTabla = true;
             tabla.Rows.Clear();
             foreach (var membresiaActual in filtradas)
-                tabla.Rows.Add(membresiaActual.IdMembresia, NombreSocio(membresiaActual), membresiaActual.Socio == null ? "-" : membresiaActual.Socio.DNI, NombrePlan(membresiaActual), membresiaActual.FechaInicio.ToString("dd/MM/yyyy"), membresiaActual.FechaVencimiento.ToString("dd/MM/yyyy"), membresiaActual.Estado ? "Habilitada" : "Deshabilitada");
+                tabla.Rows.Add(membresiaActual.IdMembresia, NombreSocio(membresiaActual), membresiaActual.Socio == null ? "-" : membresiaActual.Socio.DNI, NombrePlan(membresiaActual), membresiaActual.FechaInicio.ToString("dd/MM/yyyy"), membresiaActual.FechaVencimiento.ToString("dd/MM/yyyy"), membresiaActual.Estado ? "Activa" : "Inactiva");
             tabla.ClearSelection();
             cargandoTabla = false;
             lblEstado.Text = tabla.Rows.Count + " membresia(s) encontrada(s)";
@@ -107,6 +126,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             membresiaSeleccionada = membresiasCargadas.FirstOrDefault(m => m.IdMembresia == idSeleccionado);
             if (membresiaSeleccionada == null)
                 return;
+            CargarSocioDeMembresia(membresiaSeleccionada);
             socio.SelectedValue = membresiaSeleccionada.IdSocio;
             plan.SelectedValue = membresiaSeleccionada.IdPlan;
             inicio.Value = membresiaSeleccionada.FechaInicio;
@@ -114,7 +134,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             socio.Enabled = false;
             plan.Enabled = true;
             EstablecerModo(false);
-            lblFormulario.Text = "Membresia de " + NombreSocio(membresiaSeleccionada) + " - " + (membresiaSeleccionada.Estado ? "Habilitada" : "Deshabilitada");
+            lblFormulario.Text = "Membresía de " + NombreSocio(membresiaSeleccionada) + " - " + (membresiaSeleccionada.Estado ? "Activa" : "Inactiva");
         }
 
         /* Al hacer clic en nuevo, limpia la selección y prepara el registro de nuevos datos. */
@@ -123,6 +143,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             idSeleccionado = 0;
             membresiaSeleccionada = null;
             tabla.ClearSelection();
+            CargarSociosDisponiblesParaAlta();
             socio.Enabled = true;
             plan.Enabled = true;
             if (socio.Items.Count > 0)
@@ -139,7 +160,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         {
             var puedeCrear = socio.Items.Count > 0 && plan.Items.Count > 0;
             if (nueva)
-                lblFormulario.Text = plan.Items.Count == 0 ? "Primero crea un plan" : (socio.Items.Count == 0 ? "Primero registra un socio" : "Nueva membresia - Estado inicial: Habilitada");
+                lblFormulario.Text = plan.Items.Count == 0 ? "Primero crea un plan" : (socio.Items.Count == 0 ? "No hay socios disponibles para una nueva membresía" : "Nueva membresía - Estado inicial: Activa");
             crear.Enabled = nueva && puedeCrear;
             actualizar.Enabled = !nueva;
             habilitar.Enabled = !nueva && membresiaSeleccionada != null && !membresiaSeleccionada.Estado;
@@ -152,8 +173,8 @@ namespace exxen2._0.capaVisual.Recepcionista
         {
             try
             {
-                if (socio.SelectedValue == null || plan.SelectedValue == null)
-                    throw new InvalidOperationException("Selecciona un socio y un plan.");
+                AyudaFormularioVisual.ValidarComboSeleccionado(socio, "un socio");
+                AyudaFormularioVisual.ValidarComboSeleccionado(plan, "un plan");
                 logica.Crear(new Membresia { IdSocio = Convert.ToInt32(socio.SelectedValue), IdPlan = Convert.ToInt32(plan.SelectedValue), IdUsuarioSistema = usuario.IdUsuarioSistema, FechaInicio = inicio.Value.Date, FechaVencimiento = vencimiento.Value.Date });
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
@@ -188,7 +209,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             }
         }
 
-        /* Al hacer clic en habilitar, habilita la membresía seleccionada mediante la capa lógica. */
+        /* Al hacer clic en reactivar, habilita la misma membresía mediante la capa lógica. */
         private void habilitar_Click(object origen, EventArgs e)
         {
             try
@@ -198,7 +219,7 @@ namespace exxen2._0.capaVisual.Recepcionista
                 logica.Habilitar(idSeleccionado);
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
-                AyudaFormularioVisual.MostrarExito(lblEstado, "Membresia habilitada.");
+                AyudaFormularioVisual.MostrarExito(lblEstado, "Membresía reactivada.");
             }
             catch (Exception ex)
             {
@@ -206,19 +227,19 @@ namespace exxen2._0.capaVisual.Recepcionista
             }
         }
 
-        /* Al hacer clic en deshabilitar, solicita confirmación y deshabilita la membresía seleccionada. */
+        /* Al hacer clic en dar de baja, solicita confirmación y conserva la membresía seleccionada. */
         private void deshabilitar_Click(object origen, EventArgs e)
         {
             try
             {
                 if (idSeleccionado == 0)
                     throw new InvalidOperationException("Selecciona una membresia.");
-                if (MessageBox.Show("Deshabilitar la membresia seleccionada?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                if (MessageBox.Show("¿Dar de baja la membresía seleccionada?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                     return;
                 logica.Deshabilitar(idSeleccionado);
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
-                AyudaFormularioVisual.MostrarExito(lblEstado, "Membresia deshabilitada.");
+                AyudaFormularioVisual.MostrarExito(lblEstado, "Membresía dada de baja.");
             }
             catch (Exception ex)
             {

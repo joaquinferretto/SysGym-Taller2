@@ -25,6 +25,7 @@ namespace exxen2._0.capaVisual.Entrenador
         private readonly bool modoAdministrador;
         private readonly bool editarRutinaPersonalizada;
         private int idEntrenadorRutina;
+        private bool estadoRutinaSeleccionada = true;
 
         public RutinasEntrenadorFormulario() : this(new UsuarioSistema { Nombre = "Entrenador", Apellido = "de diseno" }) { }
 
@@ -85,7 +86,7 @@ namespace exxen2._0.capaVisual.Entrenador
                     var asignados = rutina.Membresias == null ? 0 : rutina.Membresias.Count(m => m.Estado);
                     tabla.Rows.Add(rutina.IdRutina, rutina.Nombre,
                         rutina.Entrenador == null ? "-" : rutina.Entrenador.Nombre + " " + rutina.Entrenador.Apellido,
-                        asignados, rutina.FechaCreacion.ToString("dd/MM/yyyy"));
+                        asignados, rutina.FechaCreacion.ToString("dd/MM/yyyy"), rutina.Estado ? "Activa" : "Inactiva");
                 }
                 lblEstado.Text = tabla.Rows.Count + " rutina(s) en el catalogo";
             }
@@ -101,8 +102,11 @@ namespace exxen2._0.capaVisual.Entrenador
                 var rutina = rutinas.ObtenerPorId(idRutina);
                 if (rutina == null) return;
                 idEntrenadorRutina = rutina.IdEntrenador;
+                estadoRutinaSeleccionada = rutina.Estado;
                 nombre.Text = rutina.Nombre;
                 descripcion.Text = rutina.Descripcion ?? string.Empty;
+                darDeBaja.Visible = rutina.Estado;
+                reactivar.Visible = !rutina.Estado;
                 CargarDetalleDeRutina();
             }
             catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex); }
@@ -144,8 +148,11 @@ namespace exxen2._0.capaVisual.Entrenador
 
             idRutina = rutina.IdRutina;
             idEntrenadorRutina = rutina.IdEntrenador;
+            estadoRutinaSeleccionada = rutina.Estado;
             nombre.Text = rutina.Nombre;
             descripcion.Text = rutina.Descripcion ?? string.Empty;
+            darDeBaja.Visible = rutina.Estado;
+            reactivar.Visible = !rutina.Estado;
             guardarRutina.Text = "Actualizar rutina";
             CargarDetalleDeRutina();
         }
@@ -170,6 +177,10 @@ namespace exxen2._0.capaVisual.Entrenador
                     break;
                 }
             }
+            series.Text = Convert.ToString(fila.Cells[4].Value) == "-" ? string.Empty : Convert.ToString(fila.Cells[4].Value);
+            repeticiones.Text = Convert.ToString(fila.Cells[5].Value) == "-" ? string.Empty : Convert.ToString(fila.Cells[5].Value);
+            peso.Text = Convert.ToString(fila.Cells[6].Value) == "-" ? string.Empty : Convert.ToString(fila.Cells[6].Value);
+            descanso.Text = Convert.ToString(fila.Cells[7].Value).TrimEnd('s');
         }
 
         private void quitarEjercicio_Click(object origen, EventArgs e)
@@ -177,6 +188,8 @@ namespace exxen2._0.capaVisual.Entrenador
             try
             {
                 if (idRutinaEjercicio == 0) throw new InvalidOperationException("Selecciona un ejercicio de la rutina.");
+                if (MessageBox.Show("¿Quitar el ejercicio seleccionado de la rutina?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                    return;
                 ejerciciosRutina.Quitar(idRutinaEjercicio);
                 CargarDetalleDeRutina();
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Ejercicio quitado de la rutina.");
@@ -194,11 +207,14 @@ namespace exxen2._0.capaVisual.Entrenador
             idRutina = 0;
             idRutinaEjercicio = 0;
             idEntrenadorRutina = usuario.IdUsuarioSistema;
+            estadoRutinaSeleccionada = true;
             nombre.Clear();
             descripcion.Clear();
             tabla.ClearSelection();
             tablaEjercicios.Rows.Clear();
             guardarRutina.Text = "Guardar rutina";
+            darDeBaja.Visible = false;
+            reactivar.Visible = false;
         }
 
         private void guardarRutina_Click(object origen, EventArgs e)
@@ -212,7 +228,7 @@ namespace exxen2._0.capaVisual.Entrenador
                     Descripcion = descripcion.Text.Trim(),
                     IdEntrenador = idRutina == 0 || !modoAdministrador ? usuario.IdUsuarioSistema : idEntrenadorRutina,
                     FechaCreacion = DateTime.Now,
-                    Estado = true
+                    Estado = idRutina == 0 || estadoRutinaSeleccionada
                 };
                 if (idRutina == 0)
                 {
@@ -251,20 +267,48 @@ namespace exxen2._0.capaVisual.Entrenador
                     if (idRutina == 0) return;
                 }
 
-                if (ejercicio.SelectedValue == null) throw new InvalidOperationException("Selecciona un ejercicio.");
+                AyudaFormularioVisual.ValidarComboSeleccionado(ejercicio, "un ejercicio");
                 ejerciciosRutina.AgregarEjercicio(new RutinaEjercicio
                 {
                     IdRutina = idRutina,
                     IdEjercicio = Convert.ToInt32(ejercicio.SelectedValue),
-                    Series = EnteroOpcional(series),
-                    Repeticiones = EnteroOpcional(repeticiones),
+                    Series = EnteroObligatorio(series, "series"),
+                    Repeticiones = EnteroObligatorio(repeticiones, "repeticiones"),
                     Peso = DecimalOpcional(peso),
                     Descanso = EnteroOpcional(descanso) ?? 0,
-                    Orden = EnteroOpcional(orden) ?? 1,
+                    Orden = EnteroObligatorio(orden, "orden"),
                     DiaSemana = DiaSeleccionado()
                 });
                 CargarDetalleDeRutina();
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Ejercicio agregado a la rutina.");
+            }
+            catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex); }
+        }
+
+        private void actualizarEjercicio_Click(object origen, EventArgs e)
+        {
+            try
+            {
+                if (idRutina == 0)
+                    throw new InvalidOperationException("Seleccione una rutina.");
+                if (idRutinaEjercicio == 0)
+                    throw new InvalidOperationException("Seleccione un ejercicio de la rutina.");
+                AyudaFormularioVisual.ValidarComboSeleccionado(ejercicio, "un ejercicio");
+                ejerciciosRutina.Modificar(new RutinaEjercicio
+                {
+                    IdRutinaEjercicio = idRutinaEjercicio,
+                    IdRutina = idRutina,
+                    IdEjercicio = Convert.ToInt32(ejercicio.SelectedValue),
+                    Series = EnteroObligatorio(series, "series"),
+                    Repeticiones = EnteroObligatorio(repeticiones, "repeticiones"),
+                    Peso = DecimalOpcional(peso),
+                    Descanso = EnteroOpcional(descanso) ?? 0,
+                    Orden = EnteroObligatorio(orden, "orden"),
+                    DiaSemana = DiaSeleccionado(),
+                    Estado = true
+                });
+                CargarDetalleDeRutina();
+                AyudaFormularioVisual.MostrarExito(lblEstado, "Ejercicio actualizado en la rutina.");
             }
             catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex); }
         }
@@ -274,12 +318,33 @@ namespace exxen2._0.capaVisual.Entrenador
             try
             {
                 if (idRutina == 0) throw new InvalidOperationException("Selecciona una rutina.");
+                if (MessageBox.Show("¿Dar de baja la rutina seleccionada?", "Confirmar baja", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                    return;
                 rutinas.DarDeBaja(idRutina);
                 Cargar();
                 nuevaRutina_Click(null, EventArgs.Empty);
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Rutina dada de baja.");
             }
             catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex); }
+        }
+
+        private void reactivar_Click(object origen, EventArgs e)
+        {
+            try
+            {
+                if (idRutina == 0) throw new InvalidOperationException("Selecciona una rutina.");
+                rutinas.Reactivar(idRutina);
+                Cargar();
+                AyudaFormularioVisual.MostrarExito(lblEstado, "Rutina reactivada.");
+            }
+            catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex); }
+        }
+
+        private static int EnteroObligatorio(TextBox campo, string nombre)
+        {
+            if (string.IsNullOrWhiteSpace(campo.Text))
+                throw new InvalidOperationException("El campo " + nombre + " es obligatorio.");
+            return AyudaFormularioVisual.Entero(campo, nombre);
         }
 
         private static int? EnteroOpcional(TextBox campo)
@@ -293,6 +358,12 @@ namespace exxen2._0.capaVisual.Entrenador
             decimal valor;
             return string.IsNullOrWhiteSpace(campo.Text) ? (decimal?)null : (decimal.TryParse(campo.Text, out valor) ? valor : throw new InvalidOperationException("Revisa el peso del ejercicio."));
         }
+
+        private void series_KeyPress(object origen, KeyPressEventArgs e) { AyudaFormularioVisual.ValidarEntradaEntero(e); }
+        private void repeticiones_KeyPress(object origen, KeyPressEventArgs e) { AyudaFormularioVisual.ValidarEntradaEntero(e); }
+        private void peso_KeyPress(object origen, KeyPressEventArgs e) { AyudaFormularioVisual.ValidarEntradaDecimal(peso, e); }
+        private void descanso_KeyPress(object origen, KeyPressEventArgs e) { AyudaFormularioVisual.ValidarEntradaEntero(e); }
+        private void orden_KeyPress(object origen, KeyPressEventArgs e) { AyudaFormularioVisual.ValidarEntradaEntero(e); }
 
         private void RutinasEntrenadorFormulario_Load(object origen, EventArgs e)
         {

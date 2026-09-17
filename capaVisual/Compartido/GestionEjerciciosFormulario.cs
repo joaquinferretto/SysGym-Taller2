@@ -128,6 +128,8 @@ namespace exxen2._0.capaVisual.Compartido
             try
             {
                 if (idSeleccionado == 0) throw new InvalidOperationException("Selecciona un ejercicio.");
+                if (MessageBox.Show("¿Dar de baja el ejercicio seleccionado?", "Confirmar baja", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                    return;
                 logica.DarDeBaja(idSeleccionado); Cargar();
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Ejercicio dado de baja.");
             }

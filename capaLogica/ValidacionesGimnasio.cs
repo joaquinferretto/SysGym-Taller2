@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using exxen2._0.capaDatos.Entidades;
 
 namespace exxen2._0.capaLogica
@@ -7,6 +8,44 @@ namespace exxen2._0.capaLogica
     public static class ValidacionesGimnasio
     {
         public const int TamanoMaximoFoto = 2 * 1024 * 1024;
+
+        /* Valida un nombre humano sin aceptar numeros ni simbolos ajenos al nombre. */
+        public static void ValidarNombre(string valor, string campo)
+        {
+            if (string.IsNullOrWhiteSpace(valor))
+                throw new InvalidOperationException("El " + campo + " es obligatorio.");
+            if (!valor.Any(char.IsLetter) || valor.Any(caracter => !char.IsLetter(caracter) && caracter != ' ' && caracter != '\'' && caracter != '-'))
+                throw new InvalidOperationException("El " + campo + " solo puede contener letras, espacios, apóstrofes o guiones.");
+        }
+
+        /* Valida el DNI en el formato numerico que conserva el modelo actual. */
+        public static void ValidarDni(string dni)
+        {
+            if (string.IsNullOrWhiteSpace(dni))
+                throw new InvalidOperationException("El DNI es obligatorio.");
+            if (dni.Any(caracter => caracter < '0' || caracter > '9'))
+                throw new InvalidOperationException("El DNI debe contener únicamente números.");
+        }
+
+        /* Calcula la edad completa considerando si el cumpleaños ya ocurrió. */
+        public static int CalcularEdad(DateTime fechaNacimiento, DateTime fechaReferencia)
+        {
+            var edad = fechaReferencia.Year - fechaNacimiento.Year;
+            if (fechaNacimiento.Date > fechaReferencia.Date.AddYears(-edad))
+                edad--;
+            return edad;
+        }
+
+        /* Valida que la fecha exista, no sea futura y cumpla la edad minima solicitada. */
+        public static void ValidarEdadMinima(DateTime? fechaNacimiento, int edadMinima, string mensajeEdad)
+        {
+            if (!fechaNacimiento.HasValue)
+                throw new InvalidOperationException("La fecha de nacimiento es obligatoria.");
+            if (fechaNacimiento.Value.Date > DateTime.Today)
+                throw new InvalidOperationException("La fecha de nacimiento no puede ser futura.");
+            if (CalcularEdad(fechaNacimiento.Value.Date, DateTime.Today) < edadMinima)
+                throw new InvalidOperationException(mensajeEdad);
+        }
 
         /* Valida el sexo opcional, el límite de dos MiB y la firma del formato de la foto. */
         public static void ValidarFotoYSexo(byte[] foto, string sexo)

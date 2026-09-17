@@ -27,6 +27,7 @@ namespace exxen2._0.capaLogica
         /* Valida los beneficios de la membresía y crea su asignación de entrenador activo. */
         public MembresiaEntrenador AsignarEntrenador(int idMembresia, int idEntrenador)
         {
+            new MembresiaLogica().ActualizarEstadoPorDeuda(idMembresia);
             using (var datos = new UnidadDeTrabajoGimnasio())
             using (var transaccion = datos.IniciarTransaccion())
             {
@@ -53,6 +54,7 @@ namespace exxen2._0.capaLogica
         /* Finaliza las asignaciones activas y registra el nuevo entrenador en una transacción. */
         public MembresiaEntrenador CambiarEntrenador(int idMembresia, int idEntrenador)
         {
+            new MembresiaLogica().ActualizarEstadoPorDeuda(idMembresia);
             using (var datos = new UnidadDeTrabajoGimnasio())
             using (var transaccion = datos.IniciarTransaccion())
             {
@@ -100,6 +102,8 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
+                MembresiaLogica.ActualizarEstadosPorDeudaEnContexto(datos);
+                datos.GuardarCambios();
                 return datos.Membresias.ConsultarSoloLectura("Socio", "Plan", "Entrenadores.Entrenador")
                     .OrderByDescending(m => m.Estado)
                     .ThenBy(m => m.Socio.Apellido)
@@ -153,6 +157,8 @@ namespace exxen2._0.capaLogica
                     throw new InvalidOperationException("La asignación no existe.");
                 }
 
+                MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(datos, asignacion.IdMembresia);
+                datos.GuardarCambios();
                 ValidarAsignacion(asignacion.Membresia, datos, asignacion.IdEntrenador);
                 if (datos.MembresiasEntrenadores.Any(me => me.IdMembresia == asignacion.IdMembresia && me.Estado && me.IdMembresiaEntrenador != idMembresiaEntrenador))
                 {

@@ -9,11 +9,10 @@ Aplicación de escritorio para la gestión de un gimnasio, desarrollada con Wind
 - En C# se almacena en `UsuarioSistema.Salario` como `decimal`.
 - En SQL Server se almacena como `UsuarioSistema.Salario DECIMAL(18,2) NOT NULL`.
 - Al crear o editar un usuario desde **Administración → Usuarios y roles**, el salario debe ser mayor que cero.
-- Los usuarios de una base existente reciben inicialmente salario `0` durante la migración para no inventar importes ni perder registros. El administrador debe actualizar esos valores desde la aplicación.
+- En la base inicial, el salario se carga según los datos semilla y puede modificarse desde la aplicación.
 
 ## Actualización de la base de datos
 
-- Base nueva: ejecutar `capaDatos/Database/SysGymDB.sql`.
-- Base ya existente: ejecutar `capaDatos/Database/SysGymDB_MigracionExistente.sql` sobre `SysGymDB`. El script conserva los datos y agrega la columna `Salario` cuando todavía no existe.
+- Para crear una base nueva, ejecutar `capaDatos/Database/SysGymDB.sql`.
 
-Después de actualizar el código mediante Git, cada colaborador que ya tenga una base local debe ejecutar el script de migración antes de iniciar la aplicación.
+El DDL es para una base limpia. No ejecutar el script completo sobre una base existente; el proyecto no incluye migraciones para esquemas anteriores.

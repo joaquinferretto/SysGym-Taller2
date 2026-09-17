@@ -11,6 +11,8 @@ namespace exxen2._0.capaLogica
     {
         /* Identifica al usuario reservado que representa el entrenador inicial de toda membresía. */
         public const string NombreUsuarioEntrenadorGeneral = "entrenador.general";
+        private const int CuotasVencidasParaDarDeBaja = 2;
+        private const string MensajeReactivacionBloqueadaPorDeuda = "No se puede reactivar la membresía mientras existan dos o más cuotas vencidas pendientes.";
 
         /* Crea una membresía, su primera cuota y su entrenador general en una única transacción. */
         public Membresia Crear(Membresia membresia)
@@ -23,8 +25,8 @@ namespace exxen2._0.capaLogica
                 var plan = datos.Planes.Buscar(membresia.IdPlan);
                 var usuario = datos.UsuariosSistema.Consultar("Rol").SingleOrDefault(u => u.IdUsuarioSistema == membresia.IdUsuarioSistema);
                 ValidarReferenciasActivas(socio, plan, usuario);
-                if (datos.Membresias.Any(m => m.IdSocio == membresia.IdSocio && m.Estado))
-                    throw new InvalidOperationException("El socio ya posee una membresía habilitada.");
+                if (datos.Membresias.Any(m => m.IdSocio == membresia.IdSocio))
+                    throw new InvalidOperationException("El socio ya tiene una membresía histórica. Reactivá esa misma membresía desde la gestión de membresías.");
 
                 membresia.Estado = true;
                 membresia.IdRutina = null;
@@ -51,6 +53,24 @@ namespace exxen2._0.capaLogica
             }
         }
 
+        /* Lista socios activos que todavía no tienen una membresía histórica. */
+        public List<Socio> ListarSociosDisponiblesParaAlta()
+        {
+            using (var datos = new UnidadDeTrabajoGimnasio())
+            {
+                var idsSociosConMembresia = datos.Membresias
+                    .Select(m => m.IdSocio)
+                    .Distinct()
+                    .ToList();
+
+                return datos.Socios.ConsultarSoloLectura()
+                    .Where(s => s.Estado && !idsSociosConMembresia.Contains(s.IdSocio))
+                    .OrderBy(s => s.Apellido)
+                    .ThenBy(s => s.Nombre)
+                    .ToList();
+            }
+        }
+
         /* Actualiza fechas y datos propios sin permitir cambiar referencias históricas desde este método. */
         public Membresia Modificar(Membresia membresia)
         {
@@ -66,12 +86,13 @@ namespace exxen2._0.capaLogica
                     throw new InvalidOperationException("El plan debe cambiarse mediante CambiarPlan.");
                 if (existente.IdSocio != membresia.IdSocio || existente.IdUsuarioSistema != membresia.IdUsuarioSistema)
                     throw new InvalidOperationException("No se pueden cambiar las referencias históricas de la membresía.");
+                if (existente.Estado != membresia.Estado)
+                    throw new InvalidOperationException("El estado de la membresía debe cambiarse mediante las acciones Dar de baja o Reactivar.");
                 ValidarFechas(membresia);
 
                 existente.FechaInicio = membresia.FechaInicio;
                 existente.FechaVencimiento = membresia.FechaVencimiento;
-                if (existente.Estado != membresia.Estado)
-                    CambiarEstadoEnContexto(datos, existente, membresia.Estado);
+                ActualizarEstadoPorDeudaEnContexto(datos, existente.IdMembresia);
                 datos.GuardarCambios();
                 return existente;
             }
@@ -81,28 +102,46 @@ namespace exxen2._0.capaLogica
         public Membresia ObtenerPorId(int idMembresia)
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
+            {
+                if (datos.Membresias.Buscar(idMembresia) == null)
+                    return null;
+                ActualizarEstadoPorDeudaEnContexto(datos, idMembresia);
+                datos.GuardarCambios();
                 return datos.Membresias.ConsultarSoloLectura("Plan", "Socio", "UsuarioSistema", "Rutina", "Cuotas.Pago", "Entrenadores.Entrenador").SingleOrDefault(m => m.IdMembresia == idMembresia);
+            }
         }
 
         /* Busca el historial de membresías de un socio ordenado desde la más reciente. */
         public List<Membresia> ObtenerPorSocio(int idSocio)
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
+            {
+                ActualizarEstadosPorDeudaEnContexto(datos);
+                datos.GuardarCambios();
                 return datos.Membresias.ConsultarSoloLectura("Plan", "Rutina").Where(m => m.IdSocio == idSocio).OrderByDescending(m => m.FechaInicio).ToList();
+            }
         }
 
         /* Consulta membresías activas para operaciones que requieren una relación vigente. */
         public List<Membresia> ListarHabilitadas()
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
+            {
+                ActualizarEstadosPorDeudaEnContexto(datos);
+                datos.GuardarCambios();
                 return datos.Membresias.ConsultarSoloLectura("Plan", "Socio", "Rutina").Where(m => m.Estado).OrderBy(m => m.FechaInicio).ToList();
+            }
         }
 
         /* Consulta membresías activas e históricas para la gestión administrativa. */
         public List<Membresia> ListarParaGestion()
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
+            {
+                ActualizarEstadosPorDeudaEnContexto(datos);
+                datos.GuardarCambios();
                 return datos.Membresias.ConsultarSoloLectura("Plan", "Socio", "Rutina").OrderByDescending(m => m.Estado).ThenBy(m => m.Socio.Apellido).ThenBy(m => m.Socio.Nombre).ToList();
+            }
         }
 
         /* Cambia solamente el plan y conserva las cuotas y asociaciones históricas de la membresía. */
@@ -125,12 +164,26 @@ namespace exxen2._0.capaLogica
         /* Habilita una membresía y sincroniza el estado del socio. */
         public void Habilitar(int idMembresia)
         {
+            var reactivacionBloqueada = false;
             using (var datos = new UnidadDeTrabajoGimnasio())
+            using (var transaccion = datos.IniciarTransaccion())
             {
                 var membresia = ObtenerMembresia(datos, idMembresia);
-                CambiarEstadoEnContexto(datos, membresia, true);
+                if (DebeDarseDeBajaPorDeuda(ContarCuotasVencidasImpagasEnContexto(datos, idMembresia)))
+                {
+                    CambiarEstadoEnContexto(datos, membresia, false);
+                    reactivacionBloqueada = true;
+                }
+                else
+                {
+                    CambiarEstadoEnContexto(datos, membresia, true);
+                }
                 datos.GuardarCambios();
+                transaccion.Confirmar();
             }
+
+            if (reactivacionBloqueada)
+                throw new InvalidOperationException(MensajeReactivacionBloqueadaPorDeuda);
         }
 
         /* Da de baja lógicamente una membresía sin borrar cuotas, pagos, rutina ni entrenador. */
@@ -148,6 +201,73 @@ namespace exxen2._0.capaLogica
         public void DarDeBaja(int idMembresia)
         {
             Deshabilitar(idMembresia);
+        }
+
+        /* Expone la evaluación central a operaciones de otros módulos que requieren una membresía vigente. */
+        public void ActualizarEstadoPorDeuda(int idMembresia)
+        {
+            using (var datos = new UnidadDeTrabajoGimnasio())
+            using (var transaccion = datos.IniciarTransaccion())
+            {
+                ActualizarEstadoPorDeudaEnContexto(datos, idMembresia);
+                datos.GuardarCambios();
+                transaccion.Confirmar();
+            }
+        }
+
+        /* Cuenta cuotas pendientes cuyo período terminó antes de hoy; las anuladas no generan deuda. */
+        internal static int ContarCuotasVencidasImpagasEnContexto(IUnidadDeTrabajo datos, int idMembresia)
+        {
+            return ConsultarCuotasVencidasImpagasEnContexto(datos).Count(c => c.IdMembresia == idMembresia);
+        }
+
+        /* Da de baja por deuda y sincroniza al socio sin reactivar automáticamente al regularizar. */
+        internal static void ActualizarEstadoPorDeudaEnContexto(IUnidadDeTrabajo datos, int idMembresia)
+        {
+            var membresia = ObtenerMembresia(datos, idMembresia);
+            if (DebeDarseDeBajaPorDeuda(ContarCuotasVencidasImpagasEnContexto(datos, idMembresia)))
+                CambiarEstadoEnContexto(datos, membresia, false);
+        }
+
+        /* Evalúa todas las membresías para los listados de gestión y consultas globales. */
+        internal static void ActualizarEstadosPorDeudaEnContexto(IUnidadDeTrabajo datos)
+        {
+            var idsMembresias = ConsultarCuotasVencidasImpagasEnContexto(datos)
+                .GroupBy(c => c.IdMembresia)
+                .Select(cuotas => new { IdMembresia = cuotas.Key, Cantidad = cuotas.Count() })
+                .ToList();
+            var idsParaDarDeBaja = idsMembresias
+                .Where(m => DebeDarseDeBajaPorDeuda(m.Cantidad))
+                .Select(m => m.IdMembresia)
+                .ToList();
+            if (idsParaDarDeBaja.Count == 0)
+                return;
+
+            var membresias = datos.Membresias.Where(m => idsParaDarDeBaja.Contains(m.IdMembresia)).ToList();
+            foreach (var membresia in membresias)
+                membresia.Estado = false;
+
+            var idsSocios = membresias.Select(m => m.IdSocio).Distinct().ToList();
+            foreach (var idSocio in idsSocios)
+            {
+                var socio = datos.Socios.Buscar(idSocio);
+                if (socio == null)
+                    throw new InvalidOperationException("El socio de la membresía no existe.");
+                socio.Estado = datos.Membresias.Any(m => m.IdSocio == idSocio && m.Estado && !idsParaDarDeBaja.Contains(m.IdMembresia));
+            }
+        }
+
+        /* Proyecta una sola definición de cuotas vencidas e impagas para todas las evaluaciones. */
+        private static IQueryable<CuotaMembresia> ConsultarCuotasVencidasImpagasEnContexto(IUnidadDeTrabajo datos)
+        {
+            var hoy = DateTime.Today;
+            return datos.CuotasMembresia.Where(c => c.EstadoPago == EstadosCuota.Pendiente && c.FechaHasta < hoy);
+        }
+
+        /* Aplica el umbral común de deuda para bajas automáticas y validación de reactivaciones. */
+        private static bool DebeDarseDeBajaPorDeuda(int cantidadCuotasVencidasImpagas)
+        {
+            return cantidadCuotasVencidasImpagas >= CuotasVencidasParaDarDeBaja;
         }
 
         /* Devuelve la membresía seguida por la unidad de trabajo o informa una clave inválida. */

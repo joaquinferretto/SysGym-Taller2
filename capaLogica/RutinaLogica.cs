@@ -52,6 +52,7 @@ namespace exxen2._0.capaLogica
                 throw new InvalidOperationException("La membresia del socio es obligatoria.");
             }
 
+            new MembresiaLogica().ActualizarEstadoPorDeuda(idMembresia);
             using (var datos = new UnidadDeTrabajoGimnasio())
             using (var transaccion = datos.IniciarTransaccion())
             {
@@ -86,6 +87,8 @@ namespace exxen2._0.capaLogica
 
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
+                MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(datos, idMembresia);
+                datos.GuardarCambios();
                 var membresia = datos.Membresias.Consultar("Plan", "Socio")
                     .SingleOrDefault(m => m.IdMembresia == idMembresia);
                 ValidarMembresiaParaRutina(membresia);
@@ -152,6 +155,8 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
+                MembresiaLogica.ActualizarEstadosPorDeudaEnContexto(datos);
+                datos.GuardarCambios();
                 return datos.Membresias.ConsultarSoloLectura("Socio", "Plan", "Rutina")
                     .Where(m => m.IdSocio == idSocio && m.Estado && m.Socio.Estado && m.Plan.Estado)
                     .OrderByDescending(m => m.FechaInicio)
@@ -208,6 +213,8 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
+                MembresiaLogica.ActualizarEstadosPorDeudaEnContexto(datos);
+                datos.GuardarCambios();
                 var membresias = datos.Membresias.ConsultarSoloLectura("Socio", "Plan", "Rutina", "Entrenadores.Entrenador")
                     .Where(m => m.Estado && m.Socio.Estado && m.Plan.Estado &&
                         (idEntrenador <= 0 || m.Entrenadores.Any(e => e.Estado && e.IdEntrenador == idEntrenador)))
