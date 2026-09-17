@@ -1,5 +1,11 @@
 # Contexto del proyecto
 
+## Avisos de alta y foto opcional - 17 de septiembre de 2026
+
+La creacion de usuarios desde `GestionUsuariosFormulario` ahora confirma el alta con un mensaje visual de Windows Forms y, ante errores, muestra la causa de negocio disponible o un mensaje general de alta fallida sin exponer detalles tecnicos. No se modificaron validaciones de campos, capas de logica ni persistencia.
+
+Se verifico que el alta de socios ya admite foto opcional: `GestionSociosFormulario` envia `null` cuando no se selecciona imagen, `SocioLogica` solo copia archivos cuando recibe contenido, `Socio.FotoRuta` no es requerido y el DDL mantiene `Socio.FotoRuta NVARCHAR(260) NULL`. Queda pendiente probar manualmente ambos flujos contra una base disponible y abrir los formularios afectados en el diseñador de Visual Studio.
+
 ## Ajuste UX/UI de encabezados y rutinas — 17 de septiembre de 2026
 
 Los paneles de rol presentan el módulo actual dentro del encabezado global, en una sola línea con el formato `Título | Subtítulo`, declarado en `Designer.cs` mediante `lblModuloActual`. Las franjas locales de los módulos activos quedan ocultas para que el contenido comience inmediatamente debajo. El acceso muestra `Contraseña` con ñ.

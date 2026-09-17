@@ -1,5 +1,10 @@
 # Reglas de negocio
 
+## Avisos de alta y foto opcional - 17 de septiembre de 2026
+
+- El alta de usuarios informa el resultado en la capa visual: confirma cuando el usuario se crea correctamente y, si falla, muestra una causa de negocio disponible o un mensaje general de alta fallida.
+- La foto del socio es opcional al crear o modificar. Si no se selecciona imagen, `FotoRuta` permanece en `NULL`; si se selecciona una imagen valida, se conserva el guardado administrado en `Datos/Imagenes/Socios`.
+
 ## Identidad y habilitacion de entrenador - 11 de septiembre de 2026
 
 - `UsuarioSistema` y `Socio` son entidades distintas. Pueden compartir nombre o apellido en los datos de prueba, pero se distinguen por su rol, clave e identidad (DNI).
@@ -10,7 +15,7 @@
 
 Una rutina puede reutilizarse en varias membresías. Cada membresía tiene cero o una rutina, determinada únicamente por `Membresia.IdRutina`; ningún atributo del plan habilita o restringe esta relación. Una rutina personalizada se crea desde la membresía seleccionada y queda vinculada a ella. Sus ejercicios se gestionan mediante `RutinaEjercicioLogica`, indicando un día entre lunes y viernes.
 
-Última actualización: 16 de septiembre de 2026.
+Última actualización: 17 de septiembre de 2026.
 
 ## Validaciones de altas y edición — 17 de septiembre de 2026
 
