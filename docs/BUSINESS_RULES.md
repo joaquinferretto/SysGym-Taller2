@@ -78,3 +78,10 @@ La rutina de un socio se organiza de lunes a viernes. El socio conserva una unic
 `DiaSemana` admite nulo para los ejercicios que todavia no tienen dia asignado; esos ejercicios no aparecen en la consulta semanal y se informan en la barra de estado. `ValidacionesGimnasio.ValidarDiaRutina` rechaza cualquier valor fuera del rango y `ValidacionesGimnasio.NombreDia` traduce el numero al nombre que se muestra.
 
 `RutinaEjercicioLogica.ListarSemanaPorSocio` resuelve la membresia activa del socio y consulta la rutina indicada por `Membresia.IdRutina`. Si el socio no tiene membresia activa o no tiene rutina asignada devuelve una lista vacia, sin lanzar excepcion.
+
+## Imágenes de socios y ejercicios — 17 de septiembre de 2026
+
+- `Socio.FotoRuta` es opcional y contiene únicamente una ruta relativa como `Imagenes\\Socios\\{guid}.jpg`; no se guardan Base64 ni imágenes en `varbinary` para socios.
+- Sin foto personalizada, el formulario usa los avatares embebidos `socio_hombre_default` o `socio_mujer_default` según `Sexo`. Si falta una ruta física, se conserva ese fallback y la pantalla no falla.
+- Las imágenes se aceptan solo en JPG, JPEG o PNG, se validan y se copian bajo `Datos/Imagenes` con nombres GUID. Quitar una foto deja `FotoRuta` en NULL y elimina el archivo administrado solo si no tiene otra referencia.
+- `EjercicioImagen` permite cero o varias imágenes por ejercicio. Cada registro conserva `RutaRelativa` y `Orden`; agregar usa el siguiente orden disponible y quitar elimina la relación y su archivo cuando no está compartido. Las rutinas consultan las imágenes a través de `Ejercicio`, sin duplicarlas en `RutinaEjercicio`.

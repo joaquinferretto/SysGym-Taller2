@@ -34,6 +34,7 @@ namespace exxen2._0.capaDatos.Contexto
         public DbSet<Rutina> Rutinas { get; set; }
         public DbSet<Ejercicio> Ejercicios { get; set; }
         public DbSet<RutinaEjercicio> RutinaEjercicios { get; set; }
+        public DbSet<EjercicioImagen> EjercicioImagenes { get; set; }
 
         /* Configura tablas, tipos, precisión decimal y relaciones sin borrado en cascada. */
         protected override void OnModelCreating(DbModelBuilder modelo)
@@ -56,6 +57,7 @@ namespace exxen2._0.capaDatos.Contexto
             modelo.Entity<Rutina>().ToTable("Rutina");
             modelo.Entity<Ejercicio>().ToTable("Ejercicio");
             modelo.Entity<RutinaEjercicio>().ToTable("RutinaEjercicio");
+            modelo.Entity<EjercicioImagen>().ToTable("EjercicioImagen");
             modelo.Entity<Socio>().Property(s => s.Peso).HasPrecision(6, 2);
             modelo.Entity<Socio>().Property(s => s.Altura).HasPrecision(5, 2);
             modelo.Entity<UsuarioSistema>().Property(u => u.Salario).HasPrecision(18, 2);
@@ -80,6 +82,7 @@ namespace exxen2._0.capaDatos.Contexto
             modelo.Entity<Rutina>().HasRequired(r => r.Entrenador).WithMany(u => u.RutinasComoEntrenador).HasForeignKey(r => r.IdEntrenador).WillCascadeOnDelete(false);
             modelo.Entity<RutinaEjercicio>().HasRequired(re => re.Rutina).WithMany(r => r.Ejercicios).HasForeignKey(re => re.IdRutina).WillCascadeOnDelete(false);
             modelo.Entity<RutinaEjercicio>().HasRequired(re => re.Ejercicio).WithMany(e => e.Rutinas).HasForeignKey(re => re.IdEjercicio).WillCascadeOnDelete(false);
+            modelo.Entity<EjercicioImagen>().HasRequired(i => i.Ejercicio).WithMany(e => e.EjercicioImagenes).HasForeignKey(i => i.IdEjercicio).WillCascadeOnDelete(false);
         }
     }
 }

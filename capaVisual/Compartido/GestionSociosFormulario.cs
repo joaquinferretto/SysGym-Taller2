@@ -21,6 +21,8 @@ namespace exxen2._0.capaVisual.Compartido
         private bool estadoSeleccionado = true;
         private readonly Color colorPrimario;
         private byte[] fotoSeleccionada;
+        private string extensionFotoSeleccionada;
+        private string fotoRutaSeleccionada;
         private readonly int idSocioInicial;
         /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
         public GestionSociosFormulario() : this(Color.FromArgb(79, 70, 229))
@@ -120,9 +122,11 @@ namespace exxen2._0.capaVisual.Compartido
                 if (socio == null)
                     return;
                 estadoSeleccionado = socio.Estado;
-                fotoSeleccionada = socio.Foto;
+                fotoSeleccionada = null;
+                extensionFotoSeleccionada = null;
+                fotoRutaSeleccionada = socio.FotoRuta;
                 sexo.SelectedIndex = socio.Sexo == "M" ? 0 : socio.Sexo == "F" ? 1 : -1;
-                AyudaFormularioVisual.MostrarFoto(fotoSocio, fotoSeleccionada, socio.Sexo);
+                AyudaFormularioVisual.MostrarFotoRuta(fotoSocio, fotoRutaSeleccionada, socio.Sexo);
                 nombre.Text = socio.Nombre;
                 apellido.Text = socio.Apellido;
                 dni.Text = socio.DNI;
@@ -146,8 +150,10 @@ namespace exxen2._0.capaVisual.Compartido
             idSeleccionado = 0;
             estadoSeleccionado = true;
             fotoSeleccionada = null;
+            extensionFotoSeleccionada = null;
+            fotoRutaSeleccionada = null;
             sexo.SelectedIndex = -1;
-            AyudaFormularioVisual.MostrarFoto(fotoSocio, null, null);
+            AyudaFormularioVisual.MostrarFotoRuta(fotoSocio, null, null);
             nombre.Clear();
             apellido.Clear();
             dni.Clear();
@@ -196,7 +202,7 @@ namespace exxen2._0.capaVisual.Compartido
                 FechaNacimiento = fechaNacimiento.Checked ? (DateTime? )fechaNacimiento.Value.Date : null,
                 Peso = string.IsNullOrWhiteSpace(peso.Text) ? (decimal? )null : AyudaFormularioVisual.DecimalPositivo(peso, "peso"),
                 Altura = string.IsNullOrWhiteSpace(altura.Text) ? (decimal? )null : AyudaFormularioVisual.DecimalPositivo(altura, "altura"),
-                Foto = fotoSeleccionada,
+                FotoRuta = fotoRutaSeleccionada,
                 Sexo = SexoSeleccionado()
             };
         }
@@ -208,7 +214,7 @@ namespace exxen2._0.capaVisual.Compartido
             {
                 if (!permitirEdicion || idSeleccionado != 0)
                     return;
-                logica.Crear(LeerSocio());
+                logica.Crear(LeerSocio(), fotoSeleccionada, extensionFotoSeleccionada);
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Socio creado correctamente.");
@@ -226,7 +232,7 @@ namespace exxen2._0.capaVisual.Compartido
             {
                 if (!permitirEdicion || idSeleccionado == 0)
                     throw new InvalidOperationException("Selecciona un socio.");
-                logica.Modificar(LeerSocio());
+                logica.Modificar(LeerSocio(), fotoSeleccionada, extensionFotoSeleccionada);
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Socio actualizado correctamente.");
@@ -344,16 +350,18 @@ namespace exxen2._0.capaVisual.Compartido
             return sexo.SelectedIndex == 0 ? "M" : sexo.SelectedIndex == 1 ? "F" : null;
         }
 
-        /* Al elegir una foto, valida el archivo y actualiza la vista antes de aceptar sus bytes. */
+        /* Al elegir una foto, conserva los bytes solo hasta guardar y muestra una vista independiente. */
         private void btnSeleccionarFoto_Click(object origen, EventArgs e)
         {
             try
             {
-                var contenido = AyudaFormularioVisual.SeleccionarFoto(this, SexoSeleccionado());
-                if (contenido == null)
+                var seleccion = AyudaFormularioVisual.SeleccionarImagen(this, SexoSeleccionado());
+                if (seleccion == null)
                     return;
-                AyudaFormularioVisual.MostrarFoto(fotoSocio, contenido, SexoSeleccionado());
-                fotoSeleccionada = contenido;
+                AyudaFormularioVisual.MostrarFoto(fotoSocio, seleccion.Contenido, SexoSeleccionado());
+                fotoSeleccionada = seleccion.Contenido;
+                extensionFotoSeleccionada = seleccion.Extension;
+                fotoRutaSeleccionada = null;
             }
             catch (Exception ex)
             {
@@ -365,17 +373,19 @@ namespace exxen2._0.capaVisual.Compartido
         private void btnQuitarFoto_Click(object origen, EventArgs e)
         {
             fotoSeleccionada = null;
+            extensionFotoSeleccionada = null;
+            fotoRutaSeleccionada = null;
             sexo_SelectedIndexChanged(origen, e);
         }
 
         /* Al cambiar el sexo sin foto propia, actualiza el avatar de la vista previa. */
         private void sexo_SelectedIndexChanged(object origen, EventArgs e)
         {
-            if (fotoSeleccionada != null)
+            if (fotoSeleccionada != null || !string.IsNullOrWhiteSpace(fotoRutaSeleccionada))
                 return;
             try
             {
-                AyudaFormularioVisual.MostrarFoto(fotoSocio, null, SexoSeleccionado());
+                AyudaFormularioVisual.MostrarFotoRuta(fotoSocio, null, SexoSeleccionado());
             }
             catch (Exception ex)
             {

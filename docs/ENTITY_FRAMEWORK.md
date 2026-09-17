@@ -24,12 +24,18 @@ Las relaciones usan Fluent API y deshabilitan el borrado en cascada. Los importe
 
 `ContextoGimnasio` conserva el alias de conexión `GymContext` de `App.config`. `UsuarioSistema.NombreUsuario` y `Clave` se mapean a `Username` y `Password`. En `MercadoPago`, `IdentificadorPago`, `IdentificadorPreferencia`, `ReferenciaExterna` y `DetalleEstado` se mapean a las cuatro columnas originales mediante `[Column]`. Solo cambian nombres C#, no columnas, índices ni datos.
 
-## Foto y sexo — 9 de septiembre de 2026
+## Foto y sexo — 17 de septiembre de 2026
 
-Los atributos de Socio y UsuarioSistema mapean Foto a varbinary(max) nullable y Sexo a char(1) nullable con StringLength(1). No se cambia EF6, las claves, las relaciones ni el borrado en cascada.
+Los atributos de Socio y UsuarioSistema mapean `FotoRuta` como cadena nullable de hasta 260 caracteres y `Sexo` como char(1) nullable con `StringLength(1)`. `AlmacenamientoImagenes` valida y materializa las rutas relativas; EF6 no almacena los bytes de las imágenes.
 
-Los listados directos de SocioLogica y UsuarioSistemaLogica proyectan en SQL los campos necesarios antes de materializar, excluyendo Foto; los de usuarios también excluyen Clave e incluyen el rol mediante la proyección. Se conserva AsNoTracking. ObtenerPorId recupera la foto del registro seleccionado. Las consultas de otros módulos con entidades relacionadas no se presentan como una auditoría global de transferencia de binarios.
+Los listados directos de SocioLogica y UsuarioSistemaLogica proyectan en SQL los campos necesarios antes de materializar; los de usuarios también excluyen Clave e incluyen el rol mediante la proyección. Se conserva `AsNoTracking`. ObtenerPorId recupera `FotoRuta` y el formulario carga una copia de la imagen o el avatar embebido, sin bloquear el archivo.
 
-Alta y modificación guardan Foto/Sexo junto con el registro en GuardarCambios; no requieren una segunda operación de archivos ni una transacción adicional. Se mantienen las transacciones existentes de membresías y pagos y la propagación de errores con InnerException.
+Alta y modificación guardan `FotoRuta`/`Sexo` junto con `GuardarCambios`; la copia física se realiza mediante `AlmacenamientoImagenes`. Se mantienen las transacciones existentes de membresías y pagos y la propagación de errores con InnerException.
 
 La relación opcional `Membresia.Rutina` se configura con `HasOptional(...).WithMany(...).HasForeignKey(m => m.IdRutina)`, sin borrado en cascada. `Rutina` no tiene FK hacia Socio ni Plan. El DDL inicial declara `Membresia.IdRutina INT NULL` y `FK_Membresia_Rutina`, manteniendo el mismo modelo que EF6. `SysGymDB.sql` es el esquema de creación para una base nueva; no se incluye un script de migración para bases existentes.
+
+## Imágenes portables — 17 de septiembre de 2026
+
+`Socio.FotoRuta` se mapea como cadena nullable de hasta 260 caracteres. `Ejercicio` expone `ICollection<EjercicioImagen> EjercicioImagenes` y `ContextoGimnasio` registra `DbSet<EjercicioImagen>` junto con la relación requerida `Ejercicio 1:N EjercicioImagen`, sin borrado en cascada.
+
+`EjercicioImagenLogica` consulta por `Orden`, copia archivos a `Datos/Imagenes/Ejercicios/{IdEjercicio}` y elimina la relación con el repositorio cuando corresponde. `SocioLogica` copia fotos a `Datos/Imagenes/Socios` y persiste solo `FotoRuta`; `AlmacenamientoImagenes` valida rutas relativas y extensiones. No se agregaron migraciones EF ni exportación PDF.

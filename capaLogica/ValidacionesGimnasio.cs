@@ -1,4 +1,6 @@
 using System;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using exxen2._0.capaDatos.Entidades;
 
@@ -47,20 +49,41 @@ namespace exxen2._0.capaLogica
                 throw new InvalidOperationException(mensajeEdad);
         }
 
-        /* Valida el sexo opcional, el límite de dos MiB y la firma del formato de la foto. */
+        /* Valida el sexo opcional, el límite de dos MiB y que la foto sea una imagen decodificable. */
         public static void ValidarFotoYSexo(byte[] foto, string sexo)
         {
             if (sexo != null && sexo != "M" && sexo != "F")
                 throw new InvalidOperationException("El sexo debe ser Masculino, Femenino o quedar sin seleccionar.");
             if (foto == null)
                 return;
-            if (foto.Length > TamanoMaximoFoto)
-                throw new InvalidOperationException("La foto no puede superar los 2 MB.");
-            bool png = foto.Length >= 24 && foto[0] == 137 && foto[1] == 80 && foto[2] == 78 && foto[3] == 71 && foto[4] == 13 && foto[5] == 10 && foto[6] == 26 && foto[7] == 10;
-            bool jpeg = foto.Length >= 4 && foto[0] == 255 && foto[1] == 216 && foto[2] == 255 && foto[foto.Length - 2] == 255 && foto[foto.Length - 1] == 217;
-            bool bmp = foto.Length >= 54 && foto[0] == 66 && foto[1] == 77;
-            if (!png && !jpeg && !bmp)
-                throw new InvalidOperationException("La foto debe tener formato PNG, JPG o BMP válido.");
+            ValidarImagen(foto);
+        }
+
+        /* Comprueba el tamaño y la decodificación real de una imagen PNG o JPEG. */
+        public static void ValidarImagen(byte[] imagen)
+        {
+            if (imagen == null || imagen.Length == 0)
+                throw new InvalidOperationException("Seleccione un archivo de imagen válido.");
+            if (imagen.Length > TamanoMaximoFoto)
+                throw new InvalidOperationException("La imagen no puede superar los 2 MB.");
+
+            try
+            {
+                using (var memoria = new MemoryStream(imagen))
+                using (var cargada = Image.FromStream(memoria, true, true))
+                {
+                    if (cargada.Width <= 0 || cargada.Height <= 0)
+                        throw new InvalidOperationException("Seleccione un archivo de imagen válido.");
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                throw;
+            }
+            catch (Exception excepcion)
+            {
+                throw new InvalidOperationException("Seleccione un archivo de imagen válido.", excepcion);
+            }
         }
 
         public const int PrimerDiaRutina = 1;

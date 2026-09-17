@@ -163,6 +163,13 @@ namespace exxen2._0.capaVisual.Entrenador
             btnVolver.Text = "Volver";
             btnVolver.UseVisualStyleBackColor = false;
             btnVolver.Click += new System.EventHandler(btnVolver_Click);
+            panelEncabezado.Height = 56;
+            lblTitulo.Size = new System.Drawing.Size(850, 40);
+            lblTitulo.Text = "Socios y rutinas | Consulta de rutinas de socios";
+            lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            lblDescripcion.Visible = false;
+            panelEncabezado.Visible = false;
+            btnVolver.Location = new System.Drawing.Point(980, 10);
 
             barraAcciones.BackColor = System.Drawing.Color.White;
             barraAcciones.Dock = System.Windows.Forms.DockStyle.Top;

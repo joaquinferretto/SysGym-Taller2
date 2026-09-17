@@ -24,6 +24,8 @@ namespace exxen2._0.capaDatos.Repositorios
         bool Existe(Expression<Func<T, bool>> condicion);
         /* Registra una entidad nueva para insertarla cuando se confirmen los cambios. */
         void Agregar(T entidad);
+        /* Marca una entidad para eliminarla de forma explícita cuando el caso de uso lo requiere. */
+        void Eliminar(T entidad);
     }
 
     /* Define la confirmación y liberación de una operación atómica. */
@@ -65,6 +67,7 @@ namespace exxen2._0.capaDatos.Repositorios
         IRepositorio<RutinaEjercicio> RutinaEjercicios { get; }
 
         IRepositorio<Ejercicio> Ejercicios { get; }
+        IRepositorio<EjercicioImagen> EjercicioImagenes { get; }
 
         /* Persiste los cambios y conserva la excepción original al informar errores de validación o actualización. */
         int GuardarCambios();
@@ -95,6 +98,7 @@ namespace exxen2._0.capaDatos.Repositorios
             Rutinas = CrearRepositorio<Rutina>();
             RutinaEjercicios = CrearRepositorio<RutinaEjercicio>();
             Ejercicios = CrearRepositorio<Ejercicio>();
+            EjercicioImagenes = CrearRepositorio<EjercicioImagen>();
         }
 
         public IRepositorio<Rol> Roles { get; private set; }
@@ -112,6 +116,7 @@ namespace exxen2._0.capaDatos.Repositorios
         public IRepositorio<Rutina> Rutinas { get; private set; }
         public IRepositorio<RutinaEjercicio> RutinaEjercicios { get; private set; }
         public IRepositorio<Ejercicio> Ejercicios { get; private set; }
+        public IRepositorio<EjercicioImagen> EjercicioImagenes { get; private set; }
 
         /* Persiste los cambios y conserva la excepción original al informar errores de validación o actualización. */
         public int GuardarCambios()
@@ -208,6 +213,11 @@ namespace exxen2._0.capaDatos.Repositorios
             public void Agregar(T entidad)
             {
                 contexto.Set<T>().Add(entidad);
+            }
+
+            public void Eliminar(T entidad)
+            {
+                contexto.Set<T>().Remove(entidad);
             }
 
             public Type ElementType

@@ -15,11 +15,18 @@ namespace exxen2._0.capaVisual.Compartido
     {
         private readonly Form propietario;
         private readonly Panel panelContenido;
+        private readonly Action<string> establecerModulo;
         private Form formularioActual;
         private Control contenidoInicio;
         private Action actualizarContenidoInicio;
         /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
         internal ControladorNavegacion(Form propietario, Panel panelContenido)
+            : this(propietario, panelContenido, null)
+        {
+        }
+
+        /* Inicializa la navegación y el actualizador del título del encabezado global. */
+        internal ControladorNavegacion(Form propietario, Panel panelContenido, Action<string> establecerModulo)
         {
             if (propietario == null)
                 throw new ArgumentNullException("propietario");
@@ -27,6 +34,7 @@ namespace exxen2._0.capaVisual.Compartido
                 throw new ArgumentNullException("panelContenido");
             this.propietario = propietario;
             this.panelContenido = panelContenido;
+            this.establecerModulo = establecerModulo;
         }
 
         internal bool CambioCuentaSolicitado { get; private set; }
@@ -50,6 +58,12 @@ namespace exxen2._0.capaVisual.Compartido
         /* Muestra el módulo solicitado dentro del panel principal y libera el módulo anterior. */
         internal void AbrirFormulario(Form formulario)
         {
+            AbrirFormulario(formulario, null);
+        }
+
+        /* Muestra el módulo solicitado y actualiza el título central del encabezado global. */
+        internal void AbrirFormulario(Form formulario, string tituloModulo)
+        {
             if (formulario == null)
                 return;
             if (formularioActual != null && !formularioActual.IsDisposed)
@@ -57,6 +71,7 @@ namespace exxen2._0.capaVisual.Compartido
                 if (formularioActual.GetType() == formulario.GetType())
                 {
                     formulario.Dispose();
+                    ActualizarModulo(tituloModulo);
                     formularioActual.BringToFront();
                     return;
                 }
@@ -73,11 +88,19 @@ namespace exxen2._0.capaVisual.Compartido
             formulario.Dock = DockStyle.Fill;
             formulario.MinimumSize = Size.Empty;
             formulario.FormClosed += new FormClosedEventHandler(formulario_FormClosed);
+            ActualizarModulo(tituloModulo);
             if (contenidoInicio != null)
                 contenidoInicio.Visible = false;
             panelContenido.Controls.Add(formulario);
             formulario.Show();
             formulario.BringToFront();
+        }
+
+        /* Actualiza el texto del módulo sin crear controles desde runtime. */
+        private void ActualizarModulo(string tituloModulo)
+        {
+            if (establecerModulo != null)
+                establecerModulo(tituloModulo ?? string.Empty);
         }
 
         /* Registra el contenido inicial existente y la acción que lo actualiza al volver. */
@@ -96,6 +119,7 @@ namespace exxen2._0.capaVisual.Compartido
             if (!ReferenceEquals(formularioActual, origen))
                 return;
             formularioActual = null;
+            ActualizarModulo(string.Empty);
             MostrarContenidoInicio(true);
         }
 
@@ -108,6 +132,7 @@ namespace exxen2._0.capaVisual.Compartido
                 panelContenido.Controls.Add(contenidoInicio);
             contenidoInicio.Visible = true;
             contenidoInicio.BringToFront();
+            ActualizarModulo(string.Empty);
             if (actualizar && actualizarContenidoInicio != null)
                 actualizarContenidoInicio();
         }

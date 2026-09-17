@@ -7,7 +7,7 @@ namespace exxen2._0.capaVisual.Administrador
     partial class PanelAdministrador
     {
         private IContainer components = null;
-        private Panel panelEncabezado; private Label lblMarca; private Label lblUsuarioRol; private Button btnCambiarCuenta; private Panel panelMenu; private Panel panelOpciones; private Panel panelPie; private Button btnSalir; private Panel panelContenido;
+        private Panel panelEncabezado; private TableLayoutPanel layoutEncabezado; private Panel panelIdentidad; private Label lblMarca; private Label lblUsuarioRol; private Label lblModuloActual; private Button btnCambiarCuenta; private Panel panelMenu; private Panel panelOpciones; private Panel panelPie; private Button btnSalir; private Panel panelContenido;
         private Label lblAdministracion; private Label lblOperacion; private Label lblRutinas; private Label lblConsultas; private Button btnUsuarios; private Button btnSocios; private Button btnPlanes; private Button btnMembresias; private Button btnPagos; private Button btnAsignaciones; private Button btnEjercicios; private Button btnRutinas; private Button btnMisSocios; private Button btnReportes;
 
         private InicioPanelAdministrador inicioPanel;
@@ -16,8 +16,11 @@ namespace exxen2._0.capaVisual.Administrador
         private void InitializeComponent()
         {
             this.panelEncabezado = new System.Windows.Forms.Panel();
+            this.layoutEncabezado = new System.Windows.Forms.TableLayoutPanel();
+            this.panelIdentidad = new System.Windows.Forms.Panel();
             this.lblMarca = new System.Windows.Forms.Label();
             this.lblUsuarioRol = new System.Windows.Forms.Label();
+            this.lblModuloActual = new System.Windows.Forms.Label();
             this.btnCambiarCuenta = new System.Windows.Forms.Button();
             this.panelMenu = new System.Windows.Forms.Panel();
             this.panelOpciones = new System.Windows.Forms.Panel();
@@ -40,6 +43,8 @@ namespace exxen2._0.capaVisual.Administrador
             this.panelContenido = new System.Windows.Forms.Panel();
             this.inicioPanel = new exxen2._0.capaVisual.Administrador.InicioPanelAdministrador();
             this.panelEncabezado.SuspendLayout();
+            this.layoutEncabezado.SuspendLayout();
+            this.panelIdentidad.SuspendLayout();
             this.panelMenu.SuspendLayout();
             this.panelOpciones.SuspendLayout();
             this.panelPie.SuspendLayout();
@@ -49,15 +54,45 @@ namespace exxen2._0.capaVisual.Administrador
             // panelEncabezado
             // 
             this.panelEncabezado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
-            this.panelEncabezado.Controls.Add(this.lblMarca);
-            this.panelEncabezado.Controls.Add(this.lblUsuarioRol);
-            this.panelEncabezado.Controls.Add(this.btnCambiarCuenta);
+            this.panelEncabezado.Controls.Add(this.layoutEncabezado);
             this.panelEncabezado.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelEncabezado.Location = new System.Drawing.Point(0, 0);
             this.panelEncabezado.Name = "panelEncabezado";
             this.panelEncabezado.Padding = new System.Windows.Forms.Padding(24, 8, 24, 8);
             this.panelEncabezado.Size = new System.Drawing.Size(1200, 90);
             this.panelEncabezado.TabIndex = 2;
+            this.layoutEncabezado.ColumnCount = 3;
+            this.layoutEncabezado.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 250F));
+            this.layoutEncabezado.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layoutEncabezado.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 190F));
+            this.layoutEncabezado.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layoutEncabezado.Location = new System.Drawing.Point(24, 8);
+            this.layoutEncabezado.Margin = new System.Windows.Forms.Padding(0);
+            this.layoutEncabezado.Name = "layoutEncabezado";
+            this.layoutEncabezado.RowCount = 1;
+            this.layoutEncabezado.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layoutEncabezado.Size = new System.Drawing.Size(1152, 74);
+            this.layoutEncabezado.TabIndex = 3;
+            this.layoutEncabezado.Controls.Add(this.panelIdentidad, 0, 0);
+            this.layoutEncabezado.Controls.Add(this.lblModuloActual, 1, 0);
+            this.layoutEncabezado.Controls.Add(this.btnCambiarCuenta, 2, 0);
+            this.panelIdentidad.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelIdentidad.Margin = new System.Windows.Forms.Padding(0);
+            this.panelIdentidad.Name = "panelIdentidad";
+            this.panelIdentidad.TabIndex = 0;
+            this.panelIdentidad.Controls.Add(this.lblUsuarioRol);
+            this.panelIdentidad.Controls.Add(this.lblMarca);
+            this.lblModuloActual.AutoEllipsis = true;
+            this.lblModuloActual.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblModuloActual.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
+            this.lblModuloActual.ForeColor = System.Drawing.Color.White;
+            this.lblModuloActual.Margin = new System.Windows.Forms.Padding(12, 0, 12, 0);
+            this.lblModuloActual.Name = "lblModuloActual";
+            this.lblModuloActual.Padding = new System.Windows.Forms.Padding(8, 0, 8, 0);
+            this.lblModuloActual.TabIndex = 4;
+            this.lblModuloActual.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnCambiarCuenta.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnCambiarCuenta.Margin = new System.Windows.Forms.Padding(8, 18, 0, 18);
             // 
             // lblMarca
             // 
@@ -70,6 +105,9 @@ namespace exxen2._0.capaVisual.Administrador
             this.lblMarca.TabIndex = 0;
             this.lblMarca.Text = "SYSGYM";
             this.lblMarca.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.lblMarca.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblMarca.Location = new System.Drawing.Point(0, 0);
+            this.lblMarca.Size = new System.Drawing.Size(250, 36);
             // 
             // lblUsuarioRol
             // 
@@ -80,6 +118,9 @@ namespace exxen2._0.capaVisual.Administrador
             this.lblUsuarioRol.Size = new System.Drawing.Size(900, 26);
             this.lblUsuarioRol.TabIndex = 1;
             this.lblUsuarioRol.Text = "Usuario: Administrador de diseno    |    Rol: Administrador";
+            this.lblUsuarioRol.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblUsuarioRol.Location = new System.Drawing.Point(0, 48);
+            this.lblUsuarioRol.Size = new System.Drawing.Size(250, 26);
             // 
             // btnCambiarCuenta
             // 
@@ -424,6 +465,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.MinimumSize = new System.Drawing.Size(1100, 700);
             this.Name = "PanelAdministrador";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Text = "SysGym - Administrador";
             this.panelEncabezado.Padding = new System.Windows.Forms.Padding(24, 8, 24, 8);
             this.lblMarca.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
@@ -457,6 +499,8 @@ namespace exxen2._0.capaVisual.Administrador
             this.btnReportes.Visible = false;
             this.Load += new System.EventHandler(this.PanelAdministrador_Load);
             this.panelEncabezado.ResumeLayout(false);
+            this.layoutEncabezado.ResumeLayout(false);
+            this.panelIdentidad.ResumeLayout(false);
             this.panelMenu.ResumeLayout(false);
             this.panelOpciones.ResumeLayout(false);
             this.panelPie.ResumeLayout(false);

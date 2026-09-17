@@ -22,30 +22,57 @@ namespace exxen2._0.capaLogica
         /* Valida y registra usuarios del sistema mediante la unidad de trabajo, conservando sus reglas de alta. */
         public UsuarioSistema Crear(UsuarioSistema usuario, string clave)
         {
+            return Crear(usuario, clave, null, null);
+        }
+
+        /* Valida, copia la foto seleccionada a Datos y registra solo su ruta relativa. */
+        public UsuarioSistema Crear(UsuarioSistema usuario, string clave, byte[] fotoContenido, string extensionFoto)
+        {
             ValidarDatos(usuario);
             if (string.IsNullOrWhiteSpace(clave))
             {
                 throw new InvalidOperationException("La contraseña es obligatoria.");
             }
 
-            using (var datos = new UnidadDeTrabajoGimnasio())
+            var rutaNueva = (string)null;
+            try
             {
-                var rol = ObtenerRolActivo(datos, usuario.IdRol);
-                ValidarUnicidad(datos, usuario.DNI, usuario.NombreUsuario, 0);
-                usuario.IdRol = rol.IdRol;
-                usuario.Rol = rol;
-                usuario.Clave = GenerarClave(clave);
-                usuario.Estado = true;
-                datos.UsuariosSistema.Agregar(usuario);
-                datos.GuardarCambios();
-                return usuario;
+                using (var datos = new UnidadDeTrabajoGimnasio())
+                {
+                    var rol = ObtenerRolActivo(datos, usuario.IdRol);
+                    ValidarUnicidad(datos, usuario.DNI, usuario.NombreUsuario, 0);
+                    if (fotoContenido != null)
+                        rutaNueva = AlmacenamientoImagenes.GuardarUsuario(fotoContenido, extensionFoto);
+                    usuario.FotoRuta = rutaNueva ?? NormalizarRuta(usuario.FotoRuta);
+                    usuario.IdRol = rol.IdRol;
+                    usuario.Rol = rol;
+                    usuario.Clave = GenerarClave(clave);
+                    usuario.Estado = true;
+                    datos.UsuariosSistema.Agregar(usuario);
+                    datos.GuardarCambios();
+                    return usuario;
+                }
+            }
+            catch
+            {
+                if (!string.IsNullOrWhiteSpace(rutaNueva))
+                    AlmacenamientoImagenes.Eliminar(rutaNueva);
+                throw;
             }
         }
 
         /* Valida y guarda los cambios de usuarios del sistema sobre el registro existente. */
         public UsuarioSistema Modificar(UsuarioSistema usuario, string nuevaClave = null)
         {
+            return Modificar(usuario, nuevaClave, null, null);
+        }
+
+        /* Actualiza el usuario y reemplaza o quita su foto sin guardar binarios en SQL. */
+        public UsuarioSistema Modificar(UsuarioSistema usuario, string nuevaClave, byte[] fotoContenido, string extensionFoto)
+        {
             ValidarDatos(usuario);
+            var rutaNueva = (string)null;
+            var guardado = false;
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 var existente = datos.UsuariosSistema.SingleOrDefault(u => u.IdUsuarioSistema == usuario.IdUsuarioSistema);
@@ -56,25 +83,39 @@ namespace exxen2._0.capaLogica
 
                 var rol = ObtenerRolActivo(datos, usuario.IdRol);
                 ValidarUnicidad(datos, usuario.DNI, usuario.NombreUsuario, usuario.IdUsuarioSistema);
-                existente.Nombre = usuario.Nombre;
-                existente.Apellido = usuario.Apellido;
-                existente.DNI = usuario.DNI;
-                existente.Telefono = usuario.Telefono;
-                existente.FechaNacimiento = usuario.FechaNacimiento;
-                existente.Salario = usuario.Salario;
-                existente.NombreUsuario = usuario.NombreUsuario;
-                existente.IdRol = rol.IdRol;
-                existente.Rol = rol;
-                existente.Estado = usuario.Estado;
-                existente.Foto = usuario.Foto;
-                existente.Sexo = usuario.Sexo;
-                if (!string.IsNullOrWhiteSpace(nuevaClave))
+                try
                 {
-                    existente.Clave = GenerarClave(nuevaClave);
-                }
+                    var rutaAnterior = existente.FotoRuta;
+                    if (fotoContenido != null)
+                        rutaNueva = AlmacenamientoImagenes.GuardarUsuario(fotoContenido, extensionFoto);
 
-                datos.GuardarCambios();
-                return existente;
+                    existente.Nombre = usuario.Nombre;
+                    existente.Apellido = usuario.Apellido;
+                    existente.DNI = usuario.DNI;
+                    existente.Telefono = usuario.Telefono;
+                    existente.FechaNacimiento = usuario.FechaNacimiento;
+                    existente.Salario = usuario.Salario;
+                    existente.NombreUsuario = usuario.NombreUsuario;
+                    existente.IdRol = rol.IdRol;
+                    existente.Rol = rol;
+                    existente.Estado = usuario.Estado;
+                    existente.FotoRuta = rutaNueva ?? NormalizarRuta(usuario.FotoRuta);
+                    existente.Sexo = usuario.Sexo;
+                    if (!string.IsNullOrWhiteSpace(nuevaClave))
+                        existente.Clave = GenerarClave(nuevaClave);
+
+                    datos.GuardarCambios();
+                    guardado = true;
+                    if (!string.IsNullOrWhiteSpace(rutaAnterior) && rutaAnterior != existente.FotoRuta && !datos.UsuariosSistema.Existe(u => u.FotoRuta == rutaAnterior && u.IdUsuarioSistema != usuario.IdUsuarioSistema))
+                        AlmacenamientoImagenes.Eliminar(rutaAnterior);
+                    return existente;
+                }
+                catch
+                {
+                    if (!guardado && !string.IsNullOrWhiteSpace(rutaNueva))
+                        AlmacenamientoImagenes.Eliminar(rutaNueva);
+                    throw;
+                }
             }
         }
 
@@ -316,7 +357,17 @@ namespace exxen2._0.capaLogica
             {
                 throw new InvalidOperationException("El salario debe ser mayor que cero.");
             }
-            ValidacionesGimnasio.ValidarFotoYSexo(usuario.Foto, usuario.Sexo);
+            ValidacionesGimnasio.ValidarFotoYSexo(null, usuario.Sexo);
+            AlmacenamientoImagenes.ValidarRutaRelativa(usuario.FotoRuta);
+        }
+
+        /* Normaliza una ruta administrada y conserva null cuando el usuario no tiene foto. */
+        private static string NormalizarRuta(string ruta)
+        {
+            if (string.IsNullOrWhiteSpace(ruta))
+                return null;
+            AlmacenamientoImagenes.ValidarRutaRelativa(ruta);
+            return ruta.Replace('/', '\\');
         }
 
         /* Obtiene el rol requerido y rechaza roles inexistentes o inactivos. */

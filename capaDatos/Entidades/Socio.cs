@@ -39,8 +39,8 @@ namespace exxen2._0.capaDatos.Entidades
         public decimal? Altura { get; set; }
         public bool Estado { get; set; }
 
-        [Column(TypeName = "varbinary(max)")]
-        public byte[] Foto { get; set; }
+        [StringLength(260)]
+        public string FotoRuta { get; set; }
 
         [StringLength(1)]
         [Column(TypeName = "char")]

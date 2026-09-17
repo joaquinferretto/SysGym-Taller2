@@ -8,8 +8,11 @@ namespace exxen2._0.capaVisual.Recepcionista
     {
         private IContainer components = null;
         private Panel panelEncabezado;
+        private TableLayoutPanel layoutEncabezado;
+        private Panel panelIdentidad;
         private Label lblMarca;
         private Label lblUsuarioRol;
+        private Label lblModuloActual;
         private Button btnCambiarCuenta;
         private Panel panelMenu;
         private Panel panelOpciones;
@@ -36,8 +39,11 @@ namespace exxen2._0.capaVisual.Recepcionista
         private void InitializeComponent()
         {
             panelEncabezado = new Panel();
+            layoutEncabezado = new TableLayoutPanel();
+            panelIdentidad = new Panel();
             lblMarca = new Label();
             lblUsuarioRol = new Label();
+            lblModuloActual = new Label();
             btnCambiarCuenta = new Button();
             panelMenu = new Panel();
             panelOpciones = new Panel();
@@ -55,6 +61,8 @@ namespace exxen2._0.capaVisual.Recepcionista
             panelContenido = new Panel();
             lblBienvenida = new Label();
             panelEncabezado.SuspendLayout();
+            layoutEncabezado.SuspendLayout();
+            panelIdentidad.SuspendLayout();
             panelMenu.SuspendLayout();
             panelOpciones.SuspendLayout();
 
@@ -62,13 +70,43 @@ namespace exxen2._0.capaVisual.Recepcionista
             SuspendLayout();
 
             panelEncabezado.BackColor = Color.FromArgb(5, 150, 105);
-            panelEncabezado.Controls.Add(lblMarca);
-            panelEncabezado.Controls.Add(lblUsuarioRol);
-            panelEncabezado.Controls.Add(btnCambiarCuenta);
+            panelEncabezado.Controls.Add(layoutEncabezado);
 
             panelEncabezado.Name = "panelEncabezado";
 
             panelEncabezado.TabIndex = 0;
+            layoutEncabezado.ColumnCount = 3;
+            layoutEncabezado.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 250F));
+            layoutEncabezado.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            layoutEncabezado.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 190F));
+            layoutEncabezado.Dock = DockStyle.Fill;
+            layoutEncabezado.Location = new Point(24, 8);
+            layoutEncabezado.Margin = new Padding(0);
+            layoutEncabezado.Name = "layoutEncabezado";
+            layoutEncabezado.RowCount = 1;
+            layoutEncabezado.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            layoutEncabezado.Size = new Size(1152, 74);
+            layoutEncabezado.TabIndex = 3;
+            layoutEncabezado.Controls.Add(panelIdentidad, 0, 0);
+            layoutEncabezado.Controls.Add(lblModuloActual, 1, 0);
+            layoutEncabezado.Controls.Add(btnCambiarCuenta, 2, 0);
+            panelIdentidad.Dock = DockStyle.Fill;
+            panelIdentidad.Margin = new Padding(0);
+            panelIdentidad.Name = "panelIdentidad";
+            panelIdentidad.TabIndex = 0;
+            panelIdentidad.Controls.Add(lblUsuarioRol);
+            panelIdentidad.Controls.Add(lblMarca);
+            lblModuloActual.AutoEllipsis = true;
+            lblModuloActual.Dock = DockStyle.Fill;
+            lblModuloActual.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
+            lblModuloActual.ForeColor = Color.White;
+            lblModuloActual.Margin = new Padding(12, 0, 12, 0);
+            lblModuloActual.Name = "lblModuloActual";
+            lblModuloActual.Padding = new Padding(8, 0, 8, 0);
+            lblModuloActual.TabIndex = 4;
+            lblModuloActual.TextAlign = ContentAlignment.MiddleCenter;
+            btnCambiarCuenta.Dock = DockStyle.Fill;
+            btnCambiarCuenta.Margin = new Padding(8, 18, 0, 18);
 
             lblMarca.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
             lblMarca.ForeColor = Color.White;
@@ -77,6 +115,9 @@ namespace exxen2._0.capaVisual.Recepcionista
 
             lblMarca.TabIndex = 0;
             lblMarca.Text = "SYSGYM";
+            lblMarca.Dock = DockStyle.Top;
+            lblMarca.Location = new Point(0, 0);
+            lblMarca.Size = new Size(250, 36);
 
             lblUsuarioRol.ForeColor = Color.FromArgb(209, 250, 229);
 
@@ -84,6 +125,9 @@ namespace exxen2._0.capaVisual.Recepcionista
 
             lblUsuarioRol.TabIndex = 1;
             lblUsuarioRol.Text = "Usuario: Recepcionista de diseno    |    Rol: Recepcionista";
+            lblUsuarioRol.Dock = DockStyle.Bottom;
+            lblUsuarioRol.Location = new Point(0, 48);
+            lblUsuarioRol.Size = new Size(250, 26);
 
             btnCambiarCuenta.BackColor = Color.White;
             btnCambiarCuenta.FlatAppearance.BorderSize = 0;
@@ -146,6 +190,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             MinimumSize = new Size(1100, 700);
             this.Name = "PanelRecepcionista";
             StartPosition = FormStartPosition.CenterScreen;
+            WindowState = FormWindowState.Maximized;
             Text = "SysGym - Recepcionista";
             // Layout base: encabezado fijo, menu lateral estable y contenido restante.
 
@@ -244,6 +289,8 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.btnPagos.Visible = false;
             this.btnAsignar.Visible = false;
             this.btnConsultar.Visible = false;
+            layoutEncabezado.ResumeLayout(false);
+            panelIdentidad.ResumeLayout(false);
             this.panelPie.AutoSize = false;
             this.panelPie.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelPie.Size = new System.Drawing.Size(264, 76);

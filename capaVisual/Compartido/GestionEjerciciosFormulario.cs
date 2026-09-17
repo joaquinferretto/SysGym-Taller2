@@ -13,9 +13,11 @@ namespace exxen2._0.capaVisual.Compartido
     public partial class GestionEjerciciosFormulario : Form
     {
         private readonly EjercicioLogica logica = new EjercicioLogica();
+        private readonly EjercicioImagenLogica imagenesLogica = new EjercicioImagenLogica();
         private int idSeleccionado;
         private bool estadoSeleccionado = true;
         private bool cargandoTabla;
+        private EjercicioImagen imagenSeleccionada;
 
         /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
         public GestionEjerciciosFormulario() : this(Color.FromArgb(79, 70, 229)) { }
@@ -70,6 +72,7 @@ namespace exxen2._0.capaVisual.Compartido
             nombre.Text = Convert.ToString(tabla.CurrentRow.Cells[1].Value);
             descripcion.Text = Convert.ToString(tabla.CurrentRow.Cells[2].Value);
             estadoSeleccionado = Convert.ToString(tabla.CurrentRow.Cells[3].Value) == "Activo";
+            CargarImagenes();
             lblEstadoValor.Text = estadoSeleccionado ? "Activo" : "Inactivo";
             lblEstadoValor.ForeColor = estadoSeleccionado ? Color.FromArgb(22, 101, 52) : Color.FromArgb(185, 28, 28);
             lblDetalleTitulo.Text = "Ficha / Edición del ejercicio";
@@ -95,6 +98,7 @@ namespace exxen2._0.capaVisual.Compartido
             cancelar.Visible = false;
             darDeBaja.Visible = false;
             reactivar.Visible = false;
+            CargarImagenes();
         }
 
         /* Al hacer clic en nuevo, deja la ficha lista para crear un ejercicio. */
@@ -168,5 +172,105 @@ namespace exxen2._0.capaVisual.Compartido
 
         /* Al hacer clic en actualizar listado, vuelve a consultar el catálogo. */
         private void actualizar_Click(object origen, EventArgs e) { Cargar(); }
+
+        /* Consulta las imágenes del ejercicio y crea únicamente los thumbnails variables del catálogo. */
+        private void CargarImagenes()
+        {
+            LiberarMiniaturas();
+            imagenSeleccionada = null;
+            if (idSeleccionado <= 0)
+                return;
+
+            try
+            {
+                foreach (var imagen in imagenesLogica.ListarPorEjercicio(idSeleccionado))
+                {
+                    var miniatura = new PictureBox
+                    {
+                        Width = 86,
+                        Height = 86,
+                        Margin = new Padding(4),
+                        SizeMode = PictureBoxSizeMode.Zoom,
+                        BorderStyle = BorderStyle.FixedSingle,
+                        BackColor = Color.FromArgb(241, 245, 249),
+                        Cursor = Cursors.Hand,
+                        Tag = imagen,
+                        Image = AyudaFormularioVisual.CargarImagenDesdeRuta(imagen.RutaRelativa)
+                    };
+                    miniatura.Click += miniatura_Click;
+                    galeriaImagenes.Controls.Add(miniatura);
+                }
+            }
+            catch (Exception ex)
+            {
+                AyudaFormularioVisual.MostrarError(lblEstado, ex);
+            }
+        }
+
+        /* Selecciona un thumbnail para permitir su baja sin confundirlo con el ejercicio. */
+        private void miniatura_Click(object origen, EventArgs e)
+        {
+            imagenSeleccionada = (origen as PictureBox)?.Tag as EjercicioImagen;
+            foreach (Control control in galeriaImagenes.Controls)
+            {
+                var miniatura = control as PictureBox;
+                if (miniatura != null)
+                    miniatura.BackColor = miniatura.Tag == imagenSeleccionada ? Color.FromArgb(199, 210, 254) : Color.FromArgb(241, 245, 249);
+            }
+        }
+
+        /* Agrega una imagen validada al catálogo sin copiarla hasta confirmar la operación en lógica. */
+        private void agregarImagen_Click(object origen, EventArgs e)
+        {
+            try
+            {
+                if (idSeleccionado <= 0)
+                    throw new InvalidOperationException("Primero guarde el ejercicio antes de agregar imágenes.");
+                var seleccion = AyudaFormularioVisual.SeleccionarImagen(this);
+                if (seleccion == null)
+                    return;
+                imagenesLogica.Agregar(idSeleccionado, seleccion.Contenido, seleccion.Extension);
+                CargarImagenes();
+                AyudaFormularioVisual.MostrarExito(lblEstado, "Imagen agregada correctamente.");
+            }
+            catch (Exception ex)
+            {
+                AyudaFormularioVisual.MostrarError(lblEstado, ex);
+            }
+        }
+
+        /* Quita la relación seleccionada y su archivo administrado después de confirmarlo. */
+        private void quitarImagen_Click(object origen, EventArgs e)
+        {
+            try
+            {
+                if (imagenSeleccionada == null)
+                    throw new InvalidOperationException("Seleccione una imagen del ejercicio.");
+                if (MessageBox.Show("¿Desea quitar esta imagen del ejercicio?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                    return;
+                imagenesLogica.Quitar(imagenSeleccionada.IdEjercicioImagen);
+                CargarImagenes();
+                AyudaFormularioVisual.MostrarExito(lblEstado, "Imagen quitada correctamente.");
+            }
+            catch (Exception ex)
+            {
+                AyudaFormularioVisual.MostrarError(lblEstado, ex);
+            }
+        }
+
+        /* Libera las copias cargadas antes de reconstruir la galería o cerrar el formulario. */
+        private void LiberarMiniaturas()
+        {
+            var controles = galeriaImagenes.Controls.Cast<Control>().ToList();
+            foreach (Control control in controles)
+            {
+                var miniatura = control as PictureBox;
+                if (miniatura != null && miniatura.Image != null)
+                    miniatura.Image.Dispose();
+                if (miniatura != null)
+                    miniatura.Dispose();
+            }
+            galeriaImagenes.Controls.Clear();
+        }
     }
 }

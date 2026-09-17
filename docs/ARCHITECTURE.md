@@ -1,5 +1,17 @@
 # Arquitectura
 
+## Encabezado global de módulos y edición de rutinas — 17 de septiembre de 2026
+
+Los paneles de rol (`PanelAdministrador`, `PanelRecepcionista` y `PanelEntrenador`) declaran en `Designer.cs` un encabezado de tres zonas: identidad a la izquierda, `lblModuloActual` en una columna central porcentual y «Cambiar de cuenta» a la derecha. `ControladorNavegacion` actualiza únicamente el texto central con el formato `Título | Subtítulo`; los formularios activos conservan su estructura propia en Designer, pero ocultan su franja de título local para que el contenido ocupe todo el espacio disponible.
+
+`RutinasEntrenadorFormulario` mantiene el master/detail y separa las acciones de rutina de las acciones de ejercicios. El mismo panel `Detalle del ejercicio` trabaja en modo visualización, nuevo o edición; `Agregar`, `Guardar cambios` y `Cancelar` se habilitan según el contexto sin crear controles estructurales desde runtime.
+
+## Encabezados compactos y edición contextual — 17 de septiembre de 2026
+
+Los formularios activos usan un encabezado estructural declarado en `Designer.cs`, acoplado arriba con `Dock=Top`, de una sola línea y con el formato `Título | Subtítulo`; el contenido restante se mantiene con `Dock=Fill`. Reportes se incorporó al mismo patrón sin modificar su carga de datos.
+
+GestionAsignaciones mantiene una `TableLayoutPanel` para la ficha y coloca la etiqueta y el combo de nuevo entrenador en la misma fila. Rutinas conserva su `SplitContainer`, sus tres secciones y sus acciones separadas; el editor de `RutinaEjercicio` tiene una fila estructural más amplia para facilitar la edición. La única persistencia adicional de esta pasada corresponde a la foto opcional de `UsuarioSistema`.
+
 ## Rediseño master/detail de tres módulos — 11 de septiembre de 2026
 
 Se reorganizaron únicamente `GestionEjerciciosFormulario`, `GestionAsignacionesFormulario` y `MisSociosFormulario` con controles nativos de Windows Forms. Las tres pantallas usan `SplitContainer`: listado filtrable a la izquierda y ficha contextual a la derecha. Los formularios mantienen header, navegación y capas existentes; la carga y las operaciones continúan pasando por `capaLogica`.
@@ -32,7 +44,7 @@ Las compilaciones Debug y Release fueron exitosas sin errores ni warnings report
 
 El entrenador puede crear rutinas reutilizables desde “Gestionar rutinas” y asignarlas desde “Mis socios”. El administrador también puede crear, editar, asignar y consultar rutinas. Cada membresía conserva cero o una rutina mediante `Membresia.IdRutina`; crear una rutina personalizada la vincula a la membresía seleccionada sin una entidad de asignación adicional. La capa visual solicita las operaciones a `RutinaLogica` y no accede a `DbContext`.
 
-Última actualización: 16 de septiembre de 2026.
+Última actualización: 17 de septiembre de 2026.
 
 ## Estabilización de validaciones y rutinas — 17 de septiembre de 2026
 
@@ -102,9 +114,15 @@ La apertura manual mediante «Ver diseñador» en Visual Studio 2022 sigue siend
 
 ### Fotos de socios y usuarios
 
-Los dos formularios de gestión incorporan PictureBox estándar, selección y eliminación de foto y selección opcional de sexo. Sus eventos se suscriben en InitializeComponent. AyudaFormularioVisual comparte la selección y presentación; la lógica valida bytes y sexo y la persistencia guarda los campos opcionales. Se clonan imágenes y recursos antes de mostrarlos y se liberan las copias reemplazadas o descartadas.
+Los dos formularios de gestión incorporan `PictureBox` estándar, selección y eliminación de foto y selección opcional de sexo. `AyudaFormularioVisual` y `AlmacenamientoImagenes` comparten selección, validación, nombres GUID, rutas relativas y carga sin mantener bloqueados los archivos. Sin foto personalizada se reutilizan los avatares embebidos `socio_hombre_default` y `socio_mujer_default`.
 
-Los avatares deben ser aportados por el usuario y registrados desde Visual Studio como avatarHombre, avatarMujer y avatarGenerico. Mientras falten, el control queda vacío con fondo gris claro. No se modificaron recursos ni se descargaron imágenes.
+`Socio.FotoRuta` y `UsuarioSistema.FotoRuta` almacenan únicamente rutas relativas a `Datos/Imagenes/Socios` y `Datos/Imagenes/Usuarios`. El DDL limpio usa esas columnas; la columna binaria histórica `UsuarioSistema.Foto` puede permanecer en una base local existente sin ser mapeada por EF6, evitando una eliminación destructiva.
+
+## Distribución UX/UI de formularios - 17 de septiembre de 2026
+
+Los formularios principales mantienen la separación de responsabilidades: `Designer.cs` declara la estructura visual, Dock, tamaños base y proporciones; `Form.cs` carga datos, atiende eventos y actualiza estados contextuales. Los paneles de rol se declaran maximizados y los módulos continúan integrándose mediante `Dock=Fill`.
+
+`RutinasEntrenadorFormulario` usa un `SplitContainer` con una proporción aproximada de 32% para el listado y 68% para el detalle, recalculada sobre el ancho disponible y limitada por `Panel1MinSize`/`Panel2MinSize`. El panel derecho usa filas estructurales para ficha, ejercicios y editor. `GestionUsuariosFormulario` usa una distribución de tabla para sus campos y conserva la foto en un área visible con zoom. No se agregan dependencias ni se modifica el flujo por capas.
 
 ## Repositorios y nombres
 
@@ -125,3 +143,9 @@ La relación se configura en EF6 y en el DDL limpio de `capaDatos/Database/SysGy
 Se corrigió exclusivamente la distribución de GestionEjerciciosFormulario, GestionAsignacionesFormulario y MisSociosFormulario. Los tres mantienen SplitContainer con ambos paneles en `Dock=Fill`; sus proporciones base son aproximadamente 56/44, 55/45 y 33/67 respectivamente. La grilla principal de cada listado conserva `ReadOnly`, `FullRowSelect`, selección única, sin encabezado de filas y columnas en modo `Fill`.
 
 La ficha de asignaciones usa filas `Percent` para aprovechar la altura completa. El listado de socios reduce sus `MinimumWidth` para que sus seis columnas visibles entren en el panel de un tercio sin scroll horizontal accidental. `SplitterDistance` queda declarado en Designer y no se reasigna desde constructor o `Load`. No se modificaron lógica, DER, SQL ni Entity Framework. Debug y Release fueron compilados correctamente; queda pendiente la apertura manual en Visual Studio y la prueba funcional contra una base disponible.
+
+## Imágenes portables y catálogo de ejercicios — 17 de septiembre de 2026
+
+La foto de `Socio` se almacena como `FotoRuta` nullable, siempre relativa a `Datos`; las imágenes personalizadas se copian a `Datos/Imagenes/Socios` con nombre GUID. Cuando la ruta no existe, `AyudaFormularioVisual` muestra los recursos embebidos `socio_hombre_default` o `socio_mujer_default` sin dejar archivos bloqueados.
+
+`EjercicioImagen` es una entidad 1:N de `Ejercicio`, con `RutaRelativa` y `Orden`. `GestionEjerciciosFormulario` mantiene sus controles estructurales en `Designer.cs` y crea únicamente thumbnails según la cantidad de imágenes. La lógica guarda y quita relaciones y archivos administrados; todavía no existe exportación a PDF.

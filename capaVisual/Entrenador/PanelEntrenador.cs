@@ -37,7 +37,7 @@ namespace exxen2._0.capaVisual.Entrenador
                 throw new ArgumentNullException("usuario");
             this.usuario = usuario;
             InitializeComponent();
-            navegacion = new ControladorNavegacion(this, panelContenido);
+            navegacion = new ControladorNavegacion(this, panelContenido, EstablecerModuloActual);
         }
 
         /* Configura las secciones del menú lateral para que puedan expandirse y contraerse. */
@@ -78,6 +78,11 @@ namespace exxen2._0.capaVisual.Entrenador
         }
 
         /* Al hacer clic en btnCambiarCuenta, cierra la sesión para volver al acceso. */
+        private void EstablecerModuloActual(string titulo)
+        {
+            lblModuloActual.Text = titulo ?? string.Empty;
+        }
+
         private void btnCambiarCuenta_Click(object origen, EventArgs e)
         {
             navegacion.CambiarCuenta();
@@ -92,19 +97,19 @@ namespace exxen2._0.capaVisual.Entrenador
         /* Al hacer clic en btnSocios, abre el módulo correspondiente dentro del panel principal. */
         private void btnSocios_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new MisSociosFormulario(usuario));
+            navegacion.AbrirFormulario(new MisSociosFormulario(usuario), "Socios y rutinas | Consulta de rutinas de socios");
         }
 
         /* Al hacer clic en btnRutinas, abre el módulo correspondiente dentro del panel principal. */
         private void btnRutinas_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new RutinasEntrenadorFormulario(usuario));
+            navegacion.AbrirFormulario(new RutinasEntrenadorFormulario(usuario), "Gestionar rutinas | Catálogo y composición de rutinas");
         }
 
         /* Al hacer clic en btnEjercicios, abre el módulo correspondiente dentro del panel principal. */
         private void btnEjercicios_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new GestionEjerciciosFormulario(Color.FromArgb(14, 116, 144)));
+            navegacion.AbrirFormulario(new GestionEjerciciosFormulario(Color.FromArgb(14, 116, 144)), "Ejercicios | Catálogo de ejercicios");
         }
 
         /* Al cargar la pantalla en ejecución, prepara sus datos iniciales sin realizar consultas desde el diseñador. */

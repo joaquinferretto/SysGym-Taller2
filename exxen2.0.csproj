@@ -82,6 +82,7 @@
     <Compile Include="capaDatos\Contexto\ContextoGimnasio.cs" />
     <Compile Include="capaDatos\Repositorios\UnidadDeTrabajoGimnasio.cs" />
     <Compile Include="capaDatos\Entidades\Ejercicio.cs" />
+    <Compile Include="capaDatos\Entidades\EjercicioImagen.cs" />
     <Compile Include="capaDatos\Entidades\CuotaMembresia.cs" />
     <Compile Include="capaDatos\Entidades\EstadosCuota.cs" />
     <Compile Include="capaDatos\Entidades\EstadosTransaccionPago.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="capaLogica\ClimaLogica.cs" />
     <Compile Include="capaLogica\CuotaMembresiaLogica.cs" />
     <Compile Include="capaLogica\EjercicioLogica.cs" />
+    <Compile Include="capaLogica\EjercicioImagenLogica.cs" />
     <Compile Include="capaLogica\MembresiaEntrenadorLogica.cs" />
     <Compile Include="capaLogica\MembresiaLogica.cs" />
     <Compile Include="capaLogica\PagoLogica.cs" />
@@ -111,6 +113,7 @@
     <Compile Include="capaLogica\SocioLogica.cs" />
     <Compile Include="capaLogica\UsuarioSistemaLogica.cs" />
     <Compile Include="capaLogica\ValidacionesGimnasio.cs" />
+    <Compile Include="capaLogica\AlmacenamientoImagenes.cs" />
     <Compile Include="capaVisual\Autenticacion\InicioSesion.cs">
       <SubType>Form</SubType>
     </Compile>

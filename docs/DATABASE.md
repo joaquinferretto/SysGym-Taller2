@@ -22,11 +22,11 @@ Las entidades principales son Rol, UsuarioSistema, Socio, Plan, Membresia, Membr
 
 El DDL principal crea una base nueva y es la única fuente de esquema inicial. No se distribuye una migración para bases existentes; no ejecutar el DDL completo sobre una base con datos. La cadena `GymContext` de `App.config` apunta actualmente a `.SQLEXPRESS`; debe cambiarse si la instancia de SQL Server es diferente.
 
-## Foto y sexo — 9 de septiembre de 2026
+## Foto y sexo — 17 de septiembre de 2026
 
-Socio y UsuarioSistema incorporan `Foto varbinary(max) NULL` y `Sexo char(1) NULL`. La foto se almacena en SQL Server, no en carpetas por persona dentro del proyecto. Sexo admite M, F o NULL mediante validación de negocio. Los registros anteriores conservan ambos campos nulos.
+Socio y UsuarioSistema incorporan `FotoRuta NVARCHAR(260) NULL` y `Sexo char(1) NULL`. SQL Server guarda únicamente rutas relativas; los archivos administrados viven bajo `Datos/Imagenes/Socios` y `Datos/Imagenes/Usuarios`. Sexo admite M, F o NULL mediante validación de negocio. Sin foto personalizada se utilizan recursos embebidos.
 
-El DDL inicial contiene estas columnas opcionales; no se mantiene un script de migración para esquemas previos.
+El DDL inicial contiene estas columnas opcionales; no se mantiene un script de migración para esquemas previos. En una base local anterior puede permanecer la columna binaria histórica de UsuarioSistema sin mapeo EF6; no se elimina automáticamente.
 
 La validación de estas cuatro columnas se realizó en la base separada SysGym_Verificacion_20260908. Se comprobó alta, lectura y eliminación de fotos por la lógica para ambas entidades, revirtiendo los registros temporales.
 
@@ -45,3 +45,9 @@ Al final de `SysGymDB.sql`, desde `/* Inserciones manuales de prueba. */`, hay I
 ## Relación de rutinas — 16 de septiembre de 2026
 
 `Membresia.IdRutina` es nullable y tiene una FK a `Rutina`; una misma Rutina puede estar referenciada por muchas membresías. `RutinaEjercicio` conserva su función asociativa con `Ejercicio`.
+
+## Imágenes portables — 17 de septiembre de 2026
+
+El DDL nuevo define `Socio.FotoRuta NVARCHAR(260) NULL`. La ruta es relativa a `Datos` y no almacena el contenido de la imagen. `EjercicioImagen` contiene `IdEjercicioImagen`, `IdEjercicio`, `RutaRelativa NVARCHAR(260)` y `Orden`, con FK a `Ejercicio`, restricción de orden positivo y ruta única.
+
+La base local existente fue actualizada de forma aditiva: se agregaron `Socio.FotoRuta` y `UsuarioSistema.FotoRuta` y se creó `EjercicioImagen` sin recrear `SysGymDB` ni perder los 20 socios. Las columnas binarias históricas que puedan existir permanecen sin uso para evitar una eliminación destructiva; el modelo EF6 activo no las mapea.

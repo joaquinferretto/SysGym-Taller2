@@ -1,10 +1,18 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 using System.Windows.Forms;
 
 namespace exxen2._0.capaVisual.Compartido
 {
+    /* Contiene una imagen validada en memoria y su extensión para guardarla después. */
+    internal sealed class ImagenSeleccionada
+    {
+        public byte[] Contenido { get; set; }
+        public string Extension { get; set; }
+    }
+
     /* Agrupa validaciones de entrada y mensajes compartidos por los formularios estándar. */
     internal static class AyudaFormularioVisual
     {
@@ -20,39 +28,84 @@ namespace exxen2._0.capaVisual.Compartido
             }
             else
             {
-                string nombreRecurso = sexo == "M" ? "avatarHombre" : sexo == "F" ? "avatarMujer" : "avatarGenerico";
-                var recurso = Properties.Resources.ResourceManager.GetObject(nombreRecurso) as System.Drawing.Image;
-                if (recurso == null && nombreRecurso != "avatarGenerico")
-                    recurso = Properties.Resources.ResourceManager.GetObject("avatarGenerico") as System.Drawing.Image;
-                if (recurso != null)
-                    nueva = new System.Drawing.Bitmap(recurso);
+                nueva = ObtenerAvatar(sexo);
             }
-            var anterior = destino.Image;
-            destino.Image = nueva;
-            if (anterior != null)
-                anterior.Dispose();
+            ReemplazarImagen(destino, nueva);
+        }
+
+        /* Muestra una ruta administrada o el avatar correspondiente cuando el archivo no existe. */
+        internal static void MostrarFotoRuta(PictureBox destino, string rutaRelativa, string sexo)
+        {
+            var nueva = CargarImagenDesdeRuta(rutaRelativa) ?? ObtenerAvatar(sexo);
+            ReemplazarImagen(destino, nueva);
+        }
+
+        /* Carga una copia independiente para que el archivo no quede bloqueado por el PictureBox. */
+        internal static System.Drawing.Image CargarImagenDesdeRuta(string rutaRelativa)
+        {
+            try
+            {
+                var ruta = capaLogica.AlmacenamientoImagenes.RutaAbsoluta(rutaRelativa);
+                if (string.IsNullOrWhiteSpace(ruta) || !File.Exists(ruta))
+                    return null;
+                using (var archivo = File.OpenRead(ruta))
+                using (var original = System.Drawing.Image.FromStream(archivo, true, true))
+                    return new System.Drawing.Bitmap(original);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         /* Permite elegir una foto y limita la lectura antes de validar sus bytes mediante lógica. */
         internal static byte[] SeleccionarFoto(IWin32Window propietario, string sexo)
         {
+            var seleccion = SeleccionarImagen(propietario, sexo);
+            return seleccion == null ? null : seleccion.Contenido;
+        }
+
+        /* Permite seleccionar una imagen PNG o JPEG y conserva la extensión para su almacenamiento. */
+        internal static ImagenSeleccionada SeleccionarImagen(IWin32Window propietario, string sexo = null)
+        {
             using (var dialogo = new OpenFileDialog())
             {
-                dialogo.Filter = "Imagenes|*.png;*.jpg;*.jpeg;*.bmp";
+                dialogo.Filter = "Imágenes|*.png;*.jpg;*.jpeg";
                 if (dialogo.ShowDialog(propietario) != DialogResult.OK)
                     return null;
                 using (var archivo = System.IO.File.OpenRead(dialogo.FileName))
                 {
                     if (archivo.Length > capaLogica.ValidacionesGimnasio.TamanoMaximoFoto)
-                        throw new InvalidOperationException("La foto no puede superar los 2 MB.");
+                        throw new InvalidOperationException("La imagen no puede superar los 2 MB.");
                     using (var lector = new System.IO.BinaryReader(archivo))
                     {
                         var contenido = lector.ReadBytes(capaLogica.ValidacionesGimnasio.TamanoMaximoFoto + 1);
                         capaLogica.ValidacionesGimnasio.ValidarFotoYSexo(contenido, sexo);
-                        return contenido;
+                        return new ImagenSeleccionada
+                        {
+                            Contenido = contenido,
+                            Extension = capaLogica.AlmacenamientoImagenes.NormalizarExtension(Path.GetExtension(dialogo.FileName))
+                        };
                     }
                 }
             }
+        }
+
+        private static System.Drawing.Image ObtenerAvatar(string sexo)
+        {
+            var nombreRecurso = sexo == "M" ? "socio_hombre_default" : sexo == "F" ? "socio_mujer_default" : "socio_hombre_default";
+            var recurso = Properties.Resources.ResourceManager.GetObject(nombreRecurso) as System.Drawing.Image;
+            if (recurso == null)
+                recurso = Properties.Resources.ResourceManager.GetObject("socio_hombre_default") as System.Drawing.Image;
+            return recurso == null ? null : new System.Drawing.Bitmap(recurso);
+        }
+
+        private static void ReemplazarImagen(PictureBox destino, System.Drawing.Image nueva)
+        {
+            var anterior = destino.Image;
+            destino.Image = nueva;
+            if (anterior != null)
+                anterior.Dispose();
         }
 
         /* Detecta si el control se está editando en Visual Studio para evitar cargas de ejecución. */

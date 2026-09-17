@@ -25,7 +25,7 @@ CREATE TABLE UsuarioSistema (
     Salario DECIMAL(18,2) NOT NULL CONSTRAINT DF_UsuarioSistema_Salario DEFAULT 0,
     Username NVARCHAR(50) NOT NULL UNIQUE,
     Password NVARCHAR(500) NOT NULL,
-    Foto VARBINARY(MAX) NULL,
+    FotoRuta NVARCHAR(260) NULL,
     Sexo CHAR(1) NULL,
     Estado BIT NOT NULL DEFAULT 1,
     IdRol INT NOT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE Socio (
     FechaNacimiento DATETIME2 NULL,
     Peso DECIMAL(6,2) NULL,
     Altura DECIMAL(5,2) NULL,
-    Foto VARBINARY(MAX) NULL,
+    FotoRuta NVARCHAR(260) NULL,
     Sexo CHAR(1) NULL,
     Estado BIT NOT NULL DEFAULT 1,
 
@@ -99,6 +99,23 @@ CREATE TABLE [Plan] (
 
     CONSTRAINT CK_Plan_Precio
         CHECK (Precio > 0)
+);
+GO
+
+CREATE TABLE EjercicioImagen (
+    IdEjercicioImagen INT IDENTITY(1,1) PRIMARY KEY,
+    IdEjercicio INT NOT NULL,
+    RutaRelativa NVARCHAR(260) NOT NULL,
+    Orden INT NOT NULL,
+
+    CONSTRAINT CK_EjercicioImagen_Orden
+        CHECK (Orden > 0),
+
+    CONSTRAINT UQ_EjercicioImagen_Ruta
+        UNIQUE (RutaRelativa),
+
+    CONSTRAINT FK_EjercicioImagen_Ejercicio
+        FOREIGN KEY (IdEjercicio) REFERENCES Ejercicio(IdEjercicio)
 );
 GO
 
@@ -454,7 +471,7 @@ BEGIN TRANSACTION;
 
 /* Inserciones de UsuarioSistema: Lucia es administradora; Mateo, Sofia, Tomas
    y Valentina son recepcionistas; los demas, entrenadores. Matias esta de baja. */
-INSERT INTO UsuarioSistema (Nombre, Apellido, DNI, Telefono, FechaNacimiento, Salario, Username, Password, Foto, Sexo, Estado, IdRol)
+INSERT INTO UsuarioSistema (Nombre, Apellido, DNI, Telefono, FechaNacimiento, Salario, Username, Password, FotoRuta, Sexo, Estado, IdRol)
 VALUES
     (N'Lucia', N'Garcia', N'32487169', N'1148296307', '19810315', 710000, N'lucia.garcia', N'ARGON2ID:19:65536:3:2:UzjfnbF3n+md5BTKCQfiIA==:jJLuZEShyp0cWykdXKDVbXM4xpdItsG98tfSyzCx0sU=', NULL, N'F', 1, (SELECT IdRol FROM Rol WHERE Descripcion = N'Administrador')),
     (N'Mateo', N'Lopez', N'41730582', N'1163074829', '19820315', 720000, N'mateo_lopez', N'ARGON2ID:19:65536:3:2:UzjfnbF3n+md5BTKCQfiIA==:jJLuZEShyp0cWykdXKDVbXM4xpdItsG98tfSyzCx0sU=', NULL, N'M', 1, (SELECT IdRol FROM Rol WHERE Descripcion = N'Recepcionista')),
@@ -478,7 +495,7 @@ VALUES
     (N'Matias', N'Navarro', N'49204673', N'1165083927', '20000315', 900000, N'matias.navarro', N'ARGON2ID:19:65536:3:2:UzjfnbF3n+md5BTKCQfiIA==:jJLuZEShyp0cWykdXKDVbXM4xpdItsG98tfSyzCx0sU=', NULL, NULL, 0, (SELECT IdRol FROM Rol WHERE Descripcion = N'Entrenador'));
 
 /* Inserciones de Socio: 20 socios; 19 y 20 de baja para probar reactivacion */
-INSERT INTO Socio (DNI, Nombre, Apellido, FechaNacimiento, Peso, Altura, Foto, Sexo, Estado)
+INSERT INTO Socio (DNI, Nombre, Apellido, FechaNacimiento, Peso, Altura, FotoRuta, Sexo, Estado)
 VALUES
     (N'39827416', N'Lucia', N'Garcia', '19860510', 56, 1.61, NULL, N'F', 1),
     (N'45160382', N'Mateo', N'Lopez', '19870510', 57, 1.62, NULL, N'M', 1),

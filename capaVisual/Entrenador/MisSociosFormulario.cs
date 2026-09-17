@@ -36,8 +36,8 @@ namespace exxen2._0.capaVisual.Entrenador
             if (modoAdministrador)
             {
                 Text = "SysGym | Socios y rutinas";
-                lblTitulo.Text = "Socios y rutinas";
-                lblDescripcion.Text = "Revisa la rutina vigente y las acciones del socio seleccionado";
+                lblTitulo.Text = "Socios y rutinas | Seguimiento de rutinas";
+                lblDescripcion.Visible = false;
             }
         }
 

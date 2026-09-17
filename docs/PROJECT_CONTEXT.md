@@ -1,5 +1,11 @@
 # Contexto del proyecto
 
+## Ajuste UX/UI de encabezados y rutinas — 17 de septiembre de 2026
+
+Los paneles de rol presentan el módulo actual dentro del encabezado global, en una sola línea con el formato `Título | Subtítulo`, declarado en `Designer.cs` mediante `lblModuloActual`. Las franjas locales de los módulos activos quedan ocultas para que el contenido comience inmediatamente debajo. El acceso muestra `Contraseña` con ñ.
+
+La ficha de asignaciones alinea etiquetas y controles en filas compartidas. Gestionar rutinas mantiene el patrón master/detail y separa Rutina seleccionada, Ejercicios de la rutina y Detalle del ejercicio; el editor conserva las acciones existentes y dispone de más altura útil.
+
 ## Reactivación de membresías y deuda — 16 de septiembre de 2026
 
 La vuelta de un socio reutiliza su fila histórica de `Membresia`; la capa lógica bloquea altas duplicadas para socios con historial y el formulario reserva el alta para socios que todavía no tengan membresía. Dos cuotas `Pendiente` con `FechaHasta` anterior a hoy desactivan lógicamente la membresía y sincronizan el estado del socio. La evaluación central está en `MembresiaLogica` y se invoca desde consultas de membresías, cuotas, rutinas y asignaciones, cambios de cuotas/pagos y generación de cuotas. La reactivación valida el mismo umbral antes de cambiar el estado; no elimina ni reconstruye cuotas, pagos, entrenador o rutina. En la limpieza del 16 de septiembre se alineó el DDL inicial con el modelo EF6 de rutinas, sin modificar el DER.
@@ -29,7 +35,7 @@ Debug y Release compilan correctamente sin errores ni warnings reportados. Falta
 
 Desde “Mis socios”, se puede asignar una rutina existente o crear una personalizada para la membresía seleccionada. La nueva rutina se vincula mediante `Membresia.IdRutina`; el editor mantiene el catálogo reutilizable y sus ejercicios. La disponibilidad no depende del plan.
 
-Última actualización: 16 de septiembre de 2026.
+Última actualización: 17 de septiembre de 2026.
 
 SysGym es una aplicación de escritorio en C# Windows Forms para gestionar un gimnasio. Utiliza .NET Framework 4.8, Entity Framework 6.4.4 y SQL Server.
 
@@ -45,7 +51,7 @@ La base se crea mediante `capaDatos/Database/SysGymDB.sql`. La integración real
 
 ## Estado de interfaz y fotos — 9 de septiembre de 2026
 
-Los paneles usan contenedores estándar con Dock estructural y Anchor para controles editables, además de Foto/Sexo opcionales en socios y usuarios. Los binarios se almacenan en SQL Server; no se crean carpetas de imágenes personales. La apertura manual en «Ver diseñador» y el recorrido manual de los tres roles siguen pendientes.
+Los paneles usan contenedores estándar con Dock estructural y Anchor para controles editables, además de FotoRuta/Sexo opcionales en socios y usuarios. Las fotos personalizadas se copian a `Datos/Imagenes` y SQL Server conserva rutas relativas; sin foto se muestran avatares embebidos. La estructura de los formularios permanece en `Designer.cs`.
 
 ## Auditoría visual estructural — 11 de septiembre de 2026
 
@@ -57,6 +63,18 @@ Se corrigió la regresión visual de las pantallas de ejercicios, asignaciones y
 
 El layout queda en los archivos `Designer.cs`; los formularios solo cargan datos, filtros, selección y acciones. No se modificaron las clases de lógica, el esquema, SQL Server ni Entity Framework en esta corrección. Las verificaciones estructurales se realizaron en memoria para 1100/1180 px y una ventana mayor; Debug y Release compilan sin errores ni warnings.
 
+## Ajuste UX/UI de módulos - 17 de septiembre de 2026
+
+Los paneles principales de Administrador, Recepcionista y Entrenador se abren maximizados desde Designer. El encabezado global muestra el módulo activo en una columna central porcentual con el formato `Título | Subtítulo`; no se cambia el menú lateral.
+
+Usuarios y roles conserva su formulario vertical, pero organiza los campos en `TableLayoutPanel` y mantiene la fotografía completa con `PictureBoxSizeMode.Zoom`. Gestionar rutinas usa un `SplitContainer` adaptable: listado de rutinas a la izquierda y detalle a la derecha, con acciones de rutina separadas de las acciones de ejercicios. El detalle del ejercicio queda agrupado debajo de su grilla y sus botones se habilitan según la selección.
+
+La verificación estructural de `InitializeComponent`, `PerformLayout` y redimensionamiento se realizó para 1280x720, 1366x768, 1600x900 y 1920x1080. Esta pasada no modificó reglas de negocio, DER, SQL ni Entity Framework; queda pendiente la apertura manual del diseñador de Visual Studio y la prueba interactiva completa.
+
 ## Modelo de rutinas y limpieza — 16 de septiembre de 2026
 
 EF6 y `capaDatos/Database/SysGymDB.sql` representan una relación opcional de una rutina por membresía: `Membresia.IdRutina INT NULL`, con una FK hacia `Rutina`. Una rutina puede reutilizarse en varias membresías y sus ejercicios siguen relacionados mediante `RutinaEjercicio`. Se retiraron la entidad intermedia, su lógica, las tablas/semillas paralelas y los formularios legacy sin referencias. El DDL es para bases nuevas; no se distribuye una migración de bases existentes. Los `.resx` dudosos se conservaron para no afectar Visual Studio Designer.
+
+## Imágenes portables — 17 de septiembre de 2026
+
+La foto de Socio y de UsuarioSistema se persiste mediante `FotoRuta`, con rutas relativas a `Datos/Imagenes/Socios` y `Datos/Imagenes/Usuarios`. Los avatares masculino y femenino están embebidos en `Properties.Resources`. El catálogo de Ejercicios usa `EjercicioImagen` para conservar varias imágenes ordenadas por ejercicio; la galería de `GestionEjerciciosFormulario` permite agregarlas y quitarlas. La exportación PDF queda expresamente fuera de esta fase.
