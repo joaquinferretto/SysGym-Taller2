@@ -6,7 +6,7 @@ Una membresía puede tener cero o una rutina mediante `Membresia.IdRutina INT NU
 
 Los scripts son compatibles con SQL Server 2008. En los bloques `CATCH` se usa `RAISERROR` en lugar de `THROW`, ya que `THROW` fue incorporado en SQL Server 2012. La transacción se revierte antes de volver a informar el error. El esquema conserva `DATETIME2`, `VARBINARY(MAX)`, índices filtrados y las demás características disponibles en SQL Server 2008.
 
-Última actualización: 16 de septiembre de 2026.
+Última actualización: 17 de septiembre de 2026.
 
 El motor es SQL Server y el esquema fuente está en `capaDatos/Database/SysGymDB.sql`. Ese único script crea `SysGymDB`, tablas, claves, índices, restricciones, usuarios iniciales, métodos de pago y el catálogo inicial de ejercicios y rutinas.
 
@@ -20,7 +20,7 @@ Las entidades principales son Rol, UsuarioSistema, Socio, Plan, Membresia, Membr
 
 `Rutina` representa una plantilla reutilizable. La FK opcional `Membresia.IdRutina` implementa la relación Rutina 1:N Membresía: cada membresía apunta a cero o una rutina y una rutina puede ser compartida. `RutinaEjercicio` continúa relacionando Rutina con Ejercicio.
 
-El DDL principal crea una base nueva y es la única fuente de esquema inicial. No se distribuye una migración para bases existentes; no ejecutar el DDL completo sobre una base con datos. La cadena `GymContext` de `App.config` apunta actualmente a `.SQLEXPRESS`; debe cambiarse si la instancia de SQL Server es diferente.
+El DDL principal crea una base nueva y es la única fuente de esquema inicial. No se distribuye una migración para bases existentes; no ejecutar el DDL completo sobre una base con datos. La cadena `GymContext` de `App.config` permanece como conexión principal a `.\SQLEXPRESS`; `GymContextRespaldo` apunta a `localhost,1433` y solo se usa si la instancia principal no está disponible. Este respaldo no requiere ejecutar `SysGymDB.sql` ni modificar tablas.
 
 ## Foto y sexo — 17 de septiembre de 2026
 

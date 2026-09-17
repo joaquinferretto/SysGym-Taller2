@@ -184,10 +184,15 @@ namespace exxen2._0.capaVisual.Administrador
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Usuario creado correctamente.");
+                MessageBox.Show("Usuario creado correctamente.", "Usuarios", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                AyudaFormularioVisual.MostrarError(lblEstado, ex);
+                var mensaje = ex is InvalidOperationException || ex is ArgumentException
+                    ? ex.Message
+                    : "No se pudo crear el usuario.";
+                lblEstado.Text = mensaje;
+                MessageBox.Show(mensaje, "Usuarios", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

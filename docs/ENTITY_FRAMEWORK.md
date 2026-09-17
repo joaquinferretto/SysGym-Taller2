@@ -4,7 +4,7 @@
 
 La consulta de “Mis socios” usa LINQ sobre los repositorios de EF6 y proyecta los datos que necesita la grilla junto con la rutina de la membresía. El administrador puede solicitar la misma consulta sin filtrar por entrenador. `CrearPersonalizada` crea la plantilla y vincula su `IdRutina` a la membresía seleccionada mediante la unidad de trabajo; los detalles se guardan con `RutinaEjercicioLogica`.
 
-Última actualización: 16 de septiembre de 2026.
+Última actualización: 17 de septiembre de 2026.
 
 El proyecto utiliza Entity Framework 6.4.4 sobre .NET Framework 4.8 con SQL Server. `capaDatos/Contexto/ContextoGimnasio.cs` contiene los `DbSet`, el mapeo explícito de tablas y las relaciones. `capaDatos/Repositorios/UnidadDeTrabajoGimnasio.cs` encapsula las operaciones de persistencia para que la capa lógica no cree ni use `ContextoGimnasio` directamente.
 
@@ -22,7 +22,9 @@ Las relaciones usan Fluent API y deshabilitan el borrado en cascada. Los importe
 
 ## Compatibilidad de nombres
 
-`ContextoGimnasio` conserva el alias de conexión `GymContext` de `App.config`. `UsuarioSistema.NombreUsuario` y `Clave` se mapean a `Username` y `Password`. En `MercadoPago`, `IdentificadorPago`, `IdentificadorPreferencia`, `ReferenciaExterna` y `DetalleEstado` se mapean a las cuatro columnas originales mediante `[Column]`. Solo cambian nombres C#, no columnas, índices ni datos.
+`ContextoGimnasio` conserva el alias de conexión principal `GymContext` de `App.config`. Al crear el primer contexto se prueba esa conexión a `.\SQLEXPRESS`; solo si falla por servidor, instancia o red no disponible se prueba `GymContextRespaldo` contra `localhost,1433` y se reutiliza esa elección durante la ejecución. El fallback no cambia entidades, migraciones, inicializadores ni esquema SQL.
+
+`UsuarioSistema.NombreUsuario` y `Clave` se mapean a `Username` y `Password`. En `MercadoPago`, `IdentificadorPago`, `IdentificadorPreferencia`, `ReferenciaExterna` y `DetalleEstado` se mapean a las cuatro columnas originales mediante `[Column]`. Solo cambian nombres C#, no columnas, índices ni datos.
 
 ## Foto y sexo — 17 de septiembre de 2026
 

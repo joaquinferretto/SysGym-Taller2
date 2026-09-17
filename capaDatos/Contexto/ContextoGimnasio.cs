@@ -1,4 +1,7 @@
+using System;
+using System.Configuration;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using exxen2._0.capaDatos.Entidades;
 
 namespace exxen2._0.capaDatos.Contexto
@@ -6,6 +9,11 @@ namespace exxen2._0.capaDatos.Contexto
     /* Mapea las entidades del gimnasio a SQL Server mediante Entity Framework 6. */
     public class ContextoGimnasio : DbContext
     {
+        private const string ConexionPrincipal = "GymContext";
+        private const string ConexionRespaldo = "GymContextRespaldo";
+        private static readonly object bloqueoConexion = new object();
+        private static string conexionActiva;
+
         static ContextoGimnasio()
         {
             // La base se crea y versiona mediante el script SQL del proyecto.
@@ -13,10 +21,86 @@ namespace exxen2._0.capaDatos.Contexto
         }
 
         /* Configura el contexto para exigir relaciones explícitas. */
-        public ContextoGimnasio() : base("name=GymContext")
+        public ContextoGimnasio() : base(ObtenerNombreConexionActiva())
         {
             Configuration.LazyLoadingEnabled = false;
             Configuration.ProxyCreationEnabled = false;
+        }
+
+        /* Elige la conexion principal y usa la de respaldo solo si la instancia principal no responde. */
+        private static string ObtenerNombreConexionActiva()
+        {
+            if (!string.IsNullOrEmpty(conexionActiva))
+            {
+                return "name=" + conexionActiva;
+            }
+
+            lock (bloqueoConexion)
+            {
+                if (!string.IsNullOrEmpty(conexionActiva))
+                {
+                    return "name=" + conexionActiva;
+                }
+
+                try
+                {
+                    ProbarConexion(ConexionPrincipal);
+                    conexionActiva = ConexionPrincipal;
+                }
+                catch (SqlException ex) when (EsFallaDeServidorNoDisponible(ex))
+                {
+                    try
+                    {
+                        ProbarConexion(ConexionRespaldo);
+                        conexionActiva = ConexionRespaldo;
+                    }
+                    catch (Exception exRespaldo)
+                    {
+                        throw new InvalidOperationException(
+                            "No se pudo conectar a SQL Server con la conexion principal ni con la conexion de respaldo.",
+                            new AggregateException(ex, exRespaldo));
+                    }
+                }
+
+                return "name=" + conexionActiva;
+            }
+        }
+
+        /* Abre y cierra una conexion para validar disponibilidad sin modificar la base. */
+        private static void ProbarConexion(string nombreConexion)
+        {
+            var configuracion = ConfigurationManager.ConnectionStrings[nombreConexion];
+            if (configuracion == null)
+            {
+                throw new InvalidOperationException("No existe la cadena de conexion '" + nombreConexion + "' en App.config.");
+            }
+
+            using (var conexion = new SqlConnection(configuracion.ConnectionString))
+            {
+                conexion.Open();
+            }
+        }
+
+        /* Detecta errores de red, instancia o servidor no disponible; otros errores no activan respaldo. */
+        private static bool EsFallaDeServidorNoDisponible(SqlException ex)
+        {
+            foreach (SqlError error in ex.Errors)
+            {
+                switch (error.Number)
+                {
+                    case -2:
+                    case -1:
+                    case 2:
+                    case 26:
+                    case 53:
+                    case 10060:
+                    case 10061:
+                    case 11001:
+                        return true;
+                }
+            }
+
+            return false;
         }
 
         public DbSet<Rol> Roles { get; set; }
