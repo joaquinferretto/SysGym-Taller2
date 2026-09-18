@@ -82,6 +82,7 @@ namespace exxen2._0.capaVisual.Entrenador
 
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panelEncabezado = new System.Windows.Forms.Panel();
             this.lblTitulo = new System.Windows.Forms.Label();
             this.lblDescripcion = new System.Windows.Forms.Label();

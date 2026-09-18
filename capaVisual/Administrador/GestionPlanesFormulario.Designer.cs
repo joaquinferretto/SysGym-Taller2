@@ -54,476 +54,508 @@ namespace exxen2._0.capaVisual.Administrador
 
         private void InitializeComponent()
         {
-            this.components = new Container();
-            this.panelEncabezado = new Panel();
-            this.lblTitulo = new Label();
-            this.lblDescripcion = new Label();
-            this.btnVolver = new Button();
-            this.barraAcciones = new Panel();
-            this.lblBuscar = new Label();
-            this.buscador = new TextBox();
-            this.lblFiltroEstado = new Label();
-            this.filtroEstado = new ComboBox();
-            this.lblEstado = new Label();
-            this.splitContenido = new SplitContainer();
-            this.panelListado = new Panel();
-            this.lblListado = new Label();
-            this.tabla = new DataGridView();
-            this.colId = new DataGridViewTextBoxColumn();
-            this.colNombre = new DataGridViewTextBoxColumn();
-            this.colPrecio = new DataGridViewTextBoxColumn();
-            this.colEstado = new DataGridViewTextBoxColumn();
-            this.panelDetalle = new Panel();
-            this.contenedorDetalle = new Panel();
-            this.lblFormulario = new Label();
-            this.contenedorCampos = new TableLayoutPanel();
-            this.lblNombre = new Label();
-            this.lblDescripcionPlan = new Label();
-            this.lblPrecio = new Label();
-            this.nombre = new TextBox();
-            this.descripcion = new TextBox();
-            this.precio = new TextBox();
-            this.panelAcciones = new Panel();
-            this.nuevo = new Button();
-            this.guardar = new Button();
-            this.actualizar = new Button();
-            this.darDeBaja = new Button();
-            this.reactivar = new Button();
-            ((ISupportInitialize)(this.splitContenido)).BeginInit();
+            this.panelEncabezado = new System.Windows.Forms.Panel();
+            this.lblTitulo = new System.Windows.Forms.Label();
+            this.lblDescripcion = new System.Windows.Forms.Label();
+            this.btnVolver = new System.Windows.Forms.Button();
+            this.barraAcciones = new System.Windows.Forms.Panel();
+            this.lblBuscar = new System.Windows.Forms.Label();
+            this.buscador = new System.Windows.Forms.TextBox();
+            this.lblFiltroEstado = new System.Windows.Forms.Label();
+            this.filtroEstado = new System.Windows.Forms.ComboBox();
+            this.lblEstado = new System.Windows.Forms.Label();
+            this.splitContenido = new System.Windows.Forms.SplitContainer();
+            this.panelListado = new System.Windows.Forms.Panel();
+            this.tabla = new System.Windows.Forms.DataGridView();
+            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lblListado = new System.Windows.Forms.Label();
+            this.panelDetalle = new System.Windows.Forms.Panel();
+            this.contenedorDetalle = new System.Windows.Forms.Panel();
+            this.panelAcciones = new System.Windows.Forms.Panel();
+            this.nuevo = new System.Windows.Forms.Button();
+            this.guardar = new System.Windows.Forms.Button();
+            this.actualizar = new System.Windows.Forms.Button();
+            this.darDeBaja = new System.Windows.Forms.Button();
+            this.reactivar = new System.Windows.Forms.Button();
+            this.contenedorCampos = new System.Windows.Forms.TableLayoutPanel();
+            this.lblNombre = new System.Windows.Forms.Label();
+            this.nombre = new System.Windows.Forms.TextBox();
+            this.lblDescripcionPlan = new System.Windows.Forms.Label();
+            this.descripcion = new System.Windows.Forms.TextBox();
+            this.lblPrecio = new System.Windows.Forms.Label();
+            this.precio = new System.Windows.Forms.TextBox();
+            this.lblFormulario = new System.Windows.Forms.Label();
+            this.panelEncabezado.SuspendLayout();
+            this.barraAcciones.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContenido)).BeginInit();
             this.splitContenido.Panel1.SuspendLayout();
             this.splitContenido.Panel2.SuspendLayout();
             this.splitContenido.SuspendLayout();
-            ((ISupportInitialize)(this.tabla)).BeginInit();
-            this.panelEncabezado.SuspendLayout();
-            this.barraAcciones.SuspendLayout();
             this.panelListado.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tabla)).BeginInit();
             this.panelDetalle.SuspendLayout();
             this.contenedorDetalle.SuspendLayout();
-            this.contenedorCampos.SuspendLayout();
             this.panelAcciones.SuspendLayout();
+            this.contenedorCampos.SuspendLayout();
             this.SuspendLayout();
-            //
+            // 
             // panelEncabezado
-            //
-            this.panelEncabezado.BackColor = Color.FromArgb(79, 70, 229);
+            // 
+            this.panelEncabezado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
             this.panelEncabezado.Controls.Add(this.lblTitulo);
             this.panelEncabezado.Controls.Add(this.lblDescripcion);
             this.panelEncabezado.Controls.Add(this.btnVolver);
-            this.panelEncabezado.Dock = DockStyle.Top;
-            this.panelEncabezado.Height = 56;
+            this.panelEncabezado.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelEncabezado.Location = new System.Drawing.Point(0, 0);
             this.panelEncabezado.Name = "panelEncabezado";
+            this.panelEncabezado.Size = new System.Drawing.Size(1100, 56);
             this.panelEncabezado.TabIndex = 0;
             this.panelEncabezado.Visible = false;
-            //
+            // 
             // lblTitulo
-            //
-            this.lblTitulo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            this.lblTitulo.AutoSize = false;
-            this.lblTitulo.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
-            this.lblTitulo.ForeColor = Color.White;
-            this.lblTitulo.Location = new Point(22, 8);
+            // 
+            this.lblTitulo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
+            this.lblTitulo.ForeColor = System.Drawing.Color.White;
+            this.lblTitulo.Location = new System.Drawing.Point(22, 8);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new Size(880, 40);
+            this.lblTitulo.Size = new System.Drawing.Size(1780, 40);
             this.lblTitulo.TabIndex = 0;
             this.lblTitulo.Text = "Planes | Gestión de planes y precios";
-            this.lblTitulo.TextAlign = ContentAlignment.MiddleLeft;
-            //
+            this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // lblDescripcion
-            //
-            this.lblDescripcion.ForeColor = Color.FromArgb(226, 232, 240);
+            // 
+            this.lblDescripcion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.lblDescripcion.Location = new System.Drawing.Point(0, 0);
             this.lblDescripcion.Name = "lblDescripcion";
+            this.lblDescripcion.Size = new System.Drawing.Size(100, 23);
             this.lblDescripcion.TabIndex = 1;
             this.lblDescripcion.Visible = false;
-            //
+            // 
             // btnVolver
-            //
-            this.btnVolver.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            this.btnVolver.BackColor = Color.White;
+            // 
+            this.btnVolver.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnVolver.BackColor = System.Drawing.Color.White;
             this.btnVolver.FlatAppearance.BorderSize = 0;
-            this.btnVolver.FlatStyle = FlatStyle.Flat;
-            this.btnVolver.ForeColor = Color.FromArgb(79, 70, 229);
-            this.btnVolver.Location = new Point(974, 10);
+            this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnVolver.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.btnVolver.Location = new System.Drawing.Point(1874, 10);
             this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new Size(104, 36);
+            this.btnVolver.Size = new System.Drawing.Size(104, 36);
             this.btnVolver.TabIndex = 2;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = false;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
-            //
+            // 
             // barraAcciones
-            //
-            this.barraAcciones.BackColor = Color.White;
+            // 
+            this.barraAcciones.BackColor = System.Drawing.Color.White;
             this.barraAcciones.Controls.Add(this.lblBuscar);
             this.barraAcciones.Controls.Add(this.buscador);
             this.barraAcciones.Controls.Add(this.lblFiltroEstado);
             this.barraAcciones.Controls.Add(this.filtroEstado);
-            this.barraAcciones.Dock = DockStyle.Top;
-            this.barraAcciones.Height = 54;
+            this.barraAcciones.Dock = System.Windows.Forms.DockStyle.Top;
+            this.barraAcciones.Location = new System.Drawing.Point(0, 56);
             this.barraAcciones.Name = "barraAcciones";
+            this.barraAcciones.Size = new System.Drawing.Size(1100, 54);
             this.barraAcciones.TabIndex = 1;
-            //
+            // 
             // lblBuscar
-            //
-            this.lblBuscar.AutoSize = false;
-            this.lblBuscar.Location = new Point(16, 12);
+            // 
+            this.lblBuscar.Location = new System.Drawing.Point(16, 12);
             this.lblBuscar.Name = "lblBuscar";
-            this.lblBuscar.Size = new Size(52, 28);
+            this.lblBuscar.Size = new System.Drawing.Size(52, 28);
             this.lblBuscar.TabIndex = 0;
             this.lblBuscar.Text = "Buscar:";
-            this.lblBuscar.TextAlign = ContentAlignment.MiddleLeft;
-            //
+            this.lblBuscar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // buscador
-            //
-            this.buscador.Location = new Point(72, 15);
+            // 
+            this.buscador.Location = new System.Drawing.Point(72, 15);
             this.buscador.Name = "buscador";
-            this.buscador.Size = new Size(250, 24);
+            this.buscador.Size = new System.Drawing.Size(250, 29);
             this.buscador.TabIndex = 0;
             this.buscador.TextChanged += new System.EventHandler(this.buscador_TextChanged);
-            //
+            // 
             // lblFiltroEstado
-            //
-            this.lblFiltroEstado.AutoSize = false;
-            this.lblFiltroEstado.Location = new Point(350, 12);
+            // 
+            this.lblFiltroEstado.Location = new System.Drawing.Point(340, 12);
             this.lblFiltroEstado.Name = "lblFiltroEstado";
-            this.lblFiltroEstado.Size = new Size(46, 28);
+            this.lblFiltroEstado.Size = new System.Drawing.Size(63, 28);
             this.lblFiltroEstado.TabIndex = 1;
             this.lblFiltroEstado.Text = "Estado:";
-            this.lblFiltroEstado.TextAlign = ContentAlignment.MiddleLeft;
-            //
+            this.lblFiltroEstado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // filtroEstado
-            //
-            this.filtroEstado.DropDownStyle = ComboBoxStyle.DropDownList;
+            // 
+            this.filtroEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.filtroEstado.Items.AddRange(new object[] {
             "Todos",
             "Activos",
             "Inactivos"});
-            this.filtroEstado.Location = new Point(404, 15);
+            this.filtroEstado.Location = new System.Drawing.Point(404, 15);
             this.filtroEstado.Name = "filtroEstado";
-            this.filtroEstado.Size = new Size(150, 25);
+            this.filtroEstado.Size = new System.Drawing.Size(150, 29);
             this.filtroEstado.TabIndex = 1;
-            this.filtroEstado.SelectedIndex = 0;
             this.filtroEstado.SelectedIndexChanged += new System.EventHandler(this.filtroEstado_SelectedIndexChanged);
-            //
+            // 
             // lblEstado
-            //
-            this.lblEstado.BackColor = Color.FromArgb(226, 232, 240);
-            this.lblEstado.Dock = DockStyle.Bottom;
-            this.lblEstado.Height = 28;
+            // 
+            this.lblEstado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.lblEstado.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblEstado.Location = new System.Drawing.Point(0, 652);
             this.lblEstado.Name = "lblEstado";
-            this.lblEstado.Padding = new Padding(16, 0, 8, 0);
+            this.lblEstado.Padding = new System.Windows.Forms.Padding(16, 0, 8, 0);
+            this.lblEstado.Size = new System.Drawing.Size(1100, 28);
             this.lblEstado.TabIndex = 3;
             this.lblEstado.Text = "Listo";
-            this.lblEstado.TextAlign = ContentAlignment.MiddleLeft;
-            //
+            this.lblEstado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // splitContenido
-            //
-            this.splitContenido.Dock = DockStyle.Fill;
-            this.splitContenido.FixedPanel = FixedPanel.None;
-            this.splitContenido.IsSplitterFixed = false;
-            this.splitContenido.MinimumSize = new Size(900, 420);
+            // 
+            this.splitContenido.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContenido.Location = new System.Drawing.Point(0, 110);
+            this.splitContenido.MinimumSize = new System.Drawing.Size(900, 420);
             this.splitContenido.Name = "splitContenido";
-            this.splitContenido.Panel1.BackColor = Color.FromArgb(248, 250, 252);
+            // 
+            // splitContenido.Panel1
+            // 
+            this.splitContenido.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
             this.splitContenido.Panel1.Controls.Add(this.panelListado);
+            this.splitContenido.Panel1.Padding = new System.Windows.Forms.Padding(16);
             this.splitContenido.Panel1MinSize = 400;
-            this.splitContenido.Panel1.Padding = new Padding(16);
-            this.splitContenido.Panel2.BackColor = Color.FromArgb(248, 250, 252);
+            // 
+            // splitContenido.Panel2
+            // 
+            this.splitContenido.Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
             this.splitContenido.Panel2.Controls.Add(this.panelDetalle);
+            this.splitContenido.Panel2.Padding = new System.Windows.Forms.Padding(0, 16, 16, 16);
             this.splitContenido.Panel2MinSize = 400;
-            this.splitContenido.Panel2.Padding = new Padding(0, 16, 16, 16);
-            this.splitContenido.Size = new Size(1068, 480);
-            this.splitContenido.SplitterDistance = 500;
+            this.splitContenido.Size = new System.Drawing.Size(1100, 542);
+            this.splitContenido.SplitterDistance = 514;
             this.splitContenido.SplitterWidth = 6;
             this.splitContenido.TabIndex = 4;
-            //
+            // 
             // panelListado
-            //
+            // 
             this.panelListado.Controls.Add(this.tabla);
             this.panelListado.Controls.Add(this.lblListado);
-            this.panelListado.Dock = DockStyle.Fill;
+            this.panelListado.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelListado.Location = new System.Drawing.Point(16, 16);
             this.panelListado.Name = "panelListado";
+            this.panelListado.Size = new System.Drawing.Size(482, 510);
             this.panelListado.TabIndex = 0;
-            //
-            // lblListado
-            //
-            this.lblListado.Dock = DockStyle.Top;
-            this.lblListado.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
-            this.lblListado.ForeColor = Color.FromArgb(30, 41, 59);
-            this.lblListado.Height = 34;
-            this.lblListado.Name = "lblListado";
-            this.lblListado.TabIndex = 0;
-            this.lblListado.Text = "Planes";
-            this.lblListado.TextAlign = ContentAlignment.MiddleLeft;
-            //
+            // 
             // tabla
-            //
+            // 
             this.tabla.AllowUserToAddRows = false;
             this.tabla.AllowUserToDeleteRows = false;
             this.tabla.AllowUserToResizeRows = false;
-            this.tabla.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            this.tabla.BackgroundColor = Color.White;
-            this.tabla.BorderStyle = BorderStyle.FixedSingle;
+            this.tabla.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.tabla.BackgroundColor = System.Drawing.Color.White;
             this.tabla.ColumnHeadersHeight = 34;
-            this.tabla.Columns.AddRange(new DataGridViewColumn[] {
+            this.tabla.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colId,
             this.colNombre,
             this.colPrecio,
             this.colEstado});
-            this.tabla.Dock = DockStyle.Fill;
+            this.tabla.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabla.Location = new System.Drawing.Point(0, 34);
             this.tabla.MultiSelect = false;
             this.tabla.Name = "tabla";
             this.tabla.ReadOnly = true;
             this.tabla.RowHeadersVisible = false;
+            this.tabla.RowHeadersWidth = 51;
             this.tabla.RowTemplate.Height = 30;
-            this.tabla.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            this.tabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.tabla.Size = new System.Drawing.Size(482, 476);
             this.tabla.TabIndex = 1;
             this.tabla.SelectionChanged += new System.EventHandler(this.tabla_SelectionChanged);
-            //
+            // 
             // colId
-            //
+            // 
+            this.colId.MinimumWidth = 6;
             this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
             this.colId.Visible = false;
-            //
+            // 
             // colNombre
-            //
+            // 
             this.colNombre.FillWeight = 48F;
             this.colNombre.HeaderText = "Nombre";
             this.colNombre.MinimumWidth = 130;
             this.colNombre.Name = "colNombre";
-            //
+            this.colNombre.ReadOnly = true;
+            // 
             // colPrecio
-            //
+            // 
             this.colPrecio.FillWeight = 25F;
             this.colPrecio.HeaderText = "Precio";
             this.colPrecio.MinimumWidth = 90;
             this.colPrecio.Name = "colPrecio";
-            //
+            this.colPrecio.ReadOnly = true;
+            // 
             // colEstado
-            //
+            // 
             this.colEstado.FillWeight = 27F;
             this.colEstado.HeaderText = "Estado";
             this.colEstado.MinimumWidth = 90;
             this.colEstado.Name = "colEstado";
-            //
+            this.colEstado.ReadOnly = true;
+            // 
+            // lblListado
+            // 
+            this.lblListado.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblListado.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.lblListado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.lblListado.Location = new System.Drawing.Point(0, 0);
+            this.lblListado.Name = "lblListado";
+            this.lblListado.Size = new System.Drawing.Size(482, 34);
+            this.lblListado.TabIndex = 0;
+            this.lblListado.Text = "Planes";
+            this.lblListado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // panelDetalle
-            //
+            // 
             this.panelDetalle.Controls.Add(this.contenedorDetalle);
-            this.panelDetalle.Dock = DockStyle.Fill;
+            this.panelDetalle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelDetalle.Location = new System.Drawing.Point(0, 16);
             this.panelDetalle.Name = "panelDetalle";
+            this.panelDetalle.Size = new System.Drawing.Size(564, 510);
             this.panelDetalle.TabIndex = 1;
-            //
+            // 
             // contenedorDetalle
-            //
+            // 
             this.contenedorDetalle.Controls.Add(this.panelAcciones);
             this.contenedorDetalle.Controls.Add(this.contenedorCampos);
             this.contenedorDetalle.Controls.Add(this.lblFormulario);
-            this.contenedorDetalle.Dock = DockStyle.Fill;
-            this.contenedorDetalle.Padding = new Padding(18);
+            this.contenedorDetalle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.contenedorDetalle.Location = new System.Drawing.Point(0, 0);
             this.contenedorDetalle.Name = "contenedorDetalle";
+            this.contenedorDetalle.Padding = new System.Windows.Forms.Padding(18);
+            this.contenedorDetalle.Size = new System.Drawing.Size(564, 510);
             this.contenedorDetalle.TabIndex = 0;
-            //
-            // lblFormulario
-            //
-            this.lblFormulario.Dock = DockStyle.Top;
-            this.lblFormulario.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            this.lblFormulario.ForeColor = Color.FromArgb(30, 41, 59);
-            this.lblFormulario.Height = 38;
-            this.lblFormulario.Name = "lblFormulario";
-            this.lblFormulario.TabIndex = 0;
-            this.lblFormulario.Text = "Nuevo plan";
-            this.lblFormulario.TextAlign = ContentAlignment.MiddleLeft;
-            //
+            // 
+            // panelAcciones
+            // 
+            this.panelAcciones.Controls.Add(this.nuevo);
+            this.panelAcciones.Controls.Add(this.guardar);
+            this.panelAcciones.Controls.Add(this.actualizar);
+            this.panelAcciones.Controls.Add(this.darDeBaja);
+            this.panelAcciones.Controls.Add(this.reactivar);
+            this.panelAcciones.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelAcciones.Location = new System.Drawing.Point(18, 206);
+            this.panelAcciones.Name = "panelAcciones";
+            this.panelAcciones.Size = new System.Drawing.Size(528, 100);
+            this.panelAcciones.TabIndex = 2;
+            // 
+            // nuevo
+            // 
+            this.nuevo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.nuevo.FlatAppearance.BorderSize = 0;
+            this.nuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.nuevo.ForeColor = System.Drawing.Color.White;
+            this.nuevo.Location = new System.Drawing.Point(21, 8);
+            this.nuevo.Name = "nuevo";
+            this.nuevo.Size = new System.Drawing.Size(112, 38);
+            this.nuevo.TabIndex = 2;
+            this.nuevo.Text = "+ Nuevo";
+            this.nuevo.UseVisualStyleBackColor = false;
+            this.nuevo.Click += new System.EventHandler(this.nuevo_Click);
+            // 
+            // guardar
+            // 
+            this.guardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.guardar.FlatAppearance.BorderSize = 0;
+            this.guardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.guardar.ForeColor = System.Drawing.Color.White;
+            this.guardar.Location = new System.Drawing.Point(156, 8);
+            this.guardar.Name = "guardar";
+            this.guardar.Size = new System.Drawing.Size(112, 38);
+            this.guardar.TabIndex = 3;
+            this.guardar.Text = "Guardar";
+            this.guardar.UseVisualStyleBackColor = false;
+            this.guardar.Click += new System.EventHandler(this.guardar_Click);
+            // 
+            // actualizar
+            // 
+            this.actualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.actualizar.FlatAppearance.BorderSize = 0;
+            this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.actualizar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.actualizar.Location = new System.Drawing.Point(288, 8);
+            this.actualizar.Name = "actualizar";
+            this.actualizar.Size = new System.Drawing.Size(112, 38);
+            this.actualizar.TabIndex = 4;
+            this.actualizar.Text = "Modificar";
+            this.actualizar.UseVisualStyleBackColor = false;
+            this.actualizar.Click += new System.EventHandler(this.actualizar_Click);
+            // 
+            // darDeBaja
+            // 
+            this.darDeBaja.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.darDeBaja.FlatAppearance.BorderSize = 0;
+            this.darDeBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.darDeBaja.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.darDeBaja.Location = new System.Drawing.Point(21, 54);
+            this.darDeBaja.Name = "darDeBaja";
+            this.darDeBaja.Size = new System.Drawing.Size(112, 38);
+            this.darDeBaja.TabIndex = 5;
+            this.darDeBaja.Text = "Dar de baja";
+            this.darDeBaja.UseVisualStyleBackColor = false;
+            this.darDeBaja.Click += new System.EventHandler(this.darDeBaja_Click);
+            // 
+            // reactivar
+            // 
+            this.reactivar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.reactivar.FlatAppearance.BorderSize = 0;
+            this.reactivar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.reactivar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.reactivar.Location = new System.Drawing.Point(156, 54);
+            this.reactivar.Name = "reactivar";
+            this.reactivar.Size = new System.Drawing.Size(112, 38);
+            this.reactivar.TabIndex = 6;
+            this.reactivar.Text = "Reactivar";
+            this.reactivar.UseVisualStyleBackColor = false;
+            this.reactivar.Click += new System.EventHandler(this.reactivar_Click);
+            // 
             // contenedorCampos
-            //
+            // 
             this.contenedorCampos.ColumnCount = 2;
-            this.contenedorCampos.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 116F));
-            this.contenedorCampos.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            this.contenedorCampos.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 116F));
+            this.contenedorCampos.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.contenedorCampos.Controls.Add(this.lblNombre, 0, 0);
             this.contenedorCampos.Controls.Add(this.nombre, 1, 0);
             this.contenedorCampos.Controls.Add(this.lblDescripcionPlan, 0, 1);
             this.contenedorCampos.Controls.Add(this.descripcion, 1, 1);
             this.contenedorCampos.Controls.Add(this.lblPrecio, 0, 2);
             this.contenedorCampos.Controls.Add(this.precio, 1, 2);
-            this.contenedorCampos.Dock = DockStyle.Top;
-            this.contenedorCampos.Height = 150;
+            this.contenedorCampos.Dock = System.Windows.Forms.DockStyle.Top;
+            this.contenedorCampos.Location = new System.Drawing.Point(18, 56);
             this.contenedorCampos.Name = "contenedorCampos";
             this.contenedorCampos.RowCount = 3;
-            this.contenedorCampos.RowStyles.Add(new RowStyle(SizeType.Percent, 33.33F));
-            this.contenedorCampos.RowStyles.Add(new RowStyle(SizeType.Percent, 33.33F));
-            this.contenedorCampos.RowStyles.Add(new RowStyle(SizeType.Percent, 33.34F));
+            this.contenedorCampos.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
+            this.contenedorCampos.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
+            this.contenedorCampos.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.34F));
+            this.contenedorCampos.Size = new System.Drawing.Size(528, 150);
             this.contenedorCampos.TabIndex = 1;
-            //
+            // 
             // lblNombre
-            //
-            this.lblNombre.Dock = DockStyle.Fill;
-            this.lblNombre.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            this.lblNombre.ForeColor = Color.FromArgb(51, 65, 85);
-            this.lblNombre.Margin = new Padding(0, 2, 8, 2);
+            // 
+            this.lblNombre.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblNombre.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.lblNombre.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.lblNombre.Location = new System.Drawing.Point(0, 2);
+            this.lblNombre.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
             this.lblNombre.Name = "lblNombre";
+            this.lblNombre.Size = new System.Drawing.Size(108, 45);
             this.lblNombre.TabIndex = 0;
             this.lblNombre.Text = "Nombre:";
-            this.lblNombre.TextAlign = ContentAlignment.MiddleLeft;
-            //
+            this.lblNombre.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // nombre
-            //
-            this.nombre.Dock = DockStyle.Fill;
-            this.nombre.Margin = new Padding(0, 3, 12, 3);
+            // 
+            this.nombre.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.nombre.Location = new System.Drawing.Point(116, 3);
+            this.nombre.Margin = new System.Windows.Forms.Padding(0, 3, 12, 3);
             this.nombre.Name = "nombre";
+            this.nombre.Size = new System.Drawing.Size(400, 29);
             this.nombre.TabIndex = 1;
-            //
+            // 
             // lblDescripcionPlan
-            //
-            this.lblDescripcionPlan.Dock = DockStyle.Fill;
-            this.lblDescripcionPlan.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            this.lblDescripcionPlan.ForeColor = Color.FromArgb(51, 65, 85);
-            this.lblDescripcionPlan.Margin = new Padding(0, 2, 8, 2);
+            // 
+            this.lblDescripcionPlan.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblDescripcionPlan.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.lblDescripcionPlan.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.lblDescripcionPlan.Location = new System.Drawing.Point(0, 51);
+            this.lblDescripcionPlan.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
             this.lblDescripcionPlan.Name = "lblDescripcionPlan";
+            this.lblDescripcionPlan.Size = new System.Drawing.Size(108, 45);
             this.lblDescripcionPlan.TabIndex = 2;
             this.lblDescripcionPlan.Text = "Descripcion:";
-            this.lblDescripcionPlan.TextAlign = ContentAlignment.MiddleLeft;
-            //
+            this.lblDescripcionPlan.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // descripcion
-            //
-            this.descripcion.Dock = DockStyle.Fill;
-            this.descripcion.Margin = new Padding(0, 3, 12, 3);
+            // 
+            this.descripcion.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.descripcion.Location = new System.Drawing.Point(116, 52);
+            this.descripcion.Margin = new System.Windows.Forms.Padding(0, 3, 12, 3);
             this.descripcion.Name = "descripcion";
+            this.descripcion.Size = new System.Drawing.Size(400, 29);
             this.descripcion.TabIndex = 3;
-            //
+            // 
             // lblPrecio
-            //
-            this.lblPrecio.Dock = DockStyle.Fill;
-            this.lblPrecio.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            this.lblPrecio.ForeColor = Color.FromArgb(51, 65, 85);
-            this.lblPrecio.Margin = new Padding(0, 2, 8, 2);
+            // 
+            this.lblPrecio.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblPrecio.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.lblPrecio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.lblPrecio.Location = new System.Drawing.Point(0, 100);
+            this.lblPrecio.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
             this.lblPrecio.Name = "lblPrecio";
+            this.lblPrecio.Size = new System.Drawing.Size(108, 48);
             this.lblPrecio.TabIndex = 4;
             this.lblPrecio.Text = "Precio:";
-            this.lblPrecio.TextAlign = ContentAlignment.MiddleLeft;
-            //
+            this.lblPrecio.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // precio
-            //
-            this.precio.Dock = DockStyle.Fill;
-            this.precio.Margin = new Padding(0, 3, 12, 3);
+            // 
+            this.precio.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.precio.Location = new System.Drawing.Point(116, 101);
+            this.precio.Margin = new System.Windows.Forms.Padding(0, 3, 12, 3);
             this.precio.Name = "precio";
+            this.precio.Size = new System.Drawing.Size(400, 29);
             this.precio.TabIndex = 5;
-            this.precio.KeyPress += new KeyPressEventHandler(this.precio_KeyPress);
-            //
-            // panelAcciones
-            //
-            this.panelAcciones.Controls.Add(this.nuevo);
-            this.panelAcciones.Controls.Add(this.guardar);
-            this.panelAcciones.Controls.Add(this.actualizar);
-            this.panelAcciones.Controls.Add(this.darDeBaja);
-            this.panelAcciones.Controls.Add(this.reactivar);
-            this.panelAcciones.Dock = DockStyle.Top;
-            this.panelAcciones.Height = 100;
-            this.panelAcciones.Name = "panelAcciones";
-            this.panelAcciones.TabIndex = 2;
-            //
-            // nuevo
-            //
-            this.nuevo.AutoSize = false;
-            this.nuevo.BackColor = Color.FromArgb(79, 70, 229);
-            this.nuevo.FlatAppearance.BorderSize = 0;
-            this.nuevo.FlatStyle = FlatStyle.Flat;
-            this.nuevo.ForeColor = Color.White;
-            this.nuevo.Location = new Point(0, 8);
-            this.nuevo.Name = "nuevo";
-            this.nuevo.Size = new Size(112, 38);
-            this.nuevo.TabIndex = 2;
-            this.nuevo.Text = "+ Nuevo";
-            this.nuevo.UseVisualStyleBackColor = false;
-            this.nuevo.Click += new System.EventHandler(this.nuevo_Click);
-            //
-            // guardar
-            //
-            this.guardar.AutoSize = false;
-            this.guardar.BackColor = Color.FromArgb(79, 70, 229);
-            this.guardar.FlatAppearance.BorderSize = 0;
-            this.guardar.FlatStyle = FlatStyle.Flat;
-            this.guardar.ForeColor = Color.White;
-            this.guardar.Location = new Point(120, 8);
-            this.guardar.Name = "guardar";
-            this.guardar.Size = new Size(112, 38);
-            this.guardar.TabIndex = 3;
-            this.guardar.Text = "Guardar";
-            this.guardar.UseVisualStyleBackColor = false;
-            this.guardar.Click += new System.EventHandler(this.guardar_Click);
-            //
-            // actualizar
-            //
-            this.actualizar.AutoSize = false;
-            this.actualizar.BackColor = Color.FromArgb(226, 232, 240);
-            this.actualizar.FlatAppearance.BorderSize = 0;
-            this.actualizar.FlatStyle = FlatStyle.Flat;
-            this.actualizar.ForeColor = Color.FromArgb(30, 41, 59);
-            this.actualizar.Location = new Point(240, 8);
-            this.actualizar.Name = "actualizar";
-            this.actualizar.Size = new Size(112, 38);
-            this.actualizar.TabIndex = 4;
-            this.actualizar.Text = "Modificar";
-            this.actualizar.UseVisualStyleBackColor = false;
-            this.actualizar.Click += new System.EventHandler(this.actualizar_Click);
-            //
-            // darDeBaja
-            //
-            this.darDeBaja.AutoSize = false;
-            this.darDeBaja.BackColor = Color.FromArgb(254, 242, 242);
-            this.darDeBaja.FlatAppearance.BorderSize = 0;
-            this.darDeBaja.FlatStyle = FlatStyle.Flat;
-            this.darDeBaja.ForeColor = Color.FromArgb(185, 28, 28);
-            this.darDeBaja.Location = new Point(0, 54);
-            this.darDeBaja.Name = "darDeBaja";
-            this.darDeBaja.Size = new Size(112, 38);
-            this.darDeBaja.TabIndex = 5;
-            this.darDeBaja.Text = "Dar de baja";
-            this.darDeBaja.UseVisualStyleBackColor = false;
-            this.darDeBaja.Click += new System.EventHandler(this.darDeBaja_Click);
-            //
-            // reactivar
-            //
-            this.reactivar.AutoSize = false;
-            this.reactivar.BackColor = Color.FromArgb(226, 232, 240);
-            this.reactivar.FlatAppearance.BorderSize = 0;
-            this.reactivar.FlatStyle = FlatStyle.Flat;
-            this.reactivar.ForeColor = Color.FromArgb(30, 41, 59);
-            this.reactivar.Location = new Point(120, 54);
-            this.reactivar.Name = "reactivar";
-            this.reactivar.Size = new Size(112, 38);
-            this.reactivar.TabIndex = 6;
-            this.reactivar.Text = "Reactivar";
-            this.reactivar.UseVisualStyleBackColor = false;
-            this.reactivar.Click += new System.EventHandler(this.reactivar_Click);
-            //
+            this.precio.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.precio_KeyPress);
+            // 
+            // lblFormulario
+            // 
+            this.lblFormulario.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblFormulario.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.lblFormulario.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.lblFormulario.Location = new System.Drawing.Point(18, 18);
+            this.lblFormulario.Name = "lblFormulario";
+            this.lblFormulario.Size = new System.Drawing.Size(528, 38);
+            this.lblFormulario.TabIndex = 0;
+            this.lblFormulario.Text = "Nuevo plan";
+            this.lblFormulario.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // GestionPlanesFormulario
-            //
-            this.AutoScaleDimensions = new SizeF(7F, 17F);
-            this.AutoScaleMode = AutoScaleMode.Font;
-            this.BackColor = Color.FromArgb(241, 245, 249);
-            this.ClientSize = new Size(1100, 680);
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
+            this.ClientSize = new System.Drawing.Size(1100, 680);
             this.Controls.Add(this.splitContenido);
             this.Controls.Add(this.lblEstado);
             this.Controls.Add(this.barraAcciones);
             this.Controls.Add(this.panelEncabezado);
-            this.Font = new Font("Segoe UI", 9.5F);
-            this.MinimumSize = new Size(900, 560);
+            this.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.MinimumSize = new System.Drawing.Size(900, 560);
             this.Name = "GestionPlanesFormulario";
-            this.StartPosition = FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "SysGym | Planes";
             this.Load += new System.EventHandler(this.GestionPlanesFormulario_Load);
+            this.panelEncabezado.ResumeLayout(false);
+            this.barraAcciones.ResumeLayout(false);
+            this.barraAcciones.PerformLayout();
+            this.splitContenido.Panel1.ResumeLayout(false);
+            this.splitContenido.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContenido)).EndInit();
+            this.splitContenido.ResumeLayout(false);
+            this.panelListado.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.tabla)).EndInit();
+            this.panelDetalle.ResumeLayout(false);
+            this.contenedorDetalle.ResumeLayout(false);
             this.panelAcciones.ResumeLayout(false);
             this.contenedorCampos.ResumeLayout(false);
-            this.contenedorDetalle.ResumeLayout(false);
-            this.panelDetalle.ResumeLayout(false);
-            this.panelListado.ResumeLayout(false);
-            this.splitContenido.Panel2.ResumeLayout(false);
-            this.splitContenido.Panel1.ResumeLayout(false);
-            ((ISupportInitialize)(this.splitContenido)).EndInit();
-            this.splitContenido.ResumeLayout(false);
-            this.barraAcciones.ResumeLayout(false);
-            this.panelEncabezado.ResumeLayout(false);
-            ((ISupportInitialize)(this.tabla)).EndInit();
+            this.contenedorCampos.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
+
         }
     }
 }

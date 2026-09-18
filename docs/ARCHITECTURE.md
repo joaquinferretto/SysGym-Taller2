@@ -1,14 +1,16 @@
 # Arquitectura
 
-## Normalizacion de RutinasEntrenadorFormulario - 18 de septiembre de 2026
+## Correccion de inicializacion del diseñador en RutinasEntrenadorFormulario - 18 de septiembre de 2026
 
 `RutinasEntrenadorFormulario.Designer.cs` conserva la distribucion master/detail existente: catalogo a la izquierda y, a la derecha, rutina seleccionada, ejercicios de la rutina y detalle del ejercicio. Se elimino el `for` que creaba las cuatro filas de `contenedorFormulario` y se declararon las cuatro `RowStyle` de 25% de forma explicita. Tambien se reemplazaron `ConfigurarTabla`, `ConfigurarBoton` y `AgregarCampo` por propiedades, `Controls.Add` y suscripciones de eventos declarativas. No quedan helpers propios ni control de flujo dentro de `InitializeComponent`; permanecen unicamente arrays estandar para `Columns.AddRange` y `Items.AddRange`.
+
+Durante la auditoria se detecto que esa normalizacion habia omitido `components = new Container();`. El campo se mantenia declarado y `Dispose` dependia de el, pero quedaba en `null` durante la instancia del formulario. Se restauro su inicializacion estandar al comienzo de `InitializeComponent`; no se cambio el layout ni se agregaron defensas genericas. El NRE informado no pudo reproducirse con el host real de Visual Studio despues de la correccion, por lo que no se atribuye a handlers sin una traza que lo confirme.
 
 El handler `Editar` es unico: `actualizarEjercicio_Click`. La seleccion de una fila vuelve a consultar el detalle por `IdRutinaEjercicio`, carga Ejercicio, Dia, Series, Repeticiones, Peso, Descanso y Orden, y deja el editor en consulta. `Agregar` crea mediante `RutinaEjercicioLogica.AgregarEjercicio`; `Guardar cambios` conserva `IdRutinaEjercicio` y llama a `RutinaEjercicioLogica.Modificar`; `Quitar` llama a `Quitar` despues de confirmar y solo baja la relacion. Cancelar descarta el modo nuevo o recarga la fila seleccionada en modo edicion. Las validaciones de rangos permanecen en la capa logica.
 
 Se mantuvo `splitContenido_Resize` porque conserva la proporcion responsive actual y protege los limites de `Panel1MinSize` y `Panel2MinSize`; el valor inicial declarativo de `SplitterDistance` sigue siendo valido. La profundidad maxima de contenedores permanecio en cinco niveles y no se eliminaron contenedores que aportan `Dock`, `Padding`, `BorderStyle`, scroll, agrupacion o layout.
 
-Debug y Release compilaron sin errores. La prueba en memoria confirmo las cuatro filas, las grillas, el SplitContainer y los modos Consulta/Nuevo/Edicion; la prueba de Cancelar Nuevo descarto valores y regreso a consulta. Los warnings CS0649 de `GestionEjerciciosFormulario` y `GestionSociosFormulario` son preexistentes y pertenecen a otros formularios. Pendiente: abrir manualmente "Ver disenador" y ejecutar los seis casos funcionales contra una base de prueba controlada; esta consola no realizo una prueba interactiva ni altero SQL Server.
+Debug y Release compilaron sin errores. La instancia de Visual Studio abrio realmente `RutinasEntrenadorFormulario.cs [Diseño]` despues del cambio; el constructor y `PerformLayout` tambien finalizaron en Debug y Release. La auditoria confirmo que los inicializadores de campos solo crean coordinadores de logica sin consultas ni acceso a datos; `Load` conserva la salida por `EnModoDisenio`; no se modificaron handlers de seleccion ni resize. Los unicos warnings CS0649 restantes pertenecen a `GestionEjerciciosFormulario` y `GestionSociosFormulario`. Pendiente: ejecutar contra una base de prueba controlada los seis casos funcionales solicitados; esta tarea no altero SQL Server.
 
 ## Simplificacion incremental de contenedores WinForms - 18 de septiembre de 2026
 
