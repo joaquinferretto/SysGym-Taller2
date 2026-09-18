@@ -282,5 +282,20 @@ namespace exxen2._0.capaVisual.Compartido
         {
 
         }
+
+        private void grupoFicha_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void nombre_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void agregarImagen_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

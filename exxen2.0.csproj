@@ -234,34 +234,10 @@
     <EmbeddedResource Include="capaVisual\Administrador\GestionUsuariosFormulario.resx">
       <DependentUpon>GestionUsuariosFormulario.cs</DependentUpon>
     </EmbeddedResource>
-<<<<<<< HEAD
-    <EmbeddedResource Include="capaVisual\Autenticacion\Login.resx">
-      <DependentUpon>Login.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="capaVisual\Compartido\GestionSociosForm.resx">
-      <DependentUpon>GestionSociosForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="capaVisual\Entrenador\DashboardEntrenador.resx">
-      <DependentUpon>DashboardEntrenador.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="capaVisual\Entrenador\MisSociosForm.resx">
-      <DependentUpon>MisSociosForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="capaVisual\Recepcionista\DashboardRecepcionista.resx">
-      <DependentUpon>DashboardRecepcionista.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="capaVisual\Recepcionista\GestionAsignacionesForm.resx">
-      <DependentUpon>GestionAsignacionesForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="capaVisual\Recepcionista\GestionMembresiasForm.resx">
-      <DependentUpon>GestionMembresiasForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="capaVisual\Recepcionista\GestionPagosForm.resx">
-      <DependentUpon>GestionPagosForm.cs</DependentUpon>
-=======
+
     <EmbeddedResource Include="capaVisual\Autenticacion\InicioSesion.resx">
       <DependentUpon>InicioSesion.cs</DependentUpon>
->>>>>>> 78ccd0668652e077ea651b364f4e40d5befd5b00
+
     </EmbeddedResource>
     <EmbeddedResource Include="capaVisual\Compartido\GestionEjerciciosFormulario.resx">
       <DependentUpon>GestionEjerciciosFormulario.cs</DependentUpon>

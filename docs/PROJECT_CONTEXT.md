@@ -1,5 +1,15 @@
 # Contexto del proyecto
 
+## Layout de registro de usuarios — 18 de septiembre de 2026
+
+Última actualización de esta sección: 18 de septiembre de 2026.
+
+`GestionUsuariosFormulario.Designer.cs` adopta la organización visual de `GestionSociosFormulario`: listado flexible a la izquierda, ficha derecha de 396 px, separación y padding de 16 px, etiquetas de 116 px y nueve filas de 38 px con controles de ancho uniforme. Conserva Nombre, Apellido, DNI, Nacimiento, Usuario, Contraseña, Salario, Rol y Sexo. Las cinco acciones mantienen su orden en dos filas, con botones de 108 x 38 px y separación de 8 px para evitar recortes cuando aparece la barra vertical. La foto de usuario y sus botones existentes se ubican debajo de las acciones; no se agregan campos de socios, controles ni dependencias.
+
+Solo se modificaron propiedades visuales en el Designer; el archivo `.cs`, los eventos, las validaciones, los filtros, las columnas y el comportamiento del DataGridView, las notificaciones, las capas inferiores, las entidades y SQL permanecen sin cambios. Se conservaron el namespace, los archivos parciales y los recursos del formulario.
+
+Verificaciones: compilación Debug con MSBuild de Visual Studio en `bin/VerificacionLayoutUsuarios/`, sin errores; permanece el warning preexistente CS0649 de `GestionEjerciciosFormulario.components`. Se verificaron constructor, creación de controles y renderizado en memoria, nueve campos alineados y cinco botones completos a 900 x 560, 1100 x 680 y 1366 x 768 px de área cliente. La ficha conserva su ancho y separación, con desplazamiento vertical cuando hace falta y sin barra horizontal. Para la comprobación final se desconectó el handler Load únicamente en la instancia de verificación, sin modificar el código ni ejecutar operaciones de negocio. Pendiente: abrir manualmente «Ver diseñador» en Visual Studio y revisar el formulario dentro del panel administrador con la base disponible.
+
 ## Notificaciones clasicas de altas - 17 de septiembre de 2026
 
 Ultima actualizacion de esta seccion: 17 de septiembre de 2026.
