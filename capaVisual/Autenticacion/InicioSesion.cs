@@ -40,8 +40,8 @@ namespace exxen2._0.capaVisual.Autenticacion
                 var usuario = usuarioSistemaLogica.Autenticar(txtNombreUsuario.Text.Trim(), txtClave.Text);
                 if (usuario == null)
                 {
-                    indicadorErrores.SetError(txtClave, "El usuario o la contrasena no son correctos.");
-                    MessageBox.Show("Usuario o contrasena incorrectos.", "Inicio de sesion", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    indicadorErrores.SetError(txtClave, "El usuario o la contraseña no son correctos.");
+                    MessageBox.Show("Usuario o contraseña incorrectos.", "Inicio de sesión", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     txtClave.Clear();
                     txtClave.Focus();
                     return;
@@ -55,7 +55,7 @@ namespace exxen2._0.capaVisual.Autenticacion
             }
             catch (Exception ex)
             {
-                MessageBox.Show("No se pudo iniciar sesion.\n\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No se pudo iniciar sesión.\n\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -107,13 +107,13 @@ namespace exxen2._0.capaVisual.Autenticacion
         /* Al validar el campo de acceso, informa los datos faltantes o inválidos mediante ErrorProvider. */
         private void txtClave_Validating(object origen, CancelEventArgs e)
         {
-            indicadorErrores.SetError(txtClave, string.IsNullOrWhiteSpace(txtClave.Text) ? "Ingresa la contrasena." : string.Empty);
+            indicadorErrores.SetError(txtClave, string.IsNullOrWhiteSpace(txtClave.Text) ? "Ingresa la contraseña." : string.Empty);
         }
 
         /* Al escribir la contraseña, actualiza la indicación existente y limpia su error de validación. */
         private void txtClave_TextChanged(object origen, EventArgs e)
         {
-            lblClaveVisible.Text = string.IsNullOrEmpty(txtClave.Text) ? string.Empty : "Contrasena visible: " + txtClave.Text;
+            lblClaveVisible.Text = string.IsNullOrEmpty(txtClave.Text) ? string.Empty : "Contraseña visible: " + txtClave.Text;
             if (!string.IsNullOrWhiteSpace(txtClave.Text))
                 indicadorErrores.SetError(txtClave, string.Empty);
         }

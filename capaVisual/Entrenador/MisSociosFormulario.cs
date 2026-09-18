@@ -1,5 +1,5 @@
-﻿using System;
-using System.ComponentModel;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -9,120 +9,215 @@ using exxen2._0.capaVisual.Compartido;
 
 namespace exxen2._0.capaVisual.Entrenador
 {
-    /* Presenta mis socios y atiende sus acciones mediante eventos de Windows Forms. */
-    [DesignerCategory("Form")]
+    /* Presenta socios y su rutina vigente en una unica pantalla master/detail. */
+    [System.ComponentModel.DesignerCategory("Form")]
     public partial class MisSociosFormulario : Form
     {
-        private readonly RutinaAsignacionLogica asignaciones = new RutinaAsignacionLogica();
+        private readonly RutinaLogica rutinas = new RutinaLogica();
+        private readonly RutinaEjercicioLogica ejerciciosRutina = new RutinaEjercicioLogica();
         private readonly UsuarioSistema usuario;
         private readonly bool modoAdministrador;
-        /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
-        public MisSociosFormulario() : this(new UsuarioSistema { Nombre = "Entrenador", Apellido = "de diseno" })
-        {
-        }
+        private List<SocioRutinaItem> sociosCargados = new List<SocioRutinaItem>();
+        private SocioRutinaItem socioSeleccionado;
+        private bool cargandoTabla;
 
-        /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
+        public MisSociosFormulario() : this(new UsuarioSistema { Nombre = "Entrenador", Apellido = "de diseno" }) { }
+
         public MisSociosFormulario(UsuarioSistema usuario)
         {
-            if (usuario == null)
-                throw new ArgumentNullException("usuario");
+            if (usuario == null) throw new ArgumentNullException("usuario");
             this.usuario = usuario;
             InitializeComponent();
         }
 
-        /* Inicializa la pantalla de socios para la gestión global del administrador. */
-        public MisSociosFormulario(UsuarioSistema usuario, bool modoAdministrador)
-            : this(usuario)
+        public MisSociosFormulario(UsuarioSistema usuario, bool modoAdministrador) : this(usuario)
         {
             this.modoAdministrador = modoAdministrador;
             if (modoAdministrador)
             {
                 Text = "SysGym | Socios y rutinas";
-                lblTitulo.Text = "Socios y rutinas";
-                lblDescripcion.Text = "Gestiona las rutinas de todos los socios asignados";
+                lblTitulo.Text = "Socios y rutinas | Seguimiento de rutinas";
+                lblDescripcion.Visible = false;
             }
         }
 
-        /* Consulta los registros del módulo y actualiza la grilla, informando los errores de carga. */
-        private void Cargar()
+        private void Cargar(int? idSocioMantener = null)
         {
             try
             {
-                tabla.Rows.Clear();
-                var socios = modoAdministrador
-                    ? asignaciones.ListarSociosParaAdministracion()
-                    : asignaciones.ListarSociosPorEntrenador(usuario.IdUsuarioSistema);
-                foreach (var socio in socios)
+                sociosCargados = modoAdministrador
+                    ? rutinas.ListarSociosParaAdministracion()
+                    : rutinas.ListarSociosPorEntrenador(usuario.IdUsuarioSistema);
+                CargarRutinasDisponibles();
+                AplicarFiltro(idSocioMantener);
+            }
+            catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex); }
+        }
+
+        private void CargarRutinasDisponibles()
+        {
+            rutinaDisponible.DataSource = null;
+            rutinaDisponible.DisplayMember = "Nombre";
+            rutinaDisponible.ValueMember = "IdRutina";
+            rutinaDisponible.DataSource = rutinas.ListarActivas();
+        }
+
+        private void AplicarFiltro(int? idSocioMantener = null)
+        {
+            var criterio = buscador.Text.Trim();
+            var filtro = Convert.ToString(filtroRutina.SelectedItem);
+            var listado = sociosCargados.AsEnumerable();
+            if (!string.IsNullOrWhiteSpace(criterio))
+                listado = listado.Where(s => Contiene(s.NombreSocio, criterio) || Contiene(s.DNI, criterio));
+            if (filtro == "Con rutina") listado = listado.Where(s => s.TieneRutina);
+            else if (filtro == "Sin rutina") listado = listado.Where(s => !s.TieneRutina);
+
+            cargandoTabla = true;
+            tabla.Rows.Clear();
+            foreach (var socio in listado)
+            {
+                tabla.Rows.Add(
+                    socio.IdSocio,
+                    socio.IdMembresia,
+                    socio.NombreSocio,
+                    socio.DNI,
+                    socio.NombrePlan,
+                    string.IsNullOrWhiteSpace(socio.NombreRutina) ? "Sin rutina" : socio.NombreRutina,
+                    socio.FechaVencimiento.ToString("dd/MM/yyyy"),
+                    socio.TieneRutina ? "Con rutina" : "Sin rutina");
+            }
+            tabla.ClearSelection();
+            cargandoTabla = false;
+            MostrarFichaVacia();
+            if (idSocioMantener.HasValue) SeleccionarFila(idSocioMantener.Value);
+            lblEstado.Text = tabla.Rows.Count + " socio(s) encontrado(s)";
+        }
+
+        private void SeleccionarFila(int idSocio)
+        {
+            foreach (DataGridViewRow fila in tabla.Rows)
+            {
+                if (fila.Cells[0].Value != null && Convert.ToInt32(fila.Cells[0].Value) == idSocio)
                 {
-                    tabla.Rows.Add(socio.IdSocio, socio.NombreSocio, socio.RutinasAsignadas);
+                    fila.Selected = true;
+                    tabla.CurrentCell = fila.Cells[2];
+                    break;
                 }
-
-                lblEstado.Text = tabla.Rows.Count + " socio(s) asignado(s) a este entrenador";
-            }
-            catch (Exception ex)
-            {
-                AyudaFormularioVisual.MostrarError(lblEstado, ex);
             }
         }
 
-        /* Al cargar la pantalla en ejecución, prepara sus datos iniciales sin realizar consultas desde el diseñador. */
-        private void MisSociosFormulario_Load(object origen, EventArgs e)
+        private static bool Contiene(string valor, string criterio)
         {
-            if (AyudaFormularioVisual.EnModoDisenio(this))
-                return;
+            return !string.IsNullOrEmpty(valor) && valor.IndexOf(criterio, StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        private void tabla_SelectionChanged(object origen, EventArgs e)
+        {
+            if (cargandoTabla || tabla.CurrentRow == null || !tabla.CurrentRow.Selected || tabla.CurrentRow.Cells[0].Value == null) return;
+            var idSocio = Convert.ToInt32(tabla.CurrentRow.Cells[0].Value);
+            socioSeleccionado = sociosCargados.FirstOrDefault(s => s.IdSocio == idSocio);
+            if (socioSeleccionado == null) return;
+
+            lblSocioValor.Text = socioSeleccionado.NombreSocio;
+            lblDniValor.Text = socioSeleccionado.DNI;
+            lblPlanValor.Text = socioSeleccionado.NombrePlan;
+            lblEntrenadorValor.Text = socioSeleccionado.NombreEntrenador;
+            lblVencimientoValor.Text = socioSeleccionado.FechaVencimiento.ToString("dd/MM/yyyy");
+            lblRutinaValor.Text = socioSeleccionado.TieneRutina ? socioSeleccionado.NombreRutina : "Sin rutina asignada";
+            CargarRutinaSemanal(socioSeleccionado.IdSocio);
+
+            rutinaDisponible.Visible = true;
+            asignarRutina.Visible = true;
+            asignarRutina.Text = socioSeleccionado.TieneRutina ? "Cambiar rutina" : "Asignar rutina";
+            verRutina.Visible = socioSeleccionado.TieneRutina;
+            crearPersonalizada.Visible = !socioSeleccionado.TieneRutina;
+            lblAccionInfo.Text = socioSeleccionado.TieneRutina
+                ? "La rutina se muestra abajo. Podes cambiarla o editar sus ejercicios."
+                : "Selecciona una rutina del catalogo o crea una personalizada.";
+        }
+
+        private void MostrarFichaVacia()
+        {
+            socioSeleccionado = null;
+            lblSocioValor.Text = "Selecciona un socio";
+            lblDniValor.Text = "-";
+            lblPlanValor.Text = "-";
+            lblEntrenadorValor.Text = "-";
+            lblVencimientoValor.Text = "-";
+            lblRutinaValor.Text = "-";
+            lblAccionInfo.Text = "Selecciona un socio para ver su rutina y acciones.";
+            tablaRutina.Rows.Clear();
+            rutinaDisponible.Visible = false;
+            asignarRutina.Visible = false;
+            verRutina.Visible = false;
+            crearPersonalizada.Visible = false;
+        }
+
+        private void CargarRutinaSemanal(int idSocio)
+        {
+            tablaRutina.Rows.Clear();
+            foreach (var ejercicio in ejerciciosRutina.ListarSemanaPorSocio(idSocio))
+            {
+                tablaRutina.Rows.Add(
+                    ValidacionesGimnasio.NombreDia(ejercicio.DiaSemana),
+                    ejercicio.Ejercicio == null ? "-" : ejercicio.Ejercicio.Nombre,
+                    ejercicio.Series.HasValue ? ejercicio.Series.Value.ToString() : "-",
+                    ejercicio.Repeticiones.HasValue ? ejercicio.Repeticiones.Value.ToString() : "-",
+                    ejercicio.Peso.HasValue ? ejercicio.Peso.Value.ToString("0.##") : "-",
+                    ejercicio.Descanso + " s");
+            }
+        }
+
+        private void asignarRutina_Click(object origen, EventArgs e)
+        {
             try
             {
-                Cargar();
+                if (socioSeleccionado == null) throw new InvalidOperationException("Selecciona un socio.");
+                var rutina = rutinaDisponible.SelectedItem as Rutina;
+                if (rutina == null) throw new InvalidOperationException("Selecciona una rutina activa.");
+                var idSocio = socioSeleccionado.IdSocio;
+                rutinas.AsignarRutina(socioSeleccionado.IdMembresia, rutina.IdRutina);
+                Cargar(idSocio);
+                AyudaFormularioVisual.MostrarExito(lblEstado, "La rutina fue asignada a la membresia.", true);
             }
-            catch (Exception ex)
-            {
-                AyudaFormularioVisual.MostrarError(lblEstado, ex);
-            }
+            catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex, true); }
         }
 
-        /* Al hacer clic en btnVolver, cierra el módulo y devuelve el control al panel principal. */
-        private void btnVolver_Click(object origen, EventArgs e)
-        {
-            Close();
-        }
-
-        /* Al hacer clic en verRutina, abre la rutina semanal del socio seleccionado en la grilla. */
         private void verRutina_Click(object origen, EventArgs e)
         {
             try
             {
-                if (tabla.CurrentRow == null || tabla.CurrentRow.Cells[0].Value == null)
-                    throw new InvalidOperationException("Selecciona un socio.");
-                using (var semana = new RutinaSemanalFormulario(Convert.ToInt32(tabla.CurrentRow.Cells[0].Value), Convert.ToString(tabla.CurrentRow.Cells[1].Value), Color.FromArgb(14, 116, 144)))
-                    semana.ShowDialog(this);
+                if (socioSeleccionado == null) throw new InvalidOperationException("Selecciona un socio.");
+                var idSocio = socioSeleccionado.IdSocio;
+                using (var formulario = new RutinasEntrenadorFormulario(usuario, idSocio, modoAdministrador, true)) formulario.ShowDialog(this);
+                Cargar(idSocio);
             }
-            catch (Exception ex)
-            {
-                AyudaFormularioVisual.MostrarError(lblEstado, ex);
-            }
+            catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex); }
         }
 
-        /* Al hacer clic en crearPersonalizada, abre el editor para el socio seleccionado. */
         private void crearPersonalizada_Click(object origen, EventArgs e)
         {
             try
             {
-                if (tabla.CurrentRow == null || tabla.CurrentRow.Cells[0].Value == null)
-                    throw new InvalidOperationException("Selecciona un socio.");
-                using (var formulario = new RutinasEntrenadorFormulario(usuario, Convert.ToInt32(tabla.CurrentRow.Cells[0].Value), modoAdministrador))
-                    formulario.ShowDialog(this);
-                Cargar();
+                if (socioSeleccionado == null) throw new InvalidOperationException("Selecciona un socio.");
+                var idSocio = socioSeleccionado.IdSocio;
+                using (var formulario = new RutinasEntrenadorFormulario(usuario, idSocio, modoAdministrador)) formulario.ShowDialog(this);
+                Cargar(idSocio);
             }
-            catch (Exception ex)
-            {
-                AyudaFormularioVisual.MostrarError(lblEstado, ex);
-            }
+            catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex); }
         }
 
-        /* Al hacer clic en actualizar, vuelve a consultar y mostrar los registros del módulo. */
-        private void actualizar_Click(object origen, EventArgs e)
+        private void MisSociosFormulario_Load(object origen, EventArgs e)
         {
-            Cargar();
+            if (!AyudaFormularioVisual.EnModoDisenio(this)) Cargar();
         }
+
+        private void btnVolver_Click(object origen, EventArgs e) { Close(); }
+        private void buscador_TextChanged(object origen, EventArgs e) { AplicarFiltro(); }
+        private void filtroRutina_SelectedIndexChanged(object origen, EventArgs e)
+        {
+            if (!AyudaFormularioVisual.EnModoDisenio(this)) AplicarFiltro();
+        }
+        private void actualizar_Click(object origen, EventArgs e) { Cargar(socioSeleccionado == null ? (int?)null : socioSeleccionado.IdSocio); }
     }
 }

@@ -20,7 +20,7 @@ namespace exxen2._0.capaVisual.Administrador
         private Panel barraAcciones;
         private Label lblEstado;
         private Panel panelContenido;
-        private Panel contenedorContenido;
+        private TableLayoutPanel contenedorContenido;
         private Panel panelListado;
         private Label lblListado;
         private Label lblAyuda;
@@ -29,11 +29,12 @@ namespace exxen2._0.capaVisual.Administrador
         private Panel panelDetalle;
         private Panel contenedorDetalle;
         private Label lblFormulario;
-        private Panel contenedorCampos;
+        private TableLayoutPanel contenedorCampos;
         private Panel panelAcciones;
         private Label lblNombre;
         private Label lblApellido;
         private Label lblDni;
+        private Label lblFechaNacimiento;
         private Label lblNombreUsuario;
         private Label lblClave;
         private Label lblSalario;
@@ -41,6 +42,7 @@ namespace exxen2._0.capaVisual.Administrador
         private TextBox nombre;
         private TextBox apellido;
         private TextBox dni;
+        private DateTimePicker fechaNacimiento;
         private TextBox nombreUsuario;
         private TextBox clave;
         private TextBox salario;
@@ -82,7 +84,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.barraAcciones = new System.Windows.Forms.Panel();
             this.lblEstado = new System.Windows.Forms.Label();
             this.panelContenido = new System.Windows.Forms.Panel();
-            this.contenedorContenido = new System.Windows.Forms.Panel();
+            this.contenedorContenido = new System.Windows.Forms.TableLayoutPanel();
             this.panelListado = new System.Windows.Forms.Panel();
             this.tabla = new System.Windows.Forms.DataGridView();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -101,13 +103,15 @@ namespace exxen2._0.capaVisual.Administrador
             this.panelDetalle = new System.Windows.Forms.Panel();
             this.contenedorDetalle = new System.Windows.Forms.Panel();
             this.lblFormulario = new System.Windows.Forms.Label();
-            this.contenedorCampos = new System.Windows.Forms.Panel();
+            this.contenedorCampos = new System.Windows.Forms.TableLayoutPanel();
             this.lblNombre = new System.Windows.Forms.Label();
             this.nombre = new System.Windows.Forms.TextBox();
             this.lblApellido = new System.Windows.Forms.Label();
             this.apellido = new System.Windows.Forms.TextBox();
             this.lblDni = new System.Windows.Forms.Label();
             this.dni = new System.Windows.Forms.TextBox();
+            this.lblFechaNacimiento = new System.Windows.Forms.Label();
+            this.fechaNacimiento = new System.Windows.Forms.DateTimePicker();
             this.lblNombreUsuario = new System.Windows.Forms.Label();
             this.nombreUsuario = new System.Windows.Forms.TextBox();
             this.lblClave = new System.Windows.Forms.Label();
@@ -404,6 +408,8 @@ namespace exxen2._0.capaVisual.Administrador
             this.contenedorCampos.Controls.Add(this.apellido);
             this.contenedorCampos.Controls.Add(this.lblDni);
             this.contenedorCampos.Controls.Add(this.dni);
+            this.contenedorCampos.Controls.Add(this.lblFechaNacimiento);
+            this.contenedorCampos.Controls.Add(this.fechaNacimiento);
             this.contenedorCampos.Controls.Add(this.lblNombreUsuario);
             this.contenedorCampos.Controls.Add(this.nombreUsuario);
             this.contenedorCampos.Controls.Add(this.lblClave);
@@ -477,6 +483,20 @@ namespace exxen2._0.capaVisual.Administrador
 
             this.dni.TabIndex = 5;
             //
+            // lblFechaNacimiento
+            //
+            this.lblFechaNacimiento.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.lblFechaNacimiento.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.lblFechaNacimiento.Name = "lblFechaNacimiento";
+            this.lblFechaNacimiento.TabIndex = 6;
+            this.lblFechaNacimiento.Text = "Nacimiento:";
+            //
+            // fechaNacimiento
+            //
+            this.fechaNacimiento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.fechaNacimiento.Name = "fechaNacimiento";
+            this.fechaNacimiento.TabIndex = 7;
+            //
             // lblUsername
             //
 
@@ -485,7 +505,7 @@ namespace exxen2._0.capaVisual.Administrador
 
             this.lblNombreUsuario.Name = "lblNombreUsuario";
 
-            this.lblNombreUsuario.TabIndex = 6;
+            this.lblNombreUsuario.TabIndex = 8;
             this.lblNombreUsuario.Text = "Usuario:";
             //
             // username
@@ -495,7 +515,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.nombreUsuario.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.nombreUsuario.Name = "nombreUsuario";
 
-            this.nombreUsuario.TabIndex = 7;
+            this.nombreUsuario.TabIndex = 9;
             //
             // lblPassword
             //
@@ -505,8 +525,8 @@ namespace exxen2._0.capaVisual.Administrador
 
             this.lblClave.Name = "lblClave";
 
-            this.lblClave.TabIndex = 8;
-            this.lblClave.Text = "Contrasena:";
+            this.lblClave.TabIndex = 10;
+            this.lblClave.Text = "Contraseña:";
 
             //
             // password
@@ -516,7 +536,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.clave.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.clave.Name = "clave";
 
-            this.clave.TabIndex = 9;
+            this.clave.TabIndex = 11;
             this.clave.UseSystemPasswordChar = true;
             //
             // lblSalario
@@ -527,7 +547,7 @@ namespace exxen2._0.capaVisual.Administrador
 
             this.lblSalario.Name = "lblSalario";
 
-            this.lblSalario.TabIndex = 10;
+            this.lblSalario.TabIndex = 12;
             this.lblSalario.Text = "Salario:";
             //
             // salario
@@ -537,7 +557,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.salario.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.salario.Name = "salario";
 
-            this.salario.TabIndex = 11;
+            this.salario.TabIndex = 13;
             //
             // lblRol
             //
@@ -547,7 +567,7 @@ namespace exxen2._0.capaVisual.Administrador
 
             this.lblRol.Name = "lblRol";
 
-            this.lblRol.TabIndex = 12;
+            this.lblRol.TabIndex = 14;
             this.lblRol.Text = "Rol:";
             //
             // rol
@@ -558,7 +578,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.rol.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.rol.Name = "rol";
 
-            this.rol.TabIndex = 13;
+            this.rol.TabIndex = 15;
             //
             // panelAcciones
             //
@@ -637,7 +657,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.reactivar.Text = "Reactivar";
             this.reactivar.UseVisualStyleBackColor = false;
             //
-            // GestionUsuariosForm
+            // GestionUsuariosFormulario
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -758,27 +778,31 @@ namespace exxen2._0.capaVisual.Administrador
             this.panelEncabezado.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelEncabezado.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.panelEncabezado.Location = new System.Drawing.Point(0, 0);
-            this.panelEncabezado.Size = new System.Drawing.Size(1100, 84);
+            this.panelEncabezado.Size = new System.Drawing.Size(1100, 56);
             this.panelEncabezado.AutoScroll = false;
             this.lblTitulo.AutoSize = false;
             this.lblTitulo.Dock = System.Windows.Forms.DockStyle.None;
             this.lblTitulo.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.lblTitulo.Location = new System.Drawing.Point(22, 8);
-            this.lblTitulo.Size = new System.Drawing.Size(890, 36);
+            this.lblTitulo.Size = new System.Drawing.Size(890, 40);
+            this.lblTitulo.Text = "Usuarios y roles | Administración del personal y sus permisos";
+            this.lblTitulo.TextAlign = ContentAlignment.MiddleLeft;
             this.lblDescripcion.AutoSize = false;
             this.lblDescripcion.Dock = System.Windows.Forms.DockStyle.None;
             this.lblDescripcion.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.lblDescripcion.Location = new System.Drawing.Point(24, 48);
             this.lblDescripcion.Size = new System.Drawing.Size(890, 26);
+            this.lblDescripcion.Visible = false;
+            this.panelEncabezado.Visible = false;
             this.btnVolver.AutoSize = false;
             this.btnVolver.Dock = System.Windows.Forms.DockStyle.None;
             this.btnVolver.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            this.btnVolver.Location = new System.Drawing.Point(974, 24);
+            this.btnVolver.Location = new System.Drawing.Point(974, 10);
             this.btnVolver.Size = new System.Drawing.Size(104, 38);
             this.barraAcciones.AutoSize = false;
             this.barraAcciones.Dock = System.Windows.Forms.DockStyle.Top;
             this.barraAcciones.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.barraAcciones.Location = new System.Drawing.Point(0, 84);
+            this.barraAcciones.Location = new System.Drawing.Point(0, 56);
             this.barraAcciones.Size = new System.Drawing.Size(1100, 1);
             this.barraAcciones.AutoScroll = false;
             this.lblEstado.AutoSize = false;
@@ -793,14 +817,21 @@ namespace exxen2._0.capaVisual.Administrador
             this.panelContenido.Size = new System.Drawing.Size(1100, 565);
             this.panelContenido.AutoScroll = false;
             this.contenedorContenido.AutoSize = false;
-            this.contenedorContenido.Dock = System.Windows.Forms.DockStyle.None;
-            this.contenedorContenido.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.contenedorContenido.Location = new System.Drawing.Point(16, 16);
+            this.contenedorContenido.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.contenedorContenido.Location = new System.Drawing.Point(0, 0);
             this.contenedorContenido.Size = new System.Drawing.Size(1068, 533);
             this.contenedorContenido.AutoScroll = false;
+            this.contenedorContenido.ColumnCount = 2;
+            this.contenedorContenido.RowCount = 1;
+            this.contenedorContenido.ColumnStyles.Clear();
+            this.contenedorContenido.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 56F));
+            this.contenedorContenido.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 44F));
+            this.contenedorContenido.RowStyles.Clear();
+            this.contenedorContenido.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            this.contenedorContenido.SetColumn(this.panelListado, 0);
+            this.contenedorContenido.SetColumn(this.panelDetalle, 1);
             this.panelListado.AutoSize = false;
-            this.panelListado.Dock = System.Windows.Forms.DockStyle.None;
-            this.panelListado.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.panelListado.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelListado.Location = new System.Drawing.Point(0, 0);
             this.panelListado.Size = new System.Drawing.Size(656, 533);
             this.panelListado.AutoScroll = false;
@@ -826,15 +857,13 @@ namespace exxen2._0.capaVisual.Administrador
             this.panelFiltro.Size = new System.Drawing.Size(622, 42);
             this.panelFiltro.AutoScroll = false;
             this.panelDetalle.AutoSize = false;
-            this.panelDetalle.Dock = System.Windows.Forms.DockStyle.None;
-            this.panelDetalle.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
-            this.panelDetalle.Location = new System.Drawing.Point(672, 0);
+            this.panelDetalle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelDetalle.Location = new System.Drawing.Point(0, 0);
             this.panelDetalle.Size = new System.Drawing.Size(396, 533);
             this.panelDetalle.AutoScroll = true;
             this.contenedorDetalle.AutoSize = false;
-            this.contenedorDetalle.Dock = System.Windows.Forms.DockStyle.None;
-            this.contenedorDetalle.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.contenedorDetalle.Location = new System.Drawing.Point(16, 16);
+            this.contenedorDetalle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.contenedorDetalle.Location = new System.Drawing.Point(0, 0);
             this.contenedorDetalle.Size = new System.Drawing.Size(362, 476);
             this.contenedorDetalle.AutoScroll = false;
             this.lblFormulario.AutoSize = false;
@@ -844,15 +873,15 @@ namespace exxen2._0.capaVisual.Administrador
             this.lblFormulario.Size = new System.Drawing.Size(362, 32);
             this.contenedorCampos.AutoSize = false;
             this.contenedorCampos.Dock = System.Windows.Forms.DockStyle.None;
-            this.contenedorCampos.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.contenedorCampos.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.contenedorCampos.Location = new System.Drawing.Point(0, 42);
-            this.contenedorCampos.Size = new System.Drawing.Size(362, 310);
+            this.contenedorCampos.Size = new System.Drawing.Size(204, 304);
             this.contenedorCampos.AutoScroll = false;
             this.panelAcciones.AutoSize = false;
             this.panelAcciones.Dock = System.Windows.Forms.DockStyle.None;
             this.panelAcciones.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.panelAcciones.Location = new System.Drawing.Point(0, 368);
-            this.panelAcciones.Size = new System.Drawing.Size(362, 100);
+            this.panelAcciones.Location = new System.Drawing.Point(0, 354);
+            this.panelAcciones.Size = new System.Drawing.Size(360, 84);
             this.panelAcciones.AutoScroll = false;
             this.lblNombre.AutoSize = false;
             this.lblNombre.Dock = System.Windows.Forms.DockStyle.None;
@@ -872,22 +901,22 @@ namespace exxen2._0.capaVisual.Administrador
             this.lblNombreUsuario.AutoSize = false;
             this.lblNombreUsuario.Dock = System.Windows.Forms.DockStyle.None;
             this.lblNombreUsuario.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.lblNombreUsuario.Location = new System.Drawing.Point(0, 114);
+            this.lblNombreUsuario.Location = new System.Drawing.Point(0, 152);
             this.lblNombreUsuario.Size = new System.Drawing.Size(116, 30);
             this.lblClave.AutoSize = false;
             this.lblClave.Dock = System.Windows.Forms.DockStyle.None;
             this.lblClave.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.lblClave.Location = new System.Drawing.Point(0, 152);
+            this.lblClave.Location = new System.Drawing.Point(0, 190);
             this.lblClave.Size = new System.Drawing.Size(116, 30);
             this.lblSalario.AutoSize = false;
             this.lblSalario.Dock = System.Windows.Forms.DockStyle.None;
             this.lblSalario.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.lblSalario.Location = new System.Drawing.Point(0, 190);
+            this.lblSalario.Location = new System.Drawing.Point(0, 228);
             this.lblSalario.Size = new System.Drawing.Size(116, 30);
             this.lblRol.AutoSize = false;
             this.lblRol.Dock = System.Windows.Forms.DockStyle.None;
             this.lblRol.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.lblRol.Location = new System.Drawing.Point(0, 228);
+            this.lblRol.Location = new System.Drawing.Point(0, 266);
             this.lblRol.Size = new System.Drawing.Size(116, 30);
             this.nombre.AutoSize = false;
             this.nombre.Dock = System.Windows.Forms.DockStyle.None;
@@ -907,22 +936,22 @@ namespace exxen2._0.capaVisual.Administrador
             this.nombreUsuario.AutoSize = false;
             this.nombreUsuario.Dock = System.Windows.Forms.DockStyle.None;
             this.nombreUsuario.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.nombreUsuario.Location = new System.Drawing.Point(124, 118);
+            this.nombreUsuario.Location = new System.Drawing.Point(124, 156);
             this.nombreUsuario.Size = new System.Drawing.Size(222, 24);
             this.clave.AutoSize = false;
             this.clave.Dock = System.Windows.Forms.DockStyle.None;
             this.clave.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.clave.Location = new System.Drawing.Point(124, 156);
+            this.clave.Location = new System.Drawing.Point(124, 194);
             this.clave.Size = new System.Drawing.Size(222, 24);
             this.salario.AutoSize = false;
             this.salario.Dock = System.Windows.Forms.DockStyle.None;
             this.salario.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.salario.Location = new System.Drawing.Point(124, 194);
+            this.salario.Location = new System.Drawing.Point(124, 232);
             this.salario.Size = new System.Drawing.Size(222, 24);
             this.rol.AutoSize = false;
             this.rol.Dock = System.Windows.Forms.DockStyle.None;
             this.rol.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.rol.Location = new System.Drawing.Point(124, 234);
+            this.rol.Location = new System.Drawing.Point(124, 270);
             this.rol.Size = new System.Drawing.Size(222, 25);
             this.nuevo.AutoSize = false;
             this.nuevo.Dock = System.Windows.Forms.DockStyle.None;
@@ -974,16 +1003,17 @@ namespace exxen2._0.capaVisual.Administrador
             this.tabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.tabla.ColumnHeadersHeight = 46;
 
-            this.contenedorCampos.Size = new System.Drawing.Size(362, 310);
-            this.panelAcciones.Location = new System.Drawing.Point(0, 368);
-            this.contenedorDetalle.Size = new System.Drawing.Size(362, 476);
+            this.contenedorCampos.Size = new System.Drawing.Size(204, 304);
+            this.panelAcciones.Location = new System.Drawing.Point(0, 354);
+            this.panelAcciones.Size = new System.Drawing.Size(360, 84);
+            this.contenedorDetalle.Size = new System.Drawing.Size(360, 438);
             this.panelDetalle.Controls.Add(this.fotoUsuario);
             this.panelDetalle.Controls.Add(this.btnSeleccionarFoto);
             this.panelDetalle.Controls.Add(this.btnQuitarFoto);
             this.contenedorCampos.Controls.Add(this.lblSexo);
             this.contenedorCampos.Controls.Add(this.sexo);
             this.fotoUsuario.Name = "fotoUsuario";
-            this.fotoUsuario.Location = new System.Drawing.Point(16, 492);
+            this.fotoUsuario.Location = new System.Drawing.Point(220, 42);
             this.fotoUsuario.Size = new System.Drawing.Size(120, 120);
             this.fotoUsuario.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.fotoUsuario.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -992,27 +1022,59 @@ namespace exxen2._0.capaVisual.Administrador
             this.fotoUsuario.Disposed += new System.EventHandler(this.fotoUsuario_Disposed);
             this.btnSeleccionarFoto.Name = "btnSeleccionarFoto";
             this.btnSeleccionarFoto.Text = "Seleccionar foto";
-            this.btnSeleccionarFoto.Location = new System.Drawing.Point(152, 492);
-            this.btnSeleccionarFoto.Size = new System.Drawing.Size(180, 36);
+            this.btnSeleccionarFoto.Location = new System.Drawing.Point(220, 170);
+            this.btnSeleccionarFoto.Size = new System.Drawing.Size(120, 30);
             this.btnSeleccionarFoto.Click += new System.EventHandler(this.btnSeleccionarFoto_Click);
             this.btnQuitarFoto.Name = "btnQuitarFoto";
             this.btnQuitarFoto.Text = "Quitar foto";
-            this.btnQuitarFoto.Location = new System.Drawing.Point(152, 536);
-            this.btnQuitarFoto.Size = new System.Drawing.Size(180, 36);
+            this.btnQuitarFoto.Location = new System.Drawing.Point(220, 206);
+            this.btnQuitarFoto.Size = new System.Drawing.Size(120, 30);
             this.btnQuitarFoto.Click += new System.EventHandler(this.btnQuitarFoto_Click);
             this.lblSexo.Name = "lblSexo";
             this.lblSexo.Text = "Sexo:";
-            this.lblSexo.Location = new System.Drawing.Point(0, 272);
+            this.lblSexo.Location = new System.Drawing.Point(0, 310);
             this.lblSexo.Size = new System.Drawing.Size(116, 28);
             this.sexo.Name = "sexo";
-            this.sexo.Location = new System.Drawing.Point(124, 272);
+            this.sexo.Location = new System.Drawing.Point(124, 310);
             this.sexo.Size = new System.Drawing.Size(222, 28);
             this.sexo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.sexo.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.sexo.Items.AddRange(new object[] { "Masculino", "Femenino" });
             this.sexo.SelectedIndex = -1;
             this.sexo.TabIndex = 7;
+            this.contenedorCampos.Controls.Clear();
+            this.contenedorCampos.ColumnCount = 2;
+            this.contenedorCampos.RowCount = 9;
+            this.contenedorCampos.ColumnStyles.Clear();
+            this.contenedorCampos.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 76F));
+            this.contenedorCampos.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            this.contenedorCampos.RowStyles.Clear();
+            for (var filaCampo = 0; filaCampo < 9; filaCampo++)
+                this.contenedorCampos.RowStyles.Add(new RowStyle(SizeType.Percent, 11.1111F));
+            var etiquetasCampos = new Control[] { this.lblNombre, this.lblApellido, this.lblDni, this.lblFechaNacimiento, this.lblNombreUsuario, this.lblClave, this.lblSalario, this.lblRol, this.lblSexo };
+            var controlesCampos = new Control[] { this.nombre, this.apellido, this.dni, this.fechaNacimiento, this.nombreUsuario, this.clave, this.salario, this.rol, this.sexo };
+            for (var indiceCampo = 0; indiceCampo < etiquetasCampos.Length; indiceCampo++)
+            {
+                etiquetasCampos[indiceCampo].Dock = DockStyle.Fill;
+                controlesCampos[indiceCampo].Dock = DockStyle.Fill;
+                controlesCampos[indiceCampo].Margin = new Padding(0, 2, 0, 2);
+                this.contenedorCampos.Controls.Add(etiquetasCampos[indiceCampo], 0, indiceCampo);
+                this.contenedorCampos.Controls.Add(controlesCampos[indiceCampo], 1, indiceCampo);
+            }
             this.sexo.SelectedIndexChanged += new System.EventHandler(this.sexo_SelectedIndexChanged);
+            this.lblFechaNacimiento.AutoSize = false;
+            this.lblFechaNacimiento.Location = new System.Drawing.Point(0, 114);
+            this.lblFechaNacimiento.Size = new System.Drawing.Size(116, 30);
+            this.fechaNacimiento.AutoSize = false;
+            this.fechaNacimiento.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.fechaNacimiento.Location = new System.Drawing.Point(124, 118);
+            this.fechaNacimiento.Size = new System.Drawing.Size(222, 24);
+            this.fechaNacimiento.ShowCheckBox = false;
+            this.nombre.MaxLength = 100;
+            this.apellido.MaxLength = 100;
+            this.dni.MaxLength = 20;
+            this.nombreUsuario.MaxLength = 50;
+            this.clave.MaxLength = 500;
             ((System.ComponentModel.ISupportInitialize)(this.fotoUsuario)).EndInit();
 
             this.panelEncabezado.ResumeLayout(false);
@@ -1043,6 +1105,9 @@ namespace exxen2._0.capaVisual.Administrador
             this.actualizar.Click += new System.EventHandler(this.actualizar_Click);
             this.darDeBaja.Click += new System.EventHandler(this.darDeBaja_Click);
             this.reactivar.Click += new System.EventHandler(this.reactivar_Click);
+            this.nombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nombre_KeyPress);
+            this.apellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.apellido_KeyPress);
+            this.dni.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dni_KeyPress);
                     this.salario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.salario_KeyPress);
         }
 

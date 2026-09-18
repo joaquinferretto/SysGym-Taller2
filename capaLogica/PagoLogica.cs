@@ -163,9 +163,10 @@ namespace exxen2._0.capaLogica
                     cuota.Pago = pago;
                     CuotaMembresiaLogica.RecalcularEstadoPagoEnContexto(datos, cuota);
                     datos.GuardarCambios();
-                    MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(datos, cuota.IdMembresia);
                 }
 
+                foreach (var idMembresia in cuotas.Select(c => c.IdMembresia).Distinct())
+                    MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(datos, idMembresia);
                 datos.GuardarCambios();
                 transaccion.Confirmar();
             }

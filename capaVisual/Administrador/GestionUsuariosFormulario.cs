@@ -21,11 +21,14 @@ namespace exxen2._0.capaVisual.Administrador
         private int idSeleccionado;
         private bool cargandoTabla;
         private bool estadoSeleccionado = true;
-        private byte[] fotoSeleccionada;
+        private ImagenSeleccionada fotoSeleccionada;
+        private string fotoRutaSeleccionada;
         /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
         public GestionUsuariosFormulario()
         {
             InitializeComponent();
+            fechaNacimiento.MaxDate = DateTime.Today.AddYears(-18);
+            fechaNacimiento.Value = fechaNacimiento.MaxDate;
         }
 
         /* Carga los roles activos disponibles para crear o modificar personal. */
@@ -95,12 +98,14 @@ namespace exxen2._0.capaVisual.Administrador
                 if (usuario == null)
                     return;
                 estadoSeleccionado = usuario.Estado;
-                fotoSeleccionada = usuario.Foto;
+                fotoSeleccionada = null;
+                fotoRutaSeleccionada = usuario.FotoRuta;
                 sexo.SelectedIndex = usuario.Sexo == "M" ? 0 : usuario.Sexo == "F" ? 1 : -1;
-                AyudaFormularioVisual.MostrarFoto(fotoUsuario, fotoSeleccionada, usuario.Sexo);
+                AyudaFormularioVisual.MostrarFotoRuta(fotoUsuario, fotoRutaSeleccionada, usuario.Sexo);
                 nombre.Text = usuario.Nombre;
                 apellido.Text = usuario.Apellido;
                 dni.Text = usuario.DNI;
+                fechaNacimiento.Value = usuario.FechaNacimiento ?? fechaNacimiento.MaxDate;
                 nombreUsuario.Text = usuario.NombreUsuario;
                 clave.Clear();
                 salario.Text = usuario.Salario.ToString("0.00", CultureInfo.CurrentCulture);
@@ -120,11 +125,13 @@ namespace exxen2._0.capaVisual.Administrador
             idSeleccionado = 0;
             estadoSeleccionado = true;
             fotoSeleccionada = null;
+            fotoRutaSeleccionada = null;
             sexo.SelectedIndex = -1;
             AyudaFormularioVisual.MostrarFoto(fotoUsuario, null, null);
             nombre.Clear();
             apellido.Clear();
             dni.Clear();
+            fechaNacimiento.Value = fechaNacimiento.MaxDate;
             nombreUsuario.Clear();
             clave.Clear();
             salario.Clear();
@@ -156,11 +163,12 @@ namespace exxen2._0.capaVisual.Administrador
                 Nombre = nombre.Text.Trim(),
                 Apellido = apellido.Text.Trim(),
                 DNI = dni.Text.Trim(),
+                FechaNacimiento = fechaNacimiento.Value.Date,
                 NombreUsuario = nombreUsuario.Text.Trim(),
                 Salario = AyudaFormularioVisual.DecimalPositivo(salario, "salario"),
                 IdRol = Convert.ToInt32(rol.SelectedValue),
                 Estado = estadoSeleccionado,
-                Foto = fotoSeleccionada,
+                FotoRuta = fotoRutaSeleccionada,
                 Sexo = SexoSeleccionado()
             };
         }
@@ -172,14 +180,21 @@ namespace exxen2._0.capaVisual.Administrador
             {
                 if (idSeleccionado != 0)
                     return;
-                logica.Crear(LeerUsuario(), clave.Text);
+                logica.Crear(LeerUsuario(), clave.Text, fotoSeleccionada == null ? null : fotoSeleccionada.Contenido, fotoSeleccionada == null ? null : fotoSeleccionada.Extension);
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
-                AyudaFormularioVisual.MostrarExito(lblEstado, "Usuario creado correctamente.");
+                AyudaFormularioVisual.MostrarExito(lblEstado, "Usuario creado correctamente.", true);
+                MessageBox.Show("Usuario creado correctamente.", "Usuarios", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                AyudaFormularioVisual.MostrarError(lblEstado, ex);
+                var mensaje = ex is InvalidOperationException || ex is ArgumentException
+                    ? ex.Message
+                    : "No se pudo crear el usuario.";
+                lblEstado.Text = mensaje;
+                lblEstado.ForeColor = Color.Red;
+                lblEstado.Visible = true;
+                MessageBox.Show(mensaje, "Usuarios", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -190,7 +205,7 @@ namespace exxen2._0.capaVisual.Administrador
             {
                 if (idSeleccionado == 0)
                     throw new InvalidOperationException("Selecciona un usuario.");
-                logica.Modificar(LeerUsuario(), clave.Text);
+                logica.Modificar(LeerUsuario(), clave.Text, fotoSeleccionada == null ? null : fotoSeleccionada.Contenido, fotoSeleccionada == null ? null : fotoSeleccionada.Extension);
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Usuario actualizado correctamente.");
@@ -286,6 +301,24 @@ namespace exxen2._0.capaVisual.Administrador
             AyudaFormularioVisual.ValidarEntradaDecimal(salario, e);
         }
 
+        /* Al escribir el nombre, bloquea caracteres que no pertenecen a un nombre humano. */
+        private void nombre_KeyPress(object origen, KeyPressEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarEntradaNombre(e);
+        }
+
+        /* Al escribir el apellido, bloquea números y símbolos no permitidos. */
+        private void apellido_KeyPress(object origen, KeyPressEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarEntradaNombre(e);
+        }
+
+        /* Al escribir el DNI, permite únicamente dígitos y teclas de control. */
+        private void dni_KeyPress(object origen, KeyPressEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarEntradaDni(e);
+        }
+
         /* Devuelve el código del sexo seleccionado sin inventar un valor para registros sin selección. */
         private string SexoSeleccionado()
         {
@@ -297,11 +330,11 @@ namespace exxen2._0.capaVisual.Administrador
         {
             try
             {
-                var contenido = AyudaFormularioVisual.SeleccionarFoto(this, SexoSeleccionado());
-                if (contenido == null)
+                var seleccion = AyudaFormularioVisual.SeleccionarImagen(this, SexoSeleccionado());
+                if (seleccion == null)
                     return;
-                AyudaFormularioVisual.MostrarFoto(fotoUsuario, contenido, SexoSeleccionado());
-                fotoSeleccionada = contenido;
+                AyudaFormularioVisual.MostrarFoto(fotoUsuario, seleccion.Contenido, SexoSeleccionado());
+                fotoSeleccionada = seleccion;
             }
             catch (Exception ex)
             {
@@ -313,6 +346,7 @@ namespace exxen2._0.capaVisual.Administrador
         private void btnQuitarFoto_Click(object origen, EventArgs e)
         {
             fotoSeleccionada = null;
+            fotoRutaSeleccionada = null;
             sexo_SelectedIndexChanged(origen, e);
         }
 
@@ -323,7 +357,7 @@ namespace exxen2._0.capaVisual.Administrador
                 return;
             try
             {
-                AyudaFormularioVisual.MostrarFoto(fotoUsuario, null, SexoSeleccionado());
+                AyudaFormularioVisual.MostrarFotoRuta(fotoUsuario, fotoRutaSeleccionada, SexoSeleccionado());
             }
             catch (Exception ex)
             {

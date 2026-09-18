@@ -39,6 +39,7 @@
     </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -79,11 +80,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="capaDatos\Conexion.cs" />
     <Compile Include="capaDatos\Contexto\ContextoGimnasio.cs" />
     <Compile Include="capaDatos\Repositorios\UnidadDeTrabajoGimnasio.cs" />
-    <Compile Include="capaDatos\Entidades\Asistencia.cs" />
     <Compile Include="capaDatos\Entidades\Ejercicio.cs" />
+    <Compile Include="capaDatos\Entidades\EjercicioImagen.cs" />
     <Compile Include="capaDatos\Entidades\CuotaMembresia.cs" />
     <Compile Include="capaDatos\Entidades\EstadosCuota.cs" />
     <Compile Include="capaDatos\Entidades\EstadosTransaccionPago.cs" />
@@ -97,15 +97,13 @@
     <Compile Include="capaDatos\Entidades\Divisa.cs" />
     <Compile Include="capaDatos\Entidades\Rol.cs" />
     <Compile Include="capaDatos\Entidades\Rutina.cs" />
-    <Compile Include="capaDatos\Entidades\RutinaAsignacion.cs" />
     <Compile Include="capaDatos\Entidades\RutinaEjercicio.cs" />
     <Compile Include="capaDatos\Entidades\Socio.cs" />
     <Compile Include="capaDatos\Entidades\UsuarioSistema.cs" />
-    <Compile Include="capaLogica\ClienteLogica.cs" />
     <Compile Include="capaLogica\ClimaLogica.cs" />
-    <Compile Include="capaLogica\AsistenciaLogica.cs" />
     <Compile Include="capaLogica\CuotaMembresiaLogica.cs" />
     <Compile Include="capaLogica\EjercicioLogica.cs" />
+    <Compile Include="capaLogica\EjercicioImagenLogica.cs" />
     <Compile Include="capaLogica\MembresiaEntrenadorLogica.cs" />
     <Compile Include="capaLogica\MembresiaLogica.cs" />
     <Compile Include="capaLogica\PagoLogica.cs" />
@@ -113,10 +111,10 @@
     <Compile Include="capaLogica\RolLogica.cs" />
     <Compile Include="capaLogica\RutinaEjercicioLogica.cs" />
     <Compile Include="capaLogica\RutinaLogica.cs" />
-    <Compile Include="capaLogica\RutinaAsignacionLogica.cs" />
     <Compile Include="capaLogica\SocioLogica.cs" />
     <Compile Include="capaLogica\UsuarioSistemaLogica.cs" />
     <Compile Include="capaLogica\ValidacionesGimnasio.cs" />
+    <Compile Include="capaLogica\AlmacenamientoImagenes.cs" />
     <Compile Include="capaVisual\Autenticacion\InicioSesion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -143,12 +141,6 @@
     </Compile>
     <Compile Include="capaVisual\Compartido\GestionEjerciciosFormulario.Designer.cs">
       <DependentUpon>GestionEjerciciosFormulario.cs</DependentUpon>
-    </Compile>
-    <Compile Include="capaVisual\Compartido\GestionAsistenciasFormulario.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="capaVisual\Compartido\GestionAsistenciasFormulario.Designer.cs">
-      <DependentUpon>GestionAsistenciasFormulario.cs</DependentUpon>
     </Compile>
     <Compile Include="capaVisual\Administrador\PanelAdministrador.cs">
       <SubType>Form</SubType>
@@ -271,6 +263,9 @@
       <DependentUpon>InicioSesion.cs</DependentUpon>
 >>>>>>> 78ccd0668652e077ea651b364f4e40d5befd5b00
     </EmbeddedResource>
+    <EmbeddedResource Include="capaVisual\Compartido\GestionEjerciciosFormulario.resx">
+      <DependentUpon>GestionEjerciciosFormulario.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -297,7 +292,6 @@
     <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="Konscious.Security.Cryptography.Argon2" Version="1.3.1" />
     <None Include="capaDatos\Database\SysGymDB.sql" />
-    <None Include="capaDatos\Database\SysGymDB_MigracionExistente.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

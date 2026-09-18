@@ -44,7 +44,7 @@ namespace exxen2._0.capaLogica
             /* Indica la ciudad para la que se solicita el pronóstico configurado. */
             get
             {
-                return "Corrientes, Corrientes";
+                return "Corrientes Capital";
             }
         }
 

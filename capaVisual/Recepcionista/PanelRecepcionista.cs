@@ -15,7 +15,6 @@ namespace exxen2._0.capaVisual.Recepcionista
         private bool clientesExpandida = true;
         private bool cajaExpandida;
         private bool entrenadoresExpandida;
-        private bool controlExpandida;
         [System.ComponentModel.Browsable(false)]
         [System.ComponentModel.DesignerSerializationVisibility(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         public bool CambioCuentaSolicitado
@@ -39,7 +38,7 @@ namespace exxen2._0.capaVisual.Recepcionista
                 throw new ArgumentNullException("usuario");
             this.usuario = usuario;
             InitializeComponent();
-            navegacion = new ControladorNavegacion(this, panelContenido);
+            navegacion = new ControladorNavegacion(this, panelContenido, EstablecerModuloActual);
         }
 
         /* Configura las secciones del menú lateral para que puedan expandirse y contraerse. */
@@ -48,7 +47,6 @@ namespace exxen2._0.capaVisual.Recepcionista
             lblClientes.Click += clientes_Click;
             lblCaja.Click += caja_Click;
             lblEntrenadores.Click += entrenadores_Click;
-            lblControl.Click += control_Click;
             AplicarMenuDesplegable();
         }
 
@@ -59,7 +57,6 @@ namespace exxen2._0.capaVisual.Recepcionista
             posicionY = MenuDesplegableHelper.ColocarSeccion(lblClientes, clientesExpandida, posicionY, btnSocios, btnMembresias);
             posicionY = MenuDesplegableHelper.ColocarSeccion(lblCaja, cajaExpandida, posicionY, btnPagos);
             posicionY = MenuDesplegableHelper.ColocarSeccion(lblEntrenadores, entrenadoresExpandida, posicionY, btnAsignar, btnConsultar);
-            posicionY = MenuDesplegableHelper.ColocarSeccion(lblControl, controlExpandida, posicionY, btnAsistencias);
             panelOpciones.AutoScrollMinSize = new Size(0, posicionY);
         }
 
@@ -84,13 +81,6 @@ namespace exxen2._0.capaVisual.Recepcionista
             AplicarMenuDesplegable();
         }
 
-        /* Al hacer clic en control de acceso, muestra u oculta sus opciones. */
-        private void control_Click(object origen, EventArgs e)
-        {
-            controlExpandida = !controlExpandida;
-            AplicarMenuDesplegable();
-        }
-
         /* Obtiene la descripción del rol o utiliza el nombre predeterminado cuando no está disponible. */
         private static string NombreRol(UsuarioSistema usuarioActual, string predeterminado)
         {
@@ -98,6 +88,11 @@ namespace exxen2._0.capaVisual.Recepcionista
         }
 
         /* Al hacer clic en btnCambiarCuenta, cierra la sesión para volver al acceso. */
+        private void EstablecerModuloActual(string titulo)
+        {
+            lblModuloActual.Text = titulo ?? string.Empty;
+        }
+
         private void btnCambiarCuenta_Click(object origen, EventArgs e)
         {
             navegacion.CambiarCuenta();
@@ -112,37 +107,31 @@ namespace exxen2._0.capaVisual.Recepcionista
         /* Al hacer clic en btnSocios, abre el módulo correspondiente dentro del panel principal. */
         private void btnSocios_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new GestionSociosFormulario(Color.FromArgb(5, 150, 105)));
+            navegacion.AbrirFormulario(new GestionSociosFormulario(Color.FromArgb(5, 150, 105)), "Socios | Gestión de socios e información personal");
         }
 
         /* Al hacer clic en btnMembresias, abre el módulo correspondiente dentro del panel principal. */
         private void btnMembresias_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new GestionMembresiasFormulario(usuario));
+            navegacion.AbrirFormulario(new GestionMembresiasFormulario(usuario), "Membresías | Gestión de membresías de socios");
         }
 
         /* Al hacer clic en btnPagos, abre el módulo correspondiente dentro del panel principal. */
         private void btnPagos_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new GestionPagosFormulario());
+            navegacion.AbrirFormulario(new GestionPagosFormulario(), "Cuotas y pagos | Gestión de cuotas y pagos");
         }
 
         /* Al hacer clic en btnAsignar, abre el módulo correspondiente dentro del panel principal. */
         private void btnAsignar_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new GestionAsignacionesFormulario());
+            navegacion.AbrirFormulario(new GestionAsignacionesFormulario(), "Asignar entrenador | Vinculación de entrenadores y membresías");
         }
 
         /* Al hacer clic en btnConsultar, abre el módulo correspondiente dentro del panel principal. */
         private void btnConsultar_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new GestionAsignacionesFormulario());
-        }
-
-        /* Al hacer clic en btnAsistencias, abre el módulo correspondiente dentro del panel principal. */
-        private void btnAsistencias_Click(object origen, EventArgs e)
-        {
-            navegacion.AbrirFormulario(new GestionAsistenciasFormulario(Color.FromArgb(5, 150, 105)));
+            navegacion.AbrirFormulario(new GestionAsignacionesFormulario(), "Asignar entrenador | Vinculación de entrenadores y membresías");
         }
 
         /* Al cargar la pantalla en ejecución, prepara sus datos iniciales sin realizar consultas desde el diseñador. */

@@ -8,6 +8,8 @@
 # Build output
 bin/
 obj/
+.codegraph
+.codegraph/
 
 # Local Codex documentation
 #AGENTS.md

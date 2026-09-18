@@ -10,6 +10,7 @@ namespace exxen2._0.capaDatos.Entidades
         public Ejercicio()
         {
             Rutinas = new HashSet<RutinaEjercicio>();
+            EjercicioImagenes = new HashSet<EjercicioImagen>();
             Estado = true;
         }
 
@@ -24,5 +25,6 @@ namespace exxen2._0.capaDatos.Entidades
         public string Descripcion { get; set; }
         public bool Estado { get; set; }
         public virtual ICollection<RutinaEjercicio> Rutinas { get; set; }
+        public virtual ICollection<EjercicioImagen> EjercicioImagenes { get; set; }
     }
 }

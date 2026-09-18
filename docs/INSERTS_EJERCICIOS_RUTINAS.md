@@ -5,11 +5,11 @@
 -- Todo el texto explicativo esta comentado para poder ejecutarlo completo.
 --
 -- Las plantillas son reutilizables: no pertenecen a un socio.
--- Si @DniSocio tiene una membresia activa, tambien se asignan a ese socio.
--- Cambiar @UsernameEntrenador y @DniSocio antes de ejecutar si corresponde.
+-- Si @DniSocio tiene una membresia activa, se asigna @NombreRutinaAsignada.
+-- Cambiar @UsernameEntrenador, @DniSocio y @NombreRutinaAsignada si corresponde.
 
-/* Ultima actualizacion: 9 de septiembre de 2026.
-   La asignacion opcional respeta el catalogo PlanRutina del plan de la membresia. */
+/* Ultima actualizacion: 16 de septiembre de 2026.
+   La membresia guarda una sola rutina mediante IdRutina. */
 USE SysGymDB;
 GO
 
@@ -18,6 +18,7 @@ SET XACT_ABORT ON;
 
 DECLARE @DniSocio NVARCHAR(20) = N'44213011';
 DECLARE @UsernameEntrenador NVARCHAR(50) = N'entrenador';
+DECLARE @NombreRutinaAsignada NVARCHAR(100) = N'Hipertrofia 1';
 DECLARE @IdSocio INT;
 DECLARE @IdEntrenador INT;
 DECLARE @IdMembresia INT;
@@ -168,25 +169,16 @@ BEGIN TRY
         WHERE re.IdRutina = r.IdRutina AND re.IdEjercicio = e.IdEjercicio AND re.Estado = 1
     );
 
-    -- Asignacion opcional de todas las plantillas a la membresia activa indicada.
+    -- Asignacion opcional de una plantilla a la membresia activa indicada.
     IF @IdMembresia IS NOT NULL
     BEGIN
-        INSERT INTO RutinaAsignacion
-            (FechaAsignacion, FechaFin, Estado, IdRutina, IdMembresia)
-        SELECT SYSDATETIME(), NULL, 1, r.IdRutina, @IdMembresia
-        FROM @Rutinas AS x
-        INNER JOIN Rutina AS r ON r.Nombre = x.Nombre AND r.IdEntrenador = @IdEntrenador
-        WHERE NOT EXISTS
-        (
-            SELECT 1 FROM RutinaAsignacion AS ra
-            WHERE ra.IdRutina = r.IdRutina AND ra.IdMembresia = @IdMembresia AND ra.Estado = 1
-        )
-        AND EXISTS
-        (
-            SELECT 1 FROM PlanRutina pr
-            INNER JOIN Membresia m ON m.IdPlan = pr.IdPlan
-            WHERE m.IdMembresia = @IdMembresia AND pr.IdRutina = r.IdRutina
-        );
+        UPDATE m
+        SET IdRutina = r.IdRutina
+        FROM Membresia AS m
+        INNER JOIN Rutina AS r
+            ON r.Nombre = @NombreRutinaAsignada
+           AND r.IdEntrenador = @IdEntrenador
+        WHERE m.IdMembresia = @IdMembresia;
     END;
 
     COMMIT TRANSACTION;
@@ -196,11 +188,11 @@ BEGIN CATCH
     THROW;
 END CATCH;
 
--- Resumen: una fila por plantilla con su cantidad de socios asignados.
+-- Resumen: una fila por plantilla con su cantidad de membresias asociadas.
 SELECT r.IdRutina, r.Nombre, r.Descripcion,
-       COUNT(CASE WHEN ra.Estado = 1 THEN 1 END) AS SociosAsignados
+       COUNT(m.IdMembresia) AS MembresiasAsignadas
 FROM Rutina AS r
-LEFT JOIN RutinaAsignacion AS ra ON ra.IdRutina = r.IdRutina
+LEFT JOIN Membresia AS m ON m.IdRutina = r.IdRutina
 WHERE r.IdEntrenador = @IdEntrenador
   AND r.Nombre IN (N'Comienzo 1', N'Hipertrofia 1', N'Hipertrofia 2', N'Fuerza', N'Powerlifting', N'Cardio')
 GROUP BY r.IdRutina, r.Nombre, r.Descripcion

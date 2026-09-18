@@ -21,6 +21,8 @@ namespace exxen2._0.capaVisual.Compartido
         private bool estadoSeleccionado = true;
         private readonly Color colorPrimario;
         private byte[] fotoSeleccionada;
+        private string extensionFotoSeleccionada;
+        private string fotoRutaSeleccionada;
         private readonly int idSocioInicial;
         /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
         public GestionSociosFormulario() : this(Color.FromArgb(79, 70, 229))
@@ -33,12 +35,13 @@ namespace exxen2._0.capaVisual.Compartido
             this.permitirEdicion = permitirEdicion;
             this.colorPrimario = colorPrimario;
             InitializeComponent();
+            fechaNacimiento.MaxDate = DateTime.Today.AddYears(-13);
+            fechaNacimiento.Value = fechaNacimiento.MaxDate;
             if (!permitirEdicion)
             {
                 nuevo.Visible = false;
                 guardar.Visible = false;
                 actualizar.Visible = false;
-                darDeBaja.Visible = false;
                 nombre.ReadOnly = true;
                 apellido.ReadOnly = true;
                 dni.ReadOnly = true;
@@ -119,9 +122,11 @@ namespace exxen2._0.capaVisual.Compartido
                 if (socio == null)
                     return;
                 estadoSeleccionado = socio.Estado;
-                fotoSeleccionada = socio.Foto;
+                fotoSeleccionada = null;
+                extensionFotoSeleccionada = null;
+                fotoRutaSeleccionada = socio.FotoRuta;
                 sexo.SelectedIndex = socio.Sexo == "M" ? 0 : socio.Sexo == "F" ? 1 : -1;
-                AyudaFormularioVisual.MostrarFoto(fotoSocio, fotoSeleccionada, socio.Sexo);
+                AyudaFormularioVisual.MostrarFotoRuta(fotoSocio, fotoRutaSeleccionada, socio.Sexo);
                 nombre.Text = socio.Nombre;
                 apellido.Text = socio.Apellido;
                 dni.Text = socio.DNI;
@@ -145,15 +150,17 @@ namespace exxen2._0.capaVisual.Compartido
             idSeleccionado = 0;
             estadoSeleccionado = true;
             fotoSeleccionada = null;
+            extensionFotoSeleccionada = null;
+            fotoRutaSeleccionada = null;
             sexo.SelectedIndex = -1;
-            AyudaFormularioVisual.MostrarFoto(fotoSocio, null, null);
+            AyudaFormularioVisual.MostrarFotoRuta(fotoSocio, null, null);
             nombre.Clear();
             apellido.Clear();
             dni.Clear();
             peso.Clear();
             altura.Clear();
-            fechaNacimiento.Value = DateTime.Today.AddYears(-18);
-            fechaNacimiento.Checked = false;
+            fechaNacimiento.Value = fechaNacimiento.MaxDate;
+            fechaNacimiento.Checked = true;
             tabla.ClearSelection();
             EstablecerModo(true, true);
             if (permitirEdicion)
@@ -166,8 +173,6 @@ namespace exxen2._0.capaVisual.Compartido
             lblFormulario.Text = nuevoRegistro ? "Nuevo socio - Estado inicial: Activo" : "Editar socio";
             guardar.Enabled = permitirEdicion && nuevoRegistro;
             actualizar.Enabled = permitirEdicion && !nuevoRegistro;
-            darDeBaja.Enabled = permitirEdicion && !nuevoRegistro && activo;
-            reactivar.Enabled = permitirEdicion && !nuevoRegistro && !activo;
         }
 
         /* Selecciona en la grilla el socio solicitado por una pantalla de origen. */
@@ -197,8 +202,7 @@ namespace exxen2._0.capaVisual.Compartido
                 FechaNacimiento = fechaNacimiento.Checked ? (DateTime? )fechaNacimiento.Value.Date : null,
                 Peso = string.IsNullOrWhiteSpace(peso.Text) ? (decimal? )null : AyudaFormularioVisual.DecimalPositivo(peso, "peso"),
                 Altura = string.IsNullOrWhiteSpace(altura.Text) ? (decimal? )null : AyudaFormularioVisual.DecimalPositivo(altura, "altura"),
-                Estado = estadoSeleccionado,
-                Foto = fotoSeleccionada,
+                FotoRuta = fotoRutaSeleccionada,
                 Sexo = SexoSeleccionado()
             };
         }
@@ -210,14 +214,14 @@ namespace exxen2._0.capaVisual.Compartido
             {
                 if (!permitirEdicion || idSeleccionado != 0)
                     return;
-                logica.Crear(LeerSocio());
+                logica.Crear(LeerSocio(), fotoSeleccionada, extensionFotoSeleccionada);
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
-                AyudaFormularioVisual.MostrarExito(lblEstado, "Socio creado correctamente.");
+                AyudaFormularioVisual.MostrarExito(lblEstado, "Socio creado correctamente.", true);
             }
             catch (Exception ex)
             {
-                AyudaFormularioVisual.MostrarError(lblEstado, ex);
+                AyudaFormularioVisual.MostrarError(lblEstado, ex, true);
             }
         }
 
@@ -228,48 +232,10 @@ namespace exxen2._0.capaVisual.Compartido
             {
                 if (!permitirEdicion || idSeleccionado == 0)
                     throw new InvalidOperationException("Selecciona un socio.");
-                logica.Modificar(LeerSocio());
+                logica.Modificar(LeerSocio(), fotoSeleccionada, extensionFotoSeleccionada);
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Socio actualizado correctamente.");
-            }
-            catch (Exception ex)
-            {
-                AyudaFormularioVisual.MostrarError(lblEstado, ex);
-            }
-        }
-
-        /* Al hacer clic en darDeBaja, solicita la baja lógica del registro seleccionado y actualiza el listado. */
-        private void darDeBaja_Click(object origen, EventArgs e)
-        {
-            try
-            {
-                if (!permitirEdicion || idSeleccionado == 0)
-                    throw new InvalidOperationException("Selecciona un socio.");
-                if (MessageBox.Show("Dar de baja al socio seleccionado?", "Confirmar baja", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
-                    return;
-                logica.DarDeBaja(idSeleccionado);
-                Cargar();
-                nuevo_Click(null, EventArgs.Empty);
-                AyudaFormularioVisual.MostrarExito(lblEstado, "Socio dado de baja.");
-            }
-            catch (Exception ex)
-            {
-                AyudaFormularioVisual.MostrarError(lblEstado, ex);
-            }
-        }
-
-        /* Al hacer clic en reactivar, solicita la reactivación del registro seleccionado y actualiza el listado. */
-        private void reactivar_Click(object origen, EventArgs e)
-        {
-            try
-            {
-                if (!permitirEdicion || idSeleccionado == 0)
-                    throw new InvalidOperationException("Selecciona un socio.");
-                logica.Reactivar(idSeleccionado);
-                Cargar();
-                nuevo_Click(null, EventArgs.Empty);
-                AyudaFormularioVisual.MostrarExito(lblEstado, "Socio reactivado correctamente.");
             }
             catch (Exception ex)
             {
@@ -360,22 +326,42 @@ namespace exxen2._0.capaVisual.Compartido
             AyudaFormularioVisual.ValidarEntradaDecimal(altura, e);
         }
 
+        /* Al escribir el nombre, bloquea caracteres que no pertenecen a un nombre humano. */
+        private void nombre_KeyPress(object origen, KeyPressEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarEntradaNombre(e);
+        }
+
+        /* Al escribir el apellido, bloquea números y símbolos no permitidos. */
+        private void apellido_KeyPress(object origen, KeyPressEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarEntradaNombre(e);
+        }
+
+        /* Al escribir el DNI, permite únicamente dígitos y teclas de control. */
+        private void dni_KeyPress(object origen, KeyPressEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarEntradaDni(e);
+        }
+
         /* Devuelve el código del sexo seleccionado sin inventar un valor para registros sin selección. */
         private string SexoSeleccionado()
         {
             return sexo.SelectedIndex == 0 ? "M" : sexo.SelectedIndex == 1 ? "F" : null;
         }
 
-        /* Al elegir una foto, valida el archivo y actualiza la vista antes de aceptar sus bytes. */
+        /* Al elegir una foto, conserva los bytes solo hasta guardar y muestra una vista independiente. */
         private void btnSeleccionarFoto_Click(object origen, EventArgs e)
         {
             try
             {
-                var contenido = AyudaFormularioVisual.SeleccionarFoto(this, SexoSeleccionado());
-                if (contenido == null)
+                var seleccion = AyudaFormularioVisual.SeleccionarImagen(this, SexoSeleccionado());
+                if (seleccion == null)
                     return;
-                AyudaFormularioVisual.MostrarFoto(fotoSocio, contenido, SexoSeleccionado());
-                fotoSeleccionada = contenido;
+                AyudaFormularioVisual.MostrarFoto(fotoSocio, seleccion.Contenido, SexoSeleccionado());
+                fotoSeleccionada = seleccion.Contenido;
+                extensionFotoSeleccionada = seleccion.Extension;
+                fotoRutaSeleccionada = null;
             }
             catch (Exception ex)
             {
@@ -387,17 +373,19 @@ namespace exxen2._0.capaVisual.Compartido
         private void btnQuitarFoto_Click(object origen, EventArgs e)
         {
             fotoSeleccionada = null;
+            extensionFotoSeleccionada = null;
+            fotoRutaSeleccionada = null;
             sexo_SelectedIndexChanged(origen, e);
         }
 
         /* Al cambiar el sexo sin foto propia, actualiza el avatar de la vista previa. */
         private void sexo_SelectedIndexChanged(object origen, EventArgs e)
         {
-            if (fotoSeleccionada != null)
+            if (fotoSeleccionada != null || !string.IsNullOrWhiteSpace(fotoRutaSeleccionada))
                 return;
             try
             {
-                AyudaFormularioVisual.MostrarFoto(fotoSocio, null, SexoSeleccionado());
+                AyudaFormularioVisual.MostrarFotoRuta(fotoSocio, null, SexoSeleccionado());
             }
             catch (Exception ex)
             {

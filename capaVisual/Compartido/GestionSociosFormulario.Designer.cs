@@ -28,8 +28,6 @@ namespace exxen2._0.capaVisual.Compartido
         private Button nuevo;
         private Button guardar;
         private Button actualizar;
-        private Button darDeBaja;
-        private Button reactivar;
         private Button calcularImc;
         private Button verRutina;
         private ComboBox filtroEstado;
@@ -115,8 +113,6 @@ namespace exxen2._0.capaVisual.Compartido
             nuevo = new Button();
             guardar = new Button();
             actualizar = new Button();
-            darDeBaja = new Button();
-            reactivar = new Button();
             calcularImc = new Button();
             verRutina = new Button();
             panelEncabezado.SuspendLayout();
@@ -241,8 +237,6 @@ namespace exxen2._0.capaVisual.Compartido
             panelAcciones.Controls.Add(nuevo);
             panelAcciones.Controls.Add(guardar);
             panelAcciones.Controls.Add(actualizar);
-            panelAcciones.Controls.Add(darDeBaja);
-            panelAcciones.Controls.Add(reactivar);
             panelAcciones.Controls.Add(calcularImc);
              panelEncabezado.Name = "panelEncabezado";  panelEncabezado.TabIndex = 0; lblTitulo.Name = "lblTitulo";  lblTitulo.TabIndex = 0; lblDescripcion.Name = "lblDescripcion";  lblDescripcion.TabIndex = 1; btnVolver.Name = "btnVolver"; btnVolver.TabIndex = 2;
              barraAcciones.Name = "barraAcciones";  barraAcciones.TabIndex = 1;  lblEstado.Name = "lblEstado";  lblEstado.TabIndex = 3;  panelContenido.Name = "panelContenido";  panelContenido.TabIndex = 2;  contenedorContenido.Name = "contenedorContenido";  contenedorContenido.TabIndex = 0;
@@ -250,8 +244,8 @@ namespace exxen2._0.capaVisual.Compartido
                tabla.Name = "tabla";  tabla.TabIndex = 3; colNombre.MinimumWidth = 180; colDni.MinimumWidth = 110; colNacimiento.MinimumWidth = 120; colEstado.MinimumWidth = 90;
             panelDetalle.Name = "panelDetalle"; panelDetalle.TabIndex = 1; contenedorDetalle.Name = "contenedorDetalle"; contenedorDetalle.TabIndex = 0; lblFormulario.Name = "lblFormulario";  lblFormulario.TabIndex = 0; contenedorCampos.Name = "contenedorCampos";  contenedorCampos.TabIndex = 1; panelAcciones.Name = "panelAcciones"; panelAcciones.TabIndex = 2;
               lblNombre.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblNombre.ForeColor = Color.FromArgb(51, 65, 85); lblNombre.Name = "lblNombre"; lblNombre.Text = "Nombre:";   lblApellido.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblApellido.ForeColor = Color.FromArgb(51, 65, 85); lblApellido.Name = "lblApellido"; lblApellido.Text = "Apellido:";   lblDni.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblDni.ForeColor = Color.FromArgb(51, 65, 85); lblDni.Name = "lblDni"; lblDni.Text = "DNI:";   lblFechaNacimiento.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblFechaNacimiento.ForeColor = Color.FromArgb(51, 65, 85); lblFechaNacimiento.Name = "lblFechaNacimiento"; lblFechaNacimiento.Text = "Nacimiento:";   lblPeso.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblPeso.ForeColor = Color.FromArgb(51, 65, 85); lblPeso.Name = "lblPeso"; lblPeso.Text = "Peso (kg):";   lblAltura.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblAltura.ForeColor = Color.FromArgb(51, 65, 85); lblAltura.Name = "lblAltura"; lblAltura.Text = "Altura (m):";
-            nombre.BorderStyle = BorderStyle.FixedSingle;  nombre.Name = "nombre"; apellido.BorderStyle = BorderStyle.FixedSingle;  apellido.Name = "apellido"; dni.BorderStyle = BorderStyle.FixedSingle;  dni.Name = "dni"; fechaNacimiento.Name = "fechaNacimiento"; peso.BorderStyle = BorderStyle.FixedSingle;  peso.Name = "peso"; altura.BorderStyle = BorderStyle.FixedSingle;  altura.Name = "altura";
-            nuevo.BackColor = Color.FromArgb(79, 70, 229); nuevo.FlatAppearance.BorderSize = 0; nuevo.FlatStyle = FlatStyle.Flat; nuevo.ForeColor = Color.White;  nuevo.Name = "nuevo";  nuevo.Text = "+ Nuevo socio"; nuevo.UseVisualStyleBackColor = false; guardar.BackColor = Color.FromArgb(79, 70, 229); guardar.FlatAppearance.BorderSize = 0; guardar.FlatStyle = FlatStyle.Flat; guardar.ForeColor = Color.White;  guardar.Name = "guardar";  guardar.Text = "Guardar"; guardar.UseVisualStyleBackColor = false; actualizar.BackColor = Color.FromArgb(226, 232, 240); actualizar.FlatAppearance.BorderSize = 0; actualizar.FlatStyle = FlatStyle.Flat; actualizar.ForeColor = Color.FromArgb(30, 41, 59);  actualizar.Name = "actualizar";  actualizar.Text = "Actualizar"; actualizar.UseVisualStyleBackColor = false; darDeBaja.BackColor = Color.FromArgb(254, 242, 242); darDeBaja.FlatAppearance.BorderSize = 0; darDeBaja.FlatStyle = FlatStyle.Flat; darDeBaja.ForeColor = Color.FromArgb(185, 28, 28);  darDeBaja.Name = "darDeBaja";  darDeBaja.Text = "Dar de baja"; darDeBaja.UseVisualStyleBackColor = false; reactivar.BackColor = Color.FromArgb(226, 232, 240); reactivar.FlatAppearance.BorderSize = 0; reactivar.FlatStyle = FlatStyle.Flat; reactivar.ForeColor = Color.FromArgb(30, 41, 59);  reactivar.Name = "reactivar";  reactivar.Text = "Reactivar"; reactivar.UseVisualStyleBackColor = false; calcularImc.BackColor = Color.FromArgb(226, 232, 240); calcularImc.FlatAppearance.BorderSize = 0; calcularImc.FlatStyle = FlatStyle.Flat; calcularImc.ForeColor = Color.FromArgb(30, 41, 59);  calcularImc.Name = "calcularImc";  calcularImc.Text = "Calcular IMC"; calcularImc.UseVisualStyleBackColor = false; verRutina.BackColor = Color.FromArgb(226, 232, 240); verRutina.FlatAppearance.BorderSize = 0; verRutina.FlatStyle = FlatStyle.Flat; verRutina.ForeColor = Color.FromArgb(30, 41, 59);  verRutina.Name = "verRutina";  verRutina.Text = "Ver rutina semanal"; verRutina.UseVisualStyleBackColor = false;
+            nombre.BorderStyle = BorderStyle.FixedSingle; nombre.MaxLength = 100; nombre.Name = "nombre"; apellido.BorderStyle = BorderStyle.FixedSingle; apellido.MaxLength = 100; apellido.Name = "apellido"; dni.BorderStyle = BorderStyle.FixedSingle; dni.MaxLength = 20; dni.Name = "dni"; fechaNacimiento.Name = "fechaNacimiento"; peso.BorderStyle = BorderStyle.FixedSingle; peso.Name = "peso"; altura.BorderStyle = BorderStyle.FixedSingle; altura.Name = "altura";
+            nuevo.BackColor = Color.FromArgb(79, 70, 229); nuevo.FlatAppearance.BorderSize = 0; nuevo.FlatStyle = FlatStyle.Flat; nuevo.ForeColor = Color.White;  nuevo.Name = "nuevo";  nuevo.Text = "+ Nuevo socio"; nuevo.UseVisualStyleBackColor = false; guardar.BackColor = Color.FromArgb(79, 70, 229); guardar.FlatAppearance.BorderSize = 0; guardar.FlatStyle = FlatStyle.Flat; guardar.ForeColor = Color.White;  guardar.Name = "guardar";  guardar.Text = "Guardar"; guardar.UseVisualStyleBackColor = false; actualizar.BackColor = Color.FromArgb(226, 232, 240); actualizar.FlatAppearance.BorderSize = 0; actualizar.FlatStyle = FlatStyle.Flat; actualizar.ForeColor = Color.FromArgb(30, 41, 59);  actualizar.Name = "actualizar";  actualizar.Text = "Actualizar"; actualizar.UseVisualStyleBackColor = false; calcularImc.BackColor = Color.FromArgb(226, 232, 240); calcularImc.FlatAppearance.BorderSize = 0; calcularImc.FlatStyle = FlatStyle.Flat; calcularImc.ForeColor = Color.FromArgb(30, 41, 59);  calcularImc.Name = "calcularImc";  calcularImc.Text = "Calcular IMC"; calcularImc.UseVisualStyleBackColor = false; verRutina.BackColor = Color.FromArgb(226, 232, 240); verRutina.FlatAppearance.BorderSize = 0; verRutina.FlatStyle = FlatStyle.Flat; verRutina.ForeColor = Color.FromArgb(30, 41, 59);  verRutina.Name = "verRutina";  verRutina.Text = "Ver rutina semanal"; verRutina.UseVisualStyleBackColor = false;
             Controls.Add(panelContenido);
             Controls.Add(lblEstado);
             Controls.Add(barraAcciones);
@@ -359,10 +353,6 @@ namespace exxen2._0.capaVisual.Compartido
 
             actualizar.Margin = new Padding(0, 0, 8, 8);
 
-            darDeBaja.Margin = new Padding(0, 0, 8, 8);
-
-            reactivar.Margin = new Padding(0, 0, 8, 8);
-
             calcularImc.Margin = new Padding(0, 0, 8, 8);
 
             this.AutoScroll = false;
@@ -370,27 +360,32 @@ namespace exxen2._0.capaVisual.Compartido
             this.panelEncabezado.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelEncabezado.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.panelEncabezado.Location = new System.Drawing.Point(0, 0);
-            this.panelEncabezado.Size = new System.Drawing.Size(1100, 84);
+            this.panelEncabezado.Size = new System.Drawing.Size(1100, 56);
             this.panelEncabezado.AutoScroll = false;
             this.lblTitulo.AutoSize = false;
             this.lblTitulo.Dock = System.Windows.Forms.DockStyle.None;
             this.lblTitulo.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.lblTitulo.Location = new System.Drawing.Point(22, 8);
             this.lblTitulo.Size = new System.Drawing.Size(890, 36);
+            this.lblTitulo.Text = "Socios | Gestión de socios e información personal";
+            this.lblTitulo.Size = new System.Drawing.Size(890, 40);
+            this.lblTitulo.TextAlign = ContentAlignment.MiddleLeft;
             this.lblDescripcion.AutoSize = false;
             this.lblDescripcion.Dock = System.Windows.Forms.DockStyle.None;
             this.lblDescripcion.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.lblDescripcion.Location = new System.Drawing.Point(24, 48);
             this.lblDescripcion.Size = new System.Drawing.Size(890, 26);
+            this.lblDescripcion.Visible = false;
+            this.panelEncabezado.Visible = false;
             this.btnVolver.AutoSize = false;
             this.btnVolver.Dock = System.Windows.Forms.DockStyle.None;
             this.btnVolver.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            this.btnVolver.Location = new System.Drawing.Point(974, 24);
+            this.btnVolver.Location = new System.Drawing.Point(974, 10);
             this.btnVolver.Size = new System.Drawing.Size(104, 38);
             this.barraAcciones.AutoSize = false;
             this.barraAcciones.Dock = System.Windows.Forms.DockStyle.Top;
             this.barraAcciones.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.barraAcciones.Location = new System.Drawing.Point(0, 84);
+            this.barraAcciones.Location = new System.Drawing.Point(0, 56);
             this.barraAcciones.Size = new System.Drawing.Size(1100, 1);
             this.barraAcciones.AutoScroll = false;
             this.lblEstado.AutoSize = false;
@@ -443,16 +438,6 @@ namespace exxen2._0.capaVisual.Compartido
             this.actualizar.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.actualizar.Location = new System.Drawing.Point(240, 0);
             this.actualizar.Size = new System.Drawing.Size(112, 38);
-            this.darDeBaja.AutoSize = false;
-            this.darDeBaja.Dock = System.Windows.Forms.DockStyle.None;
-            this.darDeBaja.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.darDeBaja.Location = new System.Drawing.Point(0, 46);
-            this.darDeBaja.Size = new System.Drawing.Size(112, 38);
-            this.reactivar.AutoSize = false;
-            this.reactivar.Dock = System.Windows.Forms.DockStyle.None;
-            this.reactivar.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.reactivar.Location = new System.Drawing.Point(120, 46);
-            this.reactivar.Size = new System.Drawing.Size(112, 38);
             this.calcularImc.AutoSize = false;
             this.calcularImc.Dock = System.Windows.Forms.DockStyle.None;
             this.calcularImc.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
@@ -642,12 +627,13 @@ namespace exxen2._0.capaVisual.Compartido
             this.nuevo.Click += new System.EventHandler(this.nuevo_Click);
             this.guardar.Click += new System.EventHandler(this.guardar_Click);
             this.actualizar.Click += new System.EventHandler(this.actualizar_Click);
-            this.darDeBaja.Click += new System.EventHandler(this.darDeBaja_Click);
-            this.reactivar.Click += new System.EventHandler(this.reactivar_Click);
             this.calcularImc.Click += new System.EventHandler(this.calcularImc_Click);
             this.verRutina.Click += new System.EventHandler(this.verRutina_Click);
-                    this.peso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.peso_KeyPress);
+            this.peso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.peso_KeyPress);
             this.altura.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.altura_KeyPress);
+            this.nombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nombre_KeyPress);
+            this.apellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.apellido_KeyPress);
+            this.dni.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dni_KeyPress);
         }
 
     }

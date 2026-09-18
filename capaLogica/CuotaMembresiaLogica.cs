@@ -45,6 +45,7 @@ namespace exxen2._0.capaLogica
 
                 var cuota = CrearPrimeraCuotaEnContexto(datos, membresia, membresia.Plan);
                 datos.GuardarCambios();
+                EvaluarEstadoMembresiaPorDeudaEnContexto(datos, idMembresia);
                 transaccion.Confirmar();
                 return cuota;
             }
@@ -77,6 +78,7 @@ namespace exxen2._0.capaLogica
                 }
 
                 datos.GuardarCambios();
+                EvaluarEstadoMembresiaPorDeudaEnContexto(datos, idMembresia);
                 transaccion.Confirmar();
                 return cuota;
             }
@@ -87,7 +89,10 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return datos.CuotasMembresia.ConsultarSoloLectura("Membresia", "Pago").SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);
+                var cuota = datos.CuotasMembresia.Consultar("Membresia", "Pago").SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);
+                if (cuota != null)
+                    EvaluarEstadoMembresiaPorDeudaEnContexto(datos, cuota.IdMembresia);
+                return cuota;
             }
         }
 
@@ -97,6 +102,7 @@ namespace exxen2._0.capaLogica
             var hoy = DateTime.Today;
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
+                EvaluarEstadoMembresiaPorDeudaEnContexto(datos, idMembresia);
                 return datos.CuotasMembresia.ConsultarSoloLectura("Pago").Where(c => c.IdMembresia == idMembresia && c.EstadoPago != EstadosCuota.Anulada && c.FechaDesde <= hoy && c.FechaHasta >= hoy).SingleOrDefault();
             }
         }
@@ -106,6 +112,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
+                EvaluarEstadoMembresiaPorDeudaEnContexto(datos, idMembresia);
                 return datos.CuotasMembresia.ConsultarSoloLectura().Where(c => c.IdMembresia == idMembresia).OrderBy(c => c.FechaDesde).ToList();
             }
         }
@@ -133,6 +140,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
+                EvaluarTodasLasMembresiasPorDeudaEnContexto(datos);
                 return datos.CuotasMembresia.ConsultarSoloLectura("Pago", "Membresia.Socio", "Membresia.Plan").Where(c => c.EstadoPago == EstadosCuota.Pendiente || c.EstadoPago == EstadosCuota.Pagada || c.EstadoPago == EstadosCuota.Anulada).OrderByDescending(c => c.FechaDesde).ThenBy(c => c.Membresia.Socio.Apellido).ThenBy(c => c.Membresia.Socio.Nombre).ToList();
             }
         }
@@ -142,6 +150,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
+                EvaluarTodasLasMembresiasPorDeudaEnContexto(datos);
                 var membresias = datos.Membresias.ConsultarSoloLectura("Socio", "Plan", "Cuotas.Pago").OrderBy(m => m.Socio.Apellido).ThenBy(m => m.Socio.Nombre).ToList();
                 return membresias.Select(CrearEstadoCuenta).ToList();
             }
@@ -241,8 +250,7 @@ namespace exxen2._0.capaLogica
                 cuota.EstadoPago = EstadosCuota.Pendiente;
                 RecalcularEstadoPagoEnContexto(datos, cuota);
                 datos.GuardarCambios();
-                MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(datos, cuota.IdMembresia);
-                datos.GuardarCambios();
+                EvaluarEstadoMembresiaPorDeudaEnContexto(datos, cuota.IdMembresia);
                 transaccion.Confirmar();
             }
         }
@@ -261,8 +269,7 @@ namespace exxen2._0.capaLogica
 
                 cuota.EstadoPago = EstadosCuota.Anulada;
                 datos.GuardarCambios();
-                MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(datos, cuota.IdMembresia);
-                datos.GuardarCambios();
+                EvaluarEstadoMembresiaPorDeudaEnContexto(datos, cuota.IdMembresia);
                 transaccion.Confirmar();
             }
         }
@@ -278,12 +285,13 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                var cuota = datos.CuotasMembresia.ConsultarSoloLectura("Pago").SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);
+                var cuota = datos.CuotasMembresia.Consultar("Pago").SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);
                 if (cuota == null)
                 {
                     throw new InvalidOperationException("La cuota no existe.");
                 }
 
+                EvaluarEstadoMembresiaPorDeudaEnContexto(datos, cuota.IdMembresia);
                 return CalcularSaldoEnContexto(datos, cuota);
             }
         }
@@ -298,12 +306,13 @@ namespace exxen2._0.capaLogica
 
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                var cuotaActual = datos.CuotasMembresia.ConsultarSoloLectura("Pago").SingleOrDefault(c => c.IdCuotaMembresia == cuota.IdCuotaMembresia);
+                var cuotaActual = datos.CuotasMembresia.Consultar("Pago").SingleOrDefault(c => c.IdCuotaMembresia == cuota.IdCuotaMembresia);
                 if (cuotaActual == null)
                 {
                     throw new InvalidOperationException("La cuota no existe.");
                 }
 
+                EvaluarEstadoMembresiaPorDeudaEnContexto(datos, cuotaActual.IdMembresia);
                 return CalcularSaldoEnContexto(datos, cuotaActual);
             }
         }
@@ -322,8 +331,7 @@ namespace exxen2._0.capaLogica
 
                 RecalcularEstadoPagoEnContexto(datos, cuota);
                 datos.GuardarCambios();
-                MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(datos, cuota.IdMembresia);
-                datos.GuardarCambios();
+                EvaluarEstadoMembresiaPorDeudaEnContexto(datos, cuota.IdMembresia);
                 transaccion.Confirmar();
             }
         }
@@ -390,6 +398,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
+                EvaluarTodasLasMembresiasPorDeudaEnContexto(datos);
                 return datos.CuotasMembresia.ConsultarSoloLectura("Pago", "Membresia.Socio", "Membresia.Plan").Where(c => c.EstadoPago == estado).OrderBy(c => c.FechaDesde).ToList();
             }
         }
@@ -401,6 +410,20 @@ namespace exxen2._0.capaLogica
             {
                 throw new InvalidOperationException("El plan actual no existe o está inactivo.");
             }
+        }
+
+        /* Delega la decisión a MembresiaLogica y persiste su sincronización con el socio. */
+        private static void EvaluarEstadoMembresiaPorDeudaEnContexto(IUnidadDeTrabajo datos, int idMembresia)
+        {
+            MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(datos, idMembresia);
+            datos.GuardarCambios();
+        }
+
+        /* Evalúa el estado de membresía antes de presentar listados globales de cuotas. */
+        private static void EvaluarTodasLasMembresiasPorDeudaEnContexto(IUnidadDeTrabajo datos)
+        {
+            MembresiaLogica.ActualizarEstadosPorDeudaEnContexto(datos);
+            datos.GuardarCambios();
         }
     }
 }

@@ -101,13 +101,18 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                var asignaciones = datos.RutinaAsignaciones.ConsultarSoloLectura("Membresia").Where(a => a.Estado && a.Membresia.IdSocio == idSocio && a.Membresia.Estado).OrderByDescending(a => a.FechaAsignacion).ToList();
-                if (asignaciones.Count == 0)
+                MembresiaLogica.ActualizarEstadosPorDeudaEnContexto(datos);
+                datos.GuardarCambios();
+                var membresia = datos.Membresias.ConsultarSoloLectura("Rutina")
+                    .Where(m => m.IdSocio == idSocio && m.Estado && m.IdRutina.HasValue)
+                    .OrderByDescending(m => m.FechaInicio)
+                    .FirstOrDefault();
+                if (membresia == null || !membresia.IdRutina.HasValue)
                 {
                     return new List<RutinaEjercicio>();
                 }
 
-                var idRutina = asignaciones[0].IdRutina;
+                var idRutina = membresia.IdRutina.Value;
                 return datos.RutinaEjercicios.ConsultarSoloLectura("Ejercicio").Where(re => re.IdRutina == idRutina && re.Estado).OrderBy(re => re.DiaSemana.HasValue ? re.DiaSemana.Value : int.MaxValue).ThenBy(re => re.Orden).ToList();
             }
         }
@@ -120,12 +125,32 @@ namespace exxen2._0.capaLogica
                 throw new ArgumentNullException("rutinaEjercicio");
             }
 
-            if (rutinaEjercicio.Series.HasValue && rutinaEjercicio.Series.Value <= 0)
+            if (rutinaEjercicio.IdRutina <= 0)
+            {
+                throw new InvalidOperationException("Seleccione una rutina.");
+            }
+
+            if (rutinaEjercicio.IdEjercicio <= 0)
+            {
+                throw new InvalidOperationException("Seleccione un ejercicio.");
+            }
+
+            if (!rutinaEjercicio.Series.HasValue)
+            {
+                throw new InvalidOperationException("Las series son obligatorias.");
+            }
+
+            if (rutinaEjercicio.Series.Value <= 0)
             {
                 throw new InvalidOperationException("Las series deben ser mayores que cero.");
             }
 
-            if (rutinaEjercicio.Repeticiones.HasValue && rutinaEjercicio.Repeticiones.Value <= 0)
+            if (!rutinaEjercicio.Repeticiones.HasValue)
+            {
+                throw new InvalidOperationException("Las repeticiones son obligatorias.");
+            }
+
+            if (rutinaEjercicio.Repeticiones.Value <= 0)
             {
                 throw new InvalidOperationException("Las repeticiones deben ser mayores que cero.");
             }
@@ -143,6 +168,11 @@ namespace exxen2._0.capaLogica
             if (rutinaEjercicio.Orden <= 0)
             {
                 throw new InvalidOperationException("El orden debe ser mayor que cero.");
+            }
+
+            if (!rutinaEjercicio.DiaSemana.HasValue)
+            {
+                throw new InvalidOperationException("Seleccione el dia de la rutina.");
             }
 
             ValidacionesGimnasio.ValidarDiaRutina(rutinaEjercicio.DiaSemana);

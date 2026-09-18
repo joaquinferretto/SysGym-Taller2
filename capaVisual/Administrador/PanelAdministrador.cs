@@ -41,7 +41,7 @@ namespace exxen2._0.capaVisual.Administrador
                 throw new ArgumentNullException("usuario");
             this.usuario = usuario;
             InitializeComponent();
-            navegacion = new ControladorNavegacion(this, panelContenido);
+            navegacion = new ControladorNavegacion(this, panelContenido, EstablecerModuloActual);
             inicioPanel.SocioDobleClic += inicioPanel_SocioDobleClic;
         }
 
@@ -60,7 +60,7 @@ namespace exxen2._0.capaVisual.Administrador
         {
             var posicionY = 18;
             posicionY = MenuDesplegableHelper.ColocarSeccion(lblAdministracion, administracionExpandida, posicionY, btnUsuarios, btnSocios);
-            posicionY = MenuDesplegableHelper.ColocarSeccion(lblOperacion, operacionExpandida, posicionY, btnPlanes, btnMembresias, btnPagos, btnAsignaciones, btnAsistencias);
+            posicionY = MenuDesplegableHelper.ColocarSeccion(lblOperacion, operacionExpandida, posicionY, btnPlanes, btnMembresias, btnPagos, btnAsignaciones);
             posicionY = MenuDesplegableHelper.ColocarSeccion(lblRutinas, rutinasExpandida, posicionY, btnEjercicios, btnRutinas, btnMisSocios);
             posicionY = MenuDesplegableHelper.ColocarSeccion(lblConsultas, consultasExpandida, posicionY, btnReportes);
             panelOpciones.AutoScrollMinSize = new Size(0, posicionY);
@@ -101,6 +101,11 @@ namespace exxen2._0.capaVisual.Administrador
         }
 
         /* Al hacer clic en btnCambiarCuenta, cierra la sesión para volver al acceso. */
+        private void EstablecerModuloActual(string titulo)
+        {
+            lblModuloActual.Text = titulo ?? string.Empty;
+        }
+
         private void btnCambiarCuenta_Click(object origen, EventArgs e)
         {
             navegacion.CambiarCuenta();
@@ -115,73 +120,67 @@ namespace exxen2._0.capaVisual.Administrador
         /* Al hacer clic en btnUsuarios, abre el módulo correspondiente dentro del panel principal. */
         private void btnUsuarios_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new GestionUsuariosFormulario());
+            navegacion.AbrirFormulario(new GestionUsuariosFormulario(), "Usuarios y roles | Administración del personal y sus permisos");
         }
 
         /* Al hacer clic en btnSocios, abre el módulo correspondiente dentro del panel principal. */
         private void btnSocios_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new GestionSociosFormulario(Color.FromArgb(79, 70, 229)));
+            navegacion.AbrirFormulario(new GestionSociosFormulario(Color.FromArgb(79, 70, 229)), "Socios | Gestión de socios e información personal");
         }
 
         /* Al hacer clic en btnPlanes, abre el módulo correspondiente dentro del panel principal. */
         private void btnPlanes_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new GestionPlanesFormulario());
+            navegacion.AbrirFormulario(new GestionPlanesFormulario(), "Planes | Gestión de planes y precios");
         }
 
         /* Al hacer clic en btnMembresias, abre el módulo correspondiente dentro del panel principal. */
         private void btnMembresias_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new GestionMembresiasFormulario(usuario, Color.FromArgb(79, 70, 229)));
+            navegacion.AbrirFormulario(new GestionMembresiasFormulario(usuario, Color.FromArgb(79, 70, 229)), "Membresías | Gestión de membresías de socios");
         }
 
         /* Al hacer clic en btnPagos, abre el módulo correspondiente dentro del panel principal. */
         private void btnPagos_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new GestionPagosFormulario());
+            navegacion.AbrirFormulario(new GestionPagosFormulario(), "Cuotas y pagos | Gestión de cuotas y pagos");
         }
 
         /* Al hacer clic en btnEjercicios, abre el módulo correspondiente dentro del panel principal. */
         private void btnEjercicios_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new GestionEjerciciosFormulario(Color.FromArgb(79, 70, 229)));
+            navegacion.AbrirFormulario(new GestionEjerciciosFormulario(Color.FromArgb(79, 70, 229)), "Ejercicios | Catálogo de ejercicios");
         }
 
         /* Al hacer clic en btnRutinas, abre el módulo correspondiente dentro del panel principal. */
         private void btnRutinas_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new RutinasEntrenadorFormulario(usuario, true));
+            navegacion.AbrirFormulario(new RutinasEntrenadorFormulario(usuario, true), "Gestionar rutinas | Catálogo y composición de rutinas");
         }
 
         /* Al hacer clic en btnAsignaciones, abre la gestión de entrenadores de las membresías. */
         private void btnAsignaciones_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new GestionAsignacionesFormulario());
-        }
-
-        /* Al hacer clic en btnAsistencias, abre la gestión de accesos de los socios. */
-        private void btnAsistencias_Click(object origen, EventArgs e)
-        {
-            navegacion.AbrirFormulario(new GestionAsistenciasFormulario(Color.FromArgb(79, 70, 229)));
+            navegacion.AbrirFormulario(new GestionAsignacionesFormulario(), "Asignar entrenador | Vinculación de entrenadores y membresías");
         }
 
         /* Al hacer clic en btnMisSocios, abre la gestión global de socios y rutinas. */
         private void btnMisSocios_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new MisSociosFormulario(usuario, true));
+            navegacion.AbrirFormulario(new MisSociosFormulario(usuario, true), "Socios y rutinas | Consulta de rutinas de socios");
         }
 
         /* Al hacer clic en btnReportes, abre el módulo correspondiente dentro del panel principal. */
         private void btnReportes_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new ReportesFormulario());
+            navegacion.AbrirFormulario(new ReportesFormulario(), "Reportes | Consultas e indicadores");
         }
 
         /* Al recibir un doble clic del estado de cuenta, abre socios con el registro ya seleccionado. */
         private void inicioPanel_SocioDobleClic(object origen, SocioEstadoCuentaEventArgs e)
         {
-            navegacion.AbrirFormulario(new GestionSociosFormulario(Color.FromArgb(79, 70, 229), e.IdSocio, true));
+            navegacion.AbrirFormulario(new GestionSociosFormulario(Color.FromArgb(79, 70, 229), e.IdSocio, true), "Socios | Gestión de socios e información personal");
         }
 
         /* Al cargar la pantalla en ejecución, prepara sus datos iniciales sin realizar consultas desde el diseñador. */
@@ -192,6 +191,11 @@ namespace exxen2._0.capaVisual.Administrador
             ConfigurarMenuDesplegable();
             lblUsuarioRol.Text = "Usuario: " + usuario.Nombre + " " + usuario.Apellido + "    |    Rol: " + NombreRol(usuario, "Administrador");
             navegacion.EstablecerContenidoInicio(inicioPanel, inicioPanel.Actualizar);
+        }
+
+        private void panelOpciones_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

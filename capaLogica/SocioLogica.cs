@@ -12,49 +12,86 @@ namespace exxen2._0.capaLogica
         /* Valida y registra socios mediante la unidad de trabajo, conservando sus reglas de alta. */
         public Socio Crear(Socio socio)
         {
-            ValidarDatos(socio);
-            using (var datos = new UnidadDeTrabajoGimnasio())
-            {
-                if (datos.Socios.Any(s => s.DNI == socio.DNI))
-                {
-                    throw new InvalidOperationException("El DNI ya está registrado.");
-                }
+            return Crear(socio, null, null);
+        }
 
-                socio.Estado = true;
-                datos.Socios.Agregar(socio);
-                datos.GuardarCambios();
-                return socio;
+        /* Valida, copia la foto seleccionada a Datos y registra solo su ruta relativa. */
+        public Socio Crear(Socio socio, byte[] fotoContenido, string extensionFoto)
+        {
+            ValidarDatos(socio);
+            var rutaNueva = (string)null;
+            try
+            {
+                using (var datos = new UnidadDeTrabajoGimnasio())
+                {
+                    if (datos.Socios.Any(s => s.DNI == socio.DNI))
+                        throw new InvalidOperationException("El DNI ya está registrado.");
+
+                    if (fotoContenido != null)
+                        rutaNueva = AlmacenamientoImagenes.GuardarSocio(fotoContenido, extensionFoto);
+                    socio.FotoRuta = rutaNueva ?? NormalizarRuta(socio.FotoRuta);
+                    socio.Estado = true;
+                    datos.Socios.Agregar(socio);
+                    datos.GuardarCambios();
+                    return socio;
+                }
+            }
+            catch
+            {
+                if (!string.IsNullOrWhiteSpace(rutaNueva))
+                    AlmacenamientoImagenes.Eliminar(rutaNueva);
+                throw;
             }
         }
 
         /* Valida y guarda los cambios de socios sobre el registro existente. */
         public Socio Modificar(Socio socio)
         {
+            return Modificar(socio, null, null);
+        }
+
+        /* Actualiza el socio y reemplaza o quita su foto sin guardar binarios en SQL. */
+        public Socio Modificar(Socio socio, byte[] fotoContenido, string extensionFoto)
+        {
             ValidarDatos(socio);
-            using (var datos = new UnidadDeTrabajoGimnasio())
+            var rutaNueva = (string)null;
+            var guardado = false;
+            try
             {
-                var existente = datos.Socios.Buscar(socio.IdSocio);
-                if (existente == null)
+                using (var datos = new UnidadDeTrabajoGimnasio())
                 {
-                    throw new InvalidOperationException("El socio no existe.");
-                }
+                    var existente = datos.Socios.Buscar(socio.IdSocio);
+                    if (existente == null)
+                        throw new InvalidOperationException("El socio no existe.");
 
-                if (datos.Socios.Any(s => s.DNI == socio.DNI && s.IdSocio != socio.IdSocio))
-                {
-                    throw new InvalidOperationException("El DNI ya está registrado.");
-                }
+                    if (datos.Socios.Any(s => s.DNI == socio.DNI && s.IdSocio != socio.IdSocio))
+                        throw new InvalidOperationException("El DNI ya está registrado.");
 
-                existente.DNI = socio.DNI;
-                existente.Nombre = socio.Nombre;
-                existente.Apellido = socio.Apellido;
-                existente.FechaNacimiento = socio.FechaNacimiento;
-                existente.Peso = socio.Peso;
-                existente.Altura = socio.Altura;
-                existente.Estado = socio.Estado;
-                existente.Foto = socio.Foto;
-                existente.Sexo = socio.Sexo;
-                datos.GuardarCambios();
-                return existente;
+                    var rutaAnterior = existente.FotoRuta;
+                    if (fotoContenido != null)
+                        rutaNueva = AlmacenamientoImagenes.GuardarSocio(fotoContenido, extensionFoto);
+
+                    existente.DNI = socio.DNI;
+                    existente.Nombre = socio.Nombre;
+                    existente.Apellido = socio.Apellido;
+                    existente.FechaNacimiento = socio.FechaNacimiento;
+                    existente.Peso = socio.Peso;
+                    existente.Altura = socio.Altura;
+                    existente.FotoRuta = rutaNueva ?? NormalizarRuta(socio.FotoRuta);
+                    existente.Sexo = socio.Sexo;
+                    datos.GuardarCambios();
+                    guardado = true;
+
+                    if (!string.IsNullOrWhiteSpace(rutaAnterior) && rutaAnterior != existente.FotoRuta && !datos.Socios.Existe(s => s.FotoRuta == rutaAnterior && s.IdSocio != socio.IdSocio))
+                        AlmacenamientoImagenes.Eliminar(rutaAnterior);
+                    return existente;
+                }
+            }
+            catch
+            {
+                if (!guardado && !string.IsNullOrWhiteSpace(rutaNueva))
+                    AlmacenamientoImagenes.Eliminar(rutaNueva);
+                throw;
             }
         }
 
@@ -63,6 +100,8 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
+                MembresiaLogica.ActualizarEstadosPorDeudaEnContexto(datos);
+                datos.GuardarCambios();
                 return datos.Socios.ConsultarSoloLectura("Membresias").SingleOrDefault(s => s.IdSocio == idSocio);
             }
         }
@@ -72,6 +111,8 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
+                MembresiaLogica.ActualizarEstadosPorDeudaEnContexto(datos);
+                datos.GuardarCambios();
                 return datos.Socios.ConsultarSoloLectura().SingleOrDefault(s => s.DNI == dni);
             }
         }
@@ -81,6 +122,8 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
+                MembresiaLogica.ActualizarEstadosPorDeudaEnContexto(datos);
+                datos.GuardarCambios();
                 return ListarSinFotos(datos.Socios.ConsultarSoloLectura().Where(s => s.Estado).OrderBy(s => s.Apellido).ThenBy(s => s.Nombre));
             }
         }
@@ -90,6 +133,8 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
+                MembresiaLogica.ActualizarEstadosPorDeudaEnContexto(datos);
+                datos.GuardarCambios();
                 return ListarSinFotos(datos.Socios.ConsultarSoloLectura().OrderByDescending(s => s.Estado).ThenBy(s => s.Apellido).ThenBy(s => s.Nombre));
             }
         }
@@ -110,36 +155,8 @@ namespace exxen2._0.capaLogica
         }
 
         /* Desactiva el registro de socios sin eliminar su historial. */
-        public void DarDeBaja(int idSocio)
-        {
-            using (var datos = new UnidadDeTrabajoGimnasio())
-            {
-                var socio = datos.Socios.Buscar(idSocio);
-                if (socio == null)
-                {
-                    throw new InvalidOperationException("El socio no existe.");
-                }
-
-                socio.Estado = false;
-                datos.GuardarCambios();
-            }
-        }
 
         /* Recupera el estado activo del registro de socios según las validaciones de la operación. */
-        public void Reactivar(int idSocio)
-        {
-            using (var datos = new UnidadDeTrabajoGimnasio())
-            {
-                var socio = datos.Socios.Buscar(idSocio);
-                if (socio == null)
-                {
-                    throw new InvalidOperationException("El socio no existe.");
-                }
-
-                socio.Estado = true;
-                datos.GuardarCambios();
-            }
-        }
 
         /* Calcula el índice a partir del peso y la altura registrados, validando los datos requeridos. */
         public decimal CalcularIMC(Socio socio)
@@ -168,15 +185,10 @@ namespace exxen2._0.capaLogica
                 throw new ArgumentNullException("socio");
             }
 
-            if (string.IsNullOrWhiteSpace(socio.DNI))
-            {
-                throw new InvalidOperationException("El DNI es obligatorio.");
-            }
-
-            if (string.IsNullOrWhiteSpace(socio.Nombre) || string.IsNullOrWhiteSpace(socio.Apellido))
-            {
-                throw new InvalidOperationException("Nombre y apellido son obligatorios.");
-            }
+            ValidacionesGimnasio.ValidarDni(socio.DNI);
+            ValidacionesGimnasio.ValidarNombre(socio.Nombre, "nombre");
+            ValidacionesGimnasio.ValidarNombre(socio.Apellido, "apellido");
+            ValidacionesGimnasio.ValidarEdadMinima(socio.FechaNacimiento, 13, "El socio debe tener al menos 13 años.");
 
             if (socio.Peso.HasValue && socio.Peso.Value <= 0)
             {
@@ -189,7 +201,14 @@ namespace exxen2._0.capaLogica
             }
 
             ValidarAlturaFraccionaria(socio.Altura);
-            ValidacionesGimnasio.ValidarFotoYSexo(socio.Foto, socio.Sexo);
+            ValidacionesGimnasio.ValidarFotoYSexo(null, socio.Sexo);
+            AlmacenamientoImagenes.ValidarRutaRelativa(socio.FotoRuta);
+        }
+
+        /* Convierte rutas vacías provenientes de formularios o integraciones en NULL de base. */
+        private static string NormalizarRuta(string ruta)
+        {
+            return string.IsNullOrWhiteSpace(ruta) ? null : ruta.Trim();
         }
 
         /* Exige que la altura en metros tenga parte decimal según la regla del proyecto. */

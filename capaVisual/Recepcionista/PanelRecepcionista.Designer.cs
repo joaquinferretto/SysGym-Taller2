@@ -8,8 +8,11 @@ namespace exxen2._0.capaVisual.Recepcionista
     {
         private IContainer components = null;
         private Panel panelEncabezado;
+        private TableLayoutPanel layoutEncabezado;
+        private Panel panelIdentidad;
         private Label lblMarca;
         private Label lblUsuarioRol;
+        private Label lblModuloActual;
         private Button btnCambiarCuenta;
         private Panel panelMenu;
         private Panel panelOpciones;
@@ -21,8 +24,6 @@ namespace exxen2._0.capaVisual.Recepcionista
         private Label lblEntrenadores;
         private Button btnAsignar;
         private Button btnConsultar;
-        private Label lblControl;
-        private Button btnAsistencias;
         private Panel panelPie;
         private Button btnSalir;
 
@@ -38,8 +39,11 @@ namespace exxen2._0.capaVisual.Recepcionista
         private void InitializeComponent()
         {
             panelEncabezado = new Panel();
+            layoutEncabezado = new TableLayoutPanel();
+            panelIdentidad = new Panel();
             lblMarca = new Label();
             lblUsuarioRol = new Label();
+            lblModuloActual = new Label();
             btnCambiarCuenta = new Button();
             panelMenu = new Panel();
             panelOpciones = new Panel();
@@ -52,13 +56,13 @@ namespace exxen2._0.capaVisual.Recepcionista
             lblEntrenadores = new Label();
             btnAsignar = new Button();
             btnConsultar = new Button();
-            lblControl = new Label();
-            btnAsistencias = new Button();
             panelPie = new Panel();
             btnSalir = new Button();
             panelContenido = new Panel();
             lblBienvenida = new Label();
             panelEncabezado.SuspendLayout();
+            layoutEncabezado.SuspendLayout();
+            panelIdentidad.SuspendLayout();
             panelMenu.SuspendLayout();
             panelOpciones.SuspendLayout();
 
@@ -66,13 +70,43 @@ namespace exxen2._0.capaVisual.Recepcionista
             SuspendLayout();
 
             panelEncabezado.BackColor = Color.FromArgb(5, 150, 105);
-            panelEncabezado.Controls.Add(lblMarca);
-            panelEncabezado.Controls.Add(lblUsuarioRol);
-            panelEncabezado.Controls.Add(btnCambiarCuenta);
+            panelEncabezado.Controls.Add(layoutEncabezado);
 
             panelEncabezado.Name = "panelEncabezado";
 
             panelEncabezado.TabIndex = 0;
+            layoutEncabezado.ColumnCount = 3;
+            layoutEncabezado.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 250F));
+            layoutEncabezado.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            layoutEncabezado.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 190F));
+            layoutEncabezado.Dock = DockStyle.Fill;
+            layoutEncabezado.Location = new Point(24, 8);
+            layoutEncabezado.Margin = new Padding(0);
+            layoutEncabezado.Name = "layoutEncabezado";
+            layoutEncabezado.RowCount = 1;
+            layoutEncabezado.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            layoutEncabezado.Size = new Size(1152, 74);
+            layoutEncabezado.TabIndex = 3;
+            layoutEncabezado.Controls.Add(panelIdentidad, 0, 0);
+            layoutEncabezado.Controls.Add(lblModuloActual, 1, 0);
+            layoutEncabezado.Controls.Add(btnCambiarCuenta, 2, 0);
+            panelIdentidad.Dock = DockStyle.Fill;
+            panelIdentidad.Margin = new Padding(0);
+            panelIdentidad.Name = "panelIdentidad";
+            panelIdentidad.TabIndex = 0;
+            panelIdentidad.Controls.Add(lblUsuarioRol);
+            panelIdentidad.Controls.Add(lblMarca);
+            lblModuloActual.AutoEllipsis = true;
+            lblModuloActual.Dock = DockStyle.Fill;
+            lblModuloActual.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
+            lblModuloActual.ForeColor = Color.White;
+            lblModuloActual.Margin = new Padding(12, 0, 12, 0);
+            lblModuloActual.Name = "lblModuloActual";
+            lblModuloActual.Padding = new Padding(8, 0, 8, 0);
+            lblModuloActual.TabIndex = 4;
+            lblModuloActual.TextAlign = ContentAlignment.MiddleCenter;
+            btnCambiarCuenta.Dock = DockStyle.Fill;
+            btnCambiarCuenta.Margin = new Padding(8, 18, 0, 18);
 
             lblMarca.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
             lblMarca.ForeColor = Color.White;
@@ -81,6 +115,9 @@ namespace exxen2._0.capaVisual.Recepcionista
 
             lblMarca.TabIndex = 0;
             lblMarca.Text = "SYSGYM";
+            lblMarca.Dock = DockStyle.Top;
+            lblMarca.Location = new Point(0, 0);
+            lblMarca.Size = new Size(250, 36);
 
             lblUsuarioRol.ForeColor = Color.FromArgb(209, 250, 229);
 
@@ -88,6 +125,9 @@ namespace exxen2._0.capaVisual.Recepcionista
 
             lblUsuarioRol.TabIndex = 1;
             lblUsuarioRol.Text = "Usuario: Recepcionista de diseno    |    Rol: Recepcionista";
+            lblUsuarioRol.Dock = DockStyle.Bottom;
+            lblUsuarioRol.Location = new Point(0, 48);
+            lblUsuarioRol.Size = new Size(250, 26);
 
             btnCambiarCuenta.BackColor = Color.White;
             btnCambiarCuenta.FlatAppearance.BorderSize = 0;
@@ -117,8 +157,6 @@ namespace exxen2._0.capaVisual.Recepcionista
             panelOpciones.Controls.Add(lblEntrenadores);
             panelOpciones.Controls.Add(btnAsignar);
             panelOpciones.Controls.Add(btnConsultar);
-            panelOpciones.Controls.Add(lblControl);
-            panelOpciones.Controls.Add(btnAsistencias);
 
             panelOpciones.Name = "panelOpciones";
             panelOpciones.Padding = new Padding(14, 18, 14, 18);
@@ -133,8 +171,6 @@ namespace exxen2._0.capaVisual.Recepcionista
             lblEntrenadores.Font = new Font("Segoe UI Semibold", 8F, FontStyle.Bold); lblEntrenadores.ForeColor = Color.FromArgb(100, 116, 139);  lblEntrenadores.Margin = new Padding(0, 8, 0, 4); lblEntrenadores.Name = "lblEntrenadores";  lblEntrenadores.TabIndex = 5; lblEntrenadores.Text = "ENTRENADORES";
             btnAsignar.BackColor = Color.FromArgb(248, 250, 252); btnAsignar.FlatAppearance.BorderColor = Color.FromArgb(226, 232, 240); btnAsignar.FlatStyle = FlatStyle.Flat; btnAsignar.Font = new Font("Segoe UI", 9.5F); btnAsignar.ForeColor = Color.FromArgb(51, 65, 85);  btnAsignar.Margin = new Padding(0, 0, 0, 5); btnAsignar.Name = "btnAsignar";  btnAsignar.TabIndex = 6; btnAsignar.Text = "Asignar entrenador"; btnAsignar.TextAlign = ContentAlignment.MiddleLeft; btnAsignar.UseVisualStyleBackColor = false;
             btnConsultar.BackColor = Color.FromArgb(248, 250, 252); btnConsultar.FlatAppearance.BorderColor = Color.FromArgb(226, 232, 240); btnConsultar.FlatStyle = FlatStyle.Flat; btnConsultar.Font = new Font("Segoe UI", 9.5F); btnConsultar.ForeColor = Color.FromArgb(51, 65, 85);  btnConsultar.Margin = new Padding(0, 0, 0, 5); btnConsultar.Name = "btnConsultar";  btnConsultar.TabIndex = 7; btnConsultar.Text = "Consultar entrenador"; btnConsultar.TextAlign = ContentAlignment.MiddleLeft; btnConsultar.UseVisualStyleBackColor = false;
-            lblControl.Font = new Font("Segoe UI Semibold", 8F, FontStyle.Bold); lblControl.ForeColor = Color.FromArgb(100, 116, 139);  lblControl.Margin = new Padding(0, 8, 0, 4); lblControl.Name = "lblControl";  lblControl.TabIndex = 8; lblControl.Text = "CONTROL DE ACCESO";
-            btnAsistencias.BackColor = Color.FromArgb(248, 250, 252); btnAsistencias.FlatAppearance.BorderColor = Color.FromArgb(226, 232, 240); btnAsistencias.FlatStyle = FlatStyle.Flat; btnAsistencias.Font = new Font("Segoe UI", 9.5F); btnAsistencias.ForeColor = Color.FromArgb(51, 65, 85);  btnAsistencias.Margin = new Padding(0, 0, 0, 5); btnAsistencias.Name = "btnAsistencias";  btnAsistencias.TabIndex = 9; btnAsistencias.Text = "Asistencias"; btnAsistencias.TextAlign = ContentAlignment.MiddleLeft; btnAsistencias.UseVisualStyleBackColor = false;
 
             panelPie.BackColor = Color.White; panelPie.Controls.Add(btnSalir);   panelPie.Name = "panelPie"; panelPie.Padding = new Padding(14, 10, 14, 14);  panelPie.TabIndex = 1;
             btnSalir.BackColor = Color.FromArgb(254, 242, 242);  btnSalir.FlatAppearance.BorderColor = Color.FromArgb(254, 202, 202); btnSalir.FlatStyle = FlatStyle.Flat; btnSalir.ForeColor = Color.FromArgb(185, 28, 28);  btnSalir.Name = "btnSalir";  btnSalir.TabIndex = 0; btnSalir.Text = "Salir"; btnSalir.TextAlign = ContentAlignment.MiddleLeft; btnSalir.UseVisualStyleBackColor = false;
@@ -154,6 +190,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             MinimumSize = new Size(1100, 700);
             this.Name = "PanelRecepcionista";
             StartPosition = FormStartPosition.CenterScreen;
+            WindowState = FormWindowState.Maximized;
             Text = "SysGym - Recepcionista";
             // Layout base: encabezado fijo, menu lateral estable y contenido restante.
 
@@ -200,12 +237,6 @@ namespace exxen2._0.capaVisual.Recepcionista
 
             btnConsultar.Margin = new Padding(0, 0, 0, 5);
             btnConsultar.Padding = new Padding(12, 0, 0, 0);
-
-            lblControl.Margin = new Padding(0, 8, 0, 2);
-            lblControl.TextAlign = ContentAlignment.MiddleLeft;
-
-            btnAsistencias.Margin = new Padding(0, 0, 0, 5);
-            btnAsistencias.Padding = new Padding(12, 0, 0, 0);
 
             panelContenido.Padding = new Padding(0);
 
@@ -255,15 +286,11 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.lblEntrenadores.Size = new System.Drawing.Size(236, 22);
             this.lblEntrenadores.Tag = "ENTRENADORES";
             this.lblEntrenadores.Text = "▶ ENTRENADORES";
-            this.lblControl.AutoSize = false;
-            this.lblControl.Location = new System.Drawing.Point(14, 196);
-            this.lblControl.Size = new System.Drawing.Size(236, 22);
-            this.lblControl.Tag = "CONTROL DE ACCESO";
-            this.lblControl.Text = "▶ CONTROL DE ACCESO";
             this.btnPagos.Visible = false;
             this.btnAsignar.Visible = false;
             this.btnConsultar.Visible = false;
-            this.btnAsistencias.Visible = false;
+            layoutEncabezado.ResumeLayout(false);
+            panelIdentidad.ResumeLayout(false);
             this.panelPie.AutoSize = false;
             this.panelPie.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelPie.Size = new System.Drawing.Size(264, 76);
@@ -294,7 +321,6 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.btnPagos.Click += new System.EventHandler(this.btnPagos_Click);
             this.btnAsignar.Click += new System.EventHandler(this.btnAsignar_Click);
             this.btnConsultar.Click += new System.EventHandler(this.btnConsultar_Click);
-            this.btnAsistencias.Click += new System.EventHandler(this.btnAsistencias_Click);
                     this.Load += new System.EventHandler(this.PanelRecepcionista_Load);
         }
     }

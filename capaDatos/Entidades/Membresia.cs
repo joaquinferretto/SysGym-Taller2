@@ -13,7 +13,6 @@ namespace exxen2._0.capaDatos.Entidades
         {
             Entrenadores = new HashSet<MembresiaEntrenador>();
             Cuotas = new HashSet<CuotaMembresia>();
-            Rutinas = new HashSet<RutinaAsignacion>();
             Estado = true;
         }
 
@@ -25,6 +24,7 @@ namespace exxen2._0.capaDatos.Entidades
         public int IdPlan { get; set; }
         public int IdSocio { get; set; }
         public int IdUsuarioSistema { get; set; }
+        public int? IdRutina { get; set; }
 
         [ForeignKey("IdPlan")]
         public virtual Plan Plan { get; set; }
@@ -34,8 +34,9 @@ namespace exxen2._0.capaDatos.Entidades
 
         [ForeignKey("IdUsuarioSistema")]
         public virtual UsuarioSistema UsuarioSistema { get; set; }
+        [ForeignKey("IdRutina")]
+        public virtual Rutina Rutina { get; set; }
         public virtual ICollection<CuotaMembresia> Cuotas { get; set; }
         public virtual ICollection<MembresiaEntrenador> Entrenadores { get; set; }
-        public virtual ICollection<RutinaAsignacion> Rutinas { get; set; }
     }
 }

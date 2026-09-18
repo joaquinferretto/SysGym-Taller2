@@ -1,4 +1,7 @@
 using System;
+using System.Drawing;
+using System.IO;
+using System.Linq;
 using exxen2._0.capaDatos.Entidades;
 
 namespace exxen2._0.capaLogica
@@ -8,20 +11,79 @@ namespace exxen2._0.capaLogica
     {
         public const int TamanoMaximoFoto = 2 * 1024 * 1024;
 
-        /* Valida el sexo opcional, el límite de dos MiB y la firma del formato de la foto. */
+        /* Valida un nombre humano sin aceptar numeros ni simbolos ajenos al nombre. */
+        public static void ValidarNombre(string valor, string campo)
+        {
+            if (string.IsNullOrWhiteSpace(valor))
+                throw new InvalidOperationException("El " + campo + " es obligatorio.");
+            if (!valor.Any(char.IsLetter) || valor.Any(caracter => !char.IsLetter(caracter) && caracter != ' ' && caracter != '\'' && caracter != '-'))
+                throw new InvalidOperationException("El " + campo + " solo puede contener letras, espacios, apóstrofes o guiones.");
+        }
+
+        /* Valida el DNI en el formato numerico que conserva el modelo actual. */
+        public static void ValidarDni(string dni)
+        {
+            if (string.IsNullOrWhiteSpace(dni))
+                throw new InvalidOperationException("El DNI es obligatorio.");
+            if (dni.Any(caracter => caracter < '0' || caracter > '9'))
+                throw new InvalidOperationException("El DNI debe contener únicamente números.");
+        }
+
+        /* Calcula la edad completa considerando si el cumpleaños ya ocurrió. */
+        public static int CalcularEdad(DateTime fechaNacimiento, DateTime fechaReferencia)
+        {
+            var edad = fechaReferencia.Year - fechaNacimiento.Year;
+            if (fechaNacimiento.Date > fechaReferencia.Date.AddYears(-edad))
+                edad--;
+            return edad;
+        }
+
+        /* Valida que la fecha exista, no sea futura y cumpla la edad minima solicitada. */
+        public static void ValidarEdadMinima(DateTime? fechaNacimiento, int edadMinima, string mensajeEdad)
+        {
+            if (!fechaNacimiento.HasValue)
+                throw new InvalidOperationException("La fecha de nacimiento es obligatoria.");
+            if (fechaNacimiento.Value.Date > DateTime.Today)
+                throw new InvalidOperationException("La fecha de nacimiento no puede ser futura.");
+            if (CalcularEdad(fechaNacimiento.Value.Date, DateTime.Today) < edadMinima)
+                throw new InvalidOperationException(mensajeEdad);
+        }
+
+        /* Valida el sexo opcional, el límite de dos MiB y que la foto sea una imagen decodificable. */
         public static void ValidarFotoYSexo(byte[] foto, string sexo)
         {
             if (sexo != null && sexo != "M" && sexo != "F")
                 throw new InvalidOperationException("El sexo debe ser Masculino, Femenino o quedar sin seleccionar.");
             if (foto == null)
                 return;
-            if (foto.Length > TamanoMaximoFoto)
-                throw new InvalidOperationException("La foto no puede superar los 2 MB.");
-            bool png = foto.Length >= 24 && foto[0] == 137 && foto[1] == 80 && foto[2] == 78 && foto[3] == 71 && foto[4] == 13 && foto[5] == 10 && foto[6] == 26 && foto[7] == 10;
-            bool jpeg = foto.Length >= 4 && foto[0] == 255 && foto[1] == 216 && foto[2] == 255 && foto[foto.Length - 2] == 255 && foto[foto.Length - 1] == 217;
-            bool bmp = foto.Length >= 54 && foto[0] == 66 && foto[1] == 77;
-            if (!png && !jpeg && !bmp)
-                throw new InvalidOperationException("La foto debe tener formato PNG, JPG o BMP válido.");
+            ValidarImagen(foto);
+        }
+
+        /* Comprueba el tamaño y la decodificación real de una imagen PNG o JPEG. */
+        public static void ValidarImagen(byte[] imagen)
+        {
+            if (imagen == null || imagen.Length == 0)
+                throw new InvalidOperationException("Seleccione un archivo de imagen válido.");
+            if (imagen.Length > TamanoMaximoFoto)
+                throw new InvalidOperationException("La imagen no puede superar los 2 MB.");
+
+            try
+            {
+                using (var memoria = new MemoryStream(imagen))
+                using (var cargada = Image.FromStream(memoria, true, true))
+                {
+                    if (cargada.Width <= 0 || cargada.Height <= 0)
+                        throw new InvalidOperationException("Seleccione un archivo de imagen válido.");
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                throw;
+            }
+            catch (Exception excepcion)
+            {
+                throw new InvalidOperationException("Seleccione un archivo de imagen válido.", excepcion);
+            }
         }
 
         public const int PrimerDiaRutina = 1;
