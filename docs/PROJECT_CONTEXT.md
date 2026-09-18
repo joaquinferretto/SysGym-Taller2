@@ -1,5 +1,25 @@
 # Contexto del proyecto
 
+## Reparacion de RutinasEntrenadorFormulario - 18 de septiembre de 2026
+
+Se trabajo exclusivamente sobre `capaVisual/Entrenador/RutinasEntrenadorFormulario.Designer.cs` y `RutinasEntrenadorFormulario.cs`. El Designer ya no contiene loops ni helpers de configuracion; las cuatro filas del detalle se declaran explicitamente y los botones, grillas, campos, columnas, nombres y eventos quedan representados mediante propiedades normales de Windows Forms. La pantalla master/detail y sus contenedores funcionales no fueron redisenados.
+
+El formulario mantiene tres modos de detalle: Consulta al seleccionar, Nuevo desde `+ Agregar ejercicio` y Edicion desde `Editar`. La seleccion carga el registro exacto por `IdRutinaEjercicio`; guardar en Edicion usa `RutinaEjercicioLogica.Modificar` sobre la relacion existente, mientras que Nuevo usa `AgregarEjercicio`. `Quitar` conserva el ejercicio de catalogo y solo desactiva `RutinaEjercicio`. Cancelar limpia un alta nueva o restaura la fila seleccionada. No se modificaron DER, SQL, arquitectura ni reglas de negocio.
+
+Verificaciones realizadas: Debug y Release sin errores; smoke de constructor/layout; cuatro filas declarativas; SplitterDistance valido; estados de botones y campos para Consulta/Nuevo/Edicion; Cancelar Nuevo; comparacion de bounds sin cambios frente a la version anterior; auditoria de handlers sin duplicados. Los warnings CS0649 pertenecen a otros formularios previamente modificados. Pendientes: comprobacion interactiva con "Ver disenador", runtime con base de prueba y casos reales de Agregar/Editar/Cancelar/Quitar.
+
+## Simplificacion incremental de contenedores - 18 de septiembre de 2026
+
+La segunda fase se limito a `GestionSociosFormulario`, `GestionMembresiasFormulario` y `GestionPagosFormulario`. Se elimino el panel intermedio `contenedorContenido` y se represento la relacion listado/detalle mediante un `TableLayoutPanel` principal con columnas y fila declaradas explicitamente en cada `Designer.cs`. Los paneles de listado y detalle conservan sus bordes, padding, scroll, filtros, acciones y medidas visuales; el resto de los contenedores se mantuvo cuando aporta layout o agrupacion.
+
+No se movio diseño programatico a los archivos `.cs`: no se crearon controles en runtime y la logica de formularios y de negocio conserva sus capas. Los tres formularios compilaron en Debug y Release sin errores, se instanciaron y ejecutaron `PerformLayout` en memoria, y sus controles visibles mantuvieron los mismos bounds que la compilacion anterior. `git diff --check` fue correcto. Pendiente: comprobacion manual de "Ver disenador" en Visual Studio y prueba funcional contra la base disponible.
+
+## Fase 1: Designer declarativo - 18 de septiembre de 2026
+
+La primera fase se limito a `GestionUsuariosFormulario`, `GestionPlanesFormulario` y `GestionAsignacionesFormulario`. Cada `InitializeComponent` declara de forma explicita sus controles, propiedades, contenedores, filas y suscripciones de eventos, con el formato esperable de Windows Forms Designer. Se eliminaron los helpers visuales, arrays y loops que reconstruian la interfaz; el comportamiento continua en los archivos `.cs` y la logica de negocio permanece en `capaLogica`.
+
+Se conservaron nombres, jerarquia, layout, columnas, foto, validaciones y funcionalidad. No se modificaron los formularios restantes. Debug y Release compilaron sin errores; la inicializacion en memoria confirmo las filas y controles de las tres tablas principales. Permanece el warning preexistente de `GestionEjerciciosFormulario.components`. Pendiente: abrir manualmente cada formulario con "Ver disenador" en Visual Studio y realizar la prueba funcional con la base disponible; la apertura interactiva no se ejecuto desde esta consola.
+
 ## Layout de registro de usuarios — 18 de septiembre de 2026
 
 Última actualización de esta sección: 18 de septiembre de 2026.

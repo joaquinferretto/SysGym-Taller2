@@ -132,6 +132,7 @@ namespace exxen2._0.capaVisual.Entrenador
             try
             {
                 tablaEjercicios.Rows.Clear();
+                LimpiarDetalleEjercicio();
                 if (idRutina == 0) return;
                 foreach (var detalle in ejerciciosRutina.ListarPorRutina(idRutina))
                 {
@@ -176,6 +177,17 @@ namespace exxen2._0.capaVisual.Entrenador
             CargarDetalleDeRutina();
         }
 
+        private void LimpiarDetalleEjercicio()
+        {
+            ejercicio.SelectedIndex = -1;
+            dia.SelectedIndex = -1;
+            series.Clear();
+            repeticiones.Clear();
+            peso.Clear();
+            descanso.Clear();
+            orden.Clear();
+        }
+
         private void tablaEjercicios_SelectionChanged(object origen, EventArgs e)
         {
             if (cargandoDetalle || tablaEjercicios.CurrentRow == null || !tablaEjercicios.CurrentRow.Selected)
@@ -185,25 +197,21 @@ namespace exxen2._0.capaVisual.Entrenador
             }
             var fila = tablaEjercicios.CurrentRow;
             if (fila.Cells[0].Value == null) return;
-            idRutinaEjercicio = Convert.ToInt32(fila.Cells[0].Value);
-            var nombreDia = Convert.ToString(fila.Cells[1].Value);
-            var indiceDia = dia.Items.IndexOf(nombreDia);
-            if (indiceDia >= 0) dia.SelectedIndex = indiceDia;
-            orden.Text = Convert.ToString(fila.Cells[2].Value);
-            var nombreEjercicio = Convert.ToString(fila.Cells[3].Value);
-            for (var indice = 0; indice < ejercicio.Items.Count; indice++)
-            {
-                var opcion = ejercicio.Items[indice] as Ejercicio;
-                if (opcion != null && opcion.Nombre == nombreEjercicio)
-                {
-                    ejercicio.SelectedIndex = indice;
-                    break;
-                }
-            }
-            series.Text = Convert.ToString(fila.Cells[4].Value) == "-" ? string.Empty : Convert.ToString(fila.Cells[4].Value);
-            repeticiones.Text = Convert.ToString(fila.Cells[5].Value) == "-" ? string.Empty : Convert.ToString(fila.Cells[5].Value);
-            peso.Text = Convert.ToString(fila.Cells[6].Value) == "-" ? string.Empty : Convert.ToString(fila.Cells[6].Value);
-            descanso.Text = Convert.ToString(fila.Cells[7].Value).TrimEnd('s');
+            var idSeleccionado = Convert.ToInt32(fila.Cells[0].Value);
+            var detalle = ejerciciosRutina.ListarPorRutina(idRutina)
+                .FirstOrDefault(item => item.IdRutinaEjercicio == idSeleccionado);
+            if (detalle == null) return;
+
+            idRutinaEjercicio = detalle.IdRutinaEjercicio;
+            dia.SelectedIndex = detalle.DiaSemana.HasValue
+                ? detalle.DiaSemana.Value - ValidacionesGimnasio.PrimerDiaRutina
+                : -1;
+            ejercicio.SelectedValue = detalle.IdEjercicio;
+            orden.Text = detalle.Orden.ToString();
+            series.Text = detalle.Series.HasValue ? detalle.Series.Value.ToString() : string.Empty;
+            repeticiones.Text = detalle.Repeticiones.HasValue ? detalle.Repeticiones.Value.ToString() : string.Empty;
+            peso.Text = detalle.Peso.HasValue ? detalle.Peso.Value.ToString("0.##") : string.Empty;
+            descanso.Text = detalle.Descanso.ToString();
             EstablecerModoEditorEjercicio(ModoEditorEjercicio.Visualizacion);
             AplicarEstadoControles();
         }
@@ -213,7 +221,7 @@ namespace exxen2._0.capaVisual.Entrenador
             try
             {
                 if (idRutinaEjercicio == 0) throw new InvalidOperationException("Selecciona un ejercicio de la rutina.");
-                if (MessageBox.Show("¿Quitar el ejercicio seleccionado de la rutina?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                if (MessageBox.Show("¿Desea quitar este ejercicio de la rutina?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                     return;
                 ejerciciosRutina.Quitar(idRutinaEjercicio);
                 CargarDetalleDeRutina();
@@ -238,6 +246,7 @@ namespace exxen2._0.capaVisual.Entrenador
             descripcion.Clear();
             tabla.ClearSelection();
             tablaEjercicios.Rows.Clear();
+            LimpiarDetalleEjercicio();
             guardarRutina.Text = "Guardar rutina";
             darDeBaja.Visible = false;
             reactivar.Visible = false;
@@ -388,13 +397,30 @@ namespace exxen2._0.capaVisual.Entrenador
         {
             if (modoEditorEjercicio == ModoEditorEjercicio.Nuevo)
             {
-                idRutinaEjercicio = 0;
-                ejercicio.SelectedIndex = -1;
-                series.Clear();
-                repeticiones.Clear();
-                peso.Clear();
-                descanso.Clear();
-                orden.Clear();
+                var fila = tablaEjercicios.CurrentRow;
+                if (fila != null && fila.Cells[0].Value != null)
+                {
+                    idRutinaEjercicio = Convert.ToInt32(fila.Cells[0].Value);
+                    tablaEjercicios_SelectionChanged(tablaEjercicios, EventArgs.Empty);
+                }
+                else
+                {
+                    idRutinaEjercicio = 0;
+                    ejercicio.SelectedIndex = -1;
+                    series.Clear();
+                    repeticiones.Clear();
+                    peso.Clear();
+                    descanso.Clear();
+                    orden.Clear();
+                }
+            }
+            else if (idRutinaEjercicio > 0)
+            {
+                var fila = tablaEjercicios.CurrentRow;
+                if (fila != null && fila.Cells[0].Value != null)
+                {
+                    tablaEjercicios_SelectionChanged(tablaEjercicios, EventArgs.Empty);
+                }
             }
             EstablecerModoEditorEjercicio(ModoEditorEjercicio.Visualizacion);
         }
@@ -494,6 +520,11 @@ namespace exxen2._0.capaVisual.Entrenador
         {
             Cargar();
             CargarDetalleDeRutina();
+        }
+
+        private void accionesRutina_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

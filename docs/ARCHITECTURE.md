@@ -1,5 +1,31 @@
 # Arquitectura
 
+## Normalizacion de RutinasEntrenadorFormulario - 18 de septiembre de 2026
+
+`RutinasEntrenadorFormulario.Designer.cs` conserva la distribucion master/detail existente: catalogo a la izquierda y, a la derecha, rutina seleccionada, ejercicios de la rutina y detalle del ejercicio. Se elimino el `for` que creaba las cuatro filas de `contenedorFormulario` y se declararon las cuatro `RowStyle` de 25% de forma explicita. Tambien se reemplazaron `ConfigurarTabla`, `ConfigurarBoton` y `AgregarCampo` por propiedades, `Controls.Add` y suscripciones de eventos declarativas. No quedan helpers propios ni control de flujo dentro de `InitializeComponent`; permanecen unicamente arrays estandar para `Columns.AddRange` y `Items.AddRange`.
+
+El handler `Editar` es unico: `actualizarEjercicio_Click`. La seleccion de una fila vuelve a consultar el detalle por `IdRutinaEjercicio`, carga Ejercicio, Dia, Series, Repeticiones, Peso, Descanso y Orden, y deja el editor en consulta. `Agregar` crea mediante `RutinaEjercicioLogica.AgregarEjercicio`; `Guardar cambios` conserva `IdRutinaEjercicio` y llama a `RutinaEjercicioLogica.Modificar`; `Quitar` llama a `Quitar` despues de confirmar y solo baja la relacion. Cancelar descarta el modo nuevo o recarga la fila seleccionada en modo edicion. Las validaciones de rangos permanecen en la capa logica.
+
+Se mantuvo `splitContenido_Resize` porque conserva la proporcion responsive actual y protege los limites de `Panel1MinSize` y `Panel2MinSize`; el valor inicial declarativo de `SplitterDistance` sigue siendo valido. La profundidad maxima de contenedores permanecio en cinco niveles y no se eliminaron contenedores que aportan `Dock`, `Padding`, `BorderStyle`, scroll, agrupacion o layout.
+
+Debug y Release compilaron sin errores. La prueba en memoria confirmo las cuatro filas, las grillas, el SplitContainer y los modos Consulta/Nuevo/Edicion; la prueba de Cancelar Nuevo descarto valores y regreso a consulta. Los warnings CS0649 de `GestionEjerciciosFormulario` y `GestionSociosFormulario` son preexistentes y pertenecen a otros formularios. Pendiente: abrir manualmente "Ver disenador" y ejecutar los seis casos funcionales contra una base de prueba controlada; esta consola no realizo una prueba interactiva ni altero SQL Server.
+
+## Simplificacion incremental de contenedores WinForms - 18 de septiembre de 2026
+
+Se revisaron unicamente `GestionSociosFormulario`, `GestionMembresiasFormulario` y `GestionPagosFormulario`. En cada uno se elimino el `Panel contenedorContenido`, que solo envolvia `panelListado` y `panelDetalle` sin aportar borde, scroll, padding ni comportamiento propio. `panelContenido` paso a ser un `TableLayoutPanel` declarativo con dos columnas explicitas: listado flexible y detalle fijo de 396 px; ambos paneles son ahora hijos directos. Se conservaron los paneles que aportan borde, padding, scroll, filtro, agrupacion o distribucion de controles.
+
+No se agregaron helpers, loops, carga de datos ni logica de negocio a los `Designer.cs`; tampoco se modificaron los archivos `.cs` de comportamiento ni las capas. Los nombres, eventos, foto, validaciones, controles internos y funcionalidad existente permanecen intactos. La comparacion de bounds de los controles visibles contra la compilacion anterior no mostro cambios.
+
+Debug y Release compilaron con MSBuild de Visual Studio con 0 errores. La inicializacion en memoria y `PerformLayout` confirmaron en los tres formularios el `TableLayoutPanel` de dos columnas, una fila y los dos hijos directos; `git diff --check` finalizo correctamente. Permanece el warning preexistente CS0649 de `GestionEjerciciosFormulario.components`. Pendiente: abrir manualmente los tres formularios con "Ver disenador" en Visual Studio y recorrer runtime contra SQL Server; esa inspeccion interactiva no se ejecuto desde esta consola.
+
+## Normalizacion declarativa de tres formularios WinForms - 18 de septiembre de 2026
+
+Se normalizaron unicamente `GestionUsuariosFormulario`, `GestionPlanesFormulario` y `GestionAsignacionesFormulario`. Sus `Designer.cs` ahora contienen controles, propiedades, contenedores, filas explicitas, eventos, `BeginInit`/`EndInit` y `SuspendLayout`/`ResumeLayout`, sin helpers propios ni reconstruccion procedural de la interfaz dentro de `InitializeComponent`.
+
+En Usuarios se eliminaron los arrays, los `Clear`, los dos loops y la reconstruccion de las nueve filas; en Planes se eliminaron `AgregarCampo` y `ConfigurarBoton`; en Asignaciones se eliminaron el loop de siete filas y los helpers de etiquetas y valores. Los archivos `.cs` de comportamiento, las capas, validaciones, eventos, foto, columnas y funcionalidad existente no se modificaron. Los formularios restantes quedan fuera de esta fase.
+
+Debug y Release compilaron con MSBuild de Visual Studio con 0 errores. Se inicializaron los tres formularios en memoria y se verificaron 9/18 controles de la tabla de campos de Usuarios, 3/6 de Planes y 7/14 de la ficha de Asignaciones. `git diff --check` finalizo correctamente. Permanece el warning preexistente CS0649 de `GestionEjerciciosFormulario.components`. Pendientes: abrir manualmente los tres formularios con "Ver disenador" en Visual Studio y probar sus operaciones contra SQL Server; esa inspeccion interactiva no se ejecuto desde esta consola.
+
 ## Notificaciones clasicas de altas - 17 de septiembre de 2026
 
 Ultima actualizacion de esta seccion: 17 de septiembre de 2026.

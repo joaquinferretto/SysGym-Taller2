@@ -234,13 +234,17 @@
     <EmbeddedResource Include="capaVisual\Administrador\GestionUsuariosFormulario.resx">
       <DependentUpon>GestionUsuariosFormulario.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="capaVisual\Autenticacion\InicioSesion.resx">
       <DependentUpon>InicioSesion.cs</DependentUpon>
-
     </EmbeddedResource>
     <EmbeddedResource Include="capaVisual\Compartido\GestionEjerciciosFormulario.resx">
       <DependentUpon>GestionEjerciciosFormulario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="capaVisual\Compartido\GestionSociosFormulario.resx">
+      <DependentUpon>GestionSociosFormulario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="capaVisual\Entrenador\RutinasEntrenadorFormulario.resx">
+      <DependentUpon>RutinasEntrenadorFormulario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

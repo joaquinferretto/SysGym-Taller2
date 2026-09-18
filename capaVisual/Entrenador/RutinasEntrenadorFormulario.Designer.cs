@@ -82,81 +82,992 @@ namespace exxen2._0.capaVisual.Entrenador
 
         private void InitializeComponent()
         {
-            components = new Container();
-            panelEncabezado = new Panel(); lblTitulo = new Label(); lblDescripcion = new Label(); btnVolver = new Button();
-            barraAcciones = new Panel(); lblEstado = new Label(); panelContenido = new Panel(); splitContenido = new SplitContainer(); layoutDetalle = new TableLayoutPanel(); panelListado = new Panel(); lblListadoTitulo = new Label();
-            panelRutina = new Panel(); lblDetalleTitulo = new Label(); contenedorRutina = new TableLayoutPanel(); accionesRutina = new FlowLayoutPanel();
-            panelEjercicios = new Panel(); lblEjerciciosTitulo = new Label(); accionesEjercicios = new FlowLayoutPanel(); panelFormulario = new Panel(); lblDetalleEjercicio = new Label(); contenedorFormulario = new TableLayoutPanel(); accionesFormulario = new FlowLayoutPanel();
-            lblNombre = new Label(); lblDescripcionRutina = new Label(); lblEjercicio = new Label(); lblSeries = new Label(); lblRepeticiones = new Label(); lblPeso = new Label(); lblDescanso = new Label(); lblOrden = new Label(); lblDia = new Label();
-            tabla = new DataGridView(); colId = new DataGridViewTextBoxColumn(); colRutina = new DataGridViewTextBoxColumn(); colCreador = new DataGridViewTextBoxColumn(); colAsignados = new DataGridViewTextBoxColumn(); colCreacion = new DataGridViewTextBoxColumn(); colEstado = new DataGridViewTextBoxColumn();
-            dia = new ComboBox(); ejercicio = new ComboBox(); nombre = new TextBox(); descripcion = new TextBox(); series = new TextBox(); repeticiones = new TextBox(); peso = new TextBox(); descanso = new TextBox(); orden = new TextBox();
-            nuevaRutina = new Button(); guardarRutina = new Button(); actualizar = new Button(); agregarEjercicio = new Button(); actualizarEjercicio = new Button(); darDeBaja = new Button(); reactivar = new Button(); quitarEjercicio = new Button(); guardarEjercicio = new Button(); cancelarEjercicio = new Button();
-            tablaEjercicios = new DataGridView(); colDetalleId = new DataGridViewTextBoxColumn(); colDetalleDia = new DataGridViewTextBoxColumn(); colDetalleOrden = new DataGridViewTextBoxColumn(); colDetalleEjercicio = new DataGridViewTextBoxColumn(); colDetalleSeries = new DataGridViewTextBoxColumn(); colDetalleRepeticiones = new DataGridViewTextBoxColumn(); colDetallePeso = new DataGridViewTextBoxColumn(); colDetalleDescanso = new DataGridViewTextBoxColumn();
-            ((ISupportInitialize)(tabla)).BeginInit(); ((ISupportInitialize)(tablaEjercicios)).BeginInit();
-            panelEncabezado.SuspendLayout(); barraAcciones.SuspendLayout(); panelContenido.SuspendLayout(); ((ISupportInitialize)(splitContenido)).BeginInit(); splitContenido.Panel1.SuspendLayout(); splitContenido.Panel2.SuspendLayout(); splitContenido.SuspendLayout(); layoutDetalle.SuspendLayout(); panelListado.SuspendLayout(); panelRutina.SuspendLayout(); contenedorRutina.SuspendLayout(); accionesRutina.SuspendLayout(); panelEjercicios.SuspendLayout(); accionesEjercicios.SuspendLayout(); panelFormulario.SuspendLayout(); contenedorFormulario.SuspendLayout(); accionesFormulario.SuspendLayout(); SuspendLayout();
+            this.panelEncabezado = new System.Windows.Forms.Panel();
+            this.lblTitulo = new System.Windows.Forms.Label();
+            this.lblDescripcion = new System.Windows.Forms.Label();
+            this.btnVolver = new System.Windows.Forms.Button();
+            this.barraAcciones = new System.Windows.Forms.Panel();
+            this.lblEstado = new System.Windows.Forms.Label();
+            this.panelContenido = new System.Windows.Forms.Panel();
+            this.splitContenido = new System.Windows.Forms.SplitContainer();
+            this.panelListado = new System.Windows.Forms.Panel();
+            this.tabla = new System.Windows.Forms.DataGridView();
+            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colRutina = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCreador = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAsignados = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCreacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nuevaRutina = new System.Windows.Forms.Button();
+            this.lblListadoTitulo = new System.Windows.Forms.Label();
+            this.layoutDetalle = new System.Windows.Forms.TableLayoutPanel();
+            this.panelRutina = new System.Windows.Forms.Panel();
+            this.contenedorRutina = new System.Windows.Forms.TableLayoutPanel();
+            this.lblNombre = new System.Windows.Forms.Label();
+            this.nombre = new System.Windows.Forms.TextBox();
+            this.lblDescripcionRutina = new System.Windows.Forms.Label();
+            this.descripcion = new System.Windows.Forms.TextBox();
+            this.accionesRutina = new System.Windows.Forms.FlowLayoutPanel();
+            this.guardarRutina = new System.Windows.Forms.Button();
+            this.actualizar = new System.Windows.Forms.Button();
+            this.darDeBaja = new System.Windows.Forms.Button();
+            this.reactivar = new System.Windows.Forms.Button();
+            this.lblDetalleTitulo = new System.Windows.Forms.Label();
+            this.panelEjercicios = new System.Windows.Forms.Panel();
+            this.tablaEjercicios = new System.Windows.Forms.DataGridView();
+            this.colDetalleId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDetalleDia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDetalleOrden = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDetalleEjercicio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDetalleSeries = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDetalleRepeticiones = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDetallePeso = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDetalleDescanso = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.accionesEjercicios = new System.Windows.Forms.FlowLayoutPanel();
+            this.agregarEjercicio = new System.Windows.Forms.Button();
+            this.actualizarEjercicio = new System.Windows.Forms.Button();
+            this.quitarEjercicio = new System.Windows.Forms.Button();
+            this.lblEjerciciosTitulo = new System.Windows.Forms.Label();
+            this.panelFormulario = new System.Windows.Forms.Panel();
+            this.contenedorFormulario = new System.Windows.Forms.TableLayoutPanel();
+            this.lblEjercicio = new System.Windows.Forms.Label();
+            this.ejercicio = new System.Windows.Forms.ComboBox();
+            this.lblDia = new System.Windows.Forms.Label();
+            this.dia = new System.Windows.Forms.ComboBox();
+            this.lblSeries = new System.Windows.Forms.Label();
+            this.series = new System.Windows.Forms.TextBox();
+            this.lblRepeticiones = new System.Windows.Forms.Label();
+            this.repeticiones = new System.Windows.Forms.TextBox();
+            this.lblPeso = new System.Windows.Forms.Label();
+            this.peso = new System.Windows.Forms.TextBox();
+            this.lblDescanso = new System.Windows.Forms.Label();
+            this.descanso = new System.Windows.Forms.TextBox();
+            this.lblOrden = new System.Windows.Forms.Label();
+            this.orden = new System.Windows.Forms.TextBox();
+            this.accionesFormulario = new System.Windows.Forms.FlowLayoutPanel();
+            this.guardarEjercicio = new System.Windows.Forms.Button();
+            this.cancelarEjercicio = new System.Windows.Forms.Button();
+            this.lblDetalleEjercicio = new System.Windows.Forms.Label();
+            this.panelEncabezado.SuspendLayout();
+            this.panelContenido.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContenido)).BeginInit();
+            this.splitContenido.Panel1.SuspendLayout();
+            this.splitContenido.Panel2.SuspendLayout();
+            this.splitContenido.SuspendLayout();
+            this.panelListado.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tabla)).BeginInit();
+            this.layoutDetalle.SuspendLayout();
+            this.panelRutina.SuspendLayout();
+            this.contenedorRutina.SuspendLayout();
+            this.accionesRutina.SuspendLayout();
+            this.panelEjercicios.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tablaEjercicios)).BeginInit();
+            this.accionesEjercicios.SuspendLayout();
+            this.panelFormulario.SuspendLayout();
+            this.contenedorFormulario.SuspendLayout();
+            this.accionesFormulario.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // panelEncabezado
+            // 
+            this.panelEncabezado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(116)))), ((int)(((byte)(144)))));
+            this.panelEncabezado.Controls.Add(this.lblTitulo);
+            this.panelEncabezado.Controls.Add(this.lblDescripcion);
+            this.panelEncabezado.Controls.Add(this.btnVolver);
+            this.panelEncabezado.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelEncabezado.Location = new System.Drawing.Point(0, 0);
+            this.panelEncabezado.Name = "panelEncabezado";
+            this.panelEncabezado.Padding = new System.Windows.Forms.Padding(20, 8, 20, 8);
+            this.panelEncabezado.Size = new System.Drawing.Size(1100, 56);
+            this.panelEncabezado.TabIndex = 3;
+            this.panelEncabezado.Visible = false;
+            // 
+            // lblTitulo
+            // 
+            this.lblTitulo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
+            this.lblTitulo.ForeColor = System.Drawing.Color.White;
+            this.lblTitulo.Location = new System.Drawing.Point(20, 8);
+            this.lblTitulo.Name = "lblTitulo";
+            this.lblTitulo.Size = new System.Drawing.Size(1790, 40);
+            this.lblTitulo.TabIndex = 0;
+            this.lblTitulo.Text = "Gestionar rutinas | Catálogo y composición de rutinas";
+            this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblDescripcion
+            // 
+            this.lblDescripcion.Location = new System.Drawing.Point(0, 0);
+            this.lblDescripcion.Name = "lblDescripcion";
+            this.lblDescripcion.Size = new System.Drawing.Size(100, 23);
+            this.lblDescripcion.TabIndex = 1;
+            this.lblDescripcion.Visible = false;
+            // 
+            // btnVolver
+            // 
+            this.btnVolver.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnVolver.BackColor = System.Drawing.Color.White;
+            this.btnVolver.FlatAppearance.BorderSize = 0;
+            this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnVolver.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(116)))), ((int)(((byte)(144)))));
+            this.btnVolver.Location = new System.Drawing.Point(1874, 10);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(104, 36);
+            this.btnVolver.TabIndex = 2;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = false;
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
+            // 
+            // barraAcciones
+            // 
+            this.barraAcciones.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(213)))), ((int)(((byte)(225)))));
+            this.barraAcciones.Dock = System.Windows.Forms.DockStyle.Top;
+            this.barraAcciones.Location = new System.Drawing.Point(0, 56);
+            this.barraAcciones.Name = "barraAcciones";
+            this.barraAcciones.Size = new System.Drawing.Size(1100, 1);
+            this.barraAcciones.TabIndex = 2;
+            // 
+            // lblEstado
+            // 
+            this.lblEstado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.lblEstado.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblEstado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.lblEstado.Location = new System.Drawing.Point(0, 650);
+            this.lblEstado.Name = "lblEstado";
+            this.lblEstado.Padding = new System.Windows.Forms.Padding(18, 0, 12, 0);
+            this.lblEstado.Size = new System.Drawing.Size(1100, 30);
+            this.lblEstado.TabIndex = 1;
+            this.lblEstado.Text = "Listo";
+            this.lblEstado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // panelContenido
+            // 
+            this.panelContenido.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.panelContenido.Controls.Add(this.splitContenido);
+            this.panelContenido.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelContenido.Location = new System.Drawing.Point(0, 57);
+            this.panelContenido.Name = "panelContenido";
+            this.panelContenido.Padding = new System.Windows.Forms.Padding(16);
+            this.panelContenido.Size = new System.Drawing.Size(1100, 593);
+            this.panelContenido.TabIndex = 0;
+            // 
+            // splitContenido
+            // 
+            this.splitContenido.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContenido.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContenido.Location = new System.Drawing.Point(16, 16);
+            this.splitContenido.Name = "splitContenido";
+            // 
+            // splitContenido.Panel1
+            // 
+            this.splitContenido.Panel1.Controls.Add(this.panelListado);
+            this.splitContenido.Panel1.Padding = new System.Windows.Forms.Padding(8);
+            this.splitContenido.Panel1MinSize = 240;
+            // 
+            // splitContenido.Panel2
+            // 
+            this.splitContenido.Panel2.Controls.Add(this.layoutDetalle);
+            this.splitContenido.Panel2.Padding = new System.Windows.Forms.Padding(8);
+            this.splitContenido.Panel2MinSize = 500;
+            this.splitContenido.Size = new System.Drawing.Size(1068, 561);
+            this.splitContenido.SplitterDistance = 330;
+            this.splitContenido.SplitterWidth = 6;
+            this.splitContenido.TabIndex = 0;
+            this.splitContenido.Resize += new System.EventHandler(this.splitContenido_Resize);
+            // 
+            // panelListado
+            // 
+            this.panelListado.BackColor = System.Drawing.Color.White;
+            this.panelListado.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelListado.Controls.Add(this.tabla);
+            this.panelListado.Controls.Add(this.nuevaRutina);
+            this.panelListado.Controls.Add(this.lblListadoTitulo);
+            this.panelListado.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelListado.Location = new System.Drawing.Point(8, 8);
+            this.panelListado.Name = "panelListado";
+            this.panelListado.Padding = new System.Windows.Forms.Padding(10);
+            this.panelListado.Size = new System.Drawing.Size(314, 545);
+            this.panelListado.TabIndex = 0;
+            // 
+            // tabla
+            // 
+            this.tabla.AllowUserToAddRows = false;
+            this.tabla.AllowUserToDeleteRows = false;
+            this.tabla.AllowUserToResizeRows = false;
+            this.tabla.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.tabla.BackgroundColor = System.Drawing.Color.White;
+            this.tabla.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tabla.ColumnHeadersHeight = 29;
+            this.tabla.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colId,
+            this.colRutina,
+            this.colCreador,
+            this.colAsignados,
+            this.colCreacion,
+            this.colEstado});
+            this.tabla.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabla.Location = new System.Drawing.Point(10, 40);
+            this.tabla.MultiSelect = false;
+            this.tabla.Name = "tabla";
+            this.tabla.ReadOnly = true;
+            this.tabla.RowHeadersVisible = false;
+            this.tabla.RowHeadersWidth = 51;
+            this.tabla.RowTemplate.Height = 28;
+            this.tabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.tabla.Size = new System.Drawing.Size(292, 457);
+            this.tabla.TabIndex = 1;
+            this.tabla.SelectionChanged += new System.EventHandler(this.tabla_SelectionChanged);
+            // 
+            // colId
+            // 
+            this.colId.MinimumWidth = 6;
+            this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
+            this.colId.Visible = false;
+            // 
+            // colRutina
+            // 
+            this.colRutina.FillWeight = 34F;
+            this.colRutina.HeaderText = "Rutina";
+            this.colRutina.MinimumWidth = 115;
+            this.colRutina.Name = "colRutina";
+            this.colRutina.ReadOnly = true;
+            // 
+            // colCreador
+            // 
+            this.colCreador.FillWeight = 26F;
+            this.colCreador.HeaderText = "Entrenador";
+            this.colCreador.MinimumWidth = 100;
+            this.colCreador.Name = "colCreador";
+            this.colCreador.ReadOnly = true;
+            // 
+            // colAsignados
+            // 
+            this.colAsignados.FillWeight = 15F;
+            this.colAsignados.HeaderText = "Socios";
+            this.colAsignados.MinimumWidth = 60;
+            this.colAsignados.Name = "colAsignados";
+            this.colAsignados.ReadOnly = true;
+            // 
+            // colCreacion
+            // 
+            this.colCreacion.FillWeight = 15F;
+            this.colCreacion.HeaderText = "Creación";
+            this.colCreacion.MinimumWidth = 82;
+            this.colCreacion.Name = "colCreacion";
+            this.colCreacion.ReadOnly = true;
+            // 
+            // colEstado
+            // 
+            this.colEstado.FillWeight = 10F;
+            this.colEstado.HeaderText = "Estado";
+            this.colEstado.MinimumWidth = 70;
+            this.colEstado.Name = "colEstado";
+            this.colEstado.ReadOnly = true;
+            // 
+            // nuevaRutina
+            // 
+            this.nuevaRutina.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.nuevaRutina.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.nuevaRutina.FlatAppearance.BorderSize = 0;
+            this.nuevaRutina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.nuevaRutina.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.nuevaRutina.Location = new System.Drawing.Point(10, 497);
+            this.nuevaRutina.Margin = new System.Windows.Forms.Padding(0, 8, 0, 0);
+            this.nuevaRutina.Name = "nuevaRutina";
+            this.nuevaRutina.Size = new System.Drawing.Size(292, 36);
+            this.nuevaRutina.TabIndex = 0;
+            this.nuevaRutina.Text = "+ Nueva rutina";
+            this.nuevaRutina.UseVisualStyleBackColor = false;
+            this.nuevaRutina.Click += new System.EventHandler(this.nuevaRutina_Click);
+            // 
+            // lblListadoTitulo
+            // 
+            this.lblListadoTitulo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblListadoTitulo.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
+            this.lblListadoTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.lblListadoTitulo.Location = new System.Drawing.Point(10, 10);
+            this.lblListadoTitulo.Name = "lblListadoTitulo";
+            this.lblListadoTitulo.Size = new System.Drawing.Size(292, 30);
+            this.lblListadoTitulo.TabIndex = 2;
+            this.lblListadoTitulo.Text = "Rutinas";
+            this.lblListadoTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // layoutDetalle
+            // 
+            this.layoutDetalle.ColumnCount = 1;
+            this.layoutDetalle.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layoutDetalle.Controls.Add(this.panelRutina, 0, 0);
+            this.layoutDetalle.Controls.Add(this.panelFormulario, 0, 2);
+            this.layoutDetalle.Controls.Add(this.panelEjercicios, 0, 1);
+            this.layoutDetalle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layoutDetalle.Location = new System.Drawing.Point(8, 8);
+            this.layoutDetalle.Name = "layoutDetalle";
+            this.layoutDetalle.RowCount = 3;
+            this.layoutDetalle.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 136F));
+            this.layoutDetalle.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layoutDetalle.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 172F));
+            this.layoutDetalle.Size = new System.Drawing.Size(716, 545);
+            this.layoutDetalle.TabIndex = 0;
+            // 
+            // panelRutina
+            // 
+            this.panelRutina.BackColor = System.Drawing.Color.White;
+            this.panelRutina.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelRutina.Controls.Add(this.contenedorRutina);
+            this.panelRutina.Controls.Add(this.accionesRutina);
+            this.panelRutina.Controls.Add(this.lblDetalleTitulo);
+            this.panelRutina.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelRutina.Location = new System.Drawing.Point(3, 3);
+            this.panelRutina.Name = "panelRutina";
+            this.panelRutina.Padding = new System.Windows.Forms.Padding(10);
+            this.panelRutina.Size = new System.Drawing.Size(710, 130);
+            this.panelRutina.TabIndex = 0;
+            // 
+            // contenedorRutina
+            // 
+            this.contenedorRutina.ColumnCount = 2;
+            this.contenedorRutina.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 86F));
+            this.contenedorRutina.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.contenedorRutina.Controls.Add(this.lblNombre, 0, 0);
+            this.contenedorRutina.Controls.Add(this.nombre, 1, 0);
+            this.contenedorRutina.Controls.Add(this.lblDescripcionRutina, 0, 1);
+            this.contenedorRutina.Controls.Add(this.descripcion, 1, 1);
+            this.contenedorRutina.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.contenedorRutina.Location = new System.Drawing.Point(10, 35);
+            this.contenedorRutina.Name = "contenedorRutina";
+            this.contenedorRutina.Padding = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.contenedorRutina.RowCount = 2;
+            this.contenedorRutina.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.contenedorRutina.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.contenedorRutina.Size = new System.Drawing.Size(688, 60);
+            this.contenedorRutina.TabIndex = 0;
+            // 
+            // lblNombre
+            // 
+            this.lblNombre.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblNombre.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.lblNombre.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.lblNombre.Location = new System.Drawing.Point(0, 4);
+            this.lblNombre.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.lblNombre.Name = "lblNombre";
+            this.lblNombre.Size = new System.Drawing.Size(78, 24);
+            this.lblNombre.TabIndex = 0;
+            this.lblNombre.Text = "Nombre:";
+            this.lblNombre.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // nombre
+            // 
+            this.nombre.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.nombre.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.nombre.Location = new System.Drawing.Point(86, 4);
+            this.nombre.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.nombre.Name = "nombre";
+            this.nombre.Size = new System.Drawing.Size(594, 29);
+            this.nombre.TabIndex = 1;
+            // 
+            // lblDescripcionRutina
+            // 
+            this.lblDescripcionRutina.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblDescripcionRutina.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.lblDescripcionRutina.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.lblDescripcionRutina.Location = new System.Drawing.Point(0, 32);
+            this.lblDescripcionRutina.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.lblDescripcionRutina.Name = "lblDescripcionRutina";
+            this.lblDescripcionRutina.Size = new System.Drawing.Size(78, 24);
+            this.lblDescripcionRutina.TabIndex = 2;
+            this.lblDescripcionRutina.Text = "Descripción:";
+            this.lblDescripcionRutina.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // descripcion
+            // 
+            this.descripcion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.descripcion.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.descripcion.Location = new System.Drawing.Point(86, 32);
+            this.descripcion.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.descripcion.Name = "descripcion";
+            this.descripcion.Size = new System.Drawing.Size(594, 29);
+            this.descripcion.TabIndex = 3;
+            // 
+            // accionesRutina
+            // 
+            this.accionesRutina.Controls.Add(this.guardarRutina);
+            this.accionesRutina.Controls.Add(this.actualizar);
+            this.accionesRutina.Controls.Add(this.darDeBaja);
+            this.accionesRutina.Controls.Add(this.reactivar);
+            this.accionesRutina.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.accionesRutina.Location = new System.Drawing.Point(10, 95);
+            this.accionesRutina.Name = "accionesRutina";
+            this.accionesRutina.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.accionesRutina.Size = new System.Drawing.Size(688, 23);
+            this.accionesRutina.TabIndex = 1;
+            this.accionesRutina.WrapContents = false;
+            this.accionesRutina.Paint += new System.Windows.Forms.PaintEventHandler(this.accionesRutina_Paint);
+            // 
+            // guardarRutina
+            // 
+            this.guardarRutina.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(116)))), ((int)(((byte)(144)))));
+            this.guardarRutina.FlatAppearance.BorderSize = 0;
+            this.guardarRutina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.guardarRutina.ForeColor = System.Drawing.Color.White;
+            this.guardarRutina.Location = new System.Drawing.Point(0, 2);
+            this.guardarRutina.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
+            this.guardarRutina.Name = "guardarRutina";
+            this.guardarRutina.Size = new System.Drawing.Size(108, 32);
+            this.guardarRutina.TabIndex = 1;
+            this.guardarRutina.Text = "Guardar";
+            this.guardarRutina.UseVisualStyleBackColor = false;
+            this.guardarRutina.Click += new System.EventHandler(this.guardarRutina_Click);
+            // 
+            // actualizar
+            // 
+            this.actualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.actualizar.FlatAppearance.BorderSize = 0;
+            this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.actualizar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.actualizar.Location = new System.Drawing.Point(114, 2);
+            this.actualizar.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
+            this.actualizar.Name = "actualizar";
+            this.actualizar.Size = new System.Drawing.Size(108, 32);
+            this.actualizar.TabIndex = 2;
+            this.actualizar.Text = "Actualizar";
+            this.actualizar.UseVisualStyleBackColor = false;
+            this.actualizar.Click += new System.EventHandler(this.actualizar_Click);
+            // 
+            // darDeBaja
+            // 
+            this.darDeBaja.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.darDeBaja.FlatAppearance.BorderSize = 0;
+            this.darDeBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.darDeBaja.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.darDeBaja.Location = new System.Drawing.Point(228, 2);
+            this.darDeBaja.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
+            this.darDeBaja.Name = "darDeBaja";
+            this.darDeBaja.Size = new System.Drawing.Size(108, 32);
+            this.darDeBaja.TabIndex = 5;
+            this.darDeBaja.Text = "Dar de baja";
+            this.darDeBaja.UseVisualStyleBackColor = false;
+            this.darDeBaja.Visible = false;
+            this.darDeBaja.Click += new System.EventHandler(this.darDeBaja_Click);
+            // 
+            // reactivar
+            // 
+            this.reactivar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(252)))), ((int)(((byte)(231)))));
+            this.reactivar.FlatAppearance.BorderSize = 0;
+            this.reactivar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.reactivar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(101)))), ((int)(((byte)(52)))));
+            this.reactivar.Location = new System.Drawing.Point(342, 2);
+            this.reactivar.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
+            this.reactivar.Name = "reactivar";
+            this.reactivar.Size = new System.Drawing.Size(108, 32);
+            this.reactivar.TabIndex = 6;
+            this.reactivar.Text = "Reactivar";
+            this.reactivar.UseVisualStyleBackColor = false;
+            this.reactivar.Visible = false;
+            this.reactivar.Click += new System.EventHandler(this.reactivar_Click);
+            // 
+            // lblDetalleTitulo
+            // 
+            this.lblDetalleTitulo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblDetalleTitulo.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
+            this.lblDetalleTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.lblDetalleTitulo.Location = new System.Drawing.Point(10, 10);
+            this.lblDetalleTitulo.Name = "lblDetalleTitulo";
+            this.lblDetalleTitulo.Size = new System.Drawing.Size(688, 25);
+            this.lblDetalleTitulo.TabIndex = 2;
+            this.lblDetalleTitulo.Text = "Rutina seleccionada";
+            this.lblDetalleTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // panelEjercicios
+            // 
+            this.panelEjercicios.BackColor = System.Drawing.Color.White;
+            this.panelEjercicios.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelEjercicios.Controls.Add(this.tablaEjercicios);
+            this.panelEjercicios.Controls.Add(this.accionesEjercicios);
+            this.panelEjercicios.Controls.Add(this.lblEjerciciosTitulo);
+            this.panelEjercicios.Location = new System.Drawing.Point(3, 139);
+            this.panelEjercicios.Name = "panelEjercicios";
+            this.panelEjercicios.Padding = new System.Windows.Forms.Padding(10);
+            this.panelEjercicios.Size = new System.Drawing.Size(710, 231);
+            this.panelEjercicios.TabIndex = 1;
+            // 
+            // tablaEjercicios
+            // 
+            this.tablaEjercicios.AllowUserToAddRows = false;
+            this.tablaEjercicios.AllowUserToDeleteRows = false;
+            this.tablaEjercicios.AllowUserToResizeRows = false;
+            this.tablaEjercicios.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.tablaEjercicios.BackgroundColor = System.Drawing.Color.White;
+            this.tablaEjercicios.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tablaEjercicios.ColumnHeadersHeight = 29;
+            this.tablaEjercicios.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colDetalleId,
+            this.colDetalleDia,
+            this.colDetalleOrden,
+            this.colDetalleEjercicio,
+            this.colDetalleSeries,
+            this.colDetalleRepeticiones,
+            this.colDetallePeso,
+            this.colDetalleDescanso});
+            this.tablaEjercicios.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tablaEjercicios.Location = new System.Drawing.Point(10, 76);
+            this.tablaEjercicios.MultiSelect = false;
+            this.tablaEjercicios.Name = "tablaEjercicios";
+            this.tablaEjercicios.ReadOnly = true;
+            this.tablaEjercicios.RowHeadersVisible = false;
+            this.tablaEjercicios.RowHeadersWidth = 51;
+            this.tablaEjercicios.RowTemplate.Height = 28;
+            this.tablaEjercicios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.tablaEjercicios.Size = new System.Drawing.Size(688, 143);
+            this.tablaEjercicios.TabIndex = 2;
+            this.tablaEjercicios.SelectionChanged += new System.EventHandler(this.tablaEjercicios_SelectionChanged);
+            // 
+            // colDetalleId
+            // 
+            this.colDetalleId.MinimumWidth = 6;
+            this.colDetalleId.Name = "colDetalleId";
+            this.colDetalleId.ReadOnly = true;
+            this.colDetalleId.Visible = false;
+            // 
+            // colDetalleDia
+            // 
+            this.colDetalleDia.FillWeight = 12F;
+            this.colDetalleDia.HeaderText = "Día";
+            this.colDetalleDia.MinimumWidth = 65;
+            this.colDetalleDia.Name = "colDetalleDia";
+            this.colDetalleDia.ReadOnly = true;
+            // 
+            // colDetalleOrden
+            // 
+            this.colDetalleOrden.FillWeight = 10F;
+            this.colDetalleOrden.HeaderText = "Orden";
+            this.colDetalleOrden.MinimumWidth = 58;
+            this.colDetalleOrden.Name = "colDetalleOrden";
+            this.colDetalleOrden.ReadOnly = true;
+            // 
+            // colDetalleEjercicio
+            // 
+            this.colDetalleEjercicio.FillWeight = 28F;
+            this.colDetalleEjercicio.HeaderText = "Ejercicio";
+            this.colDetalleEjercicio.MinimumWidth = 110;
+            this.colDetalleEjercicio.Name = "colDetalleEjercicio";
+            this.colDetalleEjercicio.ReadOnly = true;
+            // 
+            // colDetalleSeries
+            // 
+            this.colDetalleSeries.FillWeight = 10F;
+            this.colDetalleSeries.HeaderText = "Series";
+            this.colDetalleSeries.MinimumWidth = 58;
+            this.colDetalleSeries.Name = "colDetalleSeries";
+            this.colDetalleSeries.ReadOnly = true;
+            // 
+            // colDetalleRepeticiones
+            // 
+            this.colDetalleRepeticiones.FillWeight = 16F;
+            this.colDetalleRepeticiones.HeaderText = "Repeticiones";
+            this.colDetalleRepeticiones.MinimumWidth = 86;
+            this.colDetalleRepeticiones.Name = "colDetalleRepeticiones";
+            this.colDetalleRepeticiones.ReadOnly = true;
+            // 
+            // colDetallePeso
+            // 
+            this.colDetallePeso.FillWeight = 10F;
+            this.colDetallePeso.HeaderText = "Peso";
+            this.colDetallePeso.MinimumWidth = 58;
+            this.colDetallePeso.Name = "colDetallePeso";
+            this.colDetallePeso.ReadOnly = true;
+            // 
+            // colDetalleDescanso
+            // 
+            this.colDetalleDescanso.FillWeight = 14F;
+            this.colDetalleDescanso.HeaderText = "Descanso";
+            this.colDetalleDescanso.MinimumWidth = 76;
+            this.colDetalleDescanso.Name = "colDetalleDescanso";
+            this.colDetalleDescanso.ReadOnly = true;
+            // 
+            // accionesEjercicios
+            // 
+            this.accionesEjercicios.Controls.Add(this.agregarEjercicio);
+            this.accionesEjercicios.Controls.Add(this.actualizarEjercicio);
+            this.accionesEjercicios.Controls.Add(this.quitarEjercicio);
+            this.accionesEjercicios.Dock = System.Windows.Forms.DockStyle.Top;
+            this.accionesEjercicios.Location = new System.Drawing.Point(10, 38);
+            this.accionesEjercicios.Name = "accionesEjercicios";
+            this.accionesEjercicios.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.accionesEjercicios.Size = new System.Drawing.Size(688, 38);
+            this.accionesEjercicios.TabIndex = 3;
+            this.accionesEjercicios.WrapContents = false;
+            // 
+            // agregarEjercicio
+            // 
+            this.agregarEjercicio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(116)))), ((int)(((byte)(144)))));
+            this.agregarEjercicio.FlatAppearance.BorderSize = 0;
+            this.agregarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.agregarEjercicio.ForeColor = System.Drawing.Color.White;
+            this.agregarEjercicio.Location = new System.Drawing.Point(0, 2);
+            this.agregarEjercicio.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
+            this.agregarEjercicio.Name = "agregarEjercicio";
+            this.agregarEjercicio.Size = new System.Drawing.Size(132, 32);
+            this.agregarEjercicio.TabIndex = 3;
+            this.agregarEjercicio.Text = "+ Agregar ejercicio";
+            this.agregarEjercicio.UseVisualStyleBackColor = false;
+            this.agregarEjercicio.Click += new System.EventHandler(this.agregarEjercicio_Click);
+            // 
+            // actualizarEjercicio
+            // 
+            this.actualizarEjercicio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.actualizarEjercicio.FlatAppearance.BorderSize = 0;
+            this.actualizarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.actualizarEjercicio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.actualizarEjercicio.Location = new System.Drawing.Point(138, 2);
+            this.actualizarEjercicio.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
+            this.actualizarEjercicio.Name = "actualizarEjercicio";
+            this.actualizarEjercicio.Size = new System.Drawing.Size(92, 32);
+            this.actualizarEjercicio.TabIndex = 4;
+            this.actualizarEjercicio.Text = "Editar";
+            this.actualizarEjercicio.UseVisualStyleBackColor = false;
+            this.actualizarEjercicio.Click += new System.EventHandler(this.actualizarEjercicio_Click);
+            // 
+            // quitarEjercicio
+            // 
+            this.quitarEjercicio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.quitarEjercicio.FlatAppearance.BorderSize = 0;
+            this.quitarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.quitarEjercicio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.quitarEjercicio.Location = new System.Drawing.Point(236, 2);
+            this.quitarEjercicio.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
+            this.quitarEjercicio.Name = "quitarEjercicio";
+            this.quitarEjercicio.Size = new System.Drawing.Size(92, 32);
+            this.quitarEjercicio.TabIndex = 7;
+            this.quitarEjercicio.Text = "Quitar";
+            this.quitarEjercicio.UseVisualStyleBackColor = false;
+            this.quitarEjercicio.Click += new System.EventHandler(this.quitarEjercicio_Click);
+            // 
+            // lblEjerciciosTitulo
+            // 
+            this.lblEjerciciosTitulo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblEjerciciosTitulo.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
+            this.lblEjerciciosTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.lblEjerciciosTitulo.Location = new System.Drawing.Point(10, 10);
+            this.lblEjerciciosTitulo.Name = "lblEjerciciosTitulo";
+            this.lblEjerciciosTitulo.Size = new System.Drawing.Size(688, 28);
+            this.lblEjerciciosTitulo.TabIndex = 4;
+            this.lblEjerciciosTitulo.Text = "Ejercicios de la rutina";
+            this.lblEjerciciosTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // panelFormulario
+            // 
+            this.panelFormulario.BackColor = System.Drawing.Color.White;
+            this.panelFormulario.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelFormulario.Controls.Add(this.contenedorFormulario);
+            this.panelFormulario.Controls.Add(this.accionesFormulario);
+            this.panelFormulario.Controls.Add(this.lblDetalleEjercicio);
+            this.panelFormulario.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelFormulario.Location = new System.Drawing.Point(3, 376);
+            this.panelFormulario.Name = "panelFormulario";
+            this.panelFormulario.Padding = new System.Windows.Forms.Padding(10);
+            this.panelFormulario.Size = new System.Drawing.Size(710, 166);
+            this.panelFormulario.TabIndex = 2;
+            // 
+            // contenedorFormulario
+            // 
+            this.contenedorFormulario.ColumnCount = 4;
+            this.contenedorFormulario.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 78F));
+            this.contenedorFormulario.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.contenedorFormulario.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+            this.contenedorFormulario.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.contenedorFormulario.Controls.Add(this.lblEjercicio, 0, 0);
+            this.contenedorFormulario.Controls.Add(this.ejercicio, 1, 0);
+            this.contenedorFormulario.Controls.Add(this.lblDia, 2, 0);
+            this.contenedorFormulario.Controls.Add(this.dia, 3, 0);
+            this.contenedorFormulario.Controls.Add(this.lblSeries, 0, 1);
+            this.contenedorFormulario.Controls.Add(this.series, 1, 1);
+            this.contenedorFormulario.Controls.Add(this.lblRepeticiones, 2, 1);
+            this.contenedorFormulario.Controls.Add(this.repeticiones, 3, 1);
+            this.contenedorFormulario.Controls.Add(this.lblPeso, 0, 2);
+            this.contenedorFormulario.Controls.Add(this.peso, 1, 2);
+            this.contenedorFormulario.Controls.Add(this.lblDescanso, 2, 2);
+            this.contenedorFormulario.Controls.Add(this.descanso, 3, 2);
+            this.contenedorFormulario.Controls.Add(this.lblOrden, 0, 3);
+            this.contenedorFormulario.Controls.Add(this.orden, 1, 3);
+            this.contenedorFormulario.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.contenedorFormulario.Location = new System.Drawing.Point(10, 36);
+            this.contenedorFormulario.Name = "contenedorFormulario";
+            this.contenedorFormulario.RowCount = 4;
+            this.contenedorFormulario.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.contenedorFormulario.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.contenedorFormulario.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.contenedorFormulario.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.contenedorFormulario.Size = new System.Drawing.Size(688, 80);
+            this.contenedorFormulario.TabIndex = 0;
+            // 
+            // lblEjercicio
+            // 
+            this.lblEjercicio.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblEjercicio.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.lblEjercicio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.lblEjercicio.Location = new System.Drawing.Point(0, 2);
+            this.lblEjercicio.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.lblEjercicio.Name = "lblEjercicio";
+            this.lblEjercicio.Size = new System.Drawing.Size(70, 16);
+            this.lblEjercicio.TabIndex = 0;
+            this.lblEjercicio.Text = "Ejercicio:";
+            this.lblEjercicio.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // ejercicio
+            // 
+            this.ejercicio.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ejercicio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ejercicio.Location = new System.Drawing.Point(78, 2);
+            this.ejercicio.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.ejercicio.Name = "ejercicio";
+            this.ejercicio.Size = new System.Drawing.Size(199, 29);
+            this.ejercicio.TabIndex = 1;
+            // 
+            // lblDia
+            // 
+            this.lblDia.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblDia.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.lblDia.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.lblDia.Location = new System.Drawing.Point(285, 2);
+            this.lblDia.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.lblDia.Name = "lblDia";
+            this.lblDia.Size = new System.Drawing.Size(84, 16);
+            this.lblDia.TabIndex = 2;
+            this.lblDia.Text = "Día:";
+            this.lblDia.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // dia
+            // 
+            this.dia.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dia.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.dia.Items.AddRange(new object[] {
+            "Lunes",
+            "Martes",
+            "Miercoles",
+            "Jueves",
+            "Viernes"});
+            this.dia.Location = new System.Drawing.Point(377, 2);
+            this.dia.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.dia.Name = "dia";
+            this.dia.Size = new System.Drawing.Size(303, 29);
+            this.dia.TabIndex = 3;
+            // 
+            // lblSeries
+            // 
+            this.lblSeries.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSeries.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.lblSeries.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.lblSeries.Location = new System.Drawing.Point(0, 22);
+            this.lblSeries.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.lblSeries.Name = "lblSeries";
+            this.lblSeries.Size = new System.Drawing.Size(70, 16);
+            this.lblSeries.TabIndex = 4;
+            this.lblSeries.Text = "Series:";
+            this.lblSeries.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // series
+            // 
+            this.series.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.series.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.series.Location = new System.Drawing.Point(78, 22);
+            this.series.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.series.Name = "series";
+            this.series.Size = new System.Drawing.Size(199, 29);
+            this.series.TabIndex = 3;
+            this.series.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.series_KeyPress);
+            // 
+            // lblRepeticiones
+            // 
+            this.lblRepeticiones.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblRepeticiones.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.lblRepeticiones.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.lblRepeticiones.Location = new System.Drawing.Point(285, 22);
+            this.lblRepeticiones.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.lblRepeticiones.Name = "lblRepeticiones";
+            this.lblRepeticiones.Size = new System.Drawing.Size(84, 16);
+            this.lblRepeticiones.TabIndex = 5;
+            this.lblRepeticiones.Text = "Repeticiones:";
+            this.lblRepeticiones.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // repeticiones
+            // 
+            this.repeticiones.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.repeticiones.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.repeticiones.Location = new System.Drawing.Point(377, 22);
+            this.repeticiones.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.repeticiones.Name = "repeticiones";
+            this.repeticiones.Size = new System.Drawing.Size(303, 29);
+            this.repeticiones.TabIndex = 5;
+            this.repeticiones.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.repeticiones_KeyPress);
+            // 
+            // lblPeso
+            // 
+            this.lblPeso.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblPeso.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.lblPeso.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.lblPeso.Location = new System.Drawing.Point(0, 42);
+            this.lblPeso.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.lblPeso.Name = "lblPeso";
+            this.lblPeso.Size = new System.Drawing.Size(70, 16);
+            this.lblPeso.TabIndex = 6;
+            this.lblPeso.Text = "Peso:";
+            this.lblPeso.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // peso
+            // 
+            this.peso.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.peso.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.peso.Location = new System.Drawing.Point(78, 42);
+            this.peso.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.peso.Name = "peso";
+            this.peso.Size = new System.Drawing.Size(199, 29);
+            this.peso.TabIndex = 5;
+            this.peso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.peso_KeyPress);
+            // 
+            // lblDescanso
+            // 
+            this.lblDescanso.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblDescanso.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.lblDescanso.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.lblDescanso.Location = new System.Drawing.Point(285, 42);
+            this.lblDescanso.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.lblDescanso.Name = "lblDescanso";
+            this.lblDescanso.Size = new System.Drawing.Size(84, 16);
+            this.lblDescanso.TabIndex = 7;
+            this.lblDescanso.Text = "Descanso:";
+            this.lblDescanso.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // descanso
+            // 
+            this.descanso.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.descanso.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.descanso.Location = new System.Drawing.Point(377, 42);
+            this.descanso.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.descanso.Name = "descanso";
+            this.descanso.Size = new System.Drawing.Size(303, 29);
+            this.descanso.TabIndex = 7;
+            this.descanso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.descanso_KeyPress);
+            // 
+            // lblOrden
+            // 
+            this.lblOrden.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblOrden.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.lblOrden.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.lblOrden.Location = new System.Drawing.Point(0, 62);
+            this.lblOrden.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.lblOrden.Name = "lblOrden";
+            this.lblOrden.Size = new System.Drawing.Size(70, 16);
+            this.lblOrden.TabIndex = 8;
+            this.lblOrden.Text = "Orden:";
+            this.lblOrden.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // orden
+            // 
+            this.orden.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.orden.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.orden.Location = new System.Drawing.Point(78, 62);
+            this.orden.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.orden.Name = "orden";
+            this.orden.Size = new System.Drawing.Size(199, 29);
+            this.orden.TabIndex = 7;
+            this.orden.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.orden_KeyPress);
+            // 
+            // accionesFormulario
+            // 
+            this.accionesFormulario.Controls.Add(this.guardarEjercicio);
+            this.accionesFormulario.Controls.Add(this.cancelarEjercicio);
+            this.accionesFormulario.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.accionesFormulario.Location = new System.Drawing.Point(10, 116);
+            this.accionesFormulario.Name = "accionesFormulario";
+            this.accionesFormulario.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.accionesFormulario.Size = new System.Drawing.Size(688, 38);
+            this.accionesFormulario.TabIndex = 1;
+            this.accionesFormulario.WrapContents = false;
+            // 
+            // guardarEjercicio
+            // 
+            this.guardarEjercicio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(116)))), ((int)(((byte)(144)))));
+            this.guardarEjercicio.FlatAppearance.BorderSize = 0;
+            this.guardarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.guardarEjercicio.ForeColor = System.Drawing.Color.White;
+            this.guardarEjercicio.Location = new System.Drawing.Point(0, 2);
+            this.guardarEjercicio.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
+            this.guardarEjercicio.Name = "guardarEjercicio";
+            this.guardarEjercicio.Size = new System.Drawing.Size(120, 32);
+            this.guardarEjercicio.TabIndex = 8;
+            this.guardarEjercicio.Text = "Agregar";
+            this.guardarEjercicio.UseVisualStyleBackColor = false;
+            this.guardarEjercicio.Visible = false;
+            this.guardarEjercicio.Click += new System.EventHandler(this.guardarEjercicio_Click);
+            // 
+            // cancelarEjercicio
+            // 
+            this.cancelarEjercicio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.cancelarEjercicio.FlatAppearance.BorderSize = 0;
+            this.cancelarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cancelarEjercicio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.cancelarEjercicio.Location = new System.Drawing.Point(126, 2);
+            this.cancelarEjercicio.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
+            this.cancelarEjercicio.Name = "cancelarEjercicio";
+            this.cancelarEjercicio.Size = new System.Drawing.Size(100, 32);
+            this.cancelarEjercicio.TabIndex = 9;
+            this.cancelarEjercicio.Text = "Cancelar";
+            this.cancelarEjercicio.UseVisualStyleBackColor = false;
+            this.cancelarEjercicio.Visible = false;
+            this.cancelarEjercicio.Click += new System.EventHandler(this.cancelarEjercicio_Click);
+            // 
+            // lblDetalleEjercicio
+            // 
+            this.lblDetalleEjercicio.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblDetalleEjercicio.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.lblDetalleEjercicio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.lblDetalleEjercicio.Location = new System.Drawing.Point(10, 10);
+            this.lblDetalleEjercicio.Name = "lblDetalleEjercicio";
+            this.lblDetalleEjercicio.Size = new System.Drawing.Size(688, 26);
+            this.lblDetalleEjercicio.TabIndex = 2;
+            this.lblDetalleEjercicio.Text = "Detalle del ejercicio";
+            this.lblDetalleEjercicio.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // RutinasEntrenadorFormulario
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
+            this.ClientSize = new System.Drawing.Size(1100, 680);
+            this.Controls.Add(this.panelContenido);
+            this.Controls.Add(this.lblEstado);
+            this.Controls.Add(this.barraAcciones);
+            this.Controls.Add(this.panelEncabezado);
+            this.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.MinimumSize = new System.Drawing.Size(900, 560);
+            this.Name = "RutinasEntrenadorFormulario";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "SysGym | Gestionar rutinas";
+            this.Load += new System.EventHandler(this.RutinasEntrenadorFormulario_Load);
+            this.panelEncabezado.ResumeLayout(false);
+            this.panelContenido.ResumeLayout(false);
+            this.splitContenido.Panel1.ResumeLayout(false);
+            this.splitContenido.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContenido)).EndInit();
+            this.splitContenido.ResumeLayout(false);
+            this.panelListado.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.tabla)).EndInit();
+            this.layoutDetalle.ResumeLayout(false);
+            this.panelRutina.ResumeLayout(false);
+            this.contenedorRutina.ResumeLayout(false);
+            this.contenedorRutina.PerformLayout();
+            this.accionesRutina.ResumeLayout(false);
+            this.panelEjercicios.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.tablaEjercicios)).EndInit();
+            this.accionesEjercicios.ResumeLayout(false);
+            this.panelFormulario.ResumeLayout(false);
+            this.contenedorFormulario.ResumeLayout(false);
+            this.contenedorFormulario.PerformLayout();
+            this.accionesFormulario.ResumeLayout(false);
+            this.ResumeLayout(false);
 
-            panelEncabezado.BackColor = Color.FromArgb(14, 116, 144); panelEncabezado.Dock = DockStyle.Top; panelEncabezado.Height = 56; panelEncabezado.Padding = new Padding(20, 8, 20, 8); panelEncabezado.Controls.Add(lblTitulo); panelEncabezado.Controls.Add(lblDescripcion); panelEncabezado.Controls.Add(btnVolver);
-            lblTitulo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right; lblTitulo.AutoSize = false; lblTitulo.Font = new Font("Segoe UI", 16F, FontStyle.Bold); lblTitulo.ForeColor = Color.White; lblTitulo.Location = new Point(20, 8); lblTitulo.Size = new Size(890, 40); lblTitulo.Text = "Gestionar rutinas | Catálogo y composición de rutinas"; lblTitulo.TextAlign = ContentAlignment.MiddleLeft;
-            lblDescripcion.Visible = false;
-            panelEncabezado.Visible = false;
-            btnVolver.Anchor = AnchorStyles.Top | AnchorStyles.Right; btnVolver.BackColor = Color.White; btnVolver.FlatAppearance.BorderSize = 0; btnVolver.FlatStyle = FlatStyle.Flat; btnVolver.ForeColor = Color.FromArgb(14, 116, 144); btnVolver.Location = new Point(974, 10); btnVolver.Size = new Size(104, 36); btnVolver.Text = "Volver"; btnVolver.UseVisualStyleBackColor = false; btnVolver.Click += new System.EventHandler(btnVolver_Click);
-
-            barraAcciones.BackColor = Color.FromArgb(203, 213, 225); barraAcciones.Dock = DockStyle.Top; barraAcciones.Height = 1;
-            lblEstado.BackColor = Color.FromArgb(226, 232, 240); lblEstado.Dock = DockStyle.Bottom; lblEstado.Height = 30; lblEstado.ForeColor = Color.FromArgb(51, 65, 85); lblEstado.Padding = new Padding(18, 0, 12, 0); lblEstado.Text = "Listo"; lblEstado.TextAlign = ContentAlignment.MiddleLeft;
-            panelContenido.BackColor = Color.FromArgb(248, 250, 252); panelContenido.Dock = DockStyle.Fill; panelContenido.Padding = new Padding(16); panelContenido.Controls.Add(splitContenido);
-
-            splitContenido.Dock = DockStyle.Fill; splitContenido.Size = new Size(1068, 480); splitContenido.Orientation = Orientation.Vertical; splitContenido.FixedPanel = FixedPanel.Panel1; splitContenido.IsSplitterFixed = false; splitContenido.SplitterWidth = 6; splitContenido.SplitterDistance = 330; splitContenido.Panel1MinSize = 240; splitContenido.Panel2MinSize = 500; splitContenido.TabIndex = 0; splitContenido.Resize += new System.EventHandler(splitContenido_Resize);
-            splitContenido.Panel1.Padding = new Padding(8); splitContenido.Panel1.Controls.Add(panelListado);
-            splitContenido.Panel2.Padding = new Padding(8); splitContenido.Panel2.Controls.Add(layoutDetalle);
-            layoutDetalle.Dock = DockStyle.Fill; layoutDetalle.ColumnCount = 1; layoutDetalle.RowCount = 3; layoutDetalle.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F)); layoutDetalle.RowStyles.Add(new RowStyle(SizeType.Absolute, 136F)); layoutDetalle.RowStyles.Add(new RowStyle(SizeType.Percent, 100F)); layoutDetalle.RowStyles.Add(new RowStyle(SizeType.Absolute, 172F)); layoutDetalle.Controls.Add(panelRutina, 0, 0); layoutDetalle.Controls.Add(panelEjercicios, 0, 1); layoutDetalle.Controls.Add(panelFormulario, 0, 2);
-
-            panelListado.BackColor = Color.White; panelListado.BorderStyle = BorderStyle.FixedSingle; panelListado.Dock = DockStyle.Fill; panelListado.Padding = new Padding(10); panelListado.Controls.Add(tabla); panelListado.Controls.Add(nuevaRutina); panelListado.Controls.Add(lblListadoTitulo);
-            lblListadoTitulo.Dock = DockStyle.Top; lblListadoTitulo.Height = 30; lblListadoTitulo.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold); lblListadoTitulo.ForeColor = Color.FromArgb(30, 41, 59); lblListadoTitulo.Text = "Rutinas"; lblListadoTitulo.TextAlign = ContentAlignment.MiddleLeft;
-            ConfigurarTabla(tabla); tabla.Dock = DockStyle.Fill; tabla.TabIndex = 1; tabla.SelectionChanged += new System.EventHandler(tabla_SelectionChanged); tabla.Columns.AddRange(new DataGridViewColumn[] { colId, colRutina, colCreador, colAsignados, colCreacion, colEstado });
-            colId.Name = "colId"; colId.Visible = false; colRutina.HeaderText = "Rutina"; colRutina.Name = "colRutina"; colRutina.FillWeight = 34; colRutina.MinimumWidth = 115; colCreador.HeaderText = "Entrenador"; colCreador.Name = "colCreador"; colCreador.FillWeight = 26; colCreador.MinimumWidth = 100; colAsignados.HeaderText = "Socios"; colAsignados.Name = "colAsignados"; colAsignados.FillWeight = 15; colAsignados.MinimumWidth = 60; colCreacion.HeaderText = "Creación"; colCreacion.Name = "colCreacion"; colCreacion.FillWeight = 15; colCreacion.MinimumWidth = 82; colEstado.HeaderText = "Estado"; colEstado.Name = "colEstado"; colEstado.FillWeight = 10; colEstado.MinimumWidth = 70;
-            ConfigurarBoton(nuevaRutina, "+ Nueva rutina", Point.Empty, new Size(130, 36), Color.FromArgb(226, 232, 240), Color.FromArgb(30, 41, 59), 0, nuevaRutina_Click); nuevaRutina.Dock = DockStyle.Bottom; nuevaRutina.Margin = new Padding(0, 8, 0, 0);
-
-            panelRutina.BackColor = Color.White; panelRutina.BorderStyle = BorderStyle.FixedSingle; panelRutina.Dock = DockStyle.Fill; panelRutina.Height = 136; panelRutina.Padding = new Padding(10); panelRutina.Controls.Add(contenedorRutina); panelRutina.Controls.Add(accionesRutina); panelRutina.Controls.Add(lblDetalleTitulo);
-            lblDetalleTitulo.Dock = DockStyle.Top; lblDetalleTitulo.Height = 28; lblDetalleTitulo.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold); lblDetalleTitulo.ForeColor = Color.FromArgb(30, 41, 59); lblDetalleTitulo.Text = "Rutina seleccionada"; lblDetalleTitulo.TextAlign = ContentAlignment.MiddleLeft;
-            contenedorRutina.Dock = DockStyle.Fill; contenedorRutina.ColumnCount = 2; contenedorRutina.RowCount = 2; contenedorRutina.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 86F)); contenedorRutina.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F)); contenedorRutina.RowStyles.Add(new RowStyle(SizeType.Percent, 50F)); contenedorRutina.RowStyles.Add(new RowStyle(SizeType.Percent, 50F)); contenedorRutina.Padding = new Padding(0, 2, 0, 2);
-            AgregarCampo(contenedorRutina, lblNombre, "Nombre:", nombre, 0, 0); AgregarCampo(contenedorRutina, lblDescripcionRutina, "Descripción:", descripcion, 0, 1);
-            accionesRutina.Dock = DockStyle.Bottom; accionesRutina.Height = 38; accionesRutina.FlowDirection = FlowDirection.LeftToRight; accionesRutina.WrapContents = false; accionesRutina.Padding = new Padding(0, 2, 0, 0);
-            ConfigurarBoton(guardarRutina, "Guardar", Point.Empty, new Size(108, 32), Color.FromArgb(14, 116, 144), Color.White, 1, guardarRutina_Click); ConfigurarBoton(actualizar, "Actualizar", Point.Empty, new Size(108, 32), Color.FromArgb(226, 232, 240), Color.FromArgb(30, 41, 59), 2, actualizar_Click); ConfigurarBoton(darDeBaja, "Dar de baja", Point.Empty, new Size(108, 32), Color.FromArgb(254, 242, 242), Color.FromArgb(185, 28, 28), 5, darDeBaja_Click); ConfigurarBoton(reactivar, "Reactivar", Point.Empty, new Size(108, 32), Color.FromArgb(220, 252, 231), Color.FromArgb(22, 101, 52), 6, reactivar_Click); accionesRutina.Controls.Add(guardarRutina); accionesRutina.Controls.Add(actualizar); accionesRutina.Controls.Add(darDeBaja); accionesRutina.Controls.Add(reactivar); darDeBaja.Visible = false; reactivar.Visible = false;
-
-            panelEjercicios.BackColor = Color.White; panelEjercicios.BorderStyle = BorderStyle.FixedSingle; panelEjercicios.Dock = DockStyle.Fill; panelEjercicios.Padding = new Padding(10); panelEjercicios.Controls.Add(tablaEjercicios); panelEjercicios.Controls.Add(accionesEjercicios); panelEjercicios.Controls.Add(lblEjerciciosTitulo);
-            lblEjerciciosTitulo.Dock = DockStyle.Top; lblEjerciciosTitulo.Height = 28; lblEjerciciosTitulo.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold); lblEjerciciosTitulo.ForeColor = Color.FromArgb(30, 41, 59); lblEjerciciosTitulo.Text = "Ejercicios de la rutina"; lblEjerciciosTitulo.TextAlign = ContentAlignment.MiddleLeft;
-            accionesEjercicios.Dock = DockStyle.Top; accionesEjercicios.Height = 38; accionesEjercicios.FlowDirection = FlowDirection.LeftToRight; accionesEjercicios.WrapContents = false; accionesEjercicios.Padding = new Padding(0, 2, 0, 0);
-            ConfigurarBoton(agregarEjercicio, "+ Agregar ejercicio", Point.Empty, new Size(132, 32), Color.FromArgb(14, 116, 144), Color.White, 3, agregarEjercicio_Click); ConfigurarBoton(actualizarEjercicio, "Editar", Point.Empty, new Size(92, 32), Color.FromArgb(226, 232, 240), Color.FromArgb(30, 41, 59), 4, actualizarEjercicio_Click); ConfigurarBoton(quitarEjercicio, "Quitar", Point.Empty, new Size(92, 32), Color.FromArgb(254, 242, 242), Color.FromArgb(185, 28, 28), 7, quitarEjercicio_Click); accionesEjercicios.Controls.Add(agregarEjercicio); accionesEjercicios.Controls.Add(actualizarEjercicio); accionesEjercicios.Controls.Add(quitarEjercicio);
-            ConfigurarTabla(tablaEjercicios); tablaEjercicios.Dock = DockStyle.Fill; tablaEjercicios.TabIndex = 2; tablaEjercicios.Columns.AddRange(new DataGridViewColumn[] { colDetalleId, colDetalleDia, colDetalleOrden, colDetalleEjercicio, colDetalleSeries, colDetalleRepeticiones, colDetallePeso, colDetalleDescanso }); tablaEjercicios.SelectionChanged += new System.EventHandler(tablaEjercicios_SelectionChanged);
-            colDetalleId.Name = "colDetalleId"; colDetalleId.Visible = false; colDetalleDia.HeaderText = "Día"; colDetalleDia.Name = "colDetalleDia"; colDetalleDia.FillWeight = 12; colDetalleDia.MinimumWidth = 65; colDetalleOrden.HeaderText = "Orden"; colDetalleOrden.Name = "colDetalleOrden"; colDetalleOrden.FillWeight = 10; colDetalleOrden.MinimumWidth = 58; colDetalleEjercicio.HeaderText = "Ejercicio"; colDetalleEjercicio.Name = "colDetalleEjercicio"; colDetalleEjercicio.FillWeight = 28; colDetalleEjercicio.MinimumWidth = 110; colDetalleSeries.HeaderText = "Series"; colDetalleSeries.Name = "colDetalleSeries"; colDetalleSeries.FillWeight = 10; colDetalleSeries.MinimumWidth = 58; colDetalleRepeticiones.HeaderText = "Repeticiones"; colDetalleRepeticiones.Name = "colDetalleRepeticiones"; colDetalleRepeticiones.FillWeight = 16; colDetalleRepeticiones.MinimumWidth = 86; colDetallePeso.HeaderText = "Peso"; colDetallePeso.Name = "colDetallePeso"; colDetallePeso.FillWeight = 10; colDetallePeso.MinimumWidth = 58; colDetalleDescanso.HeaderText = "Descanso"; colDetalleDescanso.Name = "colDetalleDescanso"; colDetalleDescanso.FillWeight = 14; colDetalleDescanso.MinimumWidth = 76;
-
-            panelFormulario.BackColor = Color.White; panelFormulario.BorderStyle = BorderStyle.FixedSingle; panelFormulario.Dock = DockStyle.Fill; panelFormulario.Height = 190; panelFormulario.Padding = new Padding(10); panelFormulario.Controls.Add(contenedorFormulario); panelFormulario.Controls.Add(accionesFormulario); panelFormulario.Controls.Add(lblDetalleEjercicio);
-            lblDetalleEjercicio.Dock = DockStyle.Top; lblDetalleEjercicio.Height = 26; lblDetalleEjercicio.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold); lblDetalleEjercicio.ForeColor = Color.FromArgb(30, 41, 59); lblDetalleEjercicio.Text = "Detalle del ejercicio"; lblDetalleEjercicio.TextAlign = ContentAlignment.MiddleLeft;
-            accionesFormulario.Dock = DockStyle.Bottom; accionesFormulario.FlowDirection = FlowDirection.LeftToRight; accionesFormulario.Height = 38; accionesFormulario.Padding = new Padding(0, 2, 0, 0); accionesFormulario.WrapContents = false;
-            ConfigurarBoton(guardarEjercicio, "Agregar", Point.Empty, new Size(120, 32), Color.FromArgb(14, 116, 144), Color.White, 8, guardarEjercicio_Click); ConfigurarBoton(cancelarEjercicio, "Cancelar", Point.Empty, new Size(100, 32), Color.FromArgb(226, 232, 240), Color.FromArgb(30, 41, 59), 9, cancelarEjercicio_Click); guardarEjercicio.Visible = false; cancelarEjercicio.Visible = false; accionesFormulario.Controls.Add(guardarEjercicio); accionesFormulario.Controls.Add(cancelarEjercicio);
-            contenedorFormulario.Dock = DockStyle.Fill; contenedorFormulario.ColumnCount = 4; contenedorFormulario.RowCount = 4; contenedorFormulario.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 78F)); contenedorFormulario.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F)); contenedorFormulario.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 92F)); contenedorFormulario.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60F)); for (var fila = 0; fila < 4; fila++) contenedorFormulario.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            AgregarCampo(contenedorFormulario, lblEjercicio, "Ejercicio:", ejercicio, 0, 0); AgregarCampo(contenedorFormulario, lblDia, "Día:", dia, 2, 0); AgregarCampo(contenedorFormulario, lblSeries, "Series:", series, 0, 1); AgregarCampo(contenedorFormulario, lblRepeticiones, "Repeticiones:", repeticiones, 2, 1); AgregarCampo(contenedorFormulario, lblPeso, "Peso:", peso, 0, 2); AgregarCampo(contenedorFormulario, lblDescanso, "Descanso:", descanso, 2, 2); AgregarCampo(contenedorFormulario, lblOrden, "Orden:", orden, 0, 3);
-            ejercicio.DropDownStyle = ComboBoxStyle.DropDownList; dia.DropDownStyle = ComboBoxStyle.DropDownList; dia.Items.AddRange(new object[] { "Lunes", "Martes", "Miercoles", "Jueves", "Viernes" }); dia.SelectedIndex = 0; nombre.BorderStyle = BorderStyle.FixedSingle; descripcion.BorderStyle = BorderStyle.FixedSingle; series.BorderStyle = BorderStyle.FixedSingle; repeticiones.BorderStyle = BorderStyle.FixedSingle; peso.BorderStyle = BorderStyle.FixedSingle; descanso.BorderStyle = BorderStyle.FixedSingle; orden.BorderStyle = BorderStyle.FixedSingle; series.KeyPress += new KeyPressEventHandler(series_KeyPress); repeticiones.KeyPress += new KeyPressEventHandler(repeticiones_KeyPress); peso.KeyPress += new KeyPressEventHandler(peso_KeyPress); descanso.KeyPress += new KeyPressEventHandler(descanso_KeyPress); orden.KeyPress += new KeyPressEventHandler(orden_KeyPress);
-
-            Controls.Add(panelContenido); Controls.Add(lblEstado); Controls.Add(barraAcciones); Controls.Add(panelEncabezado); AutoScaleMode = AutoScaleMode.Font; BackColor = Color.FromArgb(241, 245, 249); ClientSize = new Size(1100, 680); Font = new Font("Segoe UI", 9.5F); MinimumSize = new Size(900, 560); Name = "RutinasEntrenadorFormulario"; StartPosition = FormStartPosition.CenterParent; Text = "SysGym | Gestionar rutinas"; Load += new System.EventHandler(RutinasEntrenadorFormulario_Load);
-            contenedorFormulario.ResumeLayout(false); accionesFormulario.ResumeLayout(false); panelFormulario.ResumeLayout(false); accionesEjercicios.ResumeLayout(false); panelEjercicios.ResumeLayout(false); accionesRutina.ResumeLayout(false); contenedorRutina.ResumeLayout(false); panelRutina.ResumeLayout(false); panelListado.ResumeLayout(false); layoutDetalle.ResumeLayout(false); splitContenido.Panel2.ResumeLayout(false); splitContenido.Panel1.ResumeLayout(false); ((ISupportInitialize)(splitContenido)).EndInit(); splitContenido.ResumeLayout(false); panelContenido.ResumeLayout(false); barraAcciones.ResumeLayout(false); panelEncabezado.ResumeLayout(false); ((ISupportInitialize)(tablaEjercicios)).EndInit(); ((ISupportInitialize)(tabla)).EndInit(); ResumeLayout(false);
         }
 
-        private static void ConfigurarTabla(DataGridView grilla)
-        {
-            grilla.BackgroundColor = Color.White; grilla.BorderStyle = BorderStyle.None; grilla.AllowUserToAddRows = false; grilla.AllowUserToDeleteRows = false; grilla.AllowUserToResizeRows = false; grilla.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; grilla.MultiSelect = false; grilla.ReadOnly = true; grilla.RowHeadersVisible = false; grilla.RowTemplate.Height = 28; grilla.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-        }
-
-        private static void ConfigurarBoton(Button boton, string texto, Point ubicacion, Size tamano, Color fondo, Color textoColor, int tabIndex, System.EventHandler evento)
-        {
-            boton.AutoSize = false; boton.BackColor = fondo; boton.FlatAppearance.BorderSize = 0; boton.FlatStyle = FlatStyle.Flat; boton.ForeColor = textoColor; boton.Location = ubicacion; boton.Margin = new Padding(0, 0, 6, 0); boton.Size = tamano; boton.TabIndex = tabIndex; boton.Text = texto; boton.UseVisualStyleBackColor = false; boton.Click += evento;
-        }
-
-        private static void AgregarCampo(TableLayoutPanel tablaCampos, Label etiqueta, string texto, Control control, int columna, int fila)
-        {
-            etiqueta.Dock = DockStyle.Fill; etiqueta.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); etiqueta.ForeColor = Color.FromArgb(30, 41, 59); etiqueta.Text = texto; etiqueta.TextAlign = ContentAlignment.MiddleLeft; etiqueta.Margin = new Padding(0, 2, 8, 2);
-            control.Dock = DockStyle.Fill; control.Margin = new Padding(0, 2, 8, 2); control.TabIndex = fila * 2 + columna + 1;
-            tablaCampos.Controls.Add(etiqueta, columna, fila); tablaCampos.Controls.Add(control, columna + 1, fila);
-        }
     }
 }
