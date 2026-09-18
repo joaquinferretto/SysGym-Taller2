@@ -178,11 +178,11 @@ namespace exxen2._0.capaVisual.Recepcionista
                 logica.Crear(new Membresia { IdSocio = Convert.ToInt32(socio.SelectedValue), IdPlan = Convert.ToInt32(plan.SelectedValue), IdUsuarioSistema = usuario.IdUsuarioSistema, FechaInicio = inicio.Value.Date, FechaVencimiento = vencimiento.Value.Date });
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
-                AyudaFormularioVisual.MostrarExito(lblEstado, "Membresia creada y primera cuota generada.");
+                AyudaFormularioVisual.MostrarExito(lblEstado, "Membresia creada y primera cuota generada.", true);
             }
             catch (Exception ex)
             {
-                AyudaFormularioVisual.MostrarError(lblEstado, ex);
+                AyudaFormularioVisual.MostrarError(lblEstado, ex, true);
             }
         }
 
@@ -255,11 +255,11 @@ namespace exxen2._0.capaVisual.Recepcionista
                 if (idSeleccionado == 0)
                     throw new InvalidOperationException("Selecciona una membresia.");
                 cuotas.GenerarSiguienteCuota(idSeleccionado);
-                AyudaFormularioVisual.MostrarExito(lblEstado, "Nueva cuota generada.");
+                AyudaFormularioVisual.MostrarExito(lblEstado, "Nueva cuota generada.", true);
             }
             catch (Exception ex)
             {
-                AyudaFormularioVisual.MostrarError(lblEstado, ex);
+                AyudaFormularioVisual.MostrarError(lblEstado, ex, true);
             }
         }
 

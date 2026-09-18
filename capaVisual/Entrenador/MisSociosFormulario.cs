@@ -178,9 +178,9 @@ namespace exxen2._0.capaVisual.Entrenador
                 var idSocio = socioSeleccionado.IdSocio;
                 rutinas.AsignarRutina(socioSeleccionado.IdMembresia, rutina.IdRutina);
                 Cargar(idSocio);
-                AyudaFormularioVisual.MostrarExito(lblEstado, "La rutina fue asignada a la membresia.");
+                AyudaFormularioVisual.MostrarExito(lblEstado, "La rutina fue asignada a la membresia.", true);
             }
-            catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex); }
+            catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex, true); }
         }
 
         private void verRutina_Click(object origen, EventArgs e)

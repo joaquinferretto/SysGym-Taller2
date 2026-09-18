@@ -219,11 +219,11 @@ namespace exxen2._0.capaVisual.Recepcionista
                 logica.RegistrarPago(new Pago { Importe = AyudaFormularioVisual.DecimalPositivo(importe, "importe"), IdMetodoPago = Convert.ToInt32(metodo.SelectedValue), Estado = Convert.ToString(estado.SelectedItem), Fecha = DateTime.Now, Descripcion = "Pago registrado en recepcion" }, idCuotaSeleccionada);
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
-                AyudaFormularioVisual.MostrarExito(lblEstado, "Pago registrado correctamente.");
+                AyudaFormularioVisual.MostrarExito(lblEstado, "Pago registrado correctamente.", true);
             }
             catch (Exception ex)
             {
-                AyudaFormularioVisual.MostrarError(lblEstado, ex);
+                AyudaFormularioVisual.MostrarError(lblEstado, ex, true);
             }
         }
 

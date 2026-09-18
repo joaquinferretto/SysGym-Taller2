@@ -180,6 +180,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.panelOpciones.Padding = new System.Windows.Forms.Padding(14, 10, 14, 10);
             this.panelOpciones.Size = new System.Drawing.Size(274, 594);
             this.panelOpciones.TabIndex = 0;
+            this.panelOpciones.Paint += new System.Windows.Forms.PaintEventHandler(this.panelOpciones_Paint);
             // 
             // lblAdministracion
             // 

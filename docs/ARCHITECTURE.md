@@ -1,5 +1,13 @@
 # Arquitectura
 
+## Notificaciones clasicas de altas - 17 de septiembre de 2026
+
+Ultima actualizacion de esta seccion: 17 de septiembre de 2026.
+
+Las notificaciones de alta permanecen en `capaVisual`, mediante los Label existentes y `AyudaFormularioVisual`. El parametro opcional `resaltar` solo asigna `ForeColor` verde/rojo y `Visible = true`; las llamadas anteriores conservan su comportamiento. No se agregan servicios, eventos globales, controles personalizados ni dependencias. Los eventos compartidos conservan las operaciones existentes y solo activan el aviso coloreado donde corresponde. No se editaron los Designer en esta tarea.
+
+Debug y Release compilaron con MSBuild de Visual Studio en una salida alternativa por bloqueo del ejecutable habitual. Se inicializaron los nueve formularios afectados y se verifico el aviso de exito en memoria. Permanece un warning CS0649 en el Designer de ejercicios previamente modificado. Pendientes: abrir los formularios en el disenador y verificar las operaciones contra SQL Server.
+
 ## Encabezado global de módulos y edición de rutinas — 17 de septiembre de 2026
 
 Los paneles de rol (`PanelAdministrador`, `PanelRecepcionista` y `PanelEntrenador`) declaran en `Designer.cs` un encabezado de tres zonas: identidad a la izquierda, `lblModuloActual` en una columna central porcentual y «Cambiar de cuenta» a la derecha. `ControladorNavegacion` actualiza únicamente el texto central con el formato `Título | Subtítulo`; los formularios activos conservan su estructura propia en Designer, pero ocultan su franja de título local para que el contenido ocupe todo el espacio disponible.

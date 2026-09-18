@@ -115,15 +115,15 @@ namespace exxen2._0.capaVisual.Compartido
         /* Al hacer clic en guardar o actualizar, valida y persiste el ejercicio mediante la capa lógica. */
         private void guardar_Click(object origen, EventArgs e)
         {
+            var eraNuevo = idSeleccionado == 0;
             try
             {
-                var eraNuevo = idSeleccionado == 0;
                 var ejercicio = new Ejercicio { IdEjercicio = idSeleccionado, Nombre = nombre.Text.Trim(), Descripcion = descripcion.Text.Trim(), Estado = estadoSeleccionado };
                 if (eraNuevo) logica.Crear(ejercicio); else logica.Modificar(ejercicio);
                 Cargar();
-                AyudaFormularioVisual.MostrarExito(lblEstado, eraNuevo ? "Ejercicio guardado correctamente." : "Ejercicio actualizado correctamente.");
+                AyudaFormularioVisual.MostrarExito(lblEstado, eraNuevo ? "Ejercicio guardado correctamente." : "Ejercicio actualizado correctamente.", eraNuevo);
             }
-            catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex); }
+            catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex, eraNuevo); }
         }
 
         /* Al hacer clic en dar de baja, conserva el historial y actualiza el catálogo. */
@@ -231,11 +231,11 @@ namespace exxen2._0.capaVisual.Compartido
                     return;
                 imagenesLogica.Agregar(idSeleccionado, seleccion.Contenido, seleccion.Extension);
                 CargarImagenes();
-                AyudaFormularioVisual.MostrarExito(lblEstado, "Imagen agregada correctamente.");
+                AyudaFormularioVisual.MostrarExito(lblEstado, "Imagen agregada correctamente.", true);
             }
             catch (Exception ex)
             {
-                AyudaFormularioVisual.MostrarError(lblEstado, ex);
+                AyudaFormularioVisual.MostrarError(lblEstado, ex, true);
             }
         }
 
@@ -271,6 +271,16 @@ namespace exxen2._0.capaVisual.Compartido
                     miniatura.Dispose();
             }
             galeriaImagenes.Controls.Clear();
+        }
+
+        private void reactivar_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void accionesFicha_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

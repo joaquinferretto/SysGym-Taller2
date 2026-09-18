@@ -1,5 +1,13 @@
 # Reglas de negocio
 
+## Notificaciones clasicas de altas - 17 de septiembre de 2026
+
+Ultima actualizacion de esta seccion: 17 de septiembre de 2026.
+
+Las altas y registros informan exito en verde y error en rojo desde la capa visual. Se mantienen las validaciones actuales: ante `InvalidOperationException` o `ArgumentException` se presenta la causa disponible; para los demas errores se usa "No se pudo completar la operacion." (con acento en el codigo), salvo usuarios, que conserva "No se pudo crear el usuario.". No se presentan stack traces ni excepciones internas. No se modificaron reglas de negocio, entidades ni esquema SQL.
+
+Se compilaron Debug y Release y se revisaron las ramas de notificacion. Queda pendiente ejecutar altas y rechazos de negocio contra una base disponible.
+
 ## Avisos de alta y foto opcional - 17 de septiembre de 2026
 
 - El alta de usuarios informa el resultado en la capa visual: confirma cuando el usuario se crea correctamente y, si falla, muestra una causa de negocio disponible o un mensaje general de alta fallida.

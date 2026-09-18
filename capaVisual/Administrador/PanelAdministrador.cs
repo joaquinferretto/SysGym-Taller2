@@ -192,5 +192,10 @@ namespace exxen2._0.capaVisual.Administrador
             lblUsuarioRol.Text = "Usuario: " + usuario.Nombre + " " + usuario.Apellido + "    |    Rol: " + NombreRol(usuario, "Administrador");
             navegacion.EstablecerContenidoInicio(inicioPanel, inicioPanel.Actualizar);
         }
+
+        private void panelOpciones_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
