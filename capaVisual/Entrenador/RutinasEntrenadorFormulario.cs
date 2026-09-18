@@ -246,6 +246,7 @@ namespace exxen2._0.capaVisual.Entrenador
 
         private void guardarRutina_Click(object origen, EventArgs e)
         {
+            var eraNueva = idRutina == 0;
             try
             {
                 var rutina = new Rutina
@@ -270,9 +271,6 @@ namespace exxen2._0.capaVisual.Entrenador
                         rutinas.Crear(rutina);
                     }
                     idRutina = rutina.IdRutina;
-                    AyudaFormularioVisual.MostrarExito(lblEstado, esRutinaPersonalizada
-                        ? "Rutina personalizada creada y asignada al socio."
-                        : "Rutina creada. Ahora podes agregarle ejercicios.");
                 }
                 else
                 {
@@ -280,8 +278,12 @@ namespace exxen2._0.capaVisual.Entrenador
                     AyudaFormularioVisual.MostrarExito(lblEstado, "Rutina actualizada.");
                 }
                 Cargar();
+                if (eraNueva)
+                    AyudaFormularioVisual.MostrarExito(lblEstado, esRutinaPersonalizada
+                        ? "Rutina personalizada creada y asignada al socio."
+                        : "Rutina creada correctamente.", true);
             }
-            catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex); }
+            catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex, eraNueva); }
         }
 
         private void agregarEjercicio_Click(object origen, EventArgs e)
@@ -347,6 +349,7 @@ namespace exxen2._0.capaVisual.Entrenador
 
         private void guardarEjercicio_Click(object origen, EventArgs e)
         {
+            var eraNuevo = modoEditorEjercicio != ModoEditorEjercicio.Edicion;
             try
             {
                 if (idRutina == 0)
@@ -373,11 +376,12 @@ namespace exxen2._0.capaVisual.Entrenador
                 else
                 {
                     ejerciciosRutina.AgregarEjercicio(detalle);
-                    AyudaFormularioVisual.MostrarExito(lblEstado, "Ejercicio agregado a la rutina.");
                 }
                 CargarDetalleDeRutina();
+                if (eraNuevo)
+                    AyudaFormularioVisual.MostrarExito(lblEstado, "Ejercicio agregado a la rutina.", true);
             }
-            catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex); }
+            catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex, eraNuevo); }
         }
 
         private void cancelarEjercicio_Click(object origen, EventArgs e)

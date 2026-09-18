@@ -217,11 +217,11 @@ namespace exxen2._0.capaVisual.Compartido
                 logica.Crear(LeerSocio(), fotoSeleccionada, extensionFotoSeleccionada);
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
-                AyudaFormularioVisual.MostrarExito(lblEstado, "Socio creado correctamente.");
+                AyudaFormularioVisual.MostrarExito(lblEstado, "Socio creado correctamente.", true);
             }
             catch (Exception ex)
             {
-                AyudaFormularioVisual.MostrarError(lblEstado, ex);
+                AyudaFormularioVisual.MostrarError(lblEstado, ex, true);
             }
         }
 

@@ -115,21 +115,35 @@ namespace exxen2._0.capaVisual.Compartido
         }
 
         /* Informa el error en la pantalla y en un mensaje para que el usuario pueda corregir la operación. */
-        internal static void MostrarError(Label estado, Exception excepcion)
+        internal static void MostrarError(Label estado, Exception excepcion, bool resaltar = false)
         {
             var mensaje = excepcion is InvalidOperationException || excepcion is ArgumentException
                 ? excepcion.Message
                 : "No se pudo completar la operación.";
             if (estado != null)
+            {
                 estado.Text = mensaje;
+                if (resaltar)
+                {
+                    estado.ForeColor = System.Drawing.Color.Red;
+                    estado.Visible = true;
+                }
+            }
             MessageBox.Show(mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         /* Actualiza el mensaje de estado después de completar una operación. */
-        internal static void MostrarExito(Label estado, string mensaje)
+        internal static void MostrarExito(Label estado, string mensaje, bool resaltar = false)
         {
             if (estado != null)
+            {
                 estado.Text = mensaje;
+                if (resaltar)
+                {
+                    estado.ForeColor = System.Drawing.Color.Green;
+                    estado.Visible = true;
+                }
+            }
         }
 
         /* Comprueba que el campo contenga un entero positivo antes de enviarlo a la lógica. */

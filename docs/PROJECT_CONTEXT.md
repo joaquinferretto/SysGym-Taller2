@@ -1,5 +1,15 @@
 # Contexto del proyecto
 
+## Notificaciones clasicas de altas - 17 de septiembre de 2026
+
+Ultima actualizacion de esta seccion: 17 de septiembre de 2026.
+
+Se revisaron todos los formularios activos. Las altas de usuarios (administrador, entrenador y recepcionista), socios, planes, membresias, cuotas, pagos, ejercicios, imagenes, rutinas y ejercicios de rutina, junto con las asignaciones de entrenador y rutina, informan el resultado usando el Label `lblEstado` existente: `Color.Green` para exito, `Color.Red` para error y `Visible = true`. Se conserva el estilo MessageBox existente, sin controles ni paquetes nuevos.
+
+`AyudaFormularioVisual.MostrarExito` y `MostrarError` reciben un parametro opcional `resaltar`; solo los flujos indicados lo activan. Los eventos compartidos de ejercicios y rutinas distinguen el alta de la edicion; asignar/cambiar entrenador o rutina comparten exactamente el mismo flujo. La creacion de rutina muestra su confirmacion despues de recargar el catalogo para evitar que el contador la reemplace. Usuarios conserva su error generico especifico; los demas usan el mensaje general existente o la causa de negocio disponible.
+
+Verificaciones: Debug y Release compilados con MSBuild de Visual Studio usando `bin/VerificacionNotificaciones/` como salida, porque el ejecutable de Debug estaba bloqueado por un proceso abierto. `dotnet build` no pudo procesar los recursos del proyecto clasico (MSB3822/MSB3823); no se cambio la configuracion del proyecto. Permanece el warning CS0649 de `GestionEjerciciosFormulario.components` en el Designer previamente modificado. Los nueve formularios afectados se inicializaron y ejecutaron layout en memoria; se verificaron texto y color verde mediante el helper. Se revisaron las ramas de error y las dependencias: no hay cambios en logica, datos, entidades, EF6 ni SQL. Pendientes: altas reales y errores contra SQL Server, inspeccion visual de rojo/verde y apertura manual en el disenador de Visual Studio.
+
 ## Avisos de alta y foto opcional - 17 de septiembre de 2026
 
 La creacion de usuarios desde `GestionUsuariosFormulario` ahora confirma el alta con un mensaje visual de Windows Forms y, ante errores, muestra la causa de negocio disponible o un mensaje general de alta fallida sin exponer detalles tecnicos. No se modificaron validaciones de campos, capas de logica ni persistencia.

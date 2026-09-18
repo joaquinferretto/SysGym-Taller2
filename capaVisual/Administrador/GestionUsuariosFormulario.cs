@@ -183,7 +183,7 @@ namespace exxen2._0.capaVisual.Administrador
                 logica.Crear(LeerUsuario(), clave.Text, fotoSeleccionada == null ? null : fotoSeleccionada.Contenido, fotoSeleccionada == null ? null : fotoSeleccionada.Extension);
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
-                AyudaFormularioVisual.MostrarExito(lblEstado, "Usuario creado correctamente.");
+                AyudaFormularioVisual.MostrarExito(lblEstado, "Usuario creado correctamente.", true);
                 MessageBox.Show("Usuario creado correctamente.", "Usuarios", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -192,6 +192,8 @@ namespace exxen2._0.capaVisual.Administrador
                     ? ex.Message
                     : "No se pudo crear el usuario.";
                 lblEstado.Text = mensaje;
+                lblEstado.ForeColor = Color.Red;
+                lblEstado.Visible = true;
                 MessageBox.Show(mensaje, "Usuarios", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }

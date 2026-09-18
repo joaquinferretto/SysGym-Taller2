@@ -125,9 +125,9 @@ namespace exxen2._0.capaVisual.Administrador
                 logica.Crear(LeerPlan());
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
-                AyudaFormularioVisual.MostrarExito(lblEstado, "Plan creado correctamente.");
+                AyudaFormularioVisual.MostrarExito(lblEstado, "Plan creado correctamente.", true);
             }
-            catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex); }
+            catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex, true); }
         }
 
         private void actualizar_Click(object origen, EventArgs e)

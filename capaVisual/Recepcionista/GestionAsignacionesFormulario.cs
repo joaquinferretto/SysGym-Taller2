@@ -133,9 +133,9 @@ namespace exxen2._0.capaVisual.Recepcionista
                 if (cambiarEntrenador) logica.CambiarEntrenador(idSeleccionado, Convert.ToInt32(entrenador.SelectedValue));
                 else logica.AsignarEntrenador(idSeleccionado, Convert.ToInt32(entrenador.SelectedValue));
                 CargarListado();
-                AyudaFormularioVisual.MostrarExito(lblEstado, cambiarEntrenador ? "Entrenador cambiado." : "Entrenador asignado.");
+                AyudaFormularioVisual.MostrarExito(lblEstado, cambiarEntrenador ? "Entrenador cambiado." : "Entrenador asignado.", true);
             }
-            catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex); }
+            catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex, true); }
         }
 
         /* Al hacer clic en dar de baja, finaliza la vinculación activa y conserva su historial. */
