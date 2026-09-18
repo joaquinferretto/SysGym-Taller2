@@ -1,16 +1,28 @@
 # Arquitectura
 
-## Correccion de inicializacion del diseñador en RutinasEntrenadorFormulario - 18 de septiembre de 2026
+## Normalizacion de Asignaciones - 18 de septiembre de 2026
 
-`RutinasEntrenadorFormulario.Designer.cs` conserva la distribucion master/detail existente: catalogo a la izquierda y, a la derecha, rutina seleccionada, ejercicios de la rutina y detalle del ejercicio. Se elimino el `for` que creaba las cuatro filas de `contenedorFormulario` y se declararon las cuatro `RowStyle` de 25% de forma explicita. Tambien se reemplazaron `ConfigurarTabla`, `ConfigurarBoton` y `AgregarCampo` por propiedades, `Controls.Add` y suscripciones de eventos declarativas. No quedan helpers propios ni control de flujo dentro de `InitializeComponent`; permanecen unicamente arrays estandar para `Columns.AddRange` y `Items.AddRange`.
+Se elimina panelDetalle (wrapper exclusivo de grupoFicha). Listado/filtros son TableLayoutPanel; etiquetas y valores permanecen directos en tablaFicha. Se conserva el GroupBox existente como region semantica con borde/fondo/padding, no como sustituto de paneles individuales. La columna AutoSize y la alineacion vertical compartida resuelven Nuevo entrenador/ComboBox sin geometria runtime. Panel 4/1, TableLayoutPanel 1/3, FlowLayoutPanel 1/1, SplitContainer 1/1, GroupBox 1/1. Form.cs y las reglas de asignacion no cambian. Verificaciones reales y pendientes en PROJECT_CONTEXT.md.
 
-Durante la auditoria se detecto que esa normalizacion habia omitido `components = new Container();`. El campo se mantenia declarado y `Dispose` dependia de el, pero quedaba en `null` durante la instancia del formulario. Se restauro su inicializacion estandar al comienzo de `InitializeComponent`; no se cambio el layout ni se agregaron defensas genericas. El NRE informado no pudo reproducirse con el host real de Visual Studio despues de la correccion, por lo que no se atribuye a handlers sin una traza que lo confirme.
+## Normalizacion de Planes - 18 de septiembre de 2026
 
-El handler `Editar` es unico: `actualizarEjercicio_Click`. La seleccion de una fila vuelve a consultar el detalle por `IdRutinaEjercicio`, carga Ejercicio, Dia, Series, Repeticiones, Peso, Descanso y Orden, y deja el editor en consulta. `Agregar` crea mediante `RutinaEjercicioLogica.AgregarEjercicio`; `Guardar cambios` conserva `IdRutinaEjercicio` y llama a `RutinaEjercicioLogica.Modificar`; `Quitar` llama a `Quitar` despues de confirmar y solo baja la relacion. Cancelar descarta el modo nuevo o recarga la fila seleccionada en modo edicion. Las validaciones de rangos permanecen en la capa logica.
+GestionPlanesFormulario conserva SplitContainer y sustituye wrappers por tablas de listado, filtros y detalle. Titulo y acciones del detalle se integran en contenedorCampos, sin panelDetalle/contenedorDetalle. Los botones comparten FlowLayoutPanel; campos y grilla directos. Panel 6/1, TableLayoutPanel 1/3, FlowLayoutPanel 0/1, SplitContainer 1/1. No cambia Form.cs, negocio ni persistencia. Designer/Properties y navegacion real Administrador/Planes comprobados; pruebas y pendientes en PROJECT_CONTEXT.md.
 
-Se mantuvo `splitContenido_Resize` porque conserva la proporcion responsive actual y protege los limites de `Panel1MinSize` y `Panel2MinSize`; el valor inicial declarativo de `SplitterDistance` sigue siendo valido. La profundidad maxima de contenedores permanecio en cinco niveles y no se eliminaron contenedores que aportan `Dock`, `Padding`, `BorderStyle`, scroll, agrupacion o layout.
+## Normalizacion de Usuarios - 18 de septiembre de 2026
 
-Debug y Release compilaron sin errores. La instancia de Visual Studio abrio realmente `RutinasEntrenadorFormulario.cs [Diseño]` despues del cambio; el constructor y `PerformLayout` tambien finalizaron en Debug y Release. La auditoria confirmo que los inicializadores de campos solo crean coordinadores de logica sin consultas ni acceso a datos; `Load` conserva la salida por `EnModoDisenio`; no se modificaron handlers de seleccion ni resize. Los unicos warnings CS0649 restantes pertenecen a `GestionEjerciciosFormulario` y `GestionSociosFormulario`. Pendiente: ejecutar contra una base de prueba controlada los seis casos funcionales solicitados; esta tarea no altero SQL Server.
+GestionUsuariosFormulario mantiene estructura declarativa: SplitContainer, tabla de listado con filtros/grilla directos y tabla de detalle con labels/campos/foto directos. Un Panel conserva AutoScroll del detalle; las acciones comparten FlowLayoutPanel. Se eliminan panelFiltro y contenedorDetalle, sin trasladar construccion visual a Form.cs. Contenedores: Panel 8/4, TableLayoutPanel 2/2, FlowLayoutPanel 0/1, SplitContainer 0/1 (antes/despues). La configuracion de fecha dependiente del dia actual pasa de constructor a Load; eventos y reglas permanecen. Designer/Properties reales y navegacion Administrador/Usuarios comprobados; detalles de pruebas y pendientes en PROJECT_CONTEXT.md.
+
+## Normalizacion declarativa incremental - 18 de septiembre de 2026
+
+Ultima actualizacion: 18 de septiembre de 2026.
+
+Primera fase: RutinasEntrenadorFormulario. Estructura principal exclusivamente en Designer.cs, controles directos en tablas y acciones en FlowLayoutPanel. Se integraron los titulos/acciones de panelRutina y panelFormulario y se convirtieron panelListado/panelEjercicios en tablas. Panel 7 -> 3; TableLayoutPanel 3 -> 5; FlowLayoutPanel 3 -> 3; SplitContainer 1 -> 1. Los paneles conservados son encabezado oculto, separador y region con padding. Las alturas se resuelven mediante AutoSize/Percent y no recalculando SplitterDistance en Resize.
+
+Constructor publico sin parametros: solo InitializeComponent. Carga de datos en Load con la proteccion de diseño existente. Se elimina el evento Paint vacio; seleccion y operaciones de negocio permanecen intactas. Se habilitan campos individualmente al integrar botones en la tabla del editor. No hay nuevos accesos entre capas, SQL, cambios de EF, DER ni reglas.
+
+Designer real y Properties comprobados en Visual Studio Community 2026 18.10.1, aceptado por el usuario. Login real, navegacion Administrador -> Gestionar rutinas y seleccion/Editar comprobados. Prueba auxiliar del formulario: carga, modos y cuatro tamaños; no confirma persistencia. Detalle y pendientes en PROJECT_CONTEXT.md.
+
+La atribucion previa del NRE a components nulo queda retirada: un contenedor opcional nulo con Dispose protegido es valido. No se obtuvo una pila que identificara la causa original. La prueba visual actual sustituye la comprobacion insuficiente basada solo en el titulo de la pestaña.
 
 ## Simplificacion incremental de contenedores WinForms - 18 de septiembre de 2026
 

@@ -6,12 +6,12 @@ namespace exxen2._0.capaVisual.Recepcionista
 {
     partial class GestionAsignacionesFormulario
     {
-        private IContainer components;
+        private IContainer components = null;
         private Panel panelEncabezado;
         private Label lblTitulo;
         private Label lblDescripcion;
         private Button btnVolver;
-        private Panel barraAcciones;
+        private TableLayoutPanel barraAcciones;
         private Label lblBuscar;
         private TextBox buscador;
         private Label lblEstadoFiltro;
@@ -19,7 +19,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         private Button actualizar;
         private Label lblEstado;
         private SplitContainer splitContenido;
-        private Panel panelListado;
+        private TableLayoutPanel panelListado;
         private Label lblListadoTitulo;
         private DataGridView tabla;
         private DataGridViewTextBoxColumn colId;
@@ -27,7 +27,6 @@ namespace exxen2._0.capaVisual.Recepcionista
         private DataGridViewTextBoxColumn colPlan;
         private DataGridViewTextBoxColumn colEntrenador;
         private DataGridViewTextBoxColumn colEstado;
-        private Panel panelDetalle;
         private GroupBox grupoFicha;
         private Label lblDetalleTitulo;
         private TableLayoutPanel tablaFicha;
@@ -62,170 +61,185 @@ namespace exxen2._0.capaVisual.Recepcionista
 
         private void InitializeComponent()
         {
-            this.components = new Container();
-            this.panelEncabezado = new Panel();
-            this.lblTitulo = new Label();
-            this.lblDescripcion = new Label();
-            this.btnVolver = new Button();
-            this.barraAcciones = new Panel();
-            this.lblBuscar = new Label();
-            this.buscador = new TextBox();
-            this.lblEstadoFiltro = new Label();
-            this.filtroEstado = new ComboBox();
-            this.actualizar = new Button();
-            this.lblEstado = new Label();
-            this.splitContenido = new SplitContainer();
-            this.panelListado = new Panel();
-            this.lblListadoTitulo = new Label();
-            this.tabla = new DataGridView();
-            this.colId = new DataGridViewTextBoxColumn();
-            this.colSocio = new DataGridViewTextBoxColumn();
-            this.colPlan = new DataGridViewTextBoxColumn();
-            this.colEntrenador = new DataGridViewTextBoxColumn();
-            this.colEstado = new DataGridViewTextBoxColumn();
-            this.panelDetalle = new Panel();
-            this.grupoFicha = new GroupBox();
-            this.lblDetalleTitulo = new Label();
-            this.tablaFicha = new TableLayoutPanel();
-            this.lblSocio = new Label();
-            this.lblSocioValor = new Label();
-            this.lblDni = new Label();
-            this.lblDniValor = new Label();
-            this.lblPlan = new Label();
-            this.lblPlanValor = new Label();
-            this.lblVencimiento = new Label();
-            this.lblVencimientoValor = new Label();
-            this.lblEstadoMembresia = new Label();
-            this.lblEstadoMembresiaValor = new Label();
-            this.lblEntrenadorActual = new Label();
-            this.lblEntrenadorActualValor = new Label();
-            this.lblNuevoEntrenador = new Label();
-            this.entrenador = new ComboBox();
-            this.accionesFicha = new FlowLayoutPanel();
-            this.asignar = new Button();
-            this.cambiar = new Button();
-            this.darDeBaja = new Button();
-            ((ISupportInitialize)(this.splitContenido)).BeginInit();
+            this.panelEncabezado = new System.Windows.Forms.Panel();
+            this.btnVolver = new System.Windows.Forms.Button();
+            this.lblDescripcion = new System.Windows.Forms.Label();
+            this.lblTitulo = new System.Windows.Forms.Label();
+            this.barraAcciones = new System.Windows.Forms.TableLayoutPanel();
+            this.lblBuscar = new System.Windows.Forms.Label();
+            this.buscador = new System.Windows.Forms.TextBox();
+            this.lblEstadoFiltro = new System.Windows.Forms.Label();
+            this.filtroEstado = new System.Windows.Forms.ComboBox();
+            this.actualizar = new System.Windows.Forms.Button();
+            this.lblEstado = new System.Windows.Forms.Label();
+            this.splitContenido = new System.Windows.Forms.SplitContainer();
+            this.panelListado = new System.Windows.Forms.TableLayoutPanel();
+            this.lblListadoTitulo = new System.Windows.Forms.Label();
+            this.tabla = new System.Windows.Forms.DataGridView();
+            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSocio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPlan = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEntrenador = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.grupoFicha = new System.Windows.Forms.GroupBox();
+            this.tablaFicha = new System.Windows.Forms.TableLayoutPanel();
+            this.lblSocio = new System.Windows.Forms.Label();
+            this.lblSocioValor = new System.Windows.Forms.Label();
+            this.lblDni = new System.Windows.Forms.Label();
+            this.lblDniValor = new System.Windows.Forms.Label();
+            this.lblPlan = new System.Windows.Forms.Label();
+            this.lblPlanValor = new System.Windows.Forms.Label();
+            this.lblVencimiento = new System.Windows.Forms.Label();
+            this.lblVencimientoValor = new System.Windows.Forms.Label();
+            this.lblEstadoMembresia = new System.Windows.Forms.Label();
+            this.lblEstadoMembresiaValor = new System.Windows.Forms.Label();
+            this.lblEntrenadorActual = new System.Windows.Forms.Label();
+            this.lblEntrenadorActualValor = new System.Windows.Forms.Label();
+            this.lblNuevoEntrenador = new System.Windows.Forms.Label();
+            this.entrenador = new System.Windows.Forms.ComboBox();
+            this.accionesFicha = new System.Windows.Forms.FlowLayoutPanel();
+            this.asignar = new System.Windows.Forms.Button();
+            this.cambiar = new System.Windows.Forms.Button();
+            this.darDeBaja = new System.Windows.Forms.Button();
+            this.lblDetalleTitulo = new System.Windows.Forms.Label();
+            this.panelEncabezado.SuspendLayout();
+            this.barraAcciones.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContenido)).BeginInit();
             this.splitContenido.Panel1.SuspendLayout();
             this.splitContenido.Panel2.SuspendLayout();
             this.splitContenido.SuspendLayout();
-            ((ISupportInitialize)(this.tabla)).BeginInit();
+            this.panelListado.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tabla)).BeginInit();
+            this.grupoFicha.SuspendLayout();
+            this.tablaFicha.SuspendLayout();
+            this.accionesFicha.SuspendLayout();
             this.SuspendLayout();
             //
             // panelEncabezado
             //
-            this.panelEncabezado.BackColor = Color.FromArgb(79, 70, 229);
+            this.panelEncabezado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
             this.panelEncabezado.Controls.Add(this.btnVolver);
             this.panelEncabezado.Controls.Add(this.lblDescripcion);
             this.panelEncabezado.Controls.Add(this.lblTitulo);
-            this.panelEncabezado.Dock = DockStyle.Top;
-            this.panelEncabezado.Height = 56;
+            this.panelEncabezado.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelEncabezado.Location = new System.Drawing.Point(0, 0);
             this.panelEncabezado.Name = "panelEncabezado";
+            this.panelEncabezado.Size = new System.Drawing.Size(1100, 56);
             this.panelEncabezado.TabIndex = 0;
             this.panelEncabezado.Visible = false;
             //
-            // lblTitulo
-            //
-            this.lblTitulo.AutoSize = false;
-            this.lblTitulo.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
-            this.lblTitulo.ForeColor = Color.White;
-            this.lblTitulo.Location = new Point(20, 8);
-            this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new Size(900, 40);
-            this.lblTitulo.TabIndex = 0;
-            this.lblTitulo.Text = "Asignar entrenador | Vinculación de entrenadores y membresías";
-            this.lblTitulo.TextAlign = ContentAlignment.MiddleLeft;
-            //
-            // lblDescripcion
-            //
-            this.lblDescripcion.AutoSize = false;
-            this.lblDescripcion.ForeColor = Color.FromArgb(226, 232, 240);
-            this.lblDescripcion.Location = new Point(22, 39);
-            this.lblDescripcion.Name = "lblDescripcion";
-            this.lblDescripcion.Size = new Size(700, 22);
-            this.lblDescripcion.TabIndex = 1;
-            this.lblDescripcion.Text = "Seleccioná una membresía para revisar y gestionar su vinculación";
-            this.lblDescripcion.Visible = false;
-            //
             // btnVolver
             //
-            this.btnVolver.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            this.btnVolver.BackColor = Color.White;
+            this.btnVolver.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnVolver.BackColor = System.Drawing.Color.White;
             this.btnVolver.FlatAppearance.BorderSize = 0;
-            this.btnVolver.FlatStyle = FlatStyle.Flat;
-            this.btnVolver.Location = new Point(980, 10);
+            this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnVolver.Location = new System.Drawing.Point(1880, 10);
             this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new Size(100, 36);
+            this.btnVolver.Size = new System.Drawing.Size(100, 36);
             this.btnVolver.TabIndex = 0;
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = false;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             //
+            // lblDescripcion
+            //
+            this.lblDescripcion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.lblDescripcion.Location = new System.Drawing.Point(22, 39);
+            this.lblDescripcion.Name = "lblDescripcion";
+            this.lblDescripcion.Size = new System.Drawing.Size(700, 22);
+            this.lblDescripcion.TabIndex = 1;
+            this.lblDescripcion.Text = "Seleccioná una membresía para revisar y gestionar su vinculación";
+            this.lblDescripcion.Visible = false;
+            //
+            // lblTitulo
+            //
+            this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
+            this.lblTitulo.ForeColor = System.Drawing.Color.White;
+            this.lblTitulo.Location = new System.Drawing.Point(20, 8);
+            this.lblTitulo.Name = "lblTitulo";
+            this.lblTitulo.Size = new System.Drawing.Size(900, 40);
+            this.lblTitulo.TabIndex = 0;
+            this.lblTitulo.Text = "Asignar entrenador | Vinculación de entrenadores y membresías";
+            this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
             // barraAcciones
             //
-            this.barraAcciones.BackColor = Color.White;
-            this.barraAcciones.Controls.Add(this.actualizar);
-            this.barraAcciones.Controls.Add(this.filtroEstado);
-            this.barraAcciones.Controls.Add(this.lblEstadoFiltro);
-            this.barraAcciones.Controls.Add(this.buscador);
-            this.barraAcciones.Controls.Add(this.lblBuscar);
-            this.barraAcciones.Dock = DockStyle.Top;
-            this.barraAcciones.Height = 54;
+            this.barraAcciones.BackColor = System.Drawing.Color.White;
+            this.barraAcciones.ColumnCount = 6;
+            this.barraAcciones.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.barraAcciones.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 262F));
+            this.barraAcciones.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.barraAcciones.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 136F));
+            this.barraAcciones.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.barraAcciones.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.barraAcciones.Controls.Add(this.lblBuscar, 0, 0);
+            this.barraAcciones.Controls.Add(this.buscador, 1, 0);
+            this.barraAcciones.Controls.Add(this.lblEstadoFiltro, 2, 0);
+            this.barraAcciones.Controls.Add(this.filtroEstado, 3, 0);
+            this.barraAcciones.Controls.Add(this.actualizar, 5, 0);
+            this.barraAcciones.Dock = System.Windows.Forms.DockStyle.Top;
+            this.barraAcciones.Location = new System.Drawing.Point(0, 56);
             this.barraAcciones.Name = "barraAcciones";
+            this.barraAcciones.Padding = new System.Windows.Forms.Padding(16, 6, 16, 6);
+            this.barraAcciones.RowCount = 1;
+            this.barraAcciones.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.barraAcciones.Size = new System.Drawing.Size(1100, 54);
             this.barraAcciones.TabIndex = 1;
             //
             // lblBuscar
             //
-            this.lblBuscar.AutoSize = false;
-            this.lblBuscar.Location = new Point(16, 10);
+            this.lblBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblBuscar.Location = new System.Drawing.Point(19, 13);
             this.lblBuscar.Name = "lblBuscar";
-            this.lblBuscar.Size = new Size(52, 28);
+            this.lblBuscar.Size = new System.Drawing.Size(52, 28);
             this.lblBuscar.TabIndex = 0;
             this.lblBuscar.Text = "Buscar:";
-            this.lblBuscar.TextAlign = ContentAlignment.MiddleLeft;
+            this.lblBuscar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // buscador
             //
-            this.buscador.BorderStyle = BorderStyle.FixedSingle;
-            this.buscador.Location = new Point(72, 10);
+            this.buscador.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.buscador.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.buscador.Location = new System.Drawing.Point(77, 12);
             this.buscador.Name = "buscador";
-            this.buscador.Size = new Size(250, 27);
+            this.buscador.Size = new System.Drawing.Size(256, 29);
             this.buscador.TabIndex = 0;
             this.buscador.TextChanged += new System.EventHandler(this.buscador_TextChanged);
             //
             // lblEstadoFiltro
             //
-            this.lblEstadoFiltro.AutoSize = false;
-            this.lblEstadoFiltro.Location = new Point(340, 10);
+            this.lblEstadoFiltro.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblEstadoFiltro.Location = new System.Drawing.Point(339, 13);
             this.lblEstadoFiltro.Name = "lblEstadoFiltro";
-            this.lblEstadoFiltro.Size = new Size(48, 28);
+            this.lblEstadoFiltro.Size = new System.Drawing.Size(48, 28);
             this.lblEstadoFiltro.TabIndex = 1;
             this.lblEstadoFiltro.Text = "Estado:";
-            this.lblEstadoFiltro.TextAlign = ContentAlignment.MiddleLeft;
+            this.lblEstadoFiltro.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // filtroEstado
             //
-            this.filtroEstado.DropDownStyle = ComboBoxStyle.DropDownList;
+            this.filtroEstado.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.filtroEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.filtroEstado.Items.AddRange(new object[] {
             "Todos",
             "Asignados",
             "Sin asignar"});
-            this.filtroEstado.Location = new Point(392, 10);
+            this.filtroEstado.Location = new System.Drawing.Point(393, 15);
             this.filtroEstado.Name = "filtroEstado";
-            this.filtroEstado.Size = new Size(130, 28);
+            this.filtroEstado.Size = new System.Drawing.Size(130, 29);
             this.filtroEstado.TabIndex = 1;
-            this.filtroEstado.SelectedIndex = 0;
             this.filtroEstado.SelectedIndexChanged += new System.EventHandler(this.filtroEstado_SelectedIndexChanged);
             //
             // actualizar
             //
-            this.actualizar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            this.actualizar.BackColor = Color.FromArgb(226, 232, 240);
+            this.actualizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.actualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
             this.actualizar.FlatAppearance.BorderSize = 0;
-            this.actualizar.FlatStyle = FlatStyle.Flat;
-            this.actualizar.Location = new Point(914, 9);
+            this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.actualizar.Location = new System.Drawing.Point(915, 9);
             this.actualizar.Name = "actualizar";
-            this.actualizar.Size = new Size(166, 34);
+            this.actualizar.Size = new System.Drawing.Size(166, 34);
             this.actualizar.TabIndex = 2;
             this.actualizar.Text = "Actualizar listado";
             this.actualizar.UseVisualStyleBackColor = false;
@@ -233,81 +247,99 @@ namespace exxen2._0.capaVisual.Recepcionista
             //
             // lblEstado
             //
-            this.lblEstado.BackColor = Color.FromArgb(226, 232, 240);
-            this.lblEstado.Dock = DockStyle.Bottom;
-            this.lblEstado.Height = 28;
+            this.lblEstado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.lblEstado.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblEstado.Location = new System.Drawing.Point(0, 652);
             this.lblEstado.Name = "lblEstado";
-            this.lblEstado.Padding = new Padding(16, 0, 8, 0);
+            this.lblEstado.Padding = new System.Windows.Forms.Padding(16, 0, 8, 0);
+            this.lblEstado.Size = new System.Drawing.Size(1100, 28);
             this.lblEstado.TabIndex = 3;
             this.lblEstado.Text = "Listo";
-            this.lblEstado.TextAlign = ContentAlignment.MiddleLeft;
+            this.lblEstado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // splitContenido
             //
-            this.splitContenido.Dock = DockStyle.Fill;
-            this.splitContenido.FixedPanel = FixedPanel.None;
-            this.splitContenido.IsSplitterFixed = false;
-            this.splitContenido.MinimumSize = new Size(900, 420);
+            this.splitContenido.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContenido.Location = new System.Drawing.Point(0, 110);
+            this.splitContenido.MinimumSize = new System.Drawing.Size(900, 420);
             this.splitContenido.Name = "splitContenido";
-            this.splitContenido.Panel1.BackColor = Color.FromArgb(248, 250, 252);
+            //
+            // splitContenido.Panel1
+            //
+            this.splitContenido.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
             this.splitContenido.Panel1.Controls.Add(this.panelListado);
+            this.splitContenido.Panel1.Padding = new System.Windows.Forms.Padding(16);
             this.splitContenido.Panel1MinSize = 420;
-            this.splitContenido.Panel1.Padding = new Padding(16);
-            this.splitContenido.Panel2.BackColor = Color.FromArgb(248, 250, 252);
-            this.splitContenido.Panel2.Controls.Add(this.panelDetalle);
+            //
+            // splitContenido.Panel2
+            //
+            this.splitContenido.Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.splitContenido.Panel2.Controls.Add(this.grupoFicha);
+            this.splitContenido.Panel2.Padding = new System.Windows.Forms.Padding(0, 16, 16, 16);
             this.splitContenido.Panel2MinSize = 340;
-            this.splitContenido.Panel2.Padding = new Padding(0, 16, 16, 16);
-            this.splitContenido.Size = new Size(1068, 480);
-            this.splitContenido.SplitterDistance = 600;
+            this.splitContenido.Size = new System.Drawing.Size(1100, 542);
+            this.splitContenido.SplitterDistance = 617;
             this.splitContenido.TabIndex = 4;
             //
             // panelListado
             //
-            this.panelListado.Controls.Add(this.tabla);
-            this.panelListado.Controls.Add(this.lblListadoTitulo);
-            this.panelListado.Dock = DockStyle.Fill;
+            this.panelListado.ColumnCount = 1;
+            this.panelListado.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.panelListado.Controls.Add(this.lblListadoTitulo, 0, 0);
+            this.panelListado.Controls.Add(this.tabla, 0, 1);
+            this.panelListado.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelListado.Location = new System.Drawing.Point(16, 16);
             this.panelListado.Name = "panelListado";
+            this.panelListado.RowCount = 2;
+            this.panelListado.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
+            this.panelListado.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.panelListado.Size = new System.Drawing.Size(585, 510);
             this.panelListado.TabIndex = 0;
             //
             // lblListadoTitulo
             //
-            this.lblListadoTitulo.Dock = DockStyle.Top;
-            this.lblListadoTitulo.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
-            this.lblListadoTitulo.ForeColor = Color.FromArgb(30, 41, 59);
-            this.lblListadoTitulo.Height = 34;
+            this.lblListadoTitulo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblListadoTitulo.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.lblListadoTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.lblListadoTitulo.Location = new System.Drawing.Point(3, 0);
             this.lblListadoTitulo.Name = "lblListadoTitulo";
+            this.lblListadoTitulo.Size = new System.Drawing.Size(579, 34);
             this.lblListadoTitulo.TabIndex = 0;
             this.lblListadoTitulo.Text = "Membresías y asignación";
-            this.lblListadoTitulo.TextAlign = ContentAlignment.MiddleLeft;
+            this.lblListadoTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // tabla
             //
             this.tabla.AllowUserToAddRows = false;
             this.tabla.AllowUserToDeleteRows = false;
             this.tabla.AllowUserToResizeRows = false;
-            this.tabla.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            this.tabla.BackgroundColor = Color.White;
-            this.tabla.BorderStyle = BorderStyle.FixedSingle;
+            this.tabla.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.tabla.BackgroundColor = System.Drawing.Color.White;
             this.tabla.ColumnHeadersHeight = 34;
-            this.tabla.Columns.AddRange(new DataGridViewColumn[] {
+            this.tabla.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colId,
             this.colSocio,
             this.colPlan,
             this.colEntrenador,
             this.colEstado});
-            this.tabla.Dock = DockStyle.Fill;
+            this.tabla.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabla.Location = new System.Drawing.Point(3, 37);
             this.tabla.MultiSelect = false;
             this.tabla.Name = "tabla";
             this.tabla.ReadOnly = true;
             this.tabla.RowHeadersVisible = false;
+            this.tabla.RowHeadersWidth = 51;
             this.tabla.RowTemplate.Height = 30;
-            this.tabla.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            this.tabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.tabla.Size = new System.Drawing.Size(579, 470);
             this.tabla.TabIndex = 3;
             this.tabla.SelectionChanged += new System.EventHandler(this.tabla_SelectionChanged);
             //
             // colId
             //
+            this.colId.MinimumWidth = 6;
             this.colId.Name = "colId";
+            this.colId.ReadOnly = true;
             this.colId.Visible = false;
             //
             // colSocio
@@ -316,6 +348,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.colSocio.HeaderText = "Socio";
             this.colSocio.MinimumWidth = 110;
             this.colSocio.Name = "colSocio";
+            this.colSocio.ReadOnly = true;
             //
             // colPlan
             //
@@ -323,6 +356,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.colPlan.HeaderText = "Plan";
             this.colPlan.MinimumWidth = 80;
             this.colPlan.Name = "colPlan";
+            this.colPlan.ReadOnly = true;
             //
             // colEntrenador
             //
@@ -330,6 +364,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.colEntrenador.HeaderText = "Entrenador actual";
             this.colEntrenador.MinimumWidth = 130;
             this.colEntrenador.Name = "colEntrenador";
+            this.colEntrenador.ReadOnly = true;
             //
             // colEstado
             //
@@ -337,44 +372,30 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.colEstado.HeaderText = "Estado";
             this.colEstado.MinimumWidth = 80;
             this.colEstado.Name = "colEstado";
-            //
-            // panelDetalle
-            //
-            this.panelDetalle.Controls.Add(this.grupoFicha);
-            this.panelDetalle.Dock = DockStyle.Fill;
-            this.panelDetalle.Name = "panelDetalle";
-            this.panelDetalle.TabIndex = 1;
+            this.colEstado.ReadOnly = true;
             //
             // grupoFicha
             //
-            this.grupoFicha.BackColor = Color.White;
+            this.grupoFicha.BackColor = System.Drawing.Color.White;
             this.grupoFicha.Controls.Add(this.tablaFicha);
             this.grupoFicha.Controls.Add(this.accionesFicha);
             this.grupoFicha.Controls.Add(this.lblDetalleTitulo);
-            this.grupoFicha.Dock = DockStyle.Fill;
-            this.grupoFicha.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
-            this.grupoFicha.ForeColor = Color.FromArgb(30, 41, 59);
-            this.grupoFicha.Padding = new Padding(16);
+            this.grupoFicha.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grupoFicha.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.grupoFicha.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.grupoFicha.Location = new System.Drawing.Point(0, 16);
             this.grupoFicha.Name = "grupoFicha";
+            this.grupoFicha.Padding = new System.Windows.Forms.Padding(16);
+            this.grupoFicha.Size = new System.Drawing.Size(463, 510);
             this.grupoFicha.TabIndex = 0;
             this.grupoFicha.TabStop = false;
             this.grupoFicha.Text = "Vinculación";
             //
-            // lblDetalleTitulo
-            //
-            this.lblDetalleTitulo.Dock = DockStyle.Top;
-            this.lblDetalleTitulo.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            this.lblDetalleTitulo.ForeColor = Color.FromArgb(79, 70, 229);
-            this.lblDetalleTitulo.Height = 32;
-            this.lblDetalleTitulo.Name = "lblDetalleTitulo";
-            this.lblDetalleTitulo.TabIndex = 0;
-            this.lblDetalleTitulo.Text = "Seleccioná una membresía";
-            //
             // tablaFicha
             //
             this.tablaFicha.ColumnCount = 2;
-            this.tablaFicha.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 142F));
-            this.tablaFicha.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            this.tablaFicha.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tablaFicha.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tablaFicha.Controls.Add(this.lblSocio, 0, 0);
             this.tablaFicha.Controls.Add(this.lblSocioValor, 1, 0);
             this.tablaFicha.Controls.Add(this.lblDni, 0, 1);
@@ -389,169 +410,205 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.tablaFicha.Controls.Add(this.lblEntrenadorActualValor, 1, 5);
             this.tablaFicha.Controls.Add(this.lblNuevoEntrenador, 0, 6);
             this.tablaFicha.Controls.Add(this.entrenador, 1, 6);
-            this.tablaFicha.Dock = DockStyle.Fill;
+            this.tablaFicha.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tablaFicha.Location = new System.Drawing.Point(16, 71);
             this.tablaFicha.Name = "tablaFicha";
-            this.tablaFicha.Padding = new Padding(0, 8, 0, 0);
+            this.tablaFicha.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.tablaFicha.RowCount = 7;
-            this.tablaFicha.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857F));
-            this.tablaFicha.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857F));
-            this.tablaFicha.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857F));
-            this.tablaFicha.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857F));
-            this.tablaFicha.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857F));
-            this.tablaFicha.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857F));
-            this.tablaFicha.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857F));
+            this.tablaFicha.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.2857F));
+            this.tablaFicha.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.2857F));
+            this.tablaFicha.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.2857F));
+            this.tablaFicha.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.2857F));
+            this.tablaFicha.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.2857F));
+            this.tablaFicha.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.2857F));
+            this.tablaFicha.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.2857F));
+            this.tablaFicha.Size = new System.Drawing.Size(431, 335);
             this.tablaFicha.TabIndex = 1;
             //
             // lblSocio
             //
-            this.lblSocio.Dock = DockStyle.Fill;
-            this.lblSocio.Margin = new Padding(0, 0, 12, 0);
+            this.lblSocio.AutoSize = true;
+            this.lblSocio.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSocio.Location = new System.Drawing.Point(0, 8);
+            this.lblSocio.Margin = new System.Windows.Forms.Padding(0, 0, 12, 0);
             this.lblSocio.Name = "lblSocio";
+            this.lblSocio.Size = new System.Drawing.Size(151, 46);
             this.lblSocio.TabIndex = 0;
             this.lblSocio.Text = "Socio";
-            this.lblSocio.TextAlign = ContentAlignment.MiddleLeft;
+            this.lblSocio.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // lblSocioValor
             //
-            this.lblSocioValor.Dock = DockStyle.Fill;
-            this.lblSocioValor.ForeColor = Color.FromArgb(51, 65, 85);
+            this.lblSocioValor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSocioValor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.lblSocioValor.Location = new System.Drawing.Point(166, 8);
             this.lblSocioValor.Name = "lblSocioValor";
+            this.lblSocioValor.Size = new System.Drawing.Size(262, 46);
             this.lblSocioValor.TabIndex = 1;
             this.lblSocioValor.Text = "Seleccioná una membresía";
-            this.lblSocioValor.TextAlign = ContentAlignment.MiddleLeft;
+            this.lblSocioValor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // lblDni
             //
-            this.lblDni.Dock = DockStyle.Fill;
-            this.lblDni.Margin = new Padding(0, 0, 12, 0);
+            this.lblDni.AutoSize = true;
+            this.lblDni.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblDni.Location = new System.Drawing.Point(0, 54);
+            this.lblDni.Margin = new System.Windows.Forms.Padding(0, 0, 12, 0);
             this.lblDni.Name = "lblDni";
+            this.lblDni.Size = new System.Drawing.Size(151, 46);
             this.lblDni.TabIndex = 2;
             this.lblDni.Text = "DNI";
-            this.lblDni.TextAlign = ContentAlignment.MiddleLeft;
+            this.lblDni.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // lblDniValor
             //
-            this.lblDniValor.Dock = DockStyle.Fill;
-            this.lblDniValor.ForeColor = Color.FromArgb(51, 65, 85);
+            this.lblDniValor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblDniValor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.lblDniValor.Location = new System.Drawing.Point(166, 54);
             this.lblDniValor.Name = "lblDniValor";
+            this.lblDniValor.Size = new System.Drawing.Size(262, 46);
             this.lblDniValor.TabIndex = 3;
             this.lblDniValor.Text = "-";
-            this.lblDniValor.TextAlign = ContentAlignment.MiddleLeft;
+            this.lblDniValor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // lblPlan
             //
-            this.lblPlan.Dock = DockStyle.Fill;
-            this.lblPlan.Margin = new Padding(0, 0, 12, 0);
+            this.lblPlan.AutoSize = true;
+            this.lblPlan.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblPlan.Location = new System.Drawing.Point(0, 100);
+            this.lblPlan.Margin = new System.Windows.Forms.Padding(0, 0, 12, 0);
             this.lblPlan.Name = "lblPlan";
+            this.lblPlan.Size = new System.Drawing.Size(151, 46);
             this.lblPlan.TabIndex = 4;
             this.lblPlan.Text = "Plan";
-            this.lblPlan.TextAlign = ContentAlignment.MiddleLeft;
+            this.lblPlan.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // lblPlanValor
             //
-            this.lblPlanValor.Dock = DockStyle.Fill;
-            this.lblPlanValor.ForeColor = Color.FromArgb(51, 65, 85);
+            this.lblPlanValor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblPlanValor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.lblPlanValor.Location = new System.Drawing.Point(166, 100);
             this.lblPlanValor.Name = "lblPlanValor";
+            this.lblPlanValor.Size = new System.Drawing.Size(262, 46);
             this.lblPlanValor.TabIndex = 5;
             this.lblPlanValor.Text = "-";
-            this.lblPlanValor.TextAlign = ContentAlignment.MiddleLeft;
+            this.lblPlanValor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // lblVencimiento
             //
-            this.lblVencimiento.Dock = DockStyle.Fill;
-            this.lblVencimiento.Margin = new Padding(0, 0, 12, 0);
+            this.lblVencimiento.AutoSize = true;
+            this.lblVencimiento.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblVencimiento.Location = new System.Drawing.Point(0, 146);
+            this.lblVencimiento.Margin = new System.Windows.Forms.Padding(0, 0, 12, 0);
             this.lblVencimiento.Name = "lblVencimiento";
+            this.lblVencimiento.Size = new System.Drawing.Size(151, 46);
             this.lblVencimiento.TabIndex = 6;
             this.lblVencimiento.Text = "Vencimiento";
-            this.lblVencimiento.TextAlign = ContentAlignment.MiddleLeft;
+            this.lblVencimiento.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // lblVencimientoValor
             //
-            this.lblVencimientoValor.Dock = DockStyle.Fill;
-            this.lblVencimientoValor.ForeColor = Color.FromArgb(51, 65, 85);
+            this.lblVencimientoValor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblVencimientoValor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.lblVencimientoValor.Location = new System.Drawing.Point(166, 146);
             this.lblVencimientoValor.Name = "lblVencimientoValor";
+            this.lblVencimientoValor.Size = new System.Drawing.Size(262, 46);
             this.lblVencimientoValor.TabIndex = 7;
             this.lblVencimientoValor.Text = "-";
-            this.lblVencimientoValor.TextAlign = ContentAlignment.MiddleLeft;
+            this.lblVencimientoValor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // lblEstadoMembresia
             //
-            this.lblEstadoMembresia.Dock = DockStyle.Fill;
-            this.lblEstadoMembresia.Margin = new Padding(0, 0, 12, 0);
+            this.lblEstadoMembresia.AutoSize = true;
+            this.lblEstadoMembresia.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblEstadoMembresia.Location = new System.Drawing.Point(0, 192);
+            this.lblEstadoMembresia.Margin = new System.Windows.Forms.Padding(0, 0, 12, 0);
             this.lblEstadoMembresia.Name = "lblEstadoMembresia";
+            this.lblEstadoMembresia.Size = new System.Drawing.Size(151, 46);
             this.lblEstadoMembresia.TabIndex = 8;
             this.lblEstadoMembresia.Text = "Estado membresía";
-            this.lblEstadoMembresia.TextAlign = ContentAlignment.MiddleLeft;
+            this.lblEstadoMembresia.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // lblEstadoMembresiaValor
             //
-            this.lblEstadoMembresiaValor.Dock = DockStyle.Fill;
-            this.lblEstadoMembresiaValor.ForeColor = Color.FromArgb(51, 65, 85);
+            this.lblEstadoMembresiaValor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblEstadoMembresiaValor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.lblEstadoMembresiaValor.Location = new System.Drawing.Point(166, 192);
             this.lblEstadoMembresiaValor.Name = "lblEstadoMembresiaValor";
+            this.lblEstadoMembresiaValor.Size = new System.Drawing.Size(262, 46);
             this.lblEstadoMembresiaValor.TabIndex = 9;
             this.lblEstadoMembresiaValor.Text = "-";
-            this.lblEstadoMembresiaValor.TextAlign = ContentAlignment.MiddleLeft;
+            this.lblEstadoMembresiaValor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // lblEntrenadorActual
             //
-            this.lblEntrenadorActual.Dock = DockStyle.Fill;
-            this.lblEntrenadorActual.Margin = new Padding(0, 0, 12, 0);
+            this.lblEntrenadorActual.AutoSize = true;
+            this.lblEntrenadorActual.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblEntrenadorActual.Location = new System.Drawing.Point(0, 238);
+            this.lblEntrenadorActual.Margin = new System.Windows.Forms.Padding(0, 0, 12, 0);
             this.lblEntrenadorActual.Name = "lblEntrenadorActual";
+            this.lblEntrenadorActual.Size = new System.Drawing.Size(151, 46);
             this.lblEntrenadorActual.TabIndex = 10;
             this.lblEntrenadorActual.Text = "Entrenador actual";
-            this.lblEntrenadorActual.TextAlign = ContentAlignment.MiddleLeft;
+            this.lblEntrenadorActual.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // lblEntrenadorActualValor
             //
-            this.lblEntrenadorActualValor.Dock = DockStyle.Fill;
-            this.lblEntrenadorActualValor.ForeColor = Color.FromArgb(51, 65, 85);
+            this.lblEntrenadorActualValor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblEntrenadorActualValor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.lblEntrenadorActualValor.Location = new System.Drawing.Point(166, 238);
             this.lblEntrenadorActualValor.Name = "lblEntrenadorActualValor";
+            this.lblEntrenadorActualValor.Size = new System.Drawing.Size(262, 46);
             this.lblEntrenadorActualValor.TabIndex = 11;
             this.lblEntrenadorActualValor.Text = "Sin asignar";
-            this.lblEntrenadorActualValor.TextAlign = ContentAlignment.MiddleLeft;
+            this.lblEntrenadorActualValor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // lblNuevoEntrenador
             //
-            this.lblNuevoEntrenador.Dock = DockStyle.Fill;
-            this.lblNuevoEntrenador.Margin = new Padding(0, 0, 12, 0);
+            this.lblNuevoEntrenador.AutoSize = true;
+            this.lblNuevoEntrenador.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblNuevoEntrenador.Location = new System.Drawing.Point(0, 284);
+            this.lblNuevoEntrenador.Margin = new System.Windows.Forms.Padding(0, 0, 12, 0);
             this.lblNuevoEntrenador.Name = "lblNuevoEntrenador";
+            this.lblNuevoEntrenador.Size = new System.Drawing.Size(151, 51);
             this.lblNuevoEntrenador.TabIndex = 12;
             this.lblNuevoEntrenador.Text = "Nuevo entrenador";
-            this.lblNuevoEntrenador.TextAlign = ContentAlignment.MiddleLeft;
+            this.lblNuevoEntrenador.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // entrenador
             //
-            this.entrenador.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            this.entrenador.AutoSize = false;
-            this.entrenador.Dock = DockStyle.None;
-            this.entrenador.DropDownStyle = ComboBoxStyle.DropDownList;
+            this.entrenador.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.entrenador.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.entrenador.Enabled = false;
-            this.entrenador.Height = 28;
-            this.entrenador.Margin = new Padding(0);
+            this.entrenador.Location = new System.Drawing.Point(163, 297);
+            this.entrenador.Margin = new System.Windows.Forms.Padding(0);
             this.entrenador.Name = "entrenador";
+            this.entrenador.Size = new System.Drawing.Size(268, 31);
             this.entrenador.TabIndex = 0;
             //
             // accionesFicha
             //
+            this.accionesFicha.AutoSize = true;
+            this.accionesFicha.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.accionesFicha.Controls.Add(this.asignar);
             this.accionesFicha.Controls.Add(this.cambiar);
             this.accionesFicha.Controls.Add(this.darDeBaja);
-            this.accionesFicha.Dock = DockStyle.Bottom;
-            this.accionesFicha.FlowDirection = FlowDirection.LeftToRight;
-            this.accionesFicha.Height = 48;
+            this.accionesFicha.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.accionesFicha.Location = new System.Drawing.Point(16, 406);
             this.accionesFicha.Name = "accionesFicha";
-            this.accionesFicha.Padding = new Padding(0, 8, 0, 0);
+            this.accionesFicha.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
+            this.accionesFicha.Size = new System.Drawing.Size(431, 88);
             this.accionesFicha.TabIndex = 2;
-            this.accionesFicha.WrapContents = false;
             //
             // asignar
             //
-            this.asignar.BackColor = Color.FromArgb(79, 70, 229);
+            this.asignar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
             this.asignar.FlatAppearance.BorderSize = 0;
-            this.asignar.FlatStyle = FlatStyle.Flat;
-            this.asignar.ForeColor = Color.White;
+            this.asignar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.asignar.ForeColor = System.Drawing.Color.White;
+            this.asignar.Location = new System.Drawing.Point(3, 11);
             this.asignar.Name = "asignar";
-            this.asignar.Size = new Size(170, 34);
+            this.asignar.Size = new System.Drawing.Size(170, 34);
             this.asignar.TabIndex = 5;
             this.asignar.Text = "Asignar entrenador";
             this.asignar.UseVisualStyleBackColor = false;
@@ -560,12 +617,13 @@ namespace exxen2._0.capaVisual.Recepcionista
             //
             // cambiar
             //
-            this.cambiar.BackColor = Color.FromArgb(79, 70, 229);
+            this.cambiar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
             this.cambiar.FlatAppearance.BorderSize = 0;
-            this.cambiar.FlatStyle = FlatStyle.Flat;
-            this.cambiar.ForeColor = Color.White;
+            this.cambiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cambiar.ForeColor = System.Drawing.Color.White;
+            this.cambiar.Location = new System.Drawing.Point(179, 11);
             this.cambiar.Name = "cambiar";
-            this.cambiar.Size = new Size(170, 34);
+            this.cambiar.Size = new System.Drawing.Size(170, 34);
             this.cambiar.TabIndex = 6;
             this.cambiar.Text = "Cambiar entrenador";
             this.cambiar.UseVisualStyleBackColor = false;
@@ -574,41 +632,62 @@ namespace exxen2._0.capaVisual.Recepcionista
             //
             // darDeBaja
             //
-            this.darDeBaja.BackColor = Color.FromArgb(254, 242, 242);
+            this.darDeBaja.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.darDeBaja.FlatAppearance.BorderSize = 0;
-            this.darDeBaja.FlatStyle = FlatStyle.Flat;
-            this.darDeBaja.ForeColor = Color.FromArgb(185, 28, 28);
+            this.darDeBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.darDeBaja.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.darDeBaja.Location = new System.Drawing.Point(3, 51);
             this.darDeBaja.Name = "darDeBaja";
-            this.darDeBaja.Size = new Size(150, 34);
+            this.darDeBaja.Size = new System.Drawing.Size(150, 34);
             this.darDeBaja.TabIndex = 7;
             this.darDeBaja.Text = "Dar de baja";
             this.darDeBaja.UseVisualStyleBackColor = false;
             this.darDeBaja.Visible = false;
             this.darDeBaja.Click += new System.EventHandler(this.darDeBaja_Click);
             //
+            // lblDetalleTitulo
+            //
+            this.lblDetalleTitulo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblDetalleTitulo.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.lblDetalleTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.lblDetalleTitulo.Location = new System.Drawing.Point(16, 39);
+            this.lblDetalleTitulo.Name = "lblDetalleTitulo";
+            this.lblDetalleTitulo.Size = new System.Drawing.Size(431, 32);
+            this.lblDetalleTitulo.TabIndex = 0;
+            this.lblDetalleTitulo.Text = "Seleccioná una membresía";
+            //
             // GestionAsignacionesFormulario
             //
-            this.AutoScaleDimensions = new SizeF(7F, 17F);
-            this.AutoScaleMode = AutoScaleMode.Font;
-            this.BackColor = Color.FromArgb(241, 245, 249);
-            this.ClientSize = new Size(1100, 680);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
+            this.ClientSize = new System.Drawing.Size(1100, 680);
             this.Controls.Add(this.splitContenido);
             this.Controls.Add(this.lblEstado);
             this.Controls.Add(this.barraAcciones);
             this.Controls.Add(this.panelEncabezado);
-            this.Font = new Font("Segoe UI", 9.5F);
-            this.MinimumSize = new Size(900, 560);
+            this.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.MinimumSize = new System.Drawing.Size(900, 560);
             this.Name = "GestionAsignacionesFormulario";
-            this.StartPosition = FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "SysGym | Asignar entrenador";
             this.Load += new System.EventHandler(this.GestionAsignacionesFormulario_Load);
-            this.splitContenido.Panel2.ResumeLayout(false);
+            this.panelEncabezado.ResumeLayout(false);
+            this.barraAcciones.ResumeLayout(false);
+            this.barraAcciones.PerformLayout();
             this.splitContenido.Panel1.ResumeLayout(false);
-            ((ISupportInitialize)(this.splitContenido)).EndInit();
+            this.splitContenido.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContenido)).EndInit();
             this.splitContenido.ResumeLayout(false);
-            ((ISupportInitialize)(this.tabla)).EndInit();
+            this.panelListado.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.tabla)).EndInit();
+            this.grupoFicha.ResumeLayout(false);
+            this.grupoFicha.PerformLayout();
+            this.tablaFicha.ResumeLayout(false);
+            this.tablaFicha.PerformLayout();
+            this.accionesFicha.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
+
         }
     }
 }

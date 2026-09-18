@@ -27,8 +27,6 @@ namespace exxen2._0.capaVisual.Administrador
         public GestionUsuariosFormulario()
         {
             InitializeComponent();
-            fechaNacimiento.MaxDate = DateTime.Today.AddYears(-18);
-            fechaNacimiento.Value = fechaNacimiento.MaxDate;
         }
 
         /* Carga los roles activos disponibles para crear o modificar personal. */
@@ -267,6 +265,8 @@ namespace exxen2._0.capaVisual.Administrador
                 return;
             try
             {
+                fechaNacimiento.MaxDate = DateTime.Today.AddYears(-18);
+                fechaNacimiento.Value = fechaNacimiento.MaxDate;
                 CargarRoles();
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);

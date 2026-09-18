@@ -35,7 +35,10 @@ namespace exxen2._0.capaVisual.Entrenador
             Edicion
         }
 
-        public RutinasEntrenadorFormulario() : this(new UsuarioSistema { Nombre = "Entrenador", Apellido = "de diseno" }) { }
+        public RutinasEntrenadorFormulario()
+        {
+            InitializeComponent();
+        }
 
         public RutinasEntrenadorFormulario(UsuarioSistema usuario)
         {
@@ -332,7 +335,11 @@ namespace exxen2._0.capaVisual.Entrenador
             actualizarEjercicio.Enabled = rutinaActiva && hayEjercicio && !editandoEjercicio;
             quitarEjercicio.Enabled = rutinaActiva && hayEjercicio && !editandoEjercicio;
             tablaEjercicios.Enabled = hayRutina;
-            contenedorFormulario.Enabled = rutinaActiva && editandoEjercicio;
+            series.Enabled = rutinaActiva && editandoEjercicio;
+            repeticiones.Enabled = rutinaActiva && editandoEjercicio;
+            peso.Enabled = rutinaActiva && editandoEjercicio;
+            descanso.Enabled = rutinaActiva && editandoEjercicio;
+            orden.Enabled = rutinaActiva && editandoEjercicio;
             ejercicio.Enabled = rutinaActiva && editandoEjercicio;
             dia.Enabled = rutinaActiva && editandoEjercicio;
             series.ReadOnly = !editandoEjercicio;
@@ -506,25 +513,11 @@ namespace exxen2._0.capaVisual.Entrenador
 
         private void btnVolver_Click(object origen, EventArgs e) { Close(); }
 
-        private void splitContenido_Resize(object origen, EventArgs e)
-        {
-            var distanciaMinima = splitContenido.Panel1MinSize;
-            var distanciaMaxima = splitContenido.Width - splitContenido.Panel2MinSize;
-            if (distanciaMaxima < distanciaMinima)
-                return;
-            var distanciaDeseada = (int)(splitContenido.Width * 0.32F);
-            splitContenido.SplitterDistance = Math.Max(distanciaMinima, Math.Min(distanciaDeseada, distanciaMaxima));
-        }
-
         private void actualizar_Click(object origen, EventArgs e)
         {
             Cargar();
             CargarDetalleDeRutina();
         }
 
-        private void accionesRutina_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
     }
 }
