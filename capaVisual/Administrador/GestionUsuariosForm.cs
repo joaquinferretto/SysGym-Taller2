@@ -25,6 +25,10 @@ namespace exxen2._0.capaVisual.Administrador
         {
             InitializeComponent();
             btnVolver.Click += delegate { Close(); };
+            FormularioVisualHelper.ConfigurarEntradaSoloLetras(nombre);
+            FormularioVisualHelper.ConfigurarEntradaSoloLetras(apellido);
+            FormularioVisualHelper.ConfigurarEntradaSoloDigitos(dni);
+            FormularioVisualHelper.ConfigurarEntradaUsername(username);
             FormularioVisualHelper.ConfigurarEntradaDecimal(salario);
             tabla.SelectionChanged += Seleccionar;
             buscador.TextChanged += delegate { AplicarFiltro(); };
@@ -116,18 +120,22 @@ namespace exxen2._0.capaVisual.Administrador
 
         private UsuarioSistema LeerUsuario()
         {
-            if (rol.SelectedValue == null) throw new InvalidOperationException("Selecciona un rol.");
+            FormularioVisualHelper.ValidarComboSeleccionado(rol, "un rol");
             return new UsuarioSistema
             {
-                IdUsuarioSistema = idSeleccionado, Nombre = nombre.Text.Trim(), Apellido = apellido.Text.Trim(),
-                DNI = dni.Text.Trim(), Username = username.Text.Trim(), Salario = FormularioVisualHelper.DecimalPositivo(salario, "salario"),
+                IdUsuarioSistema = idSeleccionado,
+                Nombre = FormularioVisualHelper.TextoSoloLetrasObligatorio(nombre, "nombre"),
+                Apellido = FormularioVisualHelper.TextoSoloLetrasObligatorio(apellido, "apellido"),
+                DNI = FormularioVisualHelper.DniObligatorio(dni),
+                Username = FormularioVisualHelper.UsernameObligatorio(username),
+                Salario = FormularioVisualHelper.DecimalPositivo(salario, "salario"),
                 IdRol = Convert.ToInt32(rol.SelectedValue), Estado = estadoSeleccionado
             };
         }
 
         private void GuardarNuevo(object sender, EventArgs e)
         {
-            try { if (idSeleccionado != 0) return; logica.Crear(LeerUsuario(), password.Text); Cargar(); NuevoUsuario(null, EventArgs.Empty); FormularioVisualHelper.MostrarExito(lblEstado, "Usuario creado correctamente."); }
+            try { if (idSeleccionado != 0) return; FormularioVisualHelper.TextoObligatorio(password, "contrasena"); logica.Crear(LeerUsuario(), password.Text); Cargar(); NuevoUsuario(null, EventArgs.Empty); FormularioVisualHelper.MostrarExito(lblEstado, "Usuario creado correctamente."); }
             catch (Exception ex) { FormularioVisualHelper.MostrarError(lblEstado, ex); }
         }
 

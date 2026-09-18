@@ -5,8 +5,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace exxen2._0.capaDatos.Entidades
 {
+    /* Representa membresías y sus relaciones persistidas en SQL Server. */
     public class Membresia
     {
+        /* Inicializa los valores y colecciones necesarios para crear membresías. */
         public Membresia()
         {
             Entrenadores = new HashSet<MembresiaEntrenador>();
@@ -17,17 +19,11 @@ namespace exxen2._0.capaDatos.Entidades
 
         [Key]
         public int IdMembresia { get; set; }
-
         public DateTime FechaInicio { get; set; }
-
         public DateTime FechaVencimiento { get; set; }
-
         public bool Estado { get; set; }
-
         public int IdPlan { get; set; }
-
         public int IdSocio { get; set; }
-
         public int IdUsuarioSistema { get; set; }
 
         [ForeignKey("IdPlan")]
@@ -38,11 +34,8 @@ namespace exxen2._0.capaDatos.Entidades
 
         [ForeignKey("IdUsuarioSistema")]
         public virtual UsuarioSistema UsuarioSistema { get; set; }
-
         public virtual ICollection<CuotaMembresia> Cuotas { get; set; }
-
         public virtual ICollection<MembresiaEntrenador> Entrenadores { get; set; }
-
         public virtual ICollection<RutinaAsignacion> Rutinas { get; set; }
     }
 }

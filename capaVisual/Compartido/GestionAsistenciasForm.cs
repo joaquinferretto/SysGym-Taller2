@@ -71,6 +71,10 @@ namespace exxen2._0.capaVisual.Compartido
         {
             try
             {
+                FormularioVisualHelper.ValidarComboSeleccionado(socio, "un socio");
+                if (fecha.Value > DateTime.Now)
+                    throw new InvalidOperationException("La fecha de asistencia no puede ser futura.");
+
                 logica.Registrar(new Asistencia
                 {
                     IdSocio = Convert.ToInt32(socio.SelectedValue),

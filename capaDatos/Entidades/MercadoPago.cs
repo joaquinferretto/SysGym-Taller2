@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace exxen2._0.capaDatos.Entidades
 {
+    /* Representa datos de Mercado Pago y sus relaciones persistidas en SQL Server. */
     public class MercadoPago
     {
+        /* Inicializa los valores y colecciones necesarios para crear datos de Mercado Pago. */
         public MercadoPago()
         {
             MetodosPago = new HashSet<MetodoPago>();
@@ -15,19 +18,21 @@ namespace exxen2._0.capaDatos.Entidades
         public int IdNroPagoMP { get; set; }
 
         [StringLength(100)]
-        public string MercadoPagoPaymentId { get; set; }
+        [Column("MercadoPagoPaymentId")]
+        public string IdentificadorPago { get; set; }
 
         [StringLength(100)]
-        public string MercadoPagoPreferenceId { get; set; }
+        [Column("MercadoPagoPreferenceId")]
+        public string IdentificadorPreferencia { get; set; }
 
         [StringLength(150)]
-        public string ExternalReference { get; set; }
+        [Column("ExternalReference")]
+        public string ReferenciaExterna { get; set; }
 
         [StringLength(200)]
-        public string StatusDetail { get; set; }
-
+        [Column("StatusDetail")]
+        public string DetalleEstado { get; set; }
         public DateTime? FechaAprobacion { get; set; }
-
         public virtual ICollection<MetodoPago> MetodosPago { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Forms;
 using exxen2._0.capaDatos.Entidades;
 using exxen2._0.capaLogica;
@@ -23,6 +22,10 @@ namespace exxen2._0.capaVisual.Autenticacion
             errorProvider = new ErrorProvider(this) { BlinkStyle = ErrorBlinkStyle.NeverBlink };
             txtUsername.KeyPress += txtUsername_KeyPress;
             txtUsername.Validating += txtUsername_Validating;
+            txtUsername.TextChanged += delegate
+            {
+                if (!string.IsNullOrWhiteSpace(txtUsername.Text)) errorProvider.SetError(txtUsername, string.Empty);
+            };
             txtPassword.Validating += txtPassword_Validating;
             txtPassword.TextChanged += txtPassword_TextChanged;
             AcceptButton = btnIngresar;
@@ -64,14 +67,25 @@ namespace exxen2._0.capaVisual.Autenticacion
         private void btnSalir_Click(object sender, EventArgs e) { Close(); }
         private void txtUsername_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsLetter(e.KeyChar)) { e.Handled = true; System.Media.SystemSounds.Beep.Play(); }
+            if (!char.IsControl(e.KeyChar) && !char.IsLetterOrDigit(e.KeyChar)
+                && e.KeyChar != '_' && e.KeyChar != '.' && e.KeyChar != '-')
+            {
+                e.Handled = true;
+                System.Media.SystemSounds.Beep.Play();
+            }
         }
 
         private void txtUsername_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtUsername.Text)) errorProvider.SetError(txtUsername, "Ingresa el nombre de usuario.");
-            else if (txtUsername.Text.Any(c => !char.IsLetter(c))) errorProvider.SetError(txtUsername, "El usuario solo puede contener letras.");
-            else errorProvider.SetError(txtUsername, string.Empty);
+            try
+            {
+                FormularioVisualHelper.UsernameObligatorio(txtUsername);
+                errorProvider.SetError(txtUsername, string.Empty);
+            }
+            catch (Exception ex)
+            {
+                errorProvider.SetError(txtUsername, ex.Message);
+            }
         }
 
         private void txtPassword_Validating(object sender, CancelEventArgs e) { errorProvider.SetError(txtPassword, string.IsNullOrWhiteSpace(txtPassword.Text) ? "Ingresa la contrasena." : string.Empty); }

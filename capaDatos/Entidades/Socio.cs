@@ -5,8 +5,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace exxen2._0.capaDatos.Entidades
 {
+    /* Representa socios y sus relaciones persistidas en SQL Server. */
     public class Socio
     {
+        /* Inicializa los valores y colecciones necesarios para crear socios. */
         public Socio()
         {
             Membresias = new HashSet<Membresia>();
@@ -29,7 +31,6 @@ namespace exxen2._0.capaDatos.Entidades
         [Required]
         [StringLength(100)]
         public string Apellido { get; set; }
-
         public DateTime? FechaNacimiento { get; set; }
 
         [Column(TypeName = "decimal")]
@@ -37,14 +38,19 @@ namespace exxen2._0.capaDatos.Entidades
 
         [Column(TypeName = "decimal")]
         public decimal? Altura { get; set; }
-
         public bool Estado { get; set; }
+
+        [Column(TypeName = "varbinary(max)")]
+        public byte[] Foto { get; set; }
+
+        [StringLength(1)]
+        [Column(TypeName = "char")]
+        public string Sexo { get; set; }
 
         [InverseProperty("Socio")]
         public virtual ICollection<Membresia> Membresias { get; set; }
 
         [InverseProperty("Socio")]
         public virtual ICollection<Asistencia> Asistencias { get; set; }
-
     }
 }

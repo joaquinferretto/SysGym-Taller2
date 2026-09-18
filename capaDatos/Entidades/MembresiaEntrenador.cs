@@ -3,8 +3,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace exxen2._0.capaDatos.Entidades
 {
+    /* Representa asignaciones de entrenador y sus relaciones persistidas en SQL Server. */
     public class MembresiaEntrenador
     {
+        /* Inicializa los valores y colecciones necesarios para crear asignaciones de entrenador. */
         public MembresiaEntrenador()
         {
             Estado = true;
@@ -12,11 +14,8 @@ namespace exxen2._0.capaDatos.Entidades
 
         [Key]
         public int IdMembresiaEntrenador { get; set; }
-
         public int IdMembresia { get; set; }
-
         public int IdEntrenador { get; set; }
-
         public bool Estado { get; set; }
 
         [ForeignKey("IdMembresia")]

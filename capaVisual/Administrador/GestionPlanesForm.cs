@@ -97,8 +97,18 @@ namespace exxen2._0.capaVisual.Administrador
 
         private Plan LeerPlan()
         {
-            if (rutina.SelectedValue == null) throw new InvalidOperationException("Selecciona una rutina base.");
-            return new Plan { IdPlan = idSeleccionado, Nombre = nombre.Text.Trim(), Descripcion = descripcion.Text.Trim(), Precio = FormularioVisualHelper.DecimalPositivo(precio, "precio"), IdRutina = Convert.ToInt32(rutina.SelectedValue), IncluyeEntrenador = incluyeEntrenador.Checked, IncluyeRutinaPersonal = incluyeRutina.Checked, Estado = estadoSeleccionado };
+            FormularioVisualHelper.ValidarComboSeleccionado(rutina, "una rutina base");
+            return new Plan
+            {
+                IdPlan = idSeleccionado,
+                Nombre = FormularioVisualHelper.TextoObligatorio(nombre, "nombre"),
+                Descripcion = descripcion.Text.Trim(),
+                Precio = FormularioVisualHelper.DecimalPositivo(precio, "precio"),
+                IdRutina = Convert.ToInt32(rutina.SelectedValue),
+                IncluyeEntrenador = incluyeEntrenador.Checked,
+                IncluyeRutinaPersonal = incluyeRutina.Checked,
+                Estado = estadoSeleccionado
+            };
         }
 
         private void GuardarNuevo(object sender, EventArgs e)

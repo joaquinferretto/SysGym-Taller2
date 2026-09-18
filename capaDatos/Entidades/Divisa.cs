@@ -3,8 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace exxen2._0.capaDatos.Entidades
 {
+    /* Representa divisas y sus relaciones persistidas en SQL Server. */
     public class Divisa
     {
+        /* Inicializa los valores y colecciones necesarios para crear divisas. */
         public Divisa()
         {
             PagosEfectivo = new HashSet<PagoEfectivo>();
@@ -13,14 +15,11 @@ namespace exxen2._0.capaDatos.Entidades
 
         [Key]
         public int IdDivisa { get; set; }
-
         public decimal CambioHoy { get; set; }
 
         [StringLength(50)]
         public string Nombre { get; set; }
-
         public bool Estado { get; set; }
-
         public virtual ICollection<PagoEfectivo> PagosEfectivo { get; set; }
     }
 }

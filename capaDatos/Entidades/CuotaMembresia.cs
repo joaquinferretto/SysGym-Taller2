@@ -5,8 +5,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace exxen2._0.capaDatos.Entidades
 {
+    /* Representa cuotas de membresía y sus relaciones persistidas en SQL Server. */
     public class CuotaMembresia
     {
+        /* Inicializa los valores y colecciones necesarios para crear cuotas de membresía. */
         public CuotaMembresia()
         {
             EstadoPago = EstadosCuota.Pendiente;
@@ -17,12 +19,10 @@ namespace exxen2._0.capaDatos.Entidades
 
         [Index("UX_CuotaMembresia_Periodo", 1, IsUnique = true)]
         public int IdMembresia { get; set; }
-
         public int? IdRegistroPago { get; set; }
 
         [Index("UX_CuotaMembresia_Periodo", 2, IsUnique = true)]
         public DateTime FechaDesde { get; set; }
-
         public DateTime FechaHasta { get; set; }
 
         [Column(TypeName = "decimal")]
@@ -37,6 +37,5 @@ namespace exxen2._0.capaDatos.Entidades
 
         [ForeignKey("IdRegistroPago")]
         public virtual Pago Pago { get; set; }
-
     }
 }

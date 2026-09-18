@@ -29,8 +29,12 @@ namespace exxen2._0.capaVisual.Compartido
             this.permitirEdicion = permitirEdicion;
             InitializeComponent();
             btnVolver.Click += delegate { Close(); };
+            FormularioVisualHelper.ConfigurarEntradaSoloLetras(nombre);
+            FormularioVisualHelper.ConfigurarEntradaSoloLetras(apellido);
+            FormularioVisualHelper.ConfigurarEntradaSoloDigitos(dni);
             FormularioVisualHelper.ConfigurarEntradaDecimal(peso);
             FormularioVisualHelper.ConfigurarEntradaDecimal(altura);
+            fechaNacimiento.MaxDate = DateTime.Today.AddDays(1).AddTicks(-1);
             tabla.SelectionChanged += Seleccionar;
             buscador.TextChanged += delegate { AplicarFiltro(); };
             filtroEstado.SelectedIndexChanged += delegate { AplicarFiltro(); };
@@ -138,12 +142,13 @@ namespace exxen2._0.capaVisual.Compartido
 
         private Socio LeerSocio()
         {
+            FormularioVisualHelper.ValidarFechaNoFutura(fechaNacimiento, "fecha de nacimiento");
             return new Socio
             {
                 IdSocio = idSeleccionado,
-                Nombre = nombre.Text.Trim(),
-                Apellido = apellido.Text.Trim(),
-                DNI = dni.Text.Trim(),
+                Nombre = FormularioVisualHelper.TextoSoloLetrasObligatorio(nombre, "nombre"),
+                Apellido = FormularioVisualHelper.TextoSoloLetrasObligatorio(apellido, "apellido"),
+                DNI = FormularioVisualHelper.DniObligatorio(dni),
                 FechaNacimiento = fechaNacimiento.Checked ? (DateTime?)fechaNacimiento.Value.Date : null,
                 Peso = string.IsNullOrWhiteSpace(peso.Text) ? (decimal?)null : FormularioVisualHelper.DecimalPositivo(peso, "peso"),
                 Altura = string.IsNullOrWhiteSpace(altura.Text) ? (decimal?)null : FormularioVisualHelper.DecimalPositivo(altura, "altura"),

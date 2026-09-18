@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using exxen2._0.capaDatos.Entidades;
@@ -6,12 +6,14 @@ using exxen2._0.capaDatos.Repositorios;
 
 namespace exxen2._0.capaLogica
 {
+    /* Coordina las operaciones y validaciones de negocio de ejercicios de una rutina. */
     public class RutinaEjercicioLogica
     {
+        /* Valida la rutina, el ejercicio y sus parámetros antes de incorporarlo a la plantilla. */
         public RutinaEjercicio AgregarEjercicio(RutinaEjercicio rutinaEjercicio)
         {
             ValidarDatos(rutinaEjercicio);
-            using (var datos = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 var rutina = datos.Rutinas.Buscar(rutinaEjercicio.IdRutina);
                 var ejercicio = datos.Ejercicios.Buscar(rutinaEjercicio.IdEjercicio);
@@ -32,10 +34,11 @@ namespace exxen2._0.capaLogica
             }
         }
 
+        /* Valida y guarda los cambios de ejercicios de una rutina sobre el registro existente. */
         public RutinaEjercicio Modificar(RutinaEjercicio rutinaEjercicio)
         {
             ValidarDatos(rutinaEjercicio);
-            using (var datos = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 var existente = datos.RutinaEjercicios.Buscar(rutinaEjercicio.IdRutinaEjercicio);
                 if (existente == null)
@@ -61,15 +64,17 @@ namespace exxen2._0.capaLogica
                 existente.Peso = rutinaEjercicio.Peso;
                 existente.Descanso = rutinaEjercicio.Descanso;
                 existente.Orden = rutinaEjercicio.Orden;
+                existente.DiaSemana = rutinaEjercicio.DiaSemana;
                 existente.Estado = rutinaEjercicio.Estado;
                 datos.GuardarCambios();
                 return existente;
             }
         }
 
+        /* Da de baja el ejercicio de la rutina sin eliminar su registro. */
         public void Quitar(int idRutinaEjercicio)
         {
-            using (var datos = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 var rutinaEjercicio = datos.RutinaEjercicios.Buscar(idRutinaEjercicio);
                 if (rutinaEjercicio == null)
@@ -82,16 +87,32 @@ namespace exxen2._0.capaLogica
             }
         }
 
+        /* Consulta ejercicios de una rutina de la rutina indicada, ordenados para entrenar para devolver los datos a la capa visual. */
         public List<RutinaEjercicio> ListarPorRutina(int idRutina)
         {
-            using (var datos = new GymUnidadDeTrabajo())
+            using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return datos.RutinaEjercicios.Consultar("Ejercicio")
-                    .Where(re => re.IdRutina == idRutina && re.Estado)
-                    .OrderBy(re => re.Orden).ToList();
+                return datos.RutinaEjercicios.ConsultarSoloLectura("Ejercicio").Where(re => re.IdRutina == idRutina && re.Estado).OrderBy(re => re.DiaSemana.HasValue ? re.DiaSemana.Value : int.MaxValue).ThenBy(re => re.Orden).ToList();
             }
         }
 
+        /* Consulta los ejercicios de la rutina vigente del socio, ordenados por día y por orden dentro del día. */
+        public List<RutinaEjercicio> ListarSemanaPorSocio(int idSocio)
+        {
+            using (var datos = new UnidadDeTrabajoGimnasio())
+            {
+                var asignaciones = datos.RutinaAsignaciones.ConsultarSoloLectura("Membresia").Where(a => a.Estado && a.Membresia.IdSocio == idSocio && a.Membresia.Estado).OrderByDescending(a => a.FechaAsignacion).ToList();
+                if (asignaciones.Count == 0)
+                {
+                    return new List<RutinaEjercicio>();
+                }
+
+                var idRutina = asignaciones[0].IdRutina;
+                return datos.RutinaEjercicios.ConsultarSoloLectura("Ejercicio").Where(re => re.IdRutina == idRutina && re.Estado).OrderBy(re => re.DiaSemana.HasValue ? re.DiaSemana.Value : int.MaxValue).ThenBy(re => re.Orden).ToList();
+            }
+        }
+
+        /* Comprueba los campos y rangos obligatorios de ejercicios de una rutina antes de persistirlos. */
         private static void ValidarDatos(RutinaEjercicio rutinaEjercicio)
         {
             if (rutinaEjercicio == null)
@@ -123,6 +144,8 @@ namespace exxen2._0.capaLogica
             {
                 throw new InvalidOperationException("El orden debe ser mayor que cero.");
             }
+
+            ValidacionesGimnasio.ValidarDiaRutina(rutinaEjercicio.DiaSemana);
         }
     }
 }

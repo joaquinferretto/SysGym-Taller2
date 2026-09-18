@@ -94,13 +94,13 @@ namespace exxen2._0.capaVisual.Recepcionista
 
         private void Crear(object sender, EventArgs e)
         {
-            try { if (socio.SelectedValue == null || plan.SelectedValue == null) throw new InvalidOperationException("Selecciona un socio y un plan."); logica.Crear(new Membresia { IdSocio = Convert.ToInt32(socio.SelectedValue), IdPlan = Convert.ToInt32(plan.SelectedValue), IdUsuarioSistema = usuario.IdUsuarioSistema, FechaInicio = inicio.Value.Date, FechaVencimiento = vencimiento.Value.Date }); Cargar(); NuevaMembresia(null, EventArgs.Empty); FormularioVisualHelper.MostrarExito(lblEstado, "Membresia creada y primera cuota generada."); }
+            try { FormularioVisualHelper.ValidarComboSeleccionado(socio, "un socio"); FormularioVisualHelper.ValidarComboSeleccionado(plan, "un plan"); FormularioVisualHelper.ValidarRangoFechas(inicio, vencimiento, "fecha de inicio", "fecha de vencimiento"); logica.Crear(new Membresia { IdSocio = Convert.ToInt32(socio.SelectedValue), IdPlan = Convert.ToInt32(plan.SelectedValue), IdUsuarioSistema = usuario.IdUsuarioSistema, FechaInicio = inicio.Value.Date, FechaVencimiento = vencimiento.Value.Date }); Cargar(); NuevaMembresia(null, EventArgs.Empty); FormularioVisualHelper.MostrarExito(lblEstado, "Membresia creada y primera cuota generada."); }
             catch (Exception ex) { FormularioVisualHelper.MostrarError(lblEstado, ex); }
         }
 
         private void Actualizar(object sender, EventArgs e)
         {
-            try { if (membresiaSeleccionada == null) throw new InvalidOperationException("Selecciona una membresia."); logica.Modificar(new Membresia { IdMembresia = membresiaSeleccionada.IdMembresia, IdSocio = membresiaSeleccionada.IdSocio, IdPlan = membresiaSeleccionada.IdPlan, IdUsuarioSistema = membresiaSeleccionada.IdUsuarioSistema, FechaInicio = inicio.Value.Date, FechaVencimiento = vencimiento.Value.Date, Estado = membresiaSeleccionada.Estado }); Cargar(); NuevaMembresia(null, EventArgs.Empty); FormularioVisualHelper.MostrarExito(lblEstado, "Membresia actualizada."); }
+            try { if (membresiaSeleccionada == null) throw new InvalidOperationException("Selecciona una membresia."); FormularioVisualHelper.ValidarRangoFechas(inicio, vencimiento, "fecha de inicio", "fecha de vencimiento"); logica.Modificar(new Membresia { IdMembresia = membresiaSeleccionada.IdMembresia, IdSocio = membresiaSeleccionada.IdSocio, IdPlan = membresiaSeleccionada.IdPlan, IdUsuarioSistema = membresiaSeleccionada.IdUsuarioSistema, FechaInicio = inicio.Value.Date, FechaVencimiento = vencimiento.Value.Date, Estado = membresiaSeleccionada.Estado }); Cargar(); NuevaMembresia(null, EventArgs.Empty); FormularioVisualHelper.MostrarExito(lblEstado, "Membresia actualizada."); }
             catch (Exception ex) { FormularioVisualHelper.MostrarError(lblEstado, ex); }
         }
 

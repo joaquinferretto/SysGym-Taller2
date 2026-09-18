@@ -5,8 +5,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace exxen2._0.capaDatos.Entidades
 {
+    /* Representa pagos y sus relaciones persistidas en SQL Server. */
     public class Pago
     {
+        /* Inicializa los valores y colecciones necesarios para crear pagos. */
         public Pago()
         {
             Estado = EstadosTransaccionPago.Pendiente;
@@ -15,7 +17,6 @@ namespace exxen2._0.capaDatos.Entidades
 
         [Key]
         public int IdRegistroPago { get; set; }
-
         public DateTime Fecha { get; set; }
 
         [Column(TypeName = "decimal")]
@@ -27,12 +28,10 @@ namespace exxen2._0.capaDatos.Entidades
         [Required]
         [StringLength(20)]
         public string Estado { get; set; }
-
         public int IdMetodoPago { get; set; }
 
         [ForeignKey("IdMetodoPago")]
         public virtual MetodoPago MetodoPago { get; set; }
-
         public virtual ICollection<CuotaMembresia> Cuotas { get; set; }
     }
 }
