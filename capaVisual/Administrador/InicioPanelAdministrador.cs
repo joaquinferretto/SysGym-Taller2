@@ -10,7 +10,7 @@ using exxen2._0.capaLogica;
 namespace exxen2._0.capaVisual.Administrador
 {
     /* Presenta el pronostico y el estado de cuotas en el panel de inicio. */
-    [DesignerCategory("Component")]
+    [DesignerCategory("UserControl")]
     public sealed partial class InicioPanelAdministrador : UserControl
     {
         public event EventHandler<SocioEstadoCuentaEventArgs> SocioDobleClic;

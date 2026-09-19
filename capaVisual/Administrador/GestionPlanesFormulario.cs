@@ -175,7 +175,6 @@ namespace exxen2._0.capaVisual.Administrador
             if (!AyudaFormularioVisual.EnModoDisenio(this)) Inicializar();
         }
 
-        private void btnVolver_Click(object origen, EventArgs e) { Close(); }
         private void buscador_TextChanged(object origen, EventArgs e) { AplicarFiltro(); }
         private void filtroEstado_SelectedIndexChanged(object origen, EventArgs e)
         {

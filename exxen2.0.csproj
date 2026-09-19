@@ -149,7 +149,7 @@
       <DependentUpon>PanelAdministrador.cs</DependentUpon>
     </Compile>
     <Compile Include="capaVisual\Administrador\InicioPanelAdministrador.cs">
-      <SubType>Component</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="capaVisual\Administrador\InicioPanelAdministrador.Designer.cs">
       <DependentUpon>InicioPanelAdministrador.cs</DependentUpon>
