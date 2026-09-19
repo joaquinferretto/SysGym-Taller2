@@ -13,7 +13,8 @@ namespace exxen2._0.capaVisual.Entrenador
         private Button btnVolver;
         private Panel barraAcciones;
         private Label lblEstado;
-        private Panel panelContenido;
+        private TableLayoutPanel panelContenido;
+        private Panel panelDetalle;
         private TableLayoutPanel layoutDetalle;
         private TableLayoutPanel panelListado;
         private Label lblListadoTitulo;
@@ -83,7 +84,8 @@ namespace exxen2._0.capaVisual.Entrenador
             this.btnVolver = new System.Windows.Forms.Button();
             this.barraAcciones = new System.Windows.Forms.Panel();
             this.lblEstado = new System.Windows.Forms.Label();
-            this.panelContenido = new System.Windows.Forms.Panel();
+            this.panelContenido = new System.Windows.Forms.TableLayoutPanel();
+            this.panelDetalle = new System.Windows.Forms.Panel();
             this.panelListado = new System.Windows.Forms.TableLayoutPanel();
             this.lblListadoTitulo = new System.Windows.Forms.Label();
             this.tabla = new System.Windows.Forms.DataGridView();
@@ -140,6 +142,7 @@ namespace exxen2._0.capaVisual.Entrenador
             this.colDetalleDescanso = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelEncabezado.SuspendLayout();
             this.panelContenido.SuspendLayout();
+            this.panelDetalle.SuspendLayout();
             this.panelListado.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).BeginInit();
             this.layoutDetalle.SuspendLayout();
@@ -213,7 +216,7 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             // lblEstado
             //
-            this.lblEstado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.lblEstado.BackColor = System.Drawing.Color.Transparent;
             this.lblEstado.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblEstado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
             this.lblEstado.Location = new System.Drawing.Point(0, 650);
@@ -227,12 +230,17 @@ namespace exxen2._0.capaVisual.Entrenador
             // panelContenido
             //
             this.panelContenido.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            this.panelContenido.Controls.Add(this.panelListado);
-            this.panelContenido.Controls.Add(this.layoutDetalle);
+            this.panelContenido.ColumnCount = 2;
+            this.panelContenido.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.panelContenido.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.panelContenido.Controls.Add(this.panelListado, 0, 0);
+            this.panelContenido.Controls.Add(this.panelDetalle, 1, 0);
             this.panelContenido.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelContenido.Location = new System.Drawing.Point(0, 57);
             this.panelContenido.Name = "panelContenido";
             this.panelContenido.Padding = new System.Windows.Forms.Padding(16);
+            this.panelContenido.RowCount = 1;
+            this.panelContenido.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.panelContenido.Size = new System.Drawing.Size(1100, 593);
             this.panelContenido.TabIndex = 0;
             //
@@ -245,8 +253,9 @@ namespace exxen2._0.capaVisual.Entrenador
             this.panelListado.Controls.Add(this.lblListadoTitulo, 0, 0);
             this.panelListado.Controls.Add(this.tabla, 0, 1);
             this.panelListado.Controls.Add(this.nuevaRutina, 0, 2);
-            this.panelListado.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left)));
+            this.panelListado.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelListado.Location = new System.Drawing.Point(24, 24);
+            this.panelListado.Margin = new System.Windows.Forms.Padding(8);
             this.panelListado.Name = "panelListado";
             this.panelListado.Padding = new System.Windows.Forms.Padding(10);
             this.panelListado.RowCount = 3;
@@ -342,6 +351,18 @@ namespace exxen2._0.capaVisual.Entrenador
             this.nuevaRutina.UseVisualStyleBackColor = false;
             this.nuevaRutina.Click += new System.EventHandler(this.nuevaRutina_Click);
             //
+            // panelDetalle
+            //
+            this.panelDetalle.AutoScroll = true;
+            this.panelDetalle.AutoScrollMinSize = new System.Drawing.Size(0, 560);
+            this.panelDetalle.Controls.Add(this.layoutDetalle);
+            this.panelDetalle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelDetalle.Location = new System.Drawing.Point(344, 24);
+            this.panelDetalle.Margin = new System.Windows.Forms.Padding(8);
+            this.panelDetalle.Name = "panelDetalle";
+            this.panelDetalle.Size = new System.Drawing.Size(732, 545);
+            this.panelDetalle.TabIndex = 1;
+            //
             // layoutDetalle
             //
             this.layoutDetalle.ColumnCount = 1;
@@ -349,8 +370,8 @@ namespace exxen2._0.capaVisual.Entrenador
             this.layoutDetalle.Controls.Add(this.contenedorRutina, 0, 0);
             this.layoutDetalle.Controls.Add(this.contenedorFormulario, 0, 2);
             this.layoutDetalle.Controls.Add(this.panelEjercicios, 0, 1);
-            this.layoutDetalle.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.layoutDetalle.Location = new System.Drawing.Point(360, 24);
+            this.layoutDetalle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layoutDetalle.Location = new System.Drawing.Point(0, 0);
             this.layoutDetalle.Name = "layoutDetalle";
             this.layoutDetalle.RowCount = 3;
             this.layoutDetalle.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -817,11 +838,12 @@ namespace exxen2._0.capaVisual.Entrenador
             this.panelEjercicios.Controls.Add(this.tablaEjercicios, 0, 2);
             this.panelEjercicios.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelEjercicios.Location = new System.Drawing.Point(3, 162);
+            this.panelEjercicios.MinimumSize = new System.Drawing.Size(0, 160);
             this.panelEjercicios.Name = "panelEjercicios";
             this.panelEjercicios.Padding = new System.Windows.Forms.Padding(10);
             this.panelEjercicios.RowCount = 3;
             this.panelEjercicios.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.panelEjercicios.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
+            this.panelEjercicios.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.panelEjercicios.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.panelEjercicios.Size = new System.Drawing.Size(710, 159);
             this.panelEjercicios.TabIndex = 1;
@@ -1011,6 +1033,7 @@ namespace exxen2._0.capaVisual.Entrenador
             this.Load += new System.EventHandler(this.RutinasEntrenadorFormulario_Load);
             this.panelEncabezado.ResumeLayout(false);
             this.panelContenido.ResumeLayout(false);
+            this.panelDetalle.ResumeLayout(false);
             this.panelListado.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).EndInit();
             this.layoutDetalle.ResumeLayout(false);

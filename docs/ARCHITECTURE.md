@@ -1,5 +1,11 @@
 # Arquitectura
 
+## Reanudación de la normalización visual — 19 de septiembre de 2026
+
+Última actualización: 19 de septiembre de 2026. En `RutinasEntrenadorFormulario`, la región principal pasa a TableLayoutPanel 30/70 con Dock=Fill en listado y detalle; sus controles permanecen directamente en las tablas declarativas de sus secciones. La fila de acciones de ejercicios usa AutoSize para evitar recortes y el label de estado no tiene un fondo propio. Un único Panel con AutoScroll contiene toda la región derecha y mantiene accesibles los campos/acciones y una altura útil de grilla en 720p; no envuelve un control individual. No se modifica Form.cs, navegación, header global, sidebar, dependencias, EF6, SQL ni reglas. Panel 3→3, TableLayoutPanel 5→6, FlowLayoutPanel 3→3 y SplitContainer 0→0 respecto del estado recibido.
+
+Debug y layout auxiliar de los tres modos y cuatro resoluciones comprobados, incluyendo ausencia de superposición, altura útil de grilla y acceso por scroll a Guardar. Diseñador real y propiedades individuales de Label/TextBox/ComboBox/Button/DataGridView inspeccionados en Visual Studio 2026; compatibilidad específica con 2022 pendiente. La prueba funcional está bloqueada por un esquema local anterior sin FotoRuta/IdRutina; no se continúa a otros formularios sin cerrar la verificación requerida o recibir una excepción explícita del usuario. Detalle, inventario de los 17 formularios activos y punto de reanudación en PROJECT_CONTEXT.md.
+
 ## Layout de Gestión de socios — 18 de septiembre de 2026
 
 Última actualización: 18 de septiembre de 2026. Ajuste exclusivo de GestionSociosFormulario.Designer.cs. panelContenido reutiliza sus dos columnas con 50%/50%; panelListado conserva Dock=Fill y panelDetalle pasa a Dock=Fill. El scroll procedía de panelDetalle con AutoScroll=true, altura fija y contenido que superaba sus límites. contenedorDetalle pasa a Dock=Fill y agrupa también foto, botones de foto y rutina semanal. Se corrigen anchos de contenedorCampos/panelAcciones y campos anclados a izquierda/derecha, y se compactan filas y posiciones desde Designer. AutoScroll=false tras comprobar que los controles caben en los tamaños verificados. Sin cálculos runtime, clases nuevas, cambios de eventos, DataGridView, negocio, datos ni dependencias entre capas. Verificaciones y límites en PROJECT_CONTEXT.md.
