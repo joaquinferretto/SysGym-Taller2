@@ -31,17 +31,17 @@ namespace exxen2._0.capaVisual.Entrenador
         private System.Windows.Forms.Label lblDetalleTitulo;
         private System.Windows.Forms.TableLayoutPanel tablaSocio;
         private System.Windows.Forms.Label lblSocio;
-        private System.Windows.Forms.Label lblSocioValor;
+        private System.Windows.Forms.TextBox txtSocio;
         private System.Windows.Forms.Label lblDni;
-        private System.Windows.Forms.Label lblDniValor;
+        private System.Windows.Forms.TextBox txtDni;
         private System.Windows.Forms.Label lblPlan;
-        private System.Windows.Forms.Label lblPlanValor;
+        private System.Windows.Forms.TextBox txtPlan;
         private System.Windows.Forms.Label lblEntrenador;
-        private System.Windows.Forms.Label lblEntrenadorValor;
+        private System.Windows.Forms.TextBox txtEntrenador;
         private System.Windows.Forms.Label lblVencimiento;
-        private System.Windows.Forms.Label lblVencimientoValor;
+        private System.Windows.Forms.TextBox txtVencimiento;
         private System.Windows.Forms.Label lblRutina;
-        private System.Windows.Forms.Label lblRutinaValor;
+        private System.Windows.Forms.TextBox txtRutina;
         private System.Windows.Forms.GroupBox grupoRutina;
         private System.Windows.Forms.DataGridView tablaRutina;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDia;
@@ -94,17 +94,17 @@ namespace exxen2._0.capaVisual.Entrenador
             lblDetalleTitulo = new System.Windows.Forms.Label();
             tablaSocio = new System.Windows.Forms.TableLayoutPanel();
             lblSocio = new System.Windows.Forms.Label();
-            lblSocioValor = new System.Windows.Forms.Label();
+            txtSocio = new System.Windows.Forms.TextBox();
             lblDni = new System.Windows.Forms.Label();
-            lblDniValor = new System.Windows.Forms.Label();
+            txtDni = new System.Windows.Forms.TextBox();
             lblPlan = new System.Windows.Forms.Label();
-            lblPlanValor = new System.Windows.Forms.Label();
+            txtPlan = new System.Windows.Forms.TextBox();
             lblEntrenador = new System.Windows.Forms.Label();
-            lblEntrenadorValor = new System.Windows.Forms.Label();
+            txtEntrenador = new System.Windows.Forms.TextBox();
             lblVencimiento = new System.Windows.Forms.Label();
-            lblVencimientoValor = new System.Windows.Forms.Label();
+            txtVencimiento = new System.Windows.Forms.TextBox();
             lblRutina = new System.Windows.Forms.Label();
-            lblRutinaValor = new System.Windows.Forms.Label();
+            txtRutina = new System.Windows.Forms.TextBox();
             grupoRutina = new System.Windows.Forms.GroupBox();
             tablaRutina = new System.Windows.Forms.DataGridView();
             colDia = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -257,12 +257,12 @@ namespace exxen2._0.capaVisual.Entrenador
             tabla.SelectionChanged += new System.EventHandler(tabla_SelectionChanged);
             colIdSocio.Name = "colIdSocio"; colIdSocio.Visible = false;
             colIdMembresia.Name = "colIdMembresia"; colIdMembresia.Visible = false;
-            colSocio.HeaderText = "Socio"; colSocio.Name = "colSocio"; colSocio.FillWeight = 28; colSocio.MinimumWidth = 90;
-            colDni.HeaderText = "DNI"; colDni.Name = "colDni"; colDni.FillWeight = 16; colDni.MinimumWidth = 60;
-            colPlan.HeaderText = "Plan"; colPlan.Name = "colPlan"; colPlan.FillWeight = 20; colPlan.MinimumWidth = 72;
-            colRutina.HeaderText = "Rutina"; colRutina.Name = "colRutina"; colRutina.FillWeight = 22; colRutina.MinimumWidth = 72;
-            colVencimiento.HeaderText = "Vence"; colVencimiento.Name = "colVencimiento"; colVencimiento.FillWeight = 16; colVencimiento.MinimumWidth = 64;
-            colEstadoRutina.HeaderText = "Estado"; colEstadoRutina.Name = "colEstadoRutina"; colEstadoRutina.FillWeight = 16; colEstadoRutina.MinimumWidth = 72;
+            colSocio.HeaderText = "Socio"; colSocio.Name = "colSocio"; colSocio.FillWeight = 28; colSocio.MinimumWidth = 20;
+            colDni.HeaderText = "DNI"; colDni.Name = "colDni"; colDni.FillWeight = 16; colDni.MinimumWidth = 20;
+            colPlan.HeaderText = "Plan"; colPlan.Name = "colPlan"; colPlan.FillWeight = 20; colPlan.MinimumWidth = 20;
+            colRutina.HeaderText = "Rutina"; colRutina.Name = "colRutina"; colRutina.FillWeight = 22; colRutina.MinimumWidth = 20;
+            colVencimiento.HeaderText = "Vence"; colVencimiento.Name = "colVencimiento"; colVencimiento.FillWeight = 16; colVencimiento.MinimumWidth = 20;
+            colEstadoRutina.HeaderText = "Estado"; colEstadoRutina.Name = "colEstadoRutina"; colEstadoRutina.FillWeight = 16; colEstadoRutina.MinimumWidth = 20;
             tabla.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { colIdSocio, colIdMembresia, colSocio, colDni, colPlan, colRutina, colVencimiento, colEstadoRutina });
 
             panelDetalle.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -293,12 +293,87 @@ namespace exxen2._0.capaVisual.Entrenador
             tablaSocio.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
             tablaSocio.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.34F));
             tablaSocio.Padding = new System.Windows.Forms.Padding(0, 6, 0, 0);
-            tablaSocio.Controls.Add(lblSocio, 0, 0); tablaSocio.Controls.Add(lblSocioValor, 1, 0); tablaSocio.Controls.Add(lblDni, 2, 0); tablaSocio.Controls.Add(lblDniValor, 3, 0);
-            tablaSocio.Controls.Add(lblPlan, 0, 1); tablaSocio.Controls.Add(lblPlanValor, 1, 1); tablaSocio.Controls.Add(lblEntrenador, 2, 1); tablaSocio.Controls.Add(lblEntrenadorValor, 3, 1);
-            tablaSocio.Controls.Add(lblVencimiento, 0, 2); tablaSocio.Controls.Add(lblVencimientoValor, 1, 2); tablaSocio.Controls.Add(lblRutina, 2, 2); tablaSocio.Controls.Add(lblRutinaValor, 3, 2);
-            ConfigurarEtiqueta(lblSocio, "Socio:"); ConfigurarValor(lblSocioValor, "-"); ConfigurarEtiqueta(lblDni, "DNI:"); ConfigurarValor(lblDniValor, "-");
-            ConfigurarEtiqueta(lblPlan, "Plan:"); ConfigurarValor(lblPlanValor, "-"); ConfigurarEtiqueta(lblEntrenador, "Entrenador:"); ConfigurarValor(lblEntrenadorValor, "-");
-            ConfigurarEtiqueta(lblVencimiento, "Vencimiento:"); ConfigurarValor(lblVencimientoValor, "-"); ConfigurarEtiqueta(lblRutina, "Rutina:"); ConfigurarValor(lblRutinaValor, "-");
+            tablaSocio.Controls.Add(lblSocio, 0, 0); tablaSocio.Controls.Add(txtSocio, 1, 0); tablaSocio.Controls.Add(lblDni, 2, 0); tablaSocio.Controls.Add(txtDni, 3, 0);
+            tablaSocio.Controls.Add(lblPlan, 0, 1); tablaSocio.Controls.Add(txtPlan, 1, 1); tablaSocio.Controls.Add(lblEntrenador, 2, 1); tablaSocio.Controls.Add(txtEntrenador, 3, 1);
+            tablaSocio.Controls.Add(lblVencimiento, 0, 2); tablaSocio.Controls.Add(txtVencimiento, 1, 2); tablaSocio.Controls.Add(lblRutina, 2, 2); tablaSocio.Controls.Add(txtRutina, 3, 2);
+            lblSocio.Dock = System.Windows.Forms.DockStyle.Fill;
+            lblSocio.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            lblSocio.ForeColor = System.Drawing.Color.FromArgb(71, 85, 105);
+            lblSocio.Text = "Socio:";
+            lblSocio.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            txtSocio.Name = "txtSocio";
+            txtSocio.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            txtSocio.BackColor = System.Drawing.SystemColors.Window;
+            txtSocio.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            txtSocio.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            txtSocio.ReadOnly = true;
+            txtSocio.TabStop = false;
+            txtSocio.Text = "Selecciona un socio";
+            lblDni.Dock = System.Windows.Forms.DockStyle.Fill;
+            lblDni.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            lblDni.ForeColor = System.Drawing.Color.FromArgb(71, 85, 105);
+            lblDni.Text = "DNI:";
+            lblDni.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            txtDni.Name = "txtDni";
+            txtDni.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            txtDni.BackColor = System.Drawing.SystemColors.Window;
+            txtDni.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            txtDni.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            txtDni.ReadOnly = true;
+            txtDni.TabStop = false;
+            txtDni.Text = "-";
+            lblPlan.Dock = System.Windows.Forms.DockStyle.Fill;
+            lblPlan.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            lblPlan.ForeColor = System.Drawing.Color.FromArgb(71, 85, 105);
+            lblPlan.Text = "Plan:";
+            lblPlan.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            txtPlan.Name = "txtPlan";
+            txtPlan.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            txtPlan.BackColor = System.Drawing.SystemColors.Window;
+            txtPlan.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            txtPlan.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            txtPlan.ReadOnly = true;
+            txtPlan.TabStop = false;
+            txtPlan.Text = "-";
+            lblEntrenador.Dock = System.Windows.Forms.DockStyle.Fill;
+            lblEntrenador.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            lblEntrenador.ForeColor = System.Drawing.Color.FromArgb(71, 85, 105);
+            lblEntrenador.Text = "Entrenador:";
+            lblEntrenador.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            txtEntrenador.Name = "txtEntrenador";
+            txtEntrenador.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            txtEntrenador.BackColor = System.Drawing.SystemColors.Window;
+            txtEntrenador.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            txtEntrenador.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            txtEntrenador.ReadOnly = true;
+            txtEntrenador.TabStop = false;
+            txtEntrenador.Text = "-";
+            lblVencimiento.Dock = System.Windows.Forms.DockStyle.Fill;
+            lblVencimiento.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            lblVencimiento.ForeColor = System.Drawing.Color.FromArgb(71, 85, 105);
+            lblVencimiento.Text = "Vencimiento:";
+            lblVencimiento.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            txtVencimiento.Name = "txtVencimiento";
+            txtVencimiento.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            txtVencimiento.BackColor = System.Drawing.SystemColors.Window;
+            txtVencimiento.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            txtVencimiento.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            txtVencimiento.ReadOnly = true;
+            txtVencimiento.TabStop = false;
+            txtVencimiento.Text = "-";
+            lblRutina.Dock = System.Windows.Forms.DockStyle.Fill;
+            lblRutina.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            lblRutina.ForeColor = System.Drawing.Color.FromArgb(71, 85, 105);
+            lblRutina.Text = "Rutina:";
+            lblRutina.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            txtRutina.Name = "txtRutina";
+            txtRutina.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            txtRutina.BackColor = System.Drawing.SystemColors.Window;
+            txtRutina.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            txtRutina.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            txtRutina.ReadOnly = true;
+            txtRutina.TabStop = false;
+            txtRutina.Text = "-";
 
             grupoRutina.Dock = System.Windows.Forms.DockStyle.Fill;
             grupoRutina.BackColor = System.Drawing.Color.White;
@@ -405,6 +480,7 @@ namespace exxen2._0.capaVisual.Entrenador
             accionesRutina.ResumeLayout(false);
             grupoRutina.ResumeLayout(false);
             tablaSocio.ResumeLayout(false);
+            tablaSocio.PerformLayout();
             grupoSocio.ResumeLayout(false);
             panelListado.ResumeLayout(false);
             splitContenido.Panel2.ResumeLayout(false);
@@ -419,21 +495,5 @@ namespace exxen2._0.capaVisual.Entrenador
             ResumeLayout(false);
         }
 
-        private static void ConfigurarEtiqueta(System.Windows.Forms.Label etiqueta, string texto)
-        {
-            etiqueta.Dock = System.Windows.Forms.DockStyle.Fill;
-            etiqueta.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
-            etiqueta.ForeColor = System.Drawing.Color.FromArgb(71, 85, 105);
-            etiqueta.Text = texto;
-            etiqueta.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-        }
-
-        private static void ConfigurarValor(System.Windows.Forms.Label etiqueta, string texto)
-        {
-            etiqueta.Dock = System.Windows.Forms.DockStyle.Fill;
-            etiqueta.ForeColor = System.Drawing.Color.FromArgb(51, 65, 85);
-            etiqueta.Text = texto;
-            etiqueta.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-        }
     }
 }

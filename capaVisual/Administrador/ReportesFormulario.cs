@@ -31,7 +31,17 @@ namespace exxen2._0.capaVisual.Administrador
         {
             try
             {
-                resumen.Text = "SOCIOS ACTIVOS\n" + socios.ListarActivos().Count + "\n\nUSUARIOS ACTIVOS\n" + usuarios.ListarActivos().Count + "\n\nMEMBRESIAS HABILITADAS\n" + membresias.ListarHabilitadas().Count + "\n\nRUTINAS ACTIVAS\n" + rutinas.ListarActivas().Count + "\n\nEJERCICIOS DISPONIBLES\n" + ejercicios.ListarActivos().Count;
+                var sociosActivos = socios.ListarActivos().Count;
+                var usuariosActivos = usuarios.ListarActivos().Count;
+                var membresiasHabilitadas = membresias.ListarHabilitadas().Count;
+                var rutinasActivas = rutinas.ListarActivas().Count;
+                var ejerciciosDisponibles = ejercicios.ListarActivos().Count;
+
+                lblSociosActivosValor.Text = sociosActivos.ToString();
+                lblUsuariosActivosValor.Text = usuariosActivos.ToString();
+                lblMembresiasValor.Text = membresiasHabilitadas.ToString();
+                lblRutinasActivasValor.Text = rutinasActivas.ToString();
+                lblEjerciciosValor.Text = ejerciciosDisponibles.ToString();
                 lblEstado.Text = "Reporte generado: " + DateTime.Now.ToString("dd/MM/yyyy HH:mm");
             }
             catch (Exception ex)

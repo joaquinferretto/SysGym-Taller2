@@ -31,17 +31,17 @@ namespace exxen2._0.capaVisual.Recepcionista
         private Label lblDetalleTitulo;
         private TableLayoutPanel tablaFicha;
         private Label lblSocio;
-        private Label lblSocioValor;
+        private TextBox txtSocio;
         private Label lblDni;
-        private Label lblDniValor;
+        private TextBox txtDni;
         private Label lblPlan;
-        private Label lblPlanValor;
+        private TextBox txtPlan;
         private Label lblVencimiento;
-        private Label lblVencimientoValor;
+        private TextBox txtVencimiento;
         private Label lblEstadoMembresia;
-        private Label lblEstadoMembresiaValor;
+        private TextBox txtEstadoMembresia;
         private Label lblEntrenadorActual;
-        private Label lblEntrenadorActualValor;
+        private TextBox txtEntrenadorActual;
         private Label lblNuevoEntrenador;
         private ComboBox entrenador;
         private FlowLayoutPanel accionesFicha;
@@ -84,17 +84,17 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.grupoFicha = new System.Windows.Forms.GroupBox();
             this.tablaFicha = new System.Windows.Forms.TableLayoutPanel();
             this.lblSocio = new System.Windows.Forms.Label();
-            this.lblSocioValor = new System.Windows.Forms.Label();
+            this.txtSocio = new System.Windows.Forms.TextBox();
             this.lblDni = new System.Windows.Forms.Label();
-            this.lblDniValor = new System.Windows.Forms.Label();
+            this.txtDni = new System.Windows.Forms.TextBox();
             this.lblPlan = new System.Windows.Forms.Label();
-            this.lblPlanValor = new System.Windows.Forms.Label();
+            this.txtPlan = new System.Windows.Forms.TextBox();
             this.lblVencimiento = new System.Windows.Forms.Label();
-            this.lblVencimientoValor = new System.Windows.Forms.Label();
+            this.txtVencimiento = new System.Windows.Forms.TextBox();
             this.lblEstadoMembresia = new System.Windows.Forms.Label();
-            this.lblEstadoMembresiaValor = new System.Windows.Forms.Label();
+            this.txtEstadoMembresia = new System.Windows.Forms.TextBox();
             this.lblEntrenadorActual = new System.Windows.Forms.Label();
-            this.lblEntrenadorActualValor = new System.Windows.Forms.Label();
+            this.txtEntrenadorActual = new System.Windows.Forms.TextBox();
             this.lblNuevoEntrenador = new System.Windows.Forms.Label();
             this.entrenador = new System.Windows.Forms.ComboBox();
             this.accionesFicha = new System.Windows.Forms.FlowLayoutPanel();
@@ -397,17 +397,17 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.tablaFicha.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tablaFicha.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tablaFicha.Controls.Add(this.lblSocio, 0, 0);
-            this.tablaFicha.Controls.Add(this.lblSocioValor, 1, 0);
+            this.tablaFicha.Controls.Add(this.txtSocio, 1, 0);
             this.tablaFicha.Controls.Add(this.lblDni, 0, 1);
-            this.tablaFicha.Controls.Add(this.lblDniValor, 1, 1);
+            this.tablaFicha.Controls.Add(this.txtDni, 1, 1);
             this.tablaFicha.Controls.Add(this.lblPlan, 0, 2);
-            this.tablaFicha.Controls.Add(this.lblPlanValor, 1, 2);
+            this.tablaFicha.Controls.Add(this.txtPlan, 1, 2);
             this.tablaFicha.Controls.Add(this.lblVencimiento, 0, 3);
-            this.tablaFicha.Controls.Add(this.lblVencimientoValor, 1, 3);
+            this.tablaFicha.Controls.Add(this.txtVencimiento, 1, 3);
             this.tablaFicha.Controls.Add(this.lblEstadoMembresia, 0, 4);
-            this.tablaFicha.Controls.Add(this.lblEstadoMembresiaValor, 1, 4);
+            this.tablaFicha.Controls.Add(this.txtEstadoMembresia, 1, 4);
             this.tablaFicha.Controls.Add(this.lblEntrenadorActual, 0, 5);
-            this.tablaFicha.Controls.Add(this.lblEntrenadorActualValor, 1, 5);
+            this.tablaFicha.Controls.Add(this.txtEntrenadorActual, 1, 5);
             this.tablaFicha.Controls.Add(this.lblNuevoEntrenador, 0, 6);
             this.tablaFicha.Controls.Add(this.entrenador, 1, 6);
             this.tablaFicha.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -437,16 +437,17 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.lblSocio.Text = "Socio";
             this.lblSocio.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
-            // lblSocioValor
+            // txtSocio
             //
-            this.lblSocioValor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblSocioValor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.lblSocioValor.Location = new System.Drawing.Point(166, 8);
-            this.lblSocioValor.Name = "lblSocioValor";
-            this.lblSocioValor.Size = new System.Drawing.Size(262, 46);
-            this.lblSocioValor.TabIndex = 1;
-            this.lblSocioValor.Text = "Seleccioná una membresía";
-            this.lblSocioValor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.txtSocio.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSocio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.txtSocio.Location = new System.Drawing.Point(166, 18);
+            this.txtSocio.Name = "txtSocio";
+            this.txtSocio.Size = new System.Drawing.Size(262, 25);
+            this.txtSocio.TabIndex = 1;
+            this.txtSocio.Text = "Seleccioná una membresía";
+            this.txtSocio.ReadOnly = true;
+            this.txtSocio.TabStop = false;
             //
             // lblDni
             //
@@ -460,16 +461,17 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.lblDni.Text = "DNI";
             this.lblDni.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
-            // lblDniValor
+            // txtDni
             //
-            this.lblDniValor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblDniValor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.lblDniValor.Location = new System.Drawing.Point(166, 54);
-            this.lblDniValor.Name = "lblDniValor";
-            this.lblDniValor.Size = new System.Drawing.Size(262, 46);
-            this.lblDniValor.TabIndex = 3;
-            this.lblDniValor.Text = "-";
-            this.lblDniValor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.txtDni.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtDni.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.txtDni.Location = new System.Drawing.Point(166, 64);
+            this.txtDni.Name = "txtDni";
+            this.txtDni.Size = new System.Drawing.Size(262, 25);
+            this.txtDni.TabIndex = 3;
+            this.txtDni.Text = "-";
+            this.txtDni.ReadOnly = true;
+            this.txtDni.TabStop = false;
             //
             // lblPlan
             //
@@ -483,16 +485,17 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.lblPlan.Text = "Plan";
             this.lblPlan.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
-            // lblPlanValor
+            // txtPlan
             //
-            this.lblPlanValor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblPlanValor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.lblPlanValor.Location = new System.Drawing.Point(166, 100);
-            this.lblPlanValor.Name = "lblPlanValor";
-            this.lblPlanValor.Size = new System.Drawing.Size(262, 46);
-            this.lblPlanValor.TabIndex = 5;
-            this.lblPlanValor.Text = "-";
-            this.lblPlanValor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.txtPlan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtPlan.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.txtPlan.Location = new System.Drawing.Point(166, 110);
+            this.txtPlan.Name = "txtPlan";
+            this.txtPlan.Size = new System.Drawing.Size(262, 25);
+            this.txtPlan.TabIndex = 5;
+            this.txtPlan.Text = "-";
+            this.txtPlan.ReadOnly = true;
+            this.txtPlan.TabStop = false;
             //
             // lblVencimiento
             //
@@ -506,16 +509,17 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.lblVencimiento.Text = "Vencimiento";
             this.lblVencimiento.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
-            // lblVencimientoValor
+            // txtVencimiento
             //
-            this.lblVencimientoValor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblVencimientoValor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.lblVencimientoValor.Location = new System.Drawing.Point(166, 146);
-            this.lblVencimientoValor.Name = "lblVencimientoValor";
-            this.lblVencimientoValor.Size = new System.Drawing.Size(262, 46);
-            this.lblVencimientoValor.TabIndex = 7;
-            this.lblVencimientoValor.Text = "-";
-            this.lblVencimientoValor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.txtVencimiento.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtVencimiento.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.txtVencimiento.Location = new System.Drawing.Point(166, 156);
+            this.txtVencimiento.Name = "txtVencimiento";
+            this.txtVencimiento.Size = new System.Drawing.Size(262, 25);
+            this.txtVencimiento.TabIndex = 7;
+            this.txtVencimiento.Text = "-";
+            this.txtVencimiento.ReadOnly = true;
+            this.txtVencimiento.TabStop = false;
             //
             // lblEstadoMembresia
             //
@@ -529,16 +533,17 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.lblEstadoMembresia.Text = "Estado membresía";
             this.lblEstadoMembresia.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
-            // lblEstadoMembresiaValor
+            // txtEstadoMembresia
             //
-            this.lblEstadoMembresiaValor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblEstadoMembresiaValor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.lblEstadoMembresiaValor.Location = new System.Drawing.Point(166, 192);
-            this.lblEstadoMembresiaValor.Name = "lblEstadoMembresiaValor";
-            this.lblEstadoMembresiaValor.Size = new System.Drawing.Size(262, 46);
-            this.lblEstadoMembresiaValor.TabIndex = 9;
-            this.lblEstadoMembresiaValor.Text = "-";
-            this.lblEstadoMembresiaValor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.txtEstadoMembresia.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtEstadoMembresia.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.txtEstadoMembresia.Location = new System.Drawing.Point(166, 202);
+            this.txtEstadoMembresia.Name = "txtEstadoMembresia";
+            this.txtEstadoMembresia.Size = new System.Drawing.Size(262, 25);
+            this.txtEstadoMembresia.TabIndex = 9;
+            this.txtEstadoMembresia.Text = "-";
+            this.txtEstadoMembresia.ReadOnly = true;
+            this.txtEstadoMembresia.TabStop = false;
             //
             // lblEntrenadorActual
             //
@@ -552,16 +557,17 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.lblEntrenadorActual.Text = "Entrenador actual";
             this.lblEntrenadorActual.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
-            // lblEntrenadorActualValor
+            // txtEntrenadorActual
             //
-            this.lblEntrenadorActualValor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblEntrenadorActualValor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.lblEntrenadorActualValor.Location = new System.Drawing.Point(166, 238);
-            this.lblEntrenadorActualValor.Name = "lblEntrenadorActualValor";
-            this.lblEntrenadorActualValor.Size = new System.Drawing.Size(262, 46);
-            this.lblEntrenadorActualValor.TabIndex = 11;
-            this.lblEntrenadorActualValor.Text = "Sin asignar";
-            this.lblEntrenadorActualValor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.txtEntrenadorActual.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtEntrenadorActual.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.txtEntrenadorActual.Location = new System.Drawing.Point(166, 248);
+            this.txtEntrenadorActual.Name = "txtEntrenadorActual";
+            this.txtEntrenadorActual.Size = new System.Drawing.Size(262, 25);
+            this.txtEntrenadorActual.TabIndex = 11;
+            this.txtEntrenadorActual.Text = "Sin asignar";
+            this.txtEntrenadorActual.ReadOnly = true;
+            this.txtEntrenadorActual.TabStop = false;
             //
             // lblNuevoEntrenador
             //

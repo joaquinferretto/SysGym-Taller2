@@ -1,5 +1,70 @@
 # Contexto del proyecto
 
+## Layout de Gestión de socios — 18 de septiembre de 2026
+
+Última actualización: 18 de septiembre de 2026. Ambas tarjetas ocupan la altura de la misma fila porcentual mediante Dock=Fill y las columnas se distribuyen 50%/50%. El contenedor interior del detalle ocupa el espacio disponible, con campos anclados horizontalmente; foto y acciones quedan dentro de él. Se reducen espacios verticales para mostrar los siete campos y todas las acciones sin scroll interno. Solo cambia el Designer y esta documentación; se preservan modificaciones previas del usuario, eventos, lógica, DataGridView y persistencia.
+
+Verificado: solución Debug compilada en bin/VerificacionLayoutSocios sin errores; dos warnings CS0649 preexistentes de components en GestionSociosFormulario y GestionEjerciciosFormulario. Inicialización y layout en memoria con tamaños de cliente del módulo 810×571, 990×551, 1076×599, 1310×731, 1630×911 y 1215×680: tarjetas de igual altura, todos los controles del detalle dentro de sus respectivos contenedores y sin barra vertical. DesignSurface carga sin errores; suscripciones de eventos idénticas a las anteriores y diff check correcto. No se ejecutó Load ni se consultó SQL Server.
+
+Pendiente: inspección interactiva en Visual Studio Designer y ejecución integrada con datos reales y otras escalas DPI. Las pruebas en memoria no sustituyen esas verificaciones ni acreditan ventanas menores a los tamaños comprobados.
+
+
+## Tarjetas de Reportes — 18 de septiembre de 2026
+
+Última actualización: 18 de septiembre de 2026. Presentación de ReportesFormulario como dashboard sencillo: tres tarjetas superiores (socios, usuarios, membresías), dos inferiores centradas (rutinas, ejercicios), cinco números con tamaño uniforme y acento violeta. Se sustituye el bloque resumen; el botón Generar reporte conserva evento y funcionalidad, y la fecha se muestra discretamente debajo. Antes de generar los valores muestran «-». Los controles están declarados en Designer. Form.cs solo separa la presentación de los mismos contadores en cinco Labels; mantiene consultas, orden de evaluación, manejo de errores y fecha.
+
+Verificado: solución Debug compilada en bin/VerificacionReportesTarjetas sin errores, con dos CS0649 preexistentes de GestionSociosFormulario y GestionEjerciciosFormulario. Layout en memoria a 900×560, 1100×680, 1280×720 y 1920×1080: cinco tarjetas y etiquetas dentro de sus contenedores y estado debajo sin desbordes. Renderizado del panel de contenido inspeccionado a 1100 px; distribución 3+2, títulos y valores iniciales visibles. DesignSurface carga sin errores. Diff check de los archivos afectados correcto y revisión del handler confirma las mismas cinco consultas y fecha. No se consultó ni modificó SQL Server.
+
+Pendientes: abrir interactivamente ReportesFormulario en Visual Studio Designer y probar generación/carga con datos reales en la aplicación. Las comprobaciones de layout y DesignSurface no acreditan esos pasos.
+
+
+## Columnas ajustadas al ancho disponible — 18 de septiembre de 2026
+
+Última actualización: 18 de septiembre de 2026. Los tres DataGridView solicitados ya tenían Fill y Dock=Fill; el desbordamiento procedía de MinimumWidth elevados. Se reducen a 20 px solo en sus columnas visibles y se ajustan FillWeight del catálogo (45/35/20) y ejercicios (10/7/32/8/17/8/18). Socios conserva 28/16/20/22/16/16. No se oculta la barra horizontal por configuración: las columnas ahora caben realmente. No hay cambios de Form.cs, lógica, datos, consultas ni dependencias.
+
+Verificado: solución Debug compilada en bin/VerificacionColumnasFill sin errores; permanecen dos CS0649 preexistentes de GestionSociosFormulario y GestionEjerciciosFormulario. Se obtuvieron los tamaños reales de las tablas mediante layout de ambos formularios a anchos de cliente 900, 1100, 1280 y 1920 px (altura 720). Con esos tamaños se comprobaron las grillas en memoria, vacías y con 80 filas de texto largo: todas las columnas caben, sin HScrollBar visible, y con VScrollBar visible cuando hay filas suficientes. Para esa prueba aislada se desconectaron los handlers de selección únicamente de las instancias temporales; no se ejecutaron consultas. Ambos formularios cargan sin errores en DesignSurface. Diff check de los archivos afectados correcto.
+
+Pendientes: inspección interactiva en Visual Studio Designer y en la aplicación con datos reales; las verificaciones en memoria no sustituyen ese recorrido.
+
+
+## Campos de Socio seleccionado — 18 de septiembre de 2026
+
+Última actualización: 18 de septiembre de 2026. Cambio visual puntual en MisSociosFormulario: seis valores informativos ahora aparecen dentro de TextBox ReadOnly definidos en Designer, conservando la distribución existente. Sin selección, txtSocio muestra «Selecciona un socio» y los demás «-», incluso antes de Load; la selección conserva las asignaciones de los mismos datos existentes. Se mantienen título y mensaje superior, listado, filtros, acciones y rutina semanal.
+
+Verificado: solución Debug compilada sin errores en bin/VerificacionSocioSeleccionado; dos warnings CS0649 preexistentes en GestionSociosFormulario y GestionEjerciciosFormulario. Inicialización y layout en memoria a 1100×680, 1280×680 y 1920×680: seis campos habilitados, ReadOnly, con borde, alineados por fila y dentro de tablaSocio; estado inicial y ejecución de MostrarFichaVacia comprobados. DesignSurface carga el formulario sin errores. El diff de Form.cs solo cambia referencias a los seis controles; no cambia lógica ni dependencias. Diff check de los archivos de esta tarea correcto; el chequeo global encuentra espacios finales preexistentes en GestionEjerciciosFormulario.Designer.cs.
+
+Pendientes: apertura e inspección interactiva en Visual Studio Designer y recorrido de selección/rutina semanal con la aplicación y SQL Server. DesignSurface y layout en memoria no sustituyen esas verificaciones; no se ejecutaron consultas ni escrituras a la base durante esta tarea.
+
+
+## Campos de Vinculación — 18 de septiembre de 2026
+
+Última actualización: 18 de septiembre de 2026. Mejora visual puntual de GestionAsignacionesFormulario: seis valores pasan de Labels a TextBox ReadOnly declarados en Designer, con bordes estándar, ancho uniforme y TabStop=false. Se conserva tablaFicha y el ComboBox Nuevo entrenador; los métodos existentes cargan los mismos datos en los nuevos campos. Se mantiene el mensaje Seleccioná una membresía y los valores de la ficha vacía.
+
+Verificado: solución Debug compilada en bin/VerificacionAsignaciones, porque la aplicación abierta bloquea la copia a bin/Debug (MSB3021/MSB3027). La compilación inicial informó dos CS0649 preexistentes en Ejercicios/Socios. Inicialización y layout en memoria a 1100×680, 1280×720 y 1920×1080: seis TextBox ReadOnly con borde, alineación y ancho iguales, dentro de su tabla. Con una membresía de prueba en memoria, AplicarFiltro llena la grilla y la selección carga los seis valores esperados; el ComboBox permite seleccionar entrenador. Ficha vacía comprobada. Se revisó que Form.cs solo modifica referencias a los seis controles; no cambian dependencias ni operaciones de asignación.
+
+Pendientes: inspección interactiva en Visual Studio Designer y aplicación, carga contra SQL Server y confirmación de una asignación real. Las comprobaciones en memoria no acreditan esos pasos; no se ejecutaron operaciones de persistencia.
+
+## Simplificación de Ejercicios — 18 de septiembre de 2026
+
+Última actualización: 18 de septiembre de 2026. Diagnóstico: encabezado interno oculto en Designer, alojamiento sin bordes con Dock=Fill y cambios legítimos de estado explican diferencias Designer/runtime; no había reconstrucción visual ni resize personalizado. Además, Nuevo/Actualizar listado tenían coordenadas fuera del ancho de diseño (1802/1644 sobre 1100) y la galería no acompañaba el ancho. La escala actual coincide con AutoScaleDimensions (7×17), por lo que se conserva el escalado por fuente.
+
+Se eliminan panelEncabezado y panelDetalle, Volver (dentro del encabezado siempre oculto), Cancelar (oculto tanto en Nuevo como en selección, sin ningún flujo que lo mostrara) y handlers vacíos. Constructor reducido a InitializeComponent; los dos paneles de rol dejan de pasar un color que solo afectaba al encabezado eliminado. Se mantienen datos, selección, Guardar/Actualizar, baja/reactivación, Nuevo, recarga, filtros y operaciones de imágenes. Los únicos controles dinámicos siguen siendo miniaturas de imágenes variables. No se cambia la lógica de persistencia ni la navegación general.
+
+Verificado: Debug compila sin errores (dos CS0649 preexistentes), 45 ejercicios contra SQL Server, filtros, búsqueda, selección, modos Nuevo/Edición, conexión única de Guardar y recarga; bounds de controles/botones a 900×560, 1100×680, 1280×720 y 1600×900. DesignSurface de WinForms carga sin errores y permite obtener diseñadores/propiedades de ocho controles principales. No equivale a abrir Visual Studio; la captura con DrawToBitmap del formulario invisible no mostró los controles y no se considera validación visual. Pendientes: inspección interactiva en Designer/aplicación, operaciones reales de alta/edición/baja/reactivación e imágenes. No se escribieron datos durante las pruebas.
+
+## Carga del catálogo de ejercicios — 18 de septiembre de 2026
+
+Última actualización: 18 de septiembre de 2026. Causa: GestionEjerciciosFormulario_Load existía pero no estaba suscrito al evento Load en Designer; el constructor no consulta datos, por lo que Cargar nunca se ejecutaba al abrir. También faltaban las conexiones de búsqueda, Estado, selección y botones; Reactivar y Agregar imagen apuntaban a handlers vacíos. Se restauran únicamente las conexiones a los métodos existentes en GestionEjerciciosFormulario.Designer.cs, sin cambios visuales ni de lógica. El flujo sigue siendo Cargar → EjercicioLogica.ListarParaGestion → UnidadDeTrabajoGimnasio → EF6 → SQL Server, y las filas se agregan con Rows.Add. Buscar vacío y Estado sin selección no filtran registros. El catch existente informa errores mediante lblEstado y MessageBox; no era la causa de la grilla vacía.
+
+Verificado: compilación Debug sin errores (persisten dos CS0649 preexistentes), creación/renderizado en memoria, despacho del evento Load con 45 ejercicios reales, búsqueda con/sin coincidencias, filtros Todos/Activos/Inactivos, selección que carga ficha, modos Nuevo/Edición y recarga. Guardar/Actualizar está conectado una sola vez a guardar_Click. La primera prueba restringida falló por autenticación SSPI; la misma prueba autorizada fuera del sandbox pasó. Sin escrituras ni cambios de configuración. Pendientes: confirmar altas/ediciones con guardado real y apertura interactiva en Visual Studio Designer; las pruebas de esta tarea no acreditan esos pasos.
+
+## Ajuste puntual de Gestionar rutinas — 18 de septiembre de 2026
+
+Última actualización: 18 de septiembre de 2026. Se quita splitContenido y se mantienen los dos sectores existentes mediante Anchor en panelContenido. El listado muestra Rutina, Entrenador y Estado; se eliminan colAsignados/colCreacion y sus valores de carga, sin modificar persistencia ni consultas. Los eventos permanecen iguales.
+
+Verificado: solución Debug compilada, creación y renderizado en memoria a 1100×680, 1280×720, 1366×768 y 1920×1080, sin divisor ni superposición; tres columnas visibles, ID/Estado correctamente alineados y reinicio de Nueva rutina. La instancia de verificación desconectó Load/selección para no consultar la base. Persisten dos warnings CS0649 ajenos (Socios y Ejercicios). Pendientes de esta modificación: apertura en Visual Studio Designer y recorrido funcional contra SQL Server de selección, carga de ejercicios y botones de persistencia. No se agregaron clases, controles ni dependencias.
+
+
 ## Normalizacion controlada: Asignaciones - 18 de septiembre de 2026
 
 Estado inicial: complejo. Panel 4 -> 1; TableLayoutPanel 1 -> 3; FlowLayoutPanel 1 -> 1; SplitContainer 1 -> 1; GroupBox 1 -> 1. Se elimina panelDetalle, que solo envolvia grupoFicha. Filtros/listado pasan a tablas; se conserva el GroupBox Vinculacion por su borde, fondo y agrupacion semantica, sin reemplazar paneles por nuevos GroupBox. Labels y valores ya eran directos: la columna de etiquetas pasa a AutoSize, conservando centrado vertical y ComboBox anclado Left/Right en la misma fila. Las acciones permiten ajuste de filas para no recortarse.

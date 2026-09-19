@@ -150,7 +150,7 @@ namespace exxen2._0.capaVisual.Administrador
         /* Al hacer clic en btnEjercicios, abre el módulo correspondiente dentro del panel principal. */
         private void btnEjercicios_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new GestionEjerciciosFormulario(Color.FromArgb(79, 70, 229)), "Ejercicios | Catálogo de ejercicios");
+            navegacion.AbrirFormulario(new GestionEjerciciosFormulario(), "Ejercicios | Catálogo de ejercicios");
         }
 
         /* Al hacer clic en btnRutinas, abre el módulo correspondiente dentro del panel principal. */

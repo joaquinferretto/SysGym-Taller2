@@ -14,7 +14,6 @@ namespace exxen2._0.capaVisual.Entrenador
         private Panel barraAcciones;
         private Label lblEstado;
         private Panel panelContenido;
-        private SplitContainer splitContenido;
         private TableLayoutPanel layoutDetalle;
         private TableLayoutPanel panelListado;
         private Label lblListadoTitulo;
@@ -40,8 +39,6 @@ namespace exxen2._0.capaVisual.Entrenador
         private DataGridViewTextBoxColumn colId;
         private DataGridViewTextBoxColumn colRutina;
         private DataGridViewTextBoxColumn colCreador;
-        private DataGridViewTextBoxColumn colAsignados;
-        private DataGridViewTextBoxColumn colCreacion;
         private DataGridViewTextBoxColumn colEstado;
         private ComboBox dia;
         private ComboBox ejercicio;
@@ -87,15 +84,12 @@ namespace exxen2._0.capaVisual.Entrenador
             this.barraAcciones = new System.Windows.Forms.Panel();
             this.lblEstado = new System.Windows.Forms.Label();
             this.panelContenido = new System.Windows.Forms.Panel();
-            this.splitContenido = new System.Windows.Forms.SplitContainer();
             this.panelListado = new System.Windows.Forms.TableLayoutPanel();
             this.lblListadoTitulo = new System.Windows.Forms.Label();
             this.tabla = new System.Windows.Forms.DataGridView();
             this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colRutina = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCreador = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAsignados = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCreacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nuevaRutina = new System.Windows.Forms.Button();
             this.layoutDetalle = new System.Windows.Forms.TableLayoutPanel();
@@ -146,10 +140,6 @@ namespace exxen2._0.capaVisual.Entrenador
             this.colDetalleDescanso = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelEncabezado.SuspendLayout();
             this.panelContenido.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContenido)).BeginInit();
-            this.splitContenido.Panel1.SuspendLayout();
-            this.splitContenido.Panel2.SuspendLayout();
-            this.splitContenido.SuspendLayout();
             this.panelListado.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).BeginInit();
             this.layoutDetalle.SuspendLayout();
@@ -237,35 +227,14 @@ namespace exxen2._0.capaVisual.Entrenador
             // panelContenido
             //
             this.panelContenido.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            this.panelContenido.Controls.Add(this.splitContenido);
+            this.panelContenido.Controls.Add(this.panelListado);
+            this.panelContenido.Controls.Add(this.layoutDetalle);
             this.panelContenido.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelContenido.Location = new System.Drawing.Point(0, 57);
             this.panelContenido.Name = "panelContenido";
             this.panelContenido.Padding = new System.Windows.Forms.Padding(16);
             this.panelContenido.Size = new System.Drawing.Size(1100, 593);
             this.panelContenido.TabIndex = 0;
-            //
-            // splitContenido
-            //
-            this.splitContenido.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContenido.Location = new System.Drawing.Point(16, 16);
-            this.splitContenido.Name = "splitContenido";
-            //
-            // splitContenido.Panel1
-            //
-            this.splitContenido.Panel1.Controls.Add(this.panelListado);
-            this.splitContenido.Panel1.Padding = new System.Windows.Forms.Padding(8);
-            this.splitContenido.Panel1MinSize = 240;
-            //
-            // splitContenido.Panel2
-            //
-            this.splitContenido.Panel2.Controls.Add(this.layoutDetalle);
-            this.splitContenido.Panel2.Padding = new System.Windows.Forms.Padding(8);
-            this.splitContenido.Panel2MinSize = 500;
-            this.splitContenido.Size = new System.Drawing.Size(1068, 561);
-            this.splitContenido.SplitterDistance = 330;
-            this.splitContenido.SplitterWidth = 6;
-            this.splitContenido.TabIndex = 0;
             //
             // panelListado
             //
@@ -276,8 +245,8 @@ namespace exxen2._0.capaVisual.Entrenador
             this.panelListado.Controls.Add(this.lblListadoTitulo, 0, 0);
             this.panelListado.Controls.Add(this.tabla, 0, 1);
             this.panelListado.Controls.Add(this.nuevaRutina, 0, 2);
-            this.panelListado.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelListado.Location = new System.Drawing.Point(8, 8);
+            this.panelListado.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left)));
+            this.panelListado.Location = new System.Drawing.Point(24, 24);
             this.panelListado.Name = "panelListado";
             this.panelListado.Padding = new System.Windows.Forms.Padding(10);
             this.panelListado.RowCount = 3;
@@ -312,8 +281,6 @@ namespace exxen2._0.capaVisual.Entrenador
             this.colId,
             this.colRutina,
             this.colCreador,
-            this.colAsignados,
-            this.colCreacion,
             this.colEstado});
             this.tabla.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabla.Location = new System.Drawing.Point(13, 43);
@@ -337,41 +304,25 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             // colRutina
             //
-            this.colRutina.FillWeight = 34F;
+            this.colRutina.FillWeight = 45F;
             this.colRutina.HeaderText = "Rutina";
-            this.colRutina.MinimumWidth = 115;
+            this.colRutina.MinimumWidth = 20;
             this.colRutina.Name = "colRutina";
             this.colRutina.ReadOnly = true;
             //
             // colCreador
             //
-            this.colCreador.FillWeight = 26F;
+            this.colCreador.FillWeight = 35F;
             this.colCreador.HeaderText = "Entrenador";
-            this.colCreador.MinimumWidth = 100;
+            this.colCreador.MinimumWidth = 20;
             this.colCreador.Name = "colCreador";
             this.colCreador.ReadOnly = true;
             //
-            // colAsignados
-            //
-            this.colAsignados.FillWeight = 15F;
-            this.colAsignados.HeaderText = "Socios";
-            this.colAsignados.MinimumWidth = 60;
-            this.colAsignados.Name = "colAsignados";
-            this.colAsignados.ReadOnly = true;
-            //
-            // colCreacion
-            //
-            this.colCreacion.FillWeight = 15F;
-            this.colCreacion.HeaderText = "Creación";
-            this.colCreacion.MinimumWidth = 82;
-            this.colCreacion.Name = "colCreacion";
-            this.colCreacion.ReadOnly = true;
-            //
             // colEstado
             //
-            this.colEstado.FillWeight = 10F;
+            this.colEstado.FillWeight = 20F;
             this.colEstado.HeaderText = "Estado";
-            this.colEstado.MinimumWidth = 70;
+            this.colEstado.MinimumWidth = 20;
             this.colEstado.Name = "colEstado";
             this.colEstado.ReadOnly = true;
             //
@@ -398,15 +349,15 @@ namespace exxen2._0.capaVisual.Entrenador
             this.layoutDetalle.Controls.Add(this.contenedorRutina, 0, 0);
             this.layoutDetalle.Controls.Add(this.contenedorFormulario, 0, 2);
             this.layoutDetalle.Controls.Add(this.panelEjercicios, 0, 1);
-            this.layoutDetalle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutDetalle.Location = new System.Drawing.Point(8, 8);
+            this.layoutDetalle.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.layoutDetalle.Location = new System.Drawing.Point(360, 24);
             this.layoutDetalle.Name = "layoutDetalle";
             this.layoutDetalle.RowCount = 3;
             this.layoutDetalle.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.layoutDetalle.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.layoutDetalle.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.layoutDetalle.Size = new System.Drawing.Size(716, 545);
-            this.layoutDetalle.TabIndex = 0;
+            this.layoutDetalle.TabIndex = 1;
             //
             // contenedorRutina
             //
@@ -988,57 +939,57 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             // colDetalleDia
             //
-            this.colDetalleDia.FillWeight = 12F;
+            this.colDetalleDia.FillWeight = 10F;
             this.colDetalleDia.HeaderText = "Día";
-            this.colDetalleDia.MinimumWidth = 65;
+            this.colDetalleDia.MinimumWidth = 20;
             this.colDetalleDia.Name = "colDetalleDia";
             this.colDetalleDia.ReadOnly = true;
             //
             // colDetalleOrden
             //
-            this.colDetalleOrden.FillWeight = 10F;
+            this.colDetalleOrden.FillWeight = 7F;
             this.colDetalleOrden.HeaderText = "Orden";
-            this.colDetalleOrden.MinimumWidth = 58;
+            this.colDetalleOrden.MinimumWidth = 20;
             this.colDetalleOrden.Name = "colDetalleOrden";
             this.colDetalleOrden.ReadOnly = true;
             //
             // colDetalleEjercicio
             //
-            this.colDetalleEjercicio.FillWeight = 28F;
+            this.colDetalleEjercicio.FillWeight = 32F;
             this.colDetalleEjercicio.HeaderText = "Ejercicio";
-            this.colDetalleEjercicio.MinimumWidth = 110;
+            this.colDetalleEjercicio.MinimumWidth = 20;
             this.colDetalleEjercicio.Name = "colDetalleEjercicio";
             this.colDetalleEjercicio.ReadOnly = true;
             //
             // colDetalleSeries
             //
-            this.colDetalleSeries.FillWeight = 10F;
+            this.colDetalleSeries.FillWeight = 8F;
             this.colDetalleSeries.HeaderText = "Series";
-            this.colDetalleSeries.MinimumWidth = 58;
+            this.colDetalleSeries.MinimumWidth = 20;
             this.colDetalleSeries.Name = "colDetalleSeries";
             this.colDetalleSeries.ReadOnly = true;
             //
             // colDetalleRepeticiones
             //
-            this.colDetalleRepeticiones.FillWeight = 16F;
+            this.colDetalleRepeticiones.FillWeight = 17F;
             this.colDetalleRepeticiones.HeaderText = "Repeticiones";
-            this.colDetalleRepeticiones.MinimumWidth = 86;
+            this.colDetalleRepeticiones.MinimumWidth = 20;
             this.colDetalleRepeticiones.Name = "colDetalleRepeticiones";
             this.colDetalleRepeticiones.ReadOnly = true;
             //
             // colDetallePeso
             //
-            this.colDetallePeso.FillWeight = 10F;
+            this.colDetallePeso.FillWeight = 8F;
             this.colDetallePeso.HeaderText = "Peso";
-            this.colDetallePeso.MinimumWidth = 58;
+            this.colDetallePeso.MinimumWidth = 20;
             this.colDetallePeso.Name = "colDetallePeso";
             this.colDetallePeso.ReadOnly = true;
             //
             // colDetalleDescanso
             //
-            this.colDetalleDescanso.FillWeight = 14F;
+            this.colDetalleDescanso.FillWeight = 18F;
             this.colDetalleDescanso.HeaderText = "Descanso";
-            this.colDetalleDescanso.MinimumWidth = 76;
+            this.colDetalleDescanso.MinimumWidth = 20;
             this.colDetalleDescanso.Name = "colDetalleDescanso";
             this.colDetalleDescanso.ReadOnly = true;
             //
@@ -1060,10 +1011,6 @@ namespace exxen2._0.capaVisual.Entrenador
             this.Load += new System.EventHandler(this.RutinasEntrenadorFormulario_Load);
             this.panelEncabezado.ResumeLayout(false);
             this.panelContenido.ResumeLayout(false);
-            this.splitContenido.Panel1.ResumeLayout(false);
-            this.splitContenido.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContenido)).EndInit();
-            this.splitContenido.ResumeLayout(false);
             this.panelListado.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).EndInit();
             this.layoutDetalle.ResumeLayout(false);

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using exxen2._0.capaDatos.Entidades;
@@ -109,7 +109,7 @@ namespace exxen2._0.capaVisual.Entrenador
         /* Al hacer clic en btnEjercicios, abre el módulo correspondiente dentro del panel principal. */
         private void btnEjercicios_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new GestionEjerciciosFormulario(Color.FromArgb(14, 116, 144)), "Ejercicios | Catálogo de ejercicios");
+            navegacion.AbrirFormulario(new GestionEjerciciosFormulario(), "Ejercicios | Catálogo de ejercicios");
         }
 
         /* Al cargar la pantalla en ejecución, prepara sus datos iniciales sin realizar consultas desde el diseñador. */

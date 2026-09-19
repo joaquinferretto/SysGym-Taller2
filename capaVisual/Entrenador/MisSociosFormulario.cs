@@ -118,12 +118,12 @@ namespace exxen2._0.capaVisual.Entrenador
             socioSeleccionado = sociosCargados.FirstOrDefault(s => s.IdSocio == idSocio);
             if (socioSeleccionado == null) return;
 
-            lblSocioValor.Text = socioSeleccionado.NombreSocio;
-            lblDniValor.Text = socioSeleccionado.DNI;
-            lblPlanValor.Text = socioSeleccionado.NombrePlan;
-            lblEntrenadorValor.Text = socioSeleccionado.NombreEntrenador;
-            lblVencimientoValor.Text = socioSeleccionado.FechaVencimiento.ToString("dd/MM/yyyy");
-            lblRutinaValor.Text = socioSeleccionado.TieneRutina ? socioSeleccionado.NombreRutina : "Sin rutina asignada";
+            txtSocio.Text = socioSeleccionado.NombreSocio;
+            txtDni.Text = socioSeleccionado.DNI;
+            txtPlan.Text = socioSeleccionado.NombrePlan;
+            txtEntrenador.Text = socioSeleccionado.NombreEntrenador;
+            txtVencimiento.Text = socioSeleccionado.FechaVencimiento.ToString("dd/MM/yyyy");
+            txtRutina.Text = socioSeleccionado.TieneRutina ? socioSeleccionado.NombreRutina : "Sin rutina asignada";
             CargarRutinaSemanal(socioSeleccionado.IdSocio);
 
             rutinaDisponible.Visible = true;
@@ -139,12 +139,12 @@ namespace exxen2._0.capaVisual.Entrenador
         private void MostrarFichaVacia()
         {
             socioSeleccionado = null;
-            lblSocioValor.Text = "Selecciona un socio";
-            lblDniValor.Text = "-";
-            lblPlanValor.Text = "-";
-            lblEntrenadorValor.Text = "-";
-            lblVencimientoValor.Text = "-";
-            lblRutinaValor.Text = "-";
+            txtSocio.Text = "Selecciona un socio";
+            txtDni.Text = "-";
+            txtPlan.Text = "-";
+            txtEntrenador.Text = "-";
+            txtVencimiento.Text = "-";
+            txtRutina.Text = "-";
             lblAccionInfo.Text = "Selecciona un socio para ver su rutina y acciones.";
             tablaRutina.Rows.Clear();
             rutinaDisponible.Visible = false;

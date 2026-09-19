@@ -83,12 +83,12 @@ namespace exxen2._0.capaVisual.Recepcionista
             var item = membresiasCargadas.FirstOrDefault(m => m.IdMembresia == idSeleccionado);
             if (item == null) return;
             idAsignacionSeleccionada = item.IdMembresiaEntrenador;
-            lblSocioValor.Text = item.NombreSocio;
-            lblDniValor.Text = item.DNI;
-            lblPlanValor.Text = item.NombrePlan;
-            lblVencimientoValor.Text = item.FechaVencimiento.ToString("dd/MM/yyyy");
-            lblEstadoMembresiaValor.Text = item.EstadoMembresia ? "Vigente" : "Inactiva";
-            lblEntrenadorActualValor.Text = item.NombreEntrenador;
+            txtSocio.Text = item.NombreSocio;
+            txtDni.Text = item.DNI;
+            txtPlan.Text = item.NombrePlan;
+            txtVencimiento.Text = item.FechaVencimiento.ToString("dd/MM/yyyy");
+            txtEstadoMembresia.Text = item.EstadoMembresia ? "Vigente" : "Inactiva";
+            txtEntrenadorActual.Text = item.NombreEntrenador;
             if (item.Asignado && entrenador.Items.Count > 0) entrenador.SelectedValue = item.IdEntrenador; else entrenador.SelectedIndex = -1;
             asignar.Visible = !item.Asignado;
             cambiar.Visible = item.Asignado;
@@ -104,7 +104,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         private void PrepararFichaVacia()
         {
             idSeleccionado = 0; idAsignacionSeleccionada = 0;
-            lblSocioValor.Text = "Seleccioná una membresía"; lblDniValor.Text = "-"; lblPlanValor.Text = "-"; lblVencimientoValor.Text = "-"; lblEstadoMembresiaValor.Text = "-"; lblEntrenadorActualValor.Text = "Sin asignar";
+            txtSocio.Text = "Seleccioná una membresía"; txtDni.Text = "-"; txtPlan.Text = "-"; txtVencimiento.Text = "-"; txtEstadoMembresia.Text = "-"; txtEntrenadorActual.Text = "Sin asignar";
             entrenador.SelectedIndex = -1; entrenador.Enabled = false;
             asignar.Visible = false; cambiar.Visible = false; darDeBaja.Visible = false;
         }

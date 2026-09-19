@@ -1,5 +1,44 @@
 # Arquitectura
 
+## Layout de Gestión de socios — 18 de septiembre de 2026
+
+Última actualización: 18 de septiembre de 2026. Ajuste exclusivo de GestionSociosFormulario.Designer.cs. panelContenido reutiliza sus dos columnas con 50%/50%; panelListado conserva Dock=Fill y panelDetalle pasa a Dock=Fill. El scroll procedía de panelDetalle con AutoScroll=true, altura fija y contenido que superaba sus límites. contenedorDetalle pasa a Dock=Fill y agrupa también foto, botones de foto y rutina semanal. Se corrigen anchos de contenedorCampos/panelAcciones y campos anclados a izquierda/derecha, y se compactan filas y posiciones desde Designer. AutoScroll=false tras comprobar que los controles caben en los tamaños verificados. Sin cálculos runtime, clases nuevas, cambios de eventos, DataGridView, negocio, datos ni dependencias entre capas. Verificaciones y límites en PROJECT_CONTEXT.md.
+
+
+## Tarjetas de Reportes — 18 de septiembre de 2026
+
+Última actualización: 18 de septiembre de 2026. ReportesFormulario reemplaza el Label resumen con borde por cinco Panel estándar, cada uno con Label de título y valor. Un único TableLayoutPanel de seis columnas porcentuales y dos filas organiza tres tarjetas arriba y dos centradas abajo, mediante ColumnSpan=2. Se declara todo en Designer; Dock y márgenes resuelven la distribución, sin Resize, controles personalizados ni creación runtime fuera de InitializeComponent. Los valores usan Segoe UI 32 negrita violeta, títulos de 10 y fondo blanco. lblEstado se conserva debajo de las tarjetas; generar y su suscripción Click se mantienen.
+
+El handler consulta los mismos cinco contadores, una vez cada uno y en el mismo orden, antes de asignarlos a los cinco Labels. Esto conserva que un error de consulta no actualice parcialmente los indicadores. La fecha y manejo de errores permanecen iguales. No cambian negocio, persistencia ni dependencias entre capas. Verificaciones en PROJECT_CONTEXT.md.
+
+
+## Columnas ajustadas al ancho disponible — 18 de septiembre de 2026
+
+Última actualización: 18 de septiembre de 2026. Ajuste exclusivo de columnas en los Designer de MisSociosFormulario (tabla de socios activos) y RutinasEntrenadorFormulario (tabla y tablaEjercicios). Se conservan AutoSizeColumnsMode=Fill, Dock=Fill y ScrollBars sin cambios. Se reducen los MinimumWidth de las 16 columnas visibles afectadas a 20 px para que sus mínimos no obliguen a desplazar horizontalmente. Los IDs ocultos y tablaRutina de MisSocios permanecen intactos.
+
+Socios conserva FillWeight 28/16/20/22/16/16 (Socio/DNI/Plan/Rutina/Vence/Estado). Catálogo usa 45/35/20 (Rutina/Entrenador/Estado). Ejercicios usa 10/7/32/8/17/8/18 (Día/Orden/Ejercicio/Series/Repeticiones/Peso/Descanso). No se cambia código de comportamiento, consultas, datos, eventos, contenedores ni dependencias entre capas. Verificaciones y pendientes en PROJECT_CONTEXT.md.
+
+
+## Campos de Socio seleccionado — 18 de septiembre de 2026
+
+Última actualización: 18 de septiembre de 2026. En MisSociosFormulario (pantalla «Socios y rutinas | Consulta de rutinas de socios»), los seis Labels de valores se reemplazan por txtSocio, txtDni, txtPlan, txtEntrenador, txtVencimiento y txtRutina: TextBox estándar con ReadOnly=true, borde Fixed3D, fondo Window y TabStop=false. Se declaran y configuran explícitamente en InitializeComponent del Designer, usando tablaSocio existente y sus tres filas con dos pares etiqueta/valor. Las propiedades de las etiquetas también quedan explícitas para retirar los helpers de esa sección. No se agregan contenedores ni controles runtime.
+
+Form.cs únicamente cambia los nombres de los destinos de Text; conserva selección, datos, consultas y rutina semanal. No cambian dependencias entre capas, servicios, repositorios, SQL ni EF. Verificaciones y pendientes en PROJECT_CONTEXT.md.
+
+
+## Campos de Vinculación — 18 de septiembre de 2026
+
+Última actualización: 18 de septiembre de 2026. En GestionAsignacionesFormulario, los seis Labels de valores se reemplazan por TextBox estándar ReadOnly: txtSocio, txtDni, txtPlan, txtVencimiento, txtEstadoMembresia y txtEntrenadorActual. Se declaran en Designer dentro de tablaFicha existente, con Anchor Left/Right, ancho uniforme y centrado vertical. No se agregan contenedores ni posicionamiento runtime. Form.cs solo cambia los destinos de las asignaciones de Text; conserva datos, eventos, estado vacío y operaciones. Nuevo entrenador sigue siendo el ComboBox existente. Sin cambios de capas, negocio, consultas, SQL ni EF. Verificaciones y pendientes en PROJECT_CONTEXT.md.
+
+## Simplificación de Ejercicios — 18 de septiembre de 2026
+
+Última actualización: 18 de septiembre de 2026. GestionEjerciciosFormulario elimina panelEncabezado (siempre oculto) y panelDetalle (envoltorio de grupoFicha). Administrador/Entrenador usan el constructor sin parámetros; el título continúa en el encabezado general mediante la navegación existente, sin modificar ControladorNavegacion. Se conservan SplitContainer para la división ajustable, tablaFicha para alinear campos, accionesFicha para botones condicionales y galeriaImagenes para miniaturas variables. Se corrigen posiciones de Nuevo/Actualizar listado y Dock de galería en Designer. Se mantiene AutoScaleMode.Font y su base 7×17; no se introducen cálculos de resize, clases ni dependencias. Verificaciones y límites en PROJECT_CONTEXT.md.
+
+## Ajuste puntual de Gestionar rutinas — 18 de septiembre de 2026
+
+Última actualización: 18 de septiembre de 2026. Se elimina el SplitContainer splitContenido: panelListado y layoutDetalle quedan directamente en panelContenido, con las posiciones y tamaños iniciales conservados y Anchor estándar (izquierda de ancho fijo; derecha adaptable). Todo sigue declarado en Designer, sin controles nuevos ni lógica de Resize. Se retiran las columnas Socios y Creación y sus valores de Rows.Add; se conserva el ID oculto. Sin cambios de consultas, entidades, base ni dependencias entre capas. Verificaciones y pendientes en PROJECT_CONTEXT.md.
+
+
 ## Normalizacion de Asignaciones - 18 de septiembre de 2026
 
 Se elimina panelDetalle (wrapper exclusivo de grupoFicha). Listado/filtros son TableLayoutPanel; etiquetas y valores permanecen directos en tablaFicha. Se conserva el GroupBox existente como region semantica con borde/fondo/padding, no como sustituto de paneles individuales. La columna AutoSize y la alineacion vertical compartida resuelven Nuevo entrenador/ComboBox sin geometria runtime. Panel 4/1, TableLayoutPanel 1/3, FlowLayoutPanel 1/1, SplitContainer 1/1, GroupBox 1/1. Form.cs y las reglas de asignacion no cambian. Verificaciones reales y pendientes en PROJECT_CONTEXT.md.

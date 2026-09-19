@@ -94,10 +94,9 @@ namespace exxen2._0.capaVisual.Entrenador
                 var lista = modoAdministrador ? rutinas.ListarParaGestion() : rutinas.ListarPorEntrenador(usuario.IdUsuarioSistema);
                 foreach (var rutina in lista)
                 {
-                    var asignados = rutina.Membresias == null ? 0 : rutina.Membresias.Count(m => m.Estado);
                     tabla.Rows.Add(rutina.IdRutina, rutina.Nombre,
                         rutina.Entrenador == null ? "-" : rutina.Entrenador.Nombre + " " + rutina.Entrenador.Apellido,
-                        asignados, rutina.FechaCreacion.ToString("dd/MM/yyyy"), rutina.Estado ? "Activa" : "Inactiva");
+                        rutina.Estado ? "Activa" : "Inactiva");
                 }
                 lblEstado.Text = tabla.Rows.Count + " rutina(s) en el catalogo";
                 AplicarEstadoControles();

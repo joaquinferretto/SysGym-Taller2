@@ -20,14 +20,9 @@ namespace exxen2._0.capaVisual.Compartido
         private EjercicioImagen imagenSeleccionada;
 
         /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
-        public GestionEjerciciosFormulario() : this(Color.FromArgb(79, 70, 229)) { }
-
-        /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
-        public GestionEjerciciosFormulario(Color colorPrimario)
+        public GestionEjerciciosFormulario()
         {
             InitializeComponent();
-            panelEncabezado.BackColor = colorPrimario;
-            btnVolver.ForeColor = colorPrimario;
         }
 
         /* Consulta, filtra y actualiza el catálogo manteniendo la ficha en un estado coherente. */
@@ -77,7 +72,6 @@ namespace exxen2._0.capaVisual.Compartido
             lblEstadoValor.ForeColor = estadoSeleccionado ? Color.FromArgb(22, 101, 52) : Color.FromArgb(185, 28, 28);
             lblDetalleTitulo.Text = "Ficha / Edición del ejercicio";
             guardar.Text = "Actualizar";
-            cancelar.Visible = false;
             darDeBaja.Visible = estadoSeleccionado;
             reactivar.Visible = !estadoSeleccionado;
             guardar.Visible = true;
@@ -95,7 +89,6 @@ namespace exxen2._0.capaVisual.Compartido
             lblDetalleTitulo.Text = "Nuevo ejercicio";
             guardar.Text = "Guardar";
             guardar.Visible = true;
-            cancelar.Visible = false;
             darDeBaja.Visible = false;
             reactivar.Visible = false;
             CargarImagenes();
@@ -108,9 +101,6 @@ namespace exxen2._0.capaVisual.Compartido
             PrepararNuevo();
             nombre.Focus();
         }
-
-        /* Al hacer clic en cancelar, vuelve al estado de alta limpio de la ficha. */
-        private void cancelar_Click(object origen, EventArgs e) { PrepararNuevo(); }
 
         /* Al hacer clic en guardar o actualizar, valida y persiste el ejercicio mediante la capa lógica. */
         private void guardar_Click(object origen, EventArgs e)
@@ -157,9 +147,6 @@ namespace exxen2._0.capaVisual.Compartido
         {
             if (!AyudaFormularioVisual.EnModoDisenio(this)) Cargar();
         }
-
-        /* Al hacer clic en volver, cierra el módulo y devuelve el control al panel principal. */
-        private void btnVolver_Click(object origen, EventArgs e) { Close(); }
 
         /* Al cambiar el texto de búsqueda, actualiza el listado sin consultar lógica compleja. */
         private void buscador_TextChanged(object origen, EventArgs e) { Cargar(); }
@@ -273,29 +260,5 @@ namespace exxen2._0.capaVisual.Compartido
             galeriaImagenes.Controls.Clear();
         }
 
-        private void reactivar_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void accionesFicha_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void grupoFicha_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void nombre_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void agregarImagen_Click_1(object sender, EventArgs e)
-        {
-
-        }
     }
 }

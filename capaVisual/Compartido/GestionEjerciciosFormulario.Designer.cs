@@ -7,10 +7,6 @@ namespace exxen2._0.capaVisual.Compartido
     partial class GestionEjerciciosFormulario
     {
         private IContainer components;
-        private Panel panelEncabezado;
-        private Label lblTitulo;
-        private Label lblDescripcion;
-        private Button btnVolver;
         private Panel barraAcciones;
         private Label lblBuscar;
         private TextBox buscador;
@@ -27,7 +23,6 @@ namespace exxen2._0.capaVisual.Compartido
         private DataGridViewTextBoxColumn colNombre;
         private DataGridViewTextBoxColumn colDescripcion;
         private DataGridViewTextBoxColumn colEstado;
-        private Panel panelDetalle;
         private GroupBox grupoFicha;
         private Label lblDetalleTitulo;
         private TableLayoutPanel tablaFicha;
@@ -44,7 +39,6 @@ namespace exxen2._0.capaVisual.Compartido
         private Button agregarImagen;
         private Button quitarImagen;
         private Button guardar;
-        private Button cancelar;
         private Button darDeBaja;
         private Button reactivar;
 
@@ -56,10 +50,6 @@ namespace exxen2._0.capaVisual.Compartido
 
         private void InitializeComponent()
         {
-            this.panelEncabezado = new System.Windows.Forms.Panel();
-            this.btnVolver = new System.Windows.Forms.Button();
-            this.lblDescripcion = new System.Windows.Forms.Label();
-            this.lblTitulo = new System.Windows.Forms.Label();
             this.barraAcciones = new System.Windows.Forms.Panel();
             this.nuevo = new System.Windows.Forms.Button();
             this.actualizar = new System.Windows.Forms.Button();
@@ -76,7 +66,6 @@ namespace exxen2._0.capaVisual.Compartido
             this.colDescripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblListadoTitulo = new System.Windows.Forms.Label();
-            this.panelDetalle = new System.Windows.Forms.Panel();
             this.grupoFicha = new System.Windows.Forms.GroupBox();
             this.tablaFicha = new System.Windows.Forms.TableLayoutPanel();
             this.grupoImagenes = new System.Windows.Forms.GroupBox();
@@ -90,13 +79,11 @@ namespace exxen2._0.capaVisual.Compartido
             this.descripcion = new System.Windows.Forms.TextBox();
             this.lblEstadoCampo = new System.Windows.Forms.Label();
             this.lblEstadoValor = new System.Windows.Forms.Label();
+            this.lblDetalleTitulo = new System.Windows.Forms.Label();
             this.accionesFicha = new System.Windows.Forms.FlowLayoutPanel();
             this.guardar = new System.Windows.Forms.Button();
             this.darDeBaja = new System.Windows.Forms.Button();
             this.reactivar = new System.Windows.Forms.Button();
-            this.cancelar = new System.Windows.Forms.Button();
-            this.lblDetalleTitulo = new System.Windows.Forms.Label();
-            this.panelEncabezado.SuspendLayout();
             this.barraAcciones.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContenido)).BeginInit();
             this.splitContenido.Panel1.SuspendLayout();
@@ -104,61 +91,12 @@ namespace exxen2._0.capaVisual.Compartido
             this.splitContenido.SuspendLayout();
             this.panelListado.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).BeginInit();
-            this.panelDetalle.SuspendLayout();
             this.grupoFicha.SuspendLayout();
             this.tablaFicha.SuspendLayout();
             this.grupoImagenes.SuspendLayout();
             this.accionesImagenes.SuspendLayout();
             this.accionesFicha.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panelEncabezado
-            // 
-            this.panelEncabezado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
-            this.panelEncabezado.Controls.Add(this.btnVolver);
-            this.panelEncabezado.Controls.Add(this.lblDescripcion);
-            this.panelEncabezado.Controls.Add(this.lblTitulo);
-            this.panelEncabezado.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEncabezado.Location = new System.Drawing.Point(0, 0);
-            this.panelEncabezado.Name = "panelEncabezado";
-            this.panelEncabezado.Padding = new System.Windows.Forms.Padding(20, 8, 20, 8);
-            this.panelEncabezado.Size = new System.Drawing.Size(1100, 63);
-            this.panelEncabezado.TabIndex = 3;
-            this.panelEncabezado.Visible = false;
-            // 
-            // btnVolver
-            // 
-            this.btnVolver.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnVolver.BackColor = System.Drawing.Color.White;
-            this.btnVolver.FlatAppearance.BorderSize = 0;
-            this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnVolver.Location = new System.Drawing.Point(1880, 10);
-            this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(100, 36);
-            this.btnVolver.TabIndex = 0;
-            this.btnVolver.Text = "Volver";
-            this.btnVolver.UseVisualStyleBackColor = false;
-            // 
-            // lblDescripcion
-            // 
-            this.lblDescripcion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
-            this.lblDescripcion.Location = new System.Drawing.Point(22, 39);
-            this.lblDescripcion.Name = "lblDescripcion";
-            this.lblDescripcion.Size = new System.Drawing.Size(700, 22);
-            this.lblDescripcion.TabIndex = 1;
-            this.lblDescripcion.Text = "Busca, selecciona y edita ejercicios disponibles para las rutinas";
-            this.lblDescripcion.Visible = false;
-            // 
-            // lblTitulo
-            // 
-            this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            this.lblTitulo.ForeColor = System.Drawing.Color.White;
-            this.lblTitulo.Location = new System.Drawing.Point(20, 8);
-            this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(700, 40);
-            this.lblTitulo.TabIndex = 2;
-            this.lblTitulo.Text = "Ejercicios | Catálogo de ejercicios";
-            this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // barraAcciones
             // 
@@ -170,7 +108,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.barraAcciones.Controls.Add(this.buscador);
             this.barraAcciones.Controls.Add(this.lblBuscar);
             this.barraAcciones.Dock = System.Windows.Forms.DockStyle.Top;
-            this.barraAcciones.Location = new System.Drawing.Point(0, 63);
+            this.barraAcciones.Location = new System.Drawing.Point(0, 0);
             this.barraAcciones.Name = "barraAcciones";
             this.barraAcciones.Padding = new System.Windows.Forms.Padding(16, 9, 16, 9);
             this.barraAcciones.Size = new System.Drawing.Size(1100, 54);
@@ -183,12 +121,13 @@ namespace exxen2._0.capaVisual.Compartido
             this.nuevo.FlatAppearance.BorderSize = 0;
             this.nuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.nuevo.ForeColor = System.Drawing.Color.White;
-            this.nuevo.Location = new System.Drawing.Point(1802, 9);
+            this.nuevo.Location = new System.Drawing.Point(902, 9);
             this.nuevo.Name = "nuevo";
             this.nuevo.Size = new System.Drawing.Size(178, 34);
             this.nuevo.TabIndex = 3;
             this.nuevo.Text = "+ Nuevo ejercicio";
             this.nuevo.UseVisualStyleBackColor = false;
+            this.nuevo.Click += new System.EventHandler(this.nuevo_Click);
             // 
             // actualizar
             // 
@@ -196,12 +135,13 @@ namespace exxen2._0.capaVisual.Compartido
             this.actualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
             this.actualizar.FlatAppearance.BorderSize = 0;
             this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.actualizar.Location = new System.Drawing.Point(1644, 9);
+            this.actualizar.Location = new System.Drawing.Point(744, 9);
             this.actualizar.Name = "actualizar";
             this.actualizar.Size = new System.Drawing.Size(150, 34);
             this.actualizar.TabIndex = 2;
             this.actualizar.Text = "Actualizar listado";
             this.actualizar.UseVisualStyleBackColor = false;
+            this.actualizar.Click += new System.EventHandler(this.actualizar_Click);
             // 
             // filtroEstado
             // 
@@ -214,6 +154,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.filtroEstado.Name = "filtroEstado";
             this.filtroEstado.Size = new System.Drawing.Size(120, 25);
             this.filtroEstado.TabIndex = 1;
+            this.filtroEstado.SelectedIndexChanged += new System.EventHandler(this.filtroEstado_SelectedIndexChanged);
             // 
             // lblEstadoFiltro
             // 
@@ -231,6 +172,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.buscador.Name = "buscador";
             this.buscador.Size = new System.Drawing.Size(240, 24);
             this.buscador.TabIndex = 0;
+            this.buscador.TextChanged += new System.EventHandler(this.buscador_TextChanged);
             // 
             // lblBuscar
             // 
@@ -256,7 +198,7 @@ namespace exxen2._0.capaVisual.Compartido
             // splitContenido
             // 
             this.splitContenido.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContenido.Location = new System.Drawing.Point(0, 117);
+            this.splitContenido.Location = new System.Drawing.Point(0, 54);
             this.splitContenido.MinimumSize = new System.Drawing.Size(900, 420);
             this.splitContenido.Name = "splitContenido";
             // 
@@ -270,10 +212,10 @@ namespace exxen2._0.capaVisual.Compartido
             // splitContenido.Panel2
             // 
             this.splitContenido.Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            this.splitContenido.Panel2.Controls.Add(this.panelDetalle);
+            this.splitContenido.Panel2.Controls.Add(this.grupoFicha);
             this.splitContenido.Panel2.Padding = new System.Windows.Forms.Padding(0, 16, 16, 16);
             this.splitContenido.Panel2MinSize = 340;
-            this.splitContenido.Size = new System.Drawing.Size(1100, 535);
+            this.splitContenido.Size = new System.Drawing.Size(1100, 598);
             this.splitContenido.SplitterDistance = 625;
             this.splitContenido.SplitterWidth = 6;
             this.splitContenido.TabIndex = 0;
@@ -285,7 +227,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.panelListado.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelListado.Location = new System.Drawing.Point(16, 16);
             this.panelListado.Name = "panelListado";
-            this.panelListado.Size = new System.Drawing.Size(593, 503);
+            this.panelListado.Size = new System.Drawing.Size(593, 566);
             this.panelListado.TabIndex = 0;
             // 
             // tabla
@@ -309,8 +251,9 @@ namespace exxen2._0.capaVisual.Compartido
             this.tabla.RowHeadersVisible = false;
             this.tabla.RowTemplate.Height = 30;
             this.tabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tabla.Size = new System.Drawing.Size(593, 469);
+            this.tabla.Size = new System.Drawing.Size(593, 532);
             this.tabla.TabIndex = 4;
+            this.tabla.SelectionChanged += new System.EventHandler(this.tabla_SelectionChanged);
             // 
             // colId
             // 
@@ -354,15 +297,6 @@ namespace exxen2._0.capaVisual.Compartido
             this.lblListadoTitulo.Text = "Ejercicios del catálogo";
             this.lblListadoTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // panelDetalle
-            // 
-            this.panelDetalle.Controls.Add(this.grupoFicha);
-            this.panelDetalle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelDetalle.Location = new System.Drawing.Point(0, 16);
-            this.panelDetalle.Name = "panelDetalle";
-            this.panelDetalle.Size = new System.Drawing.Size(453, 503);
-            this.panelDetalle.TabIndex = 0;
-            // 
             // grupoFicha
             // 
             this.grupoFicha.BackColor = System.Drawing.Color.White;
@@ -372,14 +306,13 @@ namespace exxen2._0.capaVisual.Compartido
             this.grupoFicha.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grupoFicha.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
             this.grupoFicha.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.grupoFicha.Location = new System.Drawing.Point(0, 0);
+            this.grupoFicha.Location = new System.Drawing.Point(0, 16);
             this.grupoFicha.Name = "grupoFicha";
             this.grupoFicha.Padding = new System.Windows.Forms.Padding(16);
-            this.grupoFicha.Size = new System.Drawing.Size(453, 503);
+            this.grupoFicha.Size = new System.Drawing.Size(453, 566);
             this.grupoFicha.TabIndex = 0;
             this.grupoFicha.TabStop = false;
             this.grupoFicha.Text = "Ficha / Edición del ejercicio";
-            this.grupoFicha.Enter += new System.EventHandler(this.grupoFicha_Enter);
             // 
             // tablaFicha
             // 
@@ -402,7 +335,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.tablaFicha.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tablaFicha.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
             this.tablaFicha.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 150F));
-            this.tablaFicha.Size = new System.Drawing.Size(421, 344);
+            this.tablaFicha.Size = new System.Drawing.Size(421, 407);
             this.tablaFicha.TabIndex = 0;
             // 
             // grupoImagenes
@@ -412,7 +345,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.grupoImagenes.Controls.Add(this.accionesImagenes);
             this.grupoImagenes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grupoImagenes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.grupoImagenes.Location = new System.Drawing.Point(3, 197);
+            this.grupoImagenes.Location = new System.Drawing.Point(3, 260);
             this.grupoImagenes.Name = "grupoImagenes";
             this.grupoImagenes.Padding = new System.Windows.Forms.Padding(8);
             this.grupoImagenes.Size = new System.Drawing.Size(415, 144);
@@ -424,7 +357,8 @@ namespace exxen2._0.capaVisual.Compartido
             // 
             this.galeriaImagenes.AutoScroll = true;
             this.galeriaImagenes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            this.galeriaImagenes.Location = new System.Drawing.Point(8, 20);
+            this.galeriaImagenes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.galeriaImagenes.Location = new System.Drawing.Point(8, 26);
             this.galeriaImagenes.Name = "galeriaImagenes";
             this.galeriaImagenes.Padding = new System.Windows.Forms.Padding(4);
             this.galeriaImagenes.Size = new System.Drawing.Size(399, 76);
@@ -452,7 +386,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.agregarImagen.TabIndex = 0;
             this.agregarImagen.Text = "Agregar imagen";
             this.agregarImagen.UseVisualStyleBackColor = false;
-            this.agregarImagen.Click += new System.EventHandler(this.agregarImagen_Click_1);
+            this.agregarImagen.Click += new System.EventHandler(this.agregarImagen_Click);
             // 
             // quitarImagen
             // 
@@ -466,6 +400,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.quitarImagen.TabIndex = 1;
             this.quitarImagen.Text = "Quitar imagen";
             this.quitarImagen.UseVisualStyleBackColor = false;
+            this.quitarImagen.Click += new System.EventHandler(this.quitarImagen_Click);
             // 
             // lblNombre
             // 
@@ -486,14 +421,13 @@ namespace exxen2._0.capaVisual.Compartido
             this.nombre.Name = "nombre";
             this.nombre.Size = new System.Drawing.Size(311, 25);
             this.nombre.TabIndex = 0;
-            this.nombre.TextChanged += new System.EventHandler(this.nombre_TextChanged);
             // 
             // lblDescripcionEjercicio
             // 
             this.lblDescripcionEjercicio.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblDescripcionEjercicio.Location = new System.Drawing.Point(3, 42);
             this.lblDescripcionEjercicio.Name = "lblDescripcionEjercicio";
-            this.lblDescripcionEjercicio.Size = new System.Drawing.Size(104, 118);
+            this.lblDescripcionEjercicio.Size = new System.Drawing.Size(104, 181);
             this.lblDescripcionEjercicio.TabIndex = 2;
             this.lblDescripcionEjercicio.Text = "Descripción";
             // 
@@ -506,13 +440,13 @@ namespace exxen2._0.capaVisual.Compartido
             this.descripcion.Multiline = true;
             this.descripcion.Name = "descripcion";
             this.descripcion.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.descripcion.Size = new System.Drawing.Size(311, 112);
+            this.descripcion.Size = new System.Drawing.Size(311, 175);
             this.descripcion.TabIndex = 1;
             // 
             // lblEstadoCampo
             // 
             this.lblEstadoCampo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblEstadoCampo.Location = new System.Drawing.Point(3, 160);
+            this.lblEstadoCampo.Location = new System.Drawing.Point(3, 223);
             this.lblEstadoCampo.Name = "lblEstadoCampo";
             this.lblEstadoCampo.Size = new System.Drawing.Size(104, 34);
             this.lblEstadoCampo.TabIndex = 3;
@@ -523,27 +457,36 @@ namespace exxen2._0.capaVisual.Compartido
             // 
             this.lblEstadoValor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblEstadoValor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(101)))), ((int)(((byte)(52)))));
-            this.lblEstadoValor.Location = new System.Drawing.Point(113, 160);
+            this.lblEstadoValor.Location = new System.Drawing.Point(113, 223);
             this.lblEstadoValor.Name = "lblEstadoValor";
             this.lblEstadoValor.Size = new System.Drawing.Size(305, 34);
             this.lblEstadoValor.TabIndex = 4;
             this.lblEstadoValor.Text = "Activo";
             this.lblEstadoValor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // lblDetalleTitulo
+            // 
+            this.lblDetalleTitulo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblDetalleTitulo.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            this.lblDetalleTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.lblDetalleTitulo.Location = new System.Drawing.Point(16, 34);
+            this.lblDetalleTitulo.Name = "lblDetalleTitulo";
+            this.lblDetalleTitulo.Size = new System.Drawing.Size(421, 32);
+            this.lblDetalleTitulo.TabIndex = 2;
+            this.lblDetalleTitulo.Text = "Nuevo ejercicio";
+            // 
             // accionesFicha
             // 
             this.accionesFicha.Controls.Add(this.guardar);
             this.accionesFicha.Controls.Add(this.darDeBaja);
             this.accionesFicha.Controls.Add(this.reactivar);
-            this.accionesFicha.Controls.Add(this.cancelar);
             this.accionesFicha.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.accionesFicha.Location = new System.Drawing.Point(16, 410);
+            this.accionesFicha.Location = new System.Drawing.Point(16, 473);
             this.accionesFicha.Name = "accionesFicha";
             this.accionesFicha.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.accionesFicha.Size = new System.Drawing.Size(421, 77);
             this.accionesFicha.TabIndex = 1;
             this.accionesFicha.WrapContents = false;
-            this.accionesFicha.Paint += new System.Windows.Forms.PaintEventHandler(this.accionesFicha_Paint);
             // 
             // guardar
             // 
@@ -557,6 +500,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.guardar.TabIndex = 7;
             this.guardar.Text = "Guardar";
             this.guardar.UseVisualStyleBackColor = false;
+            this.guardar.Click += new System.EventHandler(this.guardar_Click);
             // 
             // darDeBaja
             // 
@@ -571,6 +515,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.darDeBaja.Text = "Dar de baja";
             this.darDeBaja.UseVisualStyleBackColor = false;
             this.darDeBaja.Visible = false;
+            this.darDeBaja.Click += new System.EventHandler(this.darDeBaja_Click);
             // 
             // reactivar
             // 
@@ -585,30 +530,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.reactivar.Text = "Reactivar";
             this.reactivar.UseVisualStyleBackColor = false;
             this.reactivar.Visible = false;
-            this.reactivar.Click += new System.EventHandler(this.reactivar_Click_1);
-            // 
-            // cancelar
-            // 
-            this.cancelar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
-            this.cancelar.FlatAppearance.BorderSize = 0;
-            this.cancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cancelar.Location = new System.Drawing.Point(353, 11);
-            this.cancelar.Name = "cancelar";
-            this.cancelar.Size = new System.Drawing.Size(100, 34);
-            this.cancelar.TabIndex = 8;
-            this.cancelar.Text = "Cancelar";
-            this.cancelar.UseVisualStyleBackColor = false;
-            // 
-            // lblDetalleTitulo
-            // 
-            this.lblDetalleTitulo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblDetalleTitulo.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.lblDetalleTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
-            this.lblDetalleTitulo.Location = new System.Drawing.Point(16, 34);
-            this.lblDetalleTitulo.Name = "lblDetalleTitulo";
-            this.lblDetalleTitulo.Size = new System.Drawing.Size(421, 32);
-            this.lblDetalleTitulo.TabIndex = 2;
-            this.lblDetalleTitulo.Text = "Nuevo ejercicio";
+            this.reactivar.Click += new System.EventHandler(this.reactivar_Click);
             // 
             // GestionEjerciciosFormulario
             // 
@@ -619,13 +541,12 @@ namespace exxen2._0.capaVisual.Compartido
             this.Controls.Add(this.splitContenido);
             this.Controls.Add(this.lblEstado);
             this.Controls.Add(this.barraAcciones);
-            this.Controls.Add(this.panelEncabezado);
             this.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.MinimumSize = new System.Drawing.Size(900, 560);
             this.Name = "GestionEjerciciosFormulario";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "SysGym | Ejercicios";
-            this.panelEncabezado.ResumeLayout(false);
+            this.Load += new System.EventHandler(this.GestionEjerciciosFormulario_Load);
             this.barraAcciones.ResumeLayout(false);
             this.barraAcciones.PerformLayout();
             this.splitContenido.Panel1.ResumeLayout(false);
@@ -634,7 +555,6 @@ namespace exxen2._0.capaVisual.Compartido
             this.splitContenido.ResumeLayout(false);
             this.panelListado.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).EndInit();
-            this.panelDetalle.ResumeLayout(false);
             this.grupoFicha.ResumeLayout(false);
             this.tablaFicha.ResumeLayout(false);
             this.tablaFicha.PerformLayout();
