@@ -114,9 +114,9 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.tablaFicha.SuspendLayout();
             this.accionesFicha.SuspendLayout();
             this.SuspendLayout();
-            //
+            // 
             // panelEncabezado
-            //
+            // 
             this.panelEncabezado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
             this.panelEncabezado.Controls.Add(this.btnVolver);
             this.panelEncabezado.Controls.Add(this.lblDescripcion);
@@ -127,9 +127,9 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.panelEncabezado.Size = new System.Drawing.Size(1100, 56);
             this.panelEncabezado.TabIndex = 0;
             this.panelEncabezado.Visible = false;
-            //
+            // 
             // btnVolver
-            //
+            // 
             this.btnVolver.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnVolver.BackColor = System.Drawing.Color.White;
             this.btnVolver.FlatAppearance.BorderSize = 0;
@@ -141,9 +141,9 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.btnVolver.Text = "Volver";
             this.btnVolver.UseVisualStyleBackColor = false;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
-            //
+            // 
             // lblDescripcion
-            //
+            // 
             this.lblDescripcion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
             this.lblDescripcion.Location = new System.Drawing.Point(22, 39);
             this.lblDescripcion.Name = "lblDescripcion";
@@ -151,9 +151,9 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.lblDescripcion.TabIndex = 1;
             this.lblDescripcion.Text = "Seleccioná una membresía para revisar y gestionar su vinculación";
             this.lblDescripcion.Visible = false;
-            //
+            // 
             // lblTitulo
-            //
+            // 
             this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
             this.lblTitulo.ForeColor = System.Drawing.Color.White;
             this.lblTitulo.Location = new System.Drawing.Point(20, 8);
@@ -162,9 +162,9 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.lblTitulo.TabIndex = 0;
             this.lblTitulo.Text = "Asignar entrenador | Vinculación de entrenadores y membresías";
             this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
+            // 
             // barraAcciones
-            //
+            // 
             this.barraAcciones.BackColor = System.Drawing.Color.White;
             this.barraAcciones.ColumnCount = 6;
             this.barraAcciones.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -186,9 +186,9 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.barraAcciones.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.barraAcciones.Size = new System.Drawing.Size(1100, 54);
             this.barraAcciones.TabIndex = 1;
-            //
+            // 
             // lblBuscar
-            //
+            // 
             this.lblBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.lblBuscar.Location = new System.Drawing.Point(19, 13);
             this.lblBuscar.Name = "lblBuscar";
@@ -196,19 +196,19 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.lblBuscar.TabIndex = 0;
             this.lblBuscar.Text = "Buscar:";
             this.lblBuscar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
+            // 
             // buscador
-            //
+            // 
             this.buscador.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.buscador.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.buscador.Location = new System.Drawing.Point(77, 12);
+            this.buscador.Location = new System.Drawing.Point(77, 15);
             this.buscador.Name = "buscador";
-            this.buscador.Size = new System.Drawing.Size(256, 29);
+            this.buscador.Size = new System.Drawing.Size(256, 24);
             this.buscador.TabIndex = 0;
             this.buscador.TextChanged += new System.EventHandler(this.buscador_TextChanged);
-            //
+            // 
             // lblEstadoFiltro
-            //
+            // 
             this.lblEstadoFiltro.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.lblEstadoFiltro.Location = new System.Drawing.Point(339, 13);
             this.lblEstadoFiltro.Name = "lblEstadoFiltro";
@@ -216,23 +216,23 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.lblEstadoFiltro.TabIndex = 1;
             this.lblEstadoFiltro.Text = "Estado:";
             this.lblEstadoFiltro.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
+            // 
             // filtroEstado
-            //
+            // 
             this.filtroEstado.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.filtroEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.filtroEstado.Items.AddRange(new object[] {
             "Todos",
             "Asignados",
             "Sin asignar"});
-            this.filtroEstado.Location = new System.Drawing.Point(393, 15);
+            this.filtroEstado.Location = new System.Drawing.Point(393, 16);
             this.filtroEstado.Name = "filtroEstado";
-            this.filtroEstado.Size = new System.Drawing.Size(130, 29);
+            this.filtroEstado.Size = new System.Drawing.Size(130, 25);
             this.filtroEstado.TabIndex = 1;
             this.filtroEstado.SelectedIndexChanged += new System.EventHandler(this.filtroEstado_SelectedIndexChanged);
-            //
+            // 
             // actualizar
-            //
+            // 
             this.actualizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.actualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
             this.actualizar.FlatAppearance.BorderSize = 0;
@@ -244,9 +244,9 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.actualizar.Text = "Actualizar listado";
             this.actualizar.UseVisualStyleBackColor = false;
             this.actualizar.Click += new System.EventHandler(this.actualizar_Click);
-            //
+            // 
             // lblEstado
-            //
+            // 
             this.lblEstado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
             this.lblEstado.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblEstado.Location = new System.Drawing.Point(0, 652);
@@ -256,23 +256,23 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.lblEstado.TabIndex = 3;
             this.lblEstado.Text = "Listo";
             this.lblEstado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
+            // 
             // splitContenido
-            //
+            // 
             this.splitContenido.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContenido.Location = new System.Drawing.Point(0, 110);
             this.splitContenido.MinimumSize = new System.Drawing.Size(900, 420);
             this.splitContenido.Name = "splitContenido";
-            //
+            // 
             // splitContenido.Panel1
-            //
+            // 
             this.splitContenido.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
             this.splitContenido.Panel1.Controls.Add(this.panelListado);
             this.splitContenido.Panel1.Padding = new System.Windows.Forms.Padding(16);
             this.splitContenido.Panel1MinSize = 420;
-            //
+            // 
             // splitContenido.Panel2
-            //
+            // 
             this.splitContenido.Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
             this.splitContenido.Panel2.Controls.Add(this.grupoFicha);
             this.splitContenido.Panel2.Padding = new System.Windows.Forms.Padding(0, 16, 16, 16);
@@ -280,9 +280,9 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.splitContenido.Size = new System.Drawing.Size(1100, 542);
             this.splitContenido.SplitterDistance = 617;
             this.splitContenido.TabIndex = 4;
-            //
+            // 
             // panelListado
-            //
+            // 
             this.panelListado.ColumnCount = 1;
             this.panelListado.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.panelListado.Controls.Add(this.lblListadoTitulo, 0, 0);
@@ -295,9 +295,9 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.panelListado.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.panelListado.Size = new System.Drawing.Size(585, 510);
             this.panelListado.TabIndex = 0;
-            //
+            // 
             // lblListadoTitulo
-            //
+            // 
             this.lblListadoTitulo.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblListadoTitulo.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
             this.lblListadoTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
@@ -307,9 +307,9 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.lblListadoTitulo.TabIndex = 0;
             this.lblListadoTitulo.Text = "Membresías y asignación";
             this.lblListadoTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
+            // 
             // tabla
-            //
+            // 
             this.tabla.AllowUserToAddRows = false;
             this.tabla.AllowUserToDeleteRows = false;
             this.tabla.AllowUserToResizeRows = false;
@@ -334,48 +334,48 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.tabla.Size = new System.Drawing.Size(579, 470);
             this.tabla.TabIndex = 3;
             this.tabla.SelectionChanged += new System.EventHandler(this.tabla_SelectionChanged);
-            //
+            // 
             // colId
-            //
+            // 
             this.colId.MinimumWidth = 6;
             this.colId.Name = "colId";
             this.colId.ReadOnly = true;
             this.colId.Visible = false;
-            //
+            // 
             // colSocio
-            //
+            // 
             this.colSocio.FillWeight = 31F;
             this.colSocio.HeaderText = "Socio";
             this.colSocio.MinimumWidth = 110;
             this.colSocio.Name = "colSocio";
             this.colSocio.ReadOnly = true;
-            //
+            // 
             // colPlan
-            //
+            // 
             this.colPlan.FillWeight = 20F;
             this.colPlan.HeaderText = "Plan";
             this.colPlan.MinimumWidth = 80;
             this.colPlan.Name = "colPlan";
             this.colPlan.ReadOnly = true;
-            //
+            // 
             // colEntrenador
-            //
+            // 
             this.colEntrenador.FillWeight = 34F;
             this.colEntrenador.HeaderText = "Entrenador actual";
             this.colEntrenador.MinimumWidth = 130;
             this.colEntrenador.Name = "colEntrenador";
             this.colEntrenador.ReadOnly = true;
-            //
+            // 
             // colEstado
-            //
+            // 
             this.colEstado.FillWeight = 15F;
             this.colEstado.HeaderText = "Estado";
             this.colEstado.MinimumWidth = 80;
             this.colEstado.Name = "colEstado";
             this.colEstado.ReadOnly = true;
-            //
+            // 
             // grupoFicha
-            //
+            // 
             this.grupoFicha.BackColor = System.Drawing.Color.White;
             this.grupoFicha.Controls.Add(this.tablaFicha);
             this.grupoFicha.Controls.Add(this.accionesFicha);
@@ -390,9 +390,9 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.grupoFicha.TabIndex = 0;
             this.grupoFicha.TabStop = false;
             this.grupoFicha.Text = "Vinculación";
-            //
+            // 
             // tablaFicha
-            //
+            // 
             this.tablaFicha.ColumnCount = 2;
             this.tablaFicha.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tablaFicha.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -411,7 +411,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.tablaFicha.Controls.Add(this.lblNuevoEntrenador, 0, 6);
             this.tablaFicha.Controls.Add(this.entrenador, 1, 6);
             this.tablaFicha.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tablaFicha.Location = new System.Drawing.Point(16, 71);
+            this.tablaFicha.Location = new System.Drawing.Point(16, 66);
             this.tablaFicha.Name = "tablaFicha";
             this.tablaFicha.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.tablaFicha.RowCount = 7;
@@ -422,178 +422,178 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.tablaFicha.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.2857F));
             this.tablaFicha.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.2857F));
             this.tablaFicha.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.2857F));
-            this.tablaFicha.Size = new System.Drawing.Size(431, 335);
+            this.tablaFicha.Size = new System.Drawing.Size(431, 340);
             this.tablaFicha.TabIndex = 1;
-            //
+            // 
             // lblSocio
-            //
+            // 
             this.lblSocio.AutoSize = true;
             this.lblSocio.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblSocio.Location = new System.Drawing.Point(0, 8);
             this.lblSocio.Margin = new System.Windows.Forms.Padding(0, 0, 12, 0);
             this.lblSocio.Name = "lblSocio";
-            this.lblSocio.Size = new System.Drawing.Size(151, 46);
+            this.lblSocio.Size = new System.Drawing.Size(122, 47);
             this.lblSocio.TabIndex = 0;
             this.lblSocio.Text = "Socio";
             this.lblSocio.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
+            // 
             // txtSocio
-            //
+            // 
             this.txtSocio.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSocio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.txtSocio.Location = new System.Drawing.Point(166, 18);
+            this.txtSocio.Location = new System.Drawing.Point(137, 19);
             this.txtSocio.Name = "txtSocio";
-            this.txtSocio.Size = new System.Drawing.Size(262, 25);
-            this.txtSocio.TabIndex = 1;
-            this.txtSocio.Text = "Seleccioná una membresía";
             this.txtSocio.ReadOnly = true;
+            this.txtSocio.Size = new System.Drawing.Size(291, 25);
+            this.txtSocio.TabIndex = 1;
             this.txtSocio.TabStop = false;
-            //
+            this.txtSocio.Text = "Seleccioná una membresía";
+            // 
             // lblDni
-            //
+            // 
             this.lblDni.AutoSize = true;
             this.lblDni.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblDni.Location = new System.Drawing.Point(0, 54);
+            this.lblDni.Location = new System.Drawing.Point(0, 55);
             this.lblDni.Margin = new System.Windows.Forms.Padding(0, 0, 12, 0);
             this.lblDni.Name = "lblDni";
-            this.lblDni.Size = new System.Drawing.Size(151, 46);
+            this.lblDni.Size = new System.Drawing.Size(122, 47);
             this.lblDni.TabIndex = 2;
             this.lblDni.Text = "DNI";
             this.lblDni.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
+            // 
             // txtDni
-            //
+            // 
             this.txtDni.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.txtDni.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.txtDni.Location = new System.Drawing.Point(166, 64);
+            this.txtDni.Location = new System.Drawing.Point(137, 66);
             this.txtDni.Name = "txtDni";
-            this.txtDni.Size = new System.Drawing.Size(262, 25);
-            this.txtDni.TabIndex = 3;
-            this.txtDni.Text = "-";
             this.txtDni.ReadOnly = true;
+            this.txtDni.Size = new System.Drawing.Size(291, 25);
+            this.txtDni.TabIndex = 3;
             this.txtDni.TabStop = false;
-            //
+            this.txtDni.Text = "-";
+            // 
             // lblPlan
-            //
+            // 
             this.lblPlan.AutoSize = true;
             this.lblPlan.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblPlan.Location = new System.Drawing.Point(0, 100);
+            this.lblPlan.Location = new System.Drawing.Point(0, 102);
             this.lblPlan.Margin = new System.Windows.Forms.Padding(0, 0, 12, 0);
             this.lblPlan.Name = "lblPlan";
-            this.lblPlan.Size = new System.Drawing.Size(151, 46);
+            this.lblPlan.Size = new System.Drawing.Size(122, 47);
             this.lblPlan.TabIndex = 4;
             this.lblPlan.Text = "Plan";
             this.lblPlan.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
+            // 
             // txtPlan
-            //
+            // 
             this.txtPlan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPlan.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.txtPlan.Location = new System.Drawing.Point(166, 110);
+            this.txtPlan.Location = new System.Drawing.Point(137, 113);
             this.txtPlan.Name = "txtPlan";
-            this.txtPlan.Size = new System.Drawing.Size(262, 25);
-            this.txtPlan.TabIndex = 5;
-            this.txtPlan.Text = "-";
             this.txtPlan.ReadOnly = true;
+            this.txtPlan.Size = new System.Drawing.Size(291, 25);
+            this.txtPlan.TabIndex = 5;
             this.txtPlan.TabStop = false;
-            //
+            this.txtPlan.Text = "-";
+            // 
             // lblVencimiento
-            //
+            // 
             this.lblVencimiento.AutoSize = true;
             this.lblVencimiento.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblVencimiento.Location = new System.Drawing.Point(0, 146);
+            this.lblVencimiento.Location = new System.Drawing.Point(0, 149);
             this.lblVencimiento.Margin = new System.Windows.Forms.Padding(0, 0, 12, 0);
             this.lblVencimiento.Name = "lblVencimiento";
-            this.lblVencimiento.Size = new System.Drawing.Size(151, 46);
+            this.lblVencimiento.Size = new System.Drawing.Size(122, 47);
             this.lblVencimiento.TabIndex = 6;
             this.lblVencimiento.Text = "Vencimiento";
             this.lblVencimiento.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
+            // 
             // txtVencimiento
-            //
+            // 
             this.txtVencimiento.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.txtVencimiento.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.txtVencimiento.Location = new System.Drawing.Point(166, 156);
+            this.txtVencimiento.Location = new System.Drawing.Point(137, 160);
             this.txtVencimiento.Name = "txtVencimiento";
-            this.txtVencimiento.Size = new System.Drawing.Size(262, 25);
-            this.txtVencimiento.TabIndex = 7;
-            this.txtVencimiento.Text = "-";
             this.txtVencimiento.ReadOnly = true;
+            this.txtVencimiento.Size = new System.Drawing.Size(291, 25);
+            this.txtVencimiento.TabIndex = 7;
             this.txtVencimiento.TabStop = false;
-            //
+            this.txtVencimiento.Text = "-";
+            // 
             // lblEstadoMembresia
-            //
+            // 
             this.lblEstadoMembresia.AutoSize = true;
             this.lblEstadoMembresia.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblEstadoMembresia.Location = new System.Drawing.Point(0, 192);
+            this.lblEstadoMembresia.Location = new System.Drawing.Point(0, 196);
             this.lblEstadoMembresia.Margin = new System.Windows.Forms.Padding(0, 0, 12, 0);
             this.lblEstadoMembresia.Name = "lblEstadoMembresia";
-            this.lblEstadoMembresia.Size = new System.Drawing.Size(151, 46);
+            this.lblEstadoMembresia.Size = new System.Drawing.Size(122, 47);
             this.lblEstadoMembresia.TabIndex = 8;
             this.lblEstadoMembresia.Text = "Estado membresía";
             this.lblEstadoMembresia.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
+            // 
             // txtEstadoMembresia
-            //
+            // 
             this.txtEstadoMembresia.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.txtEstadoMembresia.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.txtEstadoMembresia.Location = new System.Drawing.Point(166, 202);
+            this.txtEstadoMembresia.Location = new System.Drawing.Point(137, 207);
             this.txtEstadoMembresia.Name = "txtEstadoMembresia";
-            this.txtEstadoMembresia.Size = new System.Drawing.Size(262, 25);
-            this.txtEstadoMembresia.TabIndex = 9;
-            this.txtEstadoMembresia.Text = "-";
             this.txtEstadoMembresia.ReadOnly = true;
+            this.txtEstadoMembresia.Size = new System.Drawing.Size(291, 25);
+            this.txtEstadoMembresia.TabIndex = 9;
             this.txtEstadoMembresia.TabStop = false;
-            //
+            this.txtEstadoMembresia.Text = "-";
+            // 
             // lblEntrenadorActual
-            //
+            // 
             this.lblEntrenadorActual.AutoSize = true;
             this.lblEntrenadorActual.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblEntrenadorActual.Location = new System.Drawing.Point(0, 238);
+            this.lblEntrenadorActual.Location = new System.Drawing.Point(0, 243);
             this.lblEntrenadorActual.Margin = new System.Windows.Forms.Padding(0, 0, 12, 0);
             this.lblEntrenadorActual.Name = "lblEntrenadorActual";
-            this.lblEntrenadorActual.Size = new System.Drawing.Size(151, 46);
+            this.lblEntrenadorActual.Size = new System.Drawing.Size(122, 47);
             this.lblEntrenadorActual.TabIndex = 10;
             this.lblEntrenadorActual.Text = "Entrenador actual";
             this.lblEntrenadorActual.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
+            // 
             // txtEntrenadorActual
-            //
+            // 
             this.txtEntrenadorActual.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.txtEntrenadorActual.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.txtEntrenadorActual.Location = new System.Drawing.Point(166, 248);
+            this.txtEntrenadorActual.Location = new System.Drawing.Point(137, 254);
             this.txtEntrenadorActual.Name = "txtEntrenadorActual";
-            this.txtEntrenadorActual.Size = new System.Drawing.Size(262, 25);
-            this.txtEntrenadorActual.TabIndex = 11;
-            this.txtEntrenadorActual.Text = "Sin asignar";
             this.txtEntrenadorActual.ReadOnly = true;
+            this.txtEntrenadorActual.Size = new System.Drawing.Size(291, 25);
+            this.txtEntrenadorActual.TabIndex = 11;
             this.txtEntrenadorActual.TabStop = false;
-            //
+            this.txtEntrenadorActual.Text = "Sin asignar";
+            // 
             // lblNuevoEntrenador
-            //
+            // 
             this.lblNuevoEntrenador.AutoSize = true;
             this.lblNuevoEntrenador.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblNuevoEntrenador.Location = new System.Drawing.Point(0, 284);
+            this.lblNuevoEntrenador.Location = new System.Drawing.Point(0, 290);
             this.lblNuevoEntrenador.Margin = new System.Windows.Forms.Padding(0, 0, 12, 0);
             this.lblNuevoEntrenador.Name = "lblNuevoEntrenador";
-            this.lblNuevoEntrenador.Size = new System.Drawing.Size(151, 51);
+            this.lblNuevoEntrenador.Size = new System.Drawing.Size(122, 50);
             this.lblNuevoEntrenador.TabIndex = 12;
             this.lblNuevoEntrenador.Text = "Nuevo entrenador";
             this.lblNuevoEntrenador.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            //
+            // 
             // entrenador
-            //
+            // 
             this.entrenador.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.entrenador.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.entrenador.Enabled = false;
-            this.entrenador.Location = new System.Drawing.Point(163, 297);
+            this.entrenador.Location = new System.Drawing.Point(134, 304);
             this.entrenador.Margin = new System.Windows.Forms.Padding(0);
             this.entrenador.Name = "entrenador";
-            this.entrenador.Size = new System.Drawing.Size(268, 31);
+            this.entrenador.Size = new System.Drawing.Size(297, 25);
             this.entrenador.TabIndex = 0;
-            //
+            // 
             // accionesFicha
-            //
+            // 
             this.accionesFicha.AutoSize = true;
             this.accionesFicha.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.accionesFicha.Controls.Add(this.asignar);
@@ -605,9 +605,9 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.accionesFicha.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.accionesFicha.Size = new System.Drawing.Size(431, 88);
             this.accionesFicha.TabIndex = 2;
-            //
+            // 
             // asignar
-            //
+            // 
             this.asignar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
             this.asignar.FlatAppearance.BorderSize = 0;
             this.asignar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -620,9 +620,9 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.asignar.UseVisualStyleBackColor = false;
             this.asignar.Visible = false;
             this.asignar.Click += new System.EventHandler(this.asignar_Click);
-            //
+            // 
             // cambiar
-            //
+            // 
             this.cambiar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
             this.cambiar.FlatAppearance.BorderSize = 0;
             this.cambiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -635,9 +635,9 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.cambiar.UseVisualStyleBackColor = false;
             this.cambiar.Visible = false;
             this.cambiar.Click += new System.EventHandler(this.cambiar_Click);
-            //
+            // 
             // darDeBaja
-            //
+            // 
             this.darDeBaja.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.darDeBaja.FlatAppearance.BorderSize = 0;
             this.darDeBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -650,21 +650,21 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.darDeBaja.UseVisualStyleBackColor = false;
             this.darDeBaja.Visible = false;
             this.darDeBaja.Click += new System.EventHandler(this.darDeBaja_Click);
-            //
+            // 
             // lblDetalleTitulo
-            //
+            // 
             this.lblDetalleTitulo.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblDetalleTitulo.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
             this.lblDetalleTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
-            this.lblDetalleTitulo.Location = new System.Drawing.Point(16, 39);
+            this.lblDetalleTitulo.Location = new System.Drawing.Point(16, 34);
             this.lblDetalleTitulo.Name = "lblDetalleTitulo";
             this.lblDetalleTitulo.Size = new System.Drawing.Size(431, 32);
             this.lblDetalleTitulo.TabIndex = 0;
             this.lblDetalleTitulo.Text = "Seleccioná una membresía";
-            //
+            // 
             // GestionAsignacionesFormulario
-            //
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
             this.ClientSize = new System.Drawing.Size(1100, 680);

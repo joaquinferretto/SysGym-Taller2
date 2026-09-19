@@ -9,17 +9,6 @@ using exxen2._0.capaLogica;
 
 namespace exxen2._0.capaVisual.Administrador
 {
-    /* Transporta el socio elegido desde el estado de cuenta hasta el panel administrador. */
-    public sealed class SocioEstadoCuentaEventArgs : EventArgs
-    {
-        public SocioEstadoCuentaEventArgs(int idSocio)
-        {
-            IdSocio = idSocio;
-        }
-
-        public int IdSocio { get; private set; }
-    }
-
     /* Presenta el pronostico y el estado de cuotas en el panel de inicio. */
     [DesignerCategory("Component")]
     public sealed partial class InicioPanelAdministrador : UserControl
@@ -176,5 +165,16 @@ namespace exxen2._0.capaVisual.Administrador
             tituloClima.Text = "Pronóstico semanal - " + clima.Ciudad;
             Actualizar();
         }
+    }
+
+    /* Transporta el socio elegido desde el estado de cuenta hasta el panel administrador. */
+    public sealed class SocioEstadoCuentaEventArgs : EventArgs
+    {
+        public SocioEstadoCuentaEventArgs(int idSocio)
+        {
+            IdSocio = idSocio;
+        }
+
+        public int IdSocio { get; private set; }
     }
 }

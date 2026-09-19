@@ -1,5 +1,13 @@
 # Integración de Entity Framework
 
+## Sincronización de Membresia y Socio — 19 de septiembre de 2026
+
+Se confirmó que EF6 consulta `Membresia.IdRutina` como `int?` con FK opcional a `Rutina.IdRutina`, y `Socio.FotoRuta` como cadena nullable de longitud máxima 260. La base local fue alineada mediante dos columnas nullable y una FK sin borrado en cascada; no se modificaron entidades ni relaciones del código. La auditoría de los 16 `DbSet` no encontró otros faltantes de columnas; sí detectó la tabla completa `EjercicioImagen` ausente, que queda reportada sin migración automática.
+
+## Sincronización de UsuarioSistema — 19 de septiembre de 2026
+
+Se confirmó que `UsuarioSistema.FotoRuta` es `string` nullable con longitud máxima 260 y que EF6 la consulta como `NVARCHAR(260) NULL`. La base local fue corregida de forma aditiva con una sola columna; el DDL de creación ya tenía la misma definición. La autenticación de `SanMartin` funcionó después de la corrección. No se cambiaron entidades, relaciones, claves, inicializadores ni consultas.
+
 ## Rutinas personalizadas — 16 de septiembre de 2026
 
 La consulta de “Mis socios” usa LINQ sobre los repositorios de EF6 y proyecta los datos que necesita la grilla junto con la rutina de la membresía. El administrador puede solicitar la misma consulta sin filtrar por entrenador. `CrearPersonalizada` crea la plantilla y vincula su `IdRutina` a la membresía seleccionada mediante la unidad de trabajo; los detalles se guardan con `RutinaEjercicioLogica`.

@@ -1,5 +1,21 @@
 # Base de datos
 
+## Sincronización de membresías y fotos de socios — 19 de septiembre de 2026
+
+La entidad `Membresia` define `IdRutina` como `int?` y la relación opcional hacia `Rutina.IdRutina`; la entidad `Socio` define `FotoRuta` como `string` nullable con `[StringLength(260)]`. La base local `SysGymDB` carecía de ambas columnas. Se agregaron únicamente `Membresia.IdRutina INT NULL` y `Socio.FotoRuta NVARCHAR(260) NULL`, y se creó `FK_Membresia_Rutina` hacia `Rutina(IdRutina)` con `NO ACTION` en borrado. No se modificaron registros, claves, tablas históricas ni columnas legacy.
+
+Antes y después se verificaron estas cantidades: Socio 20, Membresia 20, UsuarioSistema 23, CuotaMembresia 20, Pago 20 y Rutina 26. Las 20 membresías quedaron con `IdRutina = NULL` y los 20 socios con `FotoRuta = NULL`. La auditoría no destructiva de los 16 `DbSet` encontró como diferencia adicional la tabla completa `EjercicioImagen` ausente en la base local; no se creó porque no es una adición nullable aislada y requiere una decisión separada. `Foto varbinary(max)`, `Plan.IdRutina`, `PlanRutina` y `RutinaAsignacion` se conservaron sin cambios.
+
+`SysGymDB.sql` ya contenía ambas columnas y `FK_Membresia_Rutina`, por lo que no se modificó.
+
+## Sincronización aditiva de UsuarioSistema — 19 de septiembre de 2026
+
+Se comparó `UsuarioSistema.cs`, el mapeo EF6 y `SysGymDB`. La entidad define `FotoRuta` como `string` nullable con `[StringLength(260)]`, por lo que el DDL correcto es `FotoRuta NVARCHAR(260) NULL`. `capaDatos/Database/SysGymDB.sql` ya contenía esa definición para bases nuevas y no necesitó cambios adicionales.
+
+La base local `SysGymDB` tenía ausente únicamente esa propiedad actual y recibió solo `ALTER TABLE dbo.UsuarioSistema ADD FotoRuta NVARCHAR(260) NULL`. No se recreó la tabla, no se eliminaron columnas y no se modificaron usuarios ni claves. Antes y después se verificaron 23 registros, IDs del 1 al 23 y suma de IDs 276; las 23 rutas quedaron NULL. Todas las demás propiedades escalares actuales de la entidad ya estaban presentes y compatibles. La columna histórica extra `Foto varbinary(max)` no pertenece al modelo EF6 y se conserva sin uso.
+
+La autenticación real con `SanMartin` y `cordillera2026` respondió correctamente como usuario Administrador. Debug compiló sin errores; permanecen únicamente los warnings CS0649 preexistentes de otros formularios.
+
 ## Compatibilidad con SQL Server 2008 — 11 de septiembre de 2026
 
 Una membresía puede tener cero o una rutina mediante `Membresia.IdRutina INT NULL`. La FK apunta a `Rutina`, que puede reutilizarse en varias membresías; los ejercicios permanecen en `RutinaEjercicio`.

@@ -39,6 +39,13 @@ namespace exxen2._0.capaVisual.Compartido
 
         internal bool CambioCuentaSolicitado { get; private set; }
 
+        /* Cierra el módulo actual; su evento de cierre restaura el inicio existente. */
+        internal void VolverAlInicio()
+        {
+            if (formularioActual != null && !formularioActual.IsDisposed)
+                formularioActual.Close();
+        }
+
         /* Marca el cambio de sesión y cierra el panel principal para volver al acceso. */
         internal void CambiarCuenta()
         {

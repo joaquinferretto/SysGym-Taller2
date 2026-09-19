@@ -1,5 +1,17 @@
 # Arquitectura
 
+## Header global y retorno al inicio — 19 de septiembre de 2026
+
+PanelAdministrador usa un único Panel para el header violeta y controles directos: logo, identidad completa, título, subtítulo, Volver y Cambiar de cuenta. Eliminados layoutEncabezado y panelIdentidad, que restringían la identidad a 250 px; no se agregan consultas de usuario/rol. Título/subtítulo se separan del texto existente mediante el separador `|`. Volver usa ControladorNavegacion.VolverAlInicio: cierra el módulo actual y deja que su evento FormClosed restaure el inicio existente. En inicio permanece deshabilitado. Cambiar de cuenta y Salir conservan sus funciones distintas. panelPie se elimina y Salir queda directo en la región lateral; panelOpciones conserva scroll de menú. Sin cambios de negocio o persistencia. Registro incremental vigente en PROJECT_CONTEXT.md.
+
+## Regla vigente: estructura plana de Rutinas — 19 de septiembre de 2026
+
+Última actualización: 19 de septiembre de 2026. Esta decisión reemplaza las autorizaciones históricas de FlowLayoutPanel para botones y cajas de secciones que aparecen más abajo. Los botones y campos deben ser hijos directos de una región estructural, sin contenedores específicos de acciones o campos.
+
+`RutinasEntrenadorFormulario` conserva únicamente `panelContenido` (TableLayoutPanel principal 30/70) y `panelDetalle` (Panel con scroll de toda la región derecha). Título del listado, grilla y Nueva rutina son hijos directos de la tabla principal; los 31 controles del detalle son hijos directos del Panel. Se utilizan Location, Size y Anchor declarativos, sin reconstrucción visual en Form.cs. Se eliminan diez contenedores: dos Panel decorativos, cinco tablas intermedias y tres FlowLayoutPanel de acciones. Ambas grillas conservan columnas, FillWeight y eventos.
+
+No había StatusStrip en este formulario. El Label `lblEstado` conserva resultados y errores funcionales; se elimina su texto inicial «Listo» y su altura baja de 46 a 26 px. No cambian Form.cs, navegación, lógica, persistencia, SQL, EF6 ni dependencias entre capas. Las verificaciones actuales y sus límites se registran en PROJECT_CONTEXT.md; las pruebas históricas no acreditan esta versión.
+
 ## Reanudación de la normalización visual — 19 de septiembre de 2026
 
 Última actualización: 19 de septiembre de 2026. En `RutinasEntrenadorFormulario`, la región principal pasa a TableLayoutPanel 30/70 con Dock=Fill en listado y detalle; sus controles permanecen directamente en las tablas declarativas de sus secciones. La fila de acciones de ejercicios usa AutoSize para evitar recortes y el label de estado no tiene un fondo propio. Un único Panel con AutoScroll contiene toda la región derecha y mantiene accesibles los campos/acciones y una altura útil de grilla en 720p; no envuelve un control individual. No se modifica Form.cs, navegación, header global, sidebar, dependencias, EF6, SQL ni reglas. Panel 3→3, TableLayoutPanel 5→6, FlowLayoutPanel 3→3 y SplitContainer 0→0 respecto del estado recibido.
