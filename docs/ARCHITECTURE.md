@@ -1,5 +1,11 @@
 # Arquitectura
 
+## Paneles de Entrenador y Recepcionista — 20/09/2026
+
+Última actualización: 20 de septiembre de 2026. Ambos paneles siguen la composición de PanelAdministrador: cuatro Panel estructurales (encabezado, lateral, opciones con scroll y superficie de navegación), con controles estáticos declarados directamente en Designer. Entrenador ya tenía esa estructura; se corrigieron docking y medidas pendientes. Recepcionista elimina layoutEncabezado, panelIdentidad y panelPie, incorpora título/subtítulo y Volver mediante ControladorNavegacion existente y conserva todos sus accesos propios. Form.cs solo coordina comportamiento y navegación; no se introducen controles estáticos dinámicos ni cambios de negocio o persistencia. PanelAdministrador y los helpers compartidos no se modifican.
+
+Designer real VS2026 con edición reversible y guardado en ambos paneles, navegación con datos mediante las capas existentes y compilación Debug/Release verificados. Alcance, evidencias, limitación de altura de la pantalla y revisión visual pendiente del usuario en la primera sección de PROJECT_CONTEXT.md. PDF expresamente pendiente, sin nueva dependencia.
+
 ## Pulido de Socios y rutinas — 20/09/2026
 
 MisSociosFormulario mantiene listado izquierdo, ficha y rutina semanal derecha. El único contenedor retirado en esta pasada es accionesRutina (FlowLayoutPanel): mensaje, combo y botones existentes quedan directamente en grupoRutina, mediante Location/Size/Anchor. La tabla estructural de ficha conserva sus cuatro columnas, con etiquetas más anchas y valores equilibrados. No se agregan contenedores ni layout runtime, y Form.cs/eventos/servicios permanecen intactos. El encabezado local sigue oculto y el global sigue a cargo de la navegación existente. Debug/Release y geometría de tres resoluciones comprobados; Designer/runtime visual pendientes por limitación de acceso al escritorio. Detalle vigente en PROJECT_CONTEXT.md.

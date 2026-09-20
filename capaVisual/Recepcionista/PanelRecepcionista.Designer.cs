@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -8,11 +8,11 @@ namespace exxen2._0.capaVisual.Recepcionista
     {
         private IContainer components = null;
         private Panel panelEncabezado;
-        private TableLayoutPanel layoutEncabezado;
-        private Panel panelIdentidad;
         private Label lblMarca;
         private Label lblUsuarioRol;
         private Label lblModuloActual;
+        private Label lblSubtituloModulo;
+        private Button btnVolver;
         private Button btnCambiarCuenta;
         private Panel panelMenu;
         private Panel panelOpciones;
@@ -24,9 +24,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         private Label lblEntrenadores;
         private Button btnAsignar;
         private Button btnConsultar;
-        private Panel panelPie;
         private Button btnSalir;
-
         private Panel panelContenido;
         private Label lblBienvenida;
 
@@ -38,290 +36,355 @@ namespace exxen2._0.capaVisual.Recepcionista
 
         private void InitializeComponent()
         {
-            panelEncabezado = new Panel();
-            layoutEncabezado = new TableLayoutPanel();
-            panelIdentidad = new Panel();
-            lblMarca = new Label();
-            lblUsuarioRol = new Label();
-            lblModuloActual = new Label();
-            btnCambiarCuenta = new Button();
-            panelMenu = new Panel();
-            panelOpciones = new Panel();
-
-            lblClientes = new Label();
-            btnSocios = new Button();
-            btnMembresias = new Button();
-            lblCaja = new Label();
-            btnPagos = new Button();
-            lblEntrenadores = new Label();
-            btnAsignar = new Button();
-            btnConsultar = new Button();
-            panelPie = new Panel();
-            btnSalir = new Button();
-            panelContenido = new Panel();
-            lblBienvenida = new Label();
-            panelEncabezado.SuspendLayout();
-            layoutEncabezado.SuspendLayout();
-            panelIdentidad.SuspendLayout();
-            panelMenu.SuspendLayout();
-            panelOpciones.SuspendLayout();
-
-            panelPie.SuspendLayout();
-            SuspendLayout();
-
-            panelEncabezado.BackColor = Color.FromArgb(5, 150, 105);
-            panelEncabezado.Controls.Add(layoutEncabezado);
-
-            panelEncabezado.Name = "panelEncabezado";
-
-            panelEncabezado.TabIndex = 0;
-            layoutEncabezado.ColumnCount = 3;
-            layoutEncabezado.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 250F));
-            layoutEncabezado.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            layoutEncabezado.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 190F));
-            layoutEncabezado.Dock = DockStyle.Fill;
-            layoutEncabezado.Location = new Point(24, 8);
-            layoutEncabezado.Margin = new Padding(0);
-            layoutEncabezado.Name = "layoutEncabezado";
-            layoutEncabezado.RowCount = 1;
-            layoutEncabezado.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            layoutEncabezado.Size = new Size(1152, 74);
-            layoutEncabezado.TabIndex = 3;
-            layoutEncabezado.Controls.Add(panelIdentidad, 0, 0);
-            layoutEncabezado.Controls.Add(lblModuloActual, 1, 0);
-            layoutEncabezado.Controls.Add(btnCambiarCuenta, 2, 0);
-            panelIdentidad.Dock = DockStyle.Fill;
-            panelIdentidad.Margin = new Padding(0);
-            panelIdentidad.Name = "panelIdentidad";
-            panelIdentidad.TabIndex = 0;
-            panelIdentidad.Controls.Add(lblUsuarioRol);
-            panelIdentidad.Controls.Add(lblMarca);
-            lblModuloActual.AutoEllipsis = true;
-            lblModuloActual.Dock = DockStyle.Fill;
-            lblModuloActual.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
-            lblModuloActual.ForeColor = Color.White;
-            lblModuloActual.Margin = new Padding(12, 0, 12, 0);
-            lblModuloActual.Name = "lblModuloActual";
-            lblModuloActual.Padding = new Padding(8, 0, 8, 0);
-            lblModuloActual.TabIndex = 4;
-            lblModuloActual.TextAlign = ContentAlignment.MiddleCenter;
-            btnCambiarCuenta.Dock = DockStyle.Fill;
-            btnCambiarCuenta.Margin = new Padding(8, 18, 0, 18);
-
-            lblMarca.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
-            lblMarca.ForeColor = Color.White;
-
-            lblMarca.Name = "lblMarca";
-
-            lblMarca.TabIndex = 0;
-            lblMarca.Text = "SYSGYM";
-            lblMarca.Dock = DockStyle.Top;
-            lblMarca.Location = new Point(0, 0);
-            lblMarca.Size = new Size(250, 36);
-
-            lblUsuarioRol.ForeColor = Color.FromArgb(209, 250, 229);
-
-            lblUsuarioRol.Name = "lblUsuarioRol";
-
-            lblUsuarioRol.TabIndex = 1;
-            lblUsuarioRol.Text = "Usuario: Recepcionista de diseno    |    Rol: Recepcionista";
-            lblUsuarioRol.Dock = DockStyle.Bottom;
-            lblUsuarioRol.Location = new Point(0, 48);
-            lblUsuarioRol.Size = new Size(250, 26);
-
-            btnCambiarCuenta.BackColor = Color.White;
-            btnCambiarCuenta.FlatAppearance.BorderSize = 0;
-            btnCambiarCuenta.FlatStyle = FlatStyle.Flat;
-            btnCambiarCuenta.ForeColor = Color.FromArgb(5, 150, 105);
-
-            btnCambiarCuenta.Name = "btnCambiarCuenta";
-
-            btnCambiarCuenta.TabIndex = 2;
-            btnCambiarCuenta.Text = "Cambiar de cuenta";
-            btnCambiarCuenta.UseVisualStyleBackColor = false;
-
-            panelMenu.BackColor = Color.White;
-            panelMenu.Controls.Add(panelOpciones);
-            panelMenu.Controls.Add(panelPie);
-
-            panelMenu.Name = "panelMenu";
-
-            panelMenu.TabIndex = 1;
-
-            panelOpciones.BackColor = Color.White;
-            panelOpciones.Controls.Add(lblClientes);
-            panelOpciones.Controls.Add(btnSocios);
-            panelOpciones.Controls.Add(btnMembresias);
-            panelOpciones.Controls.Add(lblCaja);
-            panelOpciones.Controls.Add(btnPagos);
-            panelOpciones.Controls.Add(lblEntrenadores);
-            panelOpciones.Controls.Add(btnAsignar);
-            panelOpciones.Controls.Add(btnConsultar);
-
-            panelOpciones.Name = "panelOpciones";
-            panelOpciones.Padding = new Padding(14, 18, 14, 18);
-
-            panelOpciones.TabIndex = 0;
-
-            lblClientes.Font = new Font("Segoe UI Semibold", 8F, FontStyle.Bold); lblClientes.ForeColor = Color.FromArgb(100, 116, 139);  lblClientes.Margin = new Padding(0, 8, 0, 4); lblClientes.Name = "lblClientes";  lblClientes.TabIndex = 0; lblClientes.Text = "CLIENTES";
-            btnSocios.BackColor = Color.FromArgb(248, 250, 252); btnSocios.FlatAppearance.BorderColor = Color.FromArgb(226, 232, 240); btnSocios.FlatStyle = FlatStyle.Flat; btnSocios.Font = new Font("Segoe UI", 9.5F); btnSocios.ForeColor = Color.FromArgb(51, 65, 85);  btnSocios.Margin = new Padding(0, 0, 0, 5); btnSocios.Name = "btnSocios";  btnSocios.TabIndex = 1; btnSocios.Text = "Socios"; btnSocios.TextAlign = ContentAlignment.MiddleLeft; btnSocios.UseVisualStyleBackColor = false;
-            btnMembresias.BackColor = Color.FromArgb(248, 250, 252); btnMembresias.FlatAppearance.BorderColor = Color.FromArgb(226, 232, 240); btnMembresias.FlatStyle = FlatStyle.Flat; btnMembresias.Font = new Font("Segoe UI", 9.5F); btnMembresias.ForeColor = Color.FromArgb(51, 65, 85);  btnMembresias.Margin = new Padding(0, 0, 0, 5); btnMembresias.Name = "btnMembresias";  btnMembresias.TabIndex = 2; btnMembresias.Text = "Membresias"; btnMembresias.TextAlign = ContentAlignment.MiddleLeft; btnMembresias.UseVisualStyleBackColor = false;
-            lblCaja.Font = new Font("Segoe UI Semibold", 8F, FontStyle.Bold); lblCaja.ForeColor = Color.FromArgb(100, 116, 139);  lblCaja.Margin = new Padding(0, 8, 0, 4); lblCaja.Name = "lblCaja";  lblCaja.TabIndex = 3; lblCaja.Text = "CAJA";
-            btnPagos.BackColor = Color.FromArgb(248, 250, 252); btnPagos.FlatAppearance.BorderColor = Color.FromArgb(226, 232, 240); btnPagos.FlatStyle = FlatStyle.Flat; btnPagos.Font = new Font("Segoe UI", 9.5F); btnPagos.ForeColor = Color.FromArgb(51, 65, 85);  btnPagos.Margin = new Padding(0, 0, 0, 5); btnPagos.Name = "btnPagos";  btnPagos.TabIndex = 4; btnPagos.Text = "Cuotas y pagos"; btnPagos.TextAlign = ContentAlignment.MiddleLeft; btnPagos.UseVisualStyleBackColor = false;
-            lblEntrenadores.Font = new Font("Segoe UI Semibold", 8F, FontStyle.Bold); lblEntrenadores.ForeColor = Color.FromArgb(100, 116, 139);  lblEntrenadores.Margin = new Padding(0, 8, 0, 4); lblEntrenadores.Name = "lblEntrenadores";  lblEntrenadores.TabIndex = 5; lblEntrenadores.Text = "ENTRENADORES";
-            btnAsignar.BackColor = Color.FromArgb(248, 250, 252); btnAsignar.FlatAppearance.BorderColor = Color.FromArgb(226, 232, 240); btnAsignar.FlatStyle = FlatStyle.Flat; btnAsignar.Font = new Font("Segoe UI", 9.5F); btnAsignar.ForeColor = Color.FromArgb(51, 65, 85);  btnAsignar.Margin = new Padding(0, 0, 0, 5); btnAsignar.Name = "btnAsignar";  btnAsignar.TabIndex = 6; btnAsignar.Text = "Asignar entrenador"; btnAsignar.TextAlign = ContentAlignment.MiddleLeft; btnAsignar.UseVisualStyleBackColor = false;
-            btnConsultar.BackColor = Color.FromArgb(248, 250, 252); btnConsultar.FlatAppearance.BorderColor = Color.FromArgb(226, 232, 240); btnConsultar.FlatStyle = FlatStyle.Flat; btnConsultar.Font = new Font("Segoe UI", 9.5F); btnConsultar.ForeColor = Color.FromArgb(51, 65, 85);  btnConsultar.Margin = new Padding(0, 0, 0, 5); btnConsultar.Name = "btnConsultar";  btnConsultar.TabIndex = 7; btnConsultar.Text = "Consultar entrenador"; btnConsultar.TextAlign = ContentAlignment.MiddleLeft; btnConsultar.UseVisualStyleBackColor = false;
-
-            panelPie.BackColor = Color.White; panelPie.Controls.Add(btnSalir);   panelPie.Name = "panelPie"; panelPie.Padding = new Padding(14, 10, 14, 14);  panelPie.TabIndex = 1;
-            btnSalir.BackColor = Color.FromArgb(254, 242, 242);  btnSalir.FlatAppearance.BorderColor = Color.FromArgb(254, 202, 202); btnSalir.FlatStyle = FlatStyle.Flat; btnSalir.ForeColor = Color.FromArgb(185, 28, 28);  btnSalir.Name = "btnSalir";  btnSalir.TabIndex = 0; btnSalir.Text = "Salir"; btnSalir.TextAlign = ContentAlignment.MiddleLeft; btnSalir.UseVisualStyleBackColor = false;
-
-            panelContenido.BackColor = Color.FromArgb(226, 232, 240); panelContenido.Controls.Add(lblBienvenida);
-            lblBienvenida.Name = "lblBienvenida"; lblBienvenida.TabIndex = 0; lblBienvenida.Font = new Font("Segoe UI", 12F); lblBienvenida.ForeColor = Color.FromArgb(100, 116, 139); lblBienvenida.Text = "Panel de recepcion\r\n\r\nElegi una opcion del menu lateral para comenzar a trabajar.";   panelContenido.Name = "panelContenido";  panelContenido.TabIndex = 2;
-
-            AutoScaleDimensions = new SizeF(7F, 17F);
-            AutoScaleMode = AutoScaleMode.Font;
-
-            BackColor = Color.FromArgb(241, 245, 249);
-            ClientSize = new Size(1200, 760);
-            Controls.Add(panelContenido);
-            Controls.Add(panelMenu);
-            Controls.Add(panelEncabezado);
-            Font = new Font("Segoe UI", 10F);
-            MinimumSize = new Size(1100, 700);
-            this.Name = "PanelRecepcionista";
-            StartPosition = FormStartPosition.CenterScreen;
-            WindowState = FormWindowState.Maximized;
-            Text = "SysGym - Recepcionista";
-            // Layout base: encabezado fijo, menu lateral estable y contenido restante.
-
-            // Distribucion general: encabezado superior, menu lateral fijo y contenido que ocupa el resto de la ventana.
-
-            panelEncabezado.Padding = new Padding(24, 8, 24, 8);
-
-            lblMarca.Margin = new Padding(0);
-            lblMarca.TextAlign = ContentAlignment.BottomLeft;
-
-            lblUsuarioRol.Margin = new Padding(0);
-            lblUsuarioRol.TextAlign = ContentAlignment.TopLeft;
-
-            btnCambiarCuenta.Margin = new Padding(16, 0, 0, 0);
-
-            panelMenu.MinimumSize = new Size(264, 0);
-
-            panelPie.Padding = new Padding(14, 12, 14, 16);
-
-            btnSalir.Padding = new Padding(12, 0, 0, 0);
-
-            panelOpciones.Padding = new Padding(14, 10, 14, 10);
-
-            lblClientes.Margin = new Padding(0, 8, 0, 2);
-            lblClientes.TextAlign = ContentAlignment.MiddleLeft;
-
-            btnSocios.Margin = new Padding(0, 0, 0, 5);
-            btnSocios.Padding = new Padding(12, 0, 0, 0);
-
-            btnMembresias.Margin = new Padding(0, 0, 0, 5);
-            btnMembresias.Padding = new Padding(12, 0, 0, 0);
-
-            lblCaja.Margin = new Padding(0, 8, 0, 2);
-            lblCaja.TextAlign = ContentAlignment.MiddleLeft;
-
-            btnPagos.Margin = new Padding(0, 0, 0, 5);
-            btnPagos.Padding = new Padding(12, 0, 0, 0);
-
-            lblEntrenadores.Margin = new Padding(0, 8, 0, 2);
-            lblEntrenadores.TextAlign = ContentAlignment.MiddleLeft;
-
-            btnAsignar.Margin = new Padding(0, 0, 0, 5);
-            btnAsignar.Padding = new Padding(12, 0, 0, 0);
-
-            btnConsultar.Margin = new Padding(0, 0, 0, 5);
-            btnConsultar.Padding = new Padding(12, 0, 0, 0);
-
-            panelContenido.Padding = new Padding(0);
-
-            lblBienvenida.TextAlign = ContentAlignment.MiddleCenter;
-
-            this.AutoScroll = false;
-            this.panelEncabezado.AutoSize = false;
+            this.panelEncabezado = new System.Windows.Forms.Panel();
+            this.lblMarca = new System.Windows.Forms.Label();
+            this.lblUsuarioRol = new System.Windows.Forms.Label();
+            this.lblModuloActual = new System.Windows.Forms.Label();
+            this.lblSubtituloModulo = new System.Windows.Forms.Label();
+            this.btnVolver = new System.Windows.Forms.Button();
+            this.btnCambiarCuenta = new System.Windows.Forms.Button();
+            this.panelMenu = new System.Windows.Forms.Panel();
+            this.panelOpciones = new System.Windows.Forms.Panel();
+            this.lblClientes = new System.Windows.Forms.Label();
+            this.btnSocios = new System.Windows.Forms.Button();
+            this.btnMembresias = new System.Windows.Forms.Button();
+            this.lblCaja = new System.Windows.Forms.Label();
+            this.btnPagos = new System.Windows.Forms.Button();
+            this.lblEntrenadores = new System.Windows.Forms.Label();
+            this.btnAsignar = new System.Windows.Forms.Button();
+            this.btnConsultar = new System.Windows.Forms.Button();
+            this.btnSalir = new System.Windows.Forms.Button();
+            this.panelContenido = new System.Windows.Forms.Panel();
+            this.lblBienvenida = new System.Windows.Forms.Label();
+            this.panelEncabezado.SuspendLayout();
+            this.panelMenu.SuspendLayout();
+            this.panelOpciones.SuspendLayout();
+            this.panelContenido.SuspendLayout();
+            this.SuspendLayout();
+            //
+            // panelEncabezado
+            //
+            this.panelEncabezado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.panelEncabezado.Controls.Add(this.lblMarca);
+            this.panelEncabezado.Controls.Add(this.lblUsuarioRol);
+            this.panelEncabezado.Controls.Add(this.lblModuloActual);
+            this.panelEncabezado.Controls.Add(this.lblSubtituloModulo);
+            this.panelEncabezado.Controls.Add(this.btnVolver);
+            this.panelEncabezado.Controls.Add(this.btnCambiarCuenta);
             this.panelEncabezado.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelEncabezado.Location = new System.Drawing.Point(0, 0);
+            this.panelEncabezado.Name = "panelEncabezado";
             this.panelEncabezado.Padding = new System.Windows.Forms.Padding(24, 8, 24, 8);
-            this.panelEncabezado.Size = new System.Drawing.Size(1200, 90);
-            this.lblMarca.AutoSize = false;
-            this.lblMarca.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.panelEncabezado.Size = new System.Drawing.Size(1282, 90);
+            this.panelEncabezado.TabIndex = 2;
+            //
+            // lblMarca
+            //
+            this.lblMarca.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
+            this.lblMarca.ForeColor = System.Drawing.Color.White;
             this.lblMarca.Location = new System.Drawing.Point(24, 8);
-            this.lblMarca.Size = new System.Drawing.Size(900, 36);
-            this.lblUsuarioRol.AutoSize = false;
-            this.lblUsuarioRol.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.lblUsuarioRol.Location = new System.Drawing.Point(24, 48);
-            this.lblUsuarioRol.Size = new System.Drawing.Size(900, 26);
-            this.btnCambiarCuenta.AutoSize = false;
-            this.btnCambiarCuenta.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            this.btnCambiarCuenta.Location = new System.Drawing.Point(1000, 24);
-            this.btnCambiarCuenta.Size = new System.Drawing.Size(176, 38);
-            this.panelMenu.AutoSize = false;
+            this.lblMarca.Margin = new System.Windows.Forms.Padding(0);
+            this.lblMarca.Name = "lblMarca";
+            this.lblMarca.Size = new System.Drawing.Size(220, 38);
+            this.lblMarca.TabIndex = 0;
+            this.lblMarca.Text = "SYSGYM";
+            this.lblMarca.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            //
+            // lblUsuarioRol
+            //
+            this.lblUsuarioRol.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblUsuarioRol.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(231)))), ((int)(((byte)(255)))));
+            this.lblUsuarioRol.Location = new System.Drawing.Point(24, 60);
+            this.lblUsuarioRol.Margin = new System.Windows.Forms.Padding(0);
+            this.lblUsuarioRol.Name = "lblUsuarioRol";
+            this.lblUsuarioRol.Size = new System.Drawing.Size(1234, 26);
+            this.lblUsuarioRol.TabIndex = 1;
+            this.lblUsuarioRol.Text = "Usuario: Recepcionista de diseno    |    Rol: Recepcionista";
+            //
+            // lblModuloActual
+            //
+            this.lblModuloActual.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblModuloActual.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
+            this.lblModuloActual.ForeColor = System.Drawing.Color.White;
+            this.lblModuloActual.Location = new System.Drawing.Point(310, 8);
+            this.lblModuloActual.Margin = new System.Windows.Forms.Padding(12, 0, 12, 0);
+            this.lblModuloActual.Name = "lblModuloActual";
+            this.lblModuloActual.Size = new System.Drawing.Size(662, 27);
+            this.lblModuloActual.TabIndex = 4;
+            this.lblModuloActual.Text = "Inicio";
+            this.lblModuloActual.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            //
+            // lblSubtituloModulo
+            //
+            this.lblSubtituloModulo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblSubtituloModulo.ForeColor = System.Drawing.Color.White;
+            this.lblSubtituloModulo.Location = new System.Drawing.Point(310, 35);
+            this.lblSubtituloModulo.Name = "lblSubtituloModulo";
+            this.lblSubtituloModulo.Size = new System.Drawing.Size(662, 24);
+            this.lblSubtituloModulo.TabIndex = 5;
+            this.lblSubtituloModulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            //
+            // btnVolver
+            //
+            this.btnVolver.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnVolver.BackColor = System.Drawing.Color.White;
+            this.btnVolver.Enabled = false;
+            this.btnVolver.FlatAppearance.BorderSize = 0;
+            this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnVolver.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.btnVolver.Location = new System.Drawing.Point(978, 12);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(100, 36);
+            this.btnVolver.TabIndex = 1;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = false;
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
+            //
+            // btnCambiarCuenta
+            //
+            this.btnCambiarCuenta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCambiarCuenta.BackColor = System.Drawing.Color.White;
+            this.btnCambiarCuenta.FlatAppearance.BorderSize = 0;
+            this.btnCambiarCuenta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCambiarCuenta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.btnCambiarCuenta.Location = new System.Drawing.Point(1090, 12);
+            this.btnCambiarCuenta.Margin = new System.Windows.Forms.Padding(16, 0, 0, 0);
+            this.btnCambiarCuenta.Name = "btnCambiarCuenta";
+            this.btnCambiarCuenta.Size = new System.Drawing.Size(168, 36);
+            this.btnCambiarCuenta.TabIndex = 2;
+            this.btnCambiarCuenta.Text = "Cambiar de cuenta";
+            this.btnCambiarCuenta.UseVisualStyleBackColor = false;
+            this.btnCambiarCuenta.Click += new System.EventHandler(this.btnCambiarCuenta_Click);
+            //
+            // panelMenu
+            //
+            this.panelMenu.BackColor = System.Drawing.Color.White;
+            this.panelMenu.Controls.Add(this.panelOpciones);
+            this.panelMenu.Controls.Add(this.btnSalir);
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panelMenu.Location = new System.Drawing.Point(0, 90);
             this.panelMenu.MinimumSize = new System.Drawing.Size(264, 0);
-            this.panelMenu.Size = new System.Drawing.Size(264, 670);
-            this.panelOpciones.AutoSize = false;
-            this.panelOpciones.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelMenu.Name = "panelMenu";
+            this.panelMenu.Padding = new System.Windows.Forms.Padding(0, 0, 0, 12);
+            this.panelMenu.Size = new System.Drawing.Size(274, 659);
+            this.panelMenu.TabIndex = 1;
+            //
+            // panelOpciones
+            //
             this.panelOpciones.AutoScroll = true;
+            this.panelOpciones.BackColor = System.Drawing.Color.White;
+            this.panelOpciones.Controls.Add(this.lblClientes);
+            this.panelOpciones.Controls.Add(this.btnSocios);
+            this.panelOpciones.Controls.Add(this.btnMembresias);
+            this.panelOpciones.Controls.Add(this.lblCaja);
+            this.panelOpciones.Controls.Add(this.btnPagos);
+            this.panelOpciones.Controls.Add(this.lblEntrenadores);
+            this.panelOpciones.Controls.Add(this.btnAsignar);
+            this.panelOpciones.Controls.Add(this.btnConsultar);
+            this.panelOpciones.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelOpciones.Location = new System.Drawing.Point(0, 0);
+            this.panelOpciones.Name = "panelOpciones";
             this.panelOpciones.Padding = new System.Windows.Forms.Padding(14, 10, 14, 10);
-            this.lblClientes.AutoSize = false;
+            this.panelOpciones.Size = new System.Drawing.Size(274, 601);
+            this.panelOpciones.TabIndex = 0;
+            //
+            // lblClientes
+            //
+            this.lblClientes.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
+            this.lblClientes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
             this.lblClientes.Location = new System.Drawing.Point(14, 18);
+            this.lblClientes.Margin = new System.Windows.Forms.Padding(0, 8, 0, 2);
+            this.lblClientes.Name = "lblClientes";
             this.lblClientes.Size = new System.Drawing.Size(236, 22);
+            this.lblClientes.TabIndex = 0;
             this.lblClientes.Tag = "CLIENTES";
             this.lblClientes.Text = "▼ CLIENTES";
-            this.btnSocios.Size = new System.Drawing.Size(236, 38);
+            this.lblClientes.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // btnSocios
+            //
+            this.btnSocios.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.btnSocios.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.btnSocios.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSocios.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.btnSocios.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
             this.btnSocios.Location = new System.Drawing.Point(14, 42);
-            this.btnMembresias.Size = new System.Drawing.Size(236, 38);
+            this.btnSocios.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.btnSocios.Name = "btnSocios";
+            this.btnSocios.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
+            this.btnSocios.Size = new System.Drawing.Size(236, 38);
+            this.btnSocios.TabIndex = 1;
+            this.btnSocios.Text = "Socios";
+            this.btnSocios.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSocios.UseVisualStyleBackColor = false;
+            this.btnSocios.Click += new System.EventHandler(this.btnSocios_Click);
+            //
+            // btnMembresias
+            //
+            this.btnMembresias.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.btnMembresias.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.btnMembresias.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMembresias.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.btnMembresias.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
             this.btnMembresias.Location = new System.Drawing.Point(14, 85);
-            this.lblCaja.AutoSize = false;
+            this.btnMembresias.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.btnMembresias.Name = "btnMembresias";
+            this.btnMembresias.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
+            this.btnMembresias.Size = new System.Drawing.Size(236, 38);
+            this.btnMembresias.TabIndex = 2;
+            this.btnMembresias.Text = "Membresías";
+            this.btnMembresias.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnMembresias.UseVisualStyleBackColor = false;
+            this.btnMembresias.Click += new System.EventHandler(this.btnMembresias_Click);
+            //
+            // lblCaja
+            //
+            this.lblCaja.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
+            this.lblCaja.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
             this.lblCaja.Location = new System.Drawing.Point(14, 136);
+            this.lblCaja.Margin = new System.Windows.Forms.Padding(0, 8, 0, 2);
+            this.lblCaja.Name = "lblCaja";
             this.lblCaja.Size = new System.Drawing.Size(236, 22);
+            this.lblCaja.TabIndex = 3;
             this.lblCaja.Tag = "CAJA";
             this.lblCaja.Text = "▶ CAJA";
-            this.lblEntrenadores.AutoSize = false;
-            this.lblEntrenadores.Location = new System.Drawing.Point(14, 166);
+            this.lblCaja.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // btnPagos
+            //
+            this.btnPagos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.btnPagos.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.btnPagos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPagos.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.btnPagos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.btnPagos.Location = new System.Drawing.Point(14, 160);
+            this.btnPagos.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.btnPagos.Name = "btnPagos";
+            this.btnPagos.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
+            this.btnPagos.Size = new System.Drawing.Size(236, 38);
+            this.btnPagos.TabIndex = 4;
+            this.btnPagos.Text = "Cuotas y pagos";
+            this.btnPagos.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnPagos.UseVisualStyleBackColor = false;
+            this.btnPagos.Visible = false;
+            this.btnPagos.Click += new System.EventHandler(this.btnPagos_Click);
+            //
+            // lblEntrenadores
+            //
+            this.lblEntrenadores.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
+            this.lblEntrenadores.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
+            this.lblEntrenadores.Location = new System.Drawing.Point(14, 211);
+            this.lblEntrenadores.Margin = new System.Windows.Forms.Padding(0, 8, 0, 2);
+            this.lblEntrenadores.Name = "lblEntrenadores";
             this.lblEntrenadores.Size = new System.Drawing.Size(236, 22);
+            this.lblEntrenadores.TabIndex = 5;
             this.lblEntrenadores.Tag = "ENTRENADORES";
             this.lblEntrenadores.Text = "▶ ENTRENADORES";
-            this.btnPagos.Visible = false;
+            this.lblEntrenadores.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // btnAsignar
+            //
+            this.btnAsignar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.btnAsignar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.btnAsignar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAsignar.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.btnAsignar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.btnAsignar.Location = new System.Drawing.Point(14, 235);
+            this.btnAsignar.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.btnAsignar.Name = "btnAsignar";
+            this.btnAsignar.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
+            this.btnAsignar.Size = new System.Drawing.Size(236, 38);
+            this.btnAsignar.TabIndex = 6;
+            this.btnAsignar.Text = "Asignar entrenador";
+            this.btnAsignar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAsignar.UseVisualStyleBackColor = false;
             this.btnAsignar.Visible = false;
-            this.btnConsultar.Visible = false;
-            layoutEncabezado.ResumeLayout(false);
-            panelIdentidad.ResumeLayout(false);
-            this.panelPie.AutoSize = false;
-            this.panelPie.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelPie.Size = new System.Drawing.Size(264, 76);
-            this.panelPie.Padding = new System.Windows.Forms.Padding(14, 12, 14, 16);
-            this.btnSalir.AutoSize = false;
-            this.btnSalir.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.btnSalir.Location = new System.Drawing.Point(14, 14);
-            this.btnSalir.Size = new System.Drawing.Size(236, 46);
-            this.panelContenido.AutoSize = false;
-            this.panelContenido.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelContenido.AutoScroll = false;
-            this.panelContenido.Size = new System.Drawing.Size(936, 670);
-            this.lblBienvenida.AutoSize = false;
-            this.lblBienvenida.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblBienvenida.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            panelEncabezado.ResumeLayout(false);
-            panelEncabezado.PerformLayout();
-            panelMenu.ResumeLayout(false);
-
-            panelOpciones.ResumeLayout(false);
-            panelPie.ResumeLayout(false);
-            ResumeLayout(false);
-
-            this.btnCambiarCuenta.Click += new System.EventHandler(this.btnCambiarCuenta_Click);
-            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
-            this.btnSocios.Click += new System.EventHandler(this.btnSocios_Click);
-            this.btnMembresias.Click += new System.EventHandler(this.btnMembresias_Click);
-            this.btnPagos.Click += new System.EventHandler(this.btnPagos_Click);
             this.btnAsignar.Click += new System.EventHandler(this.btnAsignar_Click);
+            //
+            // btnConsultar
+            //
+            this.btnConsultar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.btnConsultar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.btnConsultar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnConsultar.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.btnConsultar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.btnConsultar.Location = new System.Drawing.Point(14, 278);
+            this.btnConsultar.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.btnConsultar.Name = "btnConsultar";
+            this.btnConsultar.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
+            this.btnConsultar.Size = new System.Drawing.Size(236, 38);
+            this.btnConsultar.TabIndex = 7;
+            this.btnConsultar.Text = "Consultar entrenador";
+            this.btnConsultar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnConsultar.UseVisualStyleBackColor = false;
+            this.btnConsultar.Visible = false;
             this.btnConsultar.Click += new System.EventHandler(this.btnConsultar_Click);
-                    this.Load += new System.EventHandler(this.PanelRecepcionista_Load);
+            //
+            // btnSalir
+            //
+            this.btnSalir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.btnSalir.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnSalir.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(202)))), ((int)(((byte)(202)))));
+            this.btnSalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSalir.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.btnSalir.Location = new System.Drawing.Point(0, 601);
+            this.btnSalir.Name = "btnSalir";
+            this.btnSalir.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
+            this.btnSalir.Size = new System.Drawing.Size(274, 46);
+            this.btnSalir.TabIndex = 1;
+            this.btnSalir.Text = "Salir";
+            this.btnSalir.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSalir.UseVisualStyleBackColor = false;
+            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
+            //
+            // panelContenido
+            //
+            this.panelContenido.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.panelContenido.Controls.Add(this.lblBienvenida);
+            this.panelContenido.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelContenido.Location = new System.Drawing.Point(274, 90);
+            this.panelContenido.Name = "panelContenido";
+            this.panelContenido.Size = new System.Drawing.Size(1008, 659);
+            this.panelContenido.TabIndex = 2;
+            //
+            // lblBienvenida
+            //
+            this.lblBienvenida.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblBienvenida.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.lblBienvenida.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
+            this.lblBienvenida.Location = new System.Drawing.Point(0, 0);
+            this.lblBienvenida.Name = "lblBienvenida";
+            this.lblBienvenida.Size = new System.Drawing.Size(1008, 659);
+            this.lblBienvenida.TabIndex = 0;
+            this.lblBienvenida.Text = "Panel de recepcion\r\n\r\nElegi una opcion del menu lateral para comenzar a trabajar." +
+    "";
+            this.lblBienvenida.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            //
+            // PanelRecepcionista
+            //
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
+            this.ClientSize = new System.Drawing.Size(1282, 749);
+            this.Controls.Add(this.panelContenido);
+            this.Controls.Add(this.panelMenu);
+            this.Controls.Add(this.panelEncabezado);
+            this.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.MinimumSize = new System.Drawing.Size(1100, 700);
+            this.Name = "PanelRecepcionista";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "SysGym - Recepcionista";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.PanelRecepcionista_Load);
+            this.panelEncabezado.ResumeLayout(false);
+            this.panelMenu.ResumeLayout(false);
+            this.panelOpciones.ResumeLayout(false);
+            this.panelContenido.ResumeLayout(false);
+            this.ResumeLayout(false);
+
         }
     }
 }

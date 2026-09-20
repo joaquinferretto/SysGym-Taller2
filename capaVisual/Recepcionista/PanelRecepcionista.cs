@@ -87,10 +87,19 @@ namespace exxen2._0.capaVisual.Recepcionista
             return usuarioActual.Rol == null || string.IsNullOrWhiteSpace(usuarioActual.Rol.Descripcion) ? predeterminado : usuarioActual.Rol.Descripcion;
         }
 
-        /* Al hacer clic en btnCambiarCuenta, cierra la sesión para volver al acceso. */
+        /* Actualiza el encabezado global y habilita el retorno cuando hay un módulo abierto. */
         private void EstablecerModuloActual(string titulo)
         {
-            lblModuloActual.Text = titulo ?? string.Empty;
+            var partes = (titulo ?? string.Empty).Split(new[] { '|' }, 2);
+            lblModuloActual.Text = string.IsNullOrWhiteSpace(titulo) ? "Inicio" : partes[0].Trim();
+            lblSubtituloModulo.Text = partes.Length > 1 ? partes[1].Trim() : string.Empty;
+            btnVolver.Enabled = !string.IsNullOrWhiteSpace(titulo);
+        }
+
+        /* Cierra el módulo actual y restaura el inicio de recepción sin cerrar la sesión. */
+        private void btnVolver_Click(object origen, EventArgs e)
+        {
+            navegacion.VolverAlInicio();
         }
 
         private void btnCambiarCuenta_Click(object origen, EventArgs e)
