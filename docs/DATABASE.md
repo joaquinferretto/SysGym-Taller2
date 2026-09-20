@@ -1,5 +1,13 @@
 # Base de datos
 
+## Estado vigente de imágenes — 20 de septiembre de 2026
+
+Actualización posterior a la ejecución del usuario: se confirmó en SQL Server que dbo.EjercicioImagen existe y contiene 0 filas; tipos/longitud coinciden y FK_EjercicioImagen_Ejercicio usa NO ACTION. Conteos preservados: 45 ejercicios, 20 socios, 23 usuarios, 20 membresías, 20 cuotas, 20 pagos y 26 rutinas. Login/catálogo/selección de ejercicio pasaron sin errores SQL en la prueba de lectura. El bloqueo de creación mencionado debajo quedó resuelto; no se agregaron imágenes de prueba.
+
+Ejercicio admite cero, una o varias imágenes mediante EjercicioImagen: IdEjercicioImagen INT IDENTITY PK, IdEjercicio INT FK sin cascada, RutaRelativa NVARCHAR(260) NOT NULL y Orden INT positivo. RutaRelativa es única; IdEjercicio NO es único. Socio y UsuarioSistema conservan FotoRuta NVARCHAR(260) NULL individual. No agregar FotoRuta a Ejercicio.
+
+SysGymDB.sql ya contiene este modelo. Para bases existentes se distribuye ahora `capaDatos/Database/MigrarEjercicioImagen.sql`, aditivo/transaccional: crea solo la tabla faltante y no altera una tabla existente. No ejecutar el DDL completo en una base con datos. **Aplicación local pendiente:** conexión bloqueada por SSL/SSPI el 20/09/2026, antes de ejecutar comandos. La afirmación histórica inferior de que EjercicioImagen ya se había creado no describe el estado verificado: la última consulta exitosa la encontró ausente. Reconsultar esquema y conteos al recuperar acceso. No se eliminaron tablas ni datos.
+
 ## Sincronización de membresías y fotos de socios — 19 de septiembre de 2026
 
 La entidad `Membresia` define `IdRutina` como `int?` y la relación opcional hacia `Rutina.IdRutina`; la entidad `Socio` define `FotoRuta` como `string` nullable con `[StringLength(260)]`. La base local `SysGymDB` carecía de ambas columnas. Se agregaron únicamente `Membresia.IdRutina INT NULL` y `Socio.FotoRuta NVARCHAR(260) NULL`, y se creó `FK_Membresia_Rutina` hacia `Rutina(IdRutina)` con `NO ACTION` en borrado. No se modificaron registros, claves, tablas históricas ni columnas legacy.

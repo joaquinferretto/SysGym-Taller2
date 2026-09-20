@@ -1,5 +1,45 @@
 # Arquitectura
 
+## Pulido de Socios y rutinas — 20/09/2026
+
+MisSociosFormulario mantiene listado izquierdo, ficha y rutina semanal derecha. El único contenedor retirado en esta pasada es accionesRutina (FlowLayoutPanel): mensaje, combo y botones existentes quedan directamente en grupoRutina, mediante Location/Size/Anchor. La tabla estructural de ficha conserva sus cuatro columnas, con etiquetas más anchas y valores equilibrados. No se agregan contenedores ni layout runtime, y Form.cs/eventos/servicios permanecen intactos. El encabezado local sigue oculto y el global sigue a cargo de la navegación existente. Debug/Release y geometría de tres resoluciones comprobados; Designer/runtime visual pendientes por limitación de acceso al escritorio. Detalle vigente en PROJECT_CONTEXT.md.
+
+## Auditoría de comunicación entre capas — 20/09/2026
+
+Alcance: inspección estática de los archivos Compile incluidos en exxen2.0.csproj: 37 de capaVisual (incluye Designer), 15 de capaLogica y 20 de capaDatos. Se contrastaron dependencias, llamadas desde formularios, interfaces públicas de lógica, repositorios y contexto; no se ejecutaron operaciones de negocio ni SQL. DashboardInicioAdministrador.cs existe fuera del csproj y no se cuenta como código activo.
+
+**Resultado:** no se encontraron accesos directos de capaVisual a conexiones SQL, ContextoGimnasio, DbContext, repositorios, UnidadDeTrabajo o SaveChanges. No se encontraron SQL/DbContext ni referencias a WinForms/MessageBox/capaVisual en capaLogica. No se encontraron dependencias de capaDatos hacia capaLogica o capaVisual. El recorrido de persistencia inspeccionado es capaVisual → capaLogica → UnidadDeTrabajoGimnasio/repositorios (capaDatos) → ContextoGimnasio/EF6 → SQL Server.
+
+| Pantalla / operación | Entrada de lógica | Persistencia |
+| --- | --- | --- |
+| InicioSesion | UsuarioSistemaLogica.Autenticar | UsuariosSistema, consulta con Rol |
+| Usuarios / roles | UsuarioSistemaLogica, RolLogica | UsuariosSistema, Roles |
+| Socios | SocioLogica.Crear/Modificar/ObtenerPorId/ListarParaGestion | Socios |
+| Planes | PlanLogica | Planes |
+| Membresías | MembresiaLogica, PlanLogica, CuotaMembresiaLogica | Membresias, Planes, CuotasMembresia |
+| Cuotas y pagos | PagoLogica, CuotaMembresiaLogica, MembresiaLogica | Pagos, métodos, cuotas y membresías |
+| Asignar entrenador | MembresiaEntrenadorLogica, UsuarioSistemaLogica | MembresiasEntrenadores, usuarios |
+| Ejercicios e imágenes | EjercicioLogica, EjercicioImagenLogica | Ejercicios, EjercicioImagenes |
+| Gestionar rutinas | RutinaLogica, RutinaEjercicioLogica, EjercicioLogica | Rutinas, RutinaEjercicios, Ejercicios |
+| Socios y rutinas / semana | RutinaLogica, RutinaEjercicioLogica | Membresías, rutinas y detalles |
+| Consulta de rutinas | RutinaLogica.ListarActivas | Rutinas |
+| Inicio / estado de cuentas | CuotaMembresiaLogica.ListarEstadoCuentas | Cuotas y membresías |
+| Reportes | SocioLogica, UsuarioSistemaLogica, EjercicioLogica, RutinaLogica, MembresiaLogica | Listas materializadas y conteos en presentación |
+
+Matices de la arquitectura actual:
+
+- Visual sí referencia `capaDatos.Entidades` para recibir/enviar objetos y enumeraciones. Esto acopla sus tipos al modelo persistente, pero no abre consultas ni salta capaLogica. EF tiene lazy loading y proxies deshabilitados. Las interfaces públicas de lógica revisadas devuelven listas/entidades/resultados, no IQueryable ni unidades de trabajo. Un aislamiento estricto de tipos requeriría DTO/contratos; no se realizó ese refactor en esta auditoría.
+- LINQ sobre repositorios en capaLogica expresa filtros/reglas que EF ejecuta a través de capaDatos. LINQ sobre listas materializadas en Visual filtra/presenta información, no consulta SQL directamente.
+- ContextoGimnasio.ProbarConexion usa SqlConnection para abrir/cerrar y seleccionar conexión principal/respaldo. Es una excepción técnica ubicada en capaDatos; no ejecuta CRUD por ADO.NET. La persistencia de entidades sigue usando EF6.
+- Varias funciones de consulta tienen efectos de negocio: CuotaMembresiaLogica.ListarParaGestion/ListarEstadoCuentas evalúan deuda y llaman GuardarCambios; MembresiaLogica.ObtenerPorSocio/ListarHabilitadas/ListarParaGestion y RutinaEjercicioLogica.ListarSemanaPorSocio también pueden actualizar estados. No viola el recorrido de capas, pero NO deben considerarse lecturas puras durante pruebas. No se alteraron estas reglas.
+- Las capas son carpetas/namespaces dentro de un único proyecto, no ensamblados con restricciones de referencia. La separación depende actualmente de las convenciones del código. No se separaron proyectos ni se agregaron dependencias.
+
+No fue necesario corregir código para el recorrido solicitado. El resultado es una auditoría estática del estado actual, no una certificación de todas las reglas de negocio ni de cada ejecución runtime. Se conservan todos los cambios visuales anteriores y no se hace commit.
+
+## Asignar Entrenador: controles directos — 19 de septiembre de 2026
+
+`GestionAsignacionesFormulario` reduce siete contenedores propios a un único `SplitContainer` estructural. Panel1 contiene directamente título, búsqueda, filtro, recarga y grilla; Panel2 contiene directamente título, mensaje, etiquetas, seis campos de lectura, combo y tres acciones. Se eliminan encabezado oculto, tabla de filtros/listado/ficha, GroupBox y FlowLayoutPanel de acciones. El propio SplitContainer aporta división y bordes; sus dos regiones blancas usan Padding/Anchor/Location/Size y ancho estable de ficha, siguiendo Planes/Membresías sin agregar wrappers. `lblEstado` conserva mensajes funcionales con texto inicial vacío. El archivo funcional .cs, consultas, reglas y capas inferiores permanecen intactos. Designer real con edición reversible/guardado, Document Outline y runtime de lectura en tres resoluciones verificados; alcance y evidencias en PROJECT_CONTEXT.md. Próxima etapa sujeta a revisión visual del usuario.
+
 ## Normalización de Inicio administrador y Planes — 19 de septiembre de 2026
 
 `InicioPanelAdministrador` mantiene su estructura plana y sus cargas dinámicas. Su metadata de diseño se alinea con la herencia real: `DesignerCategory("UserControl")` y `<SubType>UserControl</SubType>`. Esto permite que Visual Studio use `UserControlDocumentDesigner`; no cambia el constructor, el clima, el estado de cuentas ni la navegación por doble clic.

@@ -36,8 +36,6 @@ namespace exxen2._0.capaVisual.Entrenador
             if (modoAdministrador)
             {
                 Text = "SysGym | Socios y rutinas";
-                lblTitulo.Text = "Socios y rutinas | Seguimiento de rutinas";
-                lblDescripcion.Visible = false;
             }
         }
 
@@ -212,7 +210,6 @@ namespace exxen2._0.capaVisual.Entrenador
             if (!AyudaFormularioVisual.EnModoDisenio(this)) Cargar();
         }
 
-        private void btnVolver_Click(object origen, EventArgs e) { Close(); }
         private void buscador_TextChanged(object origen, EventArgs e) { AplicarFiltro(); }
         private void filtroRutina_SelectedIndexChanged(object origen, EventArgs e)
         {

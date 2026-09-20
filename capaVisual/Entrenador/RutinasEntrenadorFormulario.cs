@@ -431,6 +431,29 @@ namespace exxen2._0.capaVisual.Entrenador
             EstablecerModoEditorEjercicio(ModoEditorEjercicio.Visualizacion);
         }
 
+        // Reparte el ancho entre campos existentes, sin crear contenedores ni controles.
+        private void panelDetalle_SizeChanged(object origen, EventArgs e)
+        {
+            if (ejercicio == null || descanso == null) return;
+            var ancho = panelDetalle.ClientSize.Width;
+            var segundaColumna = Math.Max(268, ancho / 2);
+            var anchoIzquierdo = Math.Max(120, segundaColumna - ejercicio.Left - 16);
+            ejercicio.Width = anchoIzquierdo;
+            series.Width = anchoIzquierdo;
+            peso.Width = anchoIzquierdo;
+            orden.Width = anchoIzquierdo;
+            lblDia.Left = segundaColumna;
+            lblRepeticiones.Left = segundaColumna;
+            lblDescanso.Left = segundaColumna;
+            dia.Left = segundaColumna + 116;
+            repeticiones.Left = dia.Left;
+            descanso.Left = dia.Left;
+            var anchoDerecho = Math.Max(120, ancho - dia.Left - 16);
+            dia.Width = anchoDerecho;
+            repeticiones.Width = anchoDerecho;
+            descanso.Width = anchoDerecho;
+        }
+
         private void actualizarEjercicio_Click(object origen, EventArgs e)
         {
             try

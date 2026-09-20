@@ -243,6 +243,9 @@
     <EmbeddedResource Include="capaVisual\Compartido\GestionSociosFormulario.resx">
       <DependentUpon>GestionSociosFormulario.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="capaVisual\Entrenador\MisSociosFormulario.resx">
+      <DependentUpon>MisSociosFormulario.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="capaVisual\Entrenador\RutinasEntrenadorFormulario.resx">
       <DependentUpon>RutinasEntrenadorFormulario.cs</DependentUpon>
     </EmbeddedResource>
@@ -281,6 +284,7 @@
     <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="Konscious.Security.Cryptography.Argon2" Version="1.3.1" />
     <None Include="capaDatos\Database\SysGymDB.sql" />
+    <None Include="capaDatos\Database\MigrarEjercicioImagen.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

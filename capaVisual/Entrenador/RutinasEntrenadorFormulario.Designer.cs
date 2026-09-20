@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -282,6 +282,7 @@ namespace exxen2._0.capaVisual.Entrenador
             // 
             // panelDetalle
             // 
+            this.panelDetalle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelDetalle.AutoScroll = true;
             this.panelDetalle.AutoScrollMinSize = new System.Drawing.Size(0, 604);
             this.panelDetalle.Controls.Add(this.lblDetalleTitulo);
@@ -321,6 +322,7 @@ namespace exxen2._0.capaVisual.Entrenador
             this.panelContenido.SetRowSpan(this.panelDetalle, 3);
             this.panelDetalle.Size = new System.Drawing.Size(732, 603);
             this.panelDetalle.TabIndex = 1;
+            this.panelDetalle.SizeChanged += new System.EventHandler(this.panelDetalle_SizeChanged);
             // 
             // lblDetalleTitulo
             // 
@@ -529,7 +531,7 @@ namespace exxen2._0.capaVisual.Entrenador
             this.tablaEjercicios.RowHeadersWidth = 51;
             this.tablaEjercicios.RowTemplate.Height = 28;
             this.tablaEjercicios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tablaEjercicios.Size = new System.Drawing.Size(673, 165);
+            this.tablaEjercicios.Size = new System.Drawing.Size(673, 155);
             this.tablaEjercicios.TabIndex = 13;
             this.tablaEjercicios.SelectionChanged += new System.EventHandler(this.tablaEjercicios_SelectionChanged);
             // 

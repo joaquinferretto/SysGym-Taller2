@@ -231,6 +231,11 @@ namespace exxen2._0.capaVisual.Compartido
         {
             try
             {
+                if (galeriaImagenes.Controls.Count == 0)
+                {
+                    MessageBox.Show(this, "No existe imagen para quitar", "Quitar imagen", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
                 if (imagenSeleccionada == null)
                     throw new InvalidOperationException("Seleccione una imagen del ejercicio.");
                 if (MessageBox.Show("¿Desea quitar esta imagen del ejercicio?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)

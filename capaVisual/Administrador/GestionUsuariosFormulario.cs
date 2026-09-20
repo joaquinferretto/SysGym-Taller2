@@ -339,6 +339,12 @@ namespace exxen2._0.capaVisual.Administrador
         /* Al quitar la foto, conserva el sexo y vuelve al avatar disponible para ese valor. */
         private void btnQuitarFoto_Click(object origen, EventArgs e)
         {
+            if (fotoSeleccionada == null && string.IsNullOrWhiteSpace(fotoRutaSeleccionada))
+            {
+                MessageBox.Show(this, "No existe imagen para quitar", "Quitar foto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
             fotoSeleccionada = null;
             fotoRutaSeleccionada = null;
             sexo_SelectedIndexChanged(origen, e);

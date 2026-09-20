@@ -1,5 +1,11 @@
 # Reglas de negocio
 
+## Cardinalidad de fotos confirmada — 20 de septiembre de 2026
+
+- Ejercicio puede tener cero, una o varias imágenes demostrativas, guardadas en EjercicioImagen con ruta y orden; agregar no reemplaza las anteriores. Quitar elimina únicamente la imagen seleccionada. Sin imágenes, Quitar muestra «No existe imagen para quitar»; con imágenes y sin selección se solicita seleccionar una.
+- Socio y UsuarioSistema tienen cada uno una única foto opcional mediante FotoRuta; no se cambia su comportamiento.
+- La futura función PDF podrá consultar todas las imágenes del ejercicio por IdEjercicio. No se agregó exportación PDF en esta tarea.
+
 ## Notificaciones clasicas de altas - 17 de septiembre de 2026
 
 Ultima actualizacion de esta seccion: 17 de septiembre de 2026.

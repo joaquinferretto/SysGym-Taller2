@@ -1,5 +1,13 @@
 # Integración de Entity Framework
 
+## Imágenes de ejercicios: decisión vigente — 20 de septiembre de 2026
+
+Verificación posterior a la ejecución del usuario: tabla creada y consulta real del módulo funcionando con 0 imágenes, 45 ejercicios, sin errores SQL ni intentos de escritura. Las pruebas con una/varias imágenes persistidas quedan pendientes; no se cargaron datos de prueba. Esta verificación sustituye el estado «migración pendiente» de la nota anterior inferior.
+
+Se conserva EF6 y el modelo Ejercicio 1:N EjercicioImagen con FK requerida en la imagen y sin cascada. Un ejercicio sin imágenes no necesita filas hijas. Se descartó la alternativa intermedia Ejercicio.FotoRuta; no hay cambio final en entidades/contexto/repositorios. Socio y Usuario mantienen su FotoRuta opcional.
+
+`EjercicioImagenLogica.ListarPorEjercicio(idEjercicio)` materializa las imágenes filtradas y ordenadas por Orden/IdEjercicioImagen. La futura exportación PDF puede consumir esta consulta y resolver los archivos mediante AlmacenamientoImagenes.RutaAbsoluta; no se implementa PDF en esta tarea. Como lazy loading está deshabilitado, listar ejercicios no carga automáticamente la colección. Migración SQL aditiva preparada; ejecución y pruebas EF contra la tabla pendientes por fallo SSL/SSPI de la conexión local. Debug/Release compilan con 0 errores y 2 warnings históricos.
+
 ## Sincronización de Membresia y Socio — 19 de septiembre de 2026
 
 Se confirmó que EF6 consulta `Membresia.IdRutina` como `int?` con FK opcional a `Rutina.IdRutina`, y `Socio.FotoRuta` como cadena nullable de longitud máxima 260. La base local fue alineada mediante dos columnas nullable y una FK sin borrado en cascada; no se modificaron entidades ni relaciones del código. La auditoría de los 16 `DbSet` no encontró otros faltantes de columnas; sí detectó la tabla completa `EjercicioImagen` ausente, que queda reportada sin migración automática.

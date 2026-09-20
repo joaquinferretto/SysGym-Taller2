@@ -98,15 +98,15 @@ namespace exxen2._0.capaVisual.Administrador
             this.lblModuloActual.Dock = System.Windows.Forms.DockStyle.None;
             this.lblModuloActual.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
             this.lblModuloActual.ForeColor = System.Drawing.Color.White;
-            this.lblModuloActual.Location = new System.Drawing.Point(280, 8);
+            this.lblModuloActual.Location = new System.Drawing.Point(310, 8);
             this.lblModuloActual.Margin = new System.Windows.Forms.Padding(12, 0, 12, 0);
             this.lblModuloActual.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.lblModuloActual.Text = "Resumen general";
+            this.lblModuloActual.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblModuloActual.Name = "lblModuloActual";
             this.lblModuloActual.Padding = new System.Windows.Forms.Padding(0);
-            this.lblModuloActual.Size = new System.Drawing.Size(680, 27);
+            this.lblModuloActual.Size = new System.Drawing.Size(662, 27);
             this.lblModuloActual.TabIndex = 4;
-            this.lblModuloActual.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // btnCambiarCuenta
             //
@@ -125,8 +125,9 @@ namespace exxen2._0.capaVisual.Administrador
             this.btnCambiarCuenta.UseVisualStyleBackColor = false;
             this.btnCambiarCuenta.Click += new System.EventHandler(this.btnCambiarCuenta_Click);
             this.lblSubtituloModulo.Name = "lblSubtituloModulo";
-            this.lblSubtituloModulo.Location = new System.Drawing.Point(280, 35);
-            this.lblSubtituloModulo.Size = new System.Drawing.Size(680, 24);
+            this.lblSubtituloModulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblSubtituloModulo.Location = new System.Drawing.Point(310, 35);
+            this.lblSubtituloModulo.Size = new System.Drawing.Size(662, 24);
             this.lblSubtituloModulo.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.lblSubtituloModulo.ForeColor = System.Drawing.Color.White;
             this.lblSubtituloModulo.TabIndex = 5;
