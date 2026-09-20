@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -8,11 +8,11 @@ namespace exxen2._0.capaVisual.Entrenador
     {
         private IContainer components = null;
         private Panel panelEncabezado;
-        private TableLayoutPanel layoutEncabezado;
-        private Panel panelIdentidad;
         private Label lblMarca;
         private Label lblUsuarioRol;
         private Label lblModuloActual;
+        private Label lblSubtituloModulo;
+        private Button btnVolver;
         private Button btnCambiarCuenta;
         private Panel panelMenu;
         private Panel panelOpciones;
@@ -21,7 +21,6 @@ namespace exxen2._0.capaVisual.Entrenador
         private Button btnRutinas;
         private Label lblCatalogo;
         private Button btnEjercicios;
-        private Panel panelPie;
         private Button btnSalir;
 
         private Panel panelContenido;
@@ -35,9 +34,9 @@ namespace exxen2._0.capaVisual.Entrenador
 
         private void InitializeComponent()
         {
+            this.lblSubtituloModulo = new Label();
+            this.btnVolver = new Button();
             this.panelEncabezado = new System.Windows.Forms.Panel();
-            this.layoutEncabezado = new System.Windows.Forms.TableLayoutPanel();
-            this.panelIdentidad = new System.Windows.Forms.Panel();
             this.lblUsuarioRol = new System.Windows.Forms.Label();
             this.lblMarca = new System.Windows.Forms.Label();
             this.lblModuloActual = new System.Windows.Forms.Label();
@@ -49,123 +48,189 @@ namespace exxen2._0.capaVisual.Entrenador
             this.btnRutinas = new System.Windows.Forms.Button();
             this.lblCatalogo = new System.Windows.Forms.Label();
             this.btnEjercicios = new System.Windows.Forms.Button();
-            this.panelPie = new System.Windows.Forms.Panel();
             this.btnSalir = new System.Windows.Forms.Button();
             this.panelContenido = new System.Windows.Forms.Panel();
             this.lblBienvenida = new System.Windows.Forms.Label();
             this.panelEncabezado.SuspendLayout();
-            this.layoutEncabezado.SuspendLayout();
-            this.panelIdentidad.SuspendLayout();
+this.panelEncabezado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+this.panelEncabezado.Controls.Add(this.lblMarca);
+this.panelEncabezado.Controls.Add(this.lblUsuarioRol);
+this.panelEncabezado.Controls.Add(this.lblModuloActual);
+this.panelEncabezado.Controls.Add(this.lblSubtituloModulo);
+this.panelEncabezado.Controls.Add(this.btnVolver);
+this.panelEncabezado.Controls.Add(this.btnCambiarCuenta);
+this.panelEncabezado.Dock = System.Windows.Forms.DockStyle.Top;
+this.panelEncabezado.Location = new System.Drawing.Point(0, 0);
+this.panelEncabezado.Name = "panelEncabezado";
+this.panelEncabezado.Padding = new System.Windows.Forms.Padding(24, 8, 24, 8);
+this.panelEncabezado.Size = new System.Drawing.Size(1282, 90);
+this.panelEncabezado.TabIndex = 2;
+this.lblMarca.Dock = System.Windows.Forms.DockStyle.None;
+this.lblMarca.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
+this.lblMarca.ForeColor = System.Drawing.Color.White;
+this.lblMarca.Location = new System.Drawing.Point(24, 8);
+this.lblMarca.Margin = new System.Windows.Forms.Padding(0);
+this.lblMarca.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+this.lblMarca.Name = "lblMarca";
+this.lblMarca.Size = new System.Drawing.Size(220, 38);
+this.lblMarca.TabIndex = 0;
+this.lblMarca.Text = "SYSGYM";
+this.lblMarca.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+this.lblUsuarioRol.Dock = System.Windows.Forms.DockStyle.None;
+this.lblUsuarioRol.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(231)))), ((int)(((byte)(255)))));
+this.lblUsuarioRol.Location = new System.Drawing.Point(24, 60);
+this.lblUsuarioRol.Margin = new System.Windows.Forms.Padding(0);
+this.lblUsuarioRol.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+this.lblUsuarioRol.AutoSize = false;
+this.lblUsuarioRol.Name = "lblUsuarioRol";
+this.lblUsuarioRol.Size = new System.Drawing.Size(1234, 26);
+this.lblUsuarioRol.TabIndex = 1;
+this.lblUsuarioRol.Text = "Usuario: Entrenador de diseno    |    Rol: Entrenador";
+this.lblModuloActual.AutoEllipsis = false;
+this.lblModuloActual.Dock = System.Windows.Forms.DockStyle.None;
+this.lblModuloActual.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
+this.lblModuloActual.ForeColor = System.Drawing.Color.White;
+this.lblModuloActual.Location = new System.Drawing.Point(310, 8);
+this.lblModuloActual.Margin = new System.Windows.Forms.Padding(12, 0, 12, 0);
+this.lblModuloActual.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+this.lblModuloActual.Text = "Resumen general";
+this.lblModuloActual.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+this.lblModuloActual.Name = "lblModuloActual";
+this.lblModuloActual.Padding = new System.Windows.Forms.Padding(0);
+this.lblModuloActual.Size = new System.Drawing.Size(662, 27);
+this.lblModuloActual.TabIndex = 4;
+this.lblSubtituloModulo.Name = "lblSubtituloModulo";
+this.lblSubtituloModulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+this.lblSubtituloModulo.Location = new System.Drawing.Point(310, 35);
+this.lblSubtituloModulo.Size = new System.Drawing.Size(662, 24);
+this.lblSubtituloModulo.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+this.lblSubtituloModulo.ForeColor = System.Drawing.Color.White;
+this.lblSubtituloModulo.TabIndex = 5;
+this.btnVolver.Name = "btnVolver";
+this.btnVolver.Text = "Volver";
+this.btnVolver.Location = new System.Drawing.Point(978, 12);
+this.btnVolver.Size = new System.Drawing.Size(100, 36);
+this.btnVolver.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+this.btnVolver.BackColor = System.Drawing.Color.White;
+this.btnVolver.ForeColor = System.Drawing.Color.FromArgb(79, 70, 229);
+this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+this.btnVolver.FlatAppearance.BorderSize = 0;
+this.btnVolver.Enabled = false;
+this.btnVolver.TabIndex = 1;
+this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
+this.btnCambiarCuenta.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+this.btnCambiarCuenta.BackColor = System.Drawing.Color.White;
+this.btnCambiarCuenta.FlatAppearance.BorderSize = 0;
+this.btnCambiarCuenta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+this.btnCambiarCuenta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+this.btnCambiarCuenta.Location = new System.Drawing.Point(1090, 12);
+this.btnCambiarCuenta.Margin = new System.Windows.Forms.Padding(16, 0, 0, 0);
+this.btnCambiarCuenta.Dock = System.Windows.Forms.DockStyle.None;
+this.btnCambiarCuenta.Name = "btnCambiarCuenta";
+this.btnCambiarCuenta.Size = new System.Drawing.Size(168, 36);
+this.btnCambiarCuenta.TabIndex = 2;
+this.btnCambiarCuenta.Text = "Cambiar de cuenta";
+this.btnCambiarCuenta.UseVisualStyleBackColor = false;
+this.btnCambiarCuenta.Click += new System.EventHandler(this.btnCambiarCuenta_Click);
+this.btnSalir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+this.btnSalir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+this.btnSalir.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(202)))), ((int)(((byte)(202)))));
+this.btnSalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+this.btnSalir.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+this.btnSalir.Location = new System.Drawing.Point(14, 16);
+this.btnSalir.Dock = System.Windows.Forms.DockStyle.Bottom;
+this.btnSalir.Name = "btnSalir";
+this.btnSalir.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
+this.btnSalir.Size = new System.Drawing.Size(246, 46);
+this.btnSalir.TabIndex = 0;
+this.btnSalir.Text = "Salir";
+this.btnSalir.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+this.btnSalir.UseVisualStyleBackColor = false;
+this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
+            this.panelMenu.Controls.Add(this.btnSalir);
             this.panelMenu.SuspendLayout();
             this.panelOpciones.SuspendLayout();
-            this.panelPie.SuspendLayout();
             this.panelContenido.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelEncabezado
             // 
-            this.panelEncabezado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(116)))), ((int)(((byte)(144)))));
-            this.panelEncabezado.Controls.Add(this.layoutEncabezado);
-            this.panelEncabezado.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEncabezado.Location = new System.Drawing.Point(0, 0);
-            this.panelEncabezado.Name = "panelEncabezado";
-            this.panelEncabezado.Padding = new System.Windows.Forms.Padding(24, 8, 24, 8);
-            this.panelEncabezado.Size = new System.Drawing.Size(1200, 90);
-            this.panelEncabezado.TabIndex = 0;
+
+
+
+
+
+
+
             // 
-            // layoutEncabezado
             // 
-            this.layoutEncabezado.ColumnCount = 3;
-            this.layoutEncabezado.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 250F));
-            this.layoutEncabezado.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.layoutEncabezado.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 190F));
-            this.layoutEncabezado.Controls.Add(this.panelIdentidad, 0, 0);
-            this.layoutEncabezado.Controls.Add(this.lblModuloActual, 1, 0);
-            this.layoutEncabezado.Controls.Add(this.btnCambiarCuenta, 2, 0);
-            this.layoutEncabezado.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutEncabezado.Location = new System.Drawing.Point(24, 8);
-            this.layoutEncabezado.Margin = new System.Windows.Forms.Padding(0);
-            this.layoutEncabezado.Name = "layoutEncabezado";
-            this.layoutEncabezado.RowCount = 1;
-            this.layoutEncabezado.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.layoutEncabezado.Size = new System.Drawing.Size(1152, 74);
-            this.layoutEncabezado.TabIndex = 3;
             // 
-            // panelIdentidad
             // 
-            this.panelIdentidad.Controls.Add(this.lblUsuarioRol);
-            this.panelIdentidad.Controls.Add(this.lblMarca);
-            this.panelIdentidad.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelIdentidad.Location = new System.Drawing.Point(0, 0);
-            this.panelIdentidad.Margin = new System.Windows.Forms.Padding(0);
-            this.panelIdentidad.Name = "panelIdentidad";
-            this.panelIdentidad.Size = new System.Drawing.Size(250, 74);
-            this.panelIdentidad.TabIndex = 0;
             // 
             // lblUsuarioRol
             // 
-            this.lblUsuarioRol.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblUsuarioRol.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(250)))), ((int)(((byte)(254)))));
-            this.lblUsuarioRol.Location = new System.Drawing.Point(0, 48);
-            this.lblUsuarioRol.Margin = new System.Windows.Forms.Padding(0);
-            this.lblUsuarioRol.Name = "lblUsuarioRol";
-            this.lblUsuarioRol.Size = new System.Drawing.Size(250, 26);
-            this.lblUsuarioRol.TabIndex = 1;
-            this.lblUsuarioRol.Text = "Usuario: Entrenador de diseno    |    Rol: Entrenador";
+
+
+
+
+
+
+
+
             // 
             // lblMarca
             // 
-            this.lblMarca.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblMarca.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
-            this.lblMarca.ForeColor = System.Drawing.Color.White;
-            this.lblMarca.Location = new System.Drawing.Point(0, 0);
-            this.lblMarca.Margin = new System.Windows.Forms.Padding(0);
-            this.lblMarca.Name = "lblMarca";
-            this.lblMarca.Size = new System.Drawing.Size(250, 36);
-            this.lblMarca.TabIndex = 0;
-            this.lblMarca.Text = "SYSGYM";
-            this.lblMarca.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+
+
+
+
+
+
+
+
+
+
             // 
             // lblModuloActual
             // 
-            this.lblModuloActual.AutoEllipsis = true;
-            this.lblModuloActual.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblModuloActual.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
-            this.lblModuloActual.ForeColor = System.Drawing.Color.White;
-            this.lblModuloActual.Location = new System.Drawing.Point(262, 0);
-            this.lblModuloActual.Margin = new System.Windows.Forms.Padding(12, 0, 12, 0);
-            this.lblModuloActual.Name = "lblModuloActual";
-            this.lblModuloActual.Padding = new System.Windows.Forms.Padding(8, 0, 8, 0);
-            this.lblModuloActual.Size = new System.Drawing.Size(688, 74);
-            this.lblModuloActual.TabIndex = 4;
-            this.lblModuloActual.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+
+
+
+
+
+
+
+
+
+
+
             // 
             // btnCambiarCuenta
             // 
-            this.btnCambiarCuenta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCambiarCuenta.BackColor = System.Drawing.Color.White;
-            this.btnCambiarCuenta.FlatAppearance.BorderSize = 0;
-            this.btnCambiarCuenta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCambiarCuenta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(116)))), ((int)(((byte)(144)))));
-            this.btnCambiarCuenta.Location = new System.Drawing.Point(978, 0);
-            this.btnCambiarCuenta.Margin = new System.Windows.Forms.Padding(16, 0, 0, 0);
-            this.btnCambiarCuenta.Name = "btnCambiarCuenta";
-            this.btnCambiarCuenta.Size = new System.Drawing.Size(174, 38);
-            this.btnCambiarCuenta.TabIndex = 2;
-            this.btnCambiarCuenta.Text = "Cambiar de cuenta";
-            this.btnCambiarCuenta.UseVisualStyleBackColor = false;
-            this.btnCambiarCuenta.Click += new System.EventHandler(this.btnCambiarCuenta_Click);
+
+
+
+
+
+
+
+
+
+
+
+
+
             // 
             // panelMenu
             // 
             this.panelMenu.BackColor = System.Drawing.Color.White;
             this.panelMenu.Controls.Add(this.panelOpciones);
-            this.panelMenu.Controls.Add(this.panelPie);
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelMenu.Location = new System.Drawing.Point(0, 90);
             this.panelMenu.MinimumSize = new System.Drawing.Size(264, 0);
             this.panelMenu.Name = "panelMenu";
-            this.panelMenu.Size = new System.Drawing.Size(264, 670);
+            this.panelMenu.Size = new System.Drawing.Size(274, 659);
             this.panelMenu.TabIndex = 1;
             // 
             // panelOpciones
@@ -181,7 +246,7 @@ namespace exxen2._0.capaVisual.Entrenador
             this.panelOpciones.Location = new System.Drawing.Point(0, 0);
             this.panelOpciones.Name = "panelOpciones";
             this.panelOpciones.Padding = new System.Windows.Forms.Padding(14, 10, 14, 10);
-            this.panelOpciones.Size = new System.Drawing.Size(264, 594);
+            this.panelOpciones.Size = new System.Drawing.Size(274, 613);
             this.panelOpciones.TabIndex = 0;
             // 
             // lblTrabajo
@@ -265,34 +330,24 @@ namespace exxen2._0.capaVisual.Entrenador
             this.btnEjercicios.Visible = false;
             this.btnEjercicios.Click += new System.EventHandler(this.btnEjercicios_Click);
             // 
-            // panelPie
             // 
-            this.panelPie.BackColor = System.Drawing.Color.White;
-            this.panelPie.Controls.Add(this.btnSalir);
-            this.panelPie.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelPie.Location = new System.Drawing.Point(0, 594);
-            this.panelPie.Name = "panelPie";
-            this.panelPie.Padding = new System.Windows.Forms.Padding(14, 12, 14, 16);
-            this.panelPie.Size = new System.Drawing.Size(264, 76);
-            this.panelPie.TabIndex = 1;
             // 
             // btnSalir
             // 
-            this.btnSalir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSalir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.btnSalir.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(202)))), ((int)(((byte)(202)))));
-            this.btnSalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSalir.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-            this.btnSalir.Location = new System.Drawing.Point(14, 14);
-            this.btnSalir.Name = "btnSalir";
-            this.btnSalir.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.btnSalir.Size = new System.Drawing.Size(236, 46);
-            this.btnSalir.TabIndex = 0;
-            this.btnSalir.Text = "Salir";
-            this.btnSalir.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSalir.UseVisualStyleBackColor = false;
-            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             // 
             // panelContenido
             // 
@@ -322,7 +377,7 @@ namespace exxen2._0.capaVisual.Entrenador
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
-            this.ClientSize = new System.Drawing.Size(1200, 760);
+            this.ClientSize = new System.Drawing.Size(1282, 749);
             this.Controls.Add(this.panelContenido);
             this.Controls.Add(this.panelMenu);
             this.Controls.Add(this.panelEncabezado);
@@ -334,11 +389,8 @@ namespace exxen2._0.capaVisual.Entrenador
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.PanelEntrenador_Load);
             this.panelEncabezado.ResumeLayout(false);
-            this.layoutEncabezado.ResumeLayout(false);
-            this.panelIdentidad.ResumeLayout(false);
             this.panelMenu.ResumeLayout(false);
             this.panelOpciones.ResumeLayout(false);
-            this.panelPie.ResumeLayout(false);
             this.panelContenido.ResumeLayout(false);
             this.ResumeLayout(false);
 

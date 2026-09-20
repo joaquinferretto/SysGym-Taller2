@@ -80,7 +80,15 @@ namespace exxen2._0.capaVisual.Entrenador
         /* Al hacer clic en btnCambiarCuenta, cierra la sesión para volver al acceso. */
         private void EstablecerModuloActual(string titulo)
         {
-            lblModuloActual.Text = titulo ?? string.Empty;
+            var partes = (titulo ?? string.Empty).Split(new[] { '|' }, 2);
+            lblModuloActual.Text = string.IsNullOrWhiteSpace(titulo) ? "Inicio" : partes[0].Trim();
+            lblSubtituloModulo.Text = partes.Length > 1 ? partes[1].Trim() : string.Empty;
+            btnVolver.Enabled = !string.IsNullOrWhiteSpace(titulo);
+        }
+
+        private void btnVolver_Click(object origen, EventArgs e)
+        {
+            navegacion.VolverAlInicio();
         }
 
         private void btnCambiarCuenta_Click(object origen, EventArgs e)
