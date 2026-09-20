@@ -6,11 +6,11 @@ using System.Windows.Forms;
 
 namespace exxen2._0.capaVisual.Compartido
 {
-    /* Contiene una imagen validada en memoria y su extensión para guardarla después. */
+    /* Conserva el archivo externo para guardar y una copia normalizada solo para vista previa. */
     internal sealed class ImagenSeleccionada
     {
         public byte[] Contenido { get; set; }
-        public string Extension { get; set; }
+        public byte[] VistaPrevia { get; set; }
     }
 
     /* Agrupa validaciones de entrada y mensajes compartidos por los formularios estándar. */
@@ -58,33 +58,26 @@ namespace exxen2._0.capaVisual.Compartido
             }
         }
 
-        /* Permite elegir una foto y limita la lectura antes de validar sus bytes mediante lógica. */
-        internal static byte[] SeleccionarFoto(IWin32Window propietario, string sexo)
-        {
-            var seleccion = SeleccionarImagen(propietario, sexo);
-            return seleccion == null ? null : seleccion.Contenido;
-        }
-
-        /* Permite seleccionar una imagen PNG o JPEG y conserva la extensión para su almacenamiento. */
+        /* Selecciona bytes externos; la firma real y la vista segura dependen del procesador central. */
         internal static ImagenSeleccionada SeleccionarImagen(IWin32Window propietario, string sexo = null)
         {
             using (var dialogo = new OpenFileDialog())
             {
-                dialogo.Filter = "Imágenes|*.png;*.jpg;*.jpeg";
+                dialogo.Filter = "Imágenes|*.jpg;*.jpeg;*.png;*.bmp;*.gif;*.tif;*.tiff;*.webp|Todos los archivos|*.*";
                 if (dialogo.ShowDialog(propietario) != DialogResult.OK)
                     return null;
                 using (var archivo = System.IO.File.OpenRead(dialogo.FileName))
                 {
-                    if (archivo.Length > capaLogica.ValidacionesGimnasio.TamanoMaximoFoto)
-                        throw new InvalidOperationException("La imagen no puede superar los 2 MB.");
+                    if (archivo.Length > capaLogica.ProcesadorImagenes.TamanoMaximoBytes)
+                        throw new InvalidOperationException("La imagen supera el tamaño máximo permitido de 10 MB.");
                     using (var lector = new System.IO.BinaryReader(archivo))
                     {
-                        var contenido = lector.ReadBytes(capaLogica.ValidacionesGimnasio.TamanoMaximoFoto + 1);
-                        capaLogica.ValidacionesGimnasio.ValidarFotoYSexo(contenido, sexo);
+                        var contenido = lector.ReadBytes(capaLogica.ProcesadorImagenes.TamanoMaximoBytes + 1);
+                        var normalizada = capaLogica.ProcesadorImagenes.Procesar(contenido);
                         return new ImagenSeleccionada
                         {
                             Contenido = contenido,
-                            Extension = capaLogica.AlmacenamientoImagenes.NormalizarExtension(Path.GetExtension(dialogo.FileName))
+                            VistaPrevia = normalizada.Contenido
                         };
                     }
                 }

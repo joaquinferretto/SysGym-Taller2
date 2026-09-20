@@ -22,11 +22,11 @@ namespace exxen2._0.capaLogica
         /* Valida y registra usuarios del sistema mediante la unidad de trabajo, conservando sus reglas de alta. */
         public UsuarioSistema Crear(UsuarioSistema usuario, string clave)
         {
-            return Crear(usuario, clave, null, null);
+            return Crear(usuario, clave, null);
         }
 
         /* Valida, copia la foto seleccionada a Datos y registra solo su ruta relativa. */
-        public UsuarioSistema Crear(UsuarioSistema usuario, string clave, byte[] fotoContenido, string extensionFoto)
+        public UsuarioSistema Crear(UsuarioSistema usuario, string clave, byte[] fotoContenido)
         {
             ValidarDatos(usuario);
             if (string.IsNullOrWhiteSpace(clave))
@@ -42,7 +42,7 @@ namespace exxen2._0.capaLogica
                     var rol = ObtenerRolActivo(datos, usuario.IdRol);
                     ValidarUnicidad(datos, usuario.DNI, usuario.NombreUsuario, 0);
                     if (fotoContenido != null)
-                        rutaNueva = AlmacenamientoImagenes.GuardarUsuario(fotoContenido, extensionFoto);
+                        rutaNueva = AlmacenamientoImagenes.GuardarUsuario(fotoContenido);
                     usuario.FotoRuta = rutaNueva ?? NormalizarRuta(usuario.FotoRuta);
                     usuario.IdRol = rol.IdRol;
                     usuario.Rol = rol;
@@ -64,11 +64,11 @@ namespace exxen2._0.capaLogica
         /* Valida y guarda los cambios de usuarios del sistema sobre el registro existente. */
         public UsuarioSistema Modificar(UsuarioSistema usuario, string nuevaClave = null)
         {
-            return Modificar(usuario, nuevaClave, null, null);
+            return Modificar(usuario, nuevaClave, null);
         }
 
         /* Actualiza el usuario y reemplaza o quita su foto sin guardar binarios en SQL. */
-        public UsuarioSistema Modificar(UsuarioSistema usuario, string nuevaClave, byte[] fotoContenido, string extensionFoto)
+        public UsuarioSistema Modificar(UsuarioSistema usuario, string nuevaClave, byte[] fotoContenido)
         {
             ValidarDatos(usuario);
             var rutaNueva = (string)null;
@@ -87,7 +87,7 @@ namespace exxen2._0.capaLogica
                 {
                     var rutaAnterior = existente.FotoRuta;
                     if (fotoContenido != null)
-                        rutaNueva = AlmacenamientoImagenes.GuardarUsuario(fotoContenido, extensionFoto);
+                        rutaNueva = AlmacenamientoImagenes.GuardarUsuario(fotoContenido);
 
                     existente.Nombre = usuario.Nombre;
                     existente.Apellido = usuario.Apellido;

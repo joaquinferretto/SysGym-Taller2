@@ -21,7 +21,6 @@ namespace exxen2._0.capaVisual.Compartido
         private bool estadoSeleccionado = true;
         private readonly Color colorPrimario;
         private byte[] fotoSeleccionada;
-        private string extensionFotoSeleccionada;
         private string fotoRutaSeleccionada;
         private readonly int idSocioInicial;
         /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
@@ -123,7 +122,6 @@ namespace exxen2._0.capaVisual.Compartido
                     return;
                 estadoSeleccionado = socio.Estado;
                 fotoSeleccionada = null;
-                extensionFotoSeleccionada = null;
                 fotoRutaSeleccionada = socio.FotoRuta;
                 sexo.SelectedIndex = socio.Sexo == "M" ? 0 : socio.Sexo == "F" ? 1 : -1;
                 AyudaFormularioVisual.MostrarFotoRuta(fotoSocio, fotoRutaSeleccionada, socio.Sexo);
@@ -150,7 +148,6 @@ namespace exxen2._0.capaVisual.Compartido
             idSeleccionado = 0;
             estadoSeleccionado = true;
             fotoSeleccionada = null;
-            extensionFotoSeleccionada = null;
             fotoRutaSeleccionada = null;
             sexo.SelectedIndex = -1;
             AyudaFormularioVisual.MostrarFotoRuta(fotoSocio, null, null);
@@ -214,7 +211,7 @@ namespace exxen2._0.capaVisual.Compartido
             {
                 if (!permitirEdicion || idSeleccionado != 0)
                     return;
-                logica.Crear(LeerSocio(), fotoSeleccionada, extensionFotoSeleccionada);
+                logica.Crear(LeerSocio(), fotoSeleccionada);
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Socio creado correctamente.", true);
@@ -232,7 +229,7 @@ namespace exxen2._0.capaVisual.Compartido
             {
                 if (!permitirEdicion || idSeleccionado == 0)
                     throw new InvalidOperationException("Selecciona un socio.");
-                logica.Modificar(LeerSocio(), fotoSeleccionada, extensionFotoSeleccionada);
+                logica.Modificar(LeerSocio(), fotoSeleccionada);
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Socio actualizado correctamente.");
@@ -358,9 +355,8 @@ namespace exxen2._0.capaVisual.Compartido
                 var seleccion = AyudaFormularioVisual.SeleccionarImagen(this, SexoSeleccionado());
                 if (seleccion == null)
                     return;
-                AyudaFormularioVisual.MostrarFoto(fotoSocio, seleccion.Contenido, SexoSeleccionado());
+                AyudaFormularioVisual.MostrarFoto(fotoSocio, seleccion.VistaPrevia, SexoSeleccionado());
                 fotoSeleccionada = seleccion.Contenido;
-                extensionFotoSeleccionada = seleccion.Extension;
                 fotoRutaSeleccionada = null;
             }
             catch (Exception ex)
@@ -379,7 +375,6 @@ namespace exxen2._0.capaVisual.Compartido
             }
 
             fotoSeleccionada = null;
-            extensionFotoSeleccionada = null;
             fotoRutaSeleccionada = null;
             sexo_SelectedIndexChanged(origen, e);
         }

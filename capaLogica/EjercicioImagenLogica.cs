@@ -26,9 +26,8 @@ namespace exxen2._0.capaLogica
         }
 
         /* Copia una imagen administrada y registra su siguiente orden para el ejercicio. */
-        public EjercicioImagen Agregar(int idEjercicio, byte[] contenido, string extension)
+        public EjercicioImagen Agregar(int idEjercicio, byte[] contenido)
         {
-            ValidacionesGimnasio.ValidarImagen(contenido);
             var rutaNueva = (string)null;
             try
             {
@@ -38,16 +37,21 @@ namespace exxen2._0.capaLogica
                     if (ejercicio == null || !ejercicio.Estado)
                         throw new InvalidOperationException("El ejercicio no existe o está inactivo.");
 
-                    var orden = datos.EjercicioImagenes
+                    var imagenesExistentes = datos.EjercicioImagenes
                         .Where(i => i.IdEjercicio == idEjercicio)
-                        .Select(i => (int?)i.Orden)
-                        .Max() ?? 0;
-                    rutaNueva = AlmacenamientoImagenes.GuardarEjercicio(contenido, extension, idEjercicio);
+                        .OrderBy(i => i.Orden)
+                        .ThenBy(i => i.IdEjercicioImagen)
+                        .ToList();
+                    ValidarLimiteParaAgregar(imagenesExistentes.Count);
+
+                    for (var indice = 0; indice < imagenesExistentes.Count; indice++)
+                        imagenesExistentes[indice].Orden = indice + 1;
+                    rutaNueva = AlmacenamientoImagenes.GuardarEjercicio(contenido, idEjercicio);
                     var imagen = new EjercicioImagen
                     {
                         IdEjercicio = idEjercicio,
                         RutaRelativa = rutaNueva,
-                        Orden = orden + 1
+                        Orden = imagenesExistentes.Count + 1
                     };
                     datos.EjercicioImagenes.Agregar(imagen);
                     datos.GuardarCambios();
@@ -62,6 +66,15 @@ namespace exxen2._0.capaLogica
             }
         }
 
+        /* Mantiene la regla en lógica aunque la pantalla deshabilite preventivamente el botón. */
+        public static void ValidarLimiteParaAgregar(int cantidadActual)
+        {
+            if (cantidadActual < 0)
+                throw new ArgumentOutOfRangeException("cantidadActual");
+            if (cantidadActual >= ProcesadorImagenes.MaxImagenesPorEjercicio)
+                throw new InvalidOperationException("Un ejercicio puede tener como máximo 4 imágenes.");
+        }
+
         /* Quita la relación y borra el archivo si no quedó referenciado por otra imagen. */
         public void Quitar(int idEjercicioImagen)
         {
@@ -72,8 +85,13 @@ namespace exxen2._0.capaLogica
                     throw new InvalidOperationException("La imagen del ejercicio no existe.");
 
                 var ruta = imagen.RutaRelativa;
+                var idEjercicio = imagen.IdEjercicio;
                 var compartida = datos.EjercicioImagenes.Existe(i => i.RutaRelativa == ruta && i.IdEjercicioImagen != idEjercicioImagen);
                 datos.EjercicioImagenes.Eliminar(imagen);
+                var restantes = datos.EjercicioImagenes.Where(i => i.IdEjercicio == idEjercicio && i.IdEjercicioImagen != idEjercicioImagen)
+                    .OrderBy(i => i.Orden).ThenBy(i => i.IdEjercicioImagen).ToList();
+                for (var indice = 0; indice < restantes.Count; indice++)
+                    restantes[indice].Orden = indice + 1;
                 datos.GuardarCambios();
                 if (!compartida)
                     AlmacenamientoImagenes.Eliminar(ruta);

@@ -1,6 +1,4 @@
 using System;
-using System.Drawing;
-using System.IO;
 using System.Linq;
 using exxen2._0.capaDatos.Entidades;
 
@@ -9,7 +7,7 @@ namespace exxen2._0.capaLogica
     /* Centraliza las comprobaciones de roles activos para los casos de uso del gimnasio. */
     public static class ValidacionesGimnasio
     {
-        public const int TamanoMaximoFoto = 2 * 1024 * 1024;
+        public const int TamanoMaximoFoto = ProcesadorImagenes.TamanoMaximoBytes;
 
         /* Valida un nombre humano sin aceptar numeros ni simbolos ajenos al nombre. */
         public static void ValidarNombre(string valor, string campo)
@@ -49,7 +47,7 @@ namespace exxen2._0.capaLogica
                 throw new InvalidOperationException(mensajeEdad);
         }
 
-        /* Valida el sexo opcional, el límite de dos MiB y que la foto sea una imagen decodificable. */
+        /* Valida el sexo opcional y delega la imagen a la política técnica central. */
         public static void ValidarFotoYSexo(byte[] foto, string sexo)
         {
             if (sexo != null && sexo != "M" && sexo != "F")
@@ -59,31 +57,10 @@ namespace exxen2._0.capaLogica
             ValidarImagen(foto);
         }
 
-        /* Comprueba el tamaño y la decodificación real de una imagen PNG o JPEG. */
+        /* Comprueba firma, tamaño, dimensiones y decodificación mediante el procesador central. */
         public static void ValidarImagen(byte[] imagen)
         {
-            if (imagen == null || imagen.Length == 0)
-                throw new InvalidOperationException("Seleccione un archivo de imagen válido.");
-            if (imagen.Length > TamanoMaximoFoto)
-                throw new InvalidOperationException("La imagen no puede superar los 2 MB.");
-
-            try
-            {
-                using (var memoria = new MemoryStream(imagen))
-                using (var cargada = Image.FromStream(memoria, true, true))
-                {
-                    if (cargada.Width <= 0 || cargada.Height <= 0)
-                        throw new InvalidOperationException("Seleccione un archivo de imagen válido.");
-                }
-            }
-            catch (InvalidOperationException)
-            {
-                throw;
-            }
-            catch (Exception excepcion)
-            {
-                throw new InvalidOperationException("Seleccione un archivo de imagen válido.", excepcion);
-            }
+            ProcesadorImagenes.Validar(imagen);
         }
 
         public const int PrimerDiaRutina = 1;

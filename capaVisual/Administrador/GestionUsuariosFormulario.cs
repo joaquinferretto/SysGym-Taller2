@@ -178,7 +178,7 @@ namespace exxen2._0.capaVisual.Administrador
             {
                 if (idSeleccionado != 0)
                     return;
-                logica.Crear(LeerUsuario(), clave.Text, fotoSeleccionada == null ? null : fotoSeleccionada.Contenido, fotoSeleccionada == null ? null : fotoSeleccionada.Extension);
+                logica.Crear(LeerUsuario(), clave.Text, fotoSeleccionada == null ? null : fotoSeleccionada.Contenido);
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Usuario creado correctamente.", true);
@@ -203,7 +203,7 @@ namespace exxen2._0.capaVisual.Administrador
             {
                 if (idSeleccionado == 0)
                     throw new InvalidOperationException("Selecciona un usuario.");
-                logica.Modificar(LeerUsuario(), clave.Text, fotoSeleccionada == null ? null : fotoSeleccionada.Contenido, fotoSeleccionada == null ? null : fotoSeleccionada.Extension);
+                logica.Modificar(LeerUsuario(), clave.Text, fotoSeleccionada == null ? null : fotoSeleccionada.Contenido);
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Usuario actualizado correctamente.");
@@ -327,7 +327,7 @@ namespace exxen2._0.capaVisual.Administrador
                 var seleccion = AyudaFormularioVisual.SeleccionarImagen(this, SexoSeleccionado());
                 if (seleccion == null)
                     return;
-                AyudaFormularioVisual.MostrarFoto(fotoUsuario, seleccion.Contenido, SexoSeleccionado());
+                AyudaFormularioVisual.MostrarFoto(fotoUsuario, seleccion.VistaPrevia, SexoSeleccionado());
                 fotoSeleccionada = seleccion;
             }
             catch (Exception ex)

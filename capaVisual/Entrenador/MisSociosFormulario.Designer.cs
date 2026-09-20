@@ -51,6 +51,7 @@ namespace exxen2._0.capaVisual.Entrenador
         private System.Windows.Forms.Button asignarRutina;
         private System.Windows.Forms.Button verRutina;
         private System.Windows.Forms.Button crearPersonalizada;
+        private System.Windows.Forms.Button exportarPdf;
 
         protected override void Dispose(bool liberarRecursos)
         {
@@ -109,6 +110,7 @@ namespace exxen2._0.capaVisual.Entrenador
             asignarRutina = new System.Windows.Forms.Button();
             verRutina = new System.Windows.Forms.Button();
             crearPersonalizada = new System.Windows.Forms.Button();
+            exportarPdf = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(tabla)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(tablaRutina)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(splitContenido)).BeginInit();
@@ -341,10 +343,11 @@ namespace exxen2._0.capaVisual.Entrenador
             grupoRutina.Controls.Add(asignarRutina);
             grupoRutina.Controls.Add(verRutina);
             grupoRutina.Controls.Add(crearPersonalizada);
+            grupoRutina.Controls.Add(exportarPdf);
             grupoRutina.Controls.Add(tablaRutina);
             tablaRutina.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             tablaRutina.Location = new System.Drawing.Point(12, 30);
-            tablaRutina.Size = new System.Drawing.Size(694, 234);
+            tablaRutina.Size = new System.Drawing.Size(694, 194);
             tablaRutina.AllowUserToAddRows = false;
             tablaRutina.AllowUserToDeleteRows = false;
             tablaRutina.AllowUserToResizeRows = false;
@@ -369,7 +372,7 @@ namespace exxen2._0.capaVisual.Entrenador
             lblAccionInfo.AutoSize = false;
             lblAccionInfo.ForeColor = System.Drawing.Color.FromArgb(71, 85, 105);
             lblAccionInfo.Margin = new System.Windows.Forms.Padding(0, 4, 8, 0);
-            lblAccionInfo.Location = new System.Drawing.Point(12, 274);
+            lblAccionInfo.Location = new System.Drawing.Point(12, 234);
             lblAccionInfo.Size = new System.Drawing.Size(694, 44);
             lblAccionInfo.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             lblAccionInfo.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
@@ -377,8 +380,8 @@ namespace exxen2._0.capaVisual.Entrenador
             lblAccionInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             rutinaDisponible.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             rutinaDisponible.Margin = new System.Windows.Forms.Padding(0, 4, 8, 0);
-            rutinaDisponible.Location = new System.Drawing.Point(12, 336);
-            rutinaDisponible.Size = new System.Drawing.Size(350, 25);
+            rutinaDisponible.Location = new System.Drawing.Point(12, 296);
+            rutinaDisponible.Size = new System.Drawing.Size(550, 25);
             rutinaDisponible.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             rutinaDisponible.TabIndex = 6;
             rutinaDisponible.Visible = false;
@@ -389,7 +392,7 @@ namespace exxen2._0.capaVisual.Entrenador
             asignarRutina.ForeColor = System.Drawing.Color.White;
             asignarRutina.Margin = new System.Windows.Forms.Padding(0, 2, 8, 0);
             asignarRutina.Size = new System.Drawing.Size(136, 34);
-            asignarRutina.Location = new System.Drawing.Point(370, 332);
+            asignarRutina.Location = new System.Drawing.Point(570, 292);
             asignarRutina.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
             asignarRutina.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             asignarRutina.TabIndex = 7;
@@ -403,7 +406,7 @@ namespace exxen2._0.capaVisual.Entrenador
             verRutina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             verRutina.Margin = new System.Windows.Forms.Padding(0, 2, 8, 0);
             verRutina.Size = new System.Drawing.Size(192, 34);
-            verRutina.Location = new System.Drawing.Point(514, 332);
+            verRutina.Location = new System.Drawing.Point(370, 332);
             verRutina.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
             verRutina.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             verRutina.TabIndex = 8;
@@ -417,7 +420,7 @@ namespace exxen2._0.capaVisual.Entrenador
             crearPersonalizada.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             crearPersonalizada.Margin = new System.Windows.Forms.Padding(0, 2, 8, 0);
             crearPersonalizada.Size = new System.Drawing.Size(192, 34);
-            crearPersonalizada.Location = new System.Drawing.Point(514, 332);
+            crearPersonalizada.Location = new System.Drawing.Point(370, 332);
             crearPersonalizada.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
             crearPersonalizada.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             crearPersonalizada.TabIndex = 9;
@@ -425,6 +428,19 @@ namespace exxen2._0.capaVisual.Entrenador
             crearPersonalizada.UseVisualStyleBackColor = false;
             crearPersonalizada.Visible = false;
             crearPersonalizada.Click += new System.EventHandler(crearPersonalizada_Click);
+            exportarPdf.Name = "exportarPdf";
+            exportarPdf.Text = "Exportar PDF";
+            exportarPdf.Size = new System.Drawing.Size(136, 34);
+            exportarPdf.Location = new System.Drawing.Point(570, 332);
+            exportarPdf.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            exportarPdf.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            exportarPdf.BackColor = System.Drawing.Color.FromArgb(226, 232, 240);
+            exportarPdf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            exportarPdf.FlatAppearance.BorderSize = 0;
+            exportarPdf.UseVisualStyleBackColor = false;
+            exportarPdf.Enabled = false;
+            exportarPdf.TabIndex = 10;
+            exportarPdf.Click += new System.EventHandler(exportarPdf_Click);
 
             splitContenido.Panel1.Controls.Add(panelListado);
             splitContenido.Panel2.Controls.Add(panelDetalle);

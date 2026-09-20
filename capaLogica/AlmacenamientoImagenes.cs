@@ -12,24 +12,24 @@ namespace exxen2._0.capaLogica
         private const string CarpetaEjercicios = "Ejercicios";
 
         /* Guarda una foto de socio dentro de Datos/Imagenes/Socios y devuelve la ruta relativa. */
-        public static string GuardarSocio(byte[] contenido, string extension)
+        public static string GuardarSocio(byte[] contenido)
         {
-            return Guardar(contenido, extension, CarpetaSocios);
+            return Guardar(contenido, CarpetaSocios);
         }
 
         /* Guarda una foto de usuario dentro de Datos/Imagenes/Usuarios y devuelve la ruta relativa. */
-        public static string GuardarUsuario(byte[] contenido, string extension)
+        public static string GuardarUsuario(byte[] contenido)
         {
-            return Guardar(contenido, extension, CarpetaUsuarios);
+            return Guardar(contenido, CarpetaUsuarios);
         }
 
         /* Guarda una imagen de ejercicio dentro de Datos/Imagenes/Ejercicios/{id}. */
-        public static string GuardarEjercicio(byte[] contenido, string extension, int idEjercicio)
+        public static string GuardarEjercicio(byte[] contenido, int idEjercicio)
         {
             if (idEjercicio <= 0)
                 throw new InvalidOperationException("Primero guarde el ejercicio antes de agregar imágenes.");
 
-            return Guardar(contenido, extension, Path.Combine(CarpetaEjercicios, idEjercicio.ToString()));
+            return Guardar(contenido, Path.Combine(CarpetaEjercicios, idEjercicio.ToString()));
         }
 
         /* Resuelve una ruta relativa de imagen dentro de la carpeta portable Datos. */
@@ -55,17 +55,6 @@ namespace exxen2._0.capaLogica
                 throw new InvalidOperationException("La ruta de imagen debe ser relativa a Datos.");
         }
 
-        /* Valida y normaliza las únicas extensiones aceptadas por la aplicación. */
-        public static string NormalizarExtension(string extension)
-        {
-            var normalizada = (extension ?? string.Empty).Trim().ToLowerInvariant();
-            if (!normalizada.StartsWith("."))
-                normalizada = "." + normalizada;
-            if (normalizada != ".jpg" && normalizada != ".jpeg" && normalizada != ".png")
-                throw new InvalidOperationException("Seleccione un archivo de imagen válido.");
-            return normalizada;
-        }
-
         /* Elimina un archivo administrado solo cuando el llamador confirmó que no tiene referencias. */
         public static void Eliminar(string rutaRelativa)
         {
@@ -74,16 +63,32 @@ namespace exxen2._0.capaLogica
                 File.Delete(ruta);
         }
 
-        private static string Guardar(byte[] contenido, string extension, string carpeta)
+        private static string Guardar(byte[] contenido, string carpeta)
         {
-            ValidacionesGimnasio.ValidarImagen(contenido);
-            var extensionNormalizada = NormalizarExtension(extension);
+            var normalizada = ProcesadorImagenes.Procesar(contenido);
             var carpetaAbsoluta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Datos", CarpetaImagenes, carpeta);
             Directory.CreateDirectory(carpetaAbsoluta);
-            var nombre = Guid.NewGuid().ToString("N") + extensionNormalizada;
+            var nombre = Guid.NewGuid().ToString("N") + normalizada.Extension;
             var rutaAbsoluta = Path.Combine(carpetaAbsoluta, nombre);
-            File.WriteAllBytes(rutaAbsoluta, contenido);
-            return Path.Combine(CarpetaImagenes, carpeta, nombre).Replace(Path.DirectorySeparatorChar, '\\');
+            var temporal = rutaAbsoluta + ".tmp";
+            try
+            {
+                using (var archivo = new FileStream(temporal, FileMode.CreateNew, FileAccess.Write, FileShare.None))
+                {
+                    archivo.Write(normalizada.Contenido, 0, normalizada.Contenido.Length);
+                    archivo.Flush(true);
+                }
+                File.Move(temporal, rutaAbsoluta);
+                return Path.Combine(CarpetaImagenes, carpeta, nombre).Replace(Path.DirectorySeparatorChar, '\\');
+            }
+            catch
+            {
+                if (File.Exists(temporal))
+                    File.Delete(temporal);
+                if (File.Exists(rutaAbsoluta))
+                    File.Delete(rutaAbsoluta);
+                throw;
+            }
         }
     }
 }

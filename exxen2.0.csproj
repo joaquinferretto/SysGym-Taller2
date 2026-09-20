@@ -105,15 +105,19 @@
     <Compile Include="capaLogica\EjercicioLogica.cs" />
     <Compile Include="capaLogica\EjercicioImagenLogica.cs" />
     <Compile Include="capaLogica\MembresiaEntrenadorLogica.cs" />
+    <Compile Include="capaLogica\ConsultaEntrenadoresLogica.cs" />
     <Compile Include="capaLogica\MembresiaLogica.cs" />
     <Compile Include="capaLogica\PagoLogica.cs" />
     <Compile Include="capaLogica\PlanLogica.cs" />
     <Compile Include="capaLogica\RolLogica.cs" />
     <Compile Include="capaLogica\RutinaEjercicioLogica.cs" />
     <Compile Include="capaLogica\RutinaLogica.cs" />
+    <Compile Include="capaLogica\RutinaExportacionLogica.cs" />
+    <Compile Include="capaLogica\ExportadorRutinaPdf.cs" />
     <Compile Include="capaLogica\SocioLogica.cs" />
     <Compile Include="capaLogica\UsuarioSistemaLogica.cs" />
     <Compile Include="capaLogica\ValidacionesGimnasio.cs" />
+    <Compile Include="capaLogica\ProcesadorImagenes.cs" />
     <Compile Include="capaLogica\AlmacenamientoImagenes.cs" />
     <Compile Include="capaVisual\Autenticacion\InicioSesion.cs">
       <SubType>Form</SubType>
@@ -202,6 +206,12 @@
     <Compile Include="capaVisual\Recepcionista\GestionAsignacionesFormulario.Designer.cs">
       <DependentUpon>GestionAsignacionesFormulario.cs</DependentUpon>
     </Compile>
+    <Compile Include="capaVisual\Recepcionista\ConsultaEntrenadoresFormulario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="capaVisual\Recepcionista\ConsultaEntrenadoresFormulario.Designer.cs">
+      <DependentUpon>ConsultaEntrenadoresFormulario.cs</DependentUpon>
+    </Compile>
     <Compile Include="capaVisual\Entrenador\PanelEntrenador.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -282,6 +292,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="PDFsharp-MigraDoc-GDI" Version="6.2.4" />
+    <PackageReference Include="Imazen.WebP" Version="11.0.0" />
+    <PackageReference Include="Imazen.WebP.NativeRuntime.win-x64" Version="1.6.1" />
+    <PackageReference Include="Imazen.WebP.NativeRuntime.win-x86" Version="1.6.1" />
     <PackageReference Include="Konscious.Security.Cryptography.Argon2" Version="1.3.1" />
     <None Include="capaDatos\Database\SysGymDB.sql" />
     <None Include="capaDatos\Database\MigrarEjercicioImagen.sql" />

@@ -20,6 +20,8 @@ namespace exxen2._0.capaVisual.Entrenador
         private List<SocioRutinaItem> sociosCargados = new List<SocioRutinaItem>();
         private SocioRutinaItem socioSeleccionado;
         private bool cargandoTabla;
+        private readonly RutinaExportacionLogica exportacion = new RutinaExportacionLogica();
+        private readonly ExportadorRutinaPdf exportadorPdf = new ExportadorRutinaPdf();
 
         public MisSociosFormulario() : this(new UsuarioSistema { Nombre = "Entrenador", Apellido = "de diseno" }) { }
 
@@ -116,6 +118,8 @@ namespace exxen2._0.capaVisual.Entrenador
             socioSeleccionado = sociosCargados.FirstOrDefault(s => s.IdSocio == idSocio);
             if (socioSeleccionado == null) return;
 
+            exportarPdf.Enabled = false;
+
             txtSocio.Text = socioSeleccionado.NombreSocio;
             txtDni.Text = socioSeleccionado.DNI;
             txtPlan.Text = socioSeleccionado.NombrePlan;
@@ -149,12 +153,15 @@ namespace exxen2._0.capaVisual.Entrenador
             asignarRutina.Visible = false;
             verRutina.Visible = false;
             crearPersonalizada.Visible = false;
+            exportarPdf.Enabled = false;
         }
 
         private void CargarRutinaSemanal(int idSocio)
         {
             tablaRutina.Rows.Clear();
-            foreach (var ejercicio in ejerciciosRutina.ListarSemanaPorSocio(idSocio))
+            exportarPdf.Enabled = false;
+            var semana = ejerciciosRutina.ListarSemanaPorSocio(idSocio);
+            foreach (var ejercicio in semana)
             {
                 tablaRutina.Rows.Add(
                     ValidacionesGimnasio.NombreDia(ejercicio.DiaSemana),
@@ -164,6 +171,33 @@ namespace exxen2._0.capaVisual.Entrenador
                     ejercicio.Peso.HasValue ? ejercicio.Peso.Value.ToString("0.##") : "-",
                     ejercicio.Descanso + " s");
             }
+            exportarPdf.Enabled = socioSeleccionado != null && socioSeleccionado.TieneRutina && semana.Any();
+        }
+
+        private void exportarPdf_Click(object origen, EventArgs e)
+        {
+            try
+            {
+                if (socioSeleccionado == null) throw new InvalidOperationException("Selecciona un socio.");
+                var documento = exportacion.Obtener(socioSeleccionado.IdSocio,
+                    socioSeleccionado.IdMembresia, usuario.IdUsuarioSistema);
+                using (var dialogo = new SaveFileDialog
+                {
+                    Title = "Exportar rutina a PDF", Filter = "PDF (*.pdf)|*.pdf",
+                    DefaultExt = "pdf", AddExtension = true, OverwritePrompt = true,
+                    FileName = exportadorPdf.NombreArchivoSugerido(documento)
+                })
+                {
+                    if (dialogo.ShowDialog(this) != DialogResult.OK) return;
+                    var avisos = exportadorPdf.Generar(documento, dialogo.FileName);
+                    AyudaFormularioVisual.MostrarExito(lblEstado, "PDF guardado en " + dialogo.FileName, true);
+                    MessageBox.Show(this, avisos.Count == 0 ? "La rutina se exportó correctamente." :
+                        "La rutina se exportó, pero algunas imágenes no estaban disponibles:\n\n" + string.Join("\n", avisos),
+                        "Exportar PDF", MessageBoxButtons.OK,
+                        avisos.Count == 0 ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex, true); }
         }
 
         private void asignarRutina_Click(object origen, EventArgs e)

@@ -1,5 +1,11 @@
 # Arquitectura
 
+## Exportación de rutinas y consulta de entrenadores — 20/09/2026
+
+La exportación respeta `MisSociosFormulario → RutinaExportacionLogica → UnidadDeTrabajoGimnasio/repositorios → EF6 → SQL Server`. La consulta materializa una instantánea de solo lectura con socio, membresía, rutina, ejercicios y rutas de imágenes; la capa visual no usa contexto, repositorios, SQL ni celdas del DataGridView como fuente. Luego `ExportadorRutinaPdf` recibe esos datos y genera el archivo, sin referencias a WinForms. Las rutas de `EjercicioImagen` se resuelven mediante `AlmacenamientoImagenes` y no se persisten cambios. PDFsharp-MigraDoc-GDI 6.2.4 aporta documento, paginación e imágenes y es compatible con .NET Framework 4.8.
+
+La consulta de Recepcionista sigue `ConsultaEntrenadoresFormulario → ConsultaEntrenadoresLogica → UnidadDeTrabajoGimnasio/repositorios → EF6 → SQL Server`. Sus dos operaciones usan `ConsultarSoloLectura`: listar usuarios con rol Entrenador y listar asignaciones activas del entrenador seleccionado con socio, plan y rutina. La pantalla no reutiliza GestionAsignacionesFormulario ni ofrece mutaciones. `PanelRecepcionista` conserva ControladorNavegacion y ahora dirige Consultar entrenador al formulario específico.
+
 ## Paneles de Entrenador y Recepcionista — 20/09/2026
 
 Última actualización: 20 de septiembre de 2026. Ambos paneles siguen la composición de PanelAdministrador: cuatro Panel estructurales (encabezado, lateral, opciones con scroll y superficie de navegación), con controles estáticos declarados directamente en Designer. Entrenador ya tenía esa estructura; se corrigieron docking y medidas pendientes. Recepcionista elimina layoutEncabezado, panelIdentidad y panelPie, incorpora título/subtítulo y Volver mediante ControladorNavegacion existente y conserva todos sus accesos propios. Form.cs solo coordina comportamiento y navegación; no se introducen controles estáticos dinámicos ni cambios de negocio o persistencia. PanelAdministrador y los helpers compartidos no se modifican.

@@ -165,12 +165,14 @@ namespace exxen2._0.capaVisual.Compartido
         {
             LiberarMiniaturas();
             imagenSeleccionada = null;
+            ActualizarEstadoGaleria(0);
             if (idSeleccionado <= 0)
                 return;
 
             try
             {
-                foreach (var imagen in imagenesLogica.ListarPorEjercicio(idSeleccionado))
+                var imagenes = imagenesLogica.ListarPorEjercicio(idSeleccionado);
+                foreach (var imagen in imagenes)
                 {
                     var miniatura = new PictureBox
                     {
@@ -187,6 +189,7 @@ namespace exxen2._0.capaVisual.Compartido
                     miniatura.Click += miniatura_Click;
                     galeriaImagenes.Controls.Add(miniatura);
                 }
+                ActualizarEstadoGaleria(imagenes.Count);
             }
             catch (Exception ex)
             {
@@ -198,12 +201,21 @@ namespace exxen2._0.capaVisual.Compartido
         private void miniatura_Click(object origen, EventArgs e)
         {
             imagenSeleccionada = (origen as PictureBox)?.Tag as EjercicioImagen;
+            quitarImagen.Enabled = imagenSeleccionada != null;
             foreach (Control control in galeriaImagenes.Controls)
             {
                 var miniatura = control as PictureBox;
                 if (miniatura != null)
                     miniatura.BackColor = miniatura.Tag == imagenSeleccionada ? Color.FromArgb(199, 210, 254) : Color.FromArgb(241, 245, 249);
             }
+        }
+
+        /* Refleja el límite de negocio sin sustituir la validación de la capa lógica. */
+        private void ActualizarEstadoGaleria(int cantidad)
+        {
+            lblImagenes.Text = "Imágenes (" + cantidad + "/" + ProcesadorImagenes.MaxImagenesPorEjercicio + ")";
+            agregarImagen.Enabled = idSeleccionado > 0 && cantidad < ProcesadorImagenes.MaxImagenesPorEjercicio;
+            quitarImagen.Enabled = false;
         }
 
         /* Agrega una imagen validada al catálogo sin copiarla hasta confirmar la operación en lógica. */
@@ -216,7 +228,7 @@ namespace exxen2._0.capaVisual.Compartido
                 var seleccion = AyudaFormularioVisual.SeleccionarImagen(this);
                 if (seleccion == null)
                     return;
-                imagenesLogica.Agregar(idSeleccionado, seleccion.Contenido, seleccion.Extension);
+                imagenesLogica.Agregar(idSeleccionado, seleccion.Contenido);
                 CargarImagenes();
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Imagen agregada correctamente.", true);
             }

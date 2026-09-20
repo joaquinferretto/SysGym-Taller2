@@ -31,6 +31,7 @@ namespace exxen2._0.capaVisual.Compartido
         private FlowLayoutPanel galeriaImagenes;
         private Button agregarImagen;
         private Button quitarImagen;
+        private Label lblImagenes;
         private Button guardar;
         private Button darDeBaja;
         private Button reactivar;
@@ -60,6 +61,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.galeriaImagenes = new System.Windows.Forms.FlowLayoutPanel();
             this.agregarImagen = new System.Windows.Forms.Button();
             this.quitarImagen = new System.Windows.Forms.Button();
+            this.lblImagenes = new System.Windows.Forms.Label();
             this.lblNombre = new System.Windows.Forms.Label();
             this.nombre = new System.Windows.Forms.TextBox();
             this.lblDescripcionEjercicio = new System.Windows.Forms.Label();
@@ -169,6 +171,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.splitContenido.Panel2.Controls.Add(this.galeriaImagenes);
             this.splitContenido.Panel2.Controls.Add(this.agregarImagen);
             this.splitContenido.Panel2.Controls.Add(this.quitarImagen);
+            this.splitContenido.Panel2.Controls.Add(this.lblImagenes);
             this.splitContenido.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitContenido.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.splitContenido.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -261,6 +264,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.agregarImagen.Size = new System.Drawing.Size(130, 34);
             this.agregarImagen.TabIndex = 0;
             this.agregarImagen.Text = "Agregar imagen";
+            this.agregarImagen.Enabled = false;
             this.agregarImagen.UseVisualStyleBackColor = false;
             this.agregarImagen.Click += new System.EventHandler(this.agregarImagen_Click);
             // quitarImagen
@@ -274,8 +278,17 @@ namespace exxen2._0.capaVisual.Compartido
             this.quitarImagen.Size = new System.Drawing.Size(130, 34);
             this.quitarImagen.TabIndex = 1;
             this.quitarImagen.Text = "Quitar imagen";
+            this.quitarImagen.Enabled = false;
             this.quitarImagen.UseVisualStyleBackColor = false;
             this.quitarImagen.Click += new System.EventHandler(this.quitarImagen_Click);
+            // lblImagenes
+            this.lblImagenes.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.lblImagenes.Location = new System.Drawing.Point(300, 308);
+            this.lblImagenes.Name = "lblImagenes";
+            this.lblImagenes.Size = new System.Drawing.Size(164, 34);
+            this.lblImagenes.TabIndex = 8;
+            this.lblImagenes.Text = "Imágenes (0/4)";
+            this.lblImagenes.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // lblNombre
             this.lblNombre.Location = new System.Drawing.Point(16, 58);
             this.lblNombre.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;

@@ -12,11 +12,11 @@ namespace exxen2._0.capaLogica
         /* Valida y registra socios mediante la unidad de trabajo, conservando sus reglas de alta. */
         public Socio Crear(Socio socio)
         {
-            return Crear(socio, null, null);
+            return Crear(socio, null);
         }
 
         /* Valida, copia la foto seleccionada a Datos y registra solo su ruta relativa. */
-        public Socio Crear(Socio socio, byte[] fotoContenido, string extensionFoto)
+        public Socio Crear(Socio socio, byte[] fotoContenido)
         {
             ValidarDatos(socio);
             var rutaNueva = (string)null;
@@ -28,7 +28,7 @@ namespace exxen2._0.capaLogica
                         throw new InvalidOperationException("El DNI ya está registrado.");
 
                     if (fotoContenido != null)
-                        rutaNueva = AlmacenamientoImagenes.GuardarSocio(fotoContenido, extensionFoto);
+                        rutaNueva = AlmacenamientoImagenes.GuardarSocio(fotoContenido);
                     socio.FotoRuta = rutaNueva ?? NormalizarRuta(socio.FotoRuta);
                     socio.Estado = true;
                     datos.Socios.Agregar(socio);
@@ -47,11 +47,11 @@ namespace exxen2._0.capaLogica
         /* Valida y guarda los cambios de socios sobre el registro existente. */
         public Socio Modificar(Socio socio)
         {
-            return Modificar(socio, null, null);
+            return Modificar(socio, null);
         }
 
         /* Actualiza el socio y reemplaza o quita su foto sin guardar binarios en SQL. */
-        public Socio Modificar(Socio socio, byte[] fotoContenido, string extensionFoto)
+        public Socio Modificar(Socio socio, byte[] fotoContenido)
         {
             ValidarDatos(socio);
             var rutaNueva = (string)null;
@@ -69,7 +69,7 @@ namespace exxen2._0.capaLogica
 
                     var rutaAnterior = existente.FotoRuta;
                     if (fotoContenido != null)
-                        rutaNueva = AlmacenamientoImagenes.GuardarSocio(fotoContenido, extensionFoto);
+                        rutaNueva = AlmacenamientoImagenes.GuardarSocio(fotoContenido);
 
                     existente.DNI = socio.DNI;
                     existente.Nombre = socio.Nombre;

@@ -140,7 +140,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         /* Al hacer clic en btnConsultar, abre el módulo correspondiente dentro del panel principal. */
         private void btnConsultar_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new GestionAsignacionesFormulario(), "Asignar entrenador | Vinculación de entrenadores y membresías");
+            navegacion.AbrirFormulario(new ConsultaEntrenadoresFormulario(), "Consultar entrenador | Entrenadores y socios asignados");
         }
 
         /* Al cargar la pantalla en ejecución, prepara sus datos iniciales sin realizar consultas desde el diseñador. */
