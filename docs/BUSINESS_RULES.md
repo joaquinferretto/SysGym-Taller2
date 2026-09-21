@@ -1,5 +1,12 @@
 # Reglas de negocio
 
+## Política vigente de imágenes y entrenador opcional — 21/09/2026
+
+- Socio y UsuarioSistema admiten como máximo una foto opcional. Ejercicio admite de cero a cuatro filas ordenadas en EjercicioImagen.
+- Toda imagen externa usa el mismo procesador: máximo 10 MB y 40 MP, firma y decodificación reales, EXIF, contain sin crop sobre 800×800, JPEG 90 o PNG con transparencia, GUID y ruta relativa. El original y su metadata no se almacenan.
+- Una membresía se crea con Socio, Plan y usuario que registra, además de su primera cuota. No requiere entrenador ni crea `MembresiaEntrenador` automáticamente.
+- La asignación de entrenador es posterior y opcional mediante Asignar entrenador. Una membresía sin relación activa debe mostrarse como «Sin asignar» y puede generar cuotas normalmente.
+
 ## Cardinalidad de fotos confirmada — 20 de septiembre de 2026
 
 - Ejercicio puede tener cero, una o varias imágenes demostrativas, guardadas en EjercicioImagen con ruta y orden; agregar no reemplaza las anteriores. Quitar elimina únicamente la imagen seleccionada. Sin imágenes, Quitar muestra «No existe imagen para quitar»; con imágenes y sin selección se solicita seleccionar una.
@@ -61,7 +68,7 @@ Una rutina puede reutilizarse en varias membresías. Cada membresía tiene cero 
 ## Roles y planes
 
 - Administradores y recepcionistas activos pueden registrar membresías.
-- Cada membresía comienza con el usuario reservado Entrenador General; luego puede asignarse un entrenador activo con rol Entrenador.
+- Cada membresía puede crearse sin entrenador. La asignación posterior vincula opcionalmente un usuario activo con rol Entrenador mediante `MembresiaEntrenador`.
 - Los planes no tienen indicadores de inclusión de entrenador o rutina ni catálogo de rutinas. La relación con la rutina es independiente del plan.
 
 ## Datos físicos del socio
@@ -83,12 +90,12 @@ Una rutina puede reutilizarse en varias membresías. Cada membresía tiene cero 
 
 ## Foto y sexo — 9 de septiembre de 2026
 
-- Socios y usuarios pueden guardar una foto opcional de hasta 2 MB (2.097.152 bytes), en PNG, JPEG o BMP. La lógica comprueba tamaño y firma del formato; la interfaz además decodifica la imagen antes de aceptarla.
+- Socios y usuarios pueden guardar una foto opcional; los ejercicios admiten hasta cuatro imágenes. El límite central es 10 MB y 40 MP por archivo, con JPEG, PNG, BMP, GIF, TIFF y WebP detectados por su contenido real.
 - Sexo admite únicamente M, F o NULL y se usa para resolver el avatar. No se asigna un sexo por defecto; Nuevo deja el combo sin selección.
-- La foto guardada tiene prioridad sobre el avatar por sexo. Sin foto ni sexo se busca avatarGenerico; si faltan recursos se muestra el fondo gris claro, sin inventar imágenes.
-- Quitar foto conserva el sexo elegido y vuelve al avatar disponible. Guardar o actualizar persiste Foto y Sexo.
-- Los listados de gestión de socios y usuarios no descargan Foto; la selección recupera el registro completo mediante ObtenerPorId.
-- Las validaciones de tamaño, formato y sexo y la persistencia de ambas entidades fueron comprobadas en una base separada, sin conservar registros de prueba.
+- La foto guardada tiene prioridad sobre el avatar por sexo. Sin foto se usa el recurso embebido disponible.
+- Quitar foto conserva el sexo elegido y vuelve al avatar. Guardar o actualizar persiste `FotoRuta` y Sexo.
+- Los listados de gestión recuperan la ruta cuando la necesitan; el archivo permanece fuera de SQL Server.
+- La imagen se recodifica a un archivo nuevo de 800×800, sin metadata y sin deformación; una sustitución fallida conserva la foto anterior.
 
 ## Rutina semanal del socio
 

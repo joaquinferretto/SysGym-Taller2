@@ -9,12 +9,10 @@ namespace exxen2._0.capaLogica
     /* Coordina las operaciones y validaciones de negocio de membresías. */
     public class MembresiaLogica
     {
-        /* Identifica al usuario reservado que representa el entrenador inicial de toda membresía. */
-        public const string NombreUsuarioEntrenadorGeneral = "entrenador.general";
         private const int CuotasVencidasParaDarDeBaja = 2;
         private const string MensajeReactivacionBloqueadaPorDeuda = "No se puede reactivar la membresía mientras existan dos o más cuotas vencidas pendientes.";
 
-        /* Crea una membresía, su primera cuota y su entrenador general en una única transacción. */
+        /* Crea una membresía y su primera cuota; la asignación de entrenador es opcional y posterior. */
         public Membresia Crear(Membresia membresia)
         {
             ValidarMembresia(membresia);
@@ -40,12 +38,6 @@ namespace exxen2._0.capaLogica
                 datos.Membresias.Agregar(membresia);
                 datos.GuardarCambios();
                 socio.Estado = true;
-                datos.MembresiasEntrenadores.Agregar(new MembresiaEntrenador
-                {
-                    IdMembresia = membresia.IdMembresia,
-                    IdEntrenador = ObtenerEntrenadorGeneral(datos).IdUsuarioSistema,
-                    Estado = true
-                });
                 CuotaMembresiaLogica.CrearPrimeraCuotaEnContexto(datos, membresia, plan);
                 datos.GuardarCambios();
                 transaccion.Confirmar();
@@ -288,15 +280,6 @@ namespace exxen2._0.capaLogica
                 throw new InvalidOperationException("El socio de la membresía no existe.");
 
             socio.Estado = estado || datos.Membresias.Any(m => m.IdSocio == membresia.IdSocio && m.IdMembresia != membresia.IdMembresia && m.Estado);
-        }
-
-        /* Busca el usuario reservado y exige que mantenga rol Entrenador activo. */
-        private static UsuarioSistema ObtenerEntrenadorGeneral(IUnidadDeTrabajo datos)
-        {
-            var general = datos.UsuariosSistema.Consultar("Rol").SingleOrDefault(u => u.NombreUsuario == NombreUsuarioEntrenadorGeneral);
-            if (!ValidacionesGimnasio.EsEntrenadorActivo(general))
-                throw new InvalidOperationException("No existe un Entrenador General activo para crear la membresía.");
-            return general;
         }
 
         /* Exige los identificadores de socio, plan y usuario que registra la membresía. */

@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -13,6 +13,7 @@ namespace exxen2._0.capaVisual.Compartido
         private System.Windows.Forms.Label lblSexo;
 
         private IContainer components;
+        private ErrorProvider indicadorErrores;
         private Panel panelEncabezado;
         private Label lblTitulo;
         private Label lblDescripcion;
@@ -63,6 +64,8 @@ namespace exxen2._0.capaVisual.Compartido
 
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            this.indicadorErrores = new System.Windows.Forms.ErrorProvider(this.components);
             this.fotoSocio = new System.Windows.Forms.PictureBox();
             this.btnSeleccionarFoto = new System.Windows.Forms.Button();
             this.btnQuitarFoto = new System.Windows.Forms.Button();
@@ -778,7 +781,9 @@ namespace exxen2._0.capaVisual.Compartido
             this.verRutina.UseVisualStyleBackColor = false;
             this.verRutina.Click += new System.EventHandler(this.verRutina_Click);
             // 
-            // GestionSociosFormulario
+                        this.indicadorErrores.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.indicadorErrores.ContainerControl = this;
+// GestionSociosFormulario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

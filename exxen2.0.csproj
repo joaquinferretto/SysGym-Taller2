@@ -125,25 +125,25 @@
     <Compile Include="capaVisual\Autenticacion\InicioSesion.Designer.cs">
       <DependentUpon>InicioSesion.cs</DependentUpon>
     </Compile>
-    <Compile Include="capaVisual\Compartido\ControladorNavegacion.cs" />
-    <Compile Include="capaVisual\Compartido\AyudaFormularioVisual.cs" />
-    <Compile Include="capaVisual\Compartido\MenuDesplegableHelper.cs" />
-    <Compile Include="capaVisual\Compartido\GestionSociosFormulario.cs">
+    <Compile Include="capaLogica\Navegacion\ControladorNavegacion.cs" />
+    <Compile Include="capaLogica\Utilidades\AyudaFormularioVisual.cs" />
+    <Compile Include="capaLogica\Utilidades\MenuDesplegableHelper.cs" />
+    <Compile Include="capaVisual\Compartido\Formularios\GestionSociosFormulario.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="capaVisual\Compartido\GestionSociosFormulario.Designer.cs">
+    <Compile Include="capaVisual\Compartido\Formularios\GestionSociosFormulario.Designer.cs">
       <DependentUpon>GestionSociosFormulario.cs</DependentUpon>
     </Compile>
-    <Compile Include="capaVisual\Compartido\RutinaSemanalFormulario.cs">
+    <Compile Include="capaVisual\Compartido\Formularios\RutinaSemanalFormulario.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="capaVisual\Compartido\RutinaSemanalFormulario.Designer.cs">
+    <Compile Include="capaVisual\Compartido\Formularios\RutinaSemanalFormulario.Designer.cs">
       <DependentUpon>RutinaSemanalFormulario.cs</DependentUpon>
     </Compile>
-    <Compile Include="capaVisual\Compartido\GestionEjerciciosFormulario.cs">
+    <Compile Include="capaVisual\Compartido\Formularios\GestionEjerciciosFormulario.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="capaVisual\Compartido\GestionEjerciciosFormulario.Designer.cs">
+    <Compile Include="capaVisual\Compartido\Formularios\GestionEjerciciosFormulario.Designer.cs">
       <DependentUpon>GestionEjerciciosFormulario.cs</DependentUpon>
     </Compile>
     <Compile Include="capaVisual\Administrador\PanelAdministrador.cs">
@@ -247,10 +247,10 @@
     <EmbeddedResource Include="capaVisual\Autenticacion\InicioSesion.resx">
       <DependentUpon>InicioSesion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="capaVisual\Compartido\GestionEjerciciosFormulario.resx">
+    <EmbeddedResource Include="capaVisual\Compartido\Formularios\GestionEjerciciosFormulario.resx">
       <DependentUpon>GestionEjerciciosFormulario.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="capaVisual\Compartido\GestionSociosFormulario.resx">
+    <EmbeddedResource Include="capaVisual\Compartido\Formularios\GestionSociosFormulario.resx">
       <DependentUpon>GestionSociosFormulario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="capaVisual\Entrenador\MisSociosFormulario.resx">

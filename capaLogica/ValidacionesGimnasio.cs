@@ -7,6 +7,9 @@ namespace exxen2._0.capaLogica
     /* Centraliza las comprobaciones de roles activos para los casos de uso del gimnasio. */
     public static class ValidacionesGimnasio
     {
+        public const int LongitudMaximaNombrePersona = 100;
+        public const int LongitudMaximaDni = 20;
+        public const int LongitudMaximaNombreUsuario = 50;
         public const int TamanoMaximoFoto = ProcesadorImagenes.TamanoMaximoBytes;
 
         /* Valida un nombre humano sin aceptar numeros ni simbolos ajenos al nombre. */
@@ -14,8 +17,10 @@ namespace exxen2._0.capaLogica
         {
             if (string.IsNullOrWhiteSpace(valor))
                 throw new InvalidOperationException("El " + campo + " es obligatorio.");
+            if (valor.Trim().Length > LongitudMaximaNombrePersona)
+                throw new InvalidOperationException("El " + campo + " no puede superar " + LongitudMaximaNombrePersona + " caracteres.");
             if (!valor.Any(char.IsLetter) || valor.Any(caracter => !char.IsLetter(caracter) && caracter != ' ' && caracter != '\'' && caracter != '-'))
-                throw new InvalidOperationException("El " + campo + " solo puede contener letras, espacios, apóstrofes o guiones.");
+                throw new InvalidOperationException("El " + campo + " contiene caracteres no válidos.");
         }
 
         /* Valida el DNI en el formato numerico que conserva el modelo actual. */
@@ -23,8 +28,22 @@ namespace exxen2._0.capaLogica
         {
             if (string.IsNullOrWhiteSpace(dni))
                 throw new InvalidOperationException("El DNI es obligatorio.");
+            if (dni.Trim().Length > LongitudMaximaDni)
+                throw new InvalidOperationException("El DNI no puede superar " + LongitudMaximaDni + " dígitos.");
             if (dni.Any(caracter => caracter < '0' || caracter > '9'))
-                throw new InvalidOperationException("El DNI debe contener únicamente números.");
+                throw new InvalidOperationException("El DNI solo puede contener números.");
+        }
+
+        /* Valida el identificador de acceso sin aplicarle las reglas de nombres personales. */
+        public static void ValidarNombreUsuario(string valor)
+        {
+            if (string.IsNullOrWhiteSpace(valor))
+                throw new InvalidOperationException("El nombre de usuario es obligatorio.");
+            var normalizado = valor.Trim();
+            if (normalizado.Length > LongitudMaximaNombreUsuario)
+                throw new InvalidOperationException("El nombre de usuario no puede superar " + LongitudMaximaNombreUsuario + " caracteres.");
+            if (normalizado.Any(caracter => !char.IsLetterOrDigit(caracter) && caracter != '.' && caracter != '_' && caracter != '-'))
+                throw new InvalidOperationException("El nombre de usuario contiene caracteres no válidos.");
         }
 
         /* Calcula la edad completa considerando si el cumpleaños ya ocurrió. */

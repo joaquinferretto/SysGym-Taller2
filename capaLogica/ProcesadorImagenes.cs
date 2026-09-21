@@ -9,7 +9,7 @@ using Imazen.WebP;
 
 namespace exxen2._0.capaLogica
 {
-    /* Resultado inmutable de decodificar y normalizar una imagen externa. */
+    /* Resultado de decodificar y normalizar una imagen externa. */
     public sealed class ImagenNormalizada
     {
         internal ImagenNormalizada(byte[] contenido, string extension, string formatoOrigen, int anchoOriginal, int altoOriginal)
@@ -43,7 +43,7 @@ namespace exxen2._0.capaLogica
 
         private const int IdOrientacionExif = 0x0112;
 
-        /* Valida el contenido real y devuelve un JPEG nuevo de 800x800 . */
+        /* Valida el contenido real y devuelve un JPEG o PNG nuevo de 800x800. */
         public static ImagenNormalizada Procesar(byte[] contenido)
         {
             ValidarTamano(contenido);

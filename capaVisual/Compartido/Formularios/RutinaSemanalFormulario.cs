@@ -6,6 +6,8 @@ using System.Windows.Forms;
 using exxen2._0.capaDatos.Entidades;
 using exxen2._0.capaLogica;
 
+using exxen2._0.capaLogica.Utilidades;
+
 namespace exxen2._0.capaVisual.Compartido
 {
     /* Presenta la rutina semanal de un socio y atiende sus acciones mediante eventos de Windows Forms. */

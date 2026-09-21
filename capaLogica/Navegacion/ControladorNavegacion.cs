@@ -2,7 +2,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace exxen2._0.capaVisual.Compartido
+namespace exxen2._0.capaLogica.Navegacion
 {
     /* Expone la intención de cambiar de cuenta al cerrar un panel principal. */
     public interface ISesionPanel

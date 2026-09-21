@@ -1,5 +1,11 @@
 # Base de datos
 
+## Verificación de membresía opcional e imágenes — 21/09/2026
+
+No hubo cambios de esquema. Las imágenes continúan representadas por rutas relativas en `Socio.FotoRuta`, `UsuarioSistema.FotoRuta` y `EjercicioImagen.RutaRelativa`; los archivos normalizados viven fuera de SQL Server. La regla de máximo cuatro imágenes de ejercicio se valida en lógica.
+
+La creación de membresías ya no requiere ni inserta un entrenador general. Prueba real: el conteo pasó de 20 a 21 membresías para Mumbach, Juan, plan Premium; `MembresiaEntrenador` permaneció en 12 filas y la membresía nueva tiene cero asignaciones. La primera cuota se creó con la membresía y la acción Generar cuota agregó el período siguiente, por lo que CuotaMembresia pasó de 20 a 22. No se alteraron tablas, claves ni datos ajenos a esa prueba funcional solicitada.
+
 ## Estado vigente de imágenes — 20 de septiembre de 2026
 
 Actualización posterior a la ejecución del usuario: se confirmó en SQL Server que dbo.EjercicioImagen existe y contiene 0 filas; tipos/longitud coinciden y FK_EjercicioImagen_Ejercicio usa NO ACTION. Conteos preservados: 45 ejercicios, 20 socios, 23 usuarios, 20 membresías, 20 cuotas, 20 pagos y 26 rutinas. Login/catálogo/selección de ejercicio pasaron sin errores SQL en la prueba de lectura. El bloqueo de creación mencionado debajo quedó resuelto; no se agregaron imágenes de prueba.

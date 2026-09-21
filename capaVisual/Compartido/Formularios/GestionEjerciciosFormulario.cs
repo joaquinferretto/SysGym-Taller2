@@ -6,6 +6,8 @@ using System.Windows.Forms;
 using exxen2._0.capaDatos.Entidades;
 using exxen2._0.capaLogica;
 
+using exxen2._0.capaLogica.Utilidades;
+
 namespace exxen2._0.capaVisual.Compartido
 {
     /* Presenta el catálogo de ejercicios y su ficha de edición mediante un flujo master/detail. */

@@ -7,6 +7,8 @@ using exxen2._0.capaDatos.Entidades;
 using exxen2._0.capaLogica;
 using exxen2._0.capaVisual.Compartido;
 
+using exxen2._0.capaLogica.Utilidades;
+
 namespace exxen2._0.capaVisual.Entrenador
 {
     /* Presenta socios y su rutina vigente en una unica pantalla master/detail. */

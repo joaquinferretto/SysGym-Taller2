@@ -4,6 +4,10 @@ using System.Windows.Forms;
 using exxen2._0.capaDatos.Entidades;
 using exxen2._0.capaVisual.Compartido;
 
+using exxen2._0.capaLogica.Navegacion;
+
+using exxen2._0.capaLogica.Utilidades;
+
 namespace exxen2._0.capaVisual.Entrenador
 {
     /* Presenta entrenador y atiende sus acciones mediante eventos de Windows Forms. */

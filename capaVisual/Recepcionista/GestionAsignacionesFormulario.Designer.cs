@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -7,6 +7,7 @@ namespace exxen2._0.capaVisual.Recepcionista
     partial class GestionAsignacionesFormulario
     {
         private IContainer components = null;
+        private ErrorProvider indicadorErrores;
         private Label lblBuscar;
         private TextBox buscador;
         private Label lblEstadoFiltro;
@@ -53,6 +54,8 @@ namespace exxen2._0.capaVisual.Recepcionista
 
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            this.indicadorErrores = new System.Windows.Forms.ErrorProvider(this.components);
             this.lblBuscar = new System.Windows.Forms.Label();
             this.buscador = new System.Windows.Forms.TextBox();
             this.lblEstadoFiltro = new System.Windows.Forms.Label();
@@ -538,7 +541,9 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.darDeBaja.Visible = false;
             this.darDeBaja.Click += new System.EventHandler(this.darDeBaja_Click);
             //
-            // GestionAsignacionesFormulario
+                        this.indicadorErrores.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.indicadorErrores.ContainerControl = this;
+// GestionAsignacionesFormulario
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

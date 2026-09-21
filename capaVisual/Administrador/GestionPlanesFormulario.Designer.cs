@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -7,6 +7,7 @@ namespace exxen2._0.capaVisual.Administrador
     partial class GestionPlanesFormulario
     {
         private IContainer components;
+        private ErrorProvider indicadorErrores;
         private Label lblEstado;
         private SplitContainer splitContenido;
         private Label lblListado;
@@ -45,6 +46,7 @@ namespace exxen2._0.capaVisual.Administrador
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            this.indicadorErrores = new System.Windows.Forms.ErrorProvider(this.components);
             this.lblEstado = new System.Windows.Forms.Label();
             this.splitContenido = new System.Windows.Forms.SplitContainer();
             this.lblListado = new System.Windows.Forms.Label();
@@ -399,7 +401,9 @@ namespace exxen2._0.capaVisual.Administrador
             this.reactivar.UseVisualStyleBackColor = false;
             this.reactivar.Click += new System.EventHandler(this.reactivar_Click);
             //
-            // GestionPlanesFormulario
+                        this.indicadorErrores.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.indicadorErrores.ContainerControl = this;
+// GestionPlanesFormulario
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

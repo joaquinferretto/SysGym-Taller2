@@ -4,7 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
 
-namespace exxen2._0.capaVisual.Compartido
+namespace exxen2._0.capaLogica.Utilidades
 {
     /* Conserva el archivo externo para guardar y una copia normalizada solo para vista previa. */
     internal sealed class ImagenSeleccionada
@@ -221,6 +221,123 @@ namespace exxen2._0.capaVisual.Compartido
         internal static void ValidarEntradaEntero(KeyPressEventArgs e)
         {
             ValidarEntradaDni(e);
+        }
+
+        /* Permite los caracteres admitidos por la regla compartida de nombres de usuario. */
+        internal static void ValidarEntradaNombreUsuario(KeyPressEventArgs e)
+        {
+            if (char.IsControl(e.KeyChar) || char.IsLetterOrDigit(e.KeyChar) || e.KeyChar == '.' || e.KeyChar == '_' || e.KeyChar == '-')
+                return;
+            e.Handled = true;
+        }
+
+        /* Ejecuta una regla y asocia su mensaje al control sin impedir cambiar el foco. */
+        internal static bool ValidarConError(ErrorProvider errores, Control control, Action validacion)
+        {
+            if (errores == null || control == null)
+                return true;
+            var cuadroTexto = control as TextBox;
+            if (!control.Enabled || !control.Visible || (cuadroTexto != null && cuadroTexto.ReadOnly))
+            {
+                errores.SetError(control, string.Empty);
+                return true;
+            }
+            try
+            {
+                validacion();
+                errores.SetError(control, string.Empty);
+                return true;
+            }
+            catch (InvalidOperationException ex)
+            {
+                errores.SetError(control, ex.Message);
+                return false;
+            }
+            catch (ArgumentException ex)
+            {
+                errores.SetError(control, ex.Message);
+                return false;
+            }
+        }
+
+        internal static bool ValidarRequerido(ErrorProvider errores, TextBox campo, string mensaje)
+        {
+            return ValidarConError(errores, campo, delegate
+            {
+                if (string.IsNullOrWhiteSpace(campo.Text))
+                    throw new InvalidOperationException(mensaje);
+            });
+        }
+
+        internal static bool ValidarNombre(ErrorProvider errores, TextBox campo, string nombreCampo)
+        {
+            return ValidarConError(errores, campo, delegate { ValidacionesGimnasio.ValidarNombre(campo.Text.Trim(), nombreCampo); });
+        }
+
+        internal static bool ValidarDni(ErrorProvider errores, TextBox campo)
+        {
+            return ValidarConError(errores, campo, delegate { ValidacionesGimnasio.ValidarDni(campo.Text.Trim()); });
+        }
+
+        internal static bool ValidarNombreUsuario(ErrorProvider errores, TextBox campo)
+        {
+            return ValidarConError(errores, campo, delegate { ValidacionesGimnasio.ValidarNombreUsuario(campo.Text.Trim()); });
+        }
+
+        internal static bool ValidarDecimal(ErrorProvider errores, TextBox campo, string nombreCampo, bool obligatorio, bool permitirCero)
+        {
+            return ValidarConError(errores, campo, delegate
+            {
+                if (string.IsNullOrWhiteSpace(campo.Text))
+                {
+                    if (obligatorio)
+                        throw new InvalidOperationException("El campo " + nombreCampo + " es obligatorio.");
+                    return;
+                }
+                DecimalPositivo(campo, nombreCampo, permitirCero);
+            });
+        }
+
+        internal static bool ValidarEntero(ErrorProvider errores, TextBox campo, string nombreCampo, bool obligatorio, bool permitirCero)
+        {
+            return ValidarConError(errores, campo, delegate
+            {
+                if (string.IsNullOrWhiteSpace(campo.Text))
+                {
+                    if (obligatorio)
+                        throw new InvalidOperationException("El campo " + nombreCampo + " es obligatorio.");
+                    return;
+                }
+                int valor;
+                if (!int.TryParse(campo.Text.Trim(), out valor))
+                    throw new InvalidOperationException("El campo " + nombreCampo + " debe ser un número entero.");
+                if (permitirCero ? valor < 0 : valor <= 0)
+                    throw new InvalidOperationException(permitirCero
+                        ? "El campo " + nombreCampo + " no puede ser negativo."
+                        : "El campo " + nombreCampo + " debe ser mayor que cero.");
+            });
+        }
+
+        internal static bool ValidarCombo(ErrorProvider errores, ComboBox combo, string mensaje)
+        {
+            return ValidarConError(errores, combo, delegate
+            {
+                var requiereValor = combo.DataSource != null || !string.IsNullOrWhiteSpace(combo.ValueMember);
+                if (combo.SelectedIndex < 0 || (requiereValor && combo.SelectedValue == null))
+                    throw new InvalidOperationException(mensaje);
+            });
+        }
+
+        internal static void EnfocarPrimerError(ErrorProvider errores, params Control[] controles)
+        {
+            foreach (var control in controles)
+            {
+                if (control != null && !string.IsNullOrEmpty(errores.GetError(control)) && control.CanFocus)
+                {
+                    control.Focus();
+                    return;
+                }
+            }
         }
     }
 }

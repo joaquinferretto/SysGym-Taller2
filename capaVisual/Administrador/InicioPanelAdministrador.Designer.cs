@@ -82,17 +82,18 @@ namespace exxen2._0.capaVisual.Administrador
             listaClima.Dock = DockStyle.None;
             listaClima.AutoScroll = false;
             listaClima.AutoSize = false;
+            listaClima.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
             listaClima.ColumnCount = 7;
             listaClima.RowCount = 1;
             listaClima.Padding = new Padding(8, 4, 8, 8);
             listaClima.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
-            listaClima.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.2857F));
-            listaClima.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.2857F));
-            listaClima.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.2857F));
-            listaClima.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.2857F));
-            listaClima.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.2857F));
-            listaClima.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.2857F));
-            listaClima.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 14.2857F));
+            listaClima.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 1F));
+            listaClima.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 1F));
+            listaClima.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 1F));
+            listaClima.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 1F));
+            listaClima.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 1F));
+            listaClima.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 1F));
+            listaClima.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 1F));
             listaClima.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
 
 

@@ -6,6 +6,10 @@ using exxen2._0.capaVisual.Compartido;
 using exxen2._0.capaVisual.Entrenador;
 using exxen2._0.capaVisual.Recepcionista;
 
+using exxen2._0.capaLogica.Navegacion;
+
+using exxen2._0.capaLogica.Utilidades;
+
 namespace exxen2._0.capaVisual.Administrador
 {
     /* Presenta administrador y atiende sus acciones mediante eventos de Windows Forms. */

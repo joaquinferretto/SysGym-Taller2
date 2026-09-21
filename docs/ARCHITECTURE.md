@@ -1,5 +1,34 @@
 # Arquitectura
 
+## Convención definitiva de capas visuales — 21/09/2026
+
+La organización adoptada específicamente por SysGym es:
+
+```text
+capaVisual
+    → Forms / UserControls / Designer / resx
+capaLogica
+    → lógica de negocio
+    → Navegacion
+    → Utilidades
+capaDatos
+    → entidades / Entity Framework / repositorios / unidad de trabajo
+SQL Server
+    → persistencia
+```
+
+`capaVisual` contiene exclusivamente pantallas y controles visuales reales. Los formularios compartidos permanecen en `capaVisual/Compartido/Formularios`. `ControladorNavegacion` e `ISesionPanel` están en `capaLogica/Navegacion`; `AyudaFormularioVisual`, `ImagenSeleccionada` y `MenuDesplegableHelper` están en `capaLogica/Utilidades`.
+
+En este proyecto, `capaLogica` comprende reglas de negocio y comportamiento reutilizable de aplicación que no representa una pantalla ni persistencia. Las subcarpetas Navegacion y Utilidades dependen conscientemente de Windows Forms para coordinar Forms, Panel, mensajes, validaciones visuales y menús. No pertenecen al dominio puro y se mantienen separadas de SocioLogica, MembresiaLogica, PagoLogica y las demás clases de negocio. Esta es una decisión práctica de SysGym para que `capaVisual` quede compuesta únicamente por Form/UserControl y sus archivos asociados; no es una regla arquitectónica universal.
+
+`InicioPanelAdministrador` conserva la estructura declarativa del UserControl. Su TableLayoutPanel de pronóstico usa siete pesos porcentuales iguales y `CellBorderStyle.Single`; los controles de cada día continúan siendo dinámicos porque dependen de los datos meteorológicos. No se agregaron contenedores, servicios ni reglas de clima.
+
+## Imágenes centralizadas y membresías opcionalmente asignadas — 21/09/2026
+
+Las tres cargas de imágenes siguen `capaVisual → capaLogica → AlmacenamientoImagenes/ProcesadorImagenes → archivo administrado`, mientras EF6 conserva únicamente la ruta relativa. Los formularios seleccionan bytes, muestran el preview normalizado y comunican errores; el procesamiento técnico único valida firma y decodificación, corrige EXIF, normaliza a 800×800, recodifica y guarda mediante GUID. SocioLogica, UsuarioSistemaLogica y EjercicioImagenLogica coordinan persistencia y limpieza segura. La capa visual no usa contexto, repositorios ni SQL.
+
+`MembresiaLogica.Crear` registra membresía y primera cuota en una transacción sin crear una asignación. La relación opcional se agrega después exclusivamente mediante `MembresiaEntrenadorLogica`; GestionAsignacionesFormulario presenta las membresías sin relación como «Sin asignar». Se mantiene el flujo Visual → Lógica → Unidad de trabajo/repositorios → EF6 → SQL Server.
+
 ## Exportación de rutinas y consulta de entrenadores — 20/09/2026
 
 La exportación respeta `MisSociosFormulario → RutinaExportacionLogica → UnidadDeTrabajoGimnasio/repositorios → EF6 → SQL Server`. La consulta materializa una instantánea de solo lectura con socio, membresía, rutina, ejercicios y rutas de imágenes; la capa visual no usa contexto, repositorios, SQL ni celdas del DataGridView como fuente. Luego `ExportadorRutinaPdf` recibe esos datos y genera el archivo, sin referencias a WinForms. Las rutas de `EjercicioImagen` se resuelven mediante `AlmacenamientoImagenes` y no se persisten cambios. PDFsharp-MigraDoc-GDI 6.2.4 aporta documento, paginación e imágenes y es compatible con .NET Framework 4.8.

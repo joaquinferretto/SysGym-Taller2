@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -7,6 +7,7 @@ namespace exxen2._0.capaVisual.Entrenador
     partial class RutinasEntrenadorFormulario
     {
         private IContainer components = null;
+        private ErrorProvider indicadorErrores;
         private Label lblTitulo;
         private Label lblDescripcion;
         private Button btnVolver;
@@ -68,6 +69,8 @@ namespace exxen2._0.capaVisual.Entrenador
 
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            this.indicadorErrores = new System.Windows.Forms.ErrorProvider(this.components);
             this.lblTitulo = new System.Windows.Forms.Label();
             this.lblDescripcion = new System.Windows.Forms.Label();
             this.btnVolver = new System.Windows.Forms.Button();
@@ -807,7 +810,9 @@ namespace exxen2._0.capaVisual.Entrenador
             this.cancelarEjercicio.Visible = false;
             this.cancelarEjercicio.Click += new System.EventHandler(this.cancelarEjercicio_Click);
             // 
-            // RutinasEntrenadorFormulario
+                        this.indicadorErrores.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.indicadorErrores.ContainerControl = this;
+// RutinasEntrenadorFormulario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

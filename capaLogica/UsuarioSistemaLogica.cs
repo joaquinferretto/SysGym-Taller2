@@ -349,8 +349,7 @@ namespace exxen2._0.capaLogica
             ValidacionesGimnasio.ValidarNombre(usuario.Nombre, "nombre");
             ValidacionesGimnasio.ValidarNombre(usuario.Apellido, "apellido");
             ValidacionesGimnasio.ValidarDni(usuario.DNI);
-            if (string.IsNullOrWhiteSpace(usuario.NombreUsuario))
-                throw new InvalidOperationException("El nombre de usuario es obligatorio.");
+            ValidacionesGimnasio.ValidarNombreUsuario(usuario.NombreUsuario);
             ValidacionesGimnasio.ValidarEdadMinima(usuario.FechaNacimiento, 18, "El usuario debe tener al menos 18 años.");
 
             if (usuario.Salario <= 0)

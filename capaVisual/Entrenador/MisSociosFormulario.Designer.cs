@@ -1,8 +1,9 @@
-namespace exxen2._0.capaVisual.Entrenador
+﻿namespace exxen2._0.capaVisual.Entrenador
 {
     partial class MisSociosFormulario
     {
         private System.ComponentModel.IContainer components;
+        private System.Windows.Forms.ErrorProvider indicadorErrores;
         private System.Windows.Forms.Panel barraAcciones;
         private System.Windows.Forms.Label lblBuscar;
         private System.Windows.Forms.TextBox buscador;
@@ -62,6 +63,7 @@ namespace exxen2._0.capaVisual.Entrenador
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            indicadorErrores = new System.Windows.Forms.ErrorProvider(components);
             barraAcciones = new System.Windows.Forms.Panel();
             lblBuscar = new System.Windows.Forms.Label();
             buscador = new System.Windows.Forms.TextBox();
@@ -447,7 +449,9 @@ namespace exxen2._0.capaVisual.Entrenador
             Controls.Add(splitContenido);
             Controls.Add(lblEstado);
             Controls.Add(barraAcciones);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoScaleMode = System.Windows.Forms.            indicadorErrores.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            indicadorErrores.ContainerControl = this;
+AutoScaleMode.Font;
             BackColor = System.Drawing.Color.FromArgb(241, 245, 249);
             ClientSize = new System.Drawing.Size(1100, 680);
             Font = new System.Drawing.Font("Segoe UI", 9.5F);

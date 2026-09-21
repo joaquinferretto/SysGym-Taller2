@@ -1,7 +1,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace exxen2._0.capaVisual.Compartido
+namespace exxen2._0.capaLogica.Utilidades
 {
     /* Reacomoda una sección del menú lateral y muestra u oculta sus opciones. */
     public static class MenuDesplegableHelper

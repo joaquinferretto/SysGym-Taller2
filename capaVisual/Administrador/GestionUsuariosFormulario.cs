@@ -9,6 +9,8 @@ using exxen2._0.capaDatos.Entidades;
 using exxen2._0.capaLogica;
 using exxen2._0.capaVisual.Compartido;
 
+using exxen2._0.capaLogica.Utilidades;
+
 namespace exxen2._0.capaVisual.Administrador
 {
     /* Presenta usuarios y atiende sus acciones mediante eventos de Windows Forms. */
@@ -27,6 +29,20 @@ namespace exxen2._0.capaVisual.Administrador
         public GestionUsuariosFormulario()
         {
             InitializeComponent();
+            ConfigurarValidaciones();
+        }
+
+        private void ConfigurarValidaciones()
+        {
+            nombre.Validating += campoNombre_Validating;
+            apellido.Validating += campoApellido_Validating;
+            dni.Validating += dni_Validating;
+            fechaNacimiento.Validating += fechaNacimiento_Validating;
+            nombreUsuario.Validating += nombreUsuario_Validating;
+            nombreUsuario.KeyPress += nombreUsuario_KeyPress;
+            clave.Validating += clave_Validating;
+            salario.Validating += salario_Validating;
+            rol.Validating += rol_Validating;
         }
 
         /* Carga los roles activos disponibles para crear o modificar personal. */
@@ -109,6 +125,7 @@ namespace exxen2._0.capaVisual.Administrador
                 salario.Text = usuario.Salario.ToString("0.00", CultureInfo.CurrentCulture);
                 if (usuario.Rol != null)
                     rol.SelectedValue = usuario.IdRol;
+                indicadorErrores.Clear();
                 EstablecerModo(false, usuario.Estado);
             }
             catch (Exception ex)
@@ -136,6 +153,7 @@ namespace exxen2._0.capaVisual.Administrador
             if (rol.Items.Count > 0)
                 rol.SelectedIndex = 0;
             tabla.ClearSelection();
+            indicadorErrores.Clear();
             EstablecerModo(true, true);
             nombre.Focus();
         }
@@ -178,6 +196,8 @@ namespace exxen2._0.capaVisual.Administrador
             {
                 if (idSeleccionado != 0)
                     return;
+                if (!ValidarFormulario(true))
+                    return;
                 logica.Crear(LeerUsuario(), clave.Text, fotoSeleccionada == null ? null : fotoSeleccionada.Contenido);
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
@@ -203,6 +223,8 @@ namespace exxen2._0.capaVisual.Administrador
             {
                 if (idSeleccionado == 0)
                     throw new InvalidOperationException("Selecciona un usuario.");
+                if (!ValidarFormulario(false))
+                    return;
                 logica.Modificar(LeerUsuario(), clave.Text, fotoSeleccionada == null ? null : fotoSeleccionada.Contenido);
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
@@ -311,6 +333,68 @@ namespace exxen2._0.capaVisual.Administrador
         private void dni_KeyPress(object origen, KeyPressEventArgs e)
         {
             AyudaFormularioVisual.ValidarEntradaDni(e);
+        }
+
+        private void nombreUsuario_KeyPress(object origen, KeyPressEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarEntradaNombreUsuario(e);
+        }
+
+        private void campoNombre_Validating(object origen, CancelEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarNombre(indicadorErrores, (TextBox)origen, origen == nombre ? "nombre" : "apellido");
+        }
+
+        private void dni_Validating(object origen, CancelEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarDni(indicadorErrores, dni);
+        }
+
+        private void nombreUsuario_Validating(object origen, CancelEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarNombreUsuario(indicadorErrores, nombreUsuario);
+        }
+
+        private void fechaNacimiento_Validating(object origen, CancelEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarConError(indicadorErrores, fechaNacimiento,
+                () => ValidacionesGimnasio.ValidarEdadMinima(fechaNacimiento.Value.Date, 18, "El usuario"));
+        }
+
+        private void clave_Validating(object origen, CancelEventArgs e)
+        {
+            if (idSeleccionado == 0)
+                AyudaFormularioVisual.ValidarRequerido(indicadorErrores, clave, "La contraseña es obligatoria.");
+            else
+                indicadorErrores.SetError(clave, string.Empty);
+        }
+
+        private void salario_Validating(object origen, CancelEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarDecimal(indicadorErrores, salario, "salario", true, false);
+        }
+
+        private void rol_Validating(object origen, CancelEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarCombo(indicadorErrores, rol, "Seleccioná un rol.");
+        }
+
+        private bool ValidarFormulario(bool alta)
+        {
+            indicadorErrores.Clear();
+            var valido = AyudaFormularioVisual.ValidarNombre(indicadorErrores, nombre, "nombre");
+            valido = AyudaFormularioVisual.ValidarNombre(indicadorErrores, apellido, "apellido") & valido;
+            valido = AyudaFormularioVisual.ValidarDni(indicadorErrores, dni) & valido;
+            valido = AyudaFormularioVisual.ValidarConError(indicadorErrores, fechaNacimiento,
+                () => ValidacionesGimnasio.ValidarEdadMinima(fechaNacimiento.Value.Date, 18, "El usuario")) & valido;
+            valido = AyudaFormularioVisual.ValidarNombreUsuario(indicadorErrores, nombreUsuario) & valido;
+            if (alta)
+                valido = AyudaFormularioVisual.ValidarRequerido(indicadorErrores, clave, "La contraseña es obligatoria.") & valido;
+            valido = AyudaFormularioVisual.ValidarDecimal(indicadorErrores, salario, "salario", true, false) & valido;
+            valido = AyudaFormularioVisual.ValidarCombo(indicadorErrores, rol, "Seleccioná un rol.") & valido;
+            if (!valido)
+                AyudaFormularioVisual.EnfocarPrimerError(indicadorErrores, nombre, apellido, dni, fechaNacimiento, nombreUsuario, clave, salario, rol);
+            return valido;
         }
 
         /* Devuelve el código del sexo seleccionado sin inventar un valor para registros sin selección. */

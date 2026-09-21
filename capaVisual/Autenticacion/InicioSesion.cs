@@ -9,23 +9,20 @@ using exxen2._0.capaVisual.Compartido;
 using exxen2._0.capaVisual.Entrenador;
 using exxen2._0.capaVisual.Recepcionista;
 
+using exxen2._0.capaLogica.Navegacion;
+using exxen2._0.capaLogica.Utilidades;
+
 namespace exxen2._0.capaVisual.Autenticacion
 {
     /* Presenta el inicio de sesión y atiende sus acciones mediante eventos de Windows Forms. */
     public partial class InicioSesion : Form
     {
         private readonly UsuarioSistemaLogica usuarioSistemaLogica;
-        private readonly ErrorProvider indicadorErrores;
         /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
         public InicioSesion()
         {
             InitializeComponent();
             usuarioSistemaLogica = new UsuarioSistemaLogica();
-            indicadorErrores = new ErrorProvider(this)
-            {
-                BlinkStyle = ErrorBlinkStyle.NeverBlink
-            };
-            components.Add(indicadorErrores);
             AcceptButton = btnIngresar;
             CancelButton = btnSalir;
         }
@@ -83,25 +80,22 @@ namespace exxen2._0.capaVisual.Autenticacion
             Close();
         }
 
-        /* Al escribir el usuario, aplica la restricción de letras del formulario de acceso. */
+        /* Al escribir el usuario, admite letras, números y separadores compatibles. */
         private void txtNombreUsuario_KeyPress(object origen, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsLetter(e.KeyChar))
-            {
-                e.Handled = true;
-                System.Media.SystemSounds.Beep.Play();
-            }
+            AyudaFormularioVisual.ValidarEntradaNombreUsuario(e);
         }
 
         /* Al validar el campo de acceso, informa los datos faltantes o inválidos mediante ErrorProvider. */
         private void txtNombreUsuario_Validating(object origen, CancelEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtNombreUsuario.Text))
-                indicadorErrores.SetError(txtNombreUsuario, "Ingresa el nombre de usuario.");
-            else if (txtNombreUsuario.Text.Any(c => !char.IsLetter(c)))
-                indicadorErrores.SetError(txtNombreUsuario, "El usuario solo puede contener letras.");
-            else
-                indicadorErrores.SetError(txtNombreUsuario, string.Empty);
+            AyudaFormularioVisual.ValidarNombreUsuario(indicadorErrores, txtNombreUsuario);
+        }
+
+        private void txtNombreUsuario_TextChanged(object origen, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(txtNombreUsuario.Text))
+                AyudaFormularioVisual.ValidarNombreUsuario(indicadorErrores, txtNombreUsuario);
         }
 
         /* Al validar el campo de acceso, informa los datos faltantes o inválidos mediante ErrorProvider. */

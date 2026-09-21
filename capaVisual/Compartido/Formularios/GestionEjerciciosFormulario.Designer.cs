@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -7,6 +7,7 @@ namespace exxen2._0.capaVisual.Compartido
     partial class GestionEjerciciosFormulario
     {
         private IContainer components;
+        private ErrorProvider indicadorErrores;
         private Label lblBuscar;
         private TextBox buscador;
         private Label lblEstadoFiltro;
@@ -44,6 +45,8 @@ namespace exxen2._0.capaVisual.Compartido
 
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            this.indicadorErrores = new System.Windows.Forms.ErrorProvider(this.components);
             this.nuevo = new System.Windows.Forms.Button();
             this.actualizar = new System.Windows.Forms.Button();
             this.filtroEstado = new System.Windows.Forms.ComboBox();
@@ -389,7 +392,9 @@ namespace exxen2._0.capaVisual.Compartido
             this.reactivar.UseVisualStyleBackColor = false;
             this.reactivar.Visible = false;
             this.reactivar.Click += new System.EventHandler(this.reactivar_Click);
-            // GestionEjerciciosFormulario
+                        this.indicadorErrores.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.indicadorErrores.ContainerControl = this;
+// GestionEjerciciosFormulario
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));

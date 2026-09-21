@@ -17,6 +17,7 @@ namespace exxen2._0.capaVisual.Autenticacion
         private Button btnIngresar;
         private Button btnSalir;
         private Panel barraSuperior;
+        private ErrorProvider indicadorErrores;
 
         protected override void Dispose(bool liberarRecursos)
         {
@@ -26,7 +27,7 @@ namespace exxen2._0.capaVisual.Autenticacion
 
         private void InitializeComponent()
         {
-            components = new Container(); lblTitulo = new Label(); lblSubtitulo = new Label(); lblNombreUsuario = new Label(); lblClave = new Label(); lblClaveVisible = new Label(); txtNombreUsuario = new TextBox(); txtClave = new TextBox(); btnIngresar = new Button(); btnSalir = new Button(); barraSuperior = new Panel();   SuspendLayout();
+            components = new Container(); lblTitulo = new Label(); lblSubtitulo = new Label(); lblNombreUsuario = new Label(); lblClave = new Label(); lblClaveVisible = new Label(); txtNombreUsuario = new TextBox(); txtClave = new TextBox(); btnIngresar = new Button(); btnSalir = new Button(); barraSuperior = new Panel(); indicadorErrores = new ErrorProvider(components); ((ISupportInitialize)(indicadorErrores)).BeginInit(); SuspendLayout();
             BackColor = Color.FromArgb(15, 23, 42); ClientSize = new Size(520, 372); Font = new Font("Segoe UI", 10F); FormBorderStyle = FormBorderStyle.FixedSingle; MaximizeBox = false; this.Name = "InicioSesion"; StartPosition = FormStartPosition.CenterScreen; Text = "SysGym | Inicio de sesion";
              lblTitulo.Font = new Font("Segoe UI", 28F, FontStyle.Bold); lblTitulo.ForeColor = Color.White;  lblTitulo.Name = "lblTitulo";  lblTitulo.TabIndex = 0; lblTitulo.Text = "SYSGYM";
              lblSubtitulo.Font = new Font("Segoe UI", 10F); lblSubtitulo.ForeColor = Color.FromArgb(186, 230, 253);  lblSubtitulo.Name = "lblSubtitulo";  lblSubtitulo.TabIndex = 1; lblSubtitulo.Text = "Gestion simple, segura y organizada";
@@ -38,6 +39,7 @@ namespace exxen2._0.capaVisual.Autenticacion
             btnIngresar.BackColor = Color.FromArgb(20, 184, 166); btnIngresar.FlatStyle = FlatStyle.Flat; btnIngresar.FlatAppearance.BorderSize = 0; btnIngresar.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold); btnIngresar.ForeColor = Color.White;  btnIngresar.Name = "btnIngresar";  btnIngresar.TabIndex = 2; btnIngresar.Text = "Ingresar"; btnIngresar.UseVisualStyleBackColor = false;
             btnSalir.BackColor = Color.FromArgb(51, 65, 85); btnSalir.DialogResult = DialogResult.Cancel; btnSalir.FlatStyle = FlatStyle.Flat; btnSalir.FlatAppearance.BorderSize = 0; btnSalir.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold); btnSalir.ForeColor = Color.FromArgb(226, 232, 240);  btnSalir.Name = "btnSalir";  btnSalir.TabIndex = 3; btnSalir.Text = "Salir"; btnSalir.UseVisualStyleBackColor = false;
             barraSuperior.BackColor = Color.FromArgb(20, 184, 166);    barraSuperior.Name = "barraSuperior";  barraSuperior.TabIndex = 5;
+            indicadorErrores.BlinkStyle = ErrorBlinkStyle.NeverBlink; indicadorErrores.ContainerControl = this;
             this.Controls.Add(lblTitulo);
             this.Controls.Add(lblSubtitulo);
             this.Controls.Add(lblNombreUsuario);
@@ -127,10 +129,11 @@ namespace exxen2._0.capaVisual.Autenticacion
             this.barraSuperior.Location = new System.Drawing.Point(0, 0);
             this.barraSuperior.Size = new System.Drawing.Size(520, 7);
             this.barraSuperior.AutoScroll = false;
-            ResumeLayout(false); PerformLayout();
+            ((ISupportInitialize)(indicadorErrores)).EndInit(); ResumeLayout(false); PerformLayout();
 
             this.txtNombreUsuario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtNombreUsuario_KeyPress);
             this.txtNombreUsuario.Validating += new System.ComponentModel.CancelEventHandler(this.txtNombreUsuario_Validating);
+            this.txtNombreUsuario.TextChanged += new System.EventHandler(this.txtNombreUsuario_TextChanged);
             this.txtClave.Validating += new System.ComponentModel.CancelEventHandler(this.txtClave_Validating);
             this.txtClave.TextChanged += new System.EventHandler(this.txtClave_TextChanged);
             this.btnIngresar.Click += new System.EventHandler(this.btnIngresar_Click);

@@ -1,12 +1,18 @@
 # Integración de Entity Framework
 
+## Persistencia vigente de imágenes y membresías — 21/09/2026
+
+EF6 guarda exclusivamente `Socio.FotoRuta`, `UsuarioSistema.FotoRuta` y `EjercicioImagen.RutaRelativa`; el procesador central recodifica los archivos antes de que la lógica asigne esas rutas. No se modificaron entidades, DbSet, relaciones ni esquema para esta política. Ejercicio conserva su relación 1:N con EjercicioImagen y máximo cuatro como regla de capa lógica.
+
+El alta de Membresía continúa en una transacción junto con su primera cuota, pero ya no inserta `MembresiaEntrenador`. La colección `Membresia.Entrenadores` y su relación EF permanecen para asignaciones posteriores opcionales. Esta corrección no requirió migración ni DDL.
+
 ## Imágenes de ejercicios: decisión vigente — 20 de septiembre de 2026
 
 Verificación posterior a la ejecución del usuario: tabla creada y consulta real del módulo funcionando con 0 imágenes, 45 ejercicios, sin errores SQL ni intentos de escritura. Las pruebas con una/varias imágenes persistidas quedan pendientes; no se cargaron datos de prueba. Esta verificación sustituye el estado «migración pendiente» de la nota anterior inferior.
 
 Se conserva EF6 y el modelo Ejercicio 1:N EjercicioImagen con FK requerida en la imagen y sin cascada. Un ejercicio sin imágenes no necesita filas hijas. Se descartó la alternativa intermedia Ejercicio.FotoRuta; no hay cambio final en entidades/contexto/repositorios. Socio y Usuario mantienen su FotoRuta opcional.
 
-`EjercicioImagenLogica.ListarPorEjercicio(idEjercicio)` materializa las imágenes filtradas y ordenadas por Orden/IdEjercicioImagen. La futura exportación PDF puede consumir esta consulta y resolver los archivos mediante AlmacenamientoImagenes.RutaAbsoluta; no se implementa PDF en esta tarea. Como lazy loading está deshabilitado, listar ejercicios no carga automáticamente la colección. Migración SQL aditiva preparada; ejecución y pruebas EF contra la tabla pendientes por fallo SSL/SSPI de la conexión local. Debug/Release compilan con 0 errores y 2 warnings históricos.
+`EjercicioImagenLogica.ListarPorEjercicio(idEjercicio)` materializa las imágenes filtradas y ordenadas por Orden/IdEjercicioImagen. La exportación PDF actual consume rutas ordenadas y las resuelve mediante AlmacenamientoImagenes.RutaAbsoluta. Como lazy loading está deshabilitado, listar ejercicios no carga automáticamente la colección. La tabla local fue verificada y las pruebas actuales del procesador pasaron en x64 y x86.
 
 ## Sincronización de Membresia y Socio — 19 de septiembre de 2026
 
@@ -56,4 +62,4 @@ La relación opcional `Membresia.Rutina` se configura con `HasOptional(...).With
 
 `Socio.FotoRuta` se mapea como cadena nullable de hasta 260 caracteres. `Ejercicio` expone `ICollection<EjercicioImagen> EjercicioImagenes` y `ContextoGimnasio` registra `DbSet<EjercicioImagen>` junto con la relación requerida `Ejercicio 1:N EjercicioImagen`, sin borrado en cascada.
 
-`EjercicioImagenLogica` consulta por `Orden`, copia archivos a `Datos/Imagenes/Ejercicios/{IdEjercicio}` y elimina la relación con el repositorio cuando corresponde. `SocioLogica` copia fotos a `Datos/Imagenes/Socios` y persiste solo `FotoRuta`; `AlmacenamientoImagenes` valida rutas relativas y extensiones. No se agregaron migraciones EF ni exportación PDF.
+`EjercicioImagenLogica` consulta por `Orden`, almacena archivos normalizados en `Datos/Imagenes/Ejercicios/{IdEjercicio}` y elimina la relación con el repositorio cuando corresponde. `SocioLogica` y `UsuarioSistemaLogica` almacenan fotos normalizadas en sus carpetas y persisten solo `FotoRuta`; `AlmacenamientoImagenes` valida rutas relativas y delega toda entrada al procesador central. No se agregaron migraciones EF para esta política.
