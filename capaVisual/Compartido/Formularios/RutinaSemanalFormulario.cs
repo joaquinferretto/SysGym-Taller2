@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -30,7 +30,6 @@ namespace exxen2._0.capaVisual.Compartido
             this.nombreSocio = string.IsNullOrWhiteSpace(nombreSocio) ? "Socio" : nombreSocio;
             InitializeComponent();
             panelEncabezado.BackColor = colorPrimario;
-            btnVolver.ForeColor = colorPrimario;
             lblTitulo.Text = "Rutina semanal de " + this.nombreSocio;
         }
 

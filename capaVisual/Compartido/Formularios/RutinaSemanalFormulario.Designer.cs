@@ -19,7 +19,7 @@ namespace exxen2._0.capaVisual.Compartido
             panelEncabezado.BackColor = Color.FromArgb(79, 70, 229); panelEncabezado.Controls.Add(lblDescripcion); panelEncabezado.Controls.Add(lblTitulo); panelEncabezado.Controls.Add(btnVolver);
             lblTitulo.Font = new Font("Segoe UI", 18F, FontStyle.Bold); lblTitulo.ForeColor = Color.White; lblTitulo.Text = "Rutina semanal";
             lblDescripcion.ForeColor = Color.FromArgb(226, 232, 240); lblDescripcion.Text = "Entrenamiento del socio de lunes a viernes";
-            btnVolver.BackColor = Color.White; btnVolver.FlatStyle = FlatStyle.Flat; btnVolver.FlatAppearance.BorderSize = 0; btnVolver.ForeColor = Color.FromArgb(79, 70, 229); btnVolver.Text = "Cerrar"; btnVolver.UseVisualStyleBackColor = false;
+            btnVolver.BackColor = Color.White; btnVolver.FlatStyle = FlatStyle.Flat; btnVolver.FlatAppearance.BorderSize = 0; btnVolver.ForeColor = System.Drawing.Color.FromArgb(72, 66, 217); btnVolver.Text = "Cerrar"; btnVolver.UseVisualStyleBackColor = false;
             lblEstado.BackColor = Color.FromArgb(226, 232, 240); lblEstado.ForeColor = Color.FromArgb(51, 65, 85); lblEstado.Text = "Listo";
             panelContenido.BackColor = Color.FromArgb(248, 250, 252); panelContenido.Padding = new Padding(16); panelContenido.Controls.Add(tablaSemana);
             tablaSemana.BackgroundColor = Color.White; tablaSemana.BorderStyle = BorderStyle.None;

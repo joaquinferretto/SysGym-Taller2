@@ -155,7 +155,7 @@ namespace exxen2._0.capaVisual.Entrenador
             this.btnVolver.BackColor = System.Drawing.Color.White;
             this.btnVolver.FlatAppearance.BorderSize = 0;
             this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnVolver.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(116)))), ((int)(((byte)(144)))));
+            this.btnVolver.ForeColor = System.Drawing.Color.FromArgb(72, 66, 217);
             this.btnVolver.Location = new System.Drawing.Point(0, 0);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(100, 24);
@@ -270,11 +270,11 @@ namespace exxen2._0.capaVisual.Entrenador
             // 
             // nuevaRutina
             // 
-            this.nuevaRutina.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.nuevaRutina.BackColor = System.Drawing.Color.FromArgb(9, 149, 111);
             this.nuevaRutina.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.nuevaRutina.FlatAppearance.BorderSize = 0;
             this.nuevaRutina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.nuevaRutina.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.nuevaRutina.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
             this.nuevaRutina.Location = new System.Drawing.Point(16, 599);
             this.nuevaRutina.Margin = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.nuevaRutina.Name = "nuevaRutina";
@@ -389,7 +389,7 @@ namespace exxen2._0.capaVisual.Entrenador
             // 
             // guardarRutina
             // 
-            this.guardarRutina.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(116)))), ((int)(((byte)(144)))));
+            this.guardarRutina.BackColor = System.Drawing.Color.FromArgb(72, 66, 217);
             this.guardarRutina.FlatAppearance.BorderSize = 0;
             this.guardarRutina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.guardarRutina.ForeColor = System.Drawing.Color.White;
@@ -404,10 +404,10 @@ namespace exxen2._0.capaVisual.Entrenador
             // 
             // actualizar
             // 
-            this.actualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.actualizar.BackColor = System.Drawing.Color.FromArgb(72, 66, 217);
             this.actualizar.FlatAppearance.BorderSize = 0;
             this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.actualizar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.actualizar.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
             this.actualizar.Location = new System.Drawing.Point(162, 102);
             this.actualizar.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
             this.actualizar.Name = "actualizar";
@@ -419,10 +419,10 @@ namespace exxen2._0.capaVisual.Entrenador
             // 
             // darDeBaja
             // 
-            this.darDeBaja.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.darDeBaja.BackColor = System.Drawing.Color.FromArgb(255, 240, 240);
             this.darDeBaja.FlatAppearance.BorderSize = 0;
             this.darDeBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.darDeBaja.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.darDeBaja.ForeColor = System.Drawing.Color.FromArgb(173, 36, 36);
             this.darDeBaja.Location = new System.Drawing.Point(276, 102);
             this.darDeBaja.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
             this.darDeBaja.Name = "darDeBaja";
@@ -464,7 +464,7 @@ namespace exxen2._0.capaVisual.Entrenador
             // 
             // agregarEjercicio
             // 
-            this.agregarEjercicio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(116)))), ((int)(((byte)(144)))));
+            this.agregarEjercicio.BackColor = System.Drawing.Color.FromArgb(9, 149, 111);
             this.agregarEjercicio.FlatAppearance.BorderSize = 0;
             this.agregarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.agregarEjercicio.ForeColor = System.Drawing.Color.White;
@@ -479,10 +479,10 @@ namespace exxen2._0.capaVisual.Entrenador
             // 
             // actualizarEjercicio
             // 
-            this.actualizarEjercicio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.actualizarEjercicio.BackColor = System.Drawing.Color.FromArgb(231, 237, 247);
             this.actualizarEjercicio.FlatAppearance.BorderSize = 0;
             this.actualizarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.actualizarEjercicio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.actualizarEjercicio.ForeColor = System.Drawing.Color.FromArgb(48, 68, 95);
             this.actualizarEjercicio.Location = new System.Drawing.Point(168, 178);
             this.actualizarEjercicio.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
             this.actualizarEjercicio.Name = "actualizarEjercicio";
@@ -494,10 +494,10 @@ namespace exxen2._0.capaVisual.Entrenador
             // 
             // quitarEjercicio
             // 
-            this.quitarEjercicio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.quitarEjercicio.BackColor = System.Drawing.Color.FromArgb(255, 240, 240);
             this.quitarEjercicio.FlatAppearance.BorderSize = 0;
             this.quitarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.quitarEjercicio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.quitarEjercicio.ForeColor = System.Drawing.Color.FromArgb(173, 36, 36);
             this.quitarEjercicio.Location = new System.Drawing.Point(266, 178);
             this.quitarEjercicio.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
             this.quitarEjercicio.Name = "quitarEjercicio";
@@ -781,7 +781,7 @@ namespace exxen2._0.capaVisual.Entrenador
             // 
             // guardarEjercicio
             // 
-            this.guardarEjercicio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(116)))), ((int)(((byte)(144)))));
+            this.guardarEjercicio.BackColor = System.Drawing.Color.FromArgb(72, 66, 217);
             this.guardarEjercicio.FlatAppearance.BorderSize = 0;
             this.guardarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.guardarEjercicio.ForeColor = System.Drawing.Color.White;
@@ -797,10 +797,10 @@ namespace exxen2._0.capaVisual.Entrenador
             // 
             // cancelarEjercicio
             // 
-            this.cancelarEjercicio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.cancelarEjercicio.BackColor = System.Drawing.Color.FromArgb(231, 237, 247);
             this.cancelarEjercicio.FlatAppearance.BorderSize = 0;
             this.cancelarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cancelarEjercicio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.cancelarEjercicio.ForeColor = System.Drawing.Color.FromArgb(48, 68, 95);
             this.cancelarEjercicio.Location = new System.Drawing.Point(176, 554);
             this.cancelarEjercicio.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
             this.cancelarEjercicio.Name = "cancelarEjercicio";

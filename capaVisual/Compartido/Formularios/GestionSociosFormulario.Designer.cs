@@ -68,7 +68,15 @@ namespace exxen2._0.capaVisual.Compartido
             this.indicadorErrores = new System.Windows.Forms.ErrorProvider(this.components);
             this.fotoSocio = new System.Windows.Forms.PictureBox();
             this.btnSeleccionarFoto = new System.Windows.Forms.Button();
+            this.btnSeleccionarFoto.FlatAppearance.BorderSize = 0;
+            this.btnSeleccionarFoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSeleccionarFoto.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.btnSeleccionarFoto.BackColor = System.Drawing.Color.FromArgb(9, 149, 111);
             this.btnQuitarFoto = new System.Windows.Forms.Button();
+            this.btnQuitarFoto.FlatAppearance.BorderSize = 0;
+            this.btnQuitarFoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnQuitarFoto.ForeColor = System.Drawing.Color.FromArgb(173, 36, 36);
+            this.btnQuitarFoto.BackColor = System.Drawing.Color.FromArgb(255, 240, 240);
             this.sexo = new System.Windows.Forms.ComboBox();
             this.lblSexo = new System.Windows.Forms.Label();
             this.panelEncabezado = new System.Windows.Forms.Panel();
@@ -149,7 +157,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.btnSeleccionarFoto.Size = new System.Drawing.Size(219, 36);
             this.btnSeleccionarFoto.TabIndex = 2;
             this.btnSeleccionarFoto.Text = "Seleccionar foto";
-            this.btnSeleccionarFoto.UseVisualStyleBackColor = true;
+            this.btnSeleccionarFoto.UseVisualStyleBackColor = false;
             this.btnSeleccionarFoto.Click += new System.EventHandler(this.btnSeleccionarFoto_Click);
             // 
             // btnQuitarFoto
@@ -161,7 +169,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.btnQuitarFoto.Size = new System.Drawing.Size(219, 36);
             this.btnQuitarFoto.TabIndex = 3;
             this.btnQuitarFoto.Text = "Quitar foto";
-            this.btnQuitarFoto.UseVisualStyleBackColor = true;
+            this.btnQuitarFoto.UseVisualStyleBackColor = false;
             this.btnQuitarFoto.Click += new System.EventHandler(this.btnQuitarFoto_Click);
             // 
             // sexo
@@ -238,7 +246,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.btnVolver.BackColor = System.Drawing.Color.White;
             this.btnVolver.FlatAppearance.BorderSize = 0;
             this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnVolver.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.btnVolver.ForeColor = System.Drawing.Color.FromArgb(72, 66, 217);
             this.btnVolver.Location = new System.Drawing.Point(974, 10);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(104, 38);
@@ -708,7 +716,7 @@ namespace exxen2._0.capaVisual.Compartido
             // 
             // nuevo
             // 
-            this.nuevo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.nuevo.BackColor = System.Drawing.Color.FromArgb(9, 149, 111);
             this.nuevo.FlatAppearance.BorderSize = 0;
             this.nuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.nuevo.ForeColor = System.Drawing.Color.White;
@@ -723,7 +731,7 @@ namespace exxen2._0.capaVisual.Compartido
             // 
             // guardar
             // 
-            this.guardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.guardar.BackColor = System.Drawing.Color.FromArgb(72, 66, 217);
             this.guardar.FlatAppearance.BorderSize = 0;
             this.guardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.guardar.ForeColor = System.Drawing.Color.White;
@@ -738,11 +746,11 @@ namespace exxen2._0.capaVisual.Compartido
             // 
             // actualizar
             // 
-            this.actualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.actualizar.BackColor = System.Drawing.Color.FromArgb(72, 66, 217);
             this.actualizar.FlatAppearance.BorderSize = 0;
             this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.panelAcciones.SetFlowBreak(this.actualizar, true);
-            this.actualizar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.actualizar.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
             this.actualizar.Location = new System.Drawing.Point(224, 0);
             this.actualizar.Margin = new System.Windows.Forms.Padding(0, 0, 4, 6);
             this.actualizar.Name = "actualizar";
@@ -754,10 +762,10 @@ namespace exxen2._0.capaVisual.Compartido
             // 
             // calcularImc
             // 
-            this.calcularImc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.calcularImc.BackColor = System.Drawing.Color.FromArgb(231, 237, 247);
             this.calcularImc.FlatAppearance.BorderSize = 0;
             this.calcularImc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.calcularImc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.calcularImc.ForeColor = System.Drawing.Color.FromArgb(48, 68, 95);
             this.calcularImc.Location = new System.Drawing.Point(0, 44);
             this.calcularImc.Margin = new System.Windows.Forms.Padding(0, 0, 4, 6);
             this.calcularImc.Name = "calcularImc";
@@ -769,11 +777,11 @@ namespace exxen2._0.capaVisual.Compartido
             // 
             // verRutina
             // 
-            this.verRutina.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.verRutina.BackColor = System.Drawing.Color.FromArgb(231, 237, 247);
             this.contenedorCampos.SetColumnSpan(this.verRutina, 2);
             this.verRutina.FlatAppearance.BorderSize = 0;
             this.verRutina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.verRutina.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.verRutina.ForeColor = System.Drawing.Color.FromArgb(48, 68, 95);
             this.verRutina.Location = new System.Drawing.Point(3, 503);
             this.verRutina.Name = "verRutina";
             this.verRutina.Size = new System.Drawing.Size(180, 38);

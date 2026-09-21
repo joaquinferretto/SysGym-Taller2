@@ -77,7 +77,15 @@ namespace exxen2._0.capaVisual.Administrador
             this.indicadorErrores = new System.Windows.Forms.ErrorProvider(this.components);
             this.fotoUsuario = new System.Windows.Forms.PictureBox();
             this.btnSeleccionarFoto = new System.Windows.Forms.Button();
+            this.btnSeleccionarFoto.FlatAppearance.BorderSize = 0;
+            this.btnSeleccionarFoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSeleccionarFoto.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.btnSeleccionarFoto.BackColor = System.Drawing.Color.FromArgb(9, 149, 111);
             this.btnQuitarFoto = new System.Windows.Forms.Button();
+            this.btnQuitarFoto.FlatAppearance.BorderSize = 0;
+            this.btnQuitarFoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnQuitarFoto.ForeColor = System.Drawing.Color.FromArgb(173, 36, 36);
+            this.btnQuitarFoto.BackColor = System.Drawing.Color.FromArgb(255, 240, 240);
             this.sexo = new System.Windows.Forms.ComboBox();
             this.lblSexo = new System.Windows.Forms.Label();
 
@@ -160,7 +168,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.btnSeleccionarFoto.Size = new System.Drawing.Size(234, 36);
             this.btnSeleccionarFoto.TabIndex = 18;
             this.btnSeleccionarFoto.Text = "Seleccionar foto";
-            this.btnSeleccionarFoto.UseVisualStyleBackColor = true;
+            this.btnSeleccionarFoto.UseVisualStyleBackColor = false;
             this.btnSeleccionarFoto.Click += new System.EventHandler(this.btnSeleccionarFoto_Click);
             //
             // btnQuitarFoto
@@ -173,7 +181,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.btnQuitarFoto.Size = new System.Drawing.Size(234, 36);
             this.btnQuitarFoto.TabIndex = 19;
             this.btnQuitarFoto.Text = "Quitar foto";
-            this.btnQuitarFoto.UseVisualStyleBackColor = true;
+            this.btnQuitarFoto.UseVisualStyleBackColor = false;
             this.btnQuitarFoto.Click += new System.EventHandler(this.btnQuitarFoto_Click);
             //
             // sexo
@@ -783,7 +791,7 @@ namespace exxen2._0.capaVisual.Administrador
             //
             // nuevo
             //
-            this.nuevo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.nuevo.BackColor = System.Drawing.Color.FromArgb(9, 149, 111);
             this.nuevo.FlatAppearance.BorderSize = 0;
             this.nuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.nuevo.ForeColor = System.Drawing.Color.White;
@@ -801,7 +809,7 @@ namespace exxen2._0.capaVisual.Administrador
             //
             // guardar
             //
-            this.guardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.guardar.BackColor = System.Drawing.Color.FromArgb(72, 66, 217);
             this.guardar.FlatAppearance.BorderSize = 0;
             this.guardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.guardar.ForeColor = System.Drawing.Color.White;
@@ -819,10 +827,10 @@ namespace exxen2._0.capaVisual.Administrador
             //
             // actualizar
             //
-            this.actualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.actualizar.BackColor = System.Drawing.Color.FromArgb(72, 66, 217);
             this.actualizar.FlatAppearance.BorderSize = 0;
             this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.actualizar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.actualizar.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
             this.actualizar.Location = new System.Drawing.Point(252, 346);
             this.actualizar.Margin = new System.Windows.Forms.Padding(0, 0, 4, 6);
             this.actualizar.Dock = System.Windows.Forms.DockStyle.None;
@@ -837,10 +845,10 @@ namespace exxen2._0.capaVisual.Administrador
             //
             // darDeBaja
             //
-            this.darDeBaja.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.darDeBaja.BackColor = System.Drawing.Color.FromArgb(255, 240, 240);
             this.darDeBaja.FlatAppearance.BorderSize = 0;
             this.darDeBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.darDeBaja.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.darDeBaja.ForeColor = System.Drawing.Color.FromArgb(173, 36, 36);
             this.darDeBaja.Location = new System.Drawing.Point(12, 386);
             this.darDeBaja.Margin = new System.Windows.Forms.Padding(0, 0, 4, 6);
             this.darDeBaja.Dock = System.Windows.Forms.DockStyle.None;
@@ -855,10 +863,10 @@ namespace exxen2._0.capaVisual.Administrador
             //
             // reactivar
             //
-            this.reactivar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.reactivar.BackColor = System.Drawing.Color.FromArgb(220, 252, 231);
             this.reactivar.FlatAppearance.BorderSize = 0;
             this.reactivar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.reactivar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.reactivar.ForeColor = System.Drawing.Color.FromArgb(22, 101, 52);
             this.reactivar.Location = new System.Drawing.Point(132, 386);
             this.reactivar.Margin = new System.Windows.Forms.Padding(0, 0, 4, 6);
             this.reactivar.Dock = System.Windows.Forms.DockStyle.None;

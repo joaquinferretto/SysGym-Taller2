@@ -49,6 +49,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.indicadorErrores = new System.Windows.Forms.ErrorProvider(this.components);
             this.nuevo = new System.Windows.Forms.Button();
             this.actualizar = new System.Windows.Forms.Button();
+            this.actualizar.ForeColor = System.Drawing.Color.FromArgb(48, 68, 95);
             this.filtroEstado = new System.Windows.Forms.ComboBox();
             this.lblEstadoFiltro = new System.Windows.Forms.Label();
             this.buscador = new System.Windows.Forms.TextBox();
@@ -63,6 +64,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.lblListadoTitulo = new System.Windows.Forms.Label();
             this.galeriaImagenes = new System.Windows.Forms.FlowLayoutPanel();
             this.agregarImagen = new System.Windows.Forms.Button();
+            this.agregarImagen.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
             this.quitarImagen = new System.Windows.Forms.Button();
             this.lblImagenes = new System.Windows.Forms.Label();
             this.lblNombre = new System.Windows.Forms.Label();
@@ -83,26 +85,26 @@ namespace exxen2._0.capaVisual.Compartido
             ((System.ComponentModel.ISupportInitialize)(this.indicadorErrores)).BeginInit();
             this.SuspendLayout();
             // nuevo
-            this.nuevo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.nuevo.BackColor = System.Drawing.Color.FromArgb(9, 149, 111);
             this.nuevo.FlatAppearance.BorderSize = 0;
             this.nuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.nuevo.ForeColor = System.Drawing.Color.White;
-            this.nuevo.Location = new System.Drawing.Point(16, 128);
-            this.nuevo.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.nuevo.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.nuevo.Location = new System.Drawing.Point(0, 568);
+            this.nuevo.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.nuevo.Name = "nuevo";
-            this.nuevo.Size = new System.Drawing.Size(178, 36);
+            this.nuevo.Size = new System.Drawing.Size(320, 36);
             this.nuevo.TabIndex = 3;
             this.nuevo.Text = "+ Nuevo ejercicio";
             this.nuevo.UseVisualStyleBackColor = false;
             this.nuevo.Click += new System.EventHandler(this.nuevo_Click);
             // actualizar
-            this.actualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.actualizar.BackColor = System.Drawing.Color.FromArgb(231, 237, 247);
             this.actualizar.FlatAppearance.BorderSize = 0;
             this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.actualizar.Location = new System.Drawing.Point(202, 128);
+            this.actualizar.Location = new System.Drawing.Point(3, 104);
             this.actualizar.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.actualizar.Name = "actualizar";
-            this.actualizar.Size = new System.Drawing.Size(150, 36);
+            this.actualizar.Size = new System.Drawing.Size(150, 32);
             this.actualizar.TabIndex = 2;
             this.actualizar.Text = "Actualizar listado";
             this.actualizar.UseVisualStyleBackColor = false;
@@ -113,14 +115,14 @@ namespace exxen2._0.capaVisual.Compartido
             "Todos",
             "Activos",
             "Inactivos"});
-            this.filtroEstado.Location = new System.Drawing.Point(80, 88);
-            this.filtroEstado.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.filtroEstado.Location = new System.Drawing.Point(67, 68);
+            this.filtroEstado.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.filtroEstado.Name = "filtroEstado";
-            this.filtroEstado.Size = new System.Drawing.Size(160, 26);
+            this.filtroEstado.Size = new System.Drawing.Size(247, 25);
             this.filtroEstado.TabIndex = 1;
             this.filtroEstado.SelectedIndexChanged += new System.EventHandler(this.filtroEstado_SelectedIndexChanged);
             // lblEstadoFiltro
-            this.lblEstadoFiltro.Location = new System.Drawing.Point(16, 88);
+            this.lblEstadoFiltro.Location = new System.Drawing.Point(3, 68);
             this.lblEstadoFiltro.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.lblEstadoFiltro.Name = "lblEstadoFiltro";
             this.lblEstadoFiltro.Size = new System.Drawing.Size(60, 26);
@@ -129,14 +131,14 @@ namespace exxen2._0.capaVisual.Compartido
             this.lblEstadoFiltro.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // buscador
             this.buscador.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.buscador.Location = new System.Drawing.Point(80, 52);
+            this.buscador.Location = new System.Drawing.Point(67, 36);
             this.buscador.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.buscador.Name = "buscador";
-            this.buscador.Size = new System.Drawing.Size(280, 26);
+            this.buscador.Size = new System.Drawing.Size(247, 24);
             this.buscador.TabIndex = 0;
             this.buscador.TextChanged += new System.EventHandler(this.buscador_TextChanged);
             // lblBuscar
-            this.lblBuscar.Location = new System.Drawing.Point(16, 52);
+            this.lblBuscar.Location = new System.Drawing.Point(3, 36);
             this.lblBuscar.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.lblBuscar.Name = "lblBuscar";
             this.lblBuscar.Size = new System.Drawing.Size(60, 26);
@@ -144,7 +146,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.lblBuscar.Text = "Buscar:";
             this.lblBuscar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // lblEstado
-            this.lblEstado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.lblEstado.BackColor = System.Drawing.Color.Transparent;
             this.lblEstado.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblEstado.Location = new System.Drawing.Point(0, 652);
             this.lblEstado.Name = "lblEstado";
@@ -176,22 +178,22 @@ namespace exxen2._0.capaVisual.Compartido
             this.splitContenido.Panel2.Controls.Add(this.agregarImagen);
             this.splitContenido.Panel2.Controls.Add(this.quitarImagen);
             this.splitContenido.Panel2.Controls.Add(this.lblImagenes);
-            this.splitContenido.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.splitContenido.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContenido.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.splitContenido.FixedPanel = System.Windows.Forms.FixedPanel.None;
             this.splitContenido.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContenido.Location = new System.Drawing.Point(16, 16);
-            this.splitContenido.MinimumSize = new System.Drawing.Size(900, 420);
+            this.splitContenido.MinimumSize = new System.Drawing.Size(862, 420);
             this.splitContenido.Name = "splitContenido";
             // splitContenido.Panel1
-            this.splitContenido.Panel1.BackColor = System.Drawing.Color.White;
+            this.splitContenido.Panel1.BackColor = System.Drawing.Color.FromArgb(248, 250, 252);
             this.splitContenido.Panel1.Padding = new System.Windows.Forms.Padding(16);
-            this.splitContenido.Panel1MinSize = 420;
+            this.splitContenido.Panel1MinSize = 300;
             // splitContenido.Panel2
-            this.splitContenido.Panel2.BackColor = System.Drawing.Color.White;
+            this.splitContenido.Panel2.BackColor = System.Drawing.Color.FromArgb(248, 250, 252);
             this.splitContenido.Panel2.Padding = new System.Windows.Forms.Padding(0, 16, 16, 16);
-            this.splitContenido.Panel2MinSize = 480;
+            this.splitContenido.Panel2MinSize = 550;
             this.splitContenido.Size = new System.Drawing.Size(1068, 620);
-            this.splitContenido.SplitterDistance = 574;
+            this.splitContenido.SplitterDistance = 320;
             this.splitContenido.SplitterWidth = 12;
             this.splitContenido.TabIndex = 0;
             // tabla
@@ -206,15 +208,16 @@ namespace exxen2._0.capaVisual.Compartido
             this.colNombre,
             this.colDescripcion,
             this.colEstado});
-            this.tabla.Location = new System.Drawing.Point(16, 180);
+            this.tabla.Location = new System.Drawing.Point(3, 148);
             this.tabla.MultiSelect = false;
             this.tabla.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right | System.Windows.Forms.AnchorStyles.Bottom;
+            this.tabla.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tabla.Name = "tabla";
             this.tabla.ReadOnly = true;
             this.tabla.RowHeadersVisible = false;
-            this.tabla.RowTemplate.Height = 30;
+            this.tabla.RowTemplate.Height = 28;
             this.tabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tabla.Size = new System.Drawing.Size(540, 424);
+            this.tabla.Size = new System.Drawing.Size(314, 408);
             this.tabla.TabIndex = 4;
             this.tabla.SelectionChanged += new System.EventHandler(this.tabla_SelectionChanged);
             // colId
@@ -240,46 +243,46 @@ namespace exxen2._0.capaVisual.Compartido
             this.colEstado.Name = "colEstado";
             this.colEstado.ReadOnly = true;
             // lblListadoTitulo
-            this.lblListadoTitulo.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
-            this.lblListadoTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.lblListadoTitulo.Location = new System.Drawing.Point(16, 12);
+            this.lblListadoTitulo.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
+            this.lblListadoTitulo.ForeColor = System.Drawing.Color.FromArgb(30, 41, 59);
+            this.lblListadoTitulo.Location = new System.Drawing.Point(3, 0);
             this.lblListadoTitulo.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.lblListadoTitulo.Name = "lblListadoTitulo";
-            this.lblListadoTitulo.Size = new System.Drawing.Size(540, 30);
+            this.lblListadoTitulo.Size = new System.Drawing.Size(314, 30);
             this.lblListadoTitulo.TabIndex = 5;
             this.lblListadoTitulo.Text = "Ejercicios del catálogo";
             this.lblListadoTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // galeriaImagenes
             this.galeriaImagenes.AutoScroll = true;
-            this.galeriaImagenes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            this.galeriaImagenes.Location = new System.Drawing.Point(16, 350);
+            this.galeriaImagenes.BackColor = System.Drawing.Color.White;
+            this.galeriaImagenes.Location = new System.Drawing.Point(10, 326);
             this.galeriaImagenes.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right | System.Windows.Forms.AnchorStyles.Bottom;
             this.galeriaImagenes.Name = "galeriaImagenes";
             this.galeriaImagenes.Padding = new System.Windows.Forms.Padding(4);
-            this.galeriaImagenes.Size = new System.Drawing.Size(448, 254);
+            this.galeriaImagenes.Size = new System.Drawing.Size(694, 278);
             this.galeriaImagenes.TabIndex = 0;
             // agregarImagen
-            this.agregarImagen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.agregarImagen.BackColor = System.Drawing.Color.FromArgb(9, 149, 111);
             this.agregarImagen.FlatAppearance.BorderSize = 0;
             this.agregarImagen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.agregarImagen.Location = new System.Drawing.Point(16, 308);
+            this.agregarImagen.Location = new System.Drawing.Point(10, 282);
             this.agregarImagen.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.agregarImagen.Name = "agregarImagen";
-            this.agregarImagen.Size = new System.Drawing.Size(130, 34);
+            this.agregarImagen.Size = new System.Drawing.Size(146, 32);
             this.agregarImagen.TabIndex = 0;
             this.agregarImagen.Text = "Agregar imagen";
             this.agregarImagen.Enabled = false;
             this.agregarImagen.UseVisualStyleBackColor = false;
             this.agregarImagen.Click += new System.EventHandler(this.agregarImagen_Click);
             // quitarImagen
-            this.quitarImagen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.quitarImagen.BackColor = System.Drawing.Color.FromArgb(255, 240, 240);
             this.quitarImagen.FlatAppearance.BorderSize = 0;
             this.quitarImagen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.quitarImagen.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-            this.quitarImagen.Location = new System.Drawing.Point(154, 308);
+            this.quitarImagen.ForeColor = System.Drawing.Color.FromArgb(173, 36, 36);
+            this.quitarImagen.Location = new System.Drawing.Point(162, 282);
             this.quitarImagen.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.quitarImagen.Name = "quitarImagen";
-            this.quitarImagen.Size = new System.Drawing.Size(130, 34);
+            this.quitarImagen.Size = new System.Drawing.Size(130, 32);
             this.quitarImagen.TabIndex = 1;
             this.quitarImagen.Text = "Quitar imagen";
             this.quitarImagen.Enabled = false;
@@ -287,93 +290,101 @@ namespace exxen2._0.capaVisual.Compartido
             this.quitarImagen.Click += new System.EventHandler(this.quitarImagen_Click);
             // lblImagenes
             this.lblImagenes.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.lblImagenes.Location = new System.Drawing.Point(300, 308);
+            this.lblImagenes.Location = new System.Drawing.Point(10, 248);
+            this.lblImagenes.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
+            this.lblImagenes.ForeColor = System.Drawing.Color.FromArgb(30, 41, 59);
             this.lblImagenes.Name = "lblImagenes";
-            this.lblImagenes.Size = new System.Drawing.Size(164, 34);
+            this.lblImagenes.Size = new System.Drawing.Size(694, 28);
             this.lblImagenes.TabIndex = 8;
             this.lblImagenes.Text = "Imágenes (0/4)";
-            this.lblImagenes.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblImagenes.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // lblNombre
-            this.lblNombre.Location = new System.Drawing.Point(16, 58);
+            this.lblNombre.Location = new System.Drawing.Point(10, 42);
             this.lblNombre.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.lblNombre.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.lblNombre.ForeColor = System.Drawing.Color.FromArgb(30, 41, 59);
             this.lblNombre.Name = "lblNombre";
-            this.lblNombre.Size = new System.Drawing.Size(104, 26);
+            this.lblNombre.Size = new System.Drawing.Size(100, 24);
             this.lblNombre.TabIndex = 1;
             this.lblNombre.Text = "Nombre";
             this.lblNombre.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // nombre
             this.nombre.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.nombre.Location = new System.Drawing.Point(128, 58);
+            this.nombre.Location = new System.Drawing.Point(116, 42);
             this.nombre.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.nombre.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.nombre.Name = "nombre";
-            this.nombre.Size = new System.Drawing.Size(336, 26);
+            this.nombre.Size = new System.Drawing.Size(588, 24);
             this.nombre.TabIndex = 0;
             // lblDescripcionEjercicio
-            this.lblDescripcionEjercicio.Location = new System.Drawing.Point(16, 98);
+            this.lblDescripcionEjercicio.Location = new System.Drawing.Point(10, 74);
             this.lblDescripcionEjercicio.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.lblDescripcionEjercicio.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.lblDescripcionEjercicio.ForeColor = System.Drawing.Color.FromArgb(30, 41, 59);
             this.lblDescripcionEjercicio.Name = "lblDescripcionEjercicio";
-            this.lblDescripcionEjercicio.Size = new System.Drawing.Size(104, 26);
+            this.lblDescripcionEjercicio.Size = new System.Drawing.Size(100, 24);
             this.lblDescripcionEjercicio.TabIndex = 2;
             this.lblDescripcionEjercicio.Text = "Descripción";
             // descripcion
             this.descripcion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.descripcion.Location = new System.Drawing.Point(128, 98);
+            this.descripcion.Location = new System.Drawing.Point(116, 74);
             this.descripcion.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.descripcion.Multiline = true;
             this.descripcion.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.descripcion.Name = "descripcion";
             this.descripcion.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.descripcion.Size = new System.Drawing.Size(336, 110);
+            this.descripcion.Size = new System.Drawing.Size(588, 84);
             this.descripcion.TabIndex = 1;
             // lblEstadoCampo
-            this.lblEstadoCampo.Location = new System.Drawing.Point(16, 218);
+            this.lblEstadoCampo.Location = new System.Drawing.Point(10, 170);
             this.lblEstadoCampo.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.lblEstadoCampo.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.lblEstadoCampo.ForeColor = System.Drawing.Color.FromArgb(30, 41, 59);
             this.lblEstadoCampo.Name = "lblEstadoCampo";
-            this.lblEstadoCampo.Size = new System.Drawing.Size(104, 26);
+            this.lblEstadoCampo.Size = new System.Drawing.Size(100, 24);
             this.lblEstadoCampo.TabIndex = 3;
             this.lblEstadoCampo.Text = "Estado";
             this.lblEstadoCampo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // lblEstadoValor
             this.lblEstadoValor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(101)))), ((int)(((byte)(52)))));
-            this.lblEstadoValor.Location = new System.Drawing.Point(128, 218);
-            this.lblEstadoValor.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
+            this.lblEstadoValor.Location = new System.Drawing.Point(116, 170);
+            this.lblEstadoValor.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.lblEstadoValor.Name = "lblEstadoValor";
-            this.lblEstadoValor.Size = new System.Drawing.Size(336, 26);
+            this.lblEstadoValor.Size = new System.Drawing.Size(588, 24);
             this.lblEstadoValor.TabIndex = 4;
             this.lblEstadoValor.Text = "Activo";
             this.lblEstadoValor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // lblDetalleTitulo
-            this.lblDetalleTitulo.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.lblDetalleTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
-            this.lblDetalleTitulo.Location = new System.Drawing.Point(16, 12);
+            this.lblDetalleTitulo.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
+            this.lblDetalleTitulo.ForeColor = System.Drawing.Color.FromArgb(30, 41, 59);
+            this.lblDetalleTitulo.Location = new System.Drawing.Point(10, 8);
             this.lblDetalleTitulo.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.lblDetalleTitulo.Name = "lblDetalleTitulo";
-            this.lblDetalleTitulo.Size = new System.Drawing.Size(448, 32);
+            this.lblDetalleTitulo.Size = new System.Drawing.Size(694, 28);
             this.lblDetalleTitulo.TabIndex = 2;
             this.lblDetalleTitulo.Text = "Nuevo ejercicio";
             // guardar
-            this.guardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.guardar.BackColor = System.Drawing.Color.FromArgb(72, 66, 217);
             this.guardar.FlatAppearance.BorderSize = 0;
             this.guardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.guardar.ForeColor = System.Drawing.Color.White;
-            this.guardar.Location = new System.Drawing.Point(16, 256);
+            this.guardar.Location = new System.Drawing.Point(10, 204);
             this.guardar.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.guardar.Name = "guardar";
-            this.guardar.Size = new System.Drawing.Size(112, 36);
+            this.guardar.Size = new System.Drawing.Size(146, 32);
             this.guardar.TabIndex = 7;
             this.guardar.Text = "Guardar";
             this.guardar.UseVisualStyleBackColor = false;
             this.guardar.Click += new System.EventHandler(this.guardar_Click);
             // darDeBaja
-            this.darDeBaja.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.darDeBaja.BackColor = System.Drawing.Color.FromArgb(255, 240, 240);
             this.darDeBaja.FlatAppearance.BorderSize = 0;
             this.darDeBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.darDeBaja.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
-            this.darDeBaja.Location = new System.Drawing.Point(136, 256);
+            this.darDeBaja.ForeColor = System.Drawing.Color.FromArgb(173, 36, 36);
+            this.darDeBaja.Location = new System.Drawing.Point(162, 204);
             this.darDeBaja.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.darDeBaja.Name = "darDeBaja";
-            this.darDeBaja.Size = new System.Drawing.Size(120, 36);
+            this.darDeBaja.Size = new System.Drawing.Size(108, 32);
             this.darDeBaja.TabIndex = 9;
             this.darDeBaja.Text = "Dar de baja";
             this.darDeBaja.UseVisualStyleBackColor = false;
@@ -384,10 +395,10 @@ namespace exxen2._0.capaVisual.Compartido
             this.reactivar.FlatAppearance.BorderSize = 0;
             this.reactivar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.reactivar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(101)))), ((int)(((byte)(52)))));
-            this.reactivar.Location = new System.Drawing.Point(264, 256);
+            this.reactivar.Location = new System.Drawing.Point(276, 204);
             this.reactivar.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.reactivar.Name = "reactivar";
-            this.reactivar.Size = new System.Drawing.Size(112, 36);
+            this.reactivar.Size = new System.Drawing.Size(108, 32);
             this.reactivar.TabIndex = 10;
             this.reactivar.Text = "Reactivar";
             this.reactivar.UseVisualStyleBackColor = false;
@@ -404,7 +415,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.Controls.Add(this.splitContenido);
             this.Controls.Add(this.lblEstado);
             this.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.MinimumSize = new System.Drawing.Size(900, 560);
+            this.MinimumSize = new System.Drawing.Size(916, 560);
             this.Name = "GestionEjerciciosFormulario";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "SysGym | Ejercicios";

@@ -54,6 +54,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.btnAsignar = new System.Windows.Forms.Button();
             this.btnConsultar = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
+            this.btnSalir.FlatAppearance.BorderSize = 0;
             this.panelContenido = new System.Windows.Forms.Panel();
             this.lblBienvenida = new System.Windows.Forms.Label();
             this.panelEncabezado.SuspendLayout();
@@ -134,7 +135,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.btnVolver.Enabled = false;
             this.btnVolver.FlatAppearance.BorderSize = 0;
             this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnVolver.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.btnVolver.ForeColor = System.Drawing.Color.FromArgb(72, 66, 217);
             this.btnVolver.Location = new System.Drawing.Point(978, 12);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(100, 36);
@@ -149,7 +150,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.btnCambiarCuenta.BackColor = System.Drawing.Color.White;
             this.btnCambiarCuenta.FlatAppearance.BorderSize = 0;
             this.btnCambiarCuenta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCambiarCuenta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.btnCambiarCuenta.ForeColor = System.Drawing.Color.FromArgb(72, 66, 217);
             this.btnCambiarCuenta.Location = new System.Drawing.Point(1090, 12);
             this.btnCambiarCuenta.Margin = new System.Windows.Forms.Padding(16, 0, 0, 0);
             this.btnCambiarCuenta.Name = "btnCambiarCuenta";
@@ -325,11 +326,11 @@ namespace exxen2._0.capaVisual.Recepcionista
             //
             // btnSalir
             //
-            this.btnSalir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.btnSalir.BackColor = System.Drawing.Color.FromArgb(255, 240, 240);
             this.btnSalir.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btnSalir.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(202)))), ((int)(((byte)(202)))));
             this.btnSalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSalir.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.btnSalir.ForeColor = System.Drawing.Color.FromArgb(173, 36, 36);
             this.btnSalir.Location = new System.Drawing.Point(0, 601);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);

@@ -61,6 +61,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.lblEstadoFiltro = new System.Windows.Forms.Label();
             this.filtroEstado = new System.Windows.Forms.ComboBox();
             this.actualizar = new System.Windows.Forms.Button();
+            this.actualizar.ForeColor = System.Drawing.Color.FromArgb(48, 68, 95);
             this.lblEstado = new System.Windows.Forms.Label();
             this.splitContenido = new System.Windows.Forms.SplitContainer();
             this.lblListadoTitulo = new System.Windows.Forms.Label();
@@ -144,7 +145,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             // actualizar
             //
             this.actualizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.actualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.actualizar.BackColor = System.Drawing.Color.FromArgb(231, 237, 247);
             this.actualizar.FlatAppearance.BorderSize = 0;
             this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.actualizar.Location = new System.Drawing.Point(358, 90);
@@ -499,7 +500,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             //
             // asignar
             //
-            this.asignar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(150)))), ((int)(((byte)(105)))));
+            this.asignar.BackColor = System.Drawing.Color.FromArgb(72, 66, 217);
             this.asignar.FlatAppearance.BorderSize = 0;
             this.asignar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.asignar.ForeColor = System.Drawing.Color.White;
@@ -514,10 +515,10 @@ namespace exxen2._0.capaVisual.Recepcionista
             //
             // cambiar
             //
-            this.cambiar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.cambiar.BackColor = System.Drawing.Color.FromArgb(72, 66, 217);
             this.cambiar.FlatAppearance.BorderSize = 0;
             this.cambiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cambiar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.cambiar.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
             this.cambiar.Location = new System.Drawing.Point(172, 388);
             this.cambiar.Name = "cambiar";
             this.cambiar.Size = new System.Drawing.Size(172, 36);
@@ -529,10 +530,10 @@ namespace exxen2._0.capaVisual.Recepcionista
             //
             // darDeBaja
             //
-            this.darDeBaja.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.darDeBaja.BackColor = System.Drawing.Color.FromArgb(255, 240, 240);
             this.darDeBaja.FlatAppearance.BorderSize = 0;
             this.darDeBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.darDeBaja.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.darDeBaja.ForeColor = System.Drawing.Color.FromArgb(173, 36, 36);
             this.darDeBaja.Location = new System.Drawing.Point(352, 388);
             this.darDeBaja.Name = "darDeBaja";
             this.darDeBaja.Size = new System.Drawing.Size(148, 36);

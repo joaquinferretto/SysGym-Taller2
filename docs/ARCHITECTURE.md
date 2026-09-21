@@ -1,5 +1,12 @@
 # Arquitectura
 
+## Unificación de Ejercicios y Socios y Rutinas — 21/09/2026
+
+Última actualización: 21 de septiembre de 2026. Ambos formularios conservan un SplitContainer con listado filtrable a la izquierda y ficha a la derecha, con estilo basado en RutinasEntrenadorFormulario. MisSocios integra los controles directamente en los paneles del splitter; se retiran seis wrappers sin eliminar controles funcionales. Títulos, campos, grillas, botones y ErrorProvider siguen declarados en Designer. Ejercicios conserva la galería FlowLayoutPanel para miniaturas variables y los cambios visuales recuperados. El mínimo del splitter es 862×420 y el del formulario 916×560 para evitar desbordamiento por los márgenes.
+
+No cambian comportamiento, recursos, parciales, dependencias, persistencia ni reglas. Debug/Release Rebuild y ejecución con lecturas pasaron; los dos Designer abrieron en VS2026. Evidencia, límites de la captura del Designer y revisión visual pendiente en PROJECT_CONTEXT.md. Esta sección reemplaza las proporciones y wrappers históricos de estos dos formularios.
+
+
 ## Validaciones de formularios — 21/09/2026
 
 Las reglas reutilizables de nombre personal, DNI, nombre de usuario y edad permanecen en `ValidacionesGimnasio`. `AyudaFormularioVisual` traduce esas reglas a `ErrorProvider` y agrega parseo visual de decimales, enteros, combos y enfoque del primer error. Los formularios configuran eventos y repiten la validación completa antes de invocar lógica; `KeyPress` no se considera una barrera definitiva.

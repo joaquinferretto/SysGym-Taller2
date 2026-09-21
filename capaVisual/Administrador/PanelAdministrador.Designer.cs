@@ -19,6 +19,7 @@ namespace exxen2._0.capaVisual.Administrador
         {
             this.lblSubtituloModulo = new System.Windows.Forms.Label();
             this.btnVolver = new System.Windows.Forms.Button();
+            this.btnVolver.UseVisualStyleBackColor = false;
             this.panelEncabezado = new System.Windows.Forms.Panel();
             this.lblUsuarioRol = new System.Windows.Forms.Label();
             this.lblMarca = new System.Windows.Forms.Label();
@@ -41,6 +42,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.lblConsultas = new System.Windows.Forms.Label();
             this.btnReportes = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
+            this.btnSalir.FlatAppearance.BorderSize = 0;
             this.panelContenido = new System.Windows.Forms.Panel();
             this.inicioPanel = new exxen2._0.capaVisual.Administrador.InicioPanelAdministrador();
             this.panelEncabezado.SuspendLayout();
@@ -114,7 +116,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.btnCambiarCuenta.BackColor = System.Drawing.Color.White;
             this.btnCambiarCuenta.FlatAppearance.BorderSize = 0;
             this.btnCambiarCuenta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCambiarCuenta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.btnCambiarCuenta.ForeColor = System.Drawing.Color.FromArgb(72, 66, 217);
             this.btnCambiarCuenta.Location = new System.Drawing.Point(1090, 12);
             this.btnCambiarCuenta.Margin = new System.Windows.Forms.Padding(16, 0, 0, 0);
             this.btnCambiarCuenta.Dock = System.Windows.Forms.DockStyle.None;
@@ -137,7 +139,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.btnVolver.Size = new System.Drawing.Size(100, 36);
             this.btnVolver.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             this.btnVolver.BackColor = System.Drawing.Color.White;
-            this.btnVolver.ForeColor = System.Drawing.Color.FromArgb(79, 70, 229);
+            this.btnVolver.ForeColor = System.Drawing.Color.FromArgb(72, 66, 217);
             this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnVolver.FlatAppearance.BorderSize = 0;
             this.btnVolver.Enabled = false;
@@ -424,10 +426,10 @@ namespace exxen2._0.capaVisual.Administrador
             //
             this.btnSalir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSalir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.btnSalir.BackColor = System.Drawing.Color.FromArgb(255, 240, 240);
             this.btnSalir.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(202)))), ((int)(((byte)(202)))));
             this.btnSalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSalir.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.btnSalir.ForeColor = System.Drawing.Color.FromArgb(173, 36, 36);
             this.btnSalir.Location = new System.Drawing.Point(14, 16);
             this.btnSalir.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btnSalir.Name = "btnSalir";

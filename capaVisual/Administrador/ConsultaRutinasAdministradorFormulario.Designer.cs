@@ -93,7 +93,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.btnVolver.BackColor = System.Drawing.Color.White;
             this.btnVolver.FlatAppearance.BorderSize = 0;
             this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnVolver.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.btnVolver.ForeColor = System.Drawing.Color.FromArgb(72, 66, 217);
             this.btnVolver.Location = new System.Drawing.Point(974, 24);
             this.btnVolver.Margin = new System.Windows.Forms.Padding(16, 0, 0, 0);
             this.btnVolver.Name = "btnVolver";
@@ -116,10 +116,10 @@ namespace exxen2._0.capaVisual.Administrador
             // 
             // actualizar
             // 
-            this.actualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.actualizar.BackColor = System.Drawing.Color.FromArgb(231, 237, 247);
             this.actualizar.FlatAppearance.BorderSize = 0;
             this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.actualizar.ForeColor = System.Drawing.Color.White;
+            this.actualizar.ForeColor = System.Drawing.Color.FromArgb(48, 68, 95);
             this.actualizar.Location = new System.Drawing.Point(16, 8);
             this.actualizar.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
             this.actualizar.MinimumSize = new System.Drawing.Size(120, 34);

@@ -334,7 +334,7 @@ namespace exxen2._0.capaVisual.Administrador
             //
             // nuevo
             //
-            this.nuevo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(150)))), ((int)(((byte)(105)))));
+            this.nuevo.BackColor = System.Drawing.Color.FromArgb(9, 149, 111);
             this.nuevo.FlatAppearance.BorderSize = 0;
             this.nuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.nuevo.ForeColor = System.Drawing.Color.White;
@@ -348,7 +348,7 @@ namespace exxen2._0.capaVisual.Administrador
             //
             // guardar
             //
-            this.guardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(150)))), ((int)(((byte)(105)))));
+            this.guardar.BackColor = System.Drawing.Color.FromArgb(72, 66, 217);
             this.guardar.FlatAppearance.BorderSize = 0;
             this.guardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.guardar.ForeColor = System.Drawing.Color.White;
@@ -362,10 +362,10 @@ namespace exxen2._0.capaVisual.Administrador
             //
             // actualizar
             //
-            this.actualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.actualizar.BackColor = System.Drawing.Color.FromArgb(72, 66, 217);
             this.actualizar.FlatAppearance.BorderSize = 0;
             this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.actualizar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.actualizar.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
             this.actualizar.Location = new System.Drawing.Point(256, 188);
             this.actualizar.Name = "actualizar";
             this.actualizar.Size = new System.Drawing.Size(112, 38);
@@ -376,10 +376,10 @@ namespace exxen2._0.capaVisual.Administrador
             //
             // darDeBaja
             //
-            this.darDeBaja.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
+            this.darDeBaja.BackColor = System.Drawing.Color.FromArgb(255, 240, 240);
             this.darDeBaja.FlatAppearance.BorderSize = 0;
             this.darDeBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.darDeBaja.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.darDeBaja.ForeColor = System.Drawing.Color.FromArgb(173, 36, 36);
             this.darDeBaja.Location = new System.Drawing.Point(16, 234);
             this.darDeBaja.Name = "darDeBaja";
             this.darDeBaja.Size = new System.Drawing.Size(112, 38);
@@ -390,10 +390,10 @@ namespace exxen2._0.capaVisual.Administrador
             //
             // reactivar
             //
-            this.reactivar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.reactivar.BackColor = System.Drawing.Color.FromArgb(220, 252, 231);
             this.reactivar.FlatAppearance.BorderSize = 0;
             this.reactivar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.reactivar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.reactivar.ForeColor = System.Drawing.Color.FromArgb(22, 101, 52);
             this.reactivar.Location = new System.Drawing.Point(136, 234);
             this.reactivar.Name = "reactivar";
             this.reactivar.Size = new System.Drawing.Size(112, 38);

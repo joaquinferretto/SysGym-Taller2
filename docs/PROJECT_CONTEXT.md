@@ -1,5 +1,24 @@
 # Contexto del proyecto
 
+## ESTADO ACTUAL — unificación de Ejercicios y Socios y Rutinas (21/09/2026)
+
+Última actualización: 21 de septiembre de 2026. Esta sección es la fuente de verdad para retomar esta tarea. Rama `main`, HEAD `4fde5b6`; sin commit ni push.
+
+**Recuperación:** antes de editar se leyó este contexto y se ejecutaron `git status --short` y `git diff`. Solo estaba modificado `GestionEjerciciosFormulario.Designer.cs` (72 inserciones/63 eliminaciones), con paleta, títulos, filtros compactos, Nuevo al pie, ficha/galería y reparto aproximado 30/70 ya guardados. MisSocios no tenía cambios locales. El contexto anterior dejaba pendiente esta unificación. El prompt interrumpido completo no está disponible: se reconstruyó el alcance a partir del diff y de la solicitud actual.
+
+**Completado:** se conservaron los ajustes guardados de Ejercicios. MisSocios adopta el estilo de Gestionar Rutinas: títulos Segoe UI Semibold 11, fondo claro, grillas blancas, acciones grises y acción principal azul petróleo. Conserva dos bloques mediante SplitContainer. Los filtros pasan al listado izquierdo; la ficha de seis campos ReadOnly, rutina semanal y acciones quedan a la derecha. Se retiraron únicamente los wrappers barraAcciones, panelListado, panelDetalle, grupoSocio, tablaSocio y grupoRutina, manteniendo todos sus controles funcionales como hijos directos del splitter. Se agregó lblRutinaTitulo. Asignar/cambiar, ver/editar, crear personalizada y PDF conservan eventos y visibilidad contextual.
+
+**Corrección detectada al verificar:** el mínimo de 900 px del splitter desbordaba una ventana de 900 px con márgenes. Ambos splitters ahora tienen MinimumSize 862×420 (300 + 12 + 550), y ambos formularios 916×560. La galería dinámica, reglas y handlers permanecen intactos. No se modificaron archivos de comportamiento .cs, recursos .resx, namespaces, proyecto, Gestionar Rutinas, capas inferiores, SQL ni EF6. La edición del Designer fue necesaria para mantener el layout editable allí, sin reconstruirlo desde runtime.
+
+**Verificaciones:** Debug Rebuild y Release Rebuild sin errores ni warnings. Ejecución con lecturas reales: Ejercicios cargó 45 registros y Socios en modo Administrador 18; pasaron selección, búsqueda sin coincidencias y actualización. Límites y solapamientos comprobados en áreas cliente 1076×598, 1310×730, 1630×910 y 900×560: `ERRORES_LAYOUT=0`. También se verificó el espacio de las acciones alternativas de Socios sin ejecutarlas y se inspeccionaron capturas runtime. No se hicieron altas, bajas, asignaciones, cargas de imágenes ni exportaciones nuevas.
+
+**Designer:** ambos archivos principales abrieron en Visual Studio Community 2026 con la vista `{7651A702-06E5-11D1-8EBD-00A0C90F26EA}`, `DesignerOpen=True`, propiedades del Form y ErrorProvider en bandeja. Los primeros intentos COM ocupados y la apertura inicial de código no se contaron como prueba de diseño. Se cerraron las vistas sin guardar para conservar la versión compilada en disco; Ejercicios había quedado marcado como modificado en el IDE durante la verificación. La terminal integrada ocupa casi toda la superficie en las capturas del IDE: la inspección completa del Designer con área suficiente queda para el usuario. El layout se verificó con capturas runtime y límites de controles.
+
+Evidencia local no versionada: `obj/verificacion-visual/` (capturas y runtime.log), `obj/VerificarVisual.cs` y `bin/Debug/VerificarVisual.exe`. Se conserva la separación de capas y la asociación cs/Designer/resx. `git diff --check` pasa, con aviso informativo LF/CRLF.
+
+**Siguiente paso exacto:** detenerse para revisión visual del usuario. Pendientes: aprobación estética, inspección completa de la superficie del Designer y recorrido manual de escrituras/PDF/imágenes si el usuario desea probarlos. No continuar otros formularios ni hacer commit/push automáticamente.
+
+
 ## ESTADO ACTUAL — auditoría global de validaciones cerrada (21/09/2026)
 
 Última actualización: 21 de septiembre de 2026. Esta sección es la fuente de verdad para continuar. Se retomó desde `main` en `073ba53`, con árbol inicialmente limpio, sin rehacer formularios cerrados ni modificar SQL, Entity Framework, entidades, navegación, imágenes, membresías o layout. No se hizo commit.

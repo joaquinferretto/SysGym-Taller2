@@ -40,6 +40,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             lblBuscar = new System.Windows.Forms.Label();
             buscar = new System.Windows.Forms.TextBox();
             actualizar = new System.Windows.Forms.Button();
+            actualizar.ForeColor = System.Drawing.Color.FromArgb(48, 68, 95);
             tablaEntrenadores = new System.Windows.Forms.DataGridView();
             colIdEntrenador = new System.Windows.Forms.DataGridViewTextBoxColumn();
             colEntrenador = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -100,7 +101,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             buscar.TextChanged += new System.EventHandler(buscar_TextChanged);
 
             actualizar.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            actualizar.BackColor = System.Drawing.Color.FromArgb(226, 232, 240);
+            actualizar.BackColor = System.Drawing.Color.FromArgb(231, 237, 247);
             actualizar.FlatAppearance.BorderSize = 0;
             actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             actualizar.Location = new System.Drawing.Point(302, 47);
