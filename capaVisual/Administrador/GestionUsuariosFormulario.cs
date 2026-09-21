@@ -35,7 +35,7 @@ namespace exxen2._0.capaVisual.Administrador
         private void ConfigurarValidaciones()
         {
             nombre.Validating += campoNombre_Validating;
-            apellido.Validating += campoApellido_Validating;
+            apellido.Validating += campoNombre_Validating;
             dni.Validating += dni_Validating;
             fechaNacimiento.Validating += fechaNacimiento_Validating;
             nombreUsuario.Validating += nombreUsuario_Validating;
@@ -43,6 +43,14 @@ namespace exxen2._0.capaVisual.Administrador
             clave.Validating += clave_Validating;
             salario.Validating += salario_Validating;
             rol.Validating += rol_Validating;
+            nombre.TextChanged += campoValidado_Cambiado;
+            apellido.TextChanged += campoValidado_Cambiado;
+            dni.TextChanged += campoValidado_Cambiado;
+            fechaNacimiento.ValueChanged += campoValidado_Cambiado;
+            nombreUsuario.TextChanged += campoValidado_Cambiado;
+            clave.TextChanged += campoValidado_Cambiado;
+            salario.TextChanged += campoValidado_Cambiado;
+            rol.SelectedIndexChanged += campoValidado_Cambiado;
         }
 
         /* Carga los roles activos disponibles para crear o modificar personal. */
@@ -358,7 +366,7 @@ namespace exxen2._0.capaVisual.Administrador
         private void fechaNacimiento_Validating(object origen, CancelEventArgs e)
         {
             AyudaFormularioVisual.ValidarConError(indicadorErrores, fechaNacimiento,
-                () => ValidacionesGimnasio.ValidarEdadMinima(fechaNacimiento.Value.Date, 18, "El usuario"));
+                () => ValidacionesGimnasio.ValidarEdadMinima(fechaNacimiento.Value.Date, 18, "El usuario debe tener al menos 18 años."));
         }
 
         private void clave_Validating(object origen, CancelEventArgs e)
@@ -379,6 +387,14 @@ namespace exxen2._0.capaVisual.Administrador
             AyudaFormularioVisual.ValidarCombo(indicadorErrores, rol, "Seleccioná un rol.");
         }
 
+        /* Al corregir un campo editable, retira su aviso anterior hasta la próxima validación. */
+        private void campoValidado_Cambiado(object origen, EventArgs e)
+        {
+            var control = origen as Control;
+            if (control != null)
+                indicadorErrores.SetError(control, string.Empty);
+        }
+
         private bool ValidarFormulario(bool alta)
         {
             indicadorErrores.Clear();
@@ -386,7 +402,7 @@ namespace exxen2._0.capaVisual.Administrador
             valido = AyudaFormularioVisual.ValidarNombre(indicadorErrores, apellido, "apellido") & valido;
             valido = AyudaFormularioVisual.ValidarDni(indicadorErrores, dni) & valido;
             valido = AyudaFormularioVisual.ValidarConError(indicadorErrores, fechaNacimiento,
-                () => ValidacionesGimnasio.ValidarEdadMinima(fechaNacimiento.Value.Date, 18, "El usuario")) & valido;
+                () => ValidacionesGimnasio.ValidarEdadMinima(fechaNacimiento.Value.Date, 18, "El usuario debe tener al menos 18 años.")) & valido;
             valido = AyudaFormularioVisual.ValidarNombreUsuario(indicadorErrores, nombreUsuario) & valido;
             if (alta)
                 valido = AyudaFormularioVisual.ValidarRequerido(indicadorErrores, clave, "La contraseña es obligatoria.") & valido;

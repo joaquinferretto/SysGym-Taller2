@@ -1,5 +1,13 @@
 # Arquitectura
 
+## Validaciones de formularios — 21/09/2026
+
+Las reglas reutilizables de nombre personal, DNI, nombre de usuario y edad permanecen en `ValidacionesGimnasio`. `AyudaFormularioVisual` traduce esas reglas a `ErrorProvider` y agrega parseo visual de decimales, enteros, combos y enfoque del primer error. Los formularios configuran eventos y repiten la validación completa antes de invocar lógica; `KeyPress` no se considera una barrera definitiva.
+
+Los diez formularios editables auditados declaran un único `ErrorProvider` no visual dentro de `components`. Los `Designer` conservan construcción declarativa y el componente usa `NeverBlink`, `ContainerControl` y el ciclo estándar `BeginInit/EndInit`. La validación ignora controles invisibles, deshabilitados y `TextBox ReadOnly`, por lo que las fichas informativas no bloquean operaciones. El flujo continúa siendo `capaVisual → capaLogica → capaDatos → EF6 → SQL Server`; no se trasladaron reglas definitivas a Windows Forms.
+
+La matriz completa por formulario y campo está en `docs/VALIDACIONES_FORMULARIOS.md`.
+
 ## Convención definitiva de capas visuales — 21/09/2026
 
 La organización adoptada específicamente por SysGym es:

@@ -76,6 +76,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.splitContenido.Panel2.SuspendLayout();
             this.splitContenido.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.indicadorErrores)).BeginInit();
             this.SuspendLayout();
             //
             // lblEstado
@@ -425,6 +426,7 @@ namespace exxen2._0.capaVisual.Administrador
             ((System.ComponentModel.ISupportInitialize)(this.splitContenido)).EndInit();
             this.splitContenido.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.indicadorErrores)).EndInit();
             this.ResumeLayout(false);
 
         }

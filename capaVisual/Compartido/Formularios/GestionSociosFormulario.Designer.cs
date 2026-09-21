@@ -124,6 +124,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.panelDetalle.SuspendLayout();
             this.contenedorCampos.SuspendLayout();
             this.panelAcciones.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.indicadorErrores)).BeginInit();
             this.SuspendLayout();
             // 
             // fotoSocio
@@ -814,6 +815,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.contenedorCampos.ResumeLayout(false);
             this.contenedorCampos.PerformLayout();
             this.panelAcciones.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.indicadorErrores)).EndInit();
             this.ResumeLayout(false);
 
         }

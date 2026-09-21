@@ -41,6 +41,19 @@ namespace exxen2._0.capaVisual.Recepcionista
                 throw new ArgumentNullException("usuario");
             this.usuario = usuario;
             InitializeComponent();
+            ConfigurarValidaciones();
+        }
+
+        /* Conecta los avisos visuales de selección y rango de fechas. */
+        private void ConfigurarValidaciones()
+        {
+            socio.Validating += socio_Validating;
+            plan.Validating += plan_Validating;
+            vencimiento.Validating += vencimiento_Validating;
+            socio.SelectedIndexChanged += campoValidado_Cambiado;
+            plan.SelectedIndexChanged += campoValidado_Cambiado;
+            inicio.ValueChanged += campoValidado_Cambiado;
+            vencimiento.ValueChanged += campoValidado_Cambiado;
         }
 
         /* Carga las opciones y los registros necesarios y prepara el formulario para una nueva operación. */
@@ -135,6 +148,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             vencimiento.Value = membresiaSeleccionada.FechaVencimiento;
             socio.Enabled = false;
             plan.Enabled = true;
+            indicadorErrores.Clear();
             EstablecerModo(false);
             lblFormulario.Text = "Membresía de " + NombreSocio(membresiaSeleccionada) + " - " + (membresiaSeleccionada.Estado ? "Activa" : "Inactiva");
         }
@@ -154,6 +168,7 @@ namespace exxen2._0.capaVisual.Recepcionista
                 plan.SelectedIndex = 0;
             inicio.Value = DateTime.Today;
             vencimiento.Value = DateTime.Today.AddMonths(1).AddDays(-1);
+            indicadorErrores.Clear();
             EstablecerModo(true);
         }
 
@@ -175,8 +190,8 @@ namespace exxen2._0.capaVisual.Recepcionista
         {
             try
             {
-                AyudaFormularioVisual.ValidarComboSeleccionado(socio, "un socio");
-                AyudaFormularioVisual.ValidarComboSeleccionado(plan, "un plan");
+                if (!ValidarFormulario(true))
+                    return;
                 logica.Crear(new Membresia { IdSocio = Convert.ToInt32(socio.SelectedValue), IdPlan = Convert.ToInt32(plan.SelectedValue), IdUsuarioSistema = usuario.IdUsuarioSistema, FechaInicio = inicio.Value.Date, FechaVencimiento = vencimiento.Value.Date });
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
@@ -195,8 +210,8 @@ namespace exxen2._0.capaVisual.Recepcionista
             {
                 if (membresiaSeleccionada == null)
                     throw new InvalidOperationException("Selecciona una membresia.");
-                AyudaFormularioVisual.ValidarComboSeleccionado(plan, "un plan");
-                AyudaFormularioVisual.ValidarRangoFechas(inicio, vencimiento, "fecha de inicio", "fecha de vencimiento");
+                if (!ValidarFormulario(false))
+                    return;
                 var idPlan = Convert.ToInt32(plan.SelectedValue);
                 if (idPlan != membresiaSeleccionada.IdPlan)
                     logica.CambiarPlan(membresiaSeleccionada.IdMembresia, idPlan);
@@ -322,6 +337,56 @@ namespace exxen2._0.capaVisual.Recepcionista
         {
             if (idSeleccionado == 0)
                 vencimiento.Value = inicio.Value.Date.AddMonths(1).AddDays(-1);
+        }
+
+        /* Al salir del socio de un alta, exige una opción disponible. */
+        private void socio_Validating(object origen, CancelEventArgs e)
+        {
+            if (idSeleccionado == 0)
+                AyudaFormularioVisual.ValidarCombo(indicadorErrores, socio, "Seleccioná un socio.");
+            else
+                indicadorErrores.SetError(socio, string.Empty);
+        }
+
+        /* Al salir del plan, exige una opción activa. */
+        private void plan_Validating(object origen, CancelEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarCombo(indicadorErrores, plan, "Seleccioná un plan.");
+        }
+
+        /* Al salir del vencimiento, comprueba el orden cronológico del período. */
+        private void vencimiento_Validating(object origen, CancelEventArgs e)
+        {
+            ValidarFechas();
+        }
+
+        /* Retira el aviso anterior cuando cambia una selección o fecha. */
+        private void campoValidado_Cambiado(object origen, EventArgs e)
+        {
+            var control = origen as Control;
+            if (control != null)
+                indicadorErrores.SetError(control, string.Empty);
+        }
+
+        /* Valida selecciones y fechas antes de crear o modificar una membresía. */
+        private bool ValidarFormulario(bool nueva)
+        {
+            indicadorErrores.Clear();
+            var valido = true;
+            if (nueva)
+                valido = AyudaFormularioVisual.ValidarCombo(indicadorErrores, socio, "Seleccioná un socio.");
+            valido = AyudaFormularioVisual.ValidarCombo(indicadorErrores, plan, "Seleccioná un plan.") & valido;
+            valido = ValidarFechas() & valido;
+            if (!valido)
+                AyudaFormularioVisual.EnfocarPrimerError(indicadorErrores, socio, plan, inicio, vencimiento);
+            return valido;
+        }
+
+        /* Asocia al vencimiento el error de un rango inválido. */
+        private bool ValidarFechas()
+        {
+            return AyudaFormularioVisual.ValidarConError(indicadorErrores, vencimiento,
+                () => AyudaFormularioVisual.ValidarRangoFechas(inicio, vencimiento, "fecha de inicio", "fecha de vencimiento"));
         }
     }
 }

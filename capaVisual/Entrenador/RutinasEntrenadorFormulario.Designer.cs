@@ -127,6 +127,7 @@ namespace exxen2._0.capaVisual.Entrenador
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).BeginInit();
             this.panelDetalle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tablaEjercicios)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.indicadorErrores)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTitulo
@@ -833,6 +834,7 @@ namespace exxen2._0.capaVisual.Entrenador
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).EndInit();
             this.panelDetalle.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tablaEjercicios)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.indicadorErrores)).EndInit();
             this.ResumeLayout(false);
 
         }

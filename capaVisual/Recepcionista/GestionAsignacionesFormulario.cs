@@ -26,6 +26,9 @@ namespace exxen2._0.capaVisual.Recepcionista
         public GestionAsignacionesFormulario()
         {
             InitializeComponent();
+            tabla.Validating += tabla_Validating;
+            entrenador.Validating += entrenador_Validating;
+            entrenador.SelectedIndexChanged += entrenador_SelectedIndexChanged;
         }
 
         /* Carga entrenadores activos mostrando nombre completo y DNI como identidad visible. */
@@ -85,6 +88,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             var item = membresiasCargadas.FirstOrDefault(m => m.IdMembresia == idSeleccionado);
             if (item == null) return;
             idAsignacionSeleccionada = item.IdMembresiaEntrenador;
+            indicadorErrores.Clear();
             txtSocio.Text = item.NombreSocio;
             txtDni.Text = item.DNI;
             txtPlan.Text = item.NombrePlan;
@@ -106,6 +110,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         private void PrepararFichaVacia()
         {
             idSeleccionado = 0; idAsignacionSeleccionada = 0;
+            indicadorErrores.Clear();
             txtSocio.Text = "Seleccioná una membresía"; txtDni.Text = "-"; txtPlan.Text = "-"; txtVencimiento.Text = "-"; txtEstadoMembresia.Text = "-"; txtEntrenadorActual.Text = "Sin asignar";
             entrenador.SelectedIndex = -1; entrenador.Enabled = false;
             asignar.Visible = false; cambiar.Visible = false; darDeBaja.Visible = false;
@@ -128,8 +133,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         {
             try
             {
-                if (idSeleccionado == 0) throw new InvalidOperationException("Seleccioná una membresía.");
-                AyudaFormularioVisual.ValidarComboSeleccionado(entrenador, "un entrenador");
+                if (!ValidarFormularioAsignacion()) return;
                 if (cambiarEntrenador && MessageBox.Show("¿Reemplazar el entrenador actual de la membresía?", "Confirmar cambio", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                     return;
                 if (cambiarEntrenador) logica.CambiarEntrenador(idSeleccionado, Convert.ToInt32(entrenador.SelectedValue));
@@ -175,6 +179,45 @@ namespace exxen2._0.capaVisual.Recepcionista
 
         /* Al hacer clic en actualizar, vuelve a consultar membresías y entrenadores. */
         private void actualizar_Click(object origen, EventArgs e) { CargarEntrenadores(); CargarListado(); }
+
+        /* Al salir del listado, informa si todavía no se eligió una membresía. */
+        private void tabla_Validating(object origen, CancelEventArgs e)
+        {
+            ValidarMembresiaSeleccionada();
+        }
+
+        /* Al salir del combo, exige entrenador solo cuando la acción está habilitada. */
+        private void entrenador_Validating(object origen, CancelEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarCombo(indicadorErrores, entrenador, "Seleccioná un entrenador.");
+        }
+
+        /* Al corregir la selección, retira el aviso anterior. */
+        private void entrenador_SelectedIndexChanged(object origen, EventArgs e)
+        {
+            indicadorErrores.SetError(entrenador, string.Empty);
+        }
+
+        /* Valida las dos selecciones antes de asignar o cambiar entrenador. */
+        private bool ValidarFormularioAsignacion()
+        {
+            indicadorErrores.Clear();
+            var valido = ValidarMembresiaSeleccionada();
+            valido = AyudaFormularioVisual.ValidarCombo(indicadorErrores, entrenador, "Seleccioná un entrenador.") & valido;
+            if (!valido)
+                AyudaFormularioVisual.EnfocarPrimerError(indicadorErrores, tabla, entrenador);
+            return valido;
+        }
+
+        /* Asocia al listado el requisito de seleccionar una membresía editable. */
+        private bool ValidarMembresiaSeleccionada()
+        {
+            return AyudaFormularioVisual.ValidarConError(indicadorErrores, tabla, delegate
+            {
+                if (idSeleccionado == 0)
+                    throw new InvalidOperationException("Seleccioná una membresía.");
+            });
+        }
 
         /* Proyecta un entrenador a un texto visible sin usar apellido como identificador. */
         private sealed class OpcionEntrenador

@@ -25,6 +25,8 @@ namespace exxen2._0.capaVisual.Compartido
         public GestionEjerciciosFormulario()
         {
             InitializeComponent();
+            nombre.Validating += nombre_Validating;
+            nombre.TextChanged += nombre_TextChanged;
         }
 
         /* Consulta, filtra y actualiza el catálogo manteniendo la ficha en un estado coherente. */
@@ -94,6 +96,7 @@ namespace exxen2._0.capaVisual.Compartido
             darDeBaja.Visible = false;
             reactivar.Visible = false;
             CargarImagenes();
+            indicadorErrores.Clear();
         }
 
         /* Al hacer clic en nuevo, deja la ficha lista para crear un ejercicio. */
@@ -110,6 +113,8 @@ namespace exxen2._0.capaVisual.Compartido
             var eraNuevo = idSeleccionado == 0;
             try
             {
+                if (!ValidarFormulario())
+                    return;
                 var ejercicio = new Ejercicio { IdEjercicio = idSeleccionado, Nombre = nombre.Text.Trim(), Descripcion = descripcion.Text.Trim(), Estado = estadoSeleccionado };
                 if (eraNuevo) logica.Crear(ejercicio); else logica.Modificar(ejercicio);
                 Cargar();
@@ -161,6 +166,28 @@ namespace exxen2._0.capaVisual.Compartido
 
         /* Al hacer clic en actualizar listado, vuelve a consultar el catálogo. */
         private void actualizar_Click(object origen, EventArgs e) { Cargar(); }
+
+        /* Al salir del nombre, informa la obligatoriedad del único campo requerido del catálogo. */
+        private void nombre_Validating(object origen, CancelEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarRequerido(indicadorErrores, nombre, "El nombre del ejercicio es obligatorio.");
+        }
+
+        /* Al corregir el nombre, retira el aviso anterior. */
+        private void nombre_TextChanged(object origen, EventArgs e)
+        {
+            indicadorErrores.SetError(nombre, string.Empty);
+        }
+
+        /* Verifica la ficha antes de llamar a EjercicioLogica. */
+        private bool ValidarFormulario()
+        {
+            indicadorErrores.Clear();
+            var valido = AyudaFormularioVisual.ValidarRequerido(indicadorErrores, nombre, "El nombre del ejercicio es obligatorio.");
+            if (!valido)
+                AyudaFormularioVisual.EnfocarPrimerError(indicadorErrores, nombre);
+            return valido;
+        }
 
         /* Consulta las imágenes del ejercicio y crea únicamente los thumbnails variables del catálogo. */
         private void CargarImagenes()

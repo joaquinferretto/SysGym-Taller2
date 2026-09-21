@@ -29,6 +29,20 @@ namespace exxen2._0.capaVisual.Recepcionista
         public GestionPagosFormulario()
         {
             InitializeComponent();
+            ConfigurarValidaciones();
+        }
+
+        /* Conecta las validaciones visuales de la operación de cobro. */
+        private void ConfigurarValidaciones()
+        {
+            membresia.Validating += membresia_Validating;
+            importe.Validating += importe_Validating;
+            metodo.Validating += metodo_Validating;
+            estado.Validating += estado_Validating;
+            membresia.SelectedIndexChanged += campoValidado_Cambiado;
+            importe.TextChanged += campoValidado_Cambiado;
+            metodo.SelectedIndexChanged += campoValidado_Cambiado;
+            estado.SelectedIndexChanged += campoValidado_Cambiado;
         }
 
         /* Carga las opciones y los registros necesarios y prepara el formulario para una nueva operación. */
@@ -156,6 +170,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         /* Carga el período y los datos de la cuota seleccionada y habilita las acciones correspondientes. */
         private void MostrarCuota(CuotaMembresia seleccionada, bool modoNuevo = false)
         {
+            indicadorErrores.Clear();
             actualizandoFormulario = true;
             idCuotaSeleccionada = seleccionada.IdCuotaMembresia;
             idPagoSeleccionado = seleccionada.IdRegistroPago ?? 0;
@@ -181,6 +196,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         /* Limpia la selección y deshabilita las operaciones cuando no hay una cuota disponible. */
         private void MostrarSinCuota(string mensaje)
         {
+            indicadorErrores.Clear();
             idCuotaSeleccionada = 0;
             idPagoSeleccionado = 0;
             cuota.Clear();
@@ -214,10 +230,8 @@ namespace exxen2._0.capaVisual.Recepcionista
         {
             try
             {
-                if (idCuotaSeleccionada <= 0)
-                    throw new InvalidOperationException("Selecciona una cuota pendiente.");
-                if (metodo.SelectedValue == null)
-                    throw new InvalidOperationException("Selecciona un metodo de pago.");
+                if (!ValidarFormulario())
+                    return;
                 logica.RegistrarPago(new Pago { Importe = AyudaFormularioVisual.DecimalPositivo(importe, "importe"), IdMetodoPago = Convert.ToInt32(metodo.SelectedValue), Estado = Convert.ToString(estado.SelectedItem), Fecha = DateTime.Now, Descripcion = "Pago registrado en recepcion" }, idCuotaSeleccionada);
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
@@ -338,6 +352,61 @@ namespace exxen2._0.capaVisual.Recepcionista
         private void importe_KeyPress(object origen, KeyPressEventArgs e)
         {
             AyudaFormularioVisual.ValidarEntradaDecimal(importe, e);
+        }
+
+        /* Al salir de la membresía, exige que exista una cuota pendiente seleccionada. */
+        private void membresia_Validating(object origen, CancelEventArgs e)
+        {
+            ValidarCuotaSeleccionada();
+        }
+
+        /* Al salir del importe, valida el decimal positivo requerido. */
+        private void importe_Validating(object origen, CancelEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarDecimal(indicadorErrores, importe, "importe", true, false);
+        }
+
+        /* Al salir del método, exige una opción disponible. */
+        private void metodo_Validating(object origen, CancelEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarCombo(indicadorErrores, metodo, "Seleccioná un método de pago.");
+        }
+
+        /* Al salir del estado, exige una opción válida. */
+        private void estado_Validating(object origen, CancelEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarCombo(indicadorErrores, estado, "Seleccioná un estado de pago.");
+        }
+
+        /* Retira el aviso anterior al corregir un valor o selección. */
+        private void campoValidado_Cambiado(object origen, EventArgs e)
+        {
+            var control = origen as Control;
+            if (control != null)
+                indicadorErrores.SetError(control, string.Empty);
+        }
+
+        /* Valida la cuota y los datos editables antes de registrar el pago. */
+        private bool ValidarFormulario()
+        {
+            indicadorErrores.Clear();
+            var valido = ValidarCuotaSeleccionada();
+            valido = AyudaFormularioVisual.ValidarDecimal(indicadorErrores, importe, "importe", true, false) & valido;
+            valido = AyudaFormularioVisual.ValidarCombo(indicadorErrores, metodo, "Seleccioná un método de pago.") & valido;
+            valido = AyudaFormularioVisual.ValidarCombo(indicadorErrores, estado, "Seleccioná un estado de pago.") & valido;
+            if (!valido)
+                AyudaFormularioVisual.EnfocarPrimerError(indicadorErrores, membresia, importe, metodo, estado);
+            return valido;
+        }
+
+        /* Representa sobre la selección visible la ausencia de una cuota registrable. */
+        private bool ValidarCuotaSeleccionada()
+        {
+            return AyudaFormularioVisual.ValidarConError(indicadorErrores, membresia, delegate
+            {
+                if (idCuotaSeleccionada <= 0)
+                    throw new InvalidOperationException("Seleccioná una cuota pendiente.");
+            });
         }
     }
 }

@@ -1,5 +1,14 @@
 # Reglas de negocio
 
+## Auditoría global de validaciones — 21/09/2026
+
+- Nombres y apellidos son obligatorios, admiten letras Unicode, espacios, apóstrofe y guion, y rechazan números u otros símbolos. El máximo compartido vigente es 100 caracteres.
+- DNI es obligatorio para socios y usuarios, contiene exclusivamente dígitos y tiene un máximo compartido de 20 caracteres. La unicidad continúa en SocioLogica y UsuarioSistemaLogica.
+- NombreUsuario es una identidad distinta del nombre personal: admite letras, números, punto, guion bajo y guion, con máximo 50. `entrenador10` es válido.
+- Usuarios mantienen edad mínima de 18 años; socios, 13. Las fechas futuras se rechazan.
+- Precio, salario, importe y los valores físicos conservan sus reglas actuales. El precio, salario e importe deben ser mayores que cero; peso y altura son opcionales pero positivos si se informan; la altura conserva parte decimal. En rutinas, peso y descanso admiten cero, mientras series, repeticiones y orden deben ser positivos.
+- Foto de socio/usuario, imágenes de ejercicio, sexo, descripciones y buscadores permanecen opcionales. Ninguna validación visual sustituye las comprobaciones de `capaLogica`.
+
 ## Política vigente de imágenes y entrenador opcional — 21/09/2026
 
 - Socio y UsuarioSistema admiten como máximo una foto opcional. Ejercicio admite de cero a cuatro filas ordenadas en EjercicioImagen.

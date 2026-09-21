@@ -1,5 +1,23 @@
 # Contexto del proyecto
 
+## ESTADO ACTUAL — auditoría global de validaciones cerrada (21/09/2026)
+
+Última actualización: 21 de septiembre de 2026. Esta sección es la fuente de verdad para continuar. Se retomó desde `main` en `073ba53`, con árbol inicialmente limpio, sin rehacer formularios cerrados ni modificar SQL, Entity Framework, entidades, navegación, imágenes, membresías o layout. No se hizo commit.
+
+**VALIDACIONES: [x] terminadas.** Se auditaron `GestionUsuariosFormulario`, `GestionSociosFormulario`, `GestionPlanesFormulario`, `GestionEjerciciosFormulario`, `GestionMembresiasFormulario`, `GestionPagosFormulario`, `GestionAsignacionesFormulario`, `RutinasEntrenadorFormulario`, `MisSociosFormulario` e `InicioSesion`. También se revisaron los demás componentes activos: RutinaSemanal, Consultas, Reportes, Inicio y paneles no contienen una ficha editable obligatoria; sus búsquedas/filtros continúan opcionales.
+
+Reglas finales: nombre/apellido mediante `ValidarNombre`; DNI exclusivamente numérico mediante `ValidarDni`; NombreUsuario separado, con letras, números, `.`, `_` y `-`; `entrenador10` válido. Usuarios conservan 18 años y contraseña obligatoria solo en alta; socios conservan 13 años, peso/altura opcionales y foto opcional. Plan exige precio mayor que cero. Ejercicio exige solo nombre y admite 0–4 imágenes. Membresía exige socio únicamente en alta, plan y rango de fechas; entrenador sigue opcional. Pago exige cuota pendiente, importe positivo, método y estado. Asignación exige membresía y entrenador al asignar/cambiar. Rutinas exigen nombre; sus detalles exigen ejercicio/día/series/repeticiones/orden, con peso y descanso no negativos. ReadOnly, invisibles y deshabilitados no bloquean.
+
+**ERRORPROVIDER: [x]** Exactamente uno por cada uno de los diez formularios editables. La auditoría corrigió una inserción automática incompleta en Membresías, Pagos y MisSocios: ya no existe doble inicialización de `components` ni líneas partidas de `AutoScaleMode`. Todos pertenecen a `components`, usan `NeverBlink`, `ContainerControl` y `BeginInit/EndInit`; Socios y Ejercicios ahora usan correctamente `components`, eliminando los dos CS0649 históricos sin asignaciones artificiales.
+
+**HANDLERS: [x]** No se encontraron handlers vacíos, `_Click_1`/`_Click_2`, suscripciones duplicadas ni bucles/helpers de construcción en los Designer. Los eventos `Validating` muestran errores al salir; los cambios de texto/selección limpian el icono anterior. Nuevo, selección distinta y ficha vacía limpian el proveedor. Guardar/Crear/Actualizar/Registrar/Asignar revalidan antes de llamar a lógica.
+
+**PRUEBAS: [x]** Pasan reglas compartidas para `Juan`, `José Luis`, `María-José`, DNI `12345678`, usuarios `admin`, `entrenador10`, `usuario123`, `juan_2026`, decimal `78,5`, enteros y combos. Se rechazaron `Juan123`, DNI `123A5678`, `ABC`, fecha futura, decimal `ABC`, entero positivo cero y combo vacío. Controles deshabilitados y ReadOnly no bloquean. Los diez formularios se instanciaron sin SQL y expusieron un ErrorProvider válido. No se crearon ni modificaron datos reales.
+
+**BUILD: [x]** Debug Rebuild y Release Rebuild: 0 errores, 0 warnings. **DESIGNER VS2026: [x]** Visual Studio Community 2026 abrió los diez archivos principales mediante `vsViewKindDesigner`; todos informaron `DesignerOpen=True` y `Saved=True`, y se cerraron sin guardar. La estructura estática confirma que ErrorProvider queda en la bandeja no visual mediante `components`. **RUNTIME: [x] dirigido sin persistencia.** Los diez formularios se instanciaron, sus ErrorProvider estuvieron disponibles y las reglas compartidas se ejercitaron sin ejecutar Load ni SQL. No se ejecutaron altas, modificaciones, pagos, asignaciones ni escrituras SQL.
+
+**DOCUMENTACIÓN: [x]** creada `docs/VALIDACIONES_FORMULARIOS.md` con la matriz Formulario/Campo/Obligatorio/Formato/Regla/ErrorProvider/Validación lógica. Actualizados ARCHITECTURE y BUSINESS_RULES. `git diff --check` final pasa; sus únicos mensajes son avisos informativos LF/CRLF. **SIGUIENTE PASO EXACTO:** detenerse para revisión del usuario. La normalización visual general queda para una etapa posterior. Los encabezados locales redundantes de GestionMembresiasFormulario y GestionPagosFormulario todavía existen en el código actual y no se tocaron durante esta tarea de validaciones.
+
 ## ESTADO ACTUAL — convención definitiva de capas visuales (21/09/2026)
 
 Última actualización: 21 de septiembre de 2026. Este bloque reemplaza como fuente de verdad la organización física descrita en las secciones históricas inferiores. Se conservaron todos los cambios locales anteriores y no se hizo commit.

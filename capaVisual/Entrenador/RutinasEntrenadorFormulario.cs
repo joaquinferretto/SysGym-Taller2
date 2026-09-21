@@ -40,6 +40,7 @@ namespace exxen2._0.capaVisual.Entrenador
         public RutinasEntrenadorFormulario()
         {
             InitializeComponent();
+            ConfigurarValidaciones();
         }
 
         public RutinasEntrenadorFormulario(UsuarioSistema usuario)
@@ -47,6 +48,28 @@ namespace exxen2._0.capaVisual.Entrenador
             if (usuario == null) throw new ArgumentNullException("usuario");
             this.usuario = usuario;
             InitializeComponent();
+            ConfigurarValidaciones();
+        }
+
+        /* Conecta las validaciones de la rutina y de su editor de ejercicios. */
+        private void ConfigurarValidaciones()
+        {
+            nombre.Validating += nombre_Validating;
+            ejercicio.Validating += ejercicio_Validating;
+            dia.Validating += dia_Validating;
+            series.Validating += enteroPositivo_Validating;
+            repeticiones.Validating += enteroPositivo_Validating;
+            peso.Validating += peso_Validating;
+            descanso.Validating += descanso_Validating;
+            orden.Validating += enteroPositivo_Validating;
+            nombre.TextChanged += campoValidado_Cambiado;
+            ejercicio.SelectedIndexChanged += campoValidado_Cambiado;
+            dia.SelectedIndexChanged += campoValidado_Cambiado;
+            series.TextChanged += campoValidado_Cambiado;
+            repeticiones.TextChanged += campoValidado_Cambiado;
+            peso.TextChanged += campoValidado_Cambiado;
+            descanso.TextChanged += campoValidado_Cambiado;
+            orden.TextChanged += campoValidado_Cambiado;
         }
 
         public RutinasEntrenadorFormulario(UsuarioSistema usuario, int idSocio) : this(usuario)
@@ -183,6 +206,7 @@ namespace exxen2._0.capaVisual.Entrenador
 
         private void LimpiarDetalleEjercicio()
         {
+            indicadorErrores.Clear();
             ejercicio.SelectedIndex = -1;
             dia.SelectedIndex = -1;
             series.Clear();
@@ -254,6 +278,7 @@ namespace exxen2._0.capaVisual.Entrenador
             guardarRutina.Text = "Guardar rutina";
             darDeBaja.Visible = false;
             reactivar.Visible = false;
+            indicadorErrores.Clear();
             AplicarEstadoControles();
         }
 
@@ -262,6 +287,8 @@ namespace exxen2._0.capaVisual.Entrenador
             var eraNueva = idRutina == 0;
             try
             {
+                if (!ValidarFormularioRutina())
+                    return;
                 var rutina = new Rutina
                 {
                     IdRutina = idRutina,
@@ -371,7 +398,8 @@ namespace exxen2._0.capaVisual.Entrenador
             {
                 if (idRutina == 0)
                     throw new InvalidOperationException("Seleccione una rutina.");
-                AyudaFormularioVisual.ValidarComboSeleccionado(ejercicio, "un ejercicio");
+                if (!ValidarDetalleEjercicio())
+                    return;
                 var detalle = new RutinaEjercicio
                 {
                     IdRutinaEjercicio = idRutinaEjercicio,
@@ -431,6 +459,7 @@ namespace exxen2._0.capaVisual.Entrenador
                 }
             }
             EstablecerModoEditorEjercicio(ModoEditorEjercicio.Visualizacion);
+            indicadorErrores.Clear();
         }
 
         // Reparte el ancho entre campos existentes, sin crear contenedores ni controles.
@@ -521,6 +550,78 @@ namespace exxen2._0.capaVisual.Entrenador
         private void peso_KeyPress(object origen, KeyPressEventArgs e) { AyudaFormularioVisual.ValidarEntradaDecimal(peso, e); }
         private void descanso_KeyPress(object origen, KeyPressEventArgs e) { AyudaFormularioVisual.ValidarEntradaEntero(e); }
         private void orden_KeyPress(object origen, KeyPressEventArgs e) { AyudaFormularioVisual.ValidarEntradaEntero(e); }
+
+        /* Al salir del nombre de rutina, informa el requisito vigente. */
+        private void nombre_Validating(object origen, CancelEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarRequerido(indicadorErrores, nombre, "El nombre de la rutina es obligatorio.");
+        }
+
+        /* Al salir del catálogo, exige un ejercicio durante alta o edición del detalle. */
+        private void ejercicio_Validating(object origen, CancelEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarCombo(indicadorErrores, ejercicio, "Seleccioná un ejercicio.");
+        }
+
+        /* Al salir del día, exige una posición entre lunes y viernes. */
+        private void dia_Validating(object origen, CancelEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarCombo(indicadorErrores, dia, "Seleccioná un día.");
+        }
+
+        /* Valida series, repeticiones u orden como enteros positivos. */
+        private void enteroPositivo_Validating(object origen, CancelEventArgs e)
+        {
+            var campo = (TextBox)origen;
+            var nombreCampo = campo == series ? "series" : campo == repeticiones ? "repeticiones" : "orden";
+            AyudaFormularioVisual.ValidarEntero(indicadorErrores, campo, nombreCampo, true, false);
+        }
+
+        /* Valida el peso opcional como decimal no negativo. */
+        private void peso_Validating(object origen, CancelEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarDecimal(indicadorErrores, peso, "peso", false, true);
+        }
+
+        /* Valida el descanso opcional como entero no negativo. */
+        private void descanso_Validating(object origen, CancelEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarEntero(indicadorErrores, descanso, "descanso", false, true);
+        }
+
+        /* Retira el aviso anterior al corregir un control. */
+        private void campoValidado_Cambiado(object origen, EventArgs e)
+        {
+            var control = origen as Control;
+            if (control != null)
+                indicadorErrores.SetError(control, string.Empty);
+        }
+
+        /* Verifica el nombre antes de crear o modificar una rutina. */
+        private bool ValidarFormularioRutina()
+        {
+            indicadorErrores.Clear();
+            var valido = AyudaFormularioVisual.ValidarRequerido(indicadorErrores, nombre, "El nombre de la rutina es obligatorio.");
+            if (!valido)
+                AyudaFormularioVisual.EnfocarPrimerError(indicadorErrores, nombre);
+            return valido;
+        }
+
+        /* Verifica todos los campos activos antes de agregar o modificar un ejercicio. */
+        private bool ValidarDetalleEjercicio()
+        {
+            indicadorErrores.Clear();
+            var valido = AyudaFormularioVisual.ValidarCombo(indicadorErrores, ejercicio, "Seleccioná un ejercicio.");
+            valido = AyudaFormularioVisual.ValidarCombo(indicadorErrores, dia, "Seleccioná un día.") & valido;
+            valido = AyudaFormularioVisual.ValidarEntero(indicadorErrores, series, "series", true, false) & valido;
+            valido = AyudaFormularioVisual.ValidarEntero(indicadorErrores, repeticiones, "repeticiones", true, false) & valido;
+            valido = AyudaFormularioVisual.ValidarDecimal(indicadorErrores, peso, "peso", false, true) & valido;
+            valido = AyudaFormularioVisual.ValidarEntero(indicadorErrores, descanso, "descanso", false, true) & valido;
+            valido = AyudaFormularioVisual.ValidarEntero(indicadorErrores, orden, "orden", true, false) & valido;
+            if (!valido)
+                AyudaFormularioVisual.EnfocarPrimerError(indicadorErrores, ejercicio, dia, series, repeticiones, peso, descanso, orden);
+            return valido;
+        }
 
         private void RutinasEntrenadorFormulario_Load(object origen, EventArgs e)
         {

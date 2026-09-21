@@ -24,6 +24,16 @@ namespace exxen2._0.capaVisual.Administrador
         public GestionPlanesFormulario()
         {
             InitializeComponent();
+            ConfigurarValidaciones();
+        }
+
+        /* Conecta los avisos de los campos editables del plan. */
+        private void ConfigurarValidaciones()
+        {
+            nombre.Validating += nombre_Validating;
+            precio.Validating += precio_Validating;
+            nombre.TextChanged += campoValidado_Cambiado;
+            precio.TextChanged += campoValidado_Cambiado;
         }
 
         private void Inicializar()
@@ -81,6 +91,7 @@ namespace exxen2._0.capaVisual.Administrador
                 nombre.Text = plan.Nombre;
                 descripcion.Text = plan.Descripcion ?? string.Empty;
                 precio.Text = plan.Precio.ToString("0.00");
+                indicadorErrores.Clear();
                 EstablecerModo(false, plan.Estado);
             }
             catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex); }
@@ -94,6 +105,7 @@ namespace exxen2._0.capaVisual.Administrador
             descripcion.Clear();
             precio.Clear();
             tabla.ClearSelection();
+            indicadorErrores.Clear();
             EstablecerModo(true, true);
             nombre.Focus();
         }
@@ -124,6 +136,7 @@ namespace exxen2._0.capaVisual.Administrador
             try
             {
                 if (idSeleccionado != 0) return;
+                if (!ValidarFormulario()) return;
                 logica.Crear(LeerPlan());
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
@@ -137,6 +150,7 @@ namespace exxen2._0.capaVisual.Administrador
             try
             {
                 if (idSeleccionado == 0) throw new InvalidOperationException("Selecciona un plan.");
+                if (!ValidarFormulario()) return;
                 logica.Modificar(LeerPlan());
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
@@ -183,5 +197,36 @@ namespace exxen2._0.capaVisual.Administrador
             if (!AyudaFormularioVisual.EnModoDisenio(this)) AplicarFiltro();
         }
         private void precio_KeyPress(object origen, KeyPressEventArgs e) { AyudaFormularioVisual.ValidarEntradaDecimal(precio, e); }
+
+        /* Al salir del nombre, informa si falta el dato requerido. */
+        private void nombre_Validating(object origen, CancelEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarRequerido(indicadorErrores, nombre, "El nombre del plan es obligatorio.");
+        }
+
+        /* Al salir del precio, valida el decimal positivo exigido por PlanLogica. */
+        private void precio_Validating(object origen, CancelEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarDecimal(indicadorErrores, precio, "precio", true, false);
+        }
+
+        /* Retira el icono anterior mientras el usuario corrige el valor. */
+        private void campoValidado_Cambiado(object origen, EventArgs e)
+        {
+            var control = origen as Control;
+            if (control != null)
+                indicadorErrores.SetError(control, string.Empty);
+        }
+
+        /* Repite las validaciones visuales antes de crear o actualizar. */
+        private bool ValidarFormulario()
+        {
+            indicadorErrores.Clear();
+            var valido = AyudaFormularioVisual.ValidarRequerido(indicadorErrores, nombre, "El nombre del plan es obligatorio.");
+            valido = AyudaFormularioVisual.ValidarDecimal(indicadorErrores, precio, "precio", true, false) & valido;
+            if (!valido)
+                AyudaFormularioVisual.EnfocarPrimerError(indicadorErrores, nombre, precio);
+            return valido;
+        }
     }
 }

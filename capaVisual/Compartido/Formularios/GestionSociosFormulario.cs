@@ -36,6 +36,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.permitirEdicion = permitirEdicion;
             this.colorPrimario = colorPrimario;
             InitializeComponent();
+            ConfigurarValidaciones();
             fechaNacimiento.MaxDate = DateTime.Today.AddYears(-13);
             fechaNacimiento.Value = fechaNacimiento.MaxDate;
             if (!permitirEdicion)
@@ -53,6 +54,23 @@ namespace exxen2._0.capaVisual.Compartido
                 btnSeleccionarFoto.Enabled = false;
                 btnQuitarFoto.Enabled = false;
             }
+        }
+
+        /* Conecta la validación visual de los campos editables sin convertirla en regla de negocio. */
+        private void ConfigurarValidaciones()
+        {
+            nombre.Validating += nombre_Validating;
+            apellido.Validating += apellido_Validating;
+            dni.Validating += dni_Validating;
+            fechaNacimiento.Validating += fechaNacimiento_Validating;
+            peso.Validating += peso_Validating;
+            altura.Validating += altura_Validating;
+            nombre.TextChanged += campoValidado_Cambiado;
+            apellido.TextChanged += campoValidado_Cambiado;
+            dni.TextChanged += campoValidado_Cambiado;
+            fechaNacimiento.ValueChanged += campoValidado_Cambiado;
+            peso.TextChanged += campoValidado_Cambiado;
+            altura.TextChanged += campoValidado_Cambiado;
         }
 
         /* Inicializa la gestión de socios enfocada en un registro proveniente de otra pantalla. */
@@ -135,6 +153,7 @@ namespace exxen2._0.capaVisual.Compartido
                     fechaNacimiento.Value = socio.FechaNacimiento.Value;
                 peso.Text = socio.Peso.HasValue ? socio.Peso.Value.ToString("0.##") : string.Empty;
                 altura.Text = socio.Altura.HasValue ? socio.Altura.Value.ToString("0.00") : string.Empty;
+                indicadorErrores.Clear();
                 EstablecerModo(false, socio.Estado);
                 lblFormulario.Text = "Editar socio - Estado: " + (socio.Estado ? "Activo" : "Inactivo");
             }
@@ -161,6 +180,7 @@ namespace exxen2._0.capaVisual.Compartido
             fechaNacimiento.Value = fechaNacimiento.MaxDate;
             fechaNacimiento.Checked = true;
             tabla.ClearSelection();
+            indicadorErrores.Clear();
             EstablecerModo(true, true);
             if (permitirEdicion)
                 nombre.Focus();
@@ -213,6 +233,8 @@ namespace exxen2._0.capaVisual.Compartido
             {
                 if (!permitirEdicion || idSeleccionado != 0)
                     return;
+                if (!ValidarFormulario())
+                    return;
                 logica.Crear(LeerSocio(), fotoSeleccionada);
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
@@ -231,6 +253,8 @@ namespace exxen2._0.capaVisual.Compartido
             {
                 if (!permitirEdicion || idSeleccionado == 0)
                     throw new InvalidOperationException("Selecciona un socio.");
+                if (!ValidarFormulario())
+                    return;
                 logica.Modificar(LeerSocio(), fotoSeleccionada);
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
@@ -341,6 +365,89 @@ namespace exxen2._0.capaVisual.Compartido
         private void dni_KeyPress(object origen, KeyPressEventArgs e)
         {
             AyudaFormularioVisual.ValidarEntradaDni(e);
+        }
+
+        /* Al salir del nombre, muestra la regla compartida junto al control. */
+        private void nombre_Validating(object origen, CancelEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarNombre(indicadorErrores, nombre, "nombre");
+        }
+
+        /* Al salir del apellido, muestra la regla compartida junto al control. */
+        private void apellido_Validating(object origen, CancelEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarNombre(indicadorErrores, apellido, "apellido");
+        }
+
+        /* Al salir del DNI, valida también texto pegado que no pasó por KeyPress. */
+        private void dni_Validating(object origen, CancelEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarDni(indicadorErrores, dni);
+        }
+
+        /* Al salir de la fecha, exige la edad mínima vigente de trece años. */
+        private void fechaNacimiento_Validating(object origen, CancelEventArgs e)
+        {
+            ValidarFechaNacimiento();
+        }
+
+        /* Al salir del peso opcional, valida su formato y positividad si fue informado. */
+        private void peso_Validating(object origen, CancelEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarDecimal(indicadorErrores, peso, "peso", false, false);
+        }
+
+        /* Al salir de la altura opcional, exige metros positivos con parte decimal. */
+        private void altura_Validating(object origen, CancelEventArgs e)
+        {
+            ValidarAltura();
+        }
+
+        /* Retira el aviso anterior mientras el usuario corrige el campo. */
+        private void campoValidado_Cambiado(object origen, EventArgs e)
+        {
+            var control = origen as Control;
+            if (control != null)
+                indicadorErrores.SetError(control, string.Empty);
+        }
+
+        /* Valida todos los datos editables antes de invocar la capa lógica. */
+        private bool ValidarFormulario()
+        {
+            indicadorErrores.Clear();
+            var valido = AyudaFormularioVisual.ValidarNombre(indicadorErrores, nombre, "nombre");
+            valido = AyudaFormularioVisual.ValidarNombre(indicadorErrores, apellido, "apellido") & valido;
+            valido = AyudaFormularioVisual.ValidarDni(indicadorErrores, dni) & valido;
+            valido = ValidarFechaNacimiento() & valido;
+            valido = AyudaFormularioVisual.ValidarDecimal(indicadorErrores, peso, "peso", false, false) & valido;
+            valido = ValidarAltura() & valido;
+            if (!valido)
+                AyudaFormularioVisual.EnfocarPrimerError(indicadorErrores, nombre, apellido, dni, fechaNacimiento, peso, altura);
+            return valido;
+        }
+
+        /* Aplica la obligatoriedad y edad mínima sin depender solo del límite visual del selector. */
+        private bool ValidarFechaNacimiento()
+        {
+            return AyudaFormularioVisual.ValidarConError(indicadorErrores, fechaNacimiento, delegate
+            {
+                if (!fechaNacimiento.Checked)
+                    throw new InvalidOperationException("La fecha de nacimiento es obligatoria.");
+                ValidacionesGimnasio.ValidarEdadMinima(fechaNacimiento.Value.Date, 13, "El socio debe tener al menos 13 años.");
+            });
+        }
+
+        /* Conserva la regla actual de altura en metros con una parte decimal. */
+        private bool ValidarAltura()
+        {
+            return AyudaFormularioVisual.ValidarConError(indicadorErrores, altura, delegate
+            {
+                if (string.IsNullOrWhiteSpace(altura.Text))
+                    return;
+                var valor = AyudaFormularioVisual.DecimalPositivo(altura, "altura");
+                if (decimal.Truncate(valor) == valor)
+                    throw new InvalidOperationException("La altura debe incluir decimales, por ejemplo 1,80 m.");
+            });
         }
 
         /* Devuelve el código del sexo seleccionado sin inventar un valor para registros sin selección. */

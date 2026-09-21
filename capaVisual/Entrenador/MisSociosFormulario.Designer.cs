@@ -116,6 +116,7 @@
             ((System.ComponentModel.ISupportInitialize)(tabla)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(tablaRutina)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(splitContenido)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(indicadorErrores)).BeginInit();
             splitContenido.Panel1.SuspendLayout();
             splitContenido.Panel2.SuspendLayout();
             splitContenido.SuspendLayout();
@@ -449,9 +450,9 @@
             Controls.Add(splitContenido);
             Controls.Add(lblEstado);
             Controls.Add(barraAcciones);
-            AutoScaleMode = System.Windows.Forms.            indicadorErrores.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            indicadorErrores.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             indicadorErrores.ContainerControl = this;
-AutoScaleMode.Font;
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.FromArgb(241, 245, 249);
             ClientSize = new System.Drawing.Size(1100, 680);
             Font = new System.Drawing.Font("Segoe UI", 9.5F);
@@ -475,6 +476,7 @@ AutoScaleMode.Font;
             barraAcciones.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(tablaRutina)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(tabla)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(indicadorErrores)).EndInit();
             ResumeLayout(false);
         }
 

@@ -130,6 +130,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.contenedorContenido.SuspendLayout();
 
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.indicadorErrores)).BeginInit();
 
             this.SuspendLayout();
             //
@@ -894,6 +895,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.contenedorContenido.ResumeLayout(false);
 
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.indicadorErrores)).EndInit();
 
             this.contenedorContenido.Panel1.Controls.Add(this.lblListado);
             this.contenedorContenido.Panel1.Controls.Add(this.lblAyuda);

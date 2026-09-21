@@ -32,6 +32,8 @@ namespace exxen2._0.capaVisual.Entrenador
             if (usuario == null) throw new ArgumentNullException("usuario");
             this.usuario = usuario;
             InitializeComponent();
+            rutinaDisponible.Validating += rutinaDisponible_Validating;
+            rutinaDisponible.SelectedIndexChanged += rutinaDisponible_SelectedIndexChanged;
         }
 
         public MisSociosFormulario(UsuarioSistema usuario, bool modoAdministrador) : this(usuario)
@@ -120,6 +122,7 @@ namespace exxen2._0.capaVisual.Entrenador
             socioSeleccionado = sociosCargados.FirstOrDefault(s => s.IdSocio == idSocio);
             if (socioSeleccionado == null) return;
 
+            indicadorErrores.Clear();
             exportarPdf.Enabled = false;
 
             txtSocio.Text = socioSeleccionado.NombreSocio;
@@ -143,6 +146,7 @@ namespace exxen2._0.capaVisual.Entrenador
         private void MostrarFichaVacia()
         {
             socioSeleccionado = null;
+            indicadorErrores.Clear();
             txtSocio.Text = "Selecciona un socio";
             txtDni.Text = "-";
             txtPlan.Text = "-";
@@ -206,9 +210,8 @@ namespace exxen2._0.capaVisual.Entrenador
         {
             try
             {
-                if (socioSeleccionado == null) throw new InvalidOperationException("Selecciona un socio.");
+                if (!ValidarAsignacionRutina()) return;
                 var rutina = rutinaDisponible.SelectedItem as Rutina;
-                if (rutina == null) throw new InvalidOperationException("Selecciona una rutina activa.");
                 var idSocio = socioSeleccionado.IdSocio;
                 rutinas.AsignarRutina(socioSeleccionado.IdMembresia, rutina.IdRutina);
                 Cargar(idSocio);
@@ -252,5 +255,32 @@ namespace exxen2._0.capaVisual.Entrenador
             if (!AyudaFormularioVisual.EnModoDisenio(this)) AplicarFiltro();
         }
         private void actualizar_Click(object origen, EventArgs e) { Cargar(socioSeleccionado == null ? (int?)null : socioSeleccionado.IdSocio); }
+
+        /* Al salir del catálogo, exige una rutina cuando la acción de asignar está disponible. */
+        private void rutinaDisponible_Validating(object origen, System.ComponentModel.CancelEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarCombo(indicadorErrores, rutinaDisponible, "Seleccioná una rutina activa.");
+        }
+
+        /* Al corregir la selección de rutina, retira el aviso anterior. */
+        private void rutinaDisponible_SelectedIndexChanged(object origen, EventArgs e)
+        {
+            indicadorErrores.SetError(rutinaDisponible, string.Empty);
+        }
+
+        /* Valida el socio visible y la rutina elegida antes de asignar. */
+        private bool ValidarAsignacionRutina()
+        {
+            indicadorErrores.Clear();
+            var valido = AyudaFormularioVisual.ValidarConError(indicadorErrores, tabla, delegate
+            {
+                if (socioSeleccionado == null)
+                    throw new InvalidOperationException("Seleccioná un socio.");
+            });
+            valido = AyudaFormularioVisual.ValidarCombo(indicadorErrores, rutinaDisponible, "Seleccioná una rutina activa.") & valido;
+            if (!valido)
+                AyudaFormularioVisual.EnfocarPrimerError(indicadorErrores, tabla, rutinaDisponible);
+            return valido;
+        }
     }
 }

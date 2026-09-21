@@ -80,6 +80,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.splitContenido.Panel2.SuspendLayout();
             this.splitContenido.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.indicadorErrores)).BeginInit();
             this.SuspendLayout();
             // nuevo
             this.nuevo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
@@ -415,6 +416,7 @@ namespace exxen2._0.capaVisual.Compartido
             ((System.ComponentModel.ISupportInitialize)(this.splitContenido)).EndInit();
             this.splitContenido.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.indicadorErrores)).EndInit();
             this.ResumeLayout(false);
 
         }
