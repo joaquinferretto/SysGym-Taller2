@@ -14,11 +14,6 @@ namespace exxen2._0.capaVisual.Compartido
 
         private IContainer components;
         private ErrorProvider indicadorErrores;
-        private Panel panelEncabezado;
-        private Label lblTitulo;
-        private Label lblDescripcion;
-        private Button btnVolver;
-        private Panel barraAcciones;
         private Label lblEstado;
         private TextBox nombre;
         private TextBox apellido;
@@ -68,22 +63,9 @@ namespace exxen2._0.capaVisual.Compartido
             this.indicadorErrores = new System.Windows.Forms.ErrorProvider(this.components);
             this.fotoSocio = new System.Windows.Forms.PictureBox();
             this.btnSeleccionarFoto = new System.Windows.Forms.Button();
-            this.btnSeleccionarFoto.FlatAppearance.BorderSize = 0;
-            this.btnSeleccionarFoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSeleccionarFoto.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.btnSeleccionarFoto.BackColor = System.Drawing.Color.FromArgb(9, 149, 111);
             this.btnQuitarFoto = new System.Windows.Forms.Button();
-            this.btnQuitarFoto.FlatAppearance.BorderSize = 0;
-            this.btnQuitarFoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnQuitarFoto.ForeColor = System.Drawing.Color.FromArgb(173, 36, 36);
-            this.btnQuitarFoto.BackColor = System.Drawing.Color.FromArgb(255, 240, 240);
             this.sexo = new System.Windows.Forms.ComboBox();
             this.lblSexo = new System.Windows.Forms.Label();
-            this.panelEncabezado = new System.Windows.Forms.Panel();
-            this.lblTitulo = new System.Windows.Forms.Label();
-            this.lblDescripcion = new System.Windows.Forms.Label();
-            this.btnVolver = new System.Windows.Forms.Button();
-            this.barraAcciones = new System.Windows.Forms.Panel();
             this.lblEstado = new System.Windows.Forms.Label();
             this.panelContenido = new System.Windows.Forms.Panel();
             this.contenedorContenido = new System.Windows.Forms.SplitContainer();
@@ -120,8 +102,8 @@ namespace exxen2._0.capaVisual.Compartido
             this.actualizar = new System.Windows.Forms.Button();
             this.calcularImc = new System.Windows.Forms.Button();
             this.verRutina = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.indicadorErrores)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fotoSocio)).BeginInit();
-            this.panelEncabezado.SuspendLayout();
             this.panelContenido.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.contenedorContenido)).BeginInit();
             this.contenedorContenido.Panel1.SuspendLayout();
@@ -132,14 +114,18 @@ namespace exxen2._0.capaVisual.Compartido
             this.panelDetalle.SuspendLayout();
             this.contenedorCampos.SuspendLayout();
             this.panelAcciones.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.indicadorErrores)).BeginInit();
             this.SuspendLayout();
+            // 
+            // indicadorErrores
+            // 
+            this.indicadorErrores.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.indicadorErrores.ContainerControl = this;
             // 
             // fotoSocio
             // 
             this.fotoSocio.BackColor = System.Drawing.Color.LightGray;
             this.fotoSocio.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.fotoSocio.Location = new System.Drawing.Point(3, 375);
+            this.fotoSocio.Location = new System.Drawing.Point(3, 371);
             this.fotoSocio.Name = "fotoSocio";
             this.contenedorCampos.SetRowSpan(this.fotoSocio, 2);
             this.fotoSocio.Size = new System.Drawing.Size(120, 120);
@@ -152,9 +138,13 @@ namespace exxen2._0.capaVisual.Compartido
             // 
             this.btnSeleccionarFoto.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSeleccionarFoto.Location = new System.Drawing.Point(129, 375);
+            this.btnSeleccionarFoto.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(149)))), ((int)(((byte)(111)))));
+            this.btnSeleccionarFoto.FlatAppearance.BorderSize = 0;
+            this.btnSeleccionarFoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSeleccionarFoto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnSeleccionarFoto.Location = new System.Drawing.Point(129, 371);
             this.btnSeleccionarFoto.Name = "btnSeleccionarFoto";
-            this.btnSeleccionarFoto.Size = new System.Drawing.Size(219, 36);
+            this.btnSeleccionarFoto.Size = new System.Drawing.Size(236, 36);
             this.btnSeleccionarFoto.TabIndex = 2;
             this.btnSeleccionarFoto.Text = "Seleccionar foto";
             this.btnSeleccionarFoto.UseVisualStyleBackColor = false;
@@ -164,9 +154,13 @@ namespace exxen2._0.capaVisual.Compartido
             // 
             this.btnQuitarFoto.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnQuitarFoto.Location = new System.Drawing.Point(129, 439);
+            this.btnQuitarFoto.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.btnQuitarFoto.FlatAppearance.BorderSize = 0;
+            this.btnQuitarFoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnQuitarFoto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(173)))), ((int)(((byte)(36)))), ((int)(((byte)(36)))));
+            this.btnQuitarFoto.Location = new System.Drawing.Point(129, 435);
             this.btnQuitarFoto.Name = "btnQuitarFoto";
-            this.btnQuitarFoto.Size = new System.Drawing.Size(219, 36);
+            this.btnQuitarFoto.Size = new System.Drawing.Size(236, 36);
             this.btnQuitarFoto.TabIndex = 3;
             this.btnQuitarFoto.Text = "Quitar foto";
             this.btnQuitarFoto.UseVisualStyleBackColor = false;
@@ -183,7 +177,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.sexo.Location = new System.Drawing.Point(126, 245);
             this.sexo.Margin = new System.Windows.Forms.Padding(0, 3, 16, 8);
             this.sexo.Name = "sexo";
-            this.sexo.Size = new System.Drawing.Size(209, 25);
+            this.sexo.Size = new System.Drawing.Size(226, 25);
             this.sexo.TabIndex = 6;
             this.sexo.SelectedIndexChanged += new System.EventHandler(this.sexo_SelectedIndexChanged);
             // 
@@ -196,73 +190,10 @@ namespace exxen2._0.capaVisual.Compartido
             this.lblSexo.Location = new System.Drawing.Point(0, 242);
             this.lblSexo.Margin = new System.Windows.Forms.Padding(0, 0, 8, 8);
             this.lblSexo.Name = "lblSexo";
-            this.lblSexo.Size = new System.Drawing.Size(118, 28);
+            this.lblSexo.Size = new System.Drawing.Size(118, 24);
             this.lblSexo.TabIndex = 12;
             this.lblSexo.Text = "Sexo:";
             this.lblSexo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // panelEncabezado
-            // 
-            this.panelEncabezado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
-            this.panelEncabezado.Controls.Add(this.lblTitulo);
-            this.panelEncabezado.Controls.Add(this.lblDescripcion);
-            this.panelEncabezado.Controls.Add(this.btnVolver);
-            this.panelEncabezado.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEncabezado.Location = new System.Drawing.Point(0, 0);
-            this.panelEncabezado.Name = "panelEncabezado";
-            this.panelEncabezado.Padding = new System.Windows.Forms.Padding(22, 8, 22, 8);
-            this.panelEncabezado.Size = new System.Drawing.Size(1100, 56);
-            this.panelEncabezado.TabIndex = 0;
-            this.panelEncabezado.Visible = false;
-            // 
-            // lblTitulo
-            // 
-            this.lblTitulo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
-            this.lblTitulo.ForeColor = System.Drawing.Color.White;
-            this.lblTitulo.Location = new System.Drawing.Point(22, 8);
-            this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(890, 40);
-            this.lblTitulo.TabIndex = 0;
-            this.lblTitulo.Text = "Socios | Gestión de socios e información personal";
-            this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblDescripcion
-            // 
-            this.lblDescripcion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblDescripcion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
-            this.lblDescripcion.Location = new System.Drawing.Point(24, 48);
-            this.lblDescripcion.Name = "lblDescripcion";
-            this.lblDescripcion.Size = new System.Drawing.Size(890, 26);
-            this.lblDescripcion.TabIndex = 1;
-            this.lblDescripcion.Text = "Alta, actualizacion, baja logica y consulta de IMC";
-            this.lblDescripcion.Visible = false;
-            // 
-            // btnVolver
-            // 
-            this.btnVolver.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnVolver.BackColor = System.Drawing.Color.White;
-            this.btnVolver.FlatAppearance.BorderSize = 0;
-            this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnVolver.ForeColor = System.Drawing.Color.FromArgb(72, 66, 217);
-            this.btnVolver.Location = new System.Drawing.Point(974, 10);
-            this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(104, 38);
-            this.btnVolver.TabIndex = 2;
-            this.btnVolver.Text = "Volver";
-            this.btnVolver.UseVisualStyleBackColor = false;
-            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
-            // 
-            // barraAcciones
-            // 
-            this.barraAcciones.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(213)))), ((int)(((byte)(225)))));
-            this.barraAcciones.Dock = System.Windows.Forms.DockStyle.Top;
-            this.barraAcciones.Location = new System.Drawing.Point(0, 56);
-            this.barraAcciones.Name = "barraAcciones";
-            this.barraAcciones.Size = new System.Drawing.Size(1100, 10);
-            this.barraAcciones.TabIndex = 1;
             // 
             // lblEstado
             // 
@@ -274,7 +205,6 @@ namespace exxen2._0.capaVisual.Compartido
             this.lblEstado.Padding = new System.Windows.Forms.Padding(18, 0, 12, 0);
             this.lblEstado.Size = new System.Drawing.Size(1100, 30);
             this.lblEstado.TabIndex = 3;
-            this.lblEstado.Text = "Listo";
             this.lblEstado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panelContenido
@@ -282,10 +212,10 @@ namespace exxen2._0.capaVisual.Compartido
             this.panelContenido.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
             this.panelContenido.Controls.Add(this.contenedorContenido);
             this.panelContenido.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelContenido.Location = new System.Drawing.Point(0, 66);
+            this.panelContenido.Location = new System.Drawing.Point(0, 0);
             this.panelContenido.Name = "panelContenido";
             this.panelContenido.Padding = new System.Windows.Forms.Padding(16);
-            this.panelContenido.Size = new System.Drawing.Size(1100, 584);
+            this.panelContenido.Size = new System.Drawing.Size(1100, 650);
             this.panelContenido.TabIndex = 2;
             // 
             // contenedorContenido
@@ -303,7 +233,7 @@ namespace exxen2._0.capaVisual.Compartido
             // 
             this.contenedorContenido.Panel2.Controls.Add(this.panelDetalle);
             this.contenedorContenido.Panel2MinSize = 360;
-            this.contenedorContenido.Size = new System.Drawing.Size(1068, 552);
+            this.contenedorContenido.Size = new System.Drawing.Size(1068, 618);
             this.contenedorContenido.SplitterDistance = 652;
             this.contenedorContenido.SplitterWidth = 16;
             this.contenedorContenido.TabIndex = 0;
@@ -331,7 +261,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.panelListado.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.panelListado.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
             this.panelListado.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.panelListado.Size = new System.Drawing.Size(652, 552);
+            this.panelListado.Size = new System.Drawing.Size(652, 618);
             this.panelListado.TabIndex = 0;
             // 
             // lblListado
@@ -425,7 +355,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.tabla.RowHeadersWidth = 51;
             this.tabla.RowTemplate.Height = 30;
             this.tabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tabla.Size = new System.Drawing.Size(612, 410);
+            this.tabla.Size = new System.Drawing.Size(612, 476);
             this.tabla.TabIndex = 3;
             this.tabla.SelectionChanged += new System.EventHandler(this.tabla_SelectionChanged);
             // 
@@ -477,7 +407,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.panelDetalle.Location = new System.Drawing.Point(0, 0);
             this.panelDetalle.Name = "panelDetalle";
             this.panelDetalle.Padding = new System.Windows.Forms.Padding(16);
-            this.panelDetalle.Size = new System.Drawing.Size(400, 552);
+            this.panelDetalle.Size = new System.Drawing.Size(400, 618);
             this.panelDetalle.TabIndex = 1;
             // 
             // contenedorCampos
@@ -505,8 +435,8 @@ namespace exxen2._0.capaVisual.Compartido
             this.contenedorCampos.Controls.Add(this.panelAcciones, 0, 8);
             this.contenedorCampos.Controls.Add(this.fotoSocio, 0, 9);
             this.contenedorCampos.Controls.Add(this.btnSeleccionarFoto, 1, 9);
-            this.contenedorCampos.Controls.Add(this.btnQuitarFoto, 1, 10);
             this.contenedorCampos.Controls.Add(this.verRutina, 0, 11);
+            this.contenedorCampos.Controls.Add(this.btnQuitarFoto, 1, 10);
             this.contenedorCampos.Dock = System.Windows.Forms.DockStyle.Top;
             this.contenedorCampos.Location = new System.Drawing.Point(16, 16);
             this.contenedorCampos.Name = "contenedorCampos";
@@ -523,7 +453,8 @@ namespace exxen2._0.capaVisual.Compartido
             this.contenedorCampos.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 64F));
             this.contenedorCampos.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 64F));
             this.contenedorCampos.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.contenedorCampos.Size = new System.Drawing.Size(351, 544);
+            this.contenedorCampos.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.contenedorCampos.Size = new System.Drawing.Size(368, 540);
             this.contenedorCampos.TabIndex = 0;
             // 
             // lblFormulario
@@ -535,7 +466,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.lblFormulario.Location = new System.Drawing.Point(3, 0);
             this.lblFormulario.MinimumSize = new System.Drawing.Size(0, 32);
             this.lblFormulario.Name = "lblFormulario";
-            this.lblFormulario.Size = new System.Drawing.Size(345, 32);
+            this.lblFormulario.Size = new System.Drawing.Size(362, 32);
             this.lblFormulario.TabIndex = 0;
             this.lblFormulario.Text = "Nuevo socio";
             this.lblFormulario.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -563,7 +494,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.nombre.Margin = new System.Windows.Forms.Padding(0, 3, 16, 8);
             this.nombre.MaxLength = 100;
             this.nombre.Name = "nombre";
-            this.nombre.Size = new System.Drawing.Size(209, 24);
+            this.nombre.Size = new System.Drawing.Size(226, 24);
             this.nombre.TabIndex = 1;
             this.nombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nombre_KeyPress);
             // 
@@ -590,7 +521,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.apellido.Margin = new System.Windows.Forms.Padding(0, 3, 16, 8);
             this.apellido.MaxLength = 100;
             this.apellido.Name = "apellido";
-            this.apellido.Size = new System.Drawing.Size(209, 24);
+            this.apellido.Size = new System.Drawing.Size(226, 24);
             this.apellido.TabIndex = 3;
             this.apellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.apellido_KeyPress);
             // 
@@ -617,7 +548,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.dni.Margin = new System.Windows.Forms.Padding(0, 3, 16, 8);
             this.dni.MaxLength = 20;
             this.dni.Name = "dni";
-            this.dni.Size = new System.Drawing.Size(209, 24);
+            this.dni.Size = new System.Drawing.Size(226, 24);
             this.dni.TabIndex = 5;
             this.dni.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dni_KeyPress);
             // 
@@ -644,7 +575,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.fechaNacimiento.Margin = new System.Windows.Forms.Padding(0, 3, 16, 8);
             this.fechaNacimiento.Name = "fechaNacimiento";
             this.fechaNacimiento.ShowCheckBox = true;
-            this.fechaNacimiento.Size = new System.Drawing.Size(209, 24);
+            this.fechaNacimiento.Size = new System.Drawing.Size(226, 24);
             this.fechaNacimiento.TabIndex = 7;
             // 
             // lblPeso
@@ -669,7 +600,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.peso.Location = new System.Drawing.Point(126, 175);
             this.peso.Margin = new System.Windows.Forms.Padding(0, 3, 16, 8);
             this.peso.Name = "peso";
-            this.peso.Size = new System.Drawing.Size(209, 24);
+            this.peso.Size = new System.Drawing.Size(226, 24);
             this.peso.TabIndex = 9;
             this.peso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.peso_KeyPress);
             // 
@@ -695,7 +626,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.altura.Location = new System.Drawing.Point(126, 210);
             this.altura.Margin = new System.Windows.Forms.Padding(0, 3, 16, 8);
             this.altura.Name = "altura";
-            this.altura.Size = new System.Drawing.Size(209, 24);
+            this.altura.Size = new System.Drawing.Size(226, 24);
             this.altura.TabIndex = 11;
             this.altura.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.altura_KeyPress);
             // 
@@ -709,14 +640,14 @@ namespace exxen2._0.capaVisual.Compartido
             this.panelAcciones.Controls.Add(this.actualizar);
             this.panelAcciones.Controls.Add(this.calcularImc);
             this.panelAcciones.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelAcciones.Location = new System.Drawing.Point(3, 281);
+            this.panelAcciones.Location = new System.Drawing.Point(3, 277);
             this.panelAcciones.Name = "panelAcciones";
-            this.panelAcciones.Size = new System.Drawing.Size(345, 88);
+            this.panelAcciones.Size = new System.Drawing.Size(362, 88);
             this.panelAcciones.TabIndex = 2;
             // 
             // nuevo
             // 
-            this.nuevo.BackColor = System.Drawing.Color.FromArgb(9, 149, 111);
+            this.nuevo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(149)))), ((int)(((byte)(111)))));
             this.nuevo.FlatAppearance.BorderSize = 0;
             this.nuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.nuevo.ForeColor = System.Drawing.Color.White;
@@ -731,7 +662,7 @@ namespace exxen2._0.capaVisual.Compartido
             // 
             // guardar
             // 
-            this.guardar.BackColor = System.Drawing.Color.FromArgb(72, 66, 217);
+            this.guardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(66)))), ((int)(((byte)(217)))));
             this.guardar.FlatAppearance.BorderSize = 0;
             this.guardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.guardar.ForeColor = System.Drawing.Color.White;
@@ -746,11 +677,11 @@ namespace exxen2._0.capaVisual.Compartido
             // 
             // actualizar
             // 
-            this.actualizar.BackColor = System.Drawing.Color.FromArgb(72, 66, 217);
+            this.actualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(66)))), ((int)(((byte)(217)))));
             this.actualizar.FlatAppearance.BorderSize = 0;
             this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.panelAcciones.SetFlowBreak(this.actualizar, true);
-            this.actualizar.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.actualizar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.actualizar.Location = new System.Drawing.Point(224, 0);
             this.actualizar.Margin = new System.Windows.Forms.Padding(0, 0, 4, 6);
             this.actualizar.Name = "actualizar";
@@ -762,10 +693,10 @@ namespace exxen2._0.capaVisual.Compartido
             // 
             // calcularImc
             // 
-            this.calcularImc.BackColor = System.Drawing.Color.FromArgb(231, 237, 247);
+            this.calcularImc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(237)))), ((int)(((byte)(247)))));
             this.calcularImc.FlatAppearance.BorderSize = 0;
             this.calcularImc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.calcularImc.ForeColor = System.Drawing.Color.FromArgb(48, 68, 95);
+            this.calcularImc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(68)))), ((int)(((byte)(95)))));
             this.calcularImc.Location = new System.Drawing.Point(0, 44);
             this.calcularImc.Margin = new System.Windows.Forms.Padding(0, 0, 4, 6);
             this.calcularImc.Name = "calcularImc";
@@ -777,12 +708,12 @@ namespace exxen2._0.capaVisual.Compartido
             // 
             // verRutina
             // 
-            this.verRutina.BackColor = System.Drawing.Color.FromArgb(231, 237, 247);
+            this.verRutina.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(237)))), ((int)(((byte)(247)))));
             this.contenedorCampos.SetColumnSpan(this.verRutina, 2);
             this.verRutina.FlatAppearance.BorderSize = 0;
             this.verRutina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.verRutina.ForeColor = System.Drawing.Color.FromArgb(48, 68, 95);
-            this.verRutina.Location = new System.Drawing.Point(3, 503);
+            this.verRutina.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(68)))), ((int)(((byte)(95)))));
+            this.verRutina.Location = new System.Drawing.Point(3, 499);
             this.verRutina.Name = "verRutina";
             this.verRutina.Size = new System.Drawing.Size(180, 38);
             this.verRutina.TabIndex = 4;
@@ -790,9 +721,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.verRutina.UseVisualStyleBackColor = false;
             this.verRutina.Click += new System.EventHandler(this.verRutina_Click);
             // 
-                        this.indicadorErrores.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
-            this.indicadorErrores.ContainerControl = this;
-// GestionSociosFormulario
+            // GestionSociosFormulario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -800,16 +729,14 @@ namespace exxen2._0.capaVisual.Compartido
             this.ClientSize = new System.Drawing.Size(1100, 680);
             this.Controls.Add(this.panelContenido);
             this.Controls.Add(this.lblEstado);
-            this.Controls.Add(this.barraAcciones);
-            this.Controls.Add(this.panelEncabezado);
             this.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.MinimumSize = new System.Drawing.Size(900, 560);
             this.Name = "GestionSociosFormulario";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "SysGym | Socios";
+            this.Text = "SysGym";
             this.Load += new System.EventHandler(this.GestionSociosFormulario_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.indicadorErrores)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fotoSocio)).EndInit();
-            this.panelEncabezado.ResumeLayout(false);
             this.panelContenido.ResumeLayout(false);
             this.contenedorContenido.Panel1.ResumeLayout(false);
             this.contenedorContenido.Panel2.ResumeLayout(false);
@@ -823,7 +750,6 @@ namespace exxen2._0.capaVisual.Compartido
             this.contenedorCampos.ResumeLayout(false);
             this.contenedorCampos.PerformLayout();
             this.panelAcciones.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.indicadorErrores)).EndInit();
             this.ResumeLayout(false);
 
         }

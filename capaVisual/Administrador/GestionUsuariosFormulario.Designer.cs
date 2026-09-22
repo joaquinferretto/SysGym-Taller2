@@ -893,7 +893,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.MinimumSize = new System.Drawing.Size(900, 560);
             this.Name = "GestionUsuariosFormulario";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "SysGym | Usuarios y roles";
+            this.Text = "SysGym";
             this.Load += new System.EventHandler(this.GestionUsuariosFormulario_Load);
             ((System.ComponentModel.ISupportInitialize)(this.fotoUsuario)).EndInit();
 

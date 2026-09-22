@@ -1,5 +1,15 @@
 # Reglas de negocio
 
+## Generación manual de cuotas y catálogo de métodos de pago — 22/09/2026
+
+- `Nuevo` en Gestión de membresías solo prepara el alta: limpia la selección y errores, carga opciones, habilita Socio/Plan y propone las fechas. No crea membresía ni cuota y no guarda cambios.
+- `Crear` da de alta una membresía y genera exactamente una primera cuota en la misma transacción. `Actualizar` modifica los datos permitidos de la membresía seleccionada y no genera cuotas.
+- `Generar cuota` consulta todas las cuotas de la membresía, incluidas las anuladas para conservar la secuencia cronológica, y toma la mayor `FechaHasta`. La nueva `FechaDesde` es esa fecha más un día y la nueva `FechaHasta` se calcula con `FechaDesde.AddMonths(1).AddDays(-1)`. No usa la fecha actual para elegir el período y crea exactamente una cuota.
+- Antes de agregar, la lógica comprueba que no exista ya la misma combinación de membresía, `FechaDesde` y `FechaHasta`; si existe, rechaza con «Ya existe una cuota para ese período.».
+- La definición compartida de deuda sigue siendo `EstadoPago = Pendiente` y `FechaHasta < DateTime.Today`. Con cero o una cuota vencida impaga se permite generar; con dos o más se bloquea, se conserva la sincronización vigente de membresía/socio inactivos y no se agrega ninguna cuota. Una membresía inactiva tampoco puede generar aunque tenga menos deuda.
+- Pagar deuda no reactiva automáticamente. La reactivación continúa siendo manual y exige menos de dos cuotas vencidas pendientes.
+- El selector de método presenta una opción por tipo estructural activo de `MetodoPago`. `IdPagoEfectivo` identifica **Efectivo** e `IdNroPagoMP` identifica **Mercado Pago**; `Observaciones` históricas no son la fuente del texto visible. La opción conserva un `IdMetodoPago` real y la ausencia de selección bloquea el registro con «Seleccioná un método de pago.».
+
 ## Auditoría global de validaciones — 21/09/2026
 
 - Nombres y apellidos son obligatorios, admiten letras Unicode, espacios, apóstrofe y guion, y rechazan números u otros símbolos. El máximo compartido vigente es 100 caracteres.

@@ -76,7 +76,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         private void CargarMetodosPago()
         {
             metodo.DataSource = logica.ListarMetodosPagoActivos();
-            metodo.DisplayMember = "Observaciones";
+            metodo.DisplayMember = "Nombre";
             metodo.ValueMember = "IdMetodoPago";
         }
 
@@ -179,7 +179,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             importe.Text = seleccionada.Importe.ToString("0.00");
             if (seleccionada.Pago != null)
             {
-                metodo.SelectedValue = seleccionada.Pago.IdMetodoPago;
+                metodo.SelectedValue = logica.ResolverIdMetodoPagoCatalogo(seleccionada.Pago.IdMetodoPago);
                 estado.SelectedItem = seleccionada.Pago.Estado;
             }
             else
@@ -328,12 +328,6 @@ namespace exxen2._0.capaVisual.Recepcionista
             {
                 AyudaFormularioVisual.MostrarError(lblEstado, ex);
             }
-        }
-
-        /* Al hacer clic en btnVolver, cierra el módulo y devuelve el control al panel principal. */
-        private void btnVolver_Click(object origen, EventArgs e)
-        {
-            Close();
         }
 
         /* Al escribir un criterio de búsqueda, filtra los registros que se muestran en la grilla. */

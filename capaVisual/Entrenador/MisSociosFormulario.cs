@@ -282,5 +282,10 @@ namespace exxen2._0.capaVisual.Entrenador
                 AyudaFormularioVisual.EnfocarPrimerError(indicadorErrores, tabla, rutinaDisponible);
             return valido;
         }
+
+        private void lblBuscar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -8,23 +8,20 @@ namespace exxen2._0.capaVisual.Recepcionista
     {
         private IContainer components;
         private ErrorProvider indicadorErrores;
-        private Panel panelEncabezado; private Label lblTitulo; private Label lblDescripcion; private Button btnVolver; private Label lblEstado; private TableLayoutPanel panelContenido; private Panel panelListado; private Label lblListado; private Label lblAyuda; private Panel panelFiltro; private Label lblFiltro; private Panel panelDetalle; private Panel contenedorDetalle; private Label lblFormulario; private Panel contenedorCampos; private Panel panelAcciones; private Label lblMembresia; private Label lblCuota; private Label lblImporte; private Label lblMetodo; private Label lblEstadoPago; private Panel barraAcciones; private DataGridView tabla; private DataGridViewTextBoxColumn colIdCuota; private DataGridViewTextBoxColumn colIdPago; private DataGridViewTextBoxColumn colSocio; private DataGridViewTextBoxColumn colDni; private DataGridViewTextBoxColumn colPlan; private DataGridViewTextBoxColumn colPeriodo; private DataGridViewTextBoxColumn colImporte; private DataGridViewTextBoxColumn colEstadoTabla;
+        private Label lblEstado; private TableLayoutPanel panelContenido; private Panel panelListado; private Label lblListado; private Label lblAyuda; private Panel panelFiltro; private Label lblFiltro; private Panel panelDetalle; private Panel contenedorDetalle; private Label lblFormulario; private Panel contenedorCampos; private Panel panelAcciones; private Label lblMembresia; private Label lblCuota; private Label lblImporte; private Label lblMetodo; private Label lblEstadoPago; private DataGridView tabla; private DataGridViewTextBoxColumn colIdCuota; private DataGridViewTextBoxColumn colIdPago; private DataGridViewTextBoxColumn colSocio; private DataGridViewTextBoxColumn colDni; private DataGridViewTextBoxColumn colPlan; private DataGridViewTextBoxColumn colPeriodo; private DataGridViewTextBoxColumn colImporte; private DataGridViewTextBoxColumn colEstadoTabla;
         private TextBox buscador; private ComboBox filtroEstado; private ComboBox membresia; private TextBox cuota; private TextBox importe; private ComboBox metodo; private ComboBox estado; private Button nuevo; private Button registrar; private Button anular; private Button reembolsar;
 
         protected override void Dispose(bool liberarRecursos) { if (liberarRecursos && components != null) components.Dispose(); base.Dispose(liberarRecursos); }
 
         private void InitializeComponent()
         {
-            components = new Container(); panelEncabezado = new Panel(); lblTitulo = new Label(); lblDescripcion = new Label(); btnVolver = new Button(); barraAcciones = new Panel(); lblEstado = new Label(); panelContenido = new TableLayoutPanel(); panelListado = new Panel(); lblListado = new Label(); lblAyuda = new Label(); buscador = new TextBox(); panelFiltro = new Panel(); lblFiltro = new Label(); filtroEstado = new ComboBox(); panelDetalle = new Panel(); contenedorDetalle = new Panel(); lblFormulario = new Label(); contenedorCampos = new Panel(); panelAcciones = new Panel(); lblMembresia = new Label(); lblCuota = new Label(); lblImporte = new Label(); lblMetodo = new Label(); lblEstadoPago = new Label(); membresia = new ComboBox(); cuota = new TextBox(); importe = new TextBox(); metodo = new ComboBox(); estado = new ComboBox(); nuevo = new Button(); registrar = new Button(); anular = new Button(); reembolsar = new Button(); tabla = new DataGridView(); colIdCuota = new DataGridViewTextBoxColumn(); colIdPago = new DataGridViewTextBoxColumn(); colSocio = new DataGridViewTextBoxColumn(); colDni = new DataGridViewTextBoxColumn(); colPlan = new DataGridViewTextBoxColumn(); colPeriodo = new DataGridViewTextBoxColumn(); colImporte = new DataGridViewTextBoxColumn(); colEstadoTabla = new DataGridViewTextBoxColumn(); indicadorErrores = new ErrorProvider(components); panelEncabezado.SuspendLayout(); panelContenido.SuspendLayout(); panelListado.SuspendLayout(); panelFiltro.SuspendLayout(); ((ISupportInitialize)(tabla)).BeginInit(); panelDetalle.SuspendLayout(); contenedorDetalle.SuspendLayout(); contenedorCampos.SuspendLayout(); panelAcciones.SuspendLayout(); ((ISupportInitialize)(indicadorErrores)).BeginInit(); SuspendLayout();
-            panelEncabezado.BackColor = Color.FromArgb(5, 150, 105);   panelEncabezado.Controls.Add(lblDescripcion); panelEncabezado.Controls.Add(lblTitulo); panelEncabezado.Controls.Add(btnVolver);   lblTitulo.Font = new Font("Segoe UI", 18F, FontStyle.Bold); lblTitulo.ForeColor = Color.White;  lblTitulo.Text = "Cuotas y pagos";  lblDescripcion.ForeColor = Color.FromArgb(226, 232, 240);  lblDescripcion.Text = "Registro de pagos y consulta de cuotas";  btnVolver.BackColor = Color.White; btnVolver.FlatStyle = FlatStyle.Flat; btnVolver.FlatAppearance.BorderSize = 0; btnVolver.ForeColor = System.Drawing.Color.FromArgb(72, 66, 217);   btnVolver.Text = "Volver"; btnVolver.UseVisualStyleBackColor = false;
-             lblEstado.BackColor = Color.FromArgb(226, 232, 240);  lblEstado.ForeColor = Color.FromArgb(51, 65, 85);  lblEstado.Padding = new Padding(18, 8, 8, 0); lblEstado.Text = "Listo"; panelContenido.BackColor = Color.FromArgb(248, 250, 252);  panelContenido.Padding = new Padding(12); panelContenido.ColumnCount = 2; panelContenido.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F)); panelContenido.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 396F)); panelContenido.Controls.Add(panelListado, 0, 0); panelContenido.Controls.Add(panelDetalle, 1, 0); panelContenido.RowCount = 1; panelContenido.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            components = new Container(); lblEstado = new Label(); panelContenido = new TableLayoutPanel(); panelListado = new Panel(); lblListado = new Label(); lblAyuda = new Label(); buscador = new TextBox(); panelFiltro = new Panel(); lblFiltro = new Label(); filtroEstado = new ComboBox(); panelDetalle = new Panel(); contenedorDetalle = new Panel(); lblFormulario = new Label(); contenedorCampos = new Panel(); panelAcciones = new Panel(); lblMembresia = new Label(); lblCuota = new Label(); lblImporte = new Label(); lblMetodo = new Label(); lblEstadoPago = new Label(); membresia = new ComboBox(); cuota = new TextBox(); importe = new TextBox(); metodo = new ComboBox(); estado = new ComboBox(); nuevo = new Button(); registrar = new Button(); anular = new Button(); reembolsar = new Button(); tabla = new DataGridView(); colIdCuota = new DataGridViewTextBoxColumn(); colIdPago = new DataGridViewTextBoxColumn(); colSocio = new DataGridViewTextBoxColumn(); colDni = new DataGridViewTextBoxColumn(); colPlan = new DataGridViewTextBoxColumn(); colPeriodo = new DataGridViewTextBoxColumn(); colImporte = new DataGridViewTextBoxColumn(); colEstadoTabla = new DataGridViewTextBoxColumn(); indicadorErrores = new ErrorProvider(components); panelContenido.SuspendLayout(); panelListado.SuspendLayout(); panelFiltro.SuspendLayout(); ((ISupportInitialize)(tabla)).BeginInit(); panelDetalle.SuspendLayout(); contenedorDetalle.SuspendLayout(); contenedorCampos.SuspendLayout(); panelAcciones.SuspendLayout(); ((ISupportInitialize)(indicadorErrores)).BeginInit(); SuspendLayout();
+             lblEstado.BackColor = Color.FromArgb(226, 232, 240);  lblEstado.ForeColor = Color.FromArgb(51, 65, 85);  lblEstado.Padding = new Padding(18, 8, 8, 0); lblEstado.Text = string.Empty; panelContenido.BackColor = Color.FromArgb(248, 250, 252);  panelContenido.Padding = new Padding(12); panelContenido.ColumnCount = 2; panelContenido.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F)); panelContenido.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 396F)); panelContenido.Controls.Add(panelListado, 0, 0); panelContenido.Controls.Add(panelDetalle, 1, 0); panelContenido.RowCount = 1; panelContenido.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             panelListado.BackColor = Color.White; panelListado.BorderStyle = BorderStyle.FixedSingle;  panelListado.Padding = new Padding(16); panelListado.Controls.Add(tabla); panelListado.Controls.Add(panelFiltro); panelListado.Controls.Add(lblAyuda); panelListado.Controls.Add(lblListado);  lblListado.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold); lblListado.ForeColor = Color.FromArgb(30, 41, 59);  lblListado.Text = "Cuotas";  lblAyuda.ForeColor = Color.FromArgb(100, 116, 139);  lblAyuda.Text = "Busca por socio, DNI o plan";    panelFiltro.Controls.Add(filtroEstado); panelFiltro.Controls.Add(lblFiltro); panelFiltro.Controls.Add(buscador);  lblFiltro.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);  lblFiltro.Text = "Mostrar";  buscador.BorderStyle = BorderStyle.FixedSingle;   filtroEstado.DropDownStyle = ComboBoxStyle.DropDownList;   filtroEstado.Items.AddRange(new object[] { "Todas", "Pendientes", "Pagadas" }); filtroEstado.SelectedIndex = 0;
                 tabla.BackgroundColor = Color.White; tabla.BorderStyle = BorderStyle.None;       tabla.Columns.AddRange(new DataGridViewColumn[] { colIdCuota, colIdPago, colSocio, colDni, colPlan, colPeriodo, colImporte, colEstadoTabla }); colIdCuota.HeaderText = "IdCuota"; colIdCuota.Name = "colIdCuota"; colIdCuota.Visible = false; colIdPago.HeaderText = "IdPago"; colIdPago.Name = "colIdPago"; colIdPago.Visible = false; colSocio.HeaderText = "Socio"; colSocio.Name = "colSocio"; colDni.HeaderText = "DNI"; colDni.Name = "colDni"; colPlan.HeaderText = "Plan"; colPlan.Name = "colPlan"; colPeriodo.HeaderText = "Periodo"; colPeriodo.Name = "colPeriodo"; colImporte.HeaderText = "Importe"; colImporte.Name = "colImporte"; colEstadoTabla.HeaderText = "Estado"; colEstadoTabla.Name = "colEstadoTabla";
             panelDetalle.BackColor = Color.White; panelDetalle.BorderStyle = BorderStyle.FixedSingle;  panelDetalle.Padding = new Padding(16); panelDetalle.Controls.Add(contenedorDetalle);       contenedorDetalle.Controls.Add(lblFormulario); contenedorDetalle.Controls.Add(contenedorCampos); contenedorDetalle.Controls.Add(panelAcciones);  lblFormulario.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold); lblFormulario.ForeColor = Color.FromArgb(30, 41, 59); lblFormulario.Text = "Nuevo pago";
                       contenedorCampos.Controls.Add(lblMembresia); contenedorCampos.Controls.Add(membresia); contenedorCampos.Controls.Add(lblCuota); contenedorCampos.Controls.Add(cuota); contenedorCampos.Controls.Add(lblImporte); contenedorCampos.Controls.Add(importe); contenedorCampos.Controls.Add(lblMetodo); contenedorCampos.Controls.Add(metodo); contenedorCampos.Controls.Add(lblEstadoPago); contenedorCampos.Controls.Add(estado);  membresia.DropDownStyle = ComboBoxStyle.DropDownList;  cuota.ReadOnly = true; cuota.BackColor = Color.FromArgb(241, 245, 249);  importe.BorderStyle = BorderStyle.FixedSingle;  metodo.DropDownStyle = ComboBoxStyle.DropDownList;  estado.DropDownStyle = ComboBoxStyle.DropDownList; estado.Items.AddRange(new object[] { "Pendiente", "Aprobado", "Rechazado" }); estado.SelectedIndex = 1;
              panelAcciones.Controls.Add(nuevo); panelAcciones.Controls.Add(registrar); panelAcciones.Controls.Add(anular); panelAcciones.Controls.Add(reembolsar);
-             panelEncabezado.Name = "panelEncabezado";  panelEncabezado.TabIndex = 0; lblTitulo.Name = "lblTitulo";  lblTitulo.TabIndex = 0; lblDescripcion.Name = "lblDescripcion";  lblDescripcion.TabIndex = 1; btnVolver.Name = "btnVolver"; btnVolver.TabIndex = 2;
-            barraAcciones.BackColor = Color.White;   barraAcciones.Name = "barraAcciones"; barraAcciones.Padding = new Padding(16, 8, 16, 8);  barraAcciones.TabIndex = 1;
              lblEstado.Name = "lblEstado";  lblEstado.TabIndex = 3;  panelContenido.Name = "panelContenido";  panelContenido.TabIndex = 2;
             panelListado.Name = "panelListado"; panelListado.TabIndex = 0; lblListado.Name = "lblListado";  lblListado.TabIndex = 0; lblAyuda.Name = "lblAyuda";  lblAyuda.TabIndex = 1; panelFiltro.Name = "panelFiltro"; panelFiltro.TabIndex = 2; lblFiltro.ForeColor = Color.FromArgb(71, 85, 105); lblFiltro.Name = "lblFiltro"; lblFiltro.TabIndex = 1; buscador.Name = "buscador"; buscador.TabIndex = 0; filtroEstado.Name = "filtroEstado"; filtroEstado.TabIndex = 2;
                tabla.Name = "tabla";  tabla.TabIndex = 3; colIdCuota.FillWeight = 50; colIdPago.FillWeight = 50; colSocio.FillWeight = 125; colSocio.MinimumWidth = 90; colDni.FillWeight = 80; colDni.MinimumWidth = 90; colPlan.FillWeight = 90; colPlan.MinimumWidth = 90; colPeriodo.FillWeight = 125; colPeriodo.MinimumWidth = 90; colImporte.FillWeight = 90; colImporte.MinimumWidth = 90; colEstadoTabla.FillWeight = 85; colEstadoTabla.MinimumWidth = 90;
@@ -32,26 +29,11 @@ namespace exxen2._0.capaVisual.Recepcionista
               lblMembresia.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblMembresia.ForeColor = Color.FromArgb(51, 65, 85); lblMembresia.Name = "lblMembresia"; lblMembresia.Text = "Membresia:";   lblCuota.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblCuota.ForeColor = Color.FromArgb(51, 65, 85); lblCuota.Name = "lblCuota"; lblCuota.Text = "Cuota:";   lblImporte.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblImporte.ForeColor = Color.FromArgb(51, 65, 85); lblImporte.Name = "lblImporte"; lblImporte.Text = "Importe:";   lblMetodo.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblMetodo.ForeColor = Color.FromArgb(51, 65, 85); lblMetodo.Name = "lblMetodo"; lblMetodo.Text = "Metodo:";   lblEstadoPago.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold); lblEstadoPago.ForeColor = Color.FromArgb(51, 65, 85); lblEstadoPago.Name = "lblEstadoPago"; lblEstadoPago.Text = "Estado:";
             membresia.Margin = new Padding(0, 4, 0, 4); membresia.Name = "membresia"; cuota.BorderStyle = BorderStyle.FixedSingle; cuota.Margin = new Padding(0, 4, 0, 4); cuota.Name = "cuota"; importe.Margin = new Padding(0, 4, 0, 4); importe.Name = "importe"; metodo.Margin = new Padding(0, 4, 0, 4); metodo.Name = "metodo"; estado.Margin = new Padding(0, 4, 0, 4); estado.Name = "estado";
             nuevo.BackColor = System.Drawing.Color.FromArgb(9, 149, 111); nuevo.FlatAppearance.BorderSize = 0; nuevo.FlatStyle = FlatStyle.Flat; nuevo.ForeColor = Color.White;  nuevo.Name = "nuevo";  nuevo.Text = "+ Nuevo pago"; nuevo.UseVisualStyleBackColor = false; registrar.BackColor = System.Drawing.Color.FromArgb(72, 66, 217); registrar.FlatAppearance.BorderSize = 0; registrar.FlatStyle = FlatStyle.Flat; registrar.ForeColor = Color.White;  registrar.Name = "registrar";  registrar.Text = "Registrar"; registrar.UseVisualStyleBackColor = false; anular.BackColor = System.Drawing.Color.FromArgb(255, 240, 240); anular.FlatAppearance.BorderSize = 0; anular.FlatStyle = FlatStyle.Flat; anular.ForeColor = System.Drawing.Color.FromArgb(173, 36, 36);  anular.Name = "anular";  anular.Text = "Anular"; anular.UseVisualStyleBackColor = false; reembolsar.BackColor = System.Drawing.Color.FromArgb(255, 240, 240); reembolsar.FlatAppearance.BorderSize = 0; reembolsar.FlatStyle = FlatStyle.Flat; reembolsar.ForeColor = System.Drawing.Color.FromArgb(173, 36, 36);  reembolsar.Name = "reembolsar";  reembolsar.Text = "Reembolsar"; reembolsar.UseVisualStyleBackColor = false;
-            Controls.Add(panelContenido); Controls.Add(lblEstado); Controls.Add(barraAcciones); Controls.Add(panelEncabezado); indicadorErrores.BlinkStyle = ErrorBlinkStyle.NeverBlink;
+            Controls.Add(panelContenido); Controls.Add(lblEstado); indicadorErrores.BlinkStyle = ErrorBlinkStyle.NeverBlink;
             indicadorErrores.ContainerControl = this;
             AutoScaleMode = AutoScaleMode.Font;
-             BackColor = Color.FromArgb(241, 245, 249); ClientSize = new Size(1100, 680); Font = new Font("Segoe UI", 9.5F); MinimumSize = new Size(900, 560); this.Name = "GestionPagosFormulario"; StartPosition = FormStartPosition.CenterParent; Text = "SysGym | Cuotas y pagos";
+             BackColor = Color.FromArgb(241, 245, 249); ClientSize = new Size(1100, 680); Font = new Font("Segoe UI", 9.5F); MinimumSize = new Size(900, 560); this.Name = "GestionPagosFormulario"; StartPosition = FormStartPosition.CenterParent; Text = "SysGym";
 
-            // Encabezado: titulo y descripcion a la izquierda, accion de regreso a la derecha.
-
-            this.panelEncabezado.Padding = new Padding(22, 8, 22, 8);
-
-            this.lblTitulo.Margin = new Padding(0);
-            this.lblTitulo.TextAlign = ContentAlignment.BottomLeft;
-
-            this.lblDescripcion.Margin = new Padding(0);
-            this.lblDescripcion.TextAlign = ContentAlignment.TopLeft;
-
-            this.btnVolver.Margin = new Padding(16, 0, 0, 0);
-            // Sin acciones propias: la barra queda como separador del encabezado.
-
-            this.barraAcciones.Padding = new Padding(0);
-            this.barraAcciones.BackColor = Color.FromArgb(203, 213, 225);
             // Barra de estado inferior.
 
             this.lblEstado.Padding = new Padding(18, 0, 12, 0);
@@ -125,31 +107,6 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.reembolsar.Margin = new Padding(0, 0, 8, 8);
 
             this.AutoScroll = false;
-            this.panelEncabezado.AutoSize = false;
-            this.panelEncabezado.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEncabezado.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.panelEncabezado.Location = new System.Drawing.Point(0, 0);
-            this.panelEncabezado.Size = new System.Drawing.Size(1100, 56);
-            this.panelEncabezado.AutoScroll = false;
-            this.lblTitulo.AutoSize = false;
-            this.lblTitulo.Dock = System.Windows.Forms.DockStyle.None;
-            this.lblTitulo.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.lblTitulo.Location = new System.Drawing.Point(22, 8);
-            this.lblTitulo.Size = new System.Drawing.Size(890, 40);
-            this.lblTitulo.Text = "Cuotas y pagos | Gestión de cuotas y pagos";
-            this.lblTitulo.TextAlign = ContentAlignment.MiddleLeft;
-            this.lblDescripcion.AutoSize = false;
-            this.lblDescripcion.Dock = System.Windows.Forms.DockStyle.None;
-            this.lblDescripcion.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.lblDescripcion.Location = new System.Drawing.Point(24, 48);
-            this.lblDescripcion.Size = new System.Drawing.Size(890, 26);
-            this.lblDescripcion.Visible = false;
-            this.panelEncabezado.Visible = false;
-            this.btnVolver.AutoSize = false;
-            this.btnVolver.Dock = System.Windows.Forms.DockStyle.None;
-            this.btnVolver.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            this.btnVolver.Location = new System.Drawing.Point(974, 10);
-            this.btnVolver.Size = new System.Drawing.Size(104, 38);
             this.lblEstado.AutoSize = false;
             this.lblEstado.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblEstado.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
@@ -159,12 +116,12 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.panelContenido.RowCount = 1;
             this.panelContenido.AutoSize = false;
             this.panelContenido.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelContenido.Location = new System.Drawing.Point(0, 85);
-            this.panelContenido.Size = new System.Drawing.Size(1100, 565);
+            this.panelContenido.Location = new System.Drawing.Point(0, 0);
+            this.panelContenido.Size = new System.Drawing.Size(1100, 650);
             this.panelContenido.AutoScroll = false;
             this.panelListado.AutoSize = false;
             this.panelListado.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelListado.Size = new System.Drawing.Size(656, 533);
+            this.panelListado.Size = new System.Drawing.Size(656, 618);
             this.panelListado.AutoScroll = false;
             this.lblListado.AutoSize = false;
             this.lblListado.Dock = System.Windows.Forms.DockStyle.None;
@@ -238,17 +195,11 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.lblEstadoPago.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.lblEstadoPago.Location = new System.Drawing.Point(0, 152);
             this.lblEstadoPago.Size = new System.Drawing.Size(116, 30);
-            this.barraAcciones.AutoSize = false;
-            this.barraAcciones.Dock = System.Windows.Forms.DockStyle.Top;
-            this.barraAcciones.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.barraAcciones.Location = new System.Drawing.Point(0, 56);
-            this.barraAcciones.Size = new System.Drawing.Size(1100, 1);
-            this.barraAcciones.AutoScroll = false;
             this.tabla.AutoSize = false;
             this.tabla.Dock = System.Windows.Forms.DockStyle.None;
             this.tabla.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.tabla.Location = new System.Drawing.Point(16, 124);
-            this.tabla.Size = new System.Drawing.Size(622, 391);
+            this.tabla.Size = new System.Drawing.Size(622, 476);
             this.tabla.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.tabla.ReadOnly = true;
             this.tabla.AllowUserToAddRows = false;
@@ -313,10 +264,9 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.reembolsar.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.reembolsar.Location = new System.Drawing.Point(0, 46);
             this.reembolsar.Size = new System.Drawing.Size(112, 38);
-            panelEncabezado.ResumeLayout(false); panelEncabezado.PerformLayout(); panelContenido.ResumeLayout(false); panelListado.ResumeLayout(false); panelListado.PerformLayout(); panelFiltro.ResumeLayout(false); panelFiltro.PerformLayout(); ((ISupportInitialize)(tabla)).EndInit(); panelDetalle.ResumeLayout(false); contenedorDetalle.ResumeLayout(false); contenedorDetalle.PerformLayout(); contenedorCampos.ResumeLayout(false); contenedorCampos.PerformLayout(); panelAcciones.ResumeLayout(false); ((ISupportInitialize)(indicadorErrores)).EndInit(); ResumeLayout(false);
+            panelContenido.ResumeLayout(false); panelListado.ResumeLayout(false); panelListado.PerformLayout(); panelFiltro.ResumeLayout(false); panelFiltro.PerformLayout(); ((ISupportInitialize)(tabla)).EndInit(); panelDetalle.ResumeLayout(false); contenedorDetalle.ResumeLayout(false); contenedorDetalle.PerformLayout(); contenedorCampos.ResumeLayout(false); contenedorCampos.PerformLayout(); panelAcciones.ResumeLayout(false); ((ISupportInitialize)(indicadorErrores)).EndInit(); ResumeLayout(false);
 
             this.Load += new System.EventHandler(this.GestionPagosFormulario_Load);
-            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             this.membresia.SelectedIndexChanged += new System.EventHandler(this.membresia_SelectedIndexChanged);
             this.tabla.SelectionChanged += new System.EventHandler(this.tabla_SelectionChanged);
             this.buscador.TextChanged += new System.EventHandler(this.buscador_TextChanged);

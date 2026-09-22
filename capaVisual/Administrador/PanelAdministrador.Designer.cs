@@ -475,7 +475,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.MinimumSize = new System.Drawing.Size(1100, 700);
             this.Name = "PanelAdministrador";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "SysGym - Administrador";
+            this.Text = "SysGym";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.PanelAdministrador_Load);
             this.panelEncabezado.ResumeLayout(false);

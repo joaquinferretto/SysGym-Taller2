@@ -32,7 +32,7 @@ namespace exxen2._0.capaVisual.Compartido
             panelEncabezado.Name = "panelEncabezado"; panelEncabezado.TabIndex = 0; lblTitulo.Name = "lblTitulo"; lblTitulo.TabIndex = 0; lblDescripcion.Name = "lblDescripcion"; lblDescripcion.TabIndex = 1; btnVolver.Name = "btnVolver"; btnVolver.TabIndex = 2;
             lblEstado.Name = "lblEstado"; lblEstado.TabIndex = 2; panelContenido.Name = "panelContenido"; panelContenido.TabIndex = 1; tablaSemana.Name = "tablaSemana"; tablaSemana.TabIndex = 0;
 
-            Controls.Add(panelContenido); Controls.Add(lblEstado); Controls.Add(panelEncabezado); AutoScaleMode = AutoScaleMode.Font; AutoScroll = false; BackColor = Color.FromArgb(241, 245, 249); ClientSize = new Size(1080, 620); Font = new Font("Segoe UI", 9.5F); MinimumSize = new Size(900, 520); this.Name = "RutinaSemanalFormulario"; StartPosition = FormStartPosition.CenterParent; Text = "SysGym | Rutina semanal";
+            Controls.Add(panelContenido); Controls.Add(lblEstado); Controls.Add(panelEncabezado); AutoScaleMode = AutoScaleMode.Font; AutoScroll = false; BackColor = Color.FromArgb(241, 245, 249); ClientSize = new Size(1080, 620); Font = new Font("Segoe UI", 9.5F); MinimumSize = new Size(900, 520); this.Name = "RutinaSemanalFormulario"; StartPosition = FormStartPosition.CenterParent; Text = "SysGym";
 
             // Armazon con Dock; los controles interiores conservan coordenadas propias y se adaptan con Anchor.
             this.panelEncabezado.AutoSize = false;

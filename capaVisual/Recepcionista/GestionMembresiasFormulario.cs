@@ -182,7 +182,18 @@ namespace exxen2._0.capaVisual.Recepcionista
             actualizar.Enabled = !nueva;
             habilitar.Enabled = !nueva && membresiaSeleccionada != null && !membresiaSeleccionada.Estado;
             deshabilitar.Enabled = !nueva && membresiaSeleccionada != null && membresiaSeleccionada.Estado;
-            generarCuota.Enabled = !nueva && membresiaSeleccionada != null && membresiaSeleccionada.Estado;
+            generarCuota.Enabled = false;
+            if (!nueva && membresiaSeleccionada != null)
+            {
+                try
+                {
+                    generarCuota.Enabled = cuotas.ConsultarDisponibilidadGeneracion(membresiaSeleccionada.IdMembresia).PuedeGenerar;
+                }
+                catch (Exception ex)
+                {
+                    AyudaFormularioVisual.MostrarError(lblEstado, ex);
+                }
+            }
         }
 
         /* Al hacer clic en crear, registra la membresía y su primera cuota mediante MembresiaLogica. */
@@ -271,8 +282,9 @@ namespace exxen2._0.capaVisual.Recepcionista
             {
                 if (idSeleccionado == 0)
                     throw new InvalidOperationException("Selecciona una membresia.");
-                cuotas.GenerarSiguienteCuota(idSeleccionado);
-                AyudaFormularioVisual.MostrarExito(lblEstado, "Nueva cuota generada.", true);
+                var cuotaGenerada = cuotas.GenerarSiguienteCuota(idSeleccionado);
+                EstablecerModo(false);
+                AyudaFormularioVisual.MostrarExito(lblEstado, "Cuota generada: " + cuotaGenerada.FechaDesde.ToString("dd/MM/yyyy") + " al " + cuotaGenerada.FechaHasta.ToString("dd/MM/yyyy") + ".", true);
             }
             catch (Exception ex)
             {
@@ -318,12 +330,6 @@ namespace exxen2._0.capaVisual.Recepcionista
             {
                 AyudaFormularioVisual.MostrarError(lblEstado, ex);
             }
-        }
-
-        /* Al hacer clic en btnVolver, cierra el módulo y devuelve el control al panel principal. */
-        private void btnVolver_Click(object origen, EventArgs e)
-        {
-            Close();
         }
 
         /* Al escribir un criterio de búsqueda, filtra los registros que se muestran en la grilla. */

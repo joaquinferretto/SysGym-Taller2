@@ -558,7 +558,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.Name = "GestionAsignacionesFormulario";
             this.Padding = new System.Windows.Forms.Padding(16);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "SysGym | Asignar entrenador";
+            this.Text = "SysGym";
             this.Load += new System.EventHandler(this.GestionAsignacionesFormulario_Load);
             this.splitContenido.Panel1.ResumeLayout(false);
             this.splitContenido.Panel2.ResumeLayout(false);

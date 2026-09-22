@@ -417,7 +417,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.Name = "GestionPlanesFormulario";
             this.Padding = new System.Windows.Forms.Padding(16);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "SysGym | Planes";
+            this.Text = "SysGym";
             this.Load += new System.EventHandler(this.GestionPlanesFormulario_Load);
             this.splitContenido.Panel1.ResumeLayout(false);
             this.splitContenido.Panel1.PerformLayout();

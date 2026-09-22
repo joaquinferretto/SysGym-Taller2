@@ -233,7 +233,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             Name = "ConsultaEntrenadoresFormulario";
             Padding = new System.Windows.Forms.Padding(16);
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            Text = "SysGym | Consultar entrenador";
+            Text = "SysGym";
             Load += new System.EventHandler(ConsultaEntrenadoresFormulario_Load);
             splitConsulta.Panel1.ResumeLayout(false);
             splitConsulta.Panel1.PerformLayout();

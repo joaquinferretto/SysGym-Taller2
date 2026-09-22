@@ -67,10 +67,5 @@ namespace exxen2._0.capaVisual.Administrador
             }
         }
 
-        /* Al hacer clic en btnVolver, cierra el módulo y devuelve el control al panel principal. */
-        private void btnVolver_Click(object origen, EventArgs e)
-        {
-            Close();
-        }
     }
 }

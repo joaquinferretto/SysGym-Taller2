@@ -418,7 +418,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.MinimumSize = new System.Drawing.Size(916, 560);
             this.Name = "GestionEjerciciosFormulario";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "SysGym | Ejercicios";
+            this.Text = "SysGym";
             this.Load += new System.EventHandler(this.GestionEjerciciosFormulario_Load);
             this.splitContenido.Panel1.ResumeLayout(false);
             this.splitContenido.Panel1.PerformLayout();

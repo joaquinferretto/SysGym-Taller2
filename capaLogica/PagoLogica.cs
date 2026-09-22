@@ -6,6 +6,13 @@ using exxen2._0.capaDatos.Repositorios;
 
 namespace exxen2._0.capaLogica
 {
+    /* Representa una opción real del catálogo de tipos de pago para la capa visual. */
+    public sealed class OpcionMetodoPago
+    {
+        public int IdMetodoPago { get; set; }
+        public string Nombre { get; set; }
+    }
+
     /* Coordina las operaciones y validaciones de negocio de pagos. */
     public class PagoLogica
     {
@@ -83,12 +90,29 @@ namespace exxen2._0.capaLogica
             }
         }
 
-        /* Consulta pagos disponibles para registrar un cobro para devolver los datos a la capa visual. */
-        public List<MetodoPago> ListarMetodosPagoActivos()
+        /* Proyecta una sola opción por tipo real y excluye los métodos ligados a movimientos históricos. */
+        public List<OpcionMetodoPago> ListarMetodosPagoActivos()
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return datos.MetodosPago.ConsultarSoloLectura().Where(m => m.Estado).OrderBy(m => m.Observaciones).ToList();
+                return CrearCatalogoMetodosPagoEnContexto(datos);
+            }
+        }
+
+        /* Resuelve el ID del catálogo que representa el mismo tipo que un método histórico. */
+        public int ResolverIdMetodoPagoCatalogo(int idMetodoPago)
+        {
+            using (var datos = new UnidadDeTrabajoGimnasio())
+            {
+                var metodo = datos.MetodosPago.ConsultarSoloLectura().SingleOrDefault(m => m.IdMetodoPago == idMetodoPago);
+                if (metodo == null)
+                    throw new InvalidOperationException("El método de pago no existe.");
+
+                var nombre = ObtenerNombreTipoMetodoPago(metodo);
+                var opcion = CrearCatalogoMetodosPagoEnContexto(datos).SingleOrDefault(o => o.Nombre == nombre);
+                if (opcion == null)
+                    throw new InvalidOperationException("No existe un método de pago activo para el tipo seleccionado.");
+                return opcion.IdMetodoPago;
             }
         }
 
@@ -281,12 +305,47 @@ namespace exxen2._0.capaLogica
                 throw new InvalidOperationException("El método de pago no existe o está inactivo.");
             }
 
-            var tieneMercadoPago = metodo.IdNroPagoMP.HasValue;
-            var tieneEfectivo = metodo.IdPagoEfectivo.HasValue;
-            if (tieneMercadoPago == tieneEfectivo)
+            if (!EsMetodoPagoEstructuralmenteValido(metodo))
             {
                 throw new InvalidOperationException("El método de pago debe tener un único detalle asociado.");
             }
+        }
+
+        /* Construye el catálogo desde las relaciones de detalle y elige un ID real por cada tipo. */
+        private static List<OpcionMetodoPago> CrearCatalogoMetodosPagoEnContexto(IUnidadDeTrabajo datos)
+        {
+            var metodos = datos.MetodosPago.ConsultarSoloLectura()
+                .Where(m => m.Estado)
+                .OrderBy(m => m.IdMetodoPago)
+                .ToList()
+                .Where(EsMetodoPagoEstructuralmenteValido)
+                .ToList();
+            var idsConPagos = new HashSet<int>(datos.Pagos.ConsultarSoloLectura().Select(p => p.IdMetodoPago).Distinct().ToList());
+            var opciones = new List<OpcionMetodoPago>();
+            foreach (var grupo in metodos.GroupBy(ObtenerNombreTipoMetodoPago))
+            {
+                var metodoCatalogo = grupo
+                    .OrderBy(m => idsConPagos.Contains(m.IdMetodoPago) ? 1 : 0)
+                    .ThenBy(m => m.IdMetodoPago)
+                    .First();
+                opciones.Add(new OpcionMetodoPago { IdMetodoPago = metodoCatalogo.IdMetodoPago, Nombre = grupo.Key });
+            }
+
+            return opciones.OrderBy(o => o.Nombre).ToList();
+        }
+
+        /* Reconoce un método válido cuando tiene exactamente un detalle específico asociado. */
+        private static bool EsMetodoPagoEstructuralmenteValido(MetodoPago metodo)
+        {
+            return metodo != null && metodo.IdPagoEfectivo.HasValue != metodo.IdNroPagoMP.HasValue;
+        }
+
+        /* Obtiene el nombre visible desde el tipo de detalle, sin interpretar Observaciones. */
+        private static string ObtenerNombreTipoMetodoPago(MetodoPago metodo)
+        {
+            if (!EsMetodoPagoEstructuralmenteValido(metodo))
+                throw new InvalidOperationException("El método de pago debe tener un único detalle asociado.");
+            return metodo.IdPagoEfectivo.HasValue ? "Efectivo" : "Mercado Pago";
         }
 
         /* Rechaza importes no positivos o superiores a la cuota antes de contabilizar un pago. */

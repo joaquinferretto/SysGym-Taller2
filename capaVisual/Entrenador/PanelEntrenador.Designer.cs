@@ -317,7 +317,7 @@ namespace exxen2._0.capaVisual.Entrenador
             this.MinimumSize = new System.Drawing.Size(1100, 700);
             this.Name = "PanelEntrenador";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "SysGym - Entrenador";
+            this.Text = "SysGym";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.PanelEntrenador_Load);
             this.panelEncabezado.ResumeLayout(false);

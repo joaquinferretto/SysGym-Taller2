@@ -1,5 +1,27 @@
 # Arquitectura
 
+## Arquitectura visual padre/hijo — 22/09/2026
+
+`PanelAdministrador`, `PanelRecepcionista` y `PanelEntrenador` son los Forms contenedores. Cada uno mantiene el único header global con identidad, título/subtítulo del destino y Volver, además del sidebar y `panelContenido`. `ControladorNavegacion` conserva la inserción de cada módulo como Form embebido mediante `TopLevel=false`, `FormBorderStyle=None` y `Dock=Fill`; la navegación normal no abre esos módulos como ventanas independientes.
+
+Los Forms hijos deben contener solamente sus regiones funcionales y no volver a declarar el header del módulo. Conforme a esta regla, `GestionMembresiasFormulario` y `GestionPagosFormulario` eliminaron físicamente su panel de encabezado oculto, título, descripción, Volver local y separador vacío. El contenido comienza en la coordenada superior del hijo y se extiende hasta el estado inferior. `lblEstado` permanece como comunicación funcional dinámica, con texto inicial vacío. La estructura sigue declarada en Designer y no se trasladó construcción visual a Form.cs.
+
+La auditoría de destinos activos detectó residuos ocultos pendientes en `GestionSociosFormulario`, `ReportesFormulario` y `RutinasEntrenadorFormulario`; se documentan para una decisión posterior y no forman parte de esta normalización. La barra de acciones de Reportes contiene una acción funcional y no debe confundirse con el encabezado residual. No hubo cambios de navegación, negocio, persistencia, SQL ni Entity Framework.
+
+## Cuotas cronológicas y métodos de pago por tipo — 22/09/2026
+
+`GestionMembresiasFormulario` consulta a `CuotaMembresiaLogica` tanto para habilitar `Generar cuota` como para ejecutar la operación. La capa visual no calcula períodos ni decide deuda: `CuotaMembresiaLogica` obtiene la cuota con mayor `FechaHasta`, calcula el mes siguiente, valida duplicados y reutiliza el umbral central de `MembresiaLogica`. La ejecución vuelve a validar todas las reglas aunque el botón estuviera habilitado. `Nuevo`, `Crear` y `Actualizar` mantienen responsabilidades separadas.
+
+`GestionPagosFormulario` recibe de `PagoLogica` una lista de `OpcionMetodoPago`, no las observaciones de movimientos históricos. La lógica deriva el tipo desde las FK reales de `MetodoPago`, agrupa por **Efectivo** o **Mercado Pago** y entrega `Nombre` como `DisplayMember` e `IdMetodoPago` como `ValueMember`. Los pagos existentes se resuelven al mismo tipo de catálogo antes de mostrarse. Se mantiene el flujo `capaVisual → capaLogica → capaDatos/repositorios → EF6 → SQL Server`; no cambiaron entidades, mapeo EF ni esquema SQL.
+
+## Inicio administrativo vigente y limpieza de componente legacy — 22/09/2026
+
+Última actualización: 22 de septiembre de 2026. `InicioPanelAdministrador` es el único UserControl de inicio administrativo activo. `PanelAdministrador.Designer.cs` lo instancia dentro de `panelContenido` y `PanelAdministrador.cs` lo registra en `ControladorNavegacion` como contenido de inicio y acción de actualización. Conserva Resumen general, el pronóstico semanal en `listaClima` con siete columnas y `CellBorderStyle.Single`, y el estado de cuenta de socios en `tablaCuotas`.
+
+`DashboardInicioAdministrador.cs` fue eliminado como componente legacy no utilizado. No estaba incluido en `exxen2.0.csproj`, no tenía Designer ni resx asociados y la búsqueda global no encontró consumidores, navegación, referencias de tipo ni formularios dependientes. No se migró su construcción visual programática ni se modificaron lógica de negocio, SQL o Entity Framework.
+
+Verificación: `exxen2.0.csproj` continúa siendo XML válido y contiene cero referencias al componente eliminado. Debug y Release Rebuild finalizaron con cero errores. En runtime, el panel Administrador cargó siete días desde Open-Meteo y 21 filas de estado de cuentas; el recorrido Usuarios y roles → Volver restauró Inicio / Resumen general.
+
 ## Unificación de Ejercicios y Socios y Rutinas — 21/09/2026
 
 Última actualización: 21 de septiembre de 2026. Ambos formularios conservan un SplitContainer con listado filtrable a la izquierda y ficha a la derecha, con estilo basado en RutinasEntrenadorFormulario. MisSocios integra los controles directamente en los paneles del splitter; se retiran seis wrappers sin eliminar controles funcionales. Títulos, campos, grillas, botones y ErrorProvider siguen declarados en Designer. Ejercicios conserva la galería FlowLayoutPanel para miniaturas variables y los cambios visuales recuperados. El mínimo del splitter es 862×420 y el del formulario 916×560 para evitar desbordamiento por los márgenes.
@@ -62,7 +84,7 @@ MisSociosFormulario mantiene listado izquierdo, ficha y rutina semanal derecha. 
 
 ## Auditoría de comunicación entre capas — 20/09/2026
 
-Alcance: inspección estática de los archivos Compile incluidos en exxen2.0.csproj: 37 de capaVisual (incluye Designer), 15 de capaLogica y 20 de capaDatos. Se contrastaron dependencias, llamadas desde formularios, interfaces públicas de lógica, repositorios y contexto; no se ejecutaron operaciones de negocio ni SQL. DashboardInicioAdministrador.cs existe fuera del csproj y no se cuenta como código activo.
+Alcance histórico: inspección estática de los archivos Compile incluidos en exxen2.0.csproj: 37 de capaVisual (incluye Designer), 15 de capaLogica y 20 de capaDatos. Se contrastaron dependencias, llamadas desde formularios, interfaces públicas de lógica, repositorios y contexto; no se ejecutaron operaciones de negocio ni SQL. El archivo residual `DashboardInicioAdministrador.cs`, que entonces estaba fuera del csproj, fue eliminado el 22/09/2026 tras confirmar que no tenía consumidores.
 
 **Resultado:** no se encontraron accesos directos de capaVisual a conexiones SQL, ContextoGimnasio, DbContext, repositorios, UnidadDeTrabajo o SaveChanges. No se encontraron SQL/DbContext ni referencias a WinForms/MessageBox/capaVisual en capaLogica. No se encontraron dependencias de capaDatos hacia capaLogica o capaVisual. El recorrido de persistencia inspeccionado es capaVisual → capaLogica → UnidadDeTrabajoGimnasio/repositorios (capaDatos) → ContextoGimnasio/EF6 → SQL Server.
 

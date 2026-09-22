@@ -257,7 +257,7 @@ namespace exxen2._0.capaLogica
         }
 
         /* Aplica el umbral común de deuda para bajas automáticas y validación de reactivaciones. */
-        private static bool DebeDarseDeBajaPorDeuda(int cantidadCuotasVencidasImpagas)
+        internal static bool DebeDarseDeBajaPorDeuda(int cantidadCuotasVencidasImpagas)
         {
             return cantidadCuotasVencidasImpagas >= CuotasVencidasParaDarDeBaja;
         }

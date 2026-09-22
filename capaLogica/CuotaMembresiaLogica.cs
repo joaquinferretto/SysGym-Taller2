@@ -23,6 +23,18 @@ namespace exxen2._0.capaLogica
         public bool TieneDeuda { get; set; }
     }
 
+    /* Informa si puede generarse la siguiente cuota y el período que correspondería crear. */
+    public sealed class DisponibilidadGeneracionCuota
+    {
+        public bool PuedeGenerar { get; set; }
+        public int CantidadCuotasVencidasImpagas { get; set; }
+        public DateTime? UltimaFechaDesde { get; set; }
+        public DateTime? UltimaFechaHasta { get; set; }
+        public DateTime? NuevaFechaDesde { get; set; }
+        public DateTime? NuevaFechaHasta { get; set; }
+        public string Motivo { get; set; }
+    }
+
     /* Coordina las operaciones y validaciones de negocio de cuotas de membresía. */
     public class CuotaMembresiaLogica
     {
@@ -51,36 +63,48 @@ namespace exxen2._0.capaLogica
             }
         }
 
-        /* Crea el siguiente período mensual con el precio actual del plan activo. */
+        /* Crea exactamente el período posterior a la última cuota si la deuda y la membresía lo permiten. */
         public CuotaMembresia GenerarSiguienteCuota(int idMembresia)
         {
+            CuotaMembresia cuota = null;
+            string motivoBloqueoPorDeuda = null;
             using (var datos = new UnidadDeTrabajoGimnasio())
             using (var transaccion = datos.IniciarTransaccion())
             {
                 var membresia = datos.Membresias.Consultar("Plan").SingleOrDefault(m => m.IdMembresia == idMembresia);
                 if (membresia == null)
-                {
                     throw new InvalidOperationException("La membresía no existe.");
-                }
 
-                var ultima = datos.CuotasMembresia.Where(c => c.IdMembresia == idMembresia && c.EstadoPago != EstadosCuota.Anulada).OrderByDescending(c => c.FechaHasta).FirstOrDefault();
-                CuotaMembresia cuota;
-                if (ultima == null)
+                var disponibilidad = EvaluarDisponibilidadGeneracionEnContexto(datos, membresia);
+                if (MembresiaLogica.DebeDarseDeBajaPorDeuda(disponibilidad.CantidadCuotasVencidasImpagas))
                 {
-                    cuota = CrearPrimeraCuotaEnContexto(datos, membresia, membresia.Plan);
+                    MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(datos, idMembresia);
+                    datos.GuardarCambios();
+                    transaccion.Confirmar();
+                    motivoBloqueoPorDeuda = disponibilidad.Motivo;
                 }
                 else
                 {
-                    var plan = datos.Planes.Buscar(membresia.IdPlan);
-                    ValidarPlanActivo(plan);
-                    var desde = ultima.FechaHasta.AddDays(1);
-                    cuota = CrearCuotaEnContexto(datos, membresia, plan, desde);
+                    cuota = GenerarSiguienteCuotaEnContexto(datos, membresia, disponibilidad);
+                    datos.GuardarCambios();
+                    transaccion.Confirmar();
                 }
+            }
 
-                datos.GuardarCambios();
-                EvaluarEstadoMembresiaPorDeudaEnContexto(datos, idMembresia);
-                transaccion.Confirmar();
-                return cuota;
+            if (!string.IsNullOrWhiteSpace(motivoBloqueoPorDeuda))
+                throw new InvalidOperationException(motivoBloqueoPorDeuda);
+            return cuota;
+        }
+
+        /* Consulta sin insertar si la membresía seleccionada admite una nueva cuota. */
+        public DisponibilidadGeneracionCuota ConsultarDisponibilidadGeneracion(int idMembresia)
+        {
+            using (var datos = new UnidadDeTrabajoGimnasio())
+            {
+                var membresia = datos.Membresias.ConsultarSoloLectura("Plan").SingleOrDefault(m => m.IdMembresia == idMembresia);
+                if (membresia == null)
+                    throw new InvalidOperationException("La membresía no existe.");
+                return EvaluarDisponibilidadGeneracionEnContexto(datos, membresia);
             }
         }
 
@@ -346,6 +370,95 @@ namespace exxen2._0.capaLogica
 
             ValidarPlanActivo(plan);
             return CrearCuotaEnContexto(datos, membresia, plan, membresia.FechaInicio);
+        }
+
+        /* Prepara una sola cuota posterior a la última existente sin confirmar la unidad de trabajo. */
+        internal static CuotaMembresia GenerarSiguienteCuotaEnContexto(IUnidadDeTrabajo datos, Membresia membresia)
+        {
+            var disponibilidad = EvaluarDisponibilidadGeneracionEnContexto(datos, membresia);
+            return GenerarSiguienteCuotaEnContexto(datos, membresia, disponibilidad);
+        }
+
+        /* Valida disponibilidad y agrega exactamente el período calculado a la unidad de trabajo. */
+        private static CuotaMembresia GenerarSiguienteCuotaEnContexto(IUnidadDeTrabajo datos, Membresia membresia, DisponibilidadGeneracionCuota disponibilidad)
+        {
+            if (!disponibilidad.PuedeGenerar)
+                throw new InvalidOperationException(disponibilidad.Motivo);
+
+            var plan = membresia.Plan ?? datos.Planes.Buscar(membresia.IdPlan);
+            ValidarPlanActivo(plan);
+            var desde = disponibilidad.NuevaFechaDesde.Value;
+            var hasta = disponibilidad.NuevaFechaHasta.Value;
+            ValidarPeriodoNoDuplicadoEnContexto(datos, membresia.IdMembresia, desde, hasta);
+            return CrearCuotaEnContexto(datos, membresia, plan, desde);
+        }
+
+        /* Evalúa la última cuota real, la deuda y las restricciones de estado sin insertar registros. */
+        internal static DisponibilidadGeneracionCuota EvaluarDisponibilidadGeneracionEnContexto(IUnidadDeTrabajo datos, Membresia membresia)
+        {
+            if (datos == null)
+                throw new ArgumentNullException("datos");
+            if (membresia == null)
+                throw new ArgumentNullException("membresia");
+
+            var cuotas = datos.CuotasMembresia.ConsultarSoloLectura()
+                .Where(c => c.IdMembresia == membresia.IdMembresia)
+                .OrderByDescending(c => c.FechaHasta)
+                .ThenByDescending(c => c.FechaDesde)
+                .ThenByDescending(c => c.IdCuotaMembresia)
+                .ToList();
+            var ultima = cuotas.FirstOrDefault();
+            var vencidas = MembresiaLogica.ContarCuotasVencidasImpagasEnContexto(datos, membresia.IdMembresia);
+            var resultado = new DisponibilidadGeneracionCuota
+            {
+                CantidadCuotasVencidasImpagas = vencidas,
+                UltimaFechaDesde = ultima == null ? (DateTime?)null : ultima.FechaDesde.Date,
+                UltimaFechaHasta = ultima == null ? (DateTime?)null : ultima.FechaHasta.Date
+            };
+
+            if (MembresiaLogica.DebeDarseDeBajaPorDeuda(vencidas))
+            {
+                resultado.Motivo = "No se puede generar una nueva cuota porque la membresía tiene 2 o más cuotas vencidas sin pagar.";
+                return resultado;
+            }
+            if (!membresia.Estado)
+            {
+                resultado.Motivo = "La membresía está inactiva. Reactivala antes de generar una cuota.";
+                return resultado;
+            }
+            if (ultima == null)
+            {
+                resultado.Motivo = "La membresía no posee una cuota inicial.";
+                return resultado;
+            }
+
+            var plan = membresia.Plan ?? datos.Planes.Buscar(membresia.IdPlan);
+            if (plan == null || !plan.Estado)
+            {
+                resultado.Motivo = "El plan actual no existe o está inactivo.";
+                return resultado;
+            }
+
+            resultado.NuevaFechaDesde = ultima.FechaHasta.Date.AddDays(1);
+            resultado.NuevaFechaHasta = CalcularPeriodoHasta(resultado.NuevaFechaDesde.Value);
+            if (cuotas.Any(c => c.FechaDesde.Date == resultado.NuevaFechaDesde.Value && c.FechaHasta.Date == resultado.NuevaFechaHasta.Value))
+            {
+                resultado.Motivo = "Ya existe una cuota para ese período.";
+                return resultado;
+            }
+
+            resultado.PuedeGenerar = true;
+            resultado.Motivo = string.Empty;
+            return resultado;
+        }
+
+        /* Impide insertar un período ya registrado para la misma membresía. */
+        internal static void ValidarPeriodoNoDuplicadoEnContexto(IUnidadDeTrabajo datos, int idMembresia, DateTime fechaDesde, DateTime fechaHasta)
+        {
+            var desde = fechaDesde.Date;
+            var hasta = fechaHasta.Date;
+            if (datos.CuotasMembresia.Any(c => c.IdMembresia == idMembresia && c.FechaDesde == desde && c.FechaHasta == hasta))
+                throw new InvalidOperationException("Ya existe una cuota para ese período.");
         }
 
         /* Determina si la cuota está pagada según el importe aprobado y respeta las anulaciones. */
