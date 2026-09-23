@@ -449,7 +449,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             //
             // nuevo
             //
-            this.nuevo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(149)))), ((int)(((byte)(111)))));
+            this.nuevo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(120)))), ((int)(((byte)(87)))));
             this.nuevo.FlatAppearance.BorderSize = 0;
             this.nuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.nuevo.ForeColor = System.Drawing.Color.White;

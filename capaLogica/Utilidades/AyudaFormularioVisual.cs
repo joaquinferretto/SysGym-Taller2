@@ -118,7 +118,7 @@ namespace exxen2._0.capaLogica.Utilidades
                 estado.Text = mensaje;
                 if (resaltar)
                 {
-                    estado.ForeColor = System.Drawing.Color.Red;
+                    estado.ForeColor = System.Drawing.Color.FromArgb(185, 28, 28);  // Rojo oscuro: Color.Red no se lee bien sobre fondo claro.
                     estado.Visible = true;
                 }
             }
@@ -133,7 +133,7 @@ namespace exxen2._0.capaLogica.Utilidades
                 estado.Text = mensaje;
                 if (resaltar)
                 {
-                    estado.ForeColor = System.Drawing.Color.Green;
+                    estado.ForeColor = System.Drawing.Color.FromArgb(22, 101, 52);  // Verde oscuro legible sobre fondo claro.
                     estado.Visible = true;
                 }
             }

@@ -126,6 +126,7 @@
     </Compile>
     <Compile Include="capaLogica\Navegacion\ControladorNavegacion.cs" />
     <Compile Include="capaLogica\Utilidades\AyudaFormularioVisual.cs" />
+    <Compile Include="capaLogica\Utilidades\ContrasteVisual.cs" />
     <Compile Include="capaLogica\Utilidades\EncabezadoPanelHelper.cs" />
     <Compile Include="capaLogica\Utilidades\MenuDesplegableHelper.cs" />
     <Compile Include="capaVisual\Compartido\Formularios\GestionSociosFormulario.cs">

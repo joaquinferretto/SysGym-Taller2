@@ -75,7 +75,7 @@ namespace exxen2._0.capaVisual.Administrador
             estadoClima.AutoSize = false;
             estadoClima.Dock = DockStyle.None;
             estadoClima.Width = 240;
-            estadoClima.ForeColor = Color.FromArgb(100, 116, 139);
+            estadoClima.ForeColor = Color.FromArgb(71, 85, 105);
             estadoClima.Text = "";
             estadoClima.TextAlign = ContentAlignment.MiddleRight;
             listaClima.BackColor = Color.White;

@@ -80,7 +80,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.btnSeleccionarFoto.FlatAppearance.BorderSize = 0;
             this.btnSeleccionarFoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSeleccionarFoto.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.btnSeleccionarFoto.BackColor = System.Drawing.Color.FromArgb(9, 149, 111);
+            this.btnSeleccionarFoto.BackColor = System.Drawing.Color.FromArgb(4, 120, 87);
             this.btnQuitarFoto = new System.Windows.Forms.Button();
             this.btnQuitarFoto.FlatAppearance.BorderSize = 0;
             this.btnQuitarFoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -344,7 +344,7 @@ namespace exxen2._0.capaVisual.Administrador
             //
             this.lblAyuda.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
 
-            this.lblAyuda.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
+            this.lblAyuda.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
             this.lblAyuda.Location = new System.Drawing.Point(16, 42);
             this.lblAyuda.Dock = System.Windows.Forms.DockStyle.None;
             this.lblAyuda.AutoSize = false;
@@ -791,7 +791,7 @@ namespace exxen2._0.capaVisual.Administrador
             //
             // nuevo
             //
-            this.nuevo.BackColor = System.Drawing.Color.FromArgb(9, 149, 111);
+            this.nuevo.BackColor = System.Drawing.Color.FromArgb(4, 120, 87);
             this.nuevo.FlatAppearance.BorderSize = 0;
             this.nuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.nuevo.ForeColor = System.Drawing.Color.White;
