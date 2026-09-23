@@ -46,7 +46,7 @@ El diagrama muestra las entidades del gimnasio y sus relaciones:
 
 [![Diagrama entidad-relación de SysGymDB](Resources/SysGymDB.png)](Resources/SysGymDB.png)
 
-Hacé clic en la imagen para verla en tamaño completo. El esquema vigente está definido en `SysGymDB.sql`: el campo `IdDivisa` que todavía aparece en `PagoEfectivo` en la imagen ya fue eliminado del modelo actual.
+Hacé clic en la imagen para verla en tamaño completo. 
 
 ## Funcionalidades
 
