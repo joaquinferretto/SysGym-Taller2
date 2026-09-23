@@ -334,7 +334,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             // lblDniTitulo
             //
             this.lblDniTitulo.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.lblDniTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(210)))), ((int)(((byte)(254)))));
+            this.lblDniTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(231)))), ((int)(((byte)(255)))));
             this.lblDniTitulo.Location = new System.Drawing.Point(308, 20);
             this.lblDniTitulo.Name = "lblDniTitulo";
             this.lblDniTitulo.Size = new System.Drawing.Size(110, 18);
@@ -355,7 +355,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             // lblSexoTitulo
             //
             this.lblSexoTitulo.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.lblSexoTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(210)))), ((int)(((byte)(254)))));
+            this.lblSexoTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(231)))), ((int)(((byte)(255)))));
             this.lblSexoTitulo.Location = new System.Drawing.Point(428, 20);
             this.lblSexoTitulo.Name = "lblSexoTitulo";
             this.lblSexoTitulo.Size = new System.Drawing.Size(110, 18);
@@ -468,7 +468,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             //
             this.lblBienvenida.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblBienvenida.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.lblBienvenida.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
+            this.lblBienvenida.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
             this.lblBienvenida.Location = new System.Drawing.Point(204, 314);
             this.lblBienvenida.Name = "lblBienvenida";
             this.lblBienvenida.Size = new System.Drawing.Size(600, 28);
@@ -490,6 +490,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.Name = "PanelRecepcionista";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SysGym";
+            this.IsMdiContainer = true;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.PanelRecepcionista_Load);
             this.panelEncabezado.ResumeLayout(false);

@@ -353,7 +353,10 @@ namespace exxen2._0.capaVisual.Compartido
                 if (idSeleccionado == 0)
                     throw new InvalidOperationException("Selecciona un socio.");
                 using (var semana = new RutinaSemanalFormulario(idSeleccionado, apellido.Text.Trim() + ", " + nombre.Text.Trim(), colorPrimario))
+                {
+                    ContrasteVisual.Aplicar(semana);
                     semana.ShowDialog(this);
+                }
             }
             catch (Exception ex)
             {
