@@ -94,7 +94,6 @@
     <Compile Include="capaDatos\Entidades\Pago.cs" />
     <Compile Include="capaDatos\Entidades\PagoEfectivo.cs" />
     <Compile Include="capaDatos\Entidades\Plan.cs" />
-    <Compile Include="capaDatos\Entidades\Divisa.cs" />
     <Compile Include="capaDatos\Entidades\Rol.cs" />
     <Compile Include="capaDatos\Entidades\Rutina.cs" />
     <Compile Include="capaDatos\Entidades\RutinaEjercicio.cs" />
@@ -127,6 +126,7 @@
     </Compile>
     <Compile Include="capaLogica\Navegacion\ControladorNavegacion.cs" />
     <Compile Include="capaLogica\Utilidades\AyudaFormularioVisual.cs" />
+    <Compile Include="capaLogica\Utilidades\EncabezadoPanelHelper.cs" />
     <Compile Include="capaLogica\Utilidades\MenuDesplegableHelper.cs" />
     <Compile Include="capaVisual\Compartido\Formularios\GestionSociosFormulario.cs">
       <SubType>Form</SubType>
@@ -262,8 +262,14 @@
     <EmbeddedResource Include="capaVisual\Entrenador\PanelEntrenador.resx">
       <DependentUpon>PanelEntrenador.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="capaVisual\Recepcionista\ConsultaEntrenadoresFormulario.resx">
+      <DependentUpon>ConsultaEntrenadoresFormulario.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="capaVisual\Recepcionista\GestionAsignacionesFormulario.resx">
       <DependentUpon>GestionAsignacionesFormulario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="capaVisual\Recepcionista\GestionMembresiasFormulario.resx">
+      <DependentUpon>GestionMembresiasFormulario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="capaVisual\Recepcionista\PanelRecepcionista.resx">
       <DependentUpon>PanelRecepcionista.cs</DependentUpon>
@@ -286,6 +292,23 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+  </ItemGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\SysGym.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="Resources\SysGym.ico" />
+    <None Include="Resources\SysGymLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="capaDatos\Imagenes\Ejercicios\**\*.*">
+      <Link>Datos\Imagenes\Ejercicios\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="capaDatos\Imagenes\Usuarios\*.*">
+      <Link>Datos\Imagenes\Usuarios\%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -125,7 +125,6 @@
             this.lblBuscar.TabIndex = 1;
             this.lblBuscar.Text = "Buscar:";
             this.lblBuscar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblBuscar.Click += new System.EventHandler(this.lblBuscar_Click);
             //
             // buscador
             //
@@ -332,7 +331,7 @@
             // colVencimiento
             //
             this.colVencimiento.FillWeight = 16F;
-            this.colVencimiento.HeaderText = "Vence";
+            this.colVencimiento.HeaderText = "Cuota hasta";
             this.colVencimiento.MinimumWidth = 62;
             this.colVencimiento.Name = "colVencimiento";
             this.colVencimiento.ReadOnly = true;
@@ -465,7 +464,7 @@
             this.lblVencimiento.Name = "lblVencimiento";
             this.lblVencimiento.Size = new System.Drawing.Size(100, 24);
             this.lblVencimiento.TabIndex = 9;
-            this.lblVencimiento.Text = "Vencimiento:";
+            this.lblVencimiento.Text = "Cuota hasta:";
             this.lblVencimiento.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // txtVencimiento
@@ -619,9 +618,9 @@
             this.rutinaDisponible.Location = new System.Drawing.Point(10, 510);
             this.rutinaDisponible.Margin = new System.Windows.Forms.Padding(0, 4, 8, 0);
             this.rutinaDisponible.Name = "rutinaDisponible";
-            this.rutinaDisponible.Size = new System.Drawing.Size(462, 25);
+            this.rutinaDisponible.Size = new System.Drawing.Size(470, 25);
             this.rutinaDisponible.TabIndex = 6;
-            this.rutinaDisponible.Visible = false;
+            this.rutinaDisponible.Enabled = false;
             //
             // asignarRutina
             //
@@ -638,7 +637,7 @@
             this.asignarRutina.TabIndex = 7;
             this.asignarRutina.Text = "Asignar rutina";
             this.asignarRutina.UseVisualStyleBackColor = false;
-            this.asignarRutina.Visible = false;
+            this.asignarRutina.Enabled = false;
             this.asignarRutina.Click += new System.EventHandler(this.asignarRutina_Click);
             //
             // verRutina
@@ -649,14 +648,14 @@
             this.verRutina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.verRutina.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.verRutina.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(68)))), ((int)(((byte)(95)))));
-            this.verRutina.Location = new System.Drawing.Point(309, 550);
+            this.verRutina.Location = new System.Drawing.Point(317, 550);
             this.verRutina.Margin = new System.Windows.Forms.Padding(0, 2, 8, 0);
             this.verRutina.Name = "verRutina";
             this.verRutina.Size = new System.Drawing.Size(163, 32);
-            this.verRutina.TabIndex = 8;
+            this.verRutina.TabIndex = 9;
             this.verRutina.Text = "Ver / editar";
             this.verRutina.UseVisualStyleBackColor = false;
-            this.verRutina.Visible = false;
+            this.verRutina.Enabled = false;
             this.verRutina.Click += new System.EventHandler(this.verRutina_Click);
             //
             // crearPersonalizada
@@ -667,14 +666,14 @@
             this.crearPersonalizada.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.crearPersonalizada.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.crearPersonalizada.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.crearPersonalizada.Location = new System.Drawing.Point(88, 550);
+            this.crearPersonalizada.Location = new System.Drawing.Point(117, 550);
             this.crearPersonalizada.Margin = new System.Windows.Forms.Padding(0, 2, 8, 0);
             this.crearPersonalizada.Name = "crearPersonalizada";
             this.crearPersonalizada.Size = new System.Drawing.Size(192, 32);
-            this.crearPersonalizada.TabIndex = 9;
+            this.crearPersonalizada.TabIndex = 8;
             this.crearPersonalizada.Text = "Crear personalizada";
             this.crearPersonalizada.UseVisualStyleBackColor = false;
-            this.crearPersonalizada.Visible = false;
+            this.crearPersonalizada.Enabled = false;
             this.crearPersonalizada.Click += new System.EventHandler(this.crearPersonalizada_Click);
             //
             // exportarPdf

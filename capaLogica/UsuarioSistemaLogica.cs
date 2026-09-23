@@ -10,11 +10,13 @@ using Konscious.Security.Cryptography;
 namespace exxen2._0.capaLogica
 {
     /* Coordina las operaciones y validaciones de negocio de usuarios del sistema. */
+    // Usuarios del personal: alta, roles, foto e inicio de sesión.
+    // Las contraseñas se guardan como hash Argon2id (nunca en texto). La usan InicioSesion y GestionUsuariosFormulario.
     public class UsuarioSistemaLogica
     {
         private const string FormatoClave = "ARGON2ID";
         private const int VersionArgon2 = 19;
-        private const int MemoriaArgon2 = 65536;
+        private const int MemoriaArgon2 = 65536;  // 64 MB de memoria por cálculo: hace muy caro adivinar claves por fuerza bruta.
         private const int IteracionesArgon2 = 3;
         private const int ParalelismoArgon2 = 2;
         private const int TamanoSal = 16;
@@ -31,25 +33,25 @@ namespace exxen2._0.capaLogica
             ValidarDatos(usuario);
             if (string.IsNullOrWhiteSpace(clave))
             {
-                throw new InvalidOperationException("La contraseña es obligatoria.");
+                throw new InvalidOperationException("La contraseña es obligatoria.");  // Regla incumplida: corta la operación y el formulario muestra este mensaje.
             }
 
             var rutaNueva = (string)null;
             try
             {
-                using (var datos = new UnidadDeTrabajoGimnasio())
+                using (var datos = new UnidadDeTrabajoGimnasio())  // Abre la conexión; al salir del bloque se cierra sola, aunque haya error (try-with-resources).
                 {
                     var rol = ObtenerRolActivo(datos, usuario.IdRol);
                     ValidarUnicidad(datos, usuario.DNI, usuario.NombreUsuario, 0);
                     if (fotoContenido != null)
                         rutaNueva = AlmacenamientoImagenes.GuardarUsuario(fotoContenido);
-                    usuario.FotoRuta = rutaNueva ?? NormalizarRuta(usuario.FotoRuta);
+                    usuario.FotoRuta = rutaNueva ?? NormalizarRuta(usuario.FotoRuta);  // ??: si lo de la izquierda es null, usa lo de la derecha.
                     usuario.IdRol = rol.IdRol;
                     usuario.Rol = rol;
                     usuario.Clave = GenerarClave(clave);
                     usuario.Estado = true;
-                    datos.UsuariosSistema.Agregar(usuario);
-                    datos.GuardarCambios();
+                    datos.UsuariosSistema.Agregar(usuario);  // Deja el objeto listo para INSERT (se ejecuta en GuardarCambios).
+                    datos.GuardarCambios();  // EF envía a SQL los INSERT/UPDATE pendientes.
                     return usuario;
                 }
             }
@@ -75,7 +77,7 @@ namespace exxen2._0.capaLogica
             var guardado = false;
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                var existente = datos.UsuariosSistema.SingleOrDefault(u => u.IdUsuarioSistema == usuario.IdUsuarioSistema);
+                var existente = datos.UsuariosSistema.SingleOrDefault(u => u.IdUsuarioSistema == usuario.IdUsuarioSistema);  // Devuelve el único que cumple o null.
                 if (existente == null)
                 {
                     throw new InvalidOperationException("El usuario no existe.");
@@ -124,7 +126,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return datos.UsuariosSistema.ConsultarSoloLectura("Rol").SingleOrDefault(u => u.IdUsuarioSistema == idUsuarioSistema);
+                return datos.UsuariosSistema.ConsultarSoloLectura("Rol").SingleOrDefault(u => u.IdUsuarioSistema == idUsuarioSistema);  // Solo lectura: EF no vigila cambios (más liviano para listar).
             }
         }
 
@@ -151,7 +153,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return ListarSinFotos(datos.UsuariosSistema.ConsultarSoloLectura().Where(u => u.Estado && u.Rol.Estado).OrderBy(u => u.Apellido).ThenBy(u => u.Nombre));
+                return ListarSinFotos(datos.UsuariosSistema.ConsultarSoloLectura().Where(u => u.Estado && u.Rol.Estado).OrderBy(u => u.Apellido).ThenBy(u => u.Nombre));  // Where = filtro (como filter de Streams / WHERE de SQL). "x => ..." es una lambda.
             }
         }
 
@@ -160,7 +162,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return ListarSinFotos(datos.UsuariosSistema.ConsultarSoloLectura().OrderByDescending(u => u.Estado).ThenBy(u => u.Apellido).ThenBy(u => u.Nombre));
+                return ListarSinFotos(datos.UsuariosSistema.ConsultarSoloLectura().OrderByDescending(u => u.Estado).ThenBy(u => u.Apellido).ThenBy(u => u.Nombre));  // Ordena (ORDER BY).
             }
         }
 
@@ -181,11 +183,11 @@ namespace exxen2._0.capaLogica
         /* Proyecta personal y rol sin descargar fotos ni contraseñas para los listados. */
         private static List<UsuarioSistema> ListarSinFotos(IQueryable<UsuarioSistema> consulta)
         {
-            return consulta.Select(u => new
+            return consulta.Select(u => new  // Select = transforma cada elemento (como map de Streams).
             {
                 u.IdUsuarioSistema, u.Nombre, u.Apellido, u.DNI, u.Telefono,
                 u.FechaNacimiento, u.Salario, u.NombreUsuario, u.Estado, u.IdRol, u.Rol, u.Sexo
-            }).ToList().Select(u => new UsuarioSistema
+            }).ToList().Select(u => new UsuarioSistema  // Acá se ejecuta la consulta en SQL y se trae la lista.
             {
                 IdUsuarioSistema = u.IdUsuarioSistema, Nombre = u.Nombre, Apellido = u.Apellido,
                 DNI = u.DNI, Telefono = u.Telefono, FechaNacimiento = u.FechaNacimiento,
@@ -199,7 +201,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                var usuario = datos.UsuariosSistema.Buscar(idUsuarioSistema);
+                var usuario = datos.UsuariosSistema.Buscar(idUsuarioSistema);  // Busca por clave primaria; si no existe devuelve null.
                 if (usuario == null)
                 {
                     throw new InvalidOperationException("El usuario no existe.");
@@ -215,7 +217,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                var usuario = datos.UsuariosSistema.Consultar("Rol").SingleOrDefault(u => u.IdUsuarioSistema == idUsuarioSistema);
+                var usuario = datos.UsuariosSistema.Consultar("Rol").SingleOrDefault(u => u.IdUsuarioSistema == idUsuarioSistema);  // Consulta con seguimiento: si se modifica el objeto, GuardarCambios hace el UPDATE.
                 if (usuario == null)
                 {
                     throw new InvalidOperationException("El usuario no existe.");
@@ -262,7 +264,7 @@ namespace exxen2._0.capaLogica
             var sal = new byte[TamanoSal];
             using (var generadorAleatorio = RandomNumberGenerator.Create())
             {
-                generadorAleatorio.GetBytes(sal);
+                generadorAleatorio.GetBytes(sal);  // "Sal" aleatoria: dos usuarios con la misma clave tienen hashes distintos.
             }
 
             var resumen = DerivarClave(clave, sal, MemoriaArgon2, IteracionesArgon2, ParalelismoArgon2);
@@ -343,7 +345,7 @@ namespace exxen2._0.capaLogica
         {
             if (usuario == null)
             {
-                throw new ArgumentNullException("usuario");
+                throw new ArgumentNullException("usuario");  // Se recibió null donde no corresponde.
             }
 
             ValidacionesGimnasio.ValidarNombre(usuario.Nombre, "nombre");
@@ -384,7 +386,7 @@ namespace exxen2._0.capaLogica
         /* Impide duplicar DNI o nombre de usuario, excluyendo el registro que se modifica. */
         private static void ValidarUnicidad(IUnidadDeTrabajo datos, string dni, string nombreUsuario, int idActual)
         {
-            if (datos.UsuariosSistema.Any(u => u.DNI == dni && u.IdUsuarioSistema != idActual))
+            if (datos.UsuariosSistema.Any(u => u.DNI == dni && u.IdUsuarioSistema != idActual))  // ¿Existe al menos uno? (no trae filas).
             {
                 throw new InvalidOperationException("El DNI ya está registrado.");
             }
@@ -406,7 +408,7 @@ namespace exxen2._0.capaLogica
             var diferencia = 0;
             for (var i = 0; i < izquierdo.Length; i++)
             {
-                diferencia |= izquierdo[i] ^ derecho[i];
+                diferencia |= izquierdo[i] ^ derecho[i];  // Compara todos los bytes siempre (tiempo constante) para no dar pistas por la demora.
             }
 
             return diferencia == 0;

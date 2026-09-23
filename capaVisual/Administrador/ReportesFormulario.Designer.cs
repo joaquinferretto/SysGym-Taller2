@@ -98,7 +98,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.generar.Dock = System.Windows.Forms.DockStyle.None;
             this.generar.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
             this.generar.Location = new System.Drawing.Point(16, 8);
-            this.generar.Size = new System.Drawing.Size(130, 34);
+            this.generar.Size = new System.Drawing.Size(160, 34);
             tablaIndicadores.Name = "tablaIndicadores";
             tablaIndicadores.Dock = DockStyle.Top;
             tablaIndicadores.Height = 360;

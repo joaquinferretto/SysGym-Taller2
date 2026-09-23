@@ -4,6 +4,8 @@ using System.IO;
 namespace exxen2._0.capaLogica
 {
     /* Centraliza las carpetas administradas por SysGym y las rutas relativas de sus imágenes. */
+    // Guarda las imágenes como archivos en la carpeta Datos\Imagenes junto al .exe
+    // y devuelve la ruta relativa que se guarda en SQL.
     public static class AlmacenamientoImagenes
     {
         private const string CarpetaImagenes = "Imagenes";
@@ -27,7 +29,7 @@ namespace exxen2._0.capaLogica
         public static string GuardarEjercicio(byte[] contenido, int idEjercicio)
         {
             if (idEjercicio <= 0)
-                throw new InvalidOperationException("Primero guarde el ejercicio antes de agregar imágenes.");
+                throw new InvalidOperationException("Primero guarde el ejercicio antes de agregar imágenes.");  // Regla incumplida: corta la operación y el formulario muestra este mensaje.
 
             return Guardar(contenido, Path.Combine(CarpetaEjercicios, idEjercicio.ToString()));
         }

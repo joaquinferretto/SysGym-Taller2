@@ -1,6 +1,7 @@
 namespace exxen2._0.capaDatos.Entidades
 {
     /* Centraliza los estados válidos de los pagos registrados. */
+    // Clase estática con constantes: los estados se escriben una sola vez y se reutilizan en todo el código.
     public static class EstadosTransaccionPago
     {
         public const string Pendiente = "Pendiente";

@@ -36,29 +36,32 @@ namespace exxen2._0.capaLogica
     }
 
     /* Coordina las operaciones y validaciones de negocio de cuotas de membresía. */
+    // Cuotas mensuales: cada cuota cubre un mes (FechaDesde a FechaHasta) y guarda el precio de ese momento.
+    // Genera la siguiente cuota, calcula saldos y decide cuándo una cuota está vencida.
+    // La usan GestionMembresiasFormulario, GestionPagosFormulario e InicioPanelAdministrador.
     public class CuotaMembresiaLogica
     {
         /* Genera la cuota inicial si la membresía todavía no posee cuotas. */
         public CuotaMembresia CrearPrimeraCuota(int idMembresia)
         {
-            using (var datos = new UnidadDeTrabajoGimnasio())
-            using (var transaccion = datos.IniciarTransaccion())
+            using (var datos = new UnidadDeTrabajoGimnasio())  // Abre la conexión; al salir del bloque se cierra sola, aunque haya error (try-with-resources).
+            using (var transaccion = datos.IniciarTransaccion())  // Transacción: si algo falla antes de Confirmar(), se deshace todo.
             {
-                var membresia = datos.Membresias.Consultar("Plan").SingleOrDefault(m => m.IdMembresia == idMembresia);
+                var membresia = datos.Membresias.Consultar("Plan").SingleOrDefault(m => m.IdMembresia == idMembresia);  // Consulta con seguimiento: si se modifica el objeto, GuardarCambios hace el UPDATE.
                 if (membresia == null)
                 {
-                    throw new InvalidOperationException("La membresía no existe.");
+                    throw new InvalidOperationException("La membresía no existe.");  // Regla incumplida: corta la operación y el formulario muestra este mensaje.
                 }
 
-                if (datos.CuotasMembresia.Any(c => c.IdMembresia == idMembresia))
+                if (datos.CuotasMembresia.Any(c => c.IdMembresia == idMembresia))  // ¿Existe al menos uno? (no trae filas).
                 {
                     throw new InvalidOperationException("La membresía ya posee una cuota.");
                 }
 
                 var cuota = CrearPrimeraCuotaEnContexto(datos, membresia, membresia.Plan);
-                datos.GuardarCambios();
+                datos.GuardarCambios();  // EF envía a SQL los INSERT/UPDATE pendientes.
                 EvaluarEstadoMembresiaPorDeudaEnContexto(datos, idMembresia);
-                transaccion.Confirmar();
+                transaccion.Confirmar();  // Recién acá quedan grabados todos los cambios de la transacción.
                 return cuota;
             }
         }
@@ -71,7 +74,7 @@ namespace exxen2._0.capaLogica
             using (var datos = new UnidadDeTrabajoGimnasio())
             using (var transaccion = datos.IniciarTransaccion())
             {
-                var membresia = datos.Membresias.Consultar("Plan").SingleOrDefault(m => m.IdMembresia == idMembresia);
+                var membresia = datos.Membresias.Consultar("Plan").SingleOrDefault(m => m.IdMembresia == idMembresia);  // Devuelve el único que cumple o null.
                 if (membresia == null)
                     throw new InvalidOperationException("La membresía no existe.");
 
@@ -101,7 +104,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                var membresia = datos.Membresias.ConsultarSoloLectura("Plan").SingleOrDefault(m => m.IdMembresia == idMembresia);
+                var membresia = datos.Membresias.ConsultarSoloLectura("Plan").SingleOrDefault(m => m.IdMembresia == idMembresia);  // Solo lectura: EF no vigila cambios (más liviano para listar).
                 if (membresia == null)
                     throw new InvalidOperationException("La membresía no existe.");
                 return EvaluarDisponibilidadGeneracionEnContexto(datos, membresia);
@@ -127,7 +130,7 @@ namespace exxen2._0.capaLogica
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 EvaluarEstadoMembresiaPorDeudaEnContexto(datos, idMembresia);
-                return datos.CuotasMembresia.ConsultarSoloLectura("Pago").Where(c => c.IdMembresia == idMembresia && c.EstadoPago != EstadosCuota.Anulada && c.FechaDesde <= hoy && c.FechaHasta >= hoy).SingleOrDefault();
+                return datos.CuotasMembresia.ConsultarSoloLectura("Pago").Where(c => c.IdMembresia == idMembresia && c.EstadoPago != EstadosCuota.Anulada && c.FechaDesde <= hoy && c.FechaHasta >= hoy).SingleOrDefault();  // Where = filtro (como filter de Streams / WHERE de SQL). "x => ..." es una lambda.
             }
         }
 
@@ -137,7 +140,7 @@ namespace exxen2._0.capaLogica
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 EvaluarEstadoMembresiaPorDeudaEnContexto(datos, idMembresia);
-                return datos.CuotasMembresia.ConsultarSoloLectura().Where(c => c.IdMembresia == idMembresia).OrderBy(c => c.FechaDesde).ToList();
+                return datos.CuotasMembresia.ConsultarSoloLectura().Where(c => c.IdMembresia == idMembresia).OrderBy(c => c.FechaDesde).ToList();  // Acá se ejecuta la consulta en SQL y se trae la lista.
             }
         }
 
@@ -165,7 +168,7 @@ namespace exxen2._0.capaLogica
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 EvaluarTodasLasMembresiasPorDeudaEnContexto(datos);
-                return datos.CuotasMembresia.ConsultarSoloLectura("Pago", "Membresia.Socio", "Membresia.Plan").Where(c => c.EstadoPago == EstadosCuota.Pendiente || c.EstadoPago == EstadosCuota.Pagada || c.EstadoPago == EstadosCuota.Anulada).OrderByDescending(c => c.FechaDesde).ThenBy(c => c.Membresia.Socio.Apellido).ThenBy(c => c.Membresia.Socio.Nombre).ToList();
+                return datos.CuotasMembresia.ConsultarSoloLectura("Pago", "Membresia.Socio", "Membresia.Plan").Where(c => c.EstadoPago == EstadosCuota.Pendiente || c.EstadoPago == EstadosCuota.Pagada || c.EstadoPago == EstadosCuota.Anulada).OrderByDescending(c => c.FechaDesde).ThenBy(c => c.Membresia.Socio.Apellido).ThenBy(c => c.Membresia.Socio.Nombre).ToList();  // Ordena (ORDER BY).
             }
         }
 
@@ -176,7 +179,7 @@ namespace exxen2._0.capaLogica
             {
                 EvaluarTodasLasMembresiasPorDeudaEnContexto(datos);
                 var membresias = datos.Membresias.ConsultarSoloLectura("Socio", "Plan", "Cuotas.Pago").OrderBy(m => m.Socio.Apellido).ThenBy(m => m.Socio.Nombre).ToList();
-                return membresias.Select(CrearEstadoCuenta).ToList();
+                return membresias.Select(CrearEstadoCuenta).ToList();  // Select = transforma cada elemento (como map de Streams).
             }
         }
 
@@ -250,7 +253,7 @@ namespace exxen2._0.capaLogica
         /* Calcula el saldo con los datos ya cargados sin abrir otra consulta. */
         private static decimal CalcularSaldoSinContexto(CuotaMembresia cuota)
         {
-            var abonado = cuota.IdRegistroPago.HasValue && cuota.Pago != null && cuota.Pago.Estado == EstadosTransaccionPago.Aprobado ? cuota.Pago.Importe : 0m;
+            var abonado = cuota.IdRegistroPago.HasValue && cuota.Pago != null && cuota.Pago.Estado == EstadosTransaccionPago.Aprobado ? cuota.Pago.Importe : 0m;  // HasValue: ¿el valor opcional (int?, DateTime?) tiene dato?
             return Math.Max(0m, cuota.Importe - abonado);
         }
 
@@ -325,7 +328,7 @@ namespace exxen2._0.capaLogica
         {
             if (cuota == null)
             {
-                throw new ArgumentNullException("cuota");
+                throw new ArgumentNullException("cuota");  // Se recibió null donde no corresponde.
             }
 
             using (var datos = new UnidadDeTrabajoGimnasio())
@@ -385,7 +388,7 @@ namespace exxen2._0.capaLogica
             if (!disponibilidad.PuedeGenerar)
                 throw new InvalidOperationException(disponibilidad.Motivo);
 
-            var plan = membresia.Plan ?? datos.Planes.Buscar(membresia.IdPlan);
+            var plan = membresia.Plan ?? datos.Planes.Buscar(membresia.IdPlan);  // Busca por clave primaria; si no existe devuelve null.
             ValidarPlanActivo(plan);
             var desde = disponibilidad.NuevaFechaDesde.Value;
             var hasta = disponibilidad.NuevaFechaHasta.Value;
@@ -432,14 +435,14 @@ namespace exxen2._0.capaLogica
                 return resultado;
             }
 
-            var plan = membresia.Plan ?? datos.Planes.Buscar(membresia.IdPlan);
+            var plan = membresia.Plan ?? datos.Planes.Buscar(membresia.IdPlan);  // ??: si lo de la izquierda es null, usa lo de la derecha.
             if (plan == null || !plan.Estado)
             {
                 resultado.Motivo = "El plan actual no existe o está inactivo.";
                 return resultado;
             }
 
-            resultado.NuevaFechaDesde = ultima.FechaHasta.Date.AddDays(1);
+            resultado.NuevaFechaDesde = ultima.FechaHasta.Date.AddDays(1);  // La nueva cuota empieza el día siguiente al fin de la anterior: no quedan huecos ni meses repetidos.
             resultado.NuevaFechaHasta = CalcularPeriodoHasta(resultado.NuevaFechaDesde.Value);
             if (cuotas.Any(c => c.FechaDesde.Date == resultado.NuevaFechaDesde.Value && c.FechaHasta.Date == resultado.NuevaFechaHasta.Value))
             {
@@ -493,17 +496,35 @@ namespace exxen2._0.capaLogica
                 IdMembresia = membresia.IdMembresia,
                 FechaDesde = periodoDesde,
                 FechaHasta = CalcularPeriodoHasta(periodoDesde),
-                Importe = plan.Precio,
+                Importe = plan.Precio,  // Se copia el precio actual: si el plan sube después, esta cuota no cambia.
                 EstadoPago = EstadosCuota.Pendiente
             };
-            datos.CuotasMembresia.Agregar(cuota);
+            datos.CuotasMembresia.Agregar(cuota);  // Deja el objeto listo para INSERT (se ejecuta en GuardarCambios).
             return cuota;
+        }
+
+        /* Devuelve la última cuota no anulada: su período es la cobertura real de la membresía, que no vence por sí misma. */
+        public static CuotaMembresia UltimaCuotaVigente(IEnumerable<CuotaMembresia> cuotas)
+        {
+            return cuotas == null
+                ? null
+                : cuotas.Where(c => c.EstadoPago != EstadosCuota.Anulada)
+                    .OrderByDescending(c => c.FechaHasta)
+                    .ThenByDescending(c => c.IdCuotaMembresia)
+                    .FirstOrDefault();
+        }
+
+        /* Fecha hasta la que la membresía tiene cuotas generadas, o null si todavía no tiene. */
+        public static DateTime? CubiertaHasta(IEnumerable<CuotaMembresia> cuotas)
+        {
+            var ultima = UltimaCuotaVigente(cuotas);
+            return ultima == null ? (DateTime?)null : ultima.FechaHasta.Date;
         }
 
         /* Calcula el último día del período mensual a partir de su fecha de inicio. */
         public static DateTime CalcularPeriodoHasta(DateTime periodoDesde)
         {
-            return periodoDesde.AddMonths(1).AddDays(-1);
+            return periodoDesde.AddMonths(1).AddDays(-1);  // Ej.: del 15/09 al 14/10. AddMonths ajusta solo los meses cortos.
         }
 
         /* Consulta cuotas de membresía con el estado solicitado para devolver los datos a la capa visual. */

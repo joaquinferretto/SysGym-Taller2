@@ -14,21 +14,28 @@ namespace exxen2._0.capaLogica
     }
 
     /* Coordina las operaciones y validaciones de negocio de pagos. */
+    // Pagos: registrar, anular y reembolsar. Cada pago se vincula a una cuota y actualiza su estado
+    // (Pendiente/Pagada) y la deuda de la membresía, todo en una transacción. La usa GestionPagosFormulario.
     public class PagoLogica
     {
         /* Valida el cobro y lo vincula a su cuota, actualizando la deuda en una misma transacción. */
         public Pago RegistrarPago(Pago pago, int idCuotaMembresia)
         {
             ValidarDatos(pago);
-            if (idCuotaMembresia <= 0)
+            if (pago.Estado == EstadosTransaccionPago.Anulado || pago.Estado == EstadosTransaccionPago.Reembolsado)
             {
-                throw new InvalidOperationException("La cuota es obligatoria.");
+                throw new InvalidOperationException("Un pago nuevo no puede registrarse como anulado o reembolsado.");
             }
 
-            using (var datos = new UnidadDeTrabajoGimnasio())
-            using (var transaccion = datos.IniciarTransaccion())
+            if (idCuotaMembresia <= 0)
             {
-                var cuota = datos.CuotasMembresia.Consultar("Pago").SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);
+                throw new InvalidOperationException("La cuota es obligatoria.");  // Regla incumplida: corta la operación y el formulario muestra este mensaje.
+            }
+
+            using (var datos = new UnidadDeTrabajoGimnasio())  // Abre la conexión; al salir del bloque se cierra sola, aunque haya error (try-with-resources).
+            using (var transaccion = datos.IniciarTransaccion())  // Transacción: si algo falla antes de Confirmar(), se deshace todo.
+            {
+                var cuota = datos.CuotasMembresia.Consultar("Pago").SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);  // Consulta con seguimiento: si se modifica el objeto, GuardarCambios hace el UPDATE.
                 if (cuota == null)
                 {
                     throw new InvalidOperationException("La cuota no existe.");
@@ -39,7 +46,7 @@ namespace exxen2._0.capaLogica
                     throw new InvalidOperationException("La cuota se encuentra anulada.");
                 }
 
-                if (cuota.IdRegistroPago.HasValue)
+                if (cuota.IdRegistroPago.HasValue)  // HasValue: ¿el valor opcional (int?, DateTime?) tiene dato?
                 {
                     throw new InvalidOperationException("La cuota ya está asociada a un pago.");
                 }
@@ -50,15 +57,15 @@ namespace exxen2._0.capaLogica
                     ValidarImporteAprobado(cuota, pago.Importe);
                 }
 
-                datos.Pagos.Agregar(pago);
-                datos.GuardarCambios();
-                cuota.IdRegistroPago = pago.IdRegistroPago;
+                datos.Pagos.Agregar(pago);  // Deja el objeto listo para INSERT (se ejecuta en GuardarCambios).
+                datos.GuardarCambios();  // EF envía a SQL los INSERT/UPDATE pendientes.
+                cuota.IdRegistroPago = pago.IdRegistroPago;  // Vincula el pago con la cuota (FK en CuotaMembresia).
                 cuota.Pago = pago;
                 CuotaMembresiaLogica.RecalcularEstadoPagoEnContexto(datos, cuota);
                 datos.GuardarCambios();
                 MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(datos, cuota.IdMembresia);
                 datos.GuardarCambios();
-                transaccion.Confirmar();
+                transaccion.Confirmar();  // Recién acá quedan grabados todos los cambios de la transacción.
                 return pago;
             }
         }
@@ -68,7 +75,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return datos.Pagos.ConsultarSoloLectura("MetodoPago", "Cuotas").SingleOrDefault(p => p.IdRegistroPago == idRegistroPago);
+                return datos.Pagos.ConsultarSoloLectura("MetodoPago", "Cuotas").SingleOrDefault(p => p.IdRegistroPago == idRegistroPago);  // Solo lectura: EF no vigila cambios (más liviano para listar).
             }
         }
 
@@ -77,7 +84,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return datos.CuotasMembresia.ConsultarSoloLectura("Pago").Where(c => c.IdCuotaMembresia == idCuotaMembresia && c.IdRegistroPago.HasValue && c.Pago != null).Select(c => c.Pago).ToList();
+                return datos.CuotasMembresia.ConsultarSoloLectura("Pago").Where(c => c.IdCuotaMembresia == idCuotaMembresia && c.IdRegistroPago.HasValue && c.Pago != null).Select(c => c.Pago).ToList();  // Acá se ejecuta la consulta en SQL y se trae la lista.
             }
         }
 
@@ -86,7 +93,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return datos.CuotasMembresia.ConsultarSoloLectura("Pago").Where(c => c.IdMembresia == idMembresia && c.IdRegistroPago.HasValue && c.Pago != null).Select(c => c.Pago).Distinct().OrderBy(p => p.Fecha).ThenBy(p => p.IdRegistroPago).ToList();
+                return datos.CuotasMembresia.ConsultarSoloLectura("Pago").Where(c => c.IdMembresia == idMembresia && c.IdRegistroPago.HasValue && c.Pago != null).Select(c => c.Pago).Distinct().OrderBy(p => p.Fecha).ThenBy(p => p.IdRegistroPago).ToList();  // Where = filtro (como filter de Streams / WHERE de SQL). "x => ..." es una lambda.
             }
         }
 
@@ -104,7 +111,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                var metodo = datos.MetodosPago.ConsultarSoloLectura().SingleOrDefault(m => m.IdMetodoPago == idMetodoPago);
+                var metodo = datos.MetodosPago.ConsultarSoloLectura().SingleOrDefault(m => m.IdMetodoPago == idMetodoPago);  // Devuelve el único que cumple o null.
                 if (metodo == null)
                     throw new InvalidOperationException("El método de pago no existe.");
 
@@ -121,7 +128,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return datos.CuotasMembresia.ConsultarSoloLectura().Where(c => c.IdCuotaMembresia == idCuotaMembresia && c.IdRegistroPago.HasValue && c.Pago.Estado == EstadosTransaccionPago.Aprobado).Select(c => (decimal? )c.Pago.Importe).SingleOrDefault() ?? 0m;
+                return datos.CuotasMembresia.ConsultarSoloLectura().Where(c => c.IdCuotaMembresia == idCuotaMembresia && c.IdRegistroPago.HasValue && c.Pago.Estado == EstadosTransaccionPago.Aprobado).Select(c => (decimal? )c.Pago.Importe).SingleOrDefault() ?? 0m;  // Select = transforma cada elemento (como map de Streams).
             }
         }
 
@@ -151,7 +158,7 @@ namespace exxen2._0.capaLogica
             using (var datos = new UnidadDeTrabajoGimnasio())
             using (var transaccion = datos.IniciarTransaccion())
             {
-                var pago = datos.Pagos.Buscar(idRegistroPago);
+                var pago = datos.Pagos.Buscar(idRegistroPago);  // Busca por clave primaria; si no existe devuelve null.
                 if (pago == null)
                 {
                     throw new InvalidOperationException("El pago no existe.");
@@ -175,7 +182,7 @@ namespace exxen2._0.capaLogica
 
                 if (nuevoEstado == EstadosTransaccionPago.Aprobado)
                 {
-                    foreach (var cuota in cuotas)
+                    foreach (var cuota in cuotas)  // Recorre cada elemento (como el for-each de Java).
                     {
                         ValidarImporteAprobado(cuota, pago.Importe);
                     }
@@ -272,7 +279,7 @@ namespace exxen2._0.capaLogica
         {
             if (pago == null)
             {
-                throw new ArgumentNullException("pago");
+                throw new ArgumentNullException("pago");  // Se recibió null donde no corresponde.
             }
 
             if (pago.Importe <= 0)
@@ -316,7 +323,7 @@ namespace exxen2._0.capaLogica
         {
             var metodos = datos.MetodosPago.ConsultarSoloLectura()
                 .Where(m => m.Estado)
-                .OrderBy(m => m.IdMetodoPago)
+                .OrderBy(m => m.IdMetodoPago)  // Ordena (ORDER BY).
                 .ToList()
                 .Where(EsMetodoPagoEstructuralmenteValido)
                 .ToList();
@@ -356,7 +363,7 @@ namespace exxen2._0.capaLogica
                 throw new InvalidOperationException("El importe debe ser mayor que cero.");
             }
 
-            if (importe > cuota.Importe)
+            if (importe > cuota.Importe)  // No se puede cobrar más de lo que vale la cuota.
             {
                 throw new InvalidOperationException("El pago supera el importe de la cuota.");
             }

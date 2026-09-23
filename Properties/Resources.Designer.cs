@@ -67,5 +67,29 @@ namespace exxen2._0.Properties
                 resourceCulture = value;
             }
         }
+
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Icon similar a (Icono).
+        /// </summary>
+        internal static System.Drawing.Icon SysGym
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("SysGym", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SysGymLogo
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("SysGymLogo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

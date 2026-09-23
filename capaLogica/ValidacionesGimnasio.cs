@@ -5,6 +5,8 @@ using exxen2._0.capaDatos.Entidades;
 namespace exxen2._0.capaLogica
 {
     /* Centraliza las comprobaciones de roles activos para los casos de uso del gimnasio. */
+    // Validaciones reutilizables (nombre, DNI, edad, días de rutina) y controles de rol.
+    // static class: no se crea con new, se usa directo: ValidacionesGimnasio.ValidarDni(...).
     public static class ValidacionesGimnasio
     {
         public const int LongitudMaximaNombrePersona = 100;
@@ -16,10 +18,10 @@ namespace exxen2._0.capaLogica
         public static void ValidarNombre(string valor, string campo)
         {
             if (string.IsNullOrWhiteSpace(valor))
-                throw new InvalidOperationException("El " + campo + " es obligatorio.");
+                throw new InvalidOperationException("El " + campo + " es obligatorio.");  // Regla incumplida: corta la operación y el formulario muestra este mensaje.
             if (valor.Trim().Length > LongitudMaximaNombrePersona)
                 throw new InvalidOperationException("El " + campo + " no puede superar " + LongitudMaximaNombrePersona + " caracteres.");
-            if (!valor.Any(char.IsLetter) || valor.Any(caracter => !char.IsLetter(caracter) && caracter != ' ' && caracter != '\'' && caracter != '-'))
+            if (!valor.Any(char.IsLetter) || valor.Any(caracter => !char.IsLetter(caracter) && caracter != ' ' && caracter != '\'' && caracter != '-'))  // ¿Existe al menos uno? (no trae filas).
                 throw new InvalidOperationException("El " + campo + " contiene caracteres no válidos.");
         }
 
@@ -58,7 +60,7 @@ namespace exxen2._0.capaLogica
         /* Valida que la fecha exista, no sea futura y cumpla la edad minima solicitada. */
         public static void ValidarEdadMinima(DateTime? fechaNacimiento, int edadMinima, string mensajeEdad)
         {
-            if (!fechaNacimiento.HasValue)
+            if (!fechaNacimiento.HasValue)  // HasValue: ¿el valor opcional (int?, DateTime?) tiene dato?
                 throw new InvalidOperationException("La fecha de nacimiento es obligatoria.");
             if (fechaNacimiento.Value.Date > DateTime.Today)
                 throw new InvalidOperationException("La fecha de nacimiento no puede ser futura.");

@@ -7,7 +7,14 @@ namespace exxen2._0.capaVisual.Administrador
     partial class PanelAdministrador
     {
         private IContainer components = null;
-        private Panel panelEncabezado; private Label lblMarca; private Label lblUsuarioRol; private Label lblModuloActual; private Button btnCambiarCuenta; private Panel panelMenu; private Panel panelOpciones; private Button btnSalir; private Panel panelContenido;
+        private Panel panelEncabezado; private PictureBox picLogo;
+        private PictureBox picUsuario;
+        private Label lblUsuario;
+        private Label lblRol;
+        private Label lblDniTitulo;
+        private Label lblDni;
+        private Label lblSexoTitulo;
+        private Label lblSexo; private Label lblModuloActual; private Button btnCambiarCuenta; private Panel panelMenu; private Panel panelOpciones; private Button btnSalir; private Panel panelContenido;
         private Label lblAdministracion; private Label lblOperacion; private Label lblRutinas; private Label lblConsultas; private Button btnUsuarios; private Button btnSocios; private Button btnPlanes; private Button btnMembresias; private Button btnPagos; private Button btnAsignaciones; private Button btnEjercicios; private Button btnRutinas; private Button btnMisSocios; private Button btnReportes;
 
         private Label lblSubtituloModulo;
@@ -21,8 +28,14 @@ namespace exxen2._0.capaVisual.Administrador
             this.btnVolver = new System.Windows.Forms.Button();
             this.btnVolver.UseVisualStyleBackColor = false;
             this.panelEncabezado = new System.Windows.Forms.Panel();
-            this.lblUsuarioRol = new System.Windows.Forms.Label();
-            this.lblMarca = new System.Windows.Forms.Label();
+            this.picUsuario = new System.Windows.Forms.PictureBox();
+            this.lblUsuario = new System.Windows.Forms.Label();
+            this.lblRol = new System.Windows.Forms.Label();
+            this.lblDniTitulo = new System.Windows.Forms.Label();
+            this.lblDni = new System.Windows.Forms.Label();
+            this.lblSexoTitulo = new System.Windows.Forms.Label();
+            this.lblSexo = new System.Windows.Forms.Label();
+            this.picLogo = new System.Windows.Forms.PictureBox();
             this.lblModuloActual = new System.Windows.Forms.Label();
             this.btnCambiarCuenta = new System.Windows.Forms.Button();
             this.panelMenu = new System.Windows.Forms.Panel();
@@ -42,122 +55,29 @@ namespace exxen2._0.capaVisual.Administrador
             this.lblConsultas = new System.Windows.Forms.Label();
             this.btnReportes = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
-            this.btnSalir.FlatAppearance.BorderSize = 0;
             this.panelContenido = new System.Windows.Forms.Panel();
             this.inicioPanel = new exxen2._0.capaVisual.Administrador.InicioPanelAdministrador();
             this.panelEncabezado.SuspendLayout();
             this.panelMenu.SuspendLayout();
             this.panelOpciones.SuspendLayout();
             this.panelContenido.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picUsuario)).BeginInit();
             this.SuspendLayout();
-            //
-            // panelEncabezado
-            //
-            this.panelEncabezado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
-            this.panelEncabezado.Controls.Add(this.lblMarca);
-            this.panelEncabezado.Controls.Add(this.lblUsuarioRol);
-            this.panelEncabezado.Controls.Add(this.lblModuloActual);
-            this.panelEncabezado.Controls.Add(this.lblSubtituloModulo);
-            this.panelEncabezado.Controls.Add(this.btnVolver);
-            this.panelEncabezado.Controls.Add(this.btnCambiarCuenta);
-            this.panelEncabezado.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelEncabezado.Location = new System.Drawing.Point(0, 0);
-            this.panelEncabezado.Name = "panelEncabezado";
-            this.panelEncabezado.Padding = new System.Windows.Forms.Padding(24, 8, 24, 8);
-            this.panelEncabezado.Size = new System.Drawing.Size(1282, 90);
-            this.panelEncabezado.TabIndex = 2;
-            //
-            // lblUsuarioRol
-            //
-            this.lblUsuarioRol.Dock = System.Windows.Forms.DockStyle.None;
-            this.lblUsuarioRol.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(231)))), ((int)(((byte)(255)))));
-            this.lblUsuarioRol.Location = new System.Drawing.Point(24, 60);
-            this.lblUsuarioRol.Margin = new System.Windows.Forms.Padding(0);
-            this.lblUsuarioRol.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.lblUsuarioRol.AutoSize = false;
-            this.lblUsuarioRol.Name = "lblUsuarioRol";
-            this.lblUsuarioRol.Size = new System.Drawing.Size(1234, 26);
-            this.lblUsuarioRol.TabIndex = 1;
-            this.lblUsuarioRol.Text = "Usuario: Administrador de diseno    |    Rol: Administrador";
-            //
-            // lblMarca
-            //
-            this.lblMarca.Dock = System.Windows.Forms.DockStyle.None;
-            this.lblMarca.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
-            this.lblMarca.ForeColor = System.Drawing.Color.White;
-            this.lblMarca.Location = new System.Drawing.Point(24, 8);
-            this.lblMarca.Margin = new System.Windows.Forms.Padding(0);
-            this.lblMarca.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
-            this.lblMarca.Name = "lblMarca";
-            this.lblMarca.Size = new System.Drawing.Size(220, 38);
-            this.lblMarca.TabIndex = 0;
-            this.lblMarca.Text = "SYSGYM";
-            this.lblMarca.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            //
-            // lblModuloActual
-            //
-            this.lblModuloActual.AutoEllipsis = false;
-            this.lblModuloActual.Dock = System.Windows.Forms.DockStyle.None;
-            this.lblModuloActual.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
-            this.lblModuloActual.ForeColor = System.Drawing.Color.White;
-            this.lblModuloActual.Location = new System.Drawing.Point(310, 8);
-            this.lblModuloActual.Margin = new System.Windows.Forms.Padding(12, 0, 12, 0);
-            this.lblModuloActual.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.lblModuloActual.Text = "Resumen general";
-            this.lblModuloActual.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblModuloActual.Name = "lblModuloActual";
-            this.lblModuloActual.Padding = new System.Windows.Forms.Padding(0);
-            this.lblModuloActual.Size = new System.Drawing.Size(662, 27);
-            this.lblModuloActual.TabIndex = 4;
-            //
-            // btnCambiarCuenta
-            //
-            this.btnCambiarCuenta.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            this.btnCambiarCuenta.BackColor = System.Drawing.Color.White;
-            this.btnCambiarCuenta.FlatAppearance.BorderSize = 0;
-            this.btnCambiarCuenta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCambiarCuenta.ForeColor = System.Drawing.Color.FromArgb(72, 66, 217);
-            this.btnCambiarCuenta.Location = new System.Drawing.Point(1090, 12);
-            this.btnCambiarCuenta.Margin = new System.Windows.Forms.Padding(16, 0, 0, 0);
-            this.btnCambiarCuenta.Dock = System.Windows.Forms.DockStyle.None;
-            this.btnCambiarCuenta.Name = "btnCambiarCuenta";
-            this.btnCambiarCuenta.Size = new System.Drawing.Size(168, 36);
-            this.btnCambiarCuenta.TabIndex = 2;
-            this.btnCambiarCuenta.Text = "Cambiar de cuenta";
-            this.btnCambiarCuenta.UseVisualStyleBackColor = false;
-            this.btnCambiarCuenta.Click += new System.EventHandler(this.btnCambiarCuenta_Click);
-            this.lblSubtituloModulo.Name = "lblSubtituloModulo";
-            this.lblSubtituloModulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblSubtituloModulo.Location = new System.Drawing.Point(310, 35);
-            this.lblSubtituloModulo.Size = new System.Drawing.Size(662, 24);
-            this.lblSubtituloModulo.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            this.lblSubtituloModulo.ForeColor = System.Drawing.Color.White;
-            this.lblSubtituloModulo.TabIndex = 5;
-            this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Text = "Volver";
-            this.btnVolver.Location = new System.Drawing.Point(978, 12);
-            this.btnVolver.Size = new System.Drawing.Size(100, 36);
-            this.btnVolver.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            this.btnVolver.BackColor = System.Drawing.Color.White;
-            this.btnVolver.ForeColor = System.Drawing.Color.FromArgb(72, 66, 217);
-            this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnVolver.FlatAppearance.BorderSize = 0;
-            this.btnVolver.Enabled = false;
-            this.btnVolver.TabIndex = 1;
-            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             //
             // panelMenu
             //
-            this.panelMenu.BackColor = System.Drawing.Color.White;
+            this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
             this.panelMenu.Controls.Add(this.panelOpciones);
+            this.panelMenu.Controls.Add(this.picLogo);
             this.panelMenu.Controls.Add(this.btnSalir);
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panelMenu.Location = new System.Drawing.Point(0, 90);
+            this.panelMenu.Location = new System.Drawing.Point(0, 0);
             this.panelMenu.MinimumSize = new System.Drawing.Size(264, 0);
-            this.panelMenu.Padding = new System.Windows.Forms.Padding(0, 0, 0, 12);
             this.panelMenu.Name = "panelMenu";
-            this.panelMenu.Size = new System.Drawing.Size(274, 659);
-            this.panelMenu.TabIndex = 1;
+            this.panelMenu.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
+            this.panelMenu.Size = new System.Drawing.Size(274, 749);
+            this.panelMenu.TabIndex = 0;
             //
             // panelOpciones
             //
@@ -177,12 +97,12 @@ namespace exxen2._0.capaVisual.Administrador
             this.panelOpciones.Controls.Add(this.btnMisSocios);
             this.panelOpciones.Controls.Add(this.lblConsultas);
             this.panelOpciones.Controls.Add(this.btnReportes);
-            this.panelOpciones.Location = new System.Drawing.Point(0, 0);
+            this.panelOpciones.Location = new System.Drawing.Point(0, 96);
             this.panelOpciones.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelOpciones.Name = "panelOpciones";
             this.panelOpciones.Padding = new System.Windows.Forms.Padding(14, 10, 14, 10);
-            this.panelOpciones.Size = new System.Drawing.Size(274, 579);
-            this.panelOpciones.TabIndex = 0;
+            this.panelOpciones.Size = new System.Drawing.Size(273, 607);
+            this.panelOpciones.TabIndex = 1;
             //
             // lblAdministracion
             //
@@ -422,33 +342,200 @@ namespace exxen2._0.capaVisual.Administrador
             this.btnReportes.Visible = false;
             this.btnReportes.Click += new System.EventHandler(this.btnReportes_Click);
             //
+            // picLogo
+            //
+            this.picLogo.BackColor = System.Drawing.Color.White;
+            this.picLogo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.picLogo.Image = global::exxen2._0.Properties.Resources.SysGymLogo;
+            this.picLogo.Location = new System.Drawing.Point(0, 0);
+            this.picLogo.Name = "picLogo";
+            this.picLogo.Padding = new System.Windows.Forms.Padding(18, 12, 18, 12);
+            this.picLogo.Size = new System.Drawing.Size(273, 96);
+            this.picLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picLogo.TabIndex = 0;
+            this.picLogo.TabStop = false;
+            //
             // btnSalir
             //
-            this.btnSalir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSalir.BackColor = System.Drawing.Color.FromArgb(255, 240, 240);
-            this.btnSalir.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(202)))), ((int)(((byte)(202)))));
-            this.btnSalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSalir.ForeColor = System.Drawing.Color.FromArgb(173, 36, 36);
-            this.btnSalir.Location = new System.Drawing.Point(14, 16);
+            this.btnSalir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.btnSalir.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnSalir.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(202)))), ((int)(((byte)(202)))));
+            this.btnSalir.FlatAppearance.BorderSize = 0;
+            this.btnSalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSalir.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(173)))), ((int)(((byte)(36)))), ((int)(((byte)(36)))));
+            this.btnSalir.Location = new System.Drawing.Point(0, 703);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.btnSalir.Size = new System.Drawing.Size(246, 46);
-            this.btnSalir.TabIndex = 0;
+            this.btnSalir.Size = new System.Drawing.Size(273, 46);
+            this.btnSalir.TabIndex = 2;
             this.btnSalir.Text = "Salir";
             this.btnSalir.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSalir.UseVisualStyleBackColor = false;
             this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             //
+            // panelEncabezado
+            //
+            this.panelEncabezado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
+            this.panelEncabezado.Controls.Add(this.picUsuario);
+            this.panelEncabezado.Controls.Add(this.lblUsuario);
+            this.panelEncabezado.Controls.Add(this.lblRol);
+            this.panelEncabezado.Controls.Add(this.lblDniTitulo);
+            this.panelEncabezado.Controls.Add(this.lblDni);
+            this.panelEncabezado.Controls.Add(this.lblSexoTitulo);
+            this.panelEncabezado.Controls.Add(this.lblSexo);
+            this.panelEncabezado.Controls.Add(this.lblModuloActual);
+            this.panelEncabezado.Controls.Add(this.lblSubtituloModulo);
+            this.panelEncabezado.Controls.Add(this.btnVolver);
+            this.panelEncabezado.Controls.Add(this.btnCambiarCuenta);
+            this.panelEncabezado.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelEncabezado.Location = new System.Drawing.Point(274, 0);
+            this.panelEncabezado.Name = "panelEncabezado";
+            this.panelEncabezado.Size = new System.Drawing.Size(1008, 96);
+            this.panelEncabezado.TabIndex = 1;
+            //
+            // picUsuario
+            //
+            this.picUsuario.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(231)))), ((int)(((byte)(255)))));
+            this.picUsuario.Location = new System.Drawing.Point(16, 16);
+            this.picUsuario.Name = "picUsuario";
+            this.picUsuario.Size = new System.Drawing.Size(64, 64);
+            this.picUsuario.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picUsuario.TabIndex = 0;
+            this.picUsuario.TabStop = false;
+            //
+            // lblUsuario
+            //
+            this.lblUsuario.AutoEllipsis = true;
+            this.lblUsuario.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
+            this.lblUsuario.ForeColor = System.Drawing.Color.White;
+            this.lblUsuario.Location = new System.Drawing.Point(92, 18);
+            this.lblUsuario.Name = "lblUsuario";
+            this.lblUsuario.Size = new System.Drawing.Size(200, 26);
+            this.lblUsuario.TabIndex = 1;
+            this.lblUsuario.Text = "Administrador de diseno";
+            this.lblUsuario.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // lblRol
+            //
+            this.lblRol.AutoEllipsis = true;
+            this.lblRol.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.lblRol.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(231)))), ((int)(((byte)(255)))));
+            this.lblRol.Location = new System.Drawing.Point(92, 46);
+            this.lblRol.Name = "lblRol";
+            this.lblRol.Size = new System.Drawing.Size(200, 22);
+            this.lblRol.TabIndex = 2;
+            this.lblRol.Text = "Administrador";
+            this.lblRol.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // lblDniTitulo
+            //
+            this.lblDniTitulo.Font = new System.Drawing.Font("Segoe UI", 8.5F);
+            this.lblDniTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(210)))), ((int)(((byte)(254)))));
+            this.lblDniTitulo.Location = new System.Drawing.Point(308, 20);
+            this.lblDniTitulo.Name = "lblDniTitulo";
+            this.lblDniTitulo.Size = new System.Drawing.Size(110, 18);
+            this.lblDniTitulo.TabIndex = 3;
+            this.lblDniTitulo.Text = "DNI";
+            //
+            // lblDni
+            //
+            this.lblDni.AutoEllipsis = true;
+            this.lblDni.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
+            this.lblDni.ForeColor = System.Drawing.Color.White;
+            this.lblDni.Location = new System.Drawing.Point(308, 40);
+            this.lblDni.Name = "lblDni";
+            this.lblDni.Size = new System.Drawing.Size(110, 24);
+            this.lblDni.TabIndex = 4;
+            this.lblDni.Text = "-";
+            //
+            // lblSexoTitulo
+            //
+            this.lblSexoTitulo.Font = new System.Drawing.Font("Segoe UI", 8.5F);
+            this.lblSexoTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(210)))), ((int)(((byte)(254)))));
+            this.lblSexoTitulo.Location = new System.Drawing.Point(428, 20);
+            this.lblSexoTitulo.Name = "lblSexoTitulo";
+            this.lblSexoTitulo.Size = new System.Drawing.Size(110, 18);
+            this.lblSexoTitulo.TabIndex = 5;
+            this.lblSexoTitulo.Text = "Sexo";
+            //
+            // lblSexo
+            //
+            this.lblSexo.AutoEllipsis = true;
+            this.lblSexo.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
+            this.lblSexo.ForeColor = System.Drawing.Color.White;
+            this.lblSexo.Location = new System.Drawing.Point(428, 40);
+            this.lblSexo.Name = "lblSexo";
+            this.lblSexo.Size = new System.Drawing.Size(110, 24);
+            this.lblSexo.TabIndex = 6;
+            this.lblSexo.Text = "-";
+            //
+            // lblModuloActual
+            //
+            this.lblModuloActual.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblModuloActual.AutoEllipsis = true;
+            this.lblModuloActual.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold);
+            this.lblModuloActual.ForeColor = System.Drawing.Color.White;
+            this.lblModuloActual.Location = new System.Drawing.Point(556, 16);
+            this.lblModuloActual.Name = "lblModuloActual";
+            this.lblModuloActual.Size = new System.Drawing.Size(252, 32);
+            this.lblModuloActual.TabIndex = 7;
+            this.lblModuloActual.Text = "Inicio";
+            this.lblModuloActual.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // lblSubtituloModulo
+            //
+            this.lblSubtituloModulo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblSubtituloModulo.AutoEllipsis = true;
+            this.lblSubtituloModulo.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.lblSubtituloModulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(231)))), ((int)(((byte)(255)))));
+            this.lblSubtituloModulo.Location = new System.Drawing.Point(556, 50);
+            this.lblSubtituloModulo.Name = "lblSubtituloModulo";
+            this.lblSubtituloModulo.Size = new System.Drawing.Size(252, 24);
+            this.lblSubtituloModulo.TabIndex = 8;
+            this.lblSubtituloModulo.Text = "Resumen general";
+            this.lblSubtituloModulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            //
+            // btnVolver
+            //
+            this.btnVolver.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnVolver.BackColor = System.Drawing.Color.White;
+            this.btnVolver.Enabled = false;
+            this.btnVolver.FlatAppearance.BorderSize = 0;
+            this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnVolver.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(66)))), ((int)(((byte)(217)))));
+            this.btnVolver.Location = new System.Drawing.Point(824, 10);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(168, 36);
+            this.btnVolver.TabIndex = 9;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = false;
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
+            //
+            // btnCambiarCuenta
+            //
+            this.btnCambiarCuenta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCambiarCuenta.BackColor = System.Drawing.Color.White;
+            this.btnCambiarCuenta.FlatAppearance.BorderSize = 0;
+            this.btnCambiarCuenta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCambiarCuenta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(66)))), ((int)(((byte)(217)))));
+            this.btnCambiarCuenta.Location = new System.Drawing.Point(824, 52);
+            this.btnCambiarCuenta.Name = "btnCambiarCuenta";
+            this.btnCambiarCuenta.Size = new System.Drawing.Size(168, 36);
+            this.btnCambiarCuenta.TabIndex = 10;
+            this.btnCambiarCuenta.Text = "Cambiar de cuenta";
+            this.btnCambiarCuenta.UseVisualStyleBackColor = false;
+            this.btnCambiarCuenta.Click += new System.EventHandler(this.btnCambiarCuenta_Click);
+            //
             // panelContenido
             //
-            this.panelContenido.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.panelContenido.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
             this.panelContenido.Controls.Add(this.inicioPanel);
             this.panelContenido.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelContenido.Location = new System.Drawing.Point(274, 90);
+            this.panelContenido.Location = new System.Drawing.Point(274, 96);
             this.panelContenido.Name = "panelContenido";
-            this.panelContenido.Size = new System.Drawing.Size(1008, 659);
+            this.panelContenido.Size = new System.Drawing.Size(1008, 653);
             this.panelContenido.TabIndex = 0;
             //
             // inicioPanel
@@ -459,7 +546,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.inicioPanel.Location = new System.Drawing.Point(0, 0);
             this.inicioPanel.MinimumSize = new System.Drawing.Size(640, 460);
             this.inicioPanel.Name = "inicioPanel";
-            this.inicioPanel.Size = new System.Drawing.Size(1008, 659);
+            this.inicioPanel.Size = new System.Drawing.Size(1008, 653);
             this.inicioPanel.TabIndex = 0;
             //
             // PanelAdministrador
@@ -469,8 +556,8 @@ namespace exxen2._0.capaVisual.Administrador
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
             this.ClientSize = new System.Drawing.Size(1282, 749);
             this.Controls.Add(this.panelContenido);
-            this.Controls.Add(this.panelMenu);
             this.Controls.Add(this.panelEncabezado);
+            this.Controls.Add(this.panelMenu);
             this.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.MinimumSize = new System.Drawing.Size(1100, 700);
             this.Name = "PanelAdministrador";
@@ -481,6 +568,8 @@ namespace exxen2._0.capaVisual.Administrador
             this.panelEncabezado.ResumeLayout(false);
             this.panelMenu.ResumeLayout(false);
             this.panelOpciones.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picUsuario)).EndInit();
             this.panelContenido.ResumeLayout(false);
             this.ResumeLayout(false);
 

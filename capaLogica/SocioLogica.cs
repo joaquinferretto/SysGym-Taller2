@@ -7,6 +7,8 @@ using exxen2._0.capaDatos.Repositorios;
 namespace exxen2._0.capaLogica
 {
     /* Coordina las operaciones y validaciones de negocio de socios. */
+    // Reglas de los socios: DNI único, datos válidos, foto guardada como archivo e IMC.
+    // La usan GestionSociosFormulario y ReportesFormulario.
     public class SocioLogica
     {
         /* Valida y registra socios mediante la unidad de trabajo, conservando sus reglas de alta. */
@@ -22,17 +24,17 @@ namespace exxen2._0.capaLogica
             var rutaNueva = (string)null;
             try
             {
-                using (var datos = new UnidadDeTrabajoGimnasio())
+                using (var datos = new UnidadDeTrabajoGimnasio())  // Abre la conexión; al salir del bloque se cierra sola, aunque haya error (try-with-resources).
                 {
-                    if (datos.Socios.Any(s => s.DNI == socio.DNI))
-                        throw new InvalidOperationException("El DNI ya está registrado.");
+                    if (datos.Socios.Any(s => s.DNI == socio.DNI))  // ¿Existe al menos uno? (no trae filas).
+                        throw new InvalidOperationException("El DNI ya está registrado.");  // Regla incumplida: corta la operación y el formulario muestra este mensaje.
 
                     if (fotoContenido != null)
                         rutaNueva = AlmacenamientoImagenes.GuardarSocio(fotoContenido);
-                    socio.FotoRuta = rutaNueva ?? NormalizarRuta(socio.FotoRuta);
+                    socio.FotoRuta = rutaNueva ?? NormalizarRuta(socio.FotoRuta);  // ??: si lo de la izquierda es null, usa lo de la derecha.
                     socio.Estado = true;
-                    datos.Socios.Agregar(socio);
-                    datos.GuardarCambios();
+                    datos.Socios.Agregar(socio);  // Deja el objeto listo para INSERT (se ejecuta en GuardarCambios).
+                    datos.GuardarCambios();  // EF envía a SQL los INSERT/UPDATE pendientes.
                     return socio;
                 }
             }
@@ -60,7 +62,7 @@ namespace exxen2._0.capaLogica
             {
                 using (var datos = new UnidadDeTrabajoGimnasio())
                 {
-                    var existente = datos.Socios.Buscar(socio.IdSocio);
+                    var existente = datos.Socios.Buscar(socio.IdSocio);  // Busca por clave primaria; si no existe devuelve null.
                     if (existente == null)
                         throw new InvalidOperationException("El socio no existe.");
 
@@ -102,7 +104,7 @@ namespace exxen2._0.capaLogica
             {
                 MembresiaLogica.ActualizarEstadosPorDeudaEnContexto(datos);
                 datos.GuardarCambios();
-                return datos.Socios.ConsultarSoloLectura("Membresias").SingleOrDefault(s => s.IdSocio == idSocio);
+                return datos.Socios.ConsultarSoloLectura("Membresias").SingleOrDefault(s => s.IdSocio == idSocio);  // Solo lectura: EF no vigila cambios (más liviano para listar).
             }
         }
 
@@ -113,7 +115,7 @@ namespace exxen2._0.capaLogica
             {
                 MembresiaLogica.ActualizarEstadosPorDeudaEnContexto(datos);
                 datos.GuardarCambios();
-                return datos.Socios.ConsultarSoloLectura().SingleOrDefault(s => s.DNI == dni);
+                return datos.Socios.ConsultarSoloLectura().SingleOrDefault(s => s.DNI == dni);  // Devuelve el único que cumple o null.
             }
         }
 
@@ -124,7 +126,7 @@ namespace exxen2._0.capaLogica
             {
                 MembresiaLogica.ActualizarEstadosPorDeudaEnContexto(datos);
                 datos.GuardarCambios();
-                return ListarSinFotos(datos.Socios.ConsultarSoloLectura().Where(s => s.Estado).OrderBy(s => s.Apellido).ThenBy(s => s.Nombre));
+                return ListarSinFotos(datos.Socios.ConsultarSoloLectura().Where(s => s.Estado).OrderBy(s => s.Apellido).ThenBy(s => s.Nombre));  // Where = filtro (como filter de Streams / WHERE de SQL). "x => ..." es una lambda.
             }
         }
 
@@ -135,18 +137,18 @@ namespace exxen2._0.capaLogica
             {
                 MembresiaLogica.ActualizarEstadosPorDeudaEnContexto(datos);
                 datos.GuardarCambios();
-                return ListarSinFotos(datos.Socios.ConsultarSoloLectura().OrderByDescending(s => s.Estado).ThenBy(s => s.Apellido).ThenBy(s => s.Nombre));
+                return ListarSinFotos(datos.Socios.ConsultarSoloLectura().OrderByDescending(s => s.Estado).ThenBy(s => s.Apellido).ThenBy(s => s.Nombre));  // Ordena (ORDER BY).
             }
         }
 
         /* Proyecta solo datos del listado en SQL, sin transferir los binarios de las fotos. */
         private static List<Socio> ListarSinFotos(IQueryable<Socio> consulta)
         {
-            return consulta.Select(s => new
+            return consulta.Select(s => new  // Select = transforma cada elemento (como map de Streams).
             {
                 s.IdSocio, s.DNI, s.Nombre, s.Apellido, s.FechaNacimiento,
                 s.Peso, s.Altura, s.Estado, s.Sexo
-            }).ToList().Select(s => new Socio
+            }).ToList().Select(s => new Socio  // Acá se ejecuta la consulta en SQL y se trae la lista.
             {
                 IdSocio = s.IdSocio, DNI = s.DNI, Nombre = s.Nombre, Apellido = s.Apellido,
                 FechaNacimiento = s.FechaNacimiento, Peso = s.Peso, Altura = s.Altura,
@@ -154,20 +156,53 @@ namespace exxen2._0.capaLogica
             }).ToList();
         }
 
-        /* Desactiva el registro de socios sin eliminar su historial. */
+        /* Baja lógica del socio: queda inactivo junto con su membresía activa; no se borran cuotas, pagos ni rutinas. */
+        public void DarDeBaja(int idSocio)
+        {
+            using (var datos = new UnidadDeTrabajoGimnasio())
+            using (var transaccion = datos.IniciarTransaccion())
+            {
+                var socio = datos.Socios.Buscar(idSocio);
+                if (socio == null)
+                    throw new InvalidOperationException("El socio no existe.");
+                if (!socio.Estado)
+                    throw new InvalidOperationException("El socio ya está dado de baja.");
 
-        /* Recupera el estado activo del registro de socios según las validaciones de la operación. */
+                socio.Estado = false;
+                // Un socio inactivo no puede conservar una membresía activa.
+                foreach (var membresia in datos.Membresias.Where(m => m.IdSocio == idSocio && m.Estado).ToList())
+                    membresia.Estado = false;
+                datos.GuardarCambios();
+                transaccion.Confirmar();
+            }
+        }
+
+        /* Reactiva al socio; su membresía se reactiva aparte desde Membresías, donde se controla la deuda. */
+        public void Reactivar(int idSocio)
+        {
+            using (var datos = new UnidadDeTrabajoGimnasio())
+            {
+                var socio = datos.Socios.Buscar(idSocio);
+                if (socio == null)
+                    throw new InvalidOperationException("El socio no existe.");
+                if (socio.Estado)
+                    throw new InvalidOperationException("El socio ya está activo.");
+
+                socio.Estado = true;
+                datos.GuardarCambios();
+            }
+        }
 
         /* Calcula el índice a partir del peso y la altura registrados, validando los datos requeridos. */
         public decimal CalcularIMC(Socio socio)
         {
-            if (socio == null || !socio.Peso.HasValue || !socio.Altura.HasValue || socio.Peso.Value <= 0 || socio.Altura.Value <= 0)
+            if (socio == null || !socio.Peso.HasValue || !socio.Altura.HasValue || socio.Peso.Value <= 0 || socio.Altura.Value <= 0)  // HasValue: ¿el valor opcional (int?, DateTime?) tiene dato?
             {
                 throw new InvalidOperationException("Peso y altura positivos son necesarios para calcular el IMC.");
             }
 
             ValidarAlturaFraccionaria(socio.Altura);
-            return Math.Round(socio.Peso.Value / (socio.Altura.Value * socio.Altura.Value), 2);
+            return Math.Round(socio.Peso.Value / (socio.Altura.Value * socio.Altura.Value), 2);  // IMC = peso (kg) / altura (m) al cuadrado, redondeado a 2 decimales.
         }
 
         /* Calcula el índice a partir del peso y la altura registrados, validando los datos requeridos. */
@@ -182,7 +217,7 @@ namespace exxen2._0.capaLogica
         {
             if (socio == null)
             {
-                throw new ArgumentNullException("socio");
+                throw new ArgumentNullException("socio");  // Se recibió null donde no corresponde.
             }
 
             ValidacionesGimnasio.ValidarDni(socio.DNI);

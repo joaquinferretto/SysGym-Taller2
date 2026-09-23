@@ -92,7 +92,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             txtSocio.Text = item.NombreSocio;
             txtDni.Text = item.DNI;
             txtPlan.Text = item.NombrePlan;
-            txtVencimiento.Text = item.FechaVencimiento.ToString("dd/MM/yyyy");
+            txtVencimiento.Text = item.CuotaHasta.HasValue ? item.CuotaHasta.Value.ToString("dd/MM/yyyy") : "Sin cuotas";
             txtEstadoMembresia.Text = item.EstadoMembresia ? "Vigente" : "Inactiva";
             txtEntrenadorActual.Text = item.NombreEntrenador;
             if (item.Asignado && entrenador.Items.Count > 0) entrenador.SelectedValue = item.IdEntrenador; else entrenador.SelectedIndex = -1;

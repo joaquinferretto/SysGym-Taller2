@@ -39,10 +39,6 @@ namespace exxen2._0.capaVisual.Entrenador
         public MisSociosFormulario(UsuarioSistema usuario, bool modoAdministrador) : this(usuario)
         {
             this.modoAdministrador = modoAdministrador;
-            if (modoAdministrador)
-            {
-                Text = "SysGym | Socios y rutinas";
-            }
         }
 
         private void Cargar(int? idSocioMantener = null)
@@ -87,14 +83,14 @@ namespace exxen2._0.capaVisual.Entrenador
                     socio.DNI,
                     socio.NombrePlan,
                     string.IsNullOrWhiteSpace(socio.NombreRutina) ? "Sin rutina" : socio.NombreRutina,
-                    socio.FechaVencimiento.ToString("dd/MM/yyyy"),
+                    socio.CuotaHasta.HasValue ? socio.CuotaHasta.Value.ToString("dd/MM/yyyy") : "-",
                     socio.TieneRutina ? "Con rutina" : "Sin rutina");
             }
             tabla.ClearSelection();
             cargandoTabla = false;
             MostrarFichaVacia();
             if (idSocioMantener.HasValue) SeleccionarFila(idSocioMantener.Value);
-            lblEstado.Text = tabla.Rows.Count + " socio(s) encontrado(s)";
+            lblEstado.Text = tabla.Rows.Count + (modoAdministrador ? " socio(s) encontrado(s)" : " alumno(s) encontrado(s)");
         }
 
         private void SeleccionarFila(int idSocio)
@@ -103,8 +99,10 @@ namespace exxen2._0.capaVisual.Entrenador
             {
                 if (fila.Cells[0].Value != null && Convert.ToInt32(fila.Cells[0].Value) == idSocio)
                 {
-                    fila.Selected = true;
+                    // Al seleccionar por código, SelectionChanged llega antes de actualizar CurrentRow: se carga la ficha explícitamente.
                     tabla.CurrentCell = fila.Cells[2];
+                    fila.Selected = true;
+                    tabla_SelectionChanged(tabla, EventArgs.Empty);
                     break;
                 }
             }
@@ -129,15 +127,12 @@ namespace exxen2._0.capaVisual.Entrenador
             txtDni.Text = socioSeleccionado.DNI;
             txtPlan.Text = socioSeleccionado.NombrePlan;
             txtEntrenador.Text = socioSeleccionado.NombreEntrenador;
-            txtVencimiento.Text = socioSeleccionado.FechaVencimiento.ToString("dd/MM/yyyy");
+            txtVencimiento.Text = socioSeleccionado.CuotaHasta.HasValue ? socioSeleccionado.CuotaHasta.Value.ToString("dd/MM/yyyy") : "Sin cuotas";
             txtRutina.Text = socioSeleccionado.TieneRutina ? socioSeleccionado.NombreRutina : "Sin rutina asignada";
             CargarRutinaSemanal(socioSeleccionado.IdSocio);
 
-            rutinaDisponible.Visible = true;
-            asignarRutina.Visible = true;
             asignarRutina.Text = socioSeleccionado.TieneRutina ? "Cambiar rutina" : "Asignar rutina";
-            verRutina.Visible = socioSeleccionado.TieneRutina;
-            crearPersonalizada.Visible = !socioSeleccionado.TieneRutina;
+            ActualizarAcciones();
             lblAccionInfo.Text = socioSeleccionado.TieneRutina
                 ? "La rutina se muestra abajo. Podes cambiarla o editar sus ejercicios."
                 : "Selecciona una rutina del catalogo o crea una personalizada.";
@@ -155,11 +150,33 @@ namespace exxen2._0.capaVisual.Entrenador
             txtRutina.Text = "-";
             lblAccionInfo.Text = "Selecciona un socio para ver su rutina y acciones.";
             tablaRutina.Rows.Clear();
-            rutinaDisponible.Visible = false;
-            asignarRutina.Visible = false;
-            verRutina.Visible = false;
-            crearPersonalizada.Visible = false;
+            asignarRutina.Text = "Asignar rutina";
             exportarPdf.Enabled = false;
+            ActualizarAcciones();
+        }
+
+        /* Habilita cada acción según el socio seleccionado: asignar usa el catálogo, crear solo sin rutina y ver solo con rutina. */
+        private void ActualizarAcciones()
+        {
+            var haySocio = socioSeleccionado != null;
+            rutinaDisponible.Enabled = haySocio;
+            asignarRutina.Enabled = haySocio && rutinaDisponible.SelectedItem is Rutina;
+            crearPersonalizada.Enabled = haySocio && !socioSeleccionado.TieneRutina;
+            verRutina.Enabled = haySocio && socioSeleccionado.TieneRutina;
+        }
+
+        /* Exige un socio seleccionado e informa mediante el ErrorProvider de la grilla. */
+        private bool ValidarSocioSeleccionado()
+        {
+            indicadorErrores.Clear();
+            var valido = AyudaFormularioVisual.ValidarConError(indicadorErrores, tabla, delegate
+            {
+                if (socioSeleccionado == null)
+                    throw new InvalidOperationException("Seleccioná un socio.");
+            });
+            if (!valido)
+                AyudaFormularioVisual.EnfocarPrimerError(indicadorErrores, tabla);
+            return valido;
         }
 
         private void CargarRutinaSemanal(int idSocio)
@@ -224,7 +241,7 @@ namespace exxen2._0.capaVisual.Entrenador
         {
             try
             {
-                if (socioSeleccionado == null) throw new InvalidOperationException("Selecciona un socio.");
+                if (!ValidarSocioSeleccionado()) return;
                 var idSocio = socioSeleccionado.IdSocio;
                 using (var formulario = new RutinasEntrenadorFormulario(usuario, idSocio, modoAdministrador, true)) formulario.ShowDialog(this);
                 Cargar(idSocio);
@@ -236,7 +253,7 @@ namespace exxen2._0.capaVisual.Entrenador
         {
             try
             {
-                if (socioSeleccionado == null) throw new InvalidOperationException("Selecciona un socio.");
+                if (!ValidarSocioSeleccionado()) return;
                 var idSocio = socioSeleccionado.IdSocio;
                 using (var formulario = new RutinasEntrenadorFormulario(usuario, idSocio, modoAdministrador)) formulario.ShowDialog(this);
                 Cargar(idSocio);
@@ -246,7 +263,21 @@ namespace exxen2._0.capaVisual.Entrenador
 
         private void MisSociosFormulario_Load(object origen, EventArgs e)
         {
-            if (!AyudaFormularioVisual.EnModoDisenio(this)) Cargar();
+            if (AyudaFormularioVisual.EnModoDisenio(this)) return;
+            if (!modoAdministrador)
+            {
+                // Para el entrenador, los socios asignados son sus alumnos.
+                lblListadoTitulo.Text = "Mis alumnos";
+                lblDetalleTitulo.Text = "Alumno seleccionado";
+                lblSocio.Text = "Alumno:";
+            }
+            Cargar();
+        }
+
+        /* Vuelve a consultar el listado conservando el alumno seleccionado; se usa al regresar al inicio del entrenador. */
+        internal void Recargar()
+        {
+            Cargar(socioSeleccionado == null ? (int?)null : socioSeleccionado.IdSocio);
         }
 
         private void buscador_TextChanged(object origen, EventArgs e) { AplicarFiltro(); }
@@ -266,6 +297,7 @@ namespace exxen2._0.capaVisual.Entrenador
         private void rutinaDisponible_SelectedIndexChanged(object origen, EventArgs e)
         {
             indicadorErrores.SetError(rutinaDisponible, string.Empty);
+            ActualizarAcciones();
         }
 
         /* Valida el socio visible y la rutina elegida antes de asignar. */
@@ -281,11 +313,6 @@ namespace exxen2._0.capaVisual.Entrenador
             if (!valido)
                 AyudaFormularioVisual.EnfocarPrimerError(indicadorErrores, tabla, rutinaDisponible);
             return valido;
-        }
-
-        private void lblBuscar_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

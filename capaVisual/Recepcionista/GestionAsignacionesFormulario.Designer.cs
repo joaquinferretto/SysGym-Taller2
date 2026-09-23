@@ -406,7 +406,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.lblVencimiento.Name = "lblVencimiento";
             this.lblVencimiento.Size = new System.Drawing.Size(134, 26);
             this.lblVencimiento.TabIndex = 6;
-            this.lblVencimiento.Text = "Vencimiento";
+            this.lblVencimiento.Text = "Cuota hasta";
             this.lblVencimiento.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // txtVencimiento

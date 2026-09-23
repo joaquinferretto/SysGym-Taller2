@@ -32,6 +32,8 @@ namespace exxen2._0.capaLogica
     }
 
     /* Consulta y transforma el pronóstico semanal para la capa visual. */
+    // Descarga el pronóstico de 8 días (hoy y los 7 siguientes) de un servicio web y lo guarda en caché para verlo sin internet.
+    // La usa InicioPanelAdministrador.
     public class ClimaLogica
     {
         public const int DiasPronostico = 8;
@@ -81,7 +83,7 @@ namespace exxen2._0.capaLogica
                     return respaldo;
                 }
                 UltimaConsultaUsoCache = false;
-                throw new InvalidOperationException("No se pudo obtener el pronóstico semanal.", ex);
+                throw new InvalidOperationException("No se pudo obtener el pronóstico semanal.", ex);  // Regla incumplida: corta la operación y el formulario muestra este mensaje.
             }
         }
 

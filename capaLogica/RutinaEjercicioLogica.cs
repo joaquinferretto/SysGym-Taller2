@@ -7,19 +7,23 @@ using exxen2._0.capaDatos.Repositorios;
 namespace exxen2._0.capaLogica
 {
     /* Coordina las operaciones y validaciones de negocio de ejercicios de una rutina. */
+    // Ejercicios dentro de una rutina (día, orden, series, repeticiones, peso y descanso).
+    // Antes de cambiar algo controla que quien edita sea el autor o un administrador.
+    // La usan RutinasEntrenadorFormulario, MisSociosFormulario y RutinaSemanalFormulario.
     public class RutinaEjercicioLogica
     {
         /* Valida la rutina, el ejercicio y sus parámetros antes de incorporarlo a la plantilla. */
-        public RutinaEjercicio AgregarEjercicio(RutinaEjercicio rutinaEjercicio)
+        public RutinaEjercicio AgregarEjercicio(RutinaEjercicio rutinaEjercicio, int idEditor)
         {
             ValidarDatos(rutinaEjercicio);
-            using (var datos = new UnidadDeTrabajoGimnasio())
+            using (var datos = new UnidadDeTrabajoGimnasio())  // Abre la conexión; al salir del bloque se cierra sola, aunque haya error (try-with-resources).
             {
-                var rutina = datos.Rutinas.Buscar(rutinaEjercicio.IdRutina);
+                RutinaLogica.ValidarEdicion(datos, rutinaEjercicio.IdRutina, idEditor);
+                var rutina = datos.Rutinas.Buscar(rutinaEjercicio.IdRutina);  // Busca por clave primaria; si no existe devuelve null.
                 var ejercicio = datos.Ejercicios.Buscar(rutinaEjercicio.IdEjercicio);
                 if (rutina == null || !rutina.Estado)
                 {
-                    throw new InvalidOperationException("La rutina no existe o está inactiva.");
+                    throw new InvalidOperationException("La rutina no existe o está inactiva.");  // Regla incumplida: corta la operación y el formulario muestra este mensaje.
                 }
 
                 if (ejercicio == null || !ejercicio.Estado)
@@ -28,14 +32,14 @@ namespace exxen2._0.capaLogica
                 }
 
                 rutinaEjercicio.Estado = true;
-                datos.RutinaEjercicios.Agregar(rutinaEjercicio);
-                datos.GuardarCambios();
+                datos.RutinaEjercicios.Agregar(rutinaEjercicio);  // Deja el objeto listo para INSERT (se ejecuta en GuardarCambios).
+                datos.GuardarCambios();  // EF envía a SQL los INSERT/UPDATE pendientes.
                 return rutinaEjercicio;
             }
         }
 
         /* Valida y guarda los cambios de ejercicios de una rutina sobre el registro existente. */
-        public RutinaEjercicio Modificar(RutinaEjercicio rutinaEjercicio)
+        public RutinaEjercicio Modificar(RutinaEjercicio rutinaEjercicio, int idEditor)
         {
             ValidarDatos(rutinaEjercicio);
             using (var datos = new UnidadDeTrabajoGimnasio())
@@ -45,6 +49,8 @@ namespace exxen2._0.capaLogica
                 {
                     throw new InvalidOperationException("El ejercicio de la rutina no existe.");
                 }
+
+                RutinaLogica.ValidarEdicion(datos, existente.IdRutina, idEditor);
 
                 var rutina = datos.Rutinas.Buscar(existente.IdRutina);
                 var ejercicio = datos.Ejercicios.Buscar(rutinaEjercicio.IdEjercicio);
@@ -72,7 +78,7 @@ namespace exxen2._0.capaLogica
         }
 
         /* Da de baja el ejercicio de la rutina sin eliminar su registro. */
-        public void Quitar(int idRutinaEjercicio)
+        public void Quitar(int idRutinaEjercicio, int idEditor)
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
@@ -81,6 +87,8 @@ namespace exxen2._0.capaLogica
                 {
                     throw new InvalidOperationException("El ejercicio de la rutina no existe.");
                 }
+
+                RutinaLogica.ValidarEdicion(datos, rutinaEjercicio.IdRutina, idEditor);
 
                 rutinaEjercicio.Estado = false;
                 datos.GuardarCambios();
@@ -92,7 +100,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return datos.RutinaEjercicios.ConsultarSoloLectura("Ejercicio").Where(re => re.IdRutina == idRutina && re.Estado).OrderBy(re => re.DiaSemana.HasValue ? re.DiaSemana.Value : int.MaxValue).ThenBy(re => re.Orden).ToList();
+                return datos.RutinaEjercicios.ConsultarSoloLectura("Ejercicio").Where(re => re.IdRutina == idRutina && re.Estado).OrderBy(re => re.DiaSemana.HasValue ? re.DiaSemana.Value : int.MaxValue).ThenBy(re => re.Orden).ToList();  // Solo lectura: EF no vigila cambios (más liviano para listar).
             }
         }
 
@@ -104,16 +112,16 @@ namespace exxen2._0.capaLogica
                 MembresiaLogica.ActualizarEstadosPorDeudaEnContexto(datos);
                 datos.GuardarCambios();
                 var membresia = datos.Membresias.ConsultarSoloLectura("Rutina")
-                    .Where(m => m.IdSocio == idSocio && m.Estado && m.IdRutina.HasValue)
-                    .OrderByDescending(m => m.FechaInicio)
+                    .Where(m => m.IdSocio == idSocio && m.Estado && m.IdRutina.HasValue)  // Where = filtro (como filter de Streams / WHERE de SQL). "x => ..." es una lambda.
+                    .OrderByDescending(m => m.FechaInicio)  // Ordena (ORDER BY).
                     .FirstOrDefault();
-                if (membresia == null || !membresia.IdRutina.HasValue)
+                if (membresia == null || !membresia.IdRutina.HasValue)  // HasValue: ¿el valor opcional (int?, DateTime?) tiene dato?
                 {
                     return new List<RutinaEjercicio>();
                 }
 
                 var idRutina = membresia.IdRutina.Value;
-                return datos.RutinaEjercicios.ConsultarSoloLectura("Ejercicio").Where(re => re.IdRutina == idRutina && re.Estado).OrderBy(re => re.DiaSemana.HasValue ? re.DiaSemana.Value : int.MaxValue).ThenBy(re => re.Orden).ToList();
+                return datos.RutinaEjercicios.ConsultarSoloLectura("Ejercicio").Where(re => re.IdRutina == idRutina && re.Estado).OrderBy(re => re.DiaSemana.HasValue ? re.DiaSemana.Value : int.MaxValue).ThenBy(re => re.Orden).ToList();  // Acá se ejecuta la consulta en SQL y se trae la lista.
             }
         }
 
@@ -122,7 +130,7 @@ namespace exxen2._0.capaLogica
         {
             if (rutinaEjercicio == null)
             {
-                throw new ArgumentNullException("rutinaEjercicio");
+                throw new ArgumentNullException("rutinaEjercicio");  // Se recibió null donde no corresponde.
             }
 
             if (rutinaEjercicio.IdRutina <= 0)

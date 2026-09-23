@@ -15,20 +15,23 @@ namespace exxen2._0.capaLogica
         public string NombreSocio { get; set; }
         public string DNI { get; set; }
         public string NombrePlan { get; set; }
-        public DateTime FechaVencimiento { get; set; }
+        public DateTime? CuotaHasta { get; set; }
         public string NombreEntrenador { get; set; }
         public string NombreRutina { get; set; }
-        public bool TieneRutina { get { return IdRutina.HasValue; } }
+        public bool TieneRutina { get { return IdRutina.HasValue; } }  // HasValue: ¿el valor opcional (int?, DateTime?) tiene dato?
     }
 
     /* Coordina las operaciones del catalogo de rutinas y su asociacion directa a membresias. */
+    // Rutinas: catálogo compartido entre entrenadores (todos ven y asignan todas),
+    // pero solo el autor o un administrador puede editar. También asigna rutinas a membresías.
+    // La usan RutinasEntrenadorFormulario, MisSociosFormulario, ConsultaRutinasAdministradorFormulario y ReportesFormulario.
     public class RutinaLogica
     {
         /* Valida y registra una rutina reutilizable en el catalogo. */
         public Rutina Crear(Rutina rutina)
         {
             ValidarDatos(rutina);
-            using (var datos = new UnidadDeTrabajoGimnasio())
+            using (var datos = new UnidadDeTrabajoGimnasio())  // Abre la conexión; al salir del bloque se cierra sola, aunque haya error (try-with-resources).
             {
                 ValidarEntrenador(datos, rutina.IdEntrenador);
                 rutina.Estado = true;
@@ -37,8 +40,8 @@ namespace exxen2._0.capaLogica
                     rutina.FechaCreacion = DateTime.Now;
                 }
 
-                datos.Rutinas.Agregar(rutina);
-                datos.GuardarCambios();
+                datos.Rutinas.Agregar(rutina);  // Deja el objeto listo para INSERT (se ejecuta en GuardarCambios).
+                datos.GuardarCambios();  // EF envía a SQL los INSERT/UPDATE pendientes.
                 return rutina;
             }
         }
@@ -49,16 +52,16 @@ namespace exxen2._0.capaLogica
             ValidarDatos(rutina);
             if (idMembresia <= 0)
             {
-                throw new InvalidOperationException("La membresia del socio es obligatoria.");
+                throw new InvalidOperationException("La membresia del socio es obligatoria.");  // Regla incumplida: corta la operación y el formulario muestra este mensaje.
             }
 
             new MembresiaLogica().ActualizarEstadoPorDeuda(idMembresia);
             using (var datos = new UnidadDeTrabajoGimnasio())
-            using (var transaccion = datos.IniciarTransaccion())
+            using (var transaccion = datos.IniciarTransaccion())  // Transacción: si algo falla antes de Confirmar(), se deshace todo.
             {
                 ValidarEntrenador(datos, rutina.IdEntrenador);
-                var membresia = datos.Membresias.Consultar("Plan", "Socio")
-                    .SingleOrDefault(m => m.IdMembresia == idMembresia);
+                var membresia = datos.Membresias.Consultar("Plan", "Socio")  // Consulta con seguimiento: si se modifica el objeto, GuardarCambios hace el UPDATE.
+                    .SingleOrDefault(m => m.IdMembresia == idMembresia);  // Devuelve el único que cumple o null.
                 ValidarMembresiaParaRutina(membresia);
                 ValidarPermisoSobreMembresia(datos, idMembresia, rutina.IdEntrenador);
 
@@ -72,7 +75,7 @@ namespace exxen2._0.capaLogica
                 datos.GuardarCambios();
                 membresia.IdRutina = rutina.IdRutina;
                 datos.GuardarCambios();
-                transaccion.Confirmar();
+                transaccion.Confirmar();  // Recién acá quedan grabados todos los cambios de la transacción.
                 return rutina;
             }
         }
@@ -93,7 +96,7 @@ namespace exxen2._0.capaLogica
                     .SingleOrDefault(m => m.IdMembresia == idMembresia);
                 ValidarMembresiaParaRutina(membresia);
 
-                var rutina = datos.Rutinas.Buscar(idRutina);
+                var rutina = datos.Rutinas.Buscar(idRutina);  // Busca por clave primaria; si no existe devuelve null.
                 if (rutina == null || !rutina.Estado)
                 {
                     throw new InvalidOperationException("La rutina seleccionada no existe o esta inactiva.");
@@ -104,8 +107,8 @@ namespace exxen2._0.capaLogica
             }
         }
 
-        /* Valida y guarda los cambios de una rutina sin alterar sus membresias asociadas. */
-        public Rutina Modificar(Rutina rutina)
+        /* Valida y guarda los cambios de una rutina sin alterar sus membresias asociadas ni su autor. */
+        public Rutina Modificar(Rutina rutina, int idEditor)
         {
             ValidarDatos(rutina);
             using (var datos = new UnidadDeTrabajoGimnasio())
@@ -116,12 +119,12 @@ namespace exxen2._0.capaLogica
                     throw new InvalidOperationException("La rutina no existe.");
                 }
 
-                ValidarEntrenador(datos, rutina.IdEntrenador);
+                ValidarEntrenador(datos, idEditor);
+                ValidarEdicion(datos, existente.IdRutina, idEditor);
                 existente.Nombre = rutina.Nombre;
                 existente.Descripcion = rutina.Descripcion;
                 existente.FechaInicio = rutina.FechaInicio;
                 existente.FechaFin = rutina.FechaFin;
-                existente.IdEntrenador = rutina.IdEntrenador;
                 existente.Estado = rutina.Estado;
                 datos.GuardarCambios();
                 return existente;
@@ -133,7 +136,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return datos.Rutinas.ConsultarSoloLectura("Entrenador", "Ejercicios.Ejercicio", "Membresias")
+                return datos.Rutinas.ConsultarSoloLectura("Entrenador", "Ejercicios.Ejercicio", "Membresias")  // Solo lectura: EF no vigila cambios (más liviano para listar).
                     .SingleOrDefault(r => r.IdRutina == idRutina);
             }
         }
@@ -144,9 +147,9 @@ namespace exxen2._0.capaLogica
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 return datos.Rutinas.ConsultarSoloLectura("Entrenador", "Ejercicios.Ejercicio", "Membresias")
-                    .OrderByDescending(r => r.Estado)
+                    .OrderByDescending(r => r.Estado)  // Ordena (ORDER BY).
                     .ThenByDescending(r => r.FechaCreacion)
-                    .ToList();
+                    .ToList();  // Acá se ejecuta la consulta en SQL y se trae la lista.
             }
         }
 
@@ -158,7 +161,7 @@ namespace exxen2._0.capaLogica
                 MembresiaLogica.ActualizarEstadosPorDeudaEnContexto(datos);
                 datos.GuardarCambios();
                 return datos.Membresias.ConsultarSoloLectura("Socio", "Plan", "Rutina")
-                    .Where(m => m.IdSocio == idSocio && m.Estado && m.Socio.Estado && m.Plan.Estado)
+                    .Where(m => m.IdSocio == idSocio && m.Estado && m.Socio.Estado && m.Plan.Estado)  // Where = filtro (como filter de Streams / WHERE de SQL). "x => ..." es una lambda.
                     .OrderByDescending(m => m.FechaInicio)
                     .FirstOrDefault();
             }
@@ -195,6 +198,54 @@ namespace exxen2._0.capaLogica
             }
         }
 
+        /* Catalogo compartido para un entrenador: todas las rutinas activas de cualquier autor mas sus propias bajas, que puede reactivar. */
+        public List<Rutina> ListarParaEntrenador(int idEntrenador)
+        {
+            using (var datos = new UnidadDeTrabajoGimnasio())
+            {
+                return datos.Rutinas.ConsultarSoloLectura("Entrenador", "Ejercicios.Ejercicio", "Membresias")
+                    .Where(r => r.Estado || r.IdEntrenador == idEntrenador)
+                    .OrderByDescending(r => r.Estado)
+                    .ThenByDescending(r => r.FechaCreacion)
+                    .ToList();
+            }
+        }
+
+        /* Indica si el usuario puede modificar la rutina: el catalogo se comparte para ver y asignar, pero solo su autor o un administrador la editan. */
+        public bool PuedeEditar(int idRutina, int idUsuario)
+        {
+            using (var datos = new UnidadDeTrabajoGimnasio())
+            {
+                return PuedeEditarEnContexto(datos, idRutina, idUsuario);
+            }
+        }
+
+        /* Exige que quien modifica la rutina o sus ejercicios sea su autor o un administrador activo. */
+        internal static void ValidarEdicion(IUnidadDeTrabajo datos, int idRutina, int idEditor)
+        {
+            if (!PuedeEditarEnContexto(datos, idRutina, idEditor))
+            {
+                throw new InvalidOperationException("Solo el entrenador que creó la rutina o un administrador pueden modificarla.");
+            }
+        }
+
+        private static bool PuedeEditarEnContexto(IUnidadDeTrabajo datos, int idRutina, int idUsuario)
+        {
+            var rutina = datos.Rutinas.ConsultarSoloLectura().SingleOrDefault(r => r.IdRutina == idRutina);
+            if (rutina == null)
+            {
+                return false;
+            }
+
+            if (rutina.IdEntrenador == idUsuario)  // Regla: el autor de la rutina puede editarla...
+            {
+                return true;
+            }
+
+            var usuario = datos.UsuariosSistema.ConsultarSoloLectura("Rol").SingleOrDefault(u => u.IdUsuarioSistema == idUsuario);
+            return ValidacionesGimnasio.EsAdministradorActivo(usuario);  // ...y si no es el autor, solo un administrador.
+        }
+
         /* Consulta las rutinas del entrenador incluyendo bajas para la gestion del catalogo. */
         public List<Rutina> ListarPorEntrenadorParaGestion(int idEntrenador)
         {
@@ -215,14 +266,14 @@ namespace exxen2._0.capaLogica
             {
                 MembresiaLogica.ActualizarEstadosPorDeudaEnContexto(datos);
                 datos.GuardarCambios();
-                var membresias = datos.Membresias.ConsultarSoloLectura("Socio", "Plan", "Rutina", "Entrenadores.Entrenador")
+                var membresias = datos.Membresias.ConsultarSoloLectura("Socio", "Plan", "Rutina", "Cuotas", "Entrenadores.Entrenador")
                     .Where(m => m.Estado && m.Socio.Estado && m.Plan.Estado &&
-                        (idEntrenador <= 0 || m.Entrenadores.Any(e => e.Estado && e.IdEntrenador == idEntrenador)))
+                        (idEntrenador <= 0 || m.Entrenadores.Any(e => e.Estado && e.IdEntrenador == idEntrenador)))  // ¿Existe al menos uno? (no trae filas).
                     .OrderBy(m => m.Socio.Apellido)
                     .ThenBy(m => m.Socio.Nombre)
                     .ToList();
 
-                return membresias.Select(CrearItemSocioRutina).ToList();
+                return membresias.Select(CrearItemSocioRutina).ToList();  // Select = transforma cada elemento (como map de Streams).
             }
         }
 
@@ -233,7 +284,7 @@ namespace exxen2._0.capaLogica
         }
 
         /* Da de baja logicamente una rutina sin romper asociaciones existentes ni borrar ejercicios. */
-        public void DarDeBaja(int idRutina)
+        public void DarDeBaja(int idRutina, int idEditor)
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
@@ -243,13 +294,14 @@ namespace exxen2._0.capaLogica
                     throw new InvalidOperationException("La rutina no existe.");
                 }
 
+                ValidarEdicion(datos, idRutina, idEditor);
                 rutina.Estado = false;
                 datos.GuardarCambios();
             }
         }
 
         /* Reactiva logicamente una rutina del catalogo. */
-        public void Reactivar(int idRutina)
+        public void Reactivar(int idRutina, int idEditor)
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
@@ -260,6 +312,7 @@ namespace exxen2._0.capaLogica
                 }
 
                 ValidarEntrenador(datos, rutina.IdEntrenador);
+                ValidarEdicion(datos, idRutina, idEditor);
                 rutina.Estado = true;
                 datos.GuardarCambios();
             }
@@ -277,7 +330,7 @@ namespace exxen2._0.capaLogica
                 NombreSocio = membresia.Socio == null ? "Socio no disponible" : membresia.Socio.Apellido + ", " + membresia.Socio.Nombre,
                 DNI = membresia.Socio == null ? "-" : membresia.Socio.DNI,
                 NombrePlan = membresia.Plan == null ? "-" : membresia.Plan.Nombre,
-                FechaVencimiento = membresia.FechaVencimiento,
+                CuotaHasta = CuotaMembresiaLogica.CubiertaHasta(membresia.Cuotas),
                 NombreEntrenador = usuario == null ? "Sin asignar" : usuario.Apellido + ", " + usuario.Nombre,
                 NombreRutina = membresia.Rutina == null ? string.Empty : membresia.Rutina.Nombre
             };
@@ -316,7 +369,7 @@ namespace exxen2._0.capaLogica
         {
             if (rutina == null)
             {
-                throw new ArgumentNullException("rutina");
+                throw new ArgumentNullException("rutina");  // Se recibió null donde no corresponde.
             }
 
             if (string.IsNullOrWhiteSpace(rutina.Nombre))

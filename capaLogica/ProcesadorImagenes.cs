@@ -29,16 +29,18 @@ namespace exxen2._0.capaLogica
     }
 
     /* Aplica una única política segura a toda imagen externa usada por SysGym. */
+    // Revisa que un archivo sea realmente una imagen (JPEG, PNG, etc.), la gira según la cámara
+    // y la achica a 800x800 como máximo antes de guardarla.
     public static class ProcesadorImagenes
     {
-        public const int AnchoNormalizado = 800;
+        public const int AnchoNormalizado = 800;  // Toda imagen se achica para entrar en 800x800 (ahorra espacio).
         public const int AltoNormalizado = 800;
         public const int TamanoMaximoMb = 10;
         public const int TamanoMaximoBytes = TamanoMaximoMb * 1024 * 1024;
         public const int MaxAnchoOriginal = 12000;
         public const int MaxAltoOriginal = 12000;
         public const long MaxPixeles = 40000000L;
-        public const int MaxImagenesPorEjercicio = 4;
+        public const int MaxImagenesPorEjercicio = 4;  // Regla: hasta 4 imágenes por ejercicio.
         public const long CalidadJpeg = 90L;
 
         private const int IdOrientacionExif = 0x0112;
@@ -108,7 +110,7 @@ namespace exxen2._0.capaLogica
         private static void ValidarTamano(byte[] contenido)
         {
             if (contenido == null || contenido.Length == 0)
-                throw new InvalidOperationException("Seleccione un archivo de imagen válido.");
+                throw new InvalidOperationException("Seleccione un archivo de imagen válido.");  // Regla incumplida: corta la operación y el formulario muestra este mensaje.
             if (contenido.Length > TamanoMaximoBytes)
                 throw new InvalidOperationException("La imagen supera el tamaño máximo permitido de 10 MB.");
         }

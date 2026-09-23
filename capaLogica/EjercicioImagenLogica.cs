@@ -7,6 +7,8 @@ using exxen2._0.capaDatos.Repositorios;
 namespace exxen2._0.capaLogica
 {
     /* Coordina las imágenes del catálogo sin duplicarlas en las relaciones de rutinas. */
+    // Imágenes de un ejercicio: hasta 4, guardadas como archivo; SQL solo guarda la ruta.
+    // La usa GestionEjerciciosFormulario.
     public class EjercicioImagenLogica
     {
         /* Lista las imágenes de un ejercicio en el orden definido para futuras exportaciones. */
@@ -15,13 +17,13 @@ namespace exxen2._0.capaLogica
             if (idEjercicio <= 0)
                 return new List<EjercicioImagen>();
 
-            using (var datos = new UnidadDeTrabajoGimnasio())
+            using (var datos = new UnidadDeTrabajoGimnasio())  // Abre la conexión; al salir del bloque se cierra sola, aunque haya error (try-with-resources).
             {
-                return datos.EjercicioImagenes.ConsultarSoloLectura()
-                    .Where(i => i.IdEjercicio == idEjercicio)
-                    .OrderBy(i => i.Orden)
+                return datos.EjercicioImagenes.ConsultarSoloLectura()  // Solo lectura: EF no vigila cambios (más liviano para listar).
+                    .Where(i => i.IdEjercicio == idEjercicio)  // Where = filtro (como filter de Streams / WHERE de SQL). "x => ..." es una lambda.
+                    .OrderBy(i => i.Orden)  // Ordena (ORDER BY).
                     .ThenBy(i => i.IdEjercicioImagen)
-                    .ToList();
+                    .ToList();  // Acá se ejecuta la consulta en SQL y se trae la lista.
             }
         }
 
@@ -33,9 +35,9 @@ namespace exxen2._0.capaLogica
             {
                 using (var datos = new UnidadDeTrabajoGimnasio())
                 {
-                    var ejercicio = datos.Ejercicios.Buscar(idEjercicio);
+                    var ejercicio = datos.Ejercicios.Buscar(idEjercicio);  // Busca por clave primaria; si no existe devuelve null.
                     if (ejercicio == null || !ejercicio.Estado)
-                        throw new InvalidOperationException("El ejercicio no existe o está inactivo.");
+                        throw new InvalidOperationException("El ejercicio no existe o está inactivo.");  // Regla incumplida: corta la operación y el formulario muestra este mensaje.
 
                     var imagenesExistentes = datos.EjercicioImagenes
                         .Where(i => i.IdEjercicio == idEjercicio)
@@ -53,8 +55,8 @@ namespace exxen2._0.capaLogica
                         RutaRelativa = rutaNueva,
                         Orden = imagenesExistentes.Count + 1
                     };
-                    datos.EjercicioImagenes.Agregar(imagen);
-                    datos.GuardarCambios();
+                    datos.EjercicioImagenes.Agregar(imagen);  // Deja el objeto listo para INSERT (se ejecuta en GuardarCambios).
+                    datos.GuardarCambios();  // EF envía a SQL los INSERT/UPDATE pendientes.
                     return imagen;
                 }
             }

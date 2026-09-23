@@ -7,40 +7,42 @@ using exxen2._0.capaDatos.Repositorios;
 namespace exxen2._0.capaLogica
 {
     /* Coordina las operaciones y validaciones de negocio de membresías. */
+    // Membresía = relación entre un socio y un plan. Un socio tiene una sola membresía (histórica);
+    // al crearla se genera su primera cuota. Con 2 o más cuotas vencidas sin pagar se da de baja sola.
+    // La usan GestionMembresiasFormulario, GestionPagosFormulario y ReportesFormulario.
     public class MembresiaLogica
     {
-        private const int CuotasVencidasParaDarDeBaja = 2;
+        private const int CuotasVencidasParaDarDeBaja = 2;  // Regla del negocio: con 2 cuotas vencidas sin pagar, la membresía se da de baja.
         private const string MensajeReactivacionBloqueadaPorDeuda = "No se puede reactivar la membresía mientras existan dos o más cuotas vencidas pendientes.";
 
         /* Crea una membresía y su primera cuota; la asignación de entrenador es opcional y posterior. */
         public Membresia Crear(Membresia membresia)
         {
             ValidarMembresia(membresia);
-            using (var datos = new UnidadDeTrabajoGimnasio())
-            using (var transaccion = datos.IniciarTransaccion())
+            using (var datos = new UnidadDeTrabajoGimnasio())  // Abre la conexión; al salir del bloque se cierra sola, aunque haya error (try-with-resources).
+            using (var transaccion = datos.IniciarTransaccion())  // Transacción: si algo falla antes de Confirmar(), se deshace todo.
             {
-                var socio = datos.Socios.Buscar(membresia.IdSocio);
+                var socio = datos.Socios.Buscar(membresia.IdSocio);  // Busca por clave primaria; si no existe devuelve null.
                 var plan = datos.Planes.Buscar(membresia.IdPlan);
-                var usuario = datos.UsuariosSistema.Consultar("Rol").SingleOrDefault(u => u.IdUsuarioSistema == membresia.IdUsuarioSistema);
+                var usuario = datos.UsuariosSistema.Consultar("Rol").SingleOrDefault(u => u.IdUsuarioSistema == membresia.IdUsuarioSistema);  // Consulta con seguimiento: si se modifica el objeto, GuardarCambios hace el UPDATE.
                 ValidarReferenciasActivas(socio, plan, usuario);
-                if (datos.Membresias.Any(m => m.IdSocio == membresia.IdSocio))
-                    throw new InvalidOperationException("El socio ya tiene una membresía histórica. Reactivá esa misma membresía desde la gestión de membresías.");
+                if (datos.Membresias.Any(m => m.IdSocio == membresia.IdSocio))  // ¿Existe al menos uno? (no trae filas).
+                    throw new InvalidOperationException("El socio ya tiene una membresía histórica. Reactivá esa misma membresía desde la gestión de membresías.");  // Regla incumplida: corta la operación y el formulario muestra este mensaje.
 
                 membresia.Estado = true;
                 membresia.IdRutina = null;
                 if (membresia.FechaInicio == default(DateTime))
                     membresia.FechaInicio = DateTime.Today;
-                if (membresia.FechaVencimiento == default(DateTime))
-                    membresia.FechaVencimiento = CuotaMembresiaLogica.CalcularPeriodoHasta(membresia.FechaInicio);
-                if (membresia.FechaVencimiento < membresia.FechaInicio)
-                    throw new InvalidOperationException("La fecha de vencimiento no puede ser anterior a la fecha de inicio.");
+                // La membresía no vence por mes: FechaVencimiento es una columna heredada que guarda el fin
+                // del período inicial; la cobertura real surge de las cuotas.
+                membresia.FechaVencimiento = CuotaMembresiaLogica.CalcularPeriodoHasta(membresia.FechaInicio);
 
-                datos.Membresias.Agregar(membresia);
-                datos.GuardarCambios();
+                datos.Membresias.Agregar(membresia);  // Deja el objeto listo para INSERT (se ejecuta en GuardarCambios).
+                datos.GuardarCambios();  // EF envía a SQL los INSERT/UPDATE pendientes.
                 socio.Estado = true;
                 CuotaMembresiaLogica.CrearPrimeraCuotaEnContexto(datos, membresia, plan);
                 datos.GuardarCambios();
-                transaccion.Confirmar();
+                transaccion.Confirmar();  // Recién acá quedan grabados todos los cambios de la transacción.
                 return membresia;
             }
         }
@@ -51,23 +53,23 @@ namespace exxen2._0.capaLogica
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 var idsSociosConMembresia = datos.Membresias
-                    .Select(m => m.IdSocio)
+                    .Select(m => m.IdSocio)  // Select = transforma cada elemento (como map de Streams).
                     .Distinct()
-                    .ToList();
+                    .ToList();  // Acá se ejecuta la consulta en SQL y se trae la lista.
 
-                return datos.Socios.ConsultarSoloLectura()
-                    .Where(s => s.Estado && !idsSociosConMembresia.Contains(s.IdSocio))
-                    .OrderBy(s => s.Apellido)
+                return datos.Socios.ConsultarSoloLectura()  // Solo lectura: EF no vigila cambios (más liviano para listar).
+                    .Where(s => s.Estado && !idsSociosConMembresia.Contains(s.IdSocio))  // Where = filtro (como filter de Streams / WHERE de SQL). "x => ..." es una lambda.
+                    .OrderBy(s => s.Apellido)  // Ordena (ORDER BY).
                     .ThenBy(s => s.Nombre)
                     .ToList();
             }
         }
 
-        /* Actualiza fechas y datos propios sin permitir cambiar referencias históricas desde este método. */
+        /* Conserva las fechas y referencias históricas al actualizar la membresía. */
         public Membresia Modificar(Membresia membresia)
         {
             if (membresia == null)
-                throw new ArgumentNullException("membresia");
+                throw new ArgumentNullException("membresia");  // Se recibió null donde no corresponde.
 
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
@@ -82,8 +84,8 @@ namespace exxen2._0.capaLogica
                     throw new InvalidOperationException("El estado de la membresía debe cambiarse mediante las acciones Dar de baja o Reactivar.");
                 ValidarFechas(membresia);
 
-                existente.FechaInicio = membresia.FechaInicio;
-                existente.FechaVencimiento = membresia.FechaVencimiento;
+                if (existente.FechaInicio.Date != membresia.FechaInicio.Date)
+                    throw new InvalidOperationException("La fecha de inicio es historica y no puede modificarse; los periodos pertenecen a las cuotas.");
                 ActualizarEstadoPorDeudaEnContexto(datos, existente.IdMembresia);
                 datos.GuardarCambios();
                 return existente;
@@ -99,7 +101,7 @@ namespace exxen2._0.capaLogica
                     return null;
                 ActualizarEstadoPorDeudaEnContexto(datos, idMembresia);
                 datos.GuardarCambios();
-                return datos.Membresias.ConsultarSoloLectura("Plan", "Socio", "UsuarioSistema", "Rutina", "Cuotas.Pago", "Entrenadores.Entrenador").SingleOrDefault(m => m.IdMembresia == idMembresia);
+                return datos.Membresias.ConsultarSoloLectura("Plan", "Socio", "UsuarioSistema", "Rutina", "Cuotas.Pago", "Entrenadores.Entrenador").SingleOrDefault(m => m.IdMembresia == idMembresia);  // Devuelve el único que cumple o null.
             }
         }
 
@@ -132,7 +134,7 @@ namespace exxen2._0.capaLogica
             {
                 ActualizarEstadosPorDeudaEnContexto(datos);
                 datos.GuardarCambios();
-                return datos.Membresias.ConsultarSoloLectura("Plan", "Socio", "Rutina").OrderByDescending(m => m.Estado).ThenBy(m => m.Socio.Apellido).ThenBy(m => m.Socio.Nombre).ToList();
+                return datos.Membresias.ConsultarSoloLectura("Plan", "Socio", "Rutina", "Cuotas").OrderByDescending(m => m.Estado).ThenBy(m => m.Socio.Apellido).ThenBy(m => m.Socio.Nombre).ToList();
             }
         }
 
@@ -236,7 +238,7 @@ namespace exxen2._0.capaLogica
                 return;
 
             var membresias = datos.Membresias.Where(m => idsParaDarDeBaja.Contains(m.IdMembresia)).ToList();
-            foreach (var membresia in membresias)
+            foreach (var membresia in membresias)  // Recorre cada elemento (como el for-each de Java).
                 membresia.Estado = false;
 
             var idsSocios = membresias.Select(m => m.IdSocio).Distinct().ToList();
@@ -253,7 +255,7 @@ namespace exxen2._0.capaLogica
         private static IQueryable<CuotaMembresia> ConsultarCuotasVencidasImpagasEnContexto(IUnidadDeTrabajo datos)
         {
             var hoy = DateTime.Today;
-            return datos.CuotasMembresia.Where(c => c.EstadoPago == EstadosCuota.Pendiente && c.FechaHasta < hoy);
+            return datos.CuotasMembresia.Where(c => c.EstadoPago == EstadosCuota.Pendiente && c.FechaHasta < hoy);  // Vencida = sigue Pendiente y su mes ya terminó. Las anuladas no cuentan.
         }
 
         /* Aplica el umbral común de deuda para bajas automáticas y validación de reactivaciones. */
@@ -291,15 +293,11 @@ namespace exxen2._0.capaLogica
                 throw new InvalidOperationException("Socio, plan actual y usuario de alta son obligatorios.");
         }
 
-        /* Comprueba que las fechas de la membresía sean válidas. */
+        /* Comprueba la fecha de inicio: la membresía no tiene vencimiento propio, los períodos son de sus cuotas. */
         private static void ValidarFechas(Membresia membresia)
         {
             if (membresia.FechaInicio == default(DateTime))
                 throw new InvalidOperationException("La fecha de inicio es obligatoria.");
-            if (membresia.FechaVencimiento == default(DateTime))
-                membresia.FechaVencimiento = CuotaMembresiaLogica.CalcularPeriodoHasta(membresia.FechaInicio);
-            if (membresia.FechaVencimiento < membresia.FechaInicio)
-                throw new InvalidOperationException("La fecha de vencimiento no puede ser anterior a la fecha de inicio.");
         }
 
         /* Comprueba que socio, plan y usuario de alta estén disponibles para una nueva membresía. */

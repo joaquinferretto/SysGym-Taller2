@@ -29,6 +29,9 @@ namespace exxen2._0.capaVisual.Recepcionista
         public GestionPagosFormulario()
         {
             InitializeComponent();
+            // Selecciones iniciales: el Designer no serializa SelectedIndex.
+            filtroEstado.SelectedIndex = 0;
+            estado.SelectedIndex = 1;
             ConfigurarValidaciones();
         }
 
@@ -109,7 +112,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             cargandoTabla = true;
             tabla.Rows.Clear();
             foreach (var c in filtradas)
-                tabla.Rows.Add(c.IdCuotaMembresia, c.IdRegistroPago.HasValue ? (object)c.IdRegistroPago.Value : null, NombreSocio(c.Membresia), c.Membresia == null || c.Membresia.Socio == null ? "-" : c.Membresia.Socio.DNI, NombrePlan(c.Membresia), Periodo(c), c.Importe.ToString("C"), c.EstadoPago);
+                tabla.Rows.Add(c.IdCuotaMembresia, c.IdRegistroPago.HasValue ? (object)c.IdRegistroPago.Value : null, NombreSocio(c.Membresia), c.Membresia == null || c.Membresia.Socio == null ? "-" : c.Membresia.Socio.DNI, NombrePlan(c.Membresia), Periodo(c), c.Importe.ToString("C"), EstadoVisible(c));
             tabla.ClearSelection();
             cargandoTabla = false;
             lblEstado.Text = tabla.Rows.Count + " cuota(s) encontrada(s) - " + cuotasCargadas.Count(c => c.EstadoPago == EstadosCuota.Pagada) + " pagada(s)";
@@ -293,6 +296,14 @@ namespace exxen2._0.capaVisual.Recepcionista
         private static string NombrePlan(Membresia m)
         {
             return m == null || m.Plan == null ? "Plan no disponible" : m.Plan.Nombre;
+        }
+
+        /* Muestra el estado del pago cuando la cuota tiene un pago que no quedó aprobado (por ejemplo, reembolsado); si no, el estado de la cuota. */
+        private static string EstadoVisible(CuotaMembresia c)
+        {
+            if (c.Pago != null && c.IdRegistroPago.HasValue && c.Pago.Estado != EstadosTransaccionPago.Aprobado)
+                return c.Pago.Estado;
+            return c.EstadoPago;
         }
 
         /* Presenta el inicio y el fin de la cuota con el formato de fecha usado en la pantalla. */

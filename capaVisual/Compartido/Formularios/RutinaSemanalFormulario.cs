@@ -29,6 +29,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.idSocio = idSocio;
             this.nombreSocio = string.IsNullOrWhiteSpace(nombreSocio) ? "Socio" : nombreSocio;
             InitializeComponent();
+            Icon = Properties.Resources.SysGym;
             panelEncabezado.BackColor = colorPrimario;
             lblTitulo.Text = "Rutina semanal de " + this.nombreSocio;
         }

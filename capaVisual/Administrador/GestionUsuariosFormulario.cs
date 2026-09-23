@@ -19,6 +19,8 @@ namespace exxen2._0.capaVisual.Administrador
     {
         private readonly UsuarioSistemaLogica logica = new UsuarioSistemaLogica();
         private readonly RolLogica roles = new RolLogica();
+        /* Avisa al panel contenedor que se guardaron cambios de un usuario (por ejemplo, para refrescar su encabezado). */
+        public event EventHandler<UsuarioActualizadoEventArgs> UsuarioActualizado;
         private List<UsuarioSistema> usuariosCargados = new List<UsuarioSistema>();
         private int idSeleccionado;
         private bool cargandoTabla;
@@ -142,6 +144,22 @@ namespace exxen2._0.capaVisual.Administrador
             }
         }
 
+        /* Vuelve a mostrar el usuario después de guardarlo, con sus datos y foto actualizados; si el filtro lo oculta, deja la ficha en blanco. */
+        private void SeleccionarUsuario(int idUsuario)
+        {
+            foreach (DataGridViewRow fila in tabla.Rows)
+            {
+                if (Convert.ToInt32(fila.Cells[0].Value) != idUsuario)
+                    continue;
+                tabla.CurrentCell = fila.Cells[1];
+                fila.Selected = true;
+                tabla_SelectionChanged(tabla, EventArgs.Empty);
+                return;
+            }
+
+            nuevo_Click(null, EventArgs.Empty);
+        }
+
         /* Al hacer clic en nuevo, limpia la selección y prepara el registro de nuevos datos. */
         private void nuevo_Click(object origen, EventArgs e)
         {
@@ -233,9 +251,11 @@ namespace exxen2._0.capaVisual.Administrador
                     throw new InvalidOperationException("Selecciona un usuario.");
                 if (!ValidarFormulario(false))
                     return;
+                var idUsuario = idSeleccionado;
                 logica.Modificar(LeerUsuario(), clave.Text, fotoSeleccionada == null ? null : fotoSeleccionada.Contenido);
                 Cargar();
-                nuevo_Click(null, EventArgs.Empty);
+                SeleccionarUsuario(idUsuario);
+                UsuarioActualizado?.Invoke(this, new UsuarioActualizadoEventArgs(idUsuario));
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Usuario actualizado correctamente.");
             }
             catch (Exception ex)
@@ -474,6 +494,16 @@ namespace exxen2._0.capaVisual.Administrador
                 fotoUsuario.Image = null;
             }
         }
+    }
 
+    /* Identifica al usuario que se acaba de modificar. */
+    public sealed class UsuarioActualizadoEventArgs : EventArgs
+    {
+        public UsuarioActualizadoEventArgs(int idUsuarioSistema)
+        {
+            IdUsuarioSistema = idUsuarioSistema;
+        }
+
+        public int IdUsuarioSistema { get; private set; }
     }
 }

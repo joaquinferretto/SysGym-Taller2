@@ -7,22 +7,24 @@ using exxen2._0.capaDatos.Repositorios;
 namespace exxen2._0.capaLogica
 {
     /* Coordina las operaciones y validaciones de negocio de ejercicios. */
+    // Catálogo de ejercicios: alta, modificación y baja lógica.
+    // La usan GestionEjerciciosFormulario, RutinasEntrenadorFormulario y ReportesFormulario.
     public class EjercicioLogica
     {
         /* Valida y registra ejercicios mediante la unidad de trabajo, conservando sus reglas de alta. */
         public Ejercicio Crear(Ejercicio ejercicio)
         {
             ValidarDatos(ejercicio);
-            using (var datos = new UnidadDeTrabajoGimnasio())
+            using (var datos = new UnidadDeTrabajoGimnasio())  // Abre la conexión; al salir del bloque se cierra sola, aunque haya error (try-with-resources).
             {
                 if (datos.Ejercicios.Existe(e => e.Nombre == ejercicio.Nombre))
                 {
-                    throw new InvalidOperationException("El ejercicio ya existe.");
+                    throw new InvalidOperationException("El ejercicio ya existe.");  // Regla incumplida: corta la operación y el formulario muestra este mensaje.
                 }
 
                 ejercicio.Estado = true;
-                datos.Ejercicios.Agregar(ejercicio);
-                datos.GuardarCambios();
+                datos.Ejercicios.Agregar(ejercicio);  // Deja el objeto listo para INSERT (se ejecuta en GuardarCambios).
+                datos.GuardarCambios();  // EF envía a SQL los INSERT/UPDATE pendientes.
                 return ejercicio;
             }
         }
@@ -33,7 +35,7 @@ namespace exxen2._0.capaLogica
             ValidarDatos(ejercicio);
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                var existente = datos.Ejercicios.Buscar(ejercicio.IdEjercicio);
+                var existente = datos.Ejercicios.Buscar(ejercicio.IdEjercicio);  // Busca por clave primaria; si no existe devuelve null.
                 if (existente == null)
                 {
                     throw new InvalidOperationException("El ejercicio no existe.");
@@ -57,7 +59,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return datos.Ejercicios.ConsultarSoloLectura().SingleOrDefault(e => e.IdEjercicio == idEjercicio);
+                return datos.Ejercicios.ConsultarSoloLectura().SingleOrDefault(e => e.IdEjercicio == idEjercicio);  // Solo lectura: EF no vigila cambios (más liviano para listar).
             }
         }
 
@@ -66,7 +68,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return datos.Ejercicios.ConsultarSoloLectura().Where(e => e.Estado).OrderBy(e => e.Nombre).ToList();
+                return datos.Ejercicios.ConsultarSoloLectura().Where(e => e.Estado).OrderBy(e => e.Nombre).ToList();  // Acá se ejecuta la consulta en SQL y se trae la lista.
             }
         }
 
@@ -75,7 +77,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return datos.Ejercicios.ConsultarSoloLectura().OrderByDescending(e => e.Estado).ThenBy(e => e.Nombre).ToList();
+                return datos.Ejercicios.ConsultarSoloLectura().OrderByDescending(e => e.Estado).ThenBy(e => e.Nombre).ToList();  // Ordena (ORDER BY).
             }
         }
 
@@ -116,7 +118,7 @@ namespace exxen2._0.capaLogica
         {
             if (ejercicio == null)
             {
-                throw new ArgumentNullException("ejercicio");
+                throw new ArgumentNullException("ejercicio");  // Se recibió null donde no corresponde.
             }
 
             if (string.IsNullOrWhiteSpace(ejercicio.Nombre))

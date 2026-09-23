@@ -41,6 +41,7 @@ namespace exxen2._0.capaVisual.Entrenador
                 throw new ArgumentNullException("usuario");
             this.usuario = usuario;
             InitializeComponent();
+            Icon = Properties.Resources.SysGym;
             navegacion = new ControladorNavegacion(this, panelContenido, EstablecerModuloActual);
         }
 
@@ -75,19 +76,19 @@ namespace exxen2._0.capaVisual.Entrenador
             AplicarMenuDesplegable();
         }
 
-        /* Obtiene la descripción del rol o utiliza el nombre predeterminado cuando no está disponible. */
-        private static string NombreRol(UsuarioSistema usuarioActual, string predeterminado)
-        {
-            return usuarioActual.Rol == null || string.IsNullOrWhiteSpace(usuarioActual.Rol.Descripcion) ? predeterminado : usuarioActual.Rol.Descripcion;
-        }
-
-        /* Al hacer clic en btnCambiarCuenta, cierra la sesión para volver al acceso. */
+        /* Recibe el «Título | Subtítulo» de ControladorNavegacion; el Inicio del entrenador es Mis alumnos. */
         private void EstablecerModuloActual(string titulo)
         {
-            var partes = (titulo ?? string.Empty).Split(new[] { '|' }, 2);
-            lblModuloActual.Text = string.IsNullOrWhiteSpace(titulo) ? "Inicio" : partes[0].Trim();
-            lblSubtituloModulo.Text = partes.Length > 1 ? partes[1].Trim() : string.Empty;
-            btnVolver.Enabled = !string.IsNullOrWhiteSpace(titulo);
+            EncabezadoPanelHelper.EstablecerModulo(titulo, "Alumnos asignados y sus rutinas", lblModuloActual, lblSubtituloModulo, btnVolver, "Mis alumnos");
+            if (string.IsNullOrWhiteSpace(titulo))
+                EncabezadoPanelHelper.MarcarOpcionActiva(panelOpciones, btnSocios);
+        }
+
+        /* Resalta la opción elegida y abre su módulo mediante la navegación existente. */
+        private void Abrir(Button opcion, Form formulario, string titulo)
+        {
+            EncabezadoPanelHelper.MarcarOpcionActiva(panelOpciones, opcion);
+            navegacion.AbrirFormulario(formulario, titulo);
         }
 
         private void btnVolver_Click(object origen, EventArgs e)
@@ -106,22 +107,22 @@ namespace exxen2._0.capaVisual.Entrenador
             navegacion.Salir();
         }
 
-        /* Al hacer clic en btnSocios, abre el módulo correspondiente dentro del panel principal. */
+        /* Al hacer clic en Mis alumnos, regresa al inicio del entrenador, que es esa misma pantalla. */
         private void btnSocios_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new MisSociosFormulario(usuario), "Socios y rutinas | Consulta de rutinas de socios");
+            navegacion.VolverAlInicio();
         }
 
         /* Al hacer clic en btnRutinas, abre el módulo correspondiente dentro del panel principal. */
         private void btnRutinas_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new RutinasEntrenadorFormulario(usuario), "Gestionar rutinas | Catálogo y composición de rutinas");
+            Abrir(btnRutinas, new RutinasEntrenadorFormulario(usuario), "Gestionar rutinas | Catálogo y composición de rutinas");
         }
 
         /* Al hacer clic en btnEjercicios, abre el módulo correspondiente dentro del panel principal. */
         private void btnEjercicios_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new GestionEjerciciosFormulario(), "Ejercicios | Catálogo de ejercicios");
+            Abrir(btnEjercicios, new GestionEjerciciosFormulario(), "Ejercicios | Catálogo de ejercicios");
         }
 
         /* Al cargar la pantalla en ejecución, prepara sus datos iniciales sin realizar consultas desde el diseñador. */
@@ -130,8 +131,16 @@ namespace exxen2._0.capaVisual.Entrenador
             if (AyudaFormularioVisual.EnModoDisenio(this))
                 return;
             ConfigurarMenuDesplegable();
-            lblUsuarioRol.Text = "Usuario: " + usuario.Nombre + " " + usuario.Apellido + "    |    Rol: " + NombreRol(usuario, "Entrenador");
-            navegacion.EstablecerContenidoInicio(lblBienvenida, null);
+            EncabezadoPanelHelper.MostrarUsuario(usuario, "Entrenador", picUsuario, lblUsuario, lblRol, lblDni, lblSexo);
+            // Mis alumnos es el inicio: se embebe igual que los módulos y se recarga al volver.
+            var misAlumnos = new MisSociosFormulario(usuario)
+            {
+                TopLevel = false,
+                FormBorderStyle = FormBorderStyle.None,
+                Dock = DockStyle.Fill,
+                MinimumSize = Size.Empty
+            };
+            navegacion.EstablecerContenidoInicio(misAlumnos, misAlumnos.Recargar);
         }
     }
 }

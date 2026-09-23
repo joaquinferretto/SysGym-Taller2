@@ -44,6 +44,8 @@ namespace exxen2._0.capaVisual.Compartido
                 nuevo.Visible = false;
                 guardar.Visible = false;
                 actualizar.Visible = false;
+                darDeBaja.Visible = false;
+                reactivar.Visible = false;
                 nombre.ReadOnly = true;
                 apellido.ReadOnly = true;
                 dni.ReadOnly = true;
@@ -155,7 +157,6 @@ namespace exxen2._0.capaVisual.Compartido
                 altura.Text = socio.Altura.HasValue ? socio.Altura.Value.ToString("0.00") : string.Empty;
                 indicadorErrores.Clear();
                 EstablecerModo(false, socio.Estado);
-                lblFormulario.Text = "Editar socio - Estado: " + (socio.Estado ? "Activo" : "Inactivo");
             }
             catch (Exception ex)
             {
@@ -189,9 +190,12 @@ namespace exxen2._0.capaVisual.Compartido
         /* Habilita las acciones disponibles según la selección y el estado del registro. */
         private void EstablecerModo(bool nuevoRegistro, bool activo)
         {
-            lblFormulario.Text = nuevoRegistro ? "Nuevo socio - Estado inicial: Activo" : "Editar socio";
+            lblFormulario.Text = nuevoRegistro ? "Nuevo socio" : "Editar socio";
+            estadoSocio.Text = activo ? "Activo" : "Inactivo";
             guardar.Enabled = permitirEdicion && nuevoRegistro;
             actualizar.Enabled = permitirEdicion && !nuevoRegistro;
+            darDeBaja.Enabled = permitirEdicion && !nuevoRegistro && activo;
+            reactivar.Enabled = permitirEdicion && !nuevoRegistro && !activo;
         }
 
         /* Selecciona en la grilla el socio solicitado por una pantalla de origen. */
@@ -255,15 +259,72 @@ namespace exxen2._0.capaVisual.Compartido
                     throw new InvalidOperationException("Selecciona un socio.");
                 if (!ValidarFormulario())
                     return;
+                var idSocio = idSeleccionado;
                 logica.Modificar(LeerSocio(), fotoSeleccionada);
                 Cargar();
-                nuevo_Click(null, EventArgs.Empty);
+                SeleccionarSocio(idSocio);
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Socio actualizado correctamente.");
             }
             catch (Exception ex)
             {
                 AyudaFormularioVisual.MostrarError(lblEstado, ex);
             }
+        }
+
+        /* Al hacer clic en dar de baja, confirma y desactiva al socio (y su membresía activa) sin borrar su historial. */
+        private void darDeBaja_Click(object origen, EventArgs e)
+        {
+            try
+            {
+                if (!permitirEdicion || idSeleccionado == 0)
+                    throw new InvalidOperationException("Selecciona un socio.");
+                if (MessageBox.Show("¿Dar de baja al socio seleccionado? También se dará de baja su membresía activa.", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                    return;
+                var idSocio = idSeleccionado;
+                logica.DarDeBaja(idSocio);
+                Cargar();
+                SeleccionarSocio(idSocio);
+                AyudaFormularioVisual.MostrarExito(lblEstado, "Socio dado de baja.");
+            }
+            catch (Exception ex)
+            {
+                AyudaFormularioVisual.MostrarError(lblEstado, ex);
+            }
+        }
+
+        /* Al hacer clic en reactivar, vuelve a dejar activo al socio seleccionado. */
+        private void reactivar_Click(object origen, EventArgs e)
+        {
+            try
+            {
+                if (!permitirEdicion || idSeleccionado == 0)
+                    throw new InvalidOperationException("Selecciona un socio.");
+                var idSocio = idSeleccionado;
+                logica.Reactivar(idSocio);
+                Cargar();
+                SeleccionarSocio(idSocio);
+                AyudaFormularioVisual.MostrarExito(lblEstado, "Socio reactivado. Su membresía se reactiva desde Membresías.");
+            }
+            catch (Exception ex)
+            {
+                AyudaFormularioVisual.MostrarError(lblEstado, ex);
+            }
+        }
+
+        /* Vuelve a seleccionar al socio después de cambiar su estado; si el filtro lo oculta, deja la ficha en blanco. */
+        private void SeleccionarSocio(int idSocio)
+        {
+            foreach (DataGridViewRow fila in tabla.Rows)
+            {
+                if (Convert.ToInt32(fila.Cells[0].Value) != idSocio)
+                    continue;
+                tabla.CurrentCell = fila.Cells[1];
+                fila.Selected = true;
+                tabla_SelectionChanged(tabla, EventArgs.Empty);
+                return;
+            }
+
+            nuevo_Click(null, EventArgs.Empty);
         }
 
         /* Al hacer clic en calcularImc, solicita el cálculo del IMC del socio y muestra el resultado. */

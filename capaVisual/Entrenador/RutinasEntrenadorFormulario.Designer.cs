@@ -8,9 +8,6 @@ namespace exxen2._0.capaVisual.Entrenador
     {
         private IContainer components = null;
         private ErrorProvider indicadorErrores;
-        private Label lblTitulo;
-        private Label lblDescripcion;
-        private Button btnVolver;
         private Label lblEstado;
         private TableLayoutPanel panelContenido;
         private Panel panelDetalle;
@@ -71,9 +68,6 @@ namespace exxen2._0.capaVisual.Entrenador
         {
             this.components = new System.ComponentModel.Container();
             this.indicadorErrores = new System.Windows.Forms.ErrorProvider(this.components);
-            this.lblTitulo = new System.Windows.Forms.Label();
-            this.lblDescripcion = new System.Windows.Forms.Label();
-            this.btnVolver = new System.Windows.Forms.Button();
             this.lblEstado = new System.Windows.Forms.Label();
             this.panelContenido = new System.Windows.Forms.TableLayoutPanel();
             this.lblListadoTitulo = new System.Windows.Forms.Label();
@@ -134,41 +128,6 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             this.indicadorErrores.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.indicadorErrores.ContainerControl = this;
-            //
-            // lblTitulo
-            //
-            this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            this.lblTitulo.ForeColor = System.Drawing.Color.White;
-            this.lblTitulo.Location = new System.Drawing.Point(0, 0);
-            this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(100, 24);
-            this.lblTitulo.TabIndex = 0;
-            this.lblTitulo.Text = "Gestionar rutinas | Catálogo y composición de rutinas";
-            this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblTitulo.Visible = false;
-            //
-            // lblDescripcion
-            //
-            this.lblDescripcion.Location = new System.Drawing.Point(0, 0);
-            this.lblDescripcion.Name = "lblDescripcion";
-            this.lblDescripcion.Size = new System.Drawing.Size(100, 24);
-            this.lblDescripcion.TabIndex = 1;
-            this.lblDescripcion.Visible = false;
-            //
-            // btnVolver
-            //
-            this.btnVolver.BackColor = System.Drawing.Color.White;
-            this.btnVolver.FlatAppearance.BorderSize = 0;
-            this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnVolver.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(66)))), ((int)(((byte)(217)))));
-            this.btnVolver.Location = new System.Drawing.Point(0, 0);
-            this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(100, 24);
-            this.btnVolver.TabIndex = 2;
-            this.btnVolver.Text = "Volver";
-            this.btnVolver.UseVisualStyleBackColor = false;
-            this.btnVolver.Visible = false;
-            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             //
             // lblEstado
             //
@@ -822,9 +781,6 @@ namespace exxen2._0.capaVisual.Entrenador
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
             this.ClientSize = new System.Drawing.Size(1100, 680);
-            this.Controls.Add(this.lblTitulo);
-            this.Controls.Add(this.lblDescripcion);
-            this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.panelContenido);
             this.Controls.Add(this.lblEstado);
             this.Font = new System.Drawing.Font("Segoe UI", 9.5F);

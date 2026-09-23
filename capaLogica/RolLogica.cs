@@ -6,14 +6,15 @@ using exxen2._0.capaDatos.Repositorios;
 namespace exxen2._0.capaLogica
 {
     /* Coordina las operaciones y validaciones de negocio de roles. */
+    // Consulta de roles (Administrador, Entrenador, Recepcionista). La usa GestionUsuariosFormulario.
     public class RolLogica
     {
         /* Busca el registro de roles por identificador y devuelve los datos disponibles. */
         public Rol ObtenerPorId(int idRol)
         {
-            using (var datos = new UnidadDeTrabajoGimnasio())
+            using (var datos = new UnidadDeTrabajoGimnasio())  // Abre la conexión; al salir del bloque se cierra sola, aunque haya error (try-with-resources).
             {
-                return datos.Roles.ConsultarSoloLectura().SingleOrDefault(r => r.IdRol == idRol);
+                return datos.Roles.ConsultarSoloLectura().SingleOrDefault(r => r.IdRol == idRol);  // Solo lectura: EF no vigila cambios (más liviano para listar).
             }
         }
 
@@ -27,7 +28,7 @@ namespace exxen2._0.capaLogica
 
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return datos.Roles.ConsultarSoloLectura().SingleOrDefault(r => r.Descripcion == descripcion);
+                return datos.Roles.ConsultarSoloLectura().SingleOrDefault(r => r.Descripcion == descripcion);  // Devuelve el único que cumple o null.
             }
         }
 
@@ -36,7 +37,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return datos.Roles.ConsultarSoloLectura().Where(r => r.Estado).OrderBy(r => r.Descripcion).ToList();
+                return datos.Roles.ConsultarSoloLectura().Where(r => r.Estado).OrderBy(r => r.Descripcion).ToList();  // Acá se ejecuta la consulta en SQL y se trae la lista.
             }
         }
     }

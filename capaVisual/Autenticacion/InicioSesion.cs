@@ -22,6 +22,7 @@ namespace exxen2._0.capaVisual.Autenticacion
         public InicioSesion()
         {
             InitializeComponent();
+            Icon = Properties.Resources.SysGym;
             usuarioSistemaLogica = new UsuarioSistemaLogica();
             AcceptButton = btnIngresar;
             CancelButton = btnSalir;

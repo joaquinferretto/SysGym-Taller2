@@ -71,7 +71,7 @@ namespace exxen2._0.capaVisual.Recepcionista
                 tablaSocios.Rows.Clear();
                 foreach (var socio in socios)
                     tablaSocios.Rows.Add(socio.NombreCompleto, socio.DNI, socio.Plan,
-                        socio.Vencimiento.ToString("dd/MM/yyyy"), socio.Rutina,
+                        socio.CuotaHasta.HasValue ? socio.CuotaHasta.Value.ToString("dd/MM/yyyy") : "-", socio.Rutina,
                         socio.MembresiaActiva ? "Activa" : "Inactiva");
                 lblSeleccion.Text = seleccionado.NombreCompleto;
                 lblResumen.Text = socios.Count + " socio(s) con asignación activa";

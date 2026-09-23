@@ -42,6 +42,7 @@ namespace exxen2._0.capaVisual.Recepcionista
                 throw new ArgumentNullException("usuario");
             this.usuario = usuario;
             InitializeComponent();
+            Icon = Properties.Resources.SysGym;
             navegacion = new ControladorNavegacion(this, panelContenido, EstablecerModuloActual);
         }
 
@@ -85,19 +86,19 @@ namespace exxen2._0.capaVisual.Recepcionista
             AplicarMenuDesplegable();
         }
 
-        /* Obtiene la descripción del rol o utiliza el nombre predeterminado cuando no está disponible. */
-        private static string NombreRol(UsuarioSistema usuarioActual, string predeterminado)
-        {
-            return usuarioActual.Rol == null || string.IsNullOrWhiteSpace(usuarioActual.Rol.Descripcion) ? predeterminado : usuarioActual.Rol.Descripcion;
-        }
-
-        /* Actualiza el encabezado global y habilita el retorno cuando hay un módulo abierto. */
+        /* Recibe el «Título | Subtítulo» de ControladorNavegacion; al volver a Inicio también quita el resaltado del menú. */
         private void EstablecerModuloActual(string titulo)
         {
-            var partes = (titulo ?? string.Empty).Split(new[] { '|' }, 2);
-            lblModuloActual.Text = string.IsNullOrWhiteSpace(titulo) ? "Inicio" : partes[0].Trim();
-            lblSubtituloModulo.Text = partes.Length > 1 ? partes[1].Trim() : string.Empty;
-            btnVolver.Enabled = !string.IsNullOrWhiteSpace(titulo);
+            EncabezadoPanelHelper.EstablecerModulo(titulo, "Panel del recepcionista", lblModuloActual, lblSubtituloModulo, btnVolver);
+            if (string.IsNullOrWhiteSpace(titulo))
+                EncabezadoPanelHelper.MarcarOpcionActiva(panelOpciones, null);
+        }
+
+        /* Resalta la opción elegida y abre su módulo mediante la navegación existente. */
+        private void Abrir(Button opcion, Form formulario, string titulo)
+        {
+            EncabezadoPanelHelper.MarcarOpcionActiva(panelOpciones, opcion);
+            navegacion.AbrirFormulario(formulario, titulo);
         }
 
         /* Cierra el módulo actual y restaura el inicio de recepción sin cerrar la sesión. */
@@ -120,31 +121,31 @@ namespace exxen2._0.capaVisual.Recepcionista
         /* Al hacer clic en btnSocios, abre el módulo correspondiente dentro del panel principal. */
         private void btnSocios_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new GestionSociosFormulario(Color.FromArgb(5, 150, 105)), "Socios | Gestión de socios e información personal");
+            Abrir(btnSocios, new GestionSociosFormulario(Color.FromArgb(5, 150, 105)), "Socios | Gestión de socios e información personal");
         }
 
         /* Al hacer clic en btnMembresias, abre el módulo correspondiente dentro del panel principal. */
         private void btnMembresias_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new GestionMembresiasFormulario(usuario), "Membresías | Gestión de membresías de socios");
+            Abrir(btnMembresias, new GestionMembresiasFormulario(usuario), "Membresías | Gestión de membresías de socios");
         }
 
         /* Al hacer clic en btnPagos, abre el módulo correspondiente dentro del panel principal. */
         private void btnPagos_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new GestionPagosFormulario(), "Cuotas y pagos | Gestión de cuotas y pagos");
+            Abrir(btnPagos, new GestionPagosFormulario(), "Cuotas y pagos | Gestión de cuotas y pagos");
         }
 
         /* Al hacer clic en btnAsignar, abre el módulo correspondiente dentro del panel principal. */
         private void btnAsignar_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new GestionAsignacionesFormulario(), "Asignar entrenador | Vinculación de entrenadores y membresías");
+            Abrir(btnAsignar, new GestionAsignacionesFormulario(), "Asignar entrenador | Vinculación de entrenadores y membresías");
         }
 
         /* Al hacer clic en btnConsultar, abre el módulo correspondiente dentro del panel principal. */
         private void btnConsultar_Click(object origen, EventArgs e)
         {
-            navegacion.AbrirFormulario(new ConsultaEntrenadoresFormulario(), "Consultar entrenador | Entrenadores y socios asignados");
+            Abrir(btnConsultar, new ConsultaEntrenadoresFormulario(), "Consultar entrenador | Entrenadores y socios asignados");
         }
 
         /* Al cargar la pantalla en ejecución, prepara sus datos iniciales sin realizar consultas desde el diseñador. */
@@ -153,8 +154,8 @@ namespace exxen2._0.capaVisual.Recepcionista
             if (AyudaFormularioVisual.EnModoDisenio(this))
                 return;
             ConfigurarMenuDesplegable();
-            lblUsuarioRol.Text = "Usuario: " + usuario.Nombre + " " + usuario.Apellido + "    |    Rol: " + NombreRol(usuario, "Recepcionista");
-            navegacion.EstablecerContenidoInicio(lblBienvenida, null);
+            EncabezadoPanelHelper.MostrarUsuario(usuario, "Recepcionista", picUsuario, lblUsuario, lblRol, lblDni, lblSexo);
+            navegacion.EstablecerContenidoInicio(panelInicio, null);
         }
     }
 }

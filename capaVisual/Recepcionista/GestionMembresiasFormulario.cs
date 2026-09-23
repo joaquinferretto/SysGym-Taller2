@@ -49,11 +49,9 @@ namespace exxen2._0.capaVisual.Recepcionista
         {
             socio.Validating += socio_Validating;
             plan.Validating += plan_Validating;
-            vencimiento.Validating += vencimiento_Validating;
             socio.SelectedIndexChanged += campoValidado_Cambiado;
             plan.SelectedIndexChanged += campoValidado_Cambiado;
             inicio.ValueChanged += campoValidado_Cambiado;
-            vencimiento.ValueChanged += campoValidado_Cambiado;
         }
 
         /* Carga las opciones y los registros necesarios y prepara el formulario para una nueva operación. */
@@ -126,7 +124,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             cargandoTabla = true;
             tabla.Rows.Clear();
             foreach (var membresiaActual in filtradas)
-                tabla.Rows.Add(membresiaActual.IdMembresia, NombreSocio(membresiaActual), membresiaActual.Socio == null ? "-" : membresiaActual.Socio.DNI, NombrePlan(membresiaActual), membresiaActual.FechaInicio.ToString("dd/MM/yyyy"), membresiaActual.FechaVencimiento.ToString("dd/MM/yyyy"), membresiaActual.Estado ? "Activa" : "Inactiva");
+                tabla.Rows.Add(membresiaActual.IdMembresia, NombreSocio(membresiaActual), membresiaActual.Socio == null ? "-" : membresiaActual.Socio.DNI, NombrePlan(membresiaActual), membresiaActual.FechaInicio.ToString("dd/MM/yyyy"), membresiaActual.Estado ? "Activa" : "Inactiva");
             tabla.ClearSelection();
             cargandoTabla = false;
             lblEstado.Text = tabla.Rows.Count + " membresia(s) encontrada(s)";
@@ -145,12 +143,13 @@ namespace exxen2._0.capaVisual.Recepcionista
             socio.SelectedValue = membresiaSeleccionada.IdSocio;
             plan.SelectedValue = membresiaSeleccionada.IdPlan;
             inicio.Value = membresiaSeleccionada.FechaInicio;
-            vencimiento.Value = membresiaSeleccionada.FechaVencimiento;
+            estadoMembresia.Text = membresiaSeleccionada.Estado ? "Activa" : "Inactiva";
+            inicio.Enabled = false;
             socio.Enabled = false;
             plan.Enabled = true;
             indicadorErrores.Clear();
             EstablecerModo(false);
-            lblFormulario.Text = "Membresía de " + NombreSocio(membresiaSeleccionada) + " - " + (membresiaSeleccionada.Estado ? "Activa" : "Inactiva");
+            lblFormulario.Text = "Membresía de " + NombreSocio(membresiaSeleccionada);
         }
 
         /* Al hacer clic en nuevo, limpia la selección y prepara el registro de nuevos datos. */
@@ -167,7 +166,8 @@ namespace exxen2._0.capaVisual.Recepcionista
             if (plan.Items.Count > 0)
                 plan.SelectedIndex = 0;
             inicio.Value = DateTime.Today;
-            vencimiento.Value = DateTime.Today.AddMonths(1).AddDays(-1);
+            inicio.Enabled = true;
+            estadoMembresia.Text = "Activa";
             indicadorErrores.Clear();
             EstablecerModo(true);
         }
@@ -177,7 +177,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         {
             var puedeCrear = socio.Items.Count > 0 && plan.Items.Count > 0;
             if (nueva)
-                lblFormulario.Text = plan.Items.Count == 0 ? "Primero crea un plan" : (socio.Items.Count == 0 ? "No hay socios disponibles para una nueva membresía" : "Nueva membresía - Estado inicial: Activa");
+                lblFormulario.Text = plan.Items.Count == 0 ? "Primero crea un plan" : (socio.Items.Count == 0 ? "No hay socios disponibles para una nueva membresía" : "Nueva membresía");
             crear.Enabled = nueva && puedeCrear;
             actualizar.Enabled = !nueva;
             habilitar.Enabled = !nueva && membresiaSeleccionada != null && !membresiaSeleccionada.Estado;
@@ -203,7 +203,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             {
                 if (!ValidarFormulario(true))
                     return;
-                logica.Crear(new Membresia { IdSocio = Convert.ToInt32(socio.SelectedValue), IdPlan = Convert.ToInt32(plan.SelectedValue), IdUsuarioSistema = usuario.IdUsuarioSistema, FechaInicio = inicio.Value.Date, FechaVencimiento = vencimiento.Value.Date });
+                logica.Crear(new Membresia { IdSocio = Convert.ToInt32(socio.SelectedValue), IdPlan = Convert.ToInt32(plan.SelectedValue), IdUsuarioSistema = usuario.IdUsuarioSistema, FechaInicio = inicio.Value.Date });
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Membresia creada y primera cuota generada.", true);
@@ -226,7 +226,7 @@ namespace exxen2._0.capaVisual.Recepcionista
                 var idPlan = Convert.ToInt32(plan.SelectedValue);
                 if (idPlan != membresiaSeleccionada.IdPlan)
                     logica.CambiarPlan(membresiaSeleccionada.IdMembresia, idPlan);
-                logica.Modificar(new Membresia { IdMembresia = membresiaSeleccionada.IdMembresia, IdSocio = membresiaSeleccionada.IdSocio, IdPlan = idPlan, IdUsuarioSistema = membresiaSeleccionada.IdUsuarioSistema, FechaInicio = inicio.Value.Date, FechaVencimiento = vencimiento.Value.Date, Estado = membresiaSeleccionada.Estado });
+                logica.Modificar(new Membresia { IdMembresia = membresiaSeleccionada.IdMembresia, IdSocio = membresiaSeleccionada.IdSocio, IdPlan = idPlan, IdUsuarioSistema = membresiaSeleccionada.IdUsuarioSistema, FechaInicio = inicio.Value.Date, Estado = membresiaSeleccionada.Estado });
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Membresia actualizada.");
@@ -338,11 +338,10 @@ namespace exxen2._0.capaVisual.Recepcionista
             AplicarFiltro();
         }
 
-        /* Al cambiar la fecha de inicio de un alta, ajusta el vencimiento del período mensual. */
+        /* Limpia el aviso visual al elegir la fecha de inicio de la membresía. */
         private void inicio_ValueChanged(object origen, EventArgs e)
         {
-            if (idSeleccionado == 0)
-                vencimiento.Value = inicio.Value.Date.AddMonths(1).AddDays(-1);
+            indicadorErrores.SetError(inicio, string.Empty);
         }
 
         /* Al salir del socio de un alta, exige una opción disponible. */
@@ -360,12 +359,6 @@ namespace exxen2._0.capaVisual.Recepcionista
             AyudaFormularioVisual.ValidarCombo(indicadorErrores, plan, "Seleccioná un plan.");
         }
 
-        /* Al salir del vencimiento, comprueba el orden cronológico del período. */
-        private void vencimiento_Validating(object origen, CancelEventArgs e)
-        {
-            ValidarFechas();
-        }
-
         /* Retira el aviso anterior cuando cambia una selección o fecha. */
         private void campoValidado_Cambiado(object origen, EventArgs e)
         {
@@ -374,7 +367,7 @@ namespace exxen2._0.capaVisual.Recepcionista
                 indicadorErrores.SetError(control, string.Empty);
         }
 
-        /* Valida selecciones y fechas antes de crear o modificar una membresía. */
+        /* Valida las selecciones antes de crear o modificar una membresía. */
         private bool ValidarFormulario(bool nueva)
         {
             indicadorErrores.Clear();
@@ -382,17 +375,10 @@ namespace exxen2._0.capaVisual.Recepcionista
             if (nueva)
                 valido = AyudaFormularioVisual.ValidarCombo(indicadorErrores, socio, "Seleccioná un socio.");
             valido = AyudaFormularioVisual.ValidarCombo(indicadorErrores, plan, "Seleccioná un plan.") & valido;
-            valido = ValidarFechas() & valido;
             if (!valido)
-                AyudaFormularioVisual.EnfocarPrimerError(indicadorErrores, socio, plan, inicio, vencimiento);
+                AyudaFormularioVisual.EnfocarPrimerError(indicadorErrores, socio, plan, inicio);
             return valido;
         }
 
-        /* Asocia al vencimiento el error de un rango inválido. */
-        private bool ValidarFechas()
-        {
-            return AyudaFormularioVisual.ValidarConError(indicadorErrores, vencimiento,
-                () => AyudaFormularioVisual.ValidarRangoFechas(inicio, vencimiento, "fecha de inicio", "fecha de vencimiento"));
-        }
     }
 }
