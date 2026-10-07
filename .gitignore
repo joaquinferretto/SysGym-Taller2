@@ -25,3 +25,6 @@ desktop.ini
 docs/*
 !docs/PROJECT_CONTEXT.md
 !docs/REPORTES_Y_COMPROBANTES.md
+
+AGENTS.md
+docs/
