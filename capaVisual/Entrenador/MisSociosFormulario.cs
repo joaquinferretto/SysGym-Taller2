@@ -243,7 +243,11 @@ namespace exxen2._0.capaVisual.Entrenador
             {
                 if (!ValidarSocioSeleccionado()) return;
                 var idSocio = socioSeleccionado.IdSocio;
-                using (var formulario = new RutinasEntrenadorFormulario(usuario, idSocio, modoAdministrador, true)) formulario.ShowDialog(this);
+                using (var formulario = new RutinasEntrenadorFormulario(usuario, idSocio, modoAdministrador, true))
+                {
+                    ContrasteVisual.Aplicar(formulario);
+                    formulario.ShowDialog(this);
+                }
                 Cargar(idSocio);
             }
             catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex); }
@@ -255,7 +259,11 @@ namespace exxen2._0.capaVisual.Entrenador
             {
                 if (!ValidarSocioSeleccionado()) return;
                 var idSocio = socioSeleccionado.IdSocio;
-                using (var formulario = new RutinasEntrenadorFormulario(usuario, idSocio, modoAdministrador)) formulario.ShowDialog(this);
+                using (var formulario = new RutinasEntrenadorFormulario(usuario, idSocio, modoAdministrador))
+                {
+                    ContrasteVisual.Aplicar(formulario);
+                    formulario.ShowDialog(this);
+                }
                 Cargar(idSocio);
             }
             catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex); }

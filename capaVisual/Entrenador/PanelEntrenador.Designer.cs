@@ -65,7 +65,6 @@ namespace exxen2._0.capaVisual.Entrenador
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.panelEncabezado.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picUsuario)).BeginInit();
-            this.panelContenido.SuspendLayout();
             this.SuspendLayout();
             //
             // panelMenu
@@ -249,7 +248,7 @@ namespace exxen2._0.capaVisual.Entrenador
             this.lblUsuario.Name = "lblUsuario";
             this.lblUsuario.Size = new System.Drawing.Size(200, 26);
             this.lblUsuario.TabIndex = 1;
-            this.lblUsuario.Text = "Entrenador de diseno";
+            this.lblUsuario.Text = "Entrenador ";
             this.lblUsuario.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // lblRol
@@ -261,13 +260,13 @@ namespace exxen2._0.capaVisual.Entrenador
             this.lblRol.Name = "lblRol";
             this.lblRol.Size = new System.Drawing.Size(200, 22);
             this.lblRol.TabIndex = 2;
-            this.lblRol.Text = "Entrenador";
+            this.lblRol.Text = "nombre Entrenador";
             this.lblRol.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // lblDniTitulo
             //
             this.lblDniTitulo.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.lblDniTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(210)))), ((int)(((byte)(254)))));
+            this.lblDniTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(231)))), ((int)(((byte)(255)))));
             this.lblDniTitulo.Location = new System.Drawing.Point(308, 20);
             this.lblDniTitulo.Name = "lblDniTitulo";
             this.lblDniTitulo.Size = new System.Drawing.Size(110, 18);
@@ -288,7 +287,7 @@ namespace exxen2._0.capaVisual.Entrenador
             // lblSexoTitulo
             //
             this.lblSexoTitulo.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.lblSexoTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(210)))), ((int)(((byte)(254)))));
+            this.lblSexoTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(231)))), ((int)(((byte)(255)))));
             this.lblSexoTitulo.Location = new System.Drawing.Point(428, 20);
             this.lblSexoTitulo.Name = "lblSexoTitulo";
             this.lblSexoTitulo.Size = new System.Drawing.Size(110, 18);
@@ -376,7 +375,7 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             // PanelEntrenador
             //
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
             this.ClientSize = new System.Drawing.Size(1282, 749);
@@ -384,6 +383,7 @@ namespace exxen2._0.capaVisual.Entrenador
             this.Controls.Add(this.panelEncabezado);
             this.Controls.Add(this.panelMenu);
             this.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.IsMdiContainer = true;
             this.MinimumSize = new System.Drawing.Size(1100, 700);
             this.Name = "PanelEntrenador";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -395,7 +395,6 @@ namespace exxen2._0.capaVisual.Entrenador
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
             this.panelEncabezado.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picUsuario)).EndInit();
-            this.panelContenido.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

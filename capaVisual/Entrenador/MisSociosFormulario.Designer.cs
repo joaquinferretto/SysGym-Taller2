@@ -661,7 +661,7 @@
             // crearPersonalizada
             //
             this.crearPersonalizada.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.crearPersonalizada.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(149)))), ((int)(((byte)(111)))));
+            this.crearPersonalizada.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(120)))), ((int)(((byte)(87)))));
             this.crearPersonalizada.FlatAppearance.BorderSize = 0;
             this.crearPersonalizada.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.crearPersonalizada.Font = new System.Drawing.Font("Segoe UI", 9.5F);

@@ -49,6 +49,7 @@ namespace exxen2._0.capaVisual.Administrador
             Icon = Properties.Resources.SysGym;
             navegacion = new ControladorNavegacion(this, panelContenido, EstablecerModuloActual);
             inicioPanel.SocioDobleClic += inicioPanel_SocioDobleClic;
+            inicioPanel.AccionSocioSolicitada += inicioPanel_AccionSocioSolicitada;
         }
 
         /* Configura las secciones del menú lateral para que puedan expandirse y contraerse. */
@@ -134,7 +135,7 @@ namespace exxen2._0.capaVisual.Administrador
         /* Al hacer clic en btnUsuarios, abre el módulo correspondiente dentro del panel principal. */
         private void btnUsuarios_Click(object origen, EventArgs e)
         {
-            var formulario = new GestionUsuariosFormulario();
+            var formulario = new GestionUsuariosFormulario(usuario);
             formulario.UsuarioActualizado += usuarios_UsuarioActualizado;
             Abrir(btnUsuarios, formulario, "Usuarios y roles | Administración del personal y sus permisos");
         }
@@ -184,7 +185,7 @@ namespace exxen2._0.capaVisual.Administrador
         /* Al hacer clic en btnPagos, abre el módulo correspondiente dentro del panel principal. */
         private void btnPagos_Click(object origen, EventArgs e)
         {
-            Abrir(btnPagos, new GestionPagosFormulario(), "Cuotas y pagos | Gestión de cuotas y pagos");
+            Abrir(btnPagos, new GestionPagosFormulario(0, usuario), "Cuotas y pagos | Gestión de cuotas y pagos");
         }
 
         /* Al hacer clic en btnEjercicios, abre el módulo correspondiente dentro del panel principal. */
@@ -224,6 +225,14 @@ namespace exxen2._0.capaVisual.Administrador
         }
 
         /* Al cargar la pantalla en ejecución, prepara sus datos iniciales sin realizar consultas desde el diseñador. */
+        private void inicioPanel_AccionSocioSolicitada(object origen, exxen2._0.capaVisual.Compartido.Controles.AccionEstadoSocioEventArgs e)
+        {
+            if (e.Accion == exxen2._0.capaVisual.Compartido.Controles.AccionEstadoSocio.VerMembresia)
+                Abrir(btnMembresias, new GestionMembresiasFormulario(usuario, Color.FromArgb(79, 70, 229)), "Membresías | Gestión de membresías de socios");
+            else
+                Abrir(btnPagos, new GestionPagosFormulario(e.IdSocio, usuario), "Cuotas y pagos | Gestión de cuotas y pagos");
+        }
+
         private void PanelAdministrador_Load(object origen, EventArgs e)
         {
             if (AyudaFormularioVisual.EnModoDisenio(this))

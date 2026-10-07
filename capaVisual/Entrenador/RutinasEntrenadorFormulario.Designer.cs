@@ -234,7 +234,7 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             // nuevaRutina
             //
-            this.nuevaRutina.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(149)))), ((int)(((byte)(111)))));
+            this.nuevaRutina.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(120)))), ((int)(((byte)(87)))));
             this.nuevaRutina.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.nuevaRutina.FlatAppearance.BorderSize = 0;
             this.nuevaRutina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -428,7 +428,7 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             // agregarEjercicio
             //
-            this.agregarEjercicio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(149)))), ((int)(((byte)(111)))));
+            this.agregarEjercicio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(120)))), ((int)(((byte)(87)))));
             this.agregarEjercicio.FlatAppearance.BorderSize = 0;
             this.agregarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.agregarEjercicio.ForeColor = System.Drawing.Color.White;

@@ -11,7 +11,7 @@ $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Drawing
 $raizPaleta = Split-Path $PSScriptRoot -Parent
 $paleta = @{
-    Alta = @('#09956F', '#FFFFFF')
+    Alta = @('#047857', '#FFFFFF')
     Confirmar = @('#4842D9', '#FFFFFF')
     Quitar = @('#FFF0F0', '#AD2424')
     Secundaria = @('#E7EDF7', '#30445F')

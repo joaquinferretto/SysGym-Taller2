@@ -16,6 +16,8 @@ namespace exxen2._0.capaDatos.Entidades
             MembresiasComoEntrenador = new HashSet<MembresiaEntrenador>();  // Colección vacía para no trabajar con null.
             RutinasComoEntrenador = new HashSet<Rutina>();  // Colección vacía para no trabajar con null.
             Estado = true;
+            PagosRegistrados = new HashSet<Pago>();
+            UsuariosCreados = new HashSet<UsuarioSistema>();
         }
 
         [Key]  // Clave primaria (PK): SQL la numera sola (IDENTITY).
@@ -59,10 +61,14 @@ namespace exxen2._0.capaDatos.Entidades
         [StringLength(1)]  // Máximo 1 carácter.
         [Column(TypeName = "char")]  // En SQL es CHAR (texto de largo fijo).
         public string Sexo { get; set; }  // Un carácter: M o F (opcional).
-        public int IdRol { get; set; }  // FK: qué rol tiene (define qué panel abre).
+        public int IdRol { get; set; }  // FK del rol.
+        public int? IdUsuarioCreador { get; set; }  // NULL para usuarios anteriores o bootstrap.
 
         [ForeignKey("IdRol")]  // Une esta navegación con la columna IdRol (clave foránea).
-        public virtual Rol Rol { get; set; }  // Navegación: objeto Rol relacionado (no es columna; se carga con Include).
+        public virtual Rol Rol { get; set; }
+        public virtual UsuarioSistema UsuarioCreador { get; set; }
+        public virtual ICollection<UsuarioSistema> UsuariosCreados { get; set; }
+        public virtual ICollection<Pago> PagosRegistrados { get; set; }  // Navegación: objeto Rol relacionado (no es columna; se carga con Include).
 
         [InverseProperty("UsuarioSistema")]  // Indica que del otro lado la relación es la propiedad UsuarioSistema.
         public virtual ICollection<Membresia> MembresiasRegistradas { get; set; }  // Navegación: membresías que dio de alta este usuario.

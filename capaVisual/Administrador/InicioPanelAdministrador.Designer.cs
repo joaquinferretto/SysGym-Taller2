@@ -14,6 +14,7 @@ namespace exxen2._0.capaVisual.Administrador
         private Label lblTituloCuotas;
         private Label resumenCuotas;
         private DataGridView tablaCuotas;
+        private exxen2._0.capaVisual.Compartido.Controles.EstadoSociosControl estadoSocios;
         private ToolTip ayudaClima;
         private DataGridViewTextBoxColumn colIdMembresia;
         private DataGridViewTextBoxColumn colIdSocio;
@@ -41,6 +42,7 @@ namespace exxen2._0.capaVisual.Administrador
             lblTituloCuotas = new Label();
             resumenCuotas = new Label();
             tablaCuotas = new DataGridView();
+            estadoSocios = new exxen2._0.capaVisual.Compartido.Controles.EstadoSociosControl();
             ayudaClima = new ToolTip(components);
             colIdMembresia = new DataGridViewTextBoxColumn();
             colIdSocio = new DataGridViewTextBoxColumn();
@@ -75,7 +77,7 @@ namespace exxen2._0.capaVisual.Administrador
             estadoClima.AutoSize = false;
             estadoClima.Dock = DockStyle.None;
             estadoClima.Width = 240;
-            estadoClima.ForeColor = Color.FromArgb(100, 116, 139);
+            estadoClima.ForeColor = Color.FromArgb(71, 85, 105);
             estadoClima.Text = "";
             estadoClima.TextAlign = ContentAlignment.MiddleRight;
             listaClima.BackColor = Color.White;
@@ -215,6 +217,11 @@ namespace exxen2._0.capaVisual.Administrador
             tablaCuotas.Size = new Size(896, 364);
             tablaCuotas.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
             Controls.Add(tablaCuotas);
+            estadoSocios.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
+            estadoSocios.Location = new Point(20, 242);
+            estadoSocios.Name = "estadoSocios";
+            estadoSocios.Size = new Size(896, 420);
+            Controls.Add(estadoSocios);
             Load += new System.EventHandler(InicioPanelAdministrador_Load);
         }
     }

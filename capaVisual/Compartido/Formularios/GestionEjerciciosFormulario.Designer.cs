@@ -85,7 +85,7 @@ namespace exxen2._0.capaVisual.Compartido
             ((System.ComponentModel.ISupportInitialize)(this.indicadorErrores)).BeginInit();
             this.SuspendLayout();
             // nuevo
-            this.nuevo.BackColor = System.Drawing.Color.FromArgb(9, 149, 111);
+            this.nuevo.BackColor = System.Drawing.Color.FromArgb(4, 120, 87);
             this.nuevo.FlatAppearance.BorderSize = 0;
             this.nuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.nuevo.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
@@ -262,7 +262,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.galeriaImagenes.Size = new System.Drawing.Size(694, 278);
             this.galeriaImagenes.TabIndex = 0;
             // agregarImagen
-            this.agregarImagen.BackColor = System.Drawing.Color.FromArgb(9, 149, 111);
+            this.agregarImagen.BackColor = System.Drawing.Color.FromArgb(4, 120, 87);
             this.agregarImagen.FlatAppearance.BorderSize = 0;
             this.agregarImagen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.agregarImagen.Location = new System.Drawing.Point(10, 282);

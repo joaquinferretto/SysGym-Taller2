@@ -132,7 +132,7 @@ namespace exxen2._0.capaVisual.Entrenador
                 return;
             ConfigurarMenuDesplegable();
             EncabezadoPanelHelper.MostrarUsuario(usuario, "Entrenador", picUsuario, lblUsuario, lblRol, lblDni, lblSexo);
-            // Mis alumnos es el inicio: se embebe igual que los módulos y se recarga al volver.
+            // Mis alumnos es el inicio: se embebe en panelContenido (encima del área MDI) y se recarga al volver.
             var misAlumnos = new MisSociosFormulario(usuario)
             {
                 TopLevel = false,
