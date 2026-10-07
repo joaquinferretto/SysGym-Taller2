@@ -7,6 +7,7 @@ using exxen2._0.capaVisual.Compartido;
 using exxen2._0.capaLogica.Navegacion;
 
 using exxen2._0.capaLogica.Utilidades;
+using exxen2._0.capaVisual.Compartido.Controles;
 
 namespace exxen2._0.capaVisual.Recepcionista
 {
@@ -44,6 +45,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             InitializeComponent();
             Icon = Properties.Resources.SysGym;
             navegacion = new ControladorNavegacion(this, panelContenido, EstablecerModuloActual);
+            inicioEstadoSocios.AccionSolicitada += inicioEstadoSocios_AccionSolicitada;
         }
 
         /* Configura las secciones del menú lateral para que puedan expandirse y contraerse. */
@@ -101,6 +103,14 @@ namespace exxen2._0.capaVisual.Recepcionista
             navegacion.AbrirFormulario(formulario, titulo);
         }
 
+        private void inicioEstadoSocios_AccionSolicitada(object origen, AccionEstadoSocioEventArgs e)
+        {
+            if (e.Accion == AccionEstadoSocio.VerMembresia)
+                Abrir(btnMembresias, new GestionMembresiasFormulario(usuario), "Membresías | Gestión de membresías de socios");
+            else
+                Abrir(btnPagos, new GestionPagosFormulario(e.IdSocio, usuario), "Cuotas y pagos | Gestión de cuotas y pagos");
+        }
+
         /* Cierra el módulo actual y restaura el inicio de recepción sin cerrar la sesión. */
         private void btnVolver_Click(object origen, EventArgs e)
         {
@@ -133,7 +143,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         /* Al hacer clic en btnPagos, abre el módulo correspondiente dentro del panel principal. */
         private void btnPagos_Click(object origen, EventArgs e)
         {
-            Abrir(btnPagos, new GestionPagosFormulario(), "Cuotas y pagos | Gestión de cuotas y pagos");
+            Abrir(btnPagos, new GestionPagosFormulario(0, usuario), "Cuotas y pagos | Gestión de cuotas y pagos");
         }
 
         /* Al hacer clic en btnAsignar, abre el módulo correspondiente dentro del panel principal. */
@@ -155,7 +165,8 @@ namespace exxen2._0.capaVisual.Recepcionista
                 return;
             ConfigurarMenuDesplegable();
             EncabezadoPanelHelper.MostrarUsuario(usuario, "Recepcionista", picUsuario, lblUsuario, lblRol, lblDni, lblSexo);
-            navegacion.EstablecerContenidoInicio(panelInicio, null);
+            navegacion.EstablecerContenidoInicio(panelInicio, inicioEstadoSocios.Actualizar);
+            inicioEstadoSocios.Actualizar();
         }
     }
 }

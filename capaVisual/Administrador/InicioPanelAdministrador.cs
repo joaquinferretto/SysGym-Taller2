@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using exxen2._0.capaLogica;
+using exxen2._0.capaVisual.Compartido.Controles;
 
 namespace exxen2._0.capaVisual.Administrador
 {
@@ -14,6 +15,7 @@ namespace exxen2._0.capaVisual.Administrador
     public sealed partial class InicioPanelAdministrador : UserControl
     {
         public event EventHandler<SocioEstadoCuentaEventArgs> SocioDobleClic;
+        public event EventHandler<AccionEstadoSocioEventArgs> AccionSocioSolicitada;
         private ClimaLogica clima;
         private CuotaMembresiaLogica cuotas;
         private bool cargando;
@@ -22,6 +24,11 @@ namespace exxen2._0.capaVisual.Administrador
         public InicioPanelAdministrador()
         {
             InitializeComponent();
+            estadoSocios.AccionSolicitada += (origen, e) =>
+            {
+                var evento = AccionSocioSolicitada;
+                if (evento != null) evento(this, e);
+            };
         }
 
         public async void Actualizar()
@@ -30,7 +37,7 @@ namespace exxen2._0.capaVisual.Administrador
             cargando = true;
             try
             {
-                CargarEstadoCuotas();
+                estadoSocios.Actualizar();
                 await CargarClimaAsincrono();
             }
             finally { cargando = false; }

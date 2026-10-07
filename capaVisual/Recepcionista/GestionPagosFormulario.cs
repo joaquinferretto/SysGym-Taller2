@@ -9,6 +9,7 @@ using exxen2._0.capaLogica;
 using exxen2._0.capaVisual.Compartido;
 
 using exxen2._0.capaLogica.Utilidades;
+using exxen2._0.capaLogica.Reportes;
 
 namespace exxen2._0.capaVisual.Recepcionista
 {
@@ -16,18 +17,34 @@ namespace exxen2._0.capaVisual.Recepcionista
     [DesignerCategory("Form")]
     public partial class GestionPagosFormulario : Form
     {
-        private readonly PagoLogica logica = new PagoLogica();
+        private readonly PagoLogica logica;
         private readonly CuotaMembresiaLogica cuotas = new CuotaMembresiaLogica();
         private readonly MembresiaLogica membresias = new MembresiaLogica();
+        private readonly ReportesPagosServicio reportes = new ReportesPagosServicio();
+        private readonly int idSocioInicial;
         private List<CuotaMembresia> cuotasCargadas = new List<CuotaMembresia>();
         private List<OpcionMembresiaPago> membresiasCargadas = new List<OpcionMembresiaPago>();
         private int idCuotaSeleccionada;
         private int idPagoSeleccionado;
         private bool cargandoTabla;
         private bool actualizandoFormulario;
+        private readonly int idUsuarioAutenticado;
         /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
         public GestionPagosFormulario()
+            : this(0, null)
         {
+        }
+
+        public GestionPagosFormulario(int idSocio)
+            : this(idSocio, null)
+        {
+        }
+
+        public GestionPagosFormulario(int idSocio, UsuarioSistema usuarioActual)
+        {
+            idSocioInicial = idSocio;
+            idUsuarioAutenticado = usuarioActual == null ? 0 : usuarioActual.IdUsuarioSistema;
+            logica = new PagoLogica(idUsuarioAutenticado);
             InitializeComponent();
             // Selecciones iniciales: el Designer no serializa SelectedIndex.
             filtroEstado.SelectedIndex = 0;
@@ -53,10 +70,19 @@ namespace exxen2._0.capaVisual.Recepcionista
         {
             try
             {
-                CargarMembresias();
-                CargarMetodosPago();
-                Cargar();
-                nuevo_Click(null, EventArgs.Empty);
+            CargarMembresias();
+            CargarMetodosPago();
+            Cargar();
+            nuevo_Click(null, EventArgs.Empty);
+            if (idSocioInicial > 0)
+            {
+                var opcion = membresiasCargadas.FirstOrDefault(m => m.IdSocio == idSocioInicial);
+                if (opcion != null)
+                {
+                    membresia.SelectedValue = opcion.IdMembresia;
+                    SeleccionarPrimeraPendiente();
+                }
+            }
             }
             catch (Exception ex)
             {
@@ -67,7 +93,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         /* Carga las membresías disponibles y sus datos de presentación para seleccionarlas. */
         private void CargarMembresias()
         {
-            membresiasCargadas = membresias.ListarParaGestion().Select(m => new OpcionMembresiaPago { IdMembresia = m.IdMembresia, Habilitada = m.Estado, Texto = NombreSocio(m) + " - " + NombrePlan(m) + (m.Estado ? string.Empty : " (inactiva)") }).ToList();
+            membresiasCargadas = membresias.ListarParaGestion().Select(m => new OpcionMembresiaPago { IdMembresia = m.IdMembresia, IdSocio = m.IdSocio, Habilitada = m.Estado, Texto = NombreSocio(m) + " - " + NombrePlan(m) + (m.Estado ? string.Empty : " (inactiva)") }).ToList();
             actualizandoFormulario = true;
             membresia.DataSource = membresiasCargadas;
             membresia.DisplayMember = "Texto";
@@ -127,6 +153,8 @@ namespace exxen2._0.capaVisual.Recepcionista
             var seleccionada = cuotasCargadas.FirstOrDefault(c => c.IdCuotaMembresia == idCuota);
             if (seleccionada != null)
                 MostrarCuota(seleccionada);
+            else
+                ActualizarExportaciones();
         }
 
         /* Al hacer clic en nuevo, limpia la selección y prepara el registro de nuevos datos. */
@@ -141,6 +169,7 @@ namespace exxen2._0.capaVisual.Recepcionista
                 membresia.SelectedValue = primeraActiva.IdMembresia;
             actualizandoFormulario = false;
             SeleccionarPrimeraPendiente();
+            ActualizarExportaciones();
         }
 
         /* Al elegir otra membresía, prepara su primera cuota pendiente si no se están cargando los controles. */
@@ -177,6 +206,8 @@ namespace exxen2._0.capaVisual.Recepcionista
             actualizandoFormulario = true;
             idCuotaSeleccionada = seleccionada.IdCuotaMembresia;
             idPagoSeleccionado = seleccionada.IdRegistroPago ?? 0;
+            var registrador = seleccionada.Pago == null ? null : seleccionada.Pago.UsuarioRegistro;
+            lblRegistradoPor.Text = "Registrado por: " + (registrador == null ? "Sin información" : registrador.Nombre + " " + registrador.Apellido);
             membresia.SelectedValue = seleccionada.IdMembresia;
             cuota.Text = Periodo(seleccionada);
             importe.Text = seleccionada.Importe.ToString("0.00");
@@ -194,6 +225,7 @@ namespace exxen2._0.capaVisual.Recepcionista
 
             actualizandoFormulario = false;
             EstablecerModo(seleccionada, modoNuevo);
+            ActualizarExportaciones();
         }
 
         /* Limpia la selección y deshabilita las operaciones cuando no hay una cuota disponible. */
@@ -202,12 +234,15 @@ namespace exxen2._0.capaVisual.Recepcionista
             indicadorErrores.Clear();
             idCuotaSeleccionada = 0;
             idPagoSeleccionado = 0;
+            lblRegistradoPor.Text = "Registrado por: Sin información";
             cuota.Clear();
             importe.Clear();
             lblFormulario.Text = mensaje;
             registrar.Enabled = false;
             anular.Enabled = false;
             reembolsar.Enabled = false;
+            exportarComprobante.Enabled = false;
+            exportarHistorial.Enabled = false;
             importe.ReadOnly = true;
             metodo.Enabled = false;
             estado.Enabled = false;
@@ -286,6 +321,56 @@ namespace exxen2._0.capaVisual.Recepcionista
             }
         }
 
+        private void exportarComprobante_Click(object origen, EventArgs e)
+        {
+            if (idPagoSeleccionado <= 0) return;
+            try
+            {
+                dialogoPdf.FileName = reportes.NombreComprobanteSugerido(idPagoSeleccionado);
+                if (dialogoPdf.ShowDialog(this) != DialogResult.OK) return;
+                reportes.GenerarComprobante(idPagoSeleccionado, dialogoPdf.FileName);
+                MessageBox.Show(this, "El comprobante se exportó correctamente.", "Exportación", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, "El archivo no pudo generarse. " + ex.Message, "Error al exportar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void exportarHistorial_Click(object origen, EventArgs e)
+        {
+            var socio = ObtenerSocioSeleccionado();
+            if (socio <= 0) return;
+            try
+            {
+                dialogoPdf.FileName = reportes.NombreHistorialSugerido(socio);
+                if (dialogoPdf.ShowDialog(this) != DialogResult.OK) return;
+                reportes.GenerarHistorial(socio, dialogoPdf.FileName);
+                MessageBox.Show(this, "El historial de pagos se exportó correctamente.", "Exportación", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, "El archivo no pudo generarse. " + ex.Message, "Error al exportar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private int ObtenerSocioSeleccionado()
+        {
+            var opcion = membresia.SelectedItem as OpcionMembresiaPago;
+            return opcion == null ? 0 : opcion.IdSocio;
+        }
+
+        private void ActualizarExportaciones()
+        {
+            var seleccionada = cuotasCargadas.FirstOrDefault(c => c.IdCuotaMembresia == idCuotaSeleccionada);
+            var pagado = seleccionada != null && seleccionada.EstadoPago == EstadosCuota.Pagada &&
+                seleccionada.Pago != null && seleccionada.Pago.Estado == EstadosTransaccionPago.Aprobado;
+            exportarComprobante.Enabled = pagado;
+            var idSocio = ObtenerSocioSeleccionado();
+            exportarHistorial.Enabled = idSocio > 0 && cuotasCargadas.Any(c => c.Membresia != null && c.Membresia.IdSocio == idSocio &&
+                c.EstadoPago == EstadosCuota.Pagada && c.Pago != null && c.Pago.Estado == EstadosTransaccionPago.Aprobado);
+        }
+
         /* Compone el nombre que se muestra en pantalla y contempla socios no disponibles. */
         private static string NombreSocio(Membresia m)
         {
@@ -322,6 +407,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         private sealed class OpcionMembresiaPago
         {
             public int IdMembresia { get; set; }
+            public int IdSocio { get; set; }
             public string Texto { get; set; }
             public bool Habilitada { get; set; }
         }

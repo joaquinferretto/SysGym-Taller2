@@ -8,8 +8,9 @@ namespace exxen2._0.capaVisual.Recepcionista
     {
         private IContainer components;
         private ErrorProvider indicadorErrores;
+        private Label lblRegistradoPor;
         private Label lblEstado; private TableLayoutPanel panelContenido; private Panel panelListado; private Label lblListado; private Label lblAyuda; private Panel panelFiltro; private Label lblFiltro; private Panel panelDetalle; private Label lblFormulario; private Label lblMembresia; private Label lblCuota; private Label lblImporte; private Label lblMetodo; private Label lblEstadoPago; private DataGridView tabla; private DataGridViewTextBoxColumn colIdCuota; private DataGridViewTextBoxColumn colIdPago; private DataGridViewTextBoxColumn colSocio; private DataGridViewTextBoxColumn colDni; private DataGridViewTextBoxColumn colPlan; private DataGridViewTextBoxColumn colPeriodo; private DataGridViewTextBoxColumn colImporte; private DataGridViewTextBoxColumn colEstadoTabla;
-        private TextBox buscador; private ComboBox filtroEstado; private ComboBox membresia; private TextBox cuota; private TextBox importe; private ComboBox metodo; private ComboBox estado; private Button nuevo; private Button registrar; private Button anular; private Button reembolsar;
+        private TextBox buscador; private ComboBox filtroEstado; private ComboBox membresia; private TextBox cuota; private TextBox importe; private ComboBox metodo; private ComboBox estado; private Button nuevo; private Button registrar; private Button anular; private Button reembolsar; private Button exportarComprobante; private Button exportarHistorial; private SaveFileDialog dialogoPdf;
 
         protected override void Dispose(bool liberarRecursos) { if (liberarRecursos && components != null) components.Dispose(); base.Dispose(liberarRecursos); }
 
@@ -45,11 +46,16 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.lblMetodo = new System.Windows.Forms.Label();
             this.metodo = new System.Windows.Forms.ComboBox();
             this.lblEstadoPago = new System.Windows.Forms.Label();
+            this.lblRegistradoPor = new System.Windows.Forms.Label();
             this.estado = new System.Windows.Forms.ComboBox();
             this.nuevo = new System.Windows.Forms.Button();
             this.registrar = new System.Windows.Forms.Button();
             this.anular = new System.Windows.Forms.Button();
             this.reembolsar = new System.Windows.Forms.Button();
+            this.exportarComprobante = new System.Windows.Forms.Button();
+            this.exportarHistorial = new System.Windows.Forms.Button();
+            this.dialogoPdf = new System.Windows.Forms.SaveFileDialog();
+            this.components.Add(this.dialogoPdf);
             this.indicadorErrores = new System.Windows.Forms.ErrorProvider(this.components);
             this.panelContenido.SuspendLayout();
             this.panelListado.SuspendLayout();
@@ -297,10 +303,13 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.panelDetalle.Controls.Add(this.metodo);
             this.panelDetalle.Controls.Add(this.lblEstadoPago);
             this.panelDetalle.Controls.Add(this.estado);
+            this.panelDetalle.Controls.Add(this.lblRegistradoPor);
             this.panelDetalle.Controls.Add(this.nuevo);
             this.panelDetalle.Controls.Add(this.registrar);
             this.panelDetalle.Controls.Add(this.anular);
             this.panelDetalle.Controls.Add(this.reembolsar);
+            this.panelDetalle.Controls.Add(this.exportarComprobante);
+            this.panelDetalle.Controls.Add(this.exportarHistorial);
             this.panelDetalle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelDetalle.Location = new System.Drawing.Point(664, 16);
@@ -429,6 +438,13 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.lblEstadoPago.TabIndex = 9;
             this.lblEstadoPago.Text = "Estado:";
             this.lblEstadoPago.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblRegistradoPor.AutoSize = false;
+            this.lblRegistradoPor.Location = new System.Drawing.Point(16, 240);
+            this.lblRegistradoPor.Name = "lblRegistradoPor";
+            this.lblRegistradoPor.Size = new System.Drawing.Size(348, 20);
+            this.lblRegistradoPor.TabIndex = 17;
+            this.lblRegistradoPor.Text = "Registrado por: Sin información";
+            this.lblRegistradoPor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // estado
             //
@@ -473,7 +489,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.registrar.Name = "registrar";
             this.registrar.Size = new System.Drawing.Size(112, 38);
             this.registrar.TabIndex = 12;
-            this.registrar.Text = "Registrar";
+            this.registrar.Text = "Registrar pago";
             this.registrar.UseVisualStyleBackColor = false;
             this.registrar.Click += new System.EventHandler(this.registrar_Click);
             //
@@ -506,6 +522,31 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.reembolsar.Text = "Reembolsar";
             this.reembolsar.UseVisualStyleBackColor = false;
             this.reembolsar.Click += new System.EventHandler(this.reembolsar_Click);
+            //
+            // exportarComprobante
+            //
+            this.exportarComprobante.Enabled = false;
+            this.exportarComprobante.Location = new System.Drawing.Point(16, 356);
+            this.exportarComprobante.Name = "exportarComprobante";
+            this.exportarComprobante.Size = new System.Drawing.Size(170, 38);
+            this.exportarComprobante.TabIndex = 15;
+            this.exportarComprobante.Text = "Exportar comprobante";
+            this.exportarComprobante.UseVisualStyleBackColor = true;
+            this.exportarComprobante.Click += new System.EventHandler(this.exportarComprobante_Click);
+            //
+            // exportarHistorial
+            //
+            this.exportarHistorial.Enabled = false;
+            this.exportarHistorial.Location = new System.Drawing.Point(194, 356);
+            this.exportarHistorial.Name = "exportarHistorial";
+            this.exportarHistorial.Size = new System.Drawing.Size(170, 38);
+            this.exportarHistorial.TabIndex = 16;
+            this.exportarHistorial.Text = "Exportar historial";
+            this.exportarHistorial.UseVisualStyleBackColor = true;
+            this.exportarHistorial.Click += new System.EventHandler(this.exportarHistorial_Click);
+            this.dialogoPdf.DefaultExt = "pdf";
+            this.dialogoPdf.Filter = "Documento PDF (*.pdf)|*.pdf";
+            this.dialogoPdf.AddExtension = true;
             //
             // indicadorErrores
             //

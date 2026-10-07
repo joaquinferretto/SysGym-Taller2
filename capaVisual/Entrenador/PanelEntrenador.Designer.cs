@@ -65,7 +65,6 @@ namespace exxen2._0.capaVisual.Entrenador
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.panelEncabezado.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picUsuario)).BeginInit();
-            this.panelContenido.SuspendLayout();
             this.SuspendLayout();
             //
             // panelMenu
@@ -249,7 +248,7 @@ namespace exxen2._0.capaVisual.Entrenador
             this.lblUsuario.Name = "lblUsuario";
             this.lblUsuario.Size = new System.Drawing.Size(200, 26);
             this.lblUsuario.TabIndex = 1;
-            this.lblUsuario.Text = "Entrenador de diseno";
+            this.lblUsuario.Text = "Entrenador ";
             this.lblUsuario.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // lblRol
@@ -261,7 +260,7 @@ namespace exxen2._0.capaVisual.Entrenador
             this.lblRol.Name = "lblRol";
             this.lblRol.Size = new System.Drawing.Size(200, 22);
             this.lblRol.TabIndex = 2;
-            this.lblRol.Text = "Entrenador";
+            this.lblRol.Text = "nombre Entrenador";
             this.lblRol.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // lblDniTitulo
@@ -376,7 +375,7 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             // PanelEntrenador
             //
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
             this.ClientSize = new System.Drawing.Size(1282, 749);
@@ -384,11 +383,11 @@ namespace exxen2._0.capaVisual.Entrenador
             this.Controls.Add(this.panelEncabezado);
             this.Controls.Add(this.panelMenu);
             this.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.IsMdiContainer = true;
             this.MinimumSize = new System.Drawing.Size(1100, 700);
             this.Name = "PanelEntrenador";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SysGym";
-            this.IsMdiContainer = true;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.PanelEntrenador_Load);
             this.panelMenu.ResumeLayout(false);
@@ -396,7 +395,6 @@ namespace exxen2._0.capaVisual.Entrenador
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
             this.panelEncabezado.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picUsuario)).EndInit();
-            this.panelContenido.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

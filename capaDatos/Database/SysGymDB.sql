@@ -29,12 +29,16 @@ CREATE TABLE UsuarioSistema (
     Sexo CHAR(1) NULL,
     Estado BIT NOT NULL DEFAULT 1,
     IdRol INT NOT NULL,
+    IdUsuarioCreador INT NULL,
 
     CONSTRAINT CK_UsuarioSistema_Salario
         CHECK (Salario >= 0),
 
     CONSTRAINT FK_UsuarioSistema_Rol
-        FOREIGN KEY (IdRol) REFERENCES Rol(IdRol)
+        FOREIGN KEY (IdRol) REFERENCES Rol(IdRol),
+
+    CONSTRAINT FK_UsuarioSistema_Creador
+        FOREIGN KEY (IdUsuarioCreador) REFERENCES UsuarioSistema(IdUsuarioSistema)
 );
 GO
 
@@ -203,6 +207,7 @@ CREATE TABLE Pago (
     Importe DECIMAL(18,2) NOT NULL,
     Estado NVARCHAR(20) NOT NULL DEFAULT 'Pendiente',
     IdMetodoPago INT NOT NULL,
+    IdUsuarioRegistro INT NULL,
 
     CONSTRAINT CK_Pago_Importe
         CHECK (Importe > 0),
@@ -211,7 +216,10 @@ CREATE TABLE Pago (
         CHECK (Estado IN ('Pendiente', 'Aprobado', 'Rechazado', 'Anulado', 'Reembolsado')),
 
     CONSTRAINT FK_Pago_MetodoPago
-        FOREIGN KEY (IdMetodoPago) REFERENCES MetodoPago(IdMetodoPago)
+        FOREIGN KEY (IdMetodoPago) REFERENCES MetodoPago(IdMetodoPago),
+
+    CONSTRAINT FK_Pago_UsuarioRegistro
+        FOREIGN KEY (IdUsuarioRegistro) REFERENCES UsuarioSistema(IdUsuarioSistema)
 );
 GO
 
@@ -1700,7 +1708,7 @@ VALUES
     ('20260901', '20260930', 15000, N'Pendiente', NULL, (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'30268471') AND FechaInicio = '20260901')),
     ('20260901', '20260930', 15000, N'Pendiente', NULL, (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'41307529') AND FechaInicio = '20260901'));
 
-/* Asignacion de entrenador: Lukas Becker acompana a las 15 membresias Premium. */
+/* Asignacion de entrenador: Lukas Becker acompaña a las 15 membresias Premium. */
 INSERT INTO MembresiaEntrenador (Estado, IdMembresia, IdEntrenador)
 VALUES
     (1, (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'38514072') AND FechaInicio = '20260901'), (SELECT IdUsuarioSistema FROM UsuarioSistema WHERE Username = N'lukas.becker')),

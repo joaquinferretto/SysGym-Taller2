@@ -30,7 +30,15 @@ namespace exxen2._0.capaLogica
         /* Valida, copia la foto seleccionada a Datos y registra solo su ruta relativa. */
         public UsuarioSistema Crear(UsuarioSistema usuario, string clave, byte[] fotoContenido)
         {
+            return Crear(usuario, clave, fotoContenido, 0);
+        }
+
+        public UsuarioSistema Crear(UsuarioSistema usuario, string clave, byte[] fotoContenido, int idUsuarioCreador)
+        {
+            if (idUsuarioCreador <= 0)
+                throw new InvalidOperationException("No hay un usuario autenticado para registrar el alta.");
             ValidarDatos(usuario);
+            usuario.IdUsuarioCreador = idUsuarioCreador;
             if (string.IsNullOrWhiteSpace(clave))
             {
                 throw new InvalidOperationException("La contraseña es obligatoria.");  // Regla incumplida: corta la operación y el formulario muestra este mensaje.
@@ -126,7 +134,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return datos.UsuariosSistema.ConsultarSoloLectura("Rol").SingleOrDefault(u => u.IdUsuarioSistema == idUsuarioSistema);  // Solo lectura: EF no vigila cambios (más liviano para listar).
+                return datos.UsuariosSistema.ConsultarSoloLectura("Rol", "UsuarioCreador").SingleOrDefault(u => u.IdUsuarioSistema == idUsuarioSistema);  // Solo lectura: EF no vigila cambios (más liviano para listar).
             }
         }
 

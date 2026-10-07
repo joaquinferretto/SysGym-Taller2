@@ -29,10 +29,12 @@ namespace exxen2._0.capaDatos.Entidades
         [Required]  // Obligatorio: la columna no acepta NULL.
         [StringLength(20)]  // Máximo 20 caracteres.
         public string Estado { get; set; }  // Pendiente, Aprobado, Rechazado, Anulado o Reembolsado.
-        public int IdMetodoPago { get; set; }  // FK: con qué se pagó.
+        public int IdMetodoPago { get; set; }  // FK del método de pago.
+        public int? IdUsuarioRegistro { get; set; }  // NULL para pagos historicos; los nuevos se asignan desde la sesion.
 
         [ForeignKey("IdMetodoPago")]  // Une esta navegación con la columna IdMetodoPago (clave foránea).
         public virtual MetodoPago MetodoPago { get; set; }  // Navegación: objeto MetodoPago relacionado (no es columna; se carga con Include).
+        public virtual UsuarioSistema UsuarioRegistro { get; set; }
         public virtual ICollection<CuotaMembresia> Cuotas { get; set; }  // Navegación: cuota que este pago canceló.
     }
 }

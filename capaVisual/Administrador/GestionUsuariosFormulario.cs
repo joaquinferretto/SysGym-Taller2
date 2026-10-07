@@ -19,6 +19,7 @@ namespace exxen2._0.capaVisual.Administrador
     {
         private readonly UsuarioSistemaLogica logica = new UsuarioSistemaLogica();
         private readonly RolLogica roles = new RolLogica();
+        private readonly int idUsuarioAutenticado;
         /* Avisa al panel contenedor que se guardaron cambios de un usuario (por ejemplo, para refrescar su encabezado). */
         public event EventHandler<UsuarioActualizadoEventArgs> UsuarioActualizado;
         private List<UsuarioSistema> usuariosCargados = new List<UsuarioSistema>();
@@ -29,7 +30,13 @@ namespace exxen2._0.capaVisual.Administrador
         private string fotoRutaSeleccionada;
         /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
         public GestionUsuariosFormulario()
+            : this(null)
         {
+        }
+
+        public GestionUsuariosFormulario(UsuarioSistema usuarioActual)
+        {
+            idUsuarioAutenticado = usuarioActual == null ? 0 : usuarioActual.IdUsuarioSistema;
             InitializeComponent();
             ConfigurarValidaciones();
         }
@@ -135,6 +142,7 @@ namespace exxen2._0.capaVisual.Administrador
                 salario.Text = usuario.Salario.ToString("0.00", CultureInfo.CurrentCulture);
                 if (usuario.Rol != null)
                     rol.SelectedValue = usuario.IdRol;
+                lblCreadoPor.Text = "Creado por: " + (usuario.UsuarioCreador == null ? "Sin información" : usuario.UsuarioCreador.Nombre + " " + usuario.UsuarioCreador.Apellido);
                 indicadorErrores.Clear();
                 EstablecerModo(false, usuario.Estado);
             }
@@ -164,6 +172,7 @@ namespace exxen2._0.capaVisual.Administrador
         private void nuevo_Click(object origen, EventArgs e)
         {
             idSeleccionado = 0;
+            lblCreadoPor.Text = "Creado por: Sin información";
             estadoSeleccionado = true;
             fotoSeleccionada = null;
             fotoRutaSeleccionada = null;
@@ -224,7 +233,7 @@ namespace exxen2._0.capaVisual.Administrador
                     return;
                 if (!ValidarFormulario(true))
                     return;
-                logica.Crear(LeerUsuario(), clave.Text, fotoSeleccionada == null ? null : fotoSeleccionada.Contenido);
+                logica.Crear(LeerUsuario(), clave.Text, fotoSeleccionada == null ? null : fotoSeleccionada.Contenido, idUsuarioAutenticado);
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Usuario creado correctamente.", true);

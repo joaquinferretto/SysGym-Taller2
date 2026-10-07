@@ -18,10 +18,23 @@ namespace exxen2._0.capaLogica
     // (Pendiente/Pagada) y la deuda de la membresía, todo en una transacción. La usa GestionPagosFormulario.
     public class PagoLogica
     {
+        private readonly int idUsuarioAutenticado;
+
+        public PagoLogica() : this(0)
+        {
+        }
+
+        public PagoLogica(int idUsuarioAutenticado)
+        {
+            this.idUsuarioAutenticado = idUsuarioAutenticado;
+        }
         /* Valida el cobro y lo vincula a su cuota, actualizando la deuda en una misma transacción. */
         public Pago RegistrarPago(Pago pago, int idCuotaMembresia)
         {
+            if (idUsuarioAutenticado <= 0)
+                throw new InvalidOperationException("No hay un usuario autenticado para registrar el pago.");
             ValidarDatos(pago);
+            pago.IdUsuarioRegistro = idUsuarioAutenticado;
             if (pago.Estado == EstadosTransaccionPago.Anulado || pago.Estado == EstadosTransaccionPago.Reembolsado)
             {
                 throw new InvalidOperationException("Un pago nuevo no puede registrarse como anulado o reembolsado.");

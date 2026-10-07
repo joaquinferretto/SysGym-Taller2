@@ -60,6 +60,7 @@ namespace exxen2._0.capaVisual.Administrador
         private DataGridViewTextBoxColumn colRol;
         private DataGridViewTextBoxColumn colSalario;
         private DataGridViewTextBoxColumn colEstado;
+        private Label lblCreadoPor;
 
         protected override void Dispose(bool liberarRecursos)
         {
@@ -88,6 +89,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.btnQuitarFoto.BackColor = System.Drawing.Color.FromArgb(255, 240, 240);
             this.sexo = new System.Windows.Forms.ComboBox();
             this.lblSexo = new System.Windows.Forms.Label();
+            this.lblCreadoPor = new System.Windows.Forms.Label();
 
             this.lblEstado = new System.Windows.Forms.Label();
 
@@ -214,6 +216,13 @@ namespace exxen2._0.capaVisual.Administrador
             this.lblSexo.TabIndex = 16;
             this.lblSexo.Text = "Sexo:";
             this.lblSexo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblCreadoPor.AutoSize = false;
+            this.lblCreadoPor.Location = new System.Drawing.Point(12, 334);
+            this.lblCreadoPor.Name = "lblCreadoPor";
+            this.lblCreadoPor.Size = new System.Drawing.Size(364, 20);
+            this.lblCreadoPor.TabIndex = 17;
+            this.lblCreadoPor.Text = "Creado por: Sin información";
+            this.lblCreadoPor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 
 
 
@@ -795,7 +804,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.nuevo.FlatAppearance.BorderSize = 0;
             this.nuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.nuevo.ForeColor = System.Drawing.Color.White;
-            this.nuevo.Location = new System.Drawing.Point(12, 346);
+            this.nuevo.Location = new System.Drawing.Point(12, 360);
             this.nuevo.Margin = new System.Windows.Forms.Padding(0, 0, 4, 6);
             this.nuevo.Dock = System.Windows.Forms.DockStyle.None;
             this.nuevo.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
@@ -813,7 +822,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.guardar.FlatAppearance.BorderSize = 0;
             this.guardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.guardar.ForeColor = System.Drawing.Color.White;
-            this.guardar.Location = new System.Drawing.Point(132, 346);
+            this.guardar.Location = new System.Drawing.Point(132, 360);
             this.guardar.Margin = new System.Windows.Forms.Padding(0, 0, 4, 6);
             this.guardar.Dock = System.Windows.Forms.DockStyle.None;
             this.guardar.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
@@ -831,7 +840,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.actualizar.FlatAppearance.BorderSize = 0;
             this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.actualizar.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.actualizar.Location = new System.Drawing.Point(252, 346);
+            this.actualizar.Location = new System.Drawing.Point(252, 360);
             this.actualizar.Margin = new System.Windows.Forms.Padding(0, 0, 4, 6);
             this.actualizar.Dock = System.Windows.Forms.DockStyle.None;
             this.actualizar.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
@@ -849,7 +858,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.darDeBaja.FlatAppearance.BorderSize = 0;
             this.darDeBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.darDeBaja.ForeColor = System.Drawing.Color.FromArgb(173, 36, 36);
-            this.darDeBaja.Location = new System.Drawing.Point(12, 386);
+            this.darDeBaja.Location = new System.Drawing.Point(12, 400);
             this.darDeBaja.Margin = new System.Windows.Forms.Padding(0, 0, 4, 6);
             this.darDeBaja.Dock = System.Windows.Forms.DockStyle.None;
             this.darDeBaja.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
@@ -867,7 +876,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.reactivar.FlatAppearance.BorderSize = 0;
             this.reactivar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.reactivar.ForeColor = System.Drawing.Color.FromArgb(22, 101, 52);
-            this.reactivar.Location = new System.Drawing.Point(132, 386);
+            this.reactivar.Location = new System.Drawing.Point(132, 400);
             this.reactivar.Margin = new System.Windows.Forms.Padding(0, 0, 4, 6);
             this.reactivar.Dock = System.Windows.Forms.DockStyle.None;
             this.reactivar.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left;
@@ -930,6 +939,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.contenedorContenido.Panel2.Controls.Add(this.rol);
             this.contenedorContenido.Panel2.Controls.Add(this.lblSexo);
             this.contenedorContenido.Panel2.Controls.Add(this.sexo);
+            this.contenedorContenido.Panel2.Controls.Add(this.lblCreadoPor);
             this.contenedorContenido.Panel2.Controls.Add(this.nuevo);
             this.contenedorContenido.Panel2.Controls.Add(this.guardar);
             this.contenedorContenido.Panel2.Controls.Add(this.actualizar);

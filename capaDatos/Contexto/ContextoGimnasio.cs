@@ -157,6 +157,7 @@ namespace exxen2._0.capaDatos.Contexto
             // Relaciones: HasRequired = FK obligatoria, HasOptional = FK que puede ser NULL, WithMany = el otro lado es una lista,
             // HasForeignKey = columna FK, WillCascadeOnDelete(false) = borrar un padre no borra a sus hijos.
             modelo.Entity<UsuarioSistema>().HasRequired(u => u.Rol).WithMany(r => r.Usuarios).HasForeignKey(u => u.IdRol).WillCascadeOnDelete(false);
+            modelo.Entity<UsuarioSistema>().HasOptional(u => u.UsuarioCreador).WithMany(u => u.UsuariosCreados).HasForeignKey(u => u.IdUsuarioCreador).WillCascadeOnDelete(false);
             modelo.Entity<Membresia>().HasRequired(m => m.Plan).WithMany(p => p.Membresias).HasForeignKey(m => m.IdPlan).WillCascadeOnDelete(false);
             modelo.Entity<Membresia>().HasRequired(m => m.Socio).WithMany(s => s.Membresias).HasForeignKey(m => m.IdSocio).WillCascadeOnDelete(false);
             modelo.Entity<Membresia>().HasRequired(m => m.UsuarioSistema).WithMany(u => u.MembresiasRegistradas).HasForeignKey(m => m.IdUsuarioSistema).WillCascadeOnDelete(false);
@@ -166,6 +167,7 @@ namespace exxen2._0.capaDatos.Contexto
             modelo.Entity<CuotaMembresia>().HasRequired(c => c.Membresia).WithMany(m => m.Cuotas).HasForeignKey(c => c.IdMembresia).WillCascadeOnDelete(false);
             modelo.Entity<CuotaMembresia>().HasOptional(c => c.Pago).WithMany(p => p.Cuotas).HasForeignKey(c => c.IdRegistroPago).WillCascadeOnDelete(false);
             modelo.Entity<Pago>().HasRequired(p => p.MetodoPago).WithMany(mp => mp.Pagos).HasForeignKey(p => p.IdMetodoPago).WillCascadeOnDelete(false);
+            modelo.Entity<Pago>().HasOptional(p => p.UsuarioRegistro).WithMany(u => u.PagosRegistrados).HasForeignKey(p => p.IdUsuarioRegistro).WillCascadeOnDelete(false);
             modelo.Entity<MetodoPago>().HasOptional(mp => mp.MercadoPago).WithMany(mp => mp.MetodosPago).HasForeignKey(mp => mp.IdNroPagoMP).WillCascadeOnDelete(false);
             modelo.Entity<MetodoPago>().HasOptional(mp => mp.PagoEfectivo).WithMany(pe => pe.MetodosPago).HasForeignKey(mp => mp.IdPagoEfectivo).WillCascadeOnDelete(false);
             modelo.Entity<Rutina>().HasRequired(r => r.Entrenador).WithMany(u => u.RutinasComoEntrenador).HasForeignKey(r => r.IdEntrenador).WillCascadeOnDelete(false);

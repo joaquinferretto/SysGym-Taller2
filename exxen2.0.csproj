@@ -113,6 +113,8 @@
     <Compile Include="capaLogica\RutinaLogica.cs" />
     <Compile Include="capaLogica\RutinaExportacionLogica.cs" />
     <Compile Include="capaLogica\ExportadorRutinaPdf.cs" />
+    <Compile Include="capaLogica\EstadoSociosLogica.cs" />
+    <Compile Include="capaLogica\Reportes\ReportesPagosServicio.cs" />
     <Compile Include="capaLogica\SocioLogica.cs" />
     <Compile Include="capaLogica\UsuarioSistemaLogica.cs" />
     <Compile Include="capaLogica\ValidacionesGimnasio.cs" />
@@ -158,6 +160,12 @@
     </Compile>
     <Compile Include="capaVisual\Administrador\InicioPanelAdministrador.Designer.cs">
       <DependentUpon>InicioPanelAdministrador.cs</DependentUpon>
+    </Compile>
+    <Compile Include="capaVisual\Compartido\Controles\EstadoSociosControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="capaVisual\Compartido\Controles\EstadoSociosControl.Designer.cs">
+      <DependentUpon>EstadoSociosControl.cs</DependentUpon>
     </Compile>
     <Compile Include="capaVisual\Administrador\ConsultaRutinasAdministradorFormulario.cs">
       <SubType>Form</SubType>
@@ -248,6 +256,9 @@
     <EmbeddedResource Include="capaVisual\Autenticacion\InicioSesion.resx">
       <DependentUpon>InicioSesion.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="capaVisual\Compartido\Controles\EstadoSociosControl.resx">
+      <DependentUpon>EstadoSociosControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="capaVisual\Compartido\Formularios\GestionEjerciciosFormulario.resx">
       <DependentUpon>GestionEjerciciosFormulario.cs</DependentUpon>
     </EmbeddedResource>
@@ -306,10 +317,79 @@
       <Link>Datos\Imagenes\Ejercicios\%(RecursiveDir)%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="capaDatos\Imagenes\Ejercicios\10\1d9dbbc2360746d98c678c2efe5caeb9.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\11\9e9a7406e3504e10bdec2d51e8c1b449.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\12\8f7405ed759a454bb75af75fa013b8a1.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\13\bdf86d7884994b71aa0611bee415fa0f.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\14\12cfdbb22ca04a078f0be31a8f727975.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\16\62b3320e720642dd91fff78601a5fd0b.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\17\7d4d0faaa7d441eb91c06684a53b56ea.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\18\24a5edca910247a099b98c05bcb86760.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\19\535de7f10e564f92a28b1fd9eb439a6d.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\1\a64931fc2f4646a8a6e49d562d24ac6c.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\20\ca09243c3789487aa844256eb1971a78.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\21\365e87ea9d8648368c2e090a1a2cc03f.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\22\28ccaf4a83994660aced69aff36ca1f8.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\23\e9a40a3e091f490fa21db383a70f2849.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\24\f136a728733b44d4a3dc1aa71434c54f.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\25\8daa3e411ded4c489cf3cfd9736a14fc.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\26\7f0e8083eb764169aaf2fd40c8b2049c.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\27\07a380fcc5ec4fdfb7320a0c4df9cb4b.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\28\898e9213b5454bc5999d7cdb061ecc2d.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\29\239c73013e7946719223743b4facfcb8.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\2\e54c109a17ca4ccc86d7928667cd1801.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\30\b8190b98714d4897a7f5202522218989.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\31\5351ffc368114920a4b4a5c8b7bbd079.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\31\9a98ff3b559c4e499283f1d3fb7b271f.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\32\8577d4dcc40d46c38c4af60273eba86a.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\36\e801c2b6742c45c38cb221ebf4b7dba9.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\37\44cb0c6a4dab4c3997f78cdfb3556e91.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\38\86b0230ff7bf423baa69fb172ecfbcd1.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\39\dd45d1d8c7524597b14d913c1a3f8207.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\40\0f705fc9f64b4fdc95312dc048995c89.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\41\6d1cee73ced741c3b23b044b2d643ff2.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\42\6e83b0400dc64be4805bc0f9f755847d.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\43\be1adc7cb2394178bd2b7d26cfffb82c.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\44\1fe87990a7ba4340801b9175ca85dcf4.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\45\3e0f486a6f314ad084784bcf3513d25c.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\46\df0b72cf9ea84f3ebf3eaf15cae1549a.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\47\f56e05de8bba488e81a8b5a778bfead0.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\49\6138bf2024eb407ba39b3ad0629a6406.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\4\dbc3d3befc8b461cbdc330895516b352.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\50\70e6829bd4594a1aa39193021d4b5984.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\51\aeec142624ac4c0b98008714d8a69888.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\52\2dce8c7a8dff4e0e887dff842715c2a1.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\54\2ec35379bac947a5a2d7fef4e50446cd.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\55\14c7f8fc4cea4b8ea77440f8f800df2a.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\56\11ecfafb9aed4dd9aae14493a302f214.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\57\df37b32090b34dc2b0d6119d374db98b.png" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\59\397cc1728a054fadb653dfc70f6f122f.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\5\6b032a3b84fd462c8bd34e1fd4bdfa3c.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\60\cdaa2a81d24e410a83805a3ff682d05f.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\61\214fdfd3b7c14b2da58f7635457aff24.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\62\7cf9d7ac42b24f1d96dd7d8c3093ab8f.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\63\c0695827a8bb4df3bf244797f2a925b1.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\65\301183f276614f7fb622a9002cea028b.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\66\f969c3dc878a4aac8ec100db6a599c51.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\67\00191f001e3f49e48670fd99ed90c18c.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\68\cd1614901ae248d1a367f88f4adbca98.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\69\716e5e48b36a4667b6e0cae4bcd5a4b0.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\74\7726b3e480554c999bd924a9169d160a.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\75\dfef50bfccd844d5a044e7e921c979a1.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\76\8b04dc64a54a4dbcbfb64bb27164bc3a.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\77\290e525866054827af338dd9c0a3e2c7.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\79\832da073532b453d87230587afa97ba3.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\7\7199498d90d84faaa1dd16881390f2e7.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\80\d835134a31f54dc3b514c6b5ea85f312.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\81\edb44dc6ae0b4da1bda1449db30d5c61.jpg" />
+    <Content Include="capaDatos\Imagenes\Ejercicios\8\243a1be452a44da48c8c114e3656eed2.jpg" />
     <Content Include="capaDatos\Imagenes\Usuarios\*.*">
       <Link>Datos\Imagenes\Usuarios\%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="capaDatos\Imagenes\Usuarios\1b5f13461f324ba59a3f927204fa637a.jpg" />
+    <Content Include="capaDatos\Imagenes\Usuarios\31c5235ceec7401cb94ab63107735658.jpg" />
+    <Content Include="capaDatos\Imagenes\Usuarios\7e665f53c5f54ac1ba1192da2609e7b1.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -324,6 +404,74 @@
     <PackageReference Include="Konscious.Security.Cryptography.Argon2" Version="1.3.1" />
     <None Include="capaDatos\Database\SysGymDB.sql" />
     <None Include="capaDatos\Database\MigrarEjercicioImagen.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Datos\Imagenes\Ejercicios\10\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\11\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\12\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\13\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\14\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\16\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\17\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\18\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\19\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\1\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\20\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\21\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\22\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\23\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\24\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\25\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\26\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\27\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\28\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\29\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\2\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\30\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\31\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\32\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\36\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\37\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\38\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\39\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\40\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\41\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\42\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\43\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\44\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\45\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\46\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\47\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\49\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\4\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\50\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\51\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\52\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\54\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\55\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\56\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\57\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\59\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\5\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\60\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\61\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\62\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\63\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\65\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\66\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\67\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\68\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\69\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\74\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\75\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\76\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\77\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\79\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\7\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\80\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\81\" />
+    <Folder Include="Datos\Imagenes\Ejercicios\8\" />
+    <Folder Include="Datos\Imagenes\Usuarios\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
