@@ -32,6 +32,8 @@ namespace exxen2._0.capaDatos.Entidades
         [StringLength(100)]  // Máximo 100 caracteres.
         public string Apellido { get; set; }  // Apellido del socio.
         public DateTime? FechaNacimiento { get; set; }  // Fecha de nacimiento (DateTime? = opcional).
+        [Column(TypeName = "datetime2")]
+        public DateTime? FechaAlta { get; set; }  // NULL en históricos; la lógica asigna las altas nuevas.
 
         [Column(TypeName = "decimal")]  // En SQL es DECIMAL: número exacto, sin errores de redondeo.
         public decimal? Peso { get; set; }  // Peso en kg (opcional).

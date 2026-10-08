@@ -17,7 +17,7 @@ namespace exxen2._0.capaVisual.Recepcionista
     public partial class GestionMembresiasFormulario : Form
     {
         private readonly UsuarioSistema usuario;
-        private readonly MembresiaLogica logica = new MembresiaLogica();
+        private readonly MembresiaLogica logica;
         private readonly PlanLogica planes = new PlanLogica();
         private readonly CuotaMembresiaLogica cuotas = new CuotaMembresiaLogica();
         private List<Membresia> membresiasCargadas = new List<Membresia>();
@@ -40,6 +40,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             if (usuario == null)
                 throw new ArgumentNullException("usuario");
             this.usuario = usuario;
+            logica = new MembresiaLogica(usuario.IdUsuarioSistema);
             InitializeComponent();
             ConfigurarValidaciones();
         }

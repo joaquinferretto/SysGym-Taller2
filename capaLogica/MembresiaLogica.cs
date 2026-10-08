@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using exxen2._0.capaDatos.Entidades;
 using exxen2._0.capaDatos.Repositorios;
+using exxen2._0.capaLogica.Auditoria;
 
 namespace exxen2._0.capaLogica
 {
@@ -12,16 +13,21 @@ namespace exxen2._0.capaLogica
     // La usan GestionMembresiasFormulario, GestionPagosFormulario y ReportesFormulario.
     public class MembresiaLogica
     {
+        private readonly AuditoriaLogica auditoria;
+        public MembresiaLogica() : this(0) { }
+        public MembresiaLogica(int idUsuarioAutenticado) { auditoria = new AuditoriaLogica(idUsuarioAutenticado); }
         private const int CuotasVencidasParaDarDeBaja = 2;  // Regla del negocio: con 2 cuotas vencidas sin pagar, la membresía se da de baja.
         private const string MensajeReactivacionBloqueadaPorDeuda = "No se puede reactivar la membresía mientras existan dos o más cuotas vencidas pendientes.";
 
         /* Crea una membresía y su primera cuota; la asignación de entrenador es opcional y posterior. */
         public Membresia Crear(Membresia membresia)
         {
-            ValidarMembresia(membresia);
+            if (membresia == null) throw new ArgumentNullException("membresia");
             using (var datos = new UnidadDeTrabajoGimnasio())  // Abre la conexión; al salir del bloque se cierra sola, aunque haya error (try-with-resources).
             using (var transaccion = datos.IniciarTransaccion())  // Transacción: si algo falla antes de Confirmar(), se deshace todo.
             {
+                membresia.IdUsuarioSistema = auditoria.ObtenerUsuario(datos).IdUsuarioSistema;
+                ValidarMembresia(membresia);
                 var socio = datos.Socios.Buscar(membresia.IdSocio);  // Busca por clave primaria; si no existe devuelve null.
                 var plan = datos.Planes.Buscar(membresia.IdPlan);
                 var usuario = datos.UsuariosSistema.Consultar("Rol").SingleOrDefault(u => u.IdUsuarioSistema == membresia.IdUsuarioSistema);  // Consulta con seguimiento: si se modifica el objeto, GuardarCambios hace el UPDATE.
@@ -41,6 +47,8 @@ namespace exxen2._0.capaLogica
                 datos.GuardarCambios();  // EF envía a SQL los INSERT/UPDATE pendientes.
                 socio.Estado = true;
                 CuotaMembresiaLogica.CrearPrimeraCuotaEnContexto(datos, membresia, plan);
+                auditoria.RegistrarOperacion(datos, AuditoriaLogica.CrearMembresia, "Membresia", membresia.IdMembresia,
+                    "Membresía " + plan.Nombre + " creada para " + socio.Nombre + " " + socio.Apellido);
                 datos.GuardarCambios();
                 transaccion.Confirmar();  // Recién acá quedan grabados todos los cambios de la transacción.
                 return membresia;
@@ -162,7 +170,9 @@ namespace exxen2._0.capaLogica
             using (var datos = new UnidadDeTrabajoGimnasio())
             using (var transaccion = datos.IniciarTransaccion())
             {
+                auditoria.ObtenerUsuario(datos);
                 var membresia = ObtenerMembresia(datos, idMembresia);
+                var estabaInactiva = !membresia.Estado;
                 if (DebeDarseDeBajaPorDeuda(ContarCuotasVencidasImpagasEnContexto(datos, idMembresia)))
                 {
                     CambiarEstadoEnContexto(datos, membresia, false);
@@ -171,6 +181,12 @@ namespace exxen2._0.capaLogica
                 else
                 {
                     CambiarEstadoEnContexto(datos, membresia, true);
+                    if (estabaInactiva)
+                    {
+                        var socio = datos.Socios.Buscar(membresia.IdSocio);
+                        auditoria.RegistrarOperacion(datos, AuditoriaLogica.ReactivarMembresia, "Membresia", membresia.IdMembresia,
+                            "Membresía de " + socio.Nombre + " " + socio.Apellido + " reactivada");
+                    }
                 }
                 datos.GuardarCambios();
                 transaccion.Confirmar();

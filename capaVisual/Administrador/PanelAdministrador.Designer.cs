@@ -7,6 +7,7 @@ namespace exxen2._0.capaVisual.Administrador
     partial class PanelAdministrador
     {
         private IContainer components = null;
+        private Button btnAuditoria;
         private Panel panelEncabezado; private PictureBox picLogo;
         private PictureBox picUsuario;
         private Label lblUsuario;
@@ -15,7 +16,7 @@ namespace exxen2._0.capaVisual.Administrador
         private Label lblDni;
         private Label lblSexoTitulo;
         private Label lblSexo; private Label lblModuloActual; private Button btnCambiarCuenta; private Panel panelMenu; private Panel panelOpciones; private Button btnSalir; private Panel panelContenido;
-        private Label lblAdministracion; private Label lblOperacion; private Label lblRutinas; private Label lblConsultas; private Button btnUsuarios; private Button btnSocios; private Button btnPlanes; private Button btnMembresias; private Button btnPagos; private Button btnAsignaciones; private Button btnEjercicios; private Button btnRutinas; private Button btnMisSocios; private Button btnReportes;
+        private Label lblAdministracion; private Label lblOperacion; private Label lblRutinas; private Label lblConsultas; private Button btnUsuarios; private Button btnSocios; private Button btnPlanes; private Button btnMembresias; private Button btnPagos; private Button btnAsignaciones; private Button btnEjercicios; private Button btnRutinas; private Button btnMisSocios; private Button btnReportes; private Button btnAnalisis;
 
         private Label lblSubtituloModulo;
         private Button btnVolver;
@@ -53,6 +54,8 @@ namespace exxen2._0.capaVisual.Administrador
             this.btnMisSocios = new System.Windows.Forms.Button();
             this.lblConsultas = new System.Windows.Forms.Label();
             this.btnReportes = new System.Windows.Forms.Button();
+            this.btnAnalisis = new System.Windows.Forms.Button();
+            this.btnAuditoria = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
             this.panelContenido = new System.Windows.Forms.Panel();
             this.inicioPanel = new exxen2._0.capaVisual.Administrador.InicioPanelAdministrador();
@@ -264,6 +267,8 @@ namespace exxen2._0.capaVisual.Administrador
             this.panelOpciones.Controls.Add(this.btnMisSocios);
             this.panelOpciones.Controls.Add(this.lblConsultas);
             this.panelOpciones.Controls.Add(this.btnReportes);
+            this.panelOpciones.Controls.Add(this.btnAnalisis);
+            this.panelOpciones.Controls.Add(this.btnAuditoria);
             this.panelOpciones.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelOpciones.Location = new System.Drawing.Point(0, 96);
             this.panelOpciones.Name = "panelOpciones";
@@ -508,6 +513,44 @@ namespace exxen2._0.capaVisual.Administrador
             this.btnReportes.UseVisualStyleBackColor = false;
             this.btnReportes.Visible = false;
             this.btnReportes.Click += new System.EventHandler(this.btnReportes_Click);
+            //
+            // btnAnalisis
+            //
+            this.btnAnalisis.BackColor = System.Drawing.Color.FromArgb(248, 250, 252);
+            this.btnAnalisis.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(226, 232, 240);
+            this.btnAnalisis.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAnalisis.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.btnAnalisis.ForeColor = System.Drawing.Color.FromArgb(51, 65, 85);
+            this.btnAnalisis.Location = new System.Drawing.Point(14, 595);
+            this.btnAnalisis.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.btnAnalisis.Name = "btnAnalisis";
+            this.btnAnalisis.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
+            this.btnAnalisis.Size = new System.Drawing.Size(236, 38);
+            this.btnAnalisis.TabIndex = 14;
+            this.btnAnalisis.Text = "Análisis";
+            this.btnAnalisis.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAnalisis.UseVisualStyleBackColor = false;
+            this.btnAnalisis.Visible = false;
+            this.btnAnalisis.Click += new System.EventHandler(this.btnAnalisis_Click);
+            //
+            // btnAuditoria
+            //
+            this.btnAuditoria.BackColor = System.Drawing.Color.FromArgb(248, 250, 252);
+            this.btnAuditoria.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(226, 232, 240);
+            this.btnAuditoria.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAuditoria.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.btnAuditoria.ForeColor = System.Drawing.Color.FromArgb(51, 65, 85);
+            this.btnAuditoria.Location = new System.Drawing.Point(14, 638);
+            this.btnAuditoria.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.btnAuditoria.Name = "btnAuditoria";
+            this.btnAuditoria.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
+            this.btnAuditoria.Size = new System.Drawing.Size(236, 38);
+            this.btnAuditoria.TabIndex = 15;
+            this.btnAuditoria.Text = "Auditoría";
+            this.btnAuditoria.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAuditoria.UseVisualStyleBackColor = false;
+            this.btnAuditoria.Visible = false;
+            this.btnAuditoria.Click += new System.EventHandler(this.btnAuditoria_Click);
             //
             // btnSalir
             //

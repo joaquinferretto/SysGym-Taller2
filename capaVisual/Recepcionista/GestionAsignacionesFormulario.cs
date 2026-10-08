@@ -8,6 +8,7 @@ using exxen2._0.capaLogica;
 using exxen2._0.capaVisual.Compartido;
 
 using exxen2._0.capaLogica.Utilidades;
+using exxen2._0.capaDatos.Entidades;
 
 namespace exxen2._0.capaVisual.Recepcionista
 {
@@ -15,7 +16,7 @@ namespace exxen2._0.capaVisual.Recepcionista
     [DesignerCategory("Form")]
     public partial class GestionAsignacionesFormulario : Form
     {
-        private readonly MembresiaEntrenadorLogica logica = new MembresiaEntrenadorLogica();
+        private readonly MembresiaEntrenadorLogica logica;
         private readonly UsuarioSistemaLogica usuarios = new UsuarioSistemaLogica();
         private List<MembresiaAsignacionItem> membresiasCargadas = new List<MembresiaAsignacionItem>();
         private int idSeleccionado;
@@ -23,8 +24,11 @@ namespace exxen2._0.capaVisual.Recepcionista
         private bool cargandoTabla;
 
         /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
-        public GestionAsignacionesFormulario()
+        public GestionAsignacionesFormulario() : this(null) { }
+
+        public GestionAsignacionesFormulario(UsuarioSistema usuarioActual)
         {
+            logica = new MembresiaEntrenadorLogica(usuarioActual == null ? 0 : usuarioActual.IdUsuarioSistema);
             InitializeComponent();
             tabla.Validating += tabla_Validating;
             entrenador.Validating += entrenador_Validating;

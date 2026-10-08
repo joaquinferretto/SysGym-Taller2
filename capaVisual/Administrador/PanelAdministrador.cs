@@ -69,7 +69,7 @@ namespace exxen2._0.capaVisual.Administrador
             posicionY = MenuDesplegableHelper.ColocarSeccion(lblAdministracion, administracionExpandida, posicionY, btnUsuarios, btnSocios);
             posicionY = MenuDesplegableHelper.ColocarSeccion(lblOperacion, operacionExpandida, posicionY, btnPlanes, btnMembresias, btnPagos, btnAsignaciones);
             posicionY = MenuDesplegableHelper.ColocarSeccion(lblRutinas, rutinasExpandida, posicionY, btnEjercicios, btnRutinas, btnMisSocios);
-            posicionY = MenuDesplegableHelper.ColocarSeccion(lblConsultas, consultasExpandida, posicionY, btnReportes);
+            posicionY = MenuDesplegableHelper.ColocarSeccion(lblConsultas, consultasExpandida, posicionY, btnReportes, btnAnalisis, btnAuditoria);
             panelOpciones.AutoScrollMinSize = new Size(0, posicionY);
         }
 
@@ -203,7 +203,7 @@ namespace exxen2._0.capaVisual.Administrador
         /* Al hacer clic en btnAsignaciones, abre la gestión de entrenadores de las membresías. */
         private void btnAsignaciones_Click(object origen, EventArgs e)
         {
-            Abrir(btnAsignaciones, new GestionAsignacionesFormulario(), "Asignar entrenador | Vinculación de entrenadores y membresías");
+            Abrir(btnAsignaciones, new GestionAsignacionesFormulario(usuario), "Asignar entrenador | Vinculación de entrenadores y membresías");
         }
 
         /* Al hacer clic en btnMisSocios, abre la gestión global de socios y rutinas. */
@@ -216,6 +216,24 @@ namespace exxen2._0.capaVisual.Administrador
         private void btnReportes_Click(object origen, EventArgs e)
         {
             Abrir(btnReportes, new ReportesFormulario(), "Reportes | Consultas e indicadores");
+        }
+
+        private void btnAnalisis_Click(object origen, EventArgs e)
+        {
+            Abrir(btnAnalisis, new AnalisisFormulario(), "Análisis | Gráficos e indicadores del gimnasio");
+        }
+
+        private void btnAuditoria_Click(object origen, EventArgs e)
+        {
+            try
+            {
+                new capaLogica.Auditoria.AuditoriaLogica(usuario.IdUsuarioSistema).ValidarAcceso();
+                Abrir(btnAuditoria, new AuditoriaFormulario(usuario), "Auditoría | Historial de operaciones");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Auditoría", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         /* Al recibir un doble clic del estado de cuenta, abre socios con el registro ya seleccionado. */

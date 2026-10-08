@@ -128,6 +128,11 @@ namespace exxen2._0.capaLogica
             return TieneRolActivo(usuario, "Administrador");
         }
 
+        public static bool EsRecepcionistaActivo(UsuarioSistema usuario)
+        {
+            return TieneRolActivo(usuario, "Recepcionista");
+        }
+
         /* Valida el estado del usuario y del rol, comparando su descripción sin distinguir mayúsculas. */
         private static bool TieneRolActivo(UsuarioSistema usuario, string descripcionRol)
         {

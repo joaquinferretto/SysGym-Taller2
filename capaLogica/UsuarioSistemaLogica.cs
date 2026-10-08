@@ -6,6 +6,7 @@ using System.Text;
 using exxen2._0.capaDatos.Entidades;
 using exxen2._0.capaDatos.Repositorios;
 using Konscious.Security.Cryptography;
+using exxen2._0.capaLogica.Auditoria;
 
 namespace exxen2._0.capaLogica
 {
@@ -48,7 +49,10 @@ namespace exxen2._0.capaLogica
             try
             {
                 using (var datos = new UnidadDeTrabajoGimnasio())  // Abre la conexión; al salir del bloque se cierra sola, aunque haya error (try-with-resources).
+                using (var transaccion = datos.IniciarTransaccion())
                 {
+                    var auditoria = new AuditoriaLogica(idUsuarioCreador);
+                    auditoria.ObtenerUsuario(datos, true);
                     var rol = ObtenerRolActivo(datos, usuario.IdRol);
                     ValidarUnicidad(datos, usuario.DNI, usuario.NombreUsuario, 0);
                     if (fotoContenido != null)
@@ -60,6 +64,10 @@ namespace exxen2._0.capaLogica
                     usuario.Estado = true;
                     datos.UsuariosSistema.Agregar(usuario);  // Deja el objeto listo para INSERT (se ejecuta en GuardarCambios).
                     datos.GuardarCambios();  // EF envía a SQL los INSERT/UPDATE pendientes.
+                    auditoria.RegistrarOperacion(datos, AuditoriaLogica.CrearUsuario, "UsuarioSistema", usuario.IdUsuarioSistema,
+                        "Usuario " + usuario.NombreUsuario + " creado con rol " + rol.Descripcion);
+                    datos.GuardarCambios();
+                    transaccion.Confirmar();
                     return usuario;
                 }
             }

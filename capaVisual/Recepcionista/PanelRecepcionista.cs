@@ -149,7 +149,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         /* Al hacer clic en btnAsignar, abre el módulo correspondiente dentro del panel principal. */
         private void btnAsignar_Click(object origen, EventArgs e)
         {
-            Abrir(btnAsignar, new GestionAsignacionesFormulario(), "Asignar entrenador | Vinculación de entrenadores y membresías");
+            Abrir(btnAsignar, new GestionAsignacionesFormulario(usuario), "Asignar entrenador | Vinculación de entrenadores y membresías");
         }
 
         /* Al hacer clic en btnConsultar, abre el módulo correspondiente dentro del panel principal. */

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using exxen2._0.capaDatos.Entidades;
 using exxen2._0.capaDatos.Repositorios;
+using exxen2._0.capaLogica.Auditoria;
 
 namespace exxen2._0.capaLogica
 {
@@ -48,7 +49,9 @@ namespace exxen2._0.capaLogica
             using (var datos = new UnidadDeTrabajoGimnasio())  // Abre la conexión; al salir del bloque se cierra sola, aunque haya error (try-with-resources).
             using (var transaccion = datos.IniciarTransaccion())  // Transacción: si algo falla antes de Confirmar(), se deshace todo.
             {
-                var cuota = datos.CuotasMembresia.Consultar("Pago").SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);  // Consulta con seguimiento: si se modifica el objeto, GuardarCambios hace el UPDATE.
+                var auditoria = new AuditoriaLogica(idUsuarioAutenticado);
+                auditoria.ObtenerUsuario(datos);
+                var cuota = datos.CuotasMembresia.Consultar("Pago", "Membresia.Socio").SingleOrDefault(c => c.IdCuotaMembresia == idCuotaMembresia);  // Consulta con seguimiento: si se modifica el objeto, GuardarCambios hace el UPDATE.
                 if (cuota == null)
                 {
                     throw new InvalidOperationException("La cuota no existe.");
@@ -77,6 +80,12 @@ namespace exxen2._0.capaLogica
                 CuotaMembresiaLogica.RecalcularEstadoPagoEnContexto(datos, cuota);
                 datos.GuardarCambios();
                 MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(datos, cuota.IdMembresia);
+                var socio = cuota.Membresia.Socio;
+                var metodo = datos.MetodosPago.Buscar(pago.IdMetodoPago);
+                auditoria.RegistrarOperacion(datos, AuditoriaLogica.RegistrarPago, "Pago", pago.IdRegistroPago,
+                    "Pago #" + pago.IdRegistroPago + " registrado para " + socio.Nombre + " " + socio.Apellido +
+                    " por " + pago.Importe.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR")) +
+                    " mediante " + ObtenerNombreTipoMetodoPago(metodo));
                 datos.GuardarCambios();
                 transaccion.Confirmar();  // Recién acá quedan grabados todos los cambios de la transacción.
                 return pago;
@@ -355,13 +364,13 @@ namespace exxen2._0.capaLogica
         }
 
         /* Reconoce un método válido cuando tiene exactamente un detalle específico asociado. */
-        private static bool EsMetodoPagoEstructuralmenteValido(MetodoPago metodo)
+        internal static bool EsMetodoPagoEstructuralmenteValido(MetodoPago metodo)
         {
             return metodo != null && metodo.IdPagoEfectivo.HasValue != metodo.IdNroPagoMP.HasValue;
         }
 
         /* Obtiene el nombre visible desde el tipo de detalle, sin interpretar Observaciones. */
-        private static string ObtenerNombreTipoMetodoPago(MetodoPago metodo)
+        internal static string ObtenerNombreTipoMetodoPago(MetodoPago metodo)
         {
             if (!EsMetodoPagoEstructuralmenteValido(metodo))
                 throw new InvalidOperationException("El método de pago debe tener un único detalle asociado.");

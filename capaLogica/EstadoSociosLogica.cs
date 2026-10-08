@@ -16,6 +16,8 @@ namespace exxen2._0.capaLogica
         public string EstadoMembresia { get; set; }
         public string EstadoPago { get; set; }
         public int CuotasVencidas { get; set; }
+        public int CuotasPendientes { get; set; }
+        public DateTime? FechaAlta { get; set; }
         public decimal DeudaTotal { get; set; }
         public DateTime? UltimoPago { get; set; }
         public DateTime? ProximoVencimiento { get; set; }
@@ -40,16 +42,42 @@ namespace exxen2._0.capaLogica
     {
         public ResumenEstadoSocios ObtenerResumen()
         {
+            return ObtenerResumen(true);
+        }
+
+        /// <summary>Reutiliza la clasificación actual sin persistir bajas automáticas durante el análisis.</summary>
+        public ResumenEstadoSocios ObtenerResumenSoloLectura()
+        {
+            return ObtenerResumen(false);
+        }
+
+        public EstadoSocioDashboard ObtenerSocioSoloLectura(int idSocio)
+        {
+            return ObtenerResumen(false, idSocio).Socios.SingleOrDefault();
+        }
+
+        public static string ClasificarDeuda(int cuotasVencidas)
+        {
+            if (MembresiaLogica.DebeDarseDeBajaPorDeuda(cuotasVencidas)) return "Límite alcanzado";
+            return cuotasVencidas > 0 ? "Con deuda" : "Al día";
+        }
+
+        private ResumenEstadoSocios ObtenerResumen(bool actualizarEstados, int? idSocio = null)
+        {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                using (var transaccion = datos.IniciarTransaccion())
+                if (actualizarEstados)
                 {
-                    MembresiaLogica.ActualizarEstadosPorDeudaEnContexto(datos);
-                    datos.GuardarCambios();
-                    transaccion.Confirmar();
+                    using (var transaccion = datos.IniciarTransaccion())
+                    {
+                        MembresiaLogica.ActualizarEstadosPorDeudaEnContexto(datos);
+                        datos.GuardarCambios();
+                        transaccion.Confirmar();
+                    }
                 }
-                var socios = datos.Socios.ConsultarSoloLectura("Membresias.Plan", "Membresias.Cuotas.Pago")
-                    .OrderBy(s => s.Apellido).ThenBy(s => s.Nombre).ToList();
+                var consulta = datos.Socios.ConsultarSoloLectura("Membresias.Plan", "Membresias.Cuotas.Pago");
+                if (idSocio.HasValue) consulta = consulta.Where(s => s.IdSocio == idSocio.Value);
+                var socios = consulta.OrderBy(s => s.Apellido).ThenBy(s => s.Nombre).ToList();
                 var resultado = new List<EstadoSocioDashboard>();
                 foreach (var socio in socios)
                 {
@@ -76,6 +104,8 @@ namespace exxen2._0.capaLogica
                         EstadoMembresia = membresia == null ? "Sin membresía" : activo ? "Activa" : "Inactiva",
                         EstadoPago = estadoPago,
                         CuotasVencidas = vencidas.Count,
+                        CuotasPendientes = pendientes.Count,
+                        FechaAlta = socio.FechaAlta,
                         DeudaTotal = pendientes.Sum(c => Math.Max(0m, c.Importe - (c.Pago != null && c.Pago.Estado == EstadosTransaccionPago.Aprobado ? c.Pago.Importe : 0m))),
                         UltimoPago = pagos.Count == 0 ? (DateTime?)null : pagos.Max(),
                         ProximoVencimiento = proximo,

@@ -42,6 +42,24 @@ CREATE TABLE UsuarioSistema (
 );
 GO
 
+/* Auditoría de operaciones exitosas; no se reconstruyen movimientos históricos. */
+CREATE TABLE AuditoriaOperacion (
+    IdAuditoria INT IDENTITY(1,1) PRIMARY KEY,
+    FechaHora DATETIME2 NOT NULL,
+    IdUsuario INT NOT NULL,
+    UsuarioNombre NVARCHAR(201) NOT NULL,
+    Rol NVARCHAR(50) NOT NULL,
+    Operacion NVARCHAR(50) NOT NULL,
+    Entidad NVARCHAR(50) NOT NULL,
+    IdEntidad INT NOT NULL,
+    Detalle NVARCHAR(1000) NOT NULL,
+    CONSTRAINT FK_AuditoriaOperacion_Usuario
+        FOREIGN KEY (IdUsuario) REFERENCES UsuarioSistema(IdUsuarioSistema)
+);
+CREATE INDEX IX_AuditoriaOperacion_FechaHora
+    ON AuditoriaOperacion (FechaHora DESC, IdAuditoria DESC);
+GO
+
 /* Socios */
 
 CREATE TABLE Socio (
@@ -50,6 +68,7 @@ CREATE TABLE Socio (
     Nombre NVARCHAR(100) NOT NULL,
     Apellido NVARCHAR(100) NOT NULL,
     FechaNacimiento DATETIME2 NULL,
+    FechaAlta DATETIME2 NULL, -- Históricos sin fecha comprobable permanecen NULL.
     Peso DECIMAL(6,2) NULL,
     Altura DECIMAL(5,2) NULL,
     FotoRuta NVARCHAR(260) NULL,

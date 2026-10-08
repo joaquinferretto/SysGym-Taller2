@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using exxen2._0.capaDatos.Entidades;
 using exxen2._0.capaDatos.Repositorios;
+using exxen2._0.capaLogica.Auditoria;
 
 namespace exxen2._0.capaLogica
 {
@@ -26,9 +27,13 @@ namespace exxen2._0.capaLogica
     // La usa GestionAsignacionesFormulario.
     public class MembresiaEntrenadorLogica
     {
+        private readonly AuditoriaLogica auditoria;
+        public MembresiaEntrenadorLogica() : this(0) { }
+        public MembresiaEntrenadorLogica(int idUsuarioAutenticado) { auditoria = new AuditoriaLogica(idUsuarioAutenticado); }
         /* Valida los beneficios de la membresía y crea su asignación de entrenador activo. */
         public MembresiaEntrenador AsignarEntrenador(int idMembresia, int idEntrenador)
         {
+            auditoria.ValidarOperador();
             new MembresiaLogica().ActualizarEstadoPorDeuda(idMembresia);
             using (var datos = new UnidadDeTrabajoGimnasio())  // Abre la conexión; al salir del bloque se cierra sola, aunque haya error (try-with-resources).
             using (var transaccion = datos.IniciarTransaccion())  // Transacción: si algo falla antes de Confirmar(), se deshace todo.
@@ -48,6 +53,10 @@ namespace exxen2._0.capaLogica
                 };
                 datos.MembresiasEntrenadores.Agregar(asignacion);  // Deja el objeto listo para INSERT (se ejecuta en GuardarCambios).
                 datos.GuardarCambios();  // EF envía a SQL los INSERT/UPDATE pendientes.
+                var entrenador = datos.UsuariosSistema.Buscar(idEntrenador);
+                auditoria.RegistrarOperacion(datos, AuditoriaLogica.AsignarEntrenador, "MembresiaEntrenador", asignacion.IdMembresiaEntrenador,
+                    "Entrenador " + Nombre(entrenador) + " asignado a " + Nombre(membresia.Socio));
+                datos.GuardarCambios();
                 transaccion.Confirmar();  // Recién acá quedan grabados todos los cambios de la transacción.
                 return asignacion;
             }
@@ -56,13 +65,17 @@ namespace exxen2._0.capaLogica
         /* Finaliza las asignaciones activas y registra el nuevo entrenador en una transacción. */
         public MembresiaEntrenador CambiarEntrenador(int idMembresia, int idEntrenador)
         {
+            auditoria.ValidarOperador();
             new MembresiaLogica().ActualizarEstadoPorDeuda(idMembresia);
             using (var datos = new UnidadDeTrabajoGimnasio())
             using (var transaccion = datos.IniciarTransaccion())
             {
                 var membresia = ObtenerMembresiaConPlan(datos, idMembresia);
                 ValidarAsignacion(membresia, datos, idEntrenador);
-                var activas = datos.MembresiasEntrenadores.Where(me => me.IdMembresia == idMembresia && me.Estado).ToList();  // Acá se ejecuta la consulta en SQL y se trae la lista.
+                var activas = datos.MembresiasEntrenadores.Consultar("Entrenador").Where(me => me.IdMembresia == idMembresia && me.Estado).ToList();
+                if (activas.Count == 1 && activas[0].IdEntrenador == idEntrenador)
+                    return activas[0]; // Elegir al mismo entrenador no es un cambio.
+                var anterior = activas.FirstOrDefault();
                 foreach (var activa in activas)  // Recorre cada elemento (como el for-each de Java).
                 {
                     activa.Estado = false;
@@ -75,6 +88,12 @@ namespace exxen2._0.capaLogica
                     Estado = true
                 };
                 datos.MembresiasEntrenadores.Agregar(nueva);
+                datos.GuardarCambios();
+                var entrenador = datos.UsuariosSistema.Buscar(idEntrenador);
+                auditoria.RegistrarOperacion(datos, anterior == null ? AuditoriaLogica.AsignarEntrenador : AuditoriaLogica.CambiarEntrenador,
+                    "MembresiaEntrenador", nueva.IdMembresiaEntrenador, anterior == null
+                        ? "Entrenador " + Nombre(entrenador) + " asignado a " + Nombre(membresia.Socio)
+                        : "Entrenador cambiado de " + Nombre(anterior.Entrenador) + " a " + Nombre(entrenador) + " para " + Nombre(membresia.Socio));
                 datos.GuardarCambios();
                 transaccion.Confirmar();
                 return nueva;
@@ -136,15 +155,21 @@ namespace exxen2._0.capaLogica
         public void DarDeBajaAsignacion(int idMembresiaEntrenador)
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
+            using (var transaccion = datos.IniciarTransaccion())
             {
-                var asignacion = datos.MembresiasEntrenadores.Buscar(idMembresiaEntrenador);  // Busca por clave primaria; si no existe devuelve null.
+                auditoria.ObtenerUsuario(datos);
+                var asignacion = datos.MembresiasEntrenadores.Consultar("Membresia.Socio", "Entrenador").SingleOrDefault(a => a.IdMembresiaEntrenador == idMembresiaEntrenador);
                 if (asignacion == null)
                 {
                     throw new InvalidOperationException("La asignación no existe.");
                 }
 
+                if (!asignacion.Estado) return;
                 asignacion.Estado = false;
+                auditoria.RegistrarOperacion(datos, AuditoriaLogica.QuitarEntrenador, "MembresiaEntrenador", asignacion.IdMembresiaEntrenador,
+                    "Entrenador " + Nombre(asignacion.Entrenador) + " quitado de " + Nombre(asignacion.Membresia.Socio));
                 datos.GuardarCambios();
+                transaccion.Confirmar();
             }
         }
 
@@ -152,8 +177,10 @@ namespace exxen2._0.capaLogica
         public void ReactivarAsignacion(int idMembresiaEntrenador)
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
+            using (var transaccion = datos.IniciarTransaccion())
             {
-                var asignacion = datos.MembresiasEntrenadores.Consultar("Membresia.Plan", "Entrenador.Rol").SingleOrDefault(me => me.IdMembresiaEntrenador == idMembresiaEntrenador);  // Consulta con seguimiento: si se modifica el objeto, GuardarCambios hace el UPDATE.
+                auditoria.ObtenerUsuario(datos);
+                var asignacion = datos.MembresiasEntrenadores.Consultar("Membresia.Plan", "Membresia.Socio", "Entrenador.Rol").SingleOrDefault(me => me.IdMembresiaEntrenador == idMembresiaEntrenador);
                 if (asignacion == null)
                 {
                     throw new InvalidOperationException("La asignación no existe.");
@@ -167,15 +194,19 @@ namespace exxen2._0.capaLogica
                     throw new InvalidOperationException("La membresía ya posee un entrenador activo.");
                 }
 
+                if (asignacion.Estado) { transaccion.Confirmar(); return; }
                 asignacion.Estado = true;
+                auditoria.RegistrarOperacion(datos, AuditoriaLogica.AsignarEntrenador, "MembresiaEntrenador", asignacion.IdMembresiaEntrenador,
+                    "Entrenador " + Nombre(asignacion.Entrenador) + " asignado a " + Nombre(asignacion.Membresia.Socio));
                 datos.GuardarCambios();
+                transaccion.Confirmar();
             }
         }
 
         /* Carga la membresía junto con su plan y rechaza identificadores inexistentes. */
         private static Membresia ObtenerMembresiaConPlan(IUnidadDeTrabajo datos, int idMembresia)
         {
-            var membresia = datos.Membresias.Consultar("Plan").SingleOrDefault(m => m.IdMembresia == idMembresia);  // Devuelve el único que cumple o null.
+            var membresia = datos.Membresias.Consultar("Plan", "Socio").SingleOrDefault(m => m.IdMembresia == idMembresia);
             if (membresia == null)
             {
                 throw new InvalidOperationException("La membresía no existe.");
@@ -203,5 +234,8 @@ namespace exxen2._0.capaLogica
                 throw new InvalidOperationException("El usuario no posee rol de Entrenador activo.");
             }
         }
+
+        private static string Nombre(UsuarioSistema usuario) { return usuario.Nombre + " " + usuario.Apellido; }
+        private static string Nombre(Socio socio) { return socio.Nombre + " " + socio.Apellido; }
     }
 }

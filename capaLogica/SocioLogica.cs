@@ -33,6 +33,7 @@ namespace exxen2._0.capaLogica
                         rutaNueva = AlmacenamientoImagenes.GuardarSocio(fotoContenido);
                     socio.FotoRuta = rutaNueva ?? NormalizarRuta(socio.FotoRuta);  // ??: si lo de la izquierda es null, usa lo de la derecha.
                     socio.Estado = true;
+                    socio.FechaAlta = DateTime.Now;
                     datos.Socios.Agregar(socio);  // Deja el objeto listo para INSERT (se ejecuta en GuardarCambios).
                     datos.GuardarCambios();  // EF envía a SQL los INSERT/UPDATE pendientes.
                     return socio;
@@ -146,13 +147,13 @@ namespace exxen2._0.capaLogica
         {
             return consulta.Select(s => new  // Select = transforma cada elemento (como map de Streams).
             {
-                s.IdSocio, s.DNI, s.Nombre, s.Apellido, s.FechaNacimiento,
+                s.IdSocio, s.DNI, s.Nombre, s.Apellido, s.FechaNacimiento, s.FechaAlta,
                 s.Peso, s.Altura, s.Estado, s.Sexo
             }).ToList().Select(s => new Socio  // Acá se ejecuta la consulta en SQL y se trae la lista.
             {
                 IdSocio = s.IdSocio, DNI = s.DNI, Nombre = s.Nombre, Apellido = s.Apellido,
                 FechaNacimiento = s.FechaNacimiento, Peso = s.Peso, Altura = s.Altura,
-                Estado = s.Estado, Sexo = s.Sexo
+                Estado = s.Estado, Sexo = s.Sexo, FechaAlta = s.FechaAlta
             }).ToList();
         }
 
