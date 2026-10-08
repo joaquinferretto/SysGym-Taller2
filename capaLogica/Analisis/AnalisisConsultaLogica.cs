@@ -115,7 +115,7 @@ namespace exxen2._0.capaLogica.Analisis
                     CantidadPagos = pagos.Count(),
                     TotalAbonado = agrupados.Values.Sum(),
                     UltimoPago = pagos.Select(p => (DateTime?)p.Fecha).Max(),
-                    EstadoDeuda = EstadoSociosLogica.ClasificarDeuda(estado.CuotasVencidas),
+                    EstadoDeuda = estado.EstadoDeuda,
                     Entrenador = "Sin entrenador activo",
                     Rutina = "Sin rutina activa",
                     TieneHistoriaParaGraficar = agrupados.Count >= 2,

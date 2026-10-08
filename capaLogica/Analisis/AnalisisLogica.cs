@@ -189,9 +189,8 @@ namespace exxen2._0.capaLogica.Analisis
                 new DatoCategoria { Nombre = "Activos", Cantidad = estado.SociosActivos },
                 new DatoCategoria { Nombre = "Inactivos", Cantidad = estado.SociosInactivos }
             };
-            var limite = estado.Socios.Count(s => MembresiaLogica.DebeDarseDeBajaPorDeuda(s.CuotasVencidas));
-            var conDeuda = estado.Socios.Count(s => s.CuotasVencidas > 0 &&
-                !MembresiaLogica.DebeDarseDeBajaPorDeuda(s.CuotasVencidas));
+            var limite = estado.LimiteAlcanzado;
+            var conDeuda = estado.ConDeuda;
             resultado.SociosConDeuda = conDeuda + limite;
             resultado.EstadoDeuda = new List<DatoCategoria>
             {

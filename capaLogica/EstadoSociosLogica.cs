@@ -16,6 +16,8 @@ namespace exxen2._0.capaLogica
         public string EstadoMembresia { get; set; }
         public string EstadoPago { get; set; }
         public int CuotasVencidas { get; set; }
+        public bool LimiteAlcanzado { get; set; }
+        public string EstadoDeuda { get; set; }
         public int CuotasPendientes { get; set; }
         public DateTime? FechaAlta { get; set; }
         public decimal DeudaTotal { get; set; }
@@ -30,11 +32,12 @@ namespace exxen2._0.capaLogica
         public int SociosActivos { get; set; }
         public int SociosInactivos { get; set; }
         public int AlDia { get; set; }
-        public int UnaVencida { get; set; }
-        public int DosOMasVencidas { get; set; }
+        public int ConDeuda { get; set; }
+        public int LimiteAlcanzado { get; set; }
         public int CuotasPendientes { get; set; }
         public int VencenHoy { get; set; }
-        public int VencenEnSieteDias { get; set; }
+        public int VencenEnPlazoAviso { get; set; }
+        public int DiasAvisoVencimiento { get; set; }
     }
 
     /// <summary>Proyecta el estado real de socios y cuotas usando el umbral de deuda de MembresiaLogica.</summary>
@@ -58,7 +61,12 @@ namespace exxen2._0.capaLogica
 
         public static string ClasificarDeuda(int cuotasVencidas)
         {
-            if (MembresiaLogica.DebeDarseDeBajaPorDeuda(cuotasVencidas)) return "Límite alcanzado";
+            return ClasificarDeuda(cuotasVencidas, new ConfiguracionSistemaLogica().Obtener().MaxCuotasVencidasPermitidas);
+        }
+
+        public static string ClasificarDeuda(int cuotasVencidas, int limite)
+        {
+            if (MembresiaLogica.DebeDarseDeBajaPorDeuda(cuotasVencidas, limite)) return "Límite alcanzado";
             return cuotasVencidas > 0 ? "Con deuda" : "Al día";
         }
 
@@ -66,6 +74,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
+                var configuracion = ConfiguracionSistemaLogica.ObtenerEnContexto(datos);
                 if (actualizarEstados)
                 {
                     using (var transaccion = datos.IniciarTransaccion())
@@ -86,10 +95,10 @@ namespace exxen2._0.capaLogica
                     var cuotas = membresia == null ? new List<CuotaMembresia>() : membresia.Cuotas.ToList();
                     var pendientes = cuotas.Where(c => c.EstadoPago == EstadosCuota.Pendiente).ToList();
                     var vencidas = pendientes.Where(c => c.FechaHasta.Date < DateTime.Today).ToList();
-                    var moroso = MembresiaLogica.DebeDarseDeBajaPorDeuda(vencidas.Count);
+                    var moroso = MembresiaLogica.DebeDarseDeBajaPorDeuda(vencidas.Count, configuracion.MaxCuotasVencidasPermitidas);
                     var activo = socio.Estado && (membresia == null || membresia.Estado) && !moroso;
                     var estadoPago = ClasificarEstadoPago(socio.Estado, membresia != null && membresia.Estado,
-                        vencidas.Count, pendientes.Count, membresia != null);
+                        vencidas.Count, pendientes.Count, membresia != null, configuracion.MaxCuotasVencidasPermitidas);
                     var pagos = cuotas.Where(c => c.EstadoPago == EstadosCuota.Pagada && c.Pago != null &&
                         c.Pago.Estado == EstadosTransaccionPago.Aprobado).Select(c => c.Pago.Fecha).ToList();
                     var proximo = pendientes.Where(c => c.FechaHasta.Date >= DateTime.Today)
@@ -104,6 +113,8 @@ namespace exxen2._0.capaLogica
                         EstadoMembresia = membresia == null ? "Sin membresía" : activo ? "Activa" : "Inactiva",
                         EstadoPago = estadoPago,
                         CuotasVencidas = vencidas.Count,
+                        LimiteAlcanzado = moroso,
+                        EstadoDeuda = ClasificarDeuda(vencidas.Count, configuracion.MaxCuotasVencidasPermitidas),
                         CuotasPendientes = pendientes.Count,
                         FechaAlta = socio.FechaAlta,
                         DeudaTotal = pendientes.Sum(c => Math.Max(0m, c.Importe - (c.Pago != null && c.Pago.Estado == EstadosTransaccionPago.Aprobado ? c.Pago.Importe : 0m))),
@@ -121,24 +132,25 @@ namespace exxen2._0.capaLogica
                     Socios = resultado,
                     SociosActivos = resultado.Count(s => s.Activo),
                     SociosInactivos = resultado.Count(s => !s.Activo),
-                    AlDia = resultado.Count(s => s.EstadoPago == "AL DÍA"),
-                    UnaVencida = resultado.Count(s => s.CuotasVencidas == 1),
-                    DosOMasVencidas = resultado.Count(s => s.CuotasVencidas >= 2),
+                    AlDia = resultado.Count(s => s.EstadoDeuda == "Al día"),
+                    ConDeuda = resultado.Count(s => s.CuotasVencidas > 0 && !s.LimiteAlcanzado),
+                    LimiteAlcanzado = resultado.Count(s => s.LimiteAlcanzado),
                     CuotasPendientes = todasLasCuotas.Count,
                     VencenHoy = todasLasCuotas.Count(c => c.FechaHasta.Date == hoy),
-                    VencenEnSieteDias = todasLasCuotas.Count(c => c.FechaHasta.Date > hoy && c.FechaHasta.Date <= hoy.AddDays(7))
+                    DiasAvisoVencimiento = configuracion.DiasAvisoVencimiento,
+                    VencenEnPlazoAviso = todasLasCuotas.Count(c => c.FechaHasta.Date >= hoy && c.FechaHasta.Date <= hoy.AddDays(configuracion.DiasAvisoVencimiento))
                 };
             }
         }
 
         public static string ClasificarEstadoPago(bool socioActivo, bool membresiaActiva, int cuotasVencidas,
-            int cuotasPendientes, bool tieneMembresia)
+            int cuotasPendientes, bool tieneMembresia, int limite)
         {
-            if (MembresiaLogica.DebeDarseDeBajaPorDeuda(cuotasVencidas)) return "MOROSO";
+            if (MembresiaLogica.DebeDarseDeBajaPorDeuda(cuotasVencidas, limite)) return "Límite alcanzado";
             if (!socioActivo || (tieneMembresia && !membresiaActiva)) return "INACTIVO";
             if (!tieneMembresia) return "SIN MEMBRESÍA";
-            if (cuotasVencidas == 1) return "1 CUOTA VENCIDA";
-            return cuotasPendientes == 0 ? "AL DÍA" : "PAGO PENDIENTE";
+            if (cuotasVencidas > 0) return "Con deuda";
+            return "Al día";
         }
     }
 }

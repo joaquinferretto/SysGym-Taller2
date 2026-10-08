@@ -25,5 +25,7 @@ desktop.ini
 docs/*
 !docs/PROJECT_CONTEXT.md
 !docs/ANALISIS_DATOS.md
+!docs/AUDITORIA_OPERACIONES.md
+!docs/REGLAS_CUOTAS.md
 
 AGENTS.md

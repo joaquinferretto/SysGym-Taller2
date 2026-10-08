@@ -123,6 +123,7 @@ namespace exxen2._0.capaDatos.Contexto
         public DbSet<RutinaEjercicio> RutinaEjercicios { get; set; }
         public DbSet<EjercicioImagen> EjercicioImagenes { get; set; }
         public DbSet<AuditoriaOperacion> AuditoriasOperaciones { get; set; }
+        public DbSet<ConfiguracionSistema> ConfiguracionesSistema { get; set; }
 
         /* Configura tablas, tipos, precisión decimal y relaciones sin borrado en cascada. */
         // "Fluent API": se ejecuta una vez al armar el modelo y completa lo que no dicen los atributos de las entidades.
@@ -148,6 +149,7 @@ namespace exxen2._0.capaDatos.Contexto
             modelo.Entity<RutinaEjercicio>().ToTable("RutinaEjercicio");
             modelo.Entity<EjercicioImagen>().ToTable("EjercicioImagen");
             modelo.Entity<AuditoriaOperacion>().ToTable("AuditoriaOperacion");
+            modelo.Entity<ConfiguracionSistema>().ToTable("ConfiguracionSistema");
             modelo.Entity<AuditoriaOperacion>().HasRequired(a => a.Usuario).WithMany().HasForeignKey(a => a.IdUsuario).WillCascadeOnDelete(false);
             // HasPrecision(total, decimales): por ejemplo (18, 2) guarda importes con 2 decimales.
             modelo.Entity<Socio>().Property(s => s.Peso).HasPrecision(6, 2);

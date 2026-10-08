@@ -33,18 +33,18 @@ namespace exxen2._0.capaVisual.Compartido.Controles
                 valorActivos.Text = resumen.SociosActivos.ToString();
                 valorInactivos.Text = resumen.SociosInactivos.ToString();
                 valorAlDia.Text = resumen.AlDia.ToString();
-                valorConDeuda.Text = resumen.Socios.Count(s => s.CuotasVencidas > 0 || s.DeudaTotal > 0).ToString();
-                valorLimiteAlcanzado.Text = resumen.DosOMasVencidas.ToString();
+                valorConDeuda.Text = resumen.ConDeuda.ToString();
+                valorLimiteAlcanzado.Text = resumen.LimiteAlcanzado.ToString();
                 valorPendientes.Text = resumen.CuotasPendientes.ToString();
                 var avisos = new List<string>();
-                if (resumen.DosOMasVencidas > 0)
-                    avisos.Add(resumen.DosOMasVencidas + " socios alcanzaron el límite de deuda");
+                if (resumen.LimiteAlcanzado > 0)
+                    avisos.Add(resumen.LimiteAlcanzado + " socios alcanzaron el límite de deuda");
                 if (resumen.VencenHoy > 0)
                     avisos.Add(resumen.VencenHoy + " cuotas vencen hoy");
-                if (resumen.VencenEnSieteDias > 0)
-                    avisos.Add(resumen.VencenEnSieteDias + " cuotas vencen dentro de los próximos 7 días");
-                if (resumen.UnaVencida > 0)
-                    avisos.Add(resumen.UnaVencida + " socios tienen 1 cuota vencida");
+                if (resumen.VencenEnPlazoAviso > 0)
+                    avisos.Add(resumen.VencenEnPlazoAviso + " cuotas vencen entre hoy y los próximos " + resumen.DiasAvisoVencimiento + " días");
+                if (resumen.ConDeuda > 0)
+                    avisos.Add(resumen.ConDeuda + " socios tienen deuda debajo del límite");
                 alertas.Text = avisos.Count == 0 ? "Sin avisos pendientes" : string.Join("  ·  ", avisos);
                 AplicarFiltro();
             }
@@ -61,10 +61,10 @@ namespace exxen2._0.capaVisual.Compartido.Controles
             var texto = buscador.Text.Trim();
             var filtro = Convert.ToString(filtroEstado.SelectedItem);
             IEnumerable<EstadoSocioDashboard> resultado = socios;
-            if (filtro == "Al día") resultado = resultado.Where(s => s.EstadoPago == "AL DÍA");
-            else if (filtro == "Con deuda") resultado = resultado.Where(s => s.CuotasVencidas > 0 || s.DeudaTotal > 0);
+            if (filtro == "Al día") resultado = resultado.Where(s => s.EstadoDeuda == "Al día");
+            else if (filtro == "Con deuda") resultado = resultado.Where(s => s.CuotasVencidas > 0 && !s.LimiteAlcanzado);
             else if (filtro == "1 cuota vencida") resultado = resultado.Where(s => s.CuotasVencidas == 1);
-            else if (filtro == "Límite alcanzado") resultado = resultado.Where(s => s.CuotasVencidas >= 2);
+            else if (filtro == "Límite alcanzado") resultado = resultado.Where(s => s.LimiteAlcanzado);
             else if (filtro == "Inactivos") resultado = resultado.Where(s => !s.Activo);
             if (!string.IsNullOrWhiteSpace(texto))
                 resultado = resultado.Where(s => Contiene(s.Socio, texto) || Contiene(s.DNI, texto));

@@ -16,8 +16,7 @@ namespace exxen2._0.capaLogica
         private readonly AuditoriaLogica auditoria;
         public MembresiaLogica() : this(0) { }
         public MembresiaLogica(int idUsuarioAutenticado) { auditoria = new AuditoriaLogica(idUsuarioAutenticado); }
-        private const int CuotasVencidasParaDarDeBaja = 2;  // Regla del negocio: con 2 cuotas vencidas sin pagar, la membresía se da de baja.
-        private const string MensajeReactivacionBloqueadaPorDeuda = "No se puede reactivar la membresía mientras existan dos o más cuotas vencidas pendientes.";
+        private const string MensajeReactivacionBloqueadaPorDeuda = "El socio alcanzó el límite de cuotas vencidas permitido.";
 
         /* Crea una membresía y su primera cuota; la asignación de entrenador es opcional y posterior. */
         public Membresia Crear(Membresia membresia)
@@ -173,7 +172,7 @@ namespace exxen2._0.capaLogica
                 auditoria.ObtenerUsuario(datos);
                 var membresia = ObtenerMembresia(datos, idMembresia);
                 var estabaInactiva = !membresia.Estado;
-                if (DebeDarseDeBajaPorDeuda(ContarCuotasVencidasImpagasEnContexto(datos, idMembresia)))
+                if (DebeDarseDeBajaPorDeuda(ContarCuotasVencidasImpagasEnContexto(datos, idMembresia), ConfiguracionSistemaLogica.ObtenerEnContexto(datos).MaxCuotasVencidasPermitidas))
                 {
                     CambiarEstadoEnContexto(datos, membresia, false);
                     reactivacionBloqueada = true;
@@ -235,19 +234,20 @@ namespace exxen2._0.capaLogica
         internal static void ActualizarEstadoPorDeudaEnContexto(IUnidadDeTrabajo datos, int idMembresia)
         {
             var membresia = ObtenerMembresia(datos, idMembresia);
-            if (DebeDarseDeBajaPorDeuda(ContarCuotasVencidasImpagasEnContexto(datos, idMembresia)))
+            if (DebeDarseDeBajaPorDeuda(ContarCuotasVencidasImpagasEnContexto(datos, idMembresia), ConfiguracionSistemaLogica.ObtenerEnContexto(datos).MaxCuotasVencidasPermitidas))
                 CambiarEstadoEnContexto(datos, membresia, false);
         }
 
         /* Evalúa todas las membresías para los listados de gestión y consultas globales. */
         internal static void ActualizarEstadosPorDeudaEnContexto(IUnidadDeTrabajo datos)
         {
+            var limite = ConfiguracionSistemaLogica.ObtenerEnContexto(datos).MaxCuotasVencidasPermitidas;
             var idsMembresias = ConsultarCuotasVencidasImpagasEnContexto(datos)
                 .GroupBy(c => c.IdMembresia)
                 .Select(cuotas => new { IdMembresia = cuotas.Key, Cantidad = cuotas.Count() })
                 .ToList();
             var idsParaDarDeBaja = idsMembresias
-                .Where(m => DebeDarseDeBajaPorDeuda(m.Cantidad))
+                .Where(m => DebeDarseDeBajaPorDeuda(m.Cantidad, limite))
                 .Select(m => m.IdMembresia)
                 .ToList();
             if (idsParaDarDeBaja.Count == 0)
@@ -277,7 +277,12 @@ namespace exxen2._0.capaLogica
         /* Aplica el umbral común de deuda para bajas automáticas y validación de reactivaciones. */
         internal static bool DebeDarseDeBajaPorDeuda(int cantidadCuotasVencidasImpagas)
         {
-            return cantidadCuotasVencidasImpagas >= CuotasVencidasParaDarDeBaja;
+            return DebeDarseDeBajaPorDeuda(cantidadCuotasVencidasImpagas, new ConfiguracionSistemaLogica().Obtener().MaxCuotasVencidasPermitidas);
+        }
+
+        internal static bool DebeDarseDeBajaPorDeuda(int cantidadCuotasVencidasImpagas, int limite)
+        {
+            return cantidadCuotasVencidasImpagas >= limite;
         }
 
         /* Devuelve la membresía seguida por la unidad de trabajo o informa una clave inválida. */

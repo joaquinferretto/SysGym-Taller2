@@ -24,8 +24,26 @@ La revisión previa confirmó que pagos y usuarios ya disponían de `IdUsuarioRe
 
 Se incorporaron `AuditoriaOperacion`, su entidad/DbSet/repositorio y `AuditoriaLogica`. El historial conserva fecha/hora, usuario, nombre/rol del momento, operación, entidad, ID y detalle legible. Registrar pago, crear usuario/membresía, reactivar membresía y asignar/cambiar/quitar entrenador guardan su auditoría dentro de la transacción de la operación. La lógica exige roles activos; la consulta es exclusiva de Administrador.
 
-El menú Administrador incluye Consultas → Auditoría, con controles estáticos en Designer, filtros opcionales de fecha/usuario/operación/búsqueda y grilla de solo lectura. La consulta usa AsNoTracking, filtra antes de materializar y limita a las 500 coincidencias más recientes. No existe configuración global editable para auditar; no se implementó una en esta tarea.
+El menú Administrador incluye Consultas → Auditoría, con controles estáticos en Designer, filtros opcionales de fecha/usuario/operación/búsqueda y grilla de solo lectura. La consulta usa AsNoTracking, filtra antes de materializar y limita a las 500 coincidencias más recientes. En esta etapa inicial no se agregó configuración; la etapa siguiente, documentada abajo, incorpora esa funcionalidad y su auditoría.
 
 La migración aditiva `AgregarAuditoriaOperaciones.sql` se aplicó dos veces sin duplicar estructuras ni asignar responsables ficticios a históricos. Los 22 pagos y 4 usuarios anteriores conservaron sus NULL. Se probaron las operaciones, el cambio de sesión real Admin → Recepcionista, PDFs, filtros, autorización, historial de usuarios inactivos y rollback si falla la auditoría en una base aislada. Los siete formularios revisados abrieron, guardaron y reabrieron en VS2026. Debug y Release: 0 errores y 0 advertencias; git diff --check correcto. Sin commit.
 
-Ver [AUDITORIA_OPERACIONES.md](AUDITORIA_OPERACIONES.md) para estructura, operaciones, seguridad, filtros, instalación, resultados y límites. Las consultas de Análisis y el cálculo de cuotas/deuda se conservaron.
+Ver [AUDITORIA_OPERACIONES.md](AUDITORIA_OPERACIONES.md) para estructura, operaciones, seguridad, filtros, instalación, resultados y límites. En la etapa inicial de auditoría se conservaron las consultas de Análisis y el cálculo de cuotas/deuda.
+
+## Configuración global — 8 de octubre de 2026
+
+La auditoría encontró el umbral fijo 2 en MembresiaLogica, clasificación/contadores de EstadoSociosLogica, filtro de EstadoSociosControl y consultas de deuda de Análisis; el plazo fijo 7 estaba en las alertas compartidas. GenerarSiguienteCuota ya respetaba la cronología y duplicados, pero no tenía horizonte de anticipación. No existía tabla o lógica equivalente a ConfiguracionSistema.
+
+Se agregó una sola fila global con defaults 2/1/7, entidad/DbSet/repositorio EF6 y ConfiguracionSistemaLogica como fuente persistida sin caché de sesión. SysGymDB.sql incluye la tabla/fila; AgregarConfiguracionSistema.sql permite actualizar bases existentes sin modificar cuotas. Se aplicó dos veces y la base real conservó 41 cuotas, 22 pagos, 4 usuarios y auditoría vacía.
+
+Administrador dispone de Administración → Configuración con controles permanentes en Designer. NumericUpDown, lógica y SQL comparten rangos: vencidas 1–120; anticipación 0–120 meses; aviso 0–365 días. La lógica verifica rol/usuario activos, y MODIFICAR_CONFIGURACION registra valores anteriores/nuevos solo ante cambios reales dentro de la misma transacción. Recepcionista y Entrenador no pueden editar.
+
+Deuda y Análisis utilizan Al día / Con deuda / Límite alcanzado con el umbral actual. Solo cuentan Pendiente y FechaHasta anterior a hoy. Se conserva inactivación y reactivación exclusivamente manual. Las alertas de ambos dashboards incluyen hoy hasta hoy más los días configurados. La generación permite el período mensual actual de la secuencia real más N futuros; cambiar anticipación no elimina cuotas ni mueve el horizonte por cada inserción.
+
+Las cuotas existentes fuera del horizonte se documentaron, sin modificarlas: Chiara Barbieri, membresía 6, cuota #38 hasta 30/04/2027, excede 5 períodos/151 días; leonardo gutierrez, membresía 31, cuota #41 hasta 22/12/2026, excede 1 período/30 días.
+
+Pruebas en base aislada: límites 2/3, pagadas/anuladas, pago sin reactivación, reactivación manual, anticipación 0/1/2, generaciones repetidas bloqueadas, meses cortos, duplicados, alertas 7/10, no-op/lecturas sin auditoría, roles y rollback conjunto. Inicio de sesión real Admin→Recepcionista verificó menú/formulario, guardar/reabrir, historial, dashboards y pago atribuido a la sesión nueva. No se cambiaron framework, arquitectura, cálculos financieros o credenciales reales.
+
+Ver [REGLAS_CUOTAS.md](REGLAS_CUOTAS.md) y [AUDITORIA_OPERACIONES.md](AUDITORIA_OPERACIONES.md) para reglas, instalación, históricos y verificación.
+
+Verificación final: ConfiguracionFormulario, GestionMembresiasFormulario, EstadoSociosControl, AnalisisFormulario y PanelAdministrador abrieron en el Designer real de VS2026; se seleccionó un control, se guardó, cerró y reabrió cada documento, sin pantalla roja ni excepción. Rebuild Debug y Release: 0 errores y 0 advertencias. git diff --check: correcto. Sin commit.

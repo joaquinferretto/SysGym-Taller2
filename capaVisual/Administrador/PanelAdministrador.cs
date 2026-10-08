@@ -66,7 +66,7 @@ namespace exxen2._0.capaVisual.Administrador
         private void AplicarMenuDesplegable()
         {
             var posicionY = 18;
-            posicionY = MenuDesplegableHelper.ColocarSeccion(lblAdministracion, administracionExpandida, posicionY, btnUsuarios, btnSocios);
+            posicionY = MenuDesplegableHelper.ColocarSeccion(lblAdministracion, administracionExpandida, posicionY, btnUsuarios, btnSocios, btnConfiguracion);
             posicionY = MenuDesplegableHelper.ColocarSeccion(lblOperacion, operacionExpandida, posicionY, btnPlanes, btnMembresias, btnPagos, btnAsignaciones);
             posicionY = MenuDesplegableHelper.ColocarSeccion(lblRutinas, rutinasExpandida, posicionY, btnEjercicios, btnRutinas, btnMisSocios);
             posicionY = MenuDesplegableHelper.ColocarSeccion(lblConsultas, consultasExpandida, posicionY, btnReportes, btnAnalisis, btnAuditoria);
@@ -233,6 +233,19 @@ namespace exxen2._0.capaVisual.Administrador
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Auditoría", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void btnConfiguracion_Click(object origen, EventArgs e)
+        {
+            try
+            {
+                new ConfiguracionSistemaLogica(usuario.IdUsuarioSistema).ValidarAcceso();
+                Abrir(btnConfiguracion, new ConfiguracionFormulario(usuario), "Configuración | Cuotas y pagos");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Configuración", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

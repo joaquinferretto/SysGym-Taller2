@@ -8,6 +8,7 @@ namespace exxen2._0.capaVisual.Administrador
     {
         private IContainer components = null;
         private Button btnAuditoria;
+        private Button btnConfiguracion;
         private Panel panelEncabezado; private PictureBox picLogo;
         private PictureBox picUsuario;
         private Label lblUsuario;
@@ -56,6 +57,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.btnReportes = new System.Windows.Forms.Button();
             this.btnAnalisis = new System.Windows.Forms.Button();
             this.btnAuditoria = new System.Windows.Forms.Button();
+            this.btnConfiguracion = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
             this.panelContenido = new System.Windows.Forms.Panel();
             this.inicioPanel = new exxen2._0.capaVisual.Administrador.InicioPanelAdministrador();
@@ -256,6 +258,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.panelOpciones.Controls.Add(this.lblAdministracion);
             this.panelOpciones.Controls.Add(this.btnUsuarios);
             this.panelOpciones.Controls.Add(this.btnSocios);
+            this.panelOpciones.Controls.Add(this.btnConfiguracion);
             this.panelOpciones.Controls.Add(this.lblOperacion);
             this.panelOpciones.Controls.Add(this.btnPlanes);
             this.panelOpciones.Controls.Add(this.btnMembresias);
@@ -551,6 +554,22 @@ namespace exxen2._0.capaVisual.Administrador
             this.btnAuditoria.UseVisualStyleBackColor = false;
             this.btnAuditoria.Visible = false;
             this.btnAuditoria.Click += new System.EventHandler(this.btnAuditoria_Click);
+            this.btnConfiguracion.BackColor = System.Drawing.Color.FromArgb(248, 250, 252);
+            this.btnConfiguracion.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(226, 232, 240);
+            this.btnConfiguracion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnConfiguracion.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.btnConfiguracion.ForeColor = System.Drawing.Color.FromArgb(51, 65, 85);
+            this.btnConfiguracion.Location = new System.Drawing.Point(14, 142);
+            this.btnConfiguracion.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.btnConfiguracion.Name = "btnConfiguracion";
+            this.btnConfiguracion.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
+            this.btnConfiguracion.Size = new System.Drawing.Size(236, 38);
+            this.btnConfiguracion.TabIndex = 16;
+            this.btnConfiguracion.Text = "Configuración";
+            this.btnConfiguracion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnConfiguracion.UseVisualStyleBackColor = false;
+            this.btnConfiguracion.Visible = true;
+            this.btnConfiguracion.Click += new System.EventHandler(this.btnConfiguracion_Click);
             //
             // btnSalir
             //

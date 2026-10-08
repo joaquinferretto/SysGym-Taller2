@@ -1,6 +1,6 @@
 # Análisis de datos — primera etapa
 
-Última actualización: 7 de octubre de 2026.
+Última actualización: 8 de octubre de 2026.
 
 ## Estabilidad de Análisis en el Designer de VS2026 — 7 de octubre de 2026
 
@@ -94,3 +94,7 @@ Se verificaron un día con 6 pagos (`Desde = Hasta`), un período sin pagos, rec
 La serie septiembre–octubre devuelve $475.000 y $0 respectivamente, con variación mensual de −100%; la comparación del intervalo con su período anterior sin ingresos queda sin porcentaje.
 
 El formulario abrió en el Designer de Visual Studio 2026; se verificó guardar, cerrar y reabrir, y la presencia de controles y Charts individuales en Esquema del documento. Los controles permanentes están declarados en `InitializeComponent`; solo las series se cargan dinámicamente.
+
+## Umbral de deuda configurable — 8 de octubre de 2026
+
+La distribución de deuda y el análisis individual reutilizan ahora el resumen de EstadoSociosLogica y su clasificación con MaxCuotasVencidasPermitidas vigente. Categorías: Al día (0 vencidas), Con deuda (mayor que 0 y menor al límite), Límite alcanzado (mayor o igual). Las lecturas de Análisis no persisten bajas ni auditan. No se modificaron otras consultas, filtros o gráficos; las reglas completas están en REGLAS_CUOTAS.md.

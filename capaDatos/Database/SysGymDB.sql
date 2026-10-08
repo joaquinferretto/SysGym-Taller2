@@ -324,6 +324,27 @@ CREATE UNIQUE INDEX UX_CuotaMembresia_IdRegistroPago
     WHERE IdRegistroPago IS NOT NULL;
 GO
 
+SET XACT_ABORT ON;
+BEGIN TRANSACTION;
+IF OBJECT_ID(N'dbo.ConfiguracionSistema', N'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.ConfiguracionSistema (
+        IdConfiguracion INT NOT NULL CONSTRAINT PK_ConfiguracionSistema PRIMARY KEY,
+        MaxCuotasVencidasPermitidas INT NOT NULL CONSTRAINT DF_Configuracion_MaxVencidas DEFAULT 2,
+        MaxMesesAnticipacionCuotas INT NOT NULL CONSTRAINT DF_Configuracion_MaxAnticipacion DEFAULT 1,
+        DiasAvisoVencimiento INT NOT NULL CONSTRAINT DF_Configuracion_DiasAviso DEFAULT 7,
+        CONSTRAINT CK_Configuracion_Unica CHECK (IdConfiguracion = 1),
+        CONSTRAINT CK_Configuracion_MaxVencidas CHECK (MaxCuotasVencidasPermitidas BETWEEN 1 AND 120),
+        CONSTRAINT CK_Configuracion_MaxAnticipacion CHECK (MaxMesesAnticipacionCuotas BETWEEN 0 AND 120),
+        CONSTRAINT CK_Configuracion_DiasAviso CHECK (DiasAvisoVencimiento BETWEEN 0 AND 365)
+    );
+END;
+IF NOT EXISTS (SELECT 1 FROM dbo.ConfiguracionSistema WHERE IdConfiguracion = 1)
+    INSERT INTO dbo.ConfiguracionSistema (IdConfiguracion, MaxCuotasVencidasPermitidas, MaxMesesAnticipacionCuotas, DiasAvisoVencimiento)
+    VALUES (1, 2, 1, 7);
+COMMIT TRANSACTION;
+
+GO
 /* Datos iniciales. Ultima actualizacion: 22 de septiembre de 2026.
    Solo sentencias INSERT: sin ciclos, variables, procedimientos ni funciones propias.
    Ejecutar una sola vez sobre la base recien creada. Las claves foraneas se resuelven

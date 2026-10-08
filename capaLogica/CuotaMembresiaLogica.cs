@@ -28,6 +28,8 @@ namespace exxen2._0.capaLogica
     {
         public bool PuedeGenerar { get; set; }
         public int CantidadCuotasVencidasImpagas { get; set; }
+        public bool LimiteDeudaAlcanzado { get; set; }
+        public DateTime? HorizontePermitido { get; set; }
         public DateTime? UltimaFechaDesde { get; set; }
         public DateTime? UltimaFechaHasta { get; set; }
         public DateTime? NuevaFechaDesde { get; set; }
@@ -79,7 +81,7 @@ namespace exxen2._0.capaLogica
                     throw new InvalidOperationException("La membresía no existe.");
 
                 var disponibilidad = EvaluarDisponibilidadGeneracionEnContexto(datos, membresia);
-                if (MembresiaLogica.DebeDarseDeBajaPorDeuda(disponibilidad.CantidadCuotasVencidasImpagas))
+                if (disponibilidad.LimiteDeudaAlcanzado)
                 {
                     MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(datos, idMembresia);
                     datos.GuardarCambios();
@@ -412,16 +414,18 @@ namespace exxen2._0.capaLogica
                 .ToList();
             var ultima = cuotas.FirstOrDefault();
             var vencidas = MembresiaLogica.ContarCuotasVencidasImpagasEnContexto(datos, membresia.IdMembresia);
+            var configuracion = ConfiguracionSistemaLogica.ObtenerEnContexto(datos);
             var resultado = new DisponibilidadGeneracionCuota
             {
                 CantidadCuotasVencidasImpagas = vencidas,
+                LimiteDeudaAlcanzado = MembresiaLogica.DebeDarseDeBajaPorDeuda(vencidas, configuracion.MaxCuotasVencidasPermitidas),
                 UltimaFechaDesde = ultima == null ? (DateTime?)null : ultima.FechaDesde.Date,
                 UltimaFechaHasta = ultima == null ? (DateTime?)null : ultima.FechaHasta.Date
             };
 
-            if (MembresiaLogica.DebeDarseDeBajaPorDeuda(vencidas))
+            if (resultado.LimiteDeudaAlcanzado)
             {
-                resultado.Motivo = "No se puede generar una nueva cuota porque la membresía tiene 2 o más cuotas vencidas sin pagar.";
+                resultado.Motivo = "El socio alcanzó el límite de cuotas vencidas permitido.";
                 return resultado;
             }
             if (!membresia.Estado)
@@ -450,6 +454,13 @@ namespace exxen2._0.capaLogica
                 return resultado;
             }
 
+            resultado.HorizontePermitido = ConfiguracionSistemaLogica.CalcularHorizonteCuotas(
+                cuotas.Min(c => c.FechaDesde), DateTime.Today, configuracion.MaxMesesAnticipacionCuotas);
+            if (resultado.NuevaFechaHasta.Value > resultado.HorizontePermitido.Value)
+            {
+                resultado.Motivo = "No se pueden generar cuotas más allá del límite configurado.";
+                return resultado;
+            }
             resultado.PuedeGenerar = true;
             resultado.Motivo = string.Empty;
             return resultado;

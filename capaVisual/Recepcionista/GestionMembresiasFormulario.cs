@@ -188,7 +188,9 @@ namespace exxen2._0.capaVisual.Recepcionista
             {
                 try
                 {
-                    generarCuota.Enabled = cuotas.ConsultarDisponibilidadGeneracion(membresiaSeleccionada.IdMembresia).PuedeGenerar;
+                    var disponibilidad = cuotas.ConsultarDisponibilidadGeneracion(membresiaSeleccionada.IdMembresia);
+                    generarCuota.Enabled = disponibilidad.PuedeGenerar;
+                    if (!disponibilidad.PuedeGenerar) lblEstado.Text = disponibilidad.Motivo;
                 }
                 catch (Exception ex)
                 {

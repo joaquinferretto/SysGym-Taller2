@@ -39,6 +39,7 @@ namespace exxen2._0.capaLogica.Auditoria
         public const string AsignarEntrenador = "ASIGNAR_ENTRENADOR";
         public const string CambiarEntrenador = "CAMBIAR_ENTRENADOR";
         public const string QuitarEntrenador = "QUITAR_ENTRENADOR";
+        public const string ModificarConfiguracion = "MODIFICAR_CONFIGURACION";
         private readonly int idUsuarioAutenticado;
 
         public AuditoriaLogica(int idUsuarioAutenticado)
@@ -56,7 +57,8 @@ namespace exxen2._0.capaLogica.Auditoria
                 new OpcionAuditoria { Codigo = ReactivarMembresia, Texto = "Reactivó membresía" },
                 new OpcionAuditoria { Codigo = AsignarEntrenador, Texto = "Asignó entrenador" },
                 new OpcionAuditoria { Codigo = CambiarEntrenador, Texto = "Cambió entrenador" },
-                new OpcionAuditoria { Codigo = QuitarEntrenador, Texto = "Quitó entrenador" }
+                new OpcionAuditoria { Codigo = QuitarEntrenador, Texto = "Quitó entrenador" },
+                new OpcionAuditoria { Codigo = ModificarConfiguracion, Texto = "Modificó configuración" }
             };
         }
 
@@ -73,7 +75,7 @@ namespace exxen2._0.capaLogica.Auditoria
             var recepcion = ValidacionesGimnasio.EsRecepcionistaActivo(usuario);
             if (!admin && (soloAdministrador || !recepcion))
                 throw new UnauthorizedAccessException(soloAdministrador
-                    ? "Solo Administrador puede consultar Auditoría o crear usuarios."
+                    ? "Esta operación requiere un Administrador activo."
                     : "La operación requiere Administrador o Recepcionista.");
             return usuario;
         }
@@ -96,7 +98,7 @@ namespace exxen2._0.capaLogica.Auditoria
             if (idEntidad <= 0 || string.IsNullOrWhiteSpace(entidad) || entidad.Length > 50 ||
                 string.IsNullOrWhiteSpace(detalle) || detalle.Length > 1000)
                 throw new ArgumentException("Los datos de la auditoría no son válidos.");
-            var usuario = ObtenerUsuario(datos, operacion == CrearUsuario);
+            var usuario = ObtenerUsuario(datos, operacion == CrearUsuario || operacion == ModificarConfiguracion);
             datos.AuditoriasOperaciones.Agregar(new AuditoriaOperacion
             {
                 FechaHora = DateTime.Now, IdUsuario = usuario.IdUsuarioSistema,

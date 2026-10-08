@@ -81,6 +81,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="capaDatos\Entidades\ConfiguracionSistema.cs" />
+    <Compile Include="capaLogica\ConfiguracionSistemaLogica.cs" />
+    <Compile Include="capaVisual\Administrador\ConfiguracionFormulario.cs"><SubType>Form</SubType></Compile>
+    <Compile Include="capaVisual\Administrador\ConfiguracionFormulario.Designer.cs"><DependentUpon>ConfiguracionFormulario.cs</DependentUpon></Compile>
+    <None Include="capaDatos\Database\AgregarConfiguracionSistema.sql" />
     <Compile Include="capaDatos\Contexto\ContextoGimnasio.cs" />
     <Compile Include="capaDatos\Repositorios\UnidadDeTrabajoGimnasio.cs" />
     <Compile Include="capaDatos\Entidades\Ejercicio.cs" />

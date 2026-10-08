@@ -70,6 +70,7 @@ namespace exxen2._0.capaDatos.Repositorios
         IRepositorio<Ejercicio> Ejercicios { get; }
         IRepositorio<EjercicioImagen> EjercicioImagenes { get; }
         IRepositorio<AuditoriaOperacion> AuditoriasOperaciones { get; }
+        IRepositorio<ConfiguracionSistema> ConfiguracionesSistema { get; }
 
         /* Persiste los cambios y conserva la excepción original al informar errores de validación o actualización. */
         int GuardarCambios();
@@ -104,6 +105,7 @@ namespace exxen2._0.capaDatos.Repositorios
             Ejercicios = CrearRepositorio<Ejercicio>();
             EjercicioImagenes = CrearRepositorio<EjercicioImagen>();
             AuditoriasOperaciones = CrearRepositorio<AuditoriaOperacion>();
+            ConfiguracionesSistema = CrearRepositorio<ConfiguracionSistema>();
         }
 
         public IRepositorio<Rol> Roles { get; private set; }
@@ -122,6 +124,7 @@ namespace exxen2._0.capaDatos.Repositorios
         public IRepositorio<Ejercicio> Ejercicios { get; private set; }
         public IRepositorio<EjercicioImagen> EjercicioImagenes { get; private set; }
         public IRepositorio<AuditoriaOperacion> AuditoriasOperaciones { get; private set; }
+        public IRepositorio<ConfiguracionSistema> ConfiguracionesSistema { get; private set; }
 
         /* Persiste los cambios y conserva la excepción original al informar errores de validación o actualización. */
         public int GuardarCambios()
