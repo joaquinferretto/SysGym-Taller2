@@ -1,4 +1,5 @@
 using System;
+using exxen2._0.capaVisual.Compartido.Controles;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -17,10 +18,17 @@ namespace exxen2._0.capaVisual.Recepcionista
     [DesignerCategory("Form")]
     public partial class GestionPagosFormulario : Form
     {
+        public event EventHandler<AccionEstadoSocioEventArgs> FichaSolicitada;
+        private void btnFicha_Click(object sender, EventArgs e)
+        {
+            var id = ObtenerSocioSeleccionado();
+            var evento = FichaSolicitada;
+            if (id > 0 && evento != null) evento(this, new AccionEstadoSocioEventArgs(id, AccionEstadoSocio.VerFicha));
+        }
         private readonly PagoLogica logica;
         private readonly CuotaMembresiaLogica cuotas = new CuotaMembresiaLogica();
         private readonly MembresiaLogica membresias = new MembresiaLogica();
-        private readonly ReportesPagosServicio reportes = new ReportesPagosServicio();
+        private readonly ReportesPagosServicio reportes;
         private readonly int idSocioInicial;
         private List<CuotaMembresia> cuotasCargadas = new List<CuotaMembresia>();
         private List<OpcionMembresiaPago> membresiasCargadas = new List<OpcionMembresiaPago>();
@@ -45,6 +53,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             idSocioInicial = idSocio;
             idUsuarioAutenticado = usuarioActual == null ? 0 : usuarioActual.IdUsuarioSistema;
             logica = new PagoLogica(idUsuarioAutenticado);
+            reportes = new ReportesPagosServicio(idUsuarioAutenticado);
             InitializeComponent();
             // Selecciones iniciales: el Designer no serializa SelectedIndex.
             filtroEstado.SelectedIndex = 0;
@@ -81,6 +90,11 @@ namespace exxen2._0.capaVisual.Recepcionista
                 {
                     membresia.SelectedValue = opcion.IdMembresia;
                     SeleccionarPrimeraPendiente();
+                }
+                else
+                {
+                    membresia.SelectedIndex = -1;
+                    MostrarSinCuota("El socio seleccionado no tiene una membresía disponible.");
                 }
             }
             }
@@ -238,6 +252,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             cuota.Clear();
             importe.Clear();
             lblFormulario.Text = mensaje;
+            btnFicha.Enabled = ObtenerSocioSeleccionado() > 0 && FichaSolicitada != null;
             registrar.Enabled = false;
             anular.Enabled = false;
             reembolsar.Enabled = false;
@@ -270,9 +285,13 @@ namespace exxen2._0.capaVisual.Recepcionista
             {
                 if (!ValidarFormulario())
                     return;
+                var idMembresiaCobro = Convert.ToInt32(membresia.SelectedValue);
                 logica.RegistrarPago(new Pago { Importe = AyudaFormularioVisual.DecimalPositivo(importe, "importe"), IdMetodoPago = Convert.ToInt32(metodo.SelectedValue), Estado = Convert.ToString(estado.SelectedItem), Fecha = DateTime.Now, Descripcion = "Pago registrado en recepcion" }, idCuotaSeleccionada);
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
+                membresia.SelectedValue = idMembresiaCobro;
+                SeleccionarPrimeraPendiente();
+                ActualizarExportaciones();
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Pago registrado correctamente.", true);
             }
             catch (Exception ex)
@@ -365,6 +384,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             var seleccionada = cuotasCargadas.FirstOrDefault(c => c.IdCuotaMembresia == idCuotaSeleccionada);
             var pagado = seleccionada != null && seleccionada.EstadoPago == EstadosCuota.Pagada &&
                 seleccionada.Pago != null && seleccionada.Pago.Estado == EstadosTransaccionPago.Aprobado;
+            btnFicha.Enabled = ObtenerSocioSeleccionado() > 0 && FichaSolicitada != null;
             exportarComprobante.Enabled = pagado;
             var idSocio = ObtenerSocioSeleccionado();
             exportarHistorial.Enabled = idSocio > 0 && cuotasCargadas.Any(c => c.Membresia != null && c.Membresia.IdSocio == idSocio &&

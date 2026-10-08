@@ -59,3 +59,17 @@ Chart.Serializer y SaveImage renderizan copias de tamaño fijo 1200×675; PNG/ba
 Pruebas aisladas verificaron texto/cantidades en PDF contra el DTO cargado, períodos con datos/vacío/varios meses, comparación opcional y cambio de límite con reaplicación. Los cinco PDFs se abrieron y renderizaron completos mediante el lector nativo de Windows. Detalles, contenido y límites están en REPORTE_ANALISIS_PDF.md.
 
 Verificación final de esta etapa: el botón Exportar y las nueve pestañas se seleccionaron en VS2026; Análisis y PanelAdministrador abrieron, guardaron y reabrieron sin pantalla roja, NullReferenceException o error de altura. Rebuild Debug y Release: 0 errores y 0 advertencias; git diff --check correcto. La prueba final terminó con SMOKE_PDF_ANALISIS_OK, incluidos Efectivo 3/Mercado Pago 1, indicadores visibles vs texto PDF, PNG independiente del tamaño y cancelación real. Sin commit.
+
+## Ficha 360° del socio — 8 de octubre de 2026
+
+Se auditó y reutilizó ReportesPagosServicio: ya existían comprobante/historial y registrador en comprobante; faltaban responsable en historial, rol y auditoría de exportación. FichaSocioLogica y FichaSocioFormulario agregan consulta compartida Admin/Recepcionista, accesible desde Estado/Socios/Pagos/Membresías mediante ControladorNavegacion. No se modificaron SQL, EF ni reglas de deuda/cuotas.
+
+Datos generales/foto, membresía/cobertura, entrenador, rutina y finanzas comparten EstadoSociosLogica.ObtenerSocioSoloLectura y la proyección del historial PDF. Últimos 20 pagos, historial completo, módulos preseleccionados y retorno con consulta renovada. Ver rutina utiliza el formulario existente con lectura explícita de la rutina; no aplica bajas desde la ficha.
+
+Comprobante e historial incluyen responsable/rol real o Sin información. Historial agrega fecha de alta, primer/último pago y admite cero pagos. EXPORTAR_COMPROBANTE_PAGO y EXPORTAR_HISTORIAL_PAGOS se confirman únicamente tras guardar; cancelación/fallos no auditan éxito. Archivo y SQL no tienen transacción distribuida, como se documenta en FICHA_SOCIO.md y REPORTES_Y_COMPROBANTES.md.
+
+Pruebas en base aislada: PDFs de Efectivo/Mercado Pago y responsables Admin/Recepcionista/NULL; historiales de 0/1/23/24 pagos y comparación con ficha. Cambio real de sesión y navegación MDI Admin→Recepcionista, cobro, vuelta a ficha y nuevo responsable visibles; lectura sin cambios de estado, roles rechazados, fallos/cancelación. Sin commit.
+
+Verificación final de Ficha 360°: ocho formularios/controles abrieron, permitieron selección, guardado y reapertura en el Designer real VS2026, sin pantalla roja. Los nueve PDFs de prueba se abrieron y renderizaron completos (once páginas) con el lector nativo de Windows; logo/tablas legibles. Cancelación real de ambos diálogos: cero eventos. Selección real con mouse en Socios y responsables completos en la grilla verificados. Rebuild Debug y Release: 0 errores / 0 advertencias; git diff --check correcto. Sin commit.
+
+El evento real Registrar pago se probó en el flujo Recepcionista → Ficha → Pagos → Ficha. Pagos conserva la membresía cobrada después de guardar, evitando que su preparación de un nuevo pago cambie el socio del retorno. El nuevo pago y su registrador Recepcionista quedan visibles. Socio sin membresía y cancelación real de ambos diálogos también se verificaron.

@@ -129,3 +129,13 @@ Entidad Analisis e IdEntidad 1 identifican el módulo, no un socio ni un archivo
 Se verificó la cancelación real del diálogo y fallos de escritura/auditoría en una base aislada, sin eventos ficticios. El INSERT de auditoría se prepara sin commit antes de escribir y se confirma después; fallo de escritura revierte la transacción. Archivo y SQL no comparten transacción distribuida: un fallo de commit posterior a la escritura puede dejar un PDF válido aunque se informe error. Ver REPORTE_ANALISIS_PDF.md para contenido, consistencia, pruebas y límites.
 
 Verificación final de esta etapa: el botón Exportar y las nueve pestañas se seleccionaron en VS2026; Análisis y PanelAdministrador abrieron, guardaron y reabrieron sin pantalla roja, NullReferenceException o error de altura. Rebuild Debug y Release: 0 errores y 0 advertencias; git diff --check correcto. La prueba final terminó con SMOKE_PDF_ANALISIS_OK, incluidos Efectivo 3/Mercado Pago 1, indicadores visibles vs texto PDF, PNG independiente del tamaño y cancelación real. Sin commit.
+
+## Exportaciones de pagos desde la Ficha 360° — 8 de octubre de 2026
+
+ReportesPagosServicio incorpora EXPORTAR_COMPROBANTE_PAGO (entidad Pago, ID del pago) y EXPORTAR_HISTORIAL_PAGOS (entidad Socio, ID del socio). Ambos permiten Administrador y Recepcionista activos resueltos desde el ID de la sesión existente. Los códigos aparecen en los filtros del historial. Consultar ficha/pagos no audita lecturas.
+
+Después de renderizar en memoria se prepara el INSERT dentro de la transacción, se escribe el archivo y se confirma. Un éxito produce un evento con detalle legible y usuario/rol del momento; cancelar SaveFileDialog no invoca el servicio. Fallos de escritura/auditoría no confirman éxito. Límite: disco y SQL no comparten transacción distribuida; un fallo del commit después de escribir puede dejar archivo sin evento confirmado.
+
+Se verificaron eventos únicos, responsables distintos tras cambiar de sesión, cancelación y errores en base aislada. Pago.IdUsuarioRegistro sigue respondiendo quién cobró; el responsable del evento de exportación puede ser otra persona. NULL históricos siguen como Sin información y no se reconstruyen. Ver FICHA_SOCIO.md y REPORTES_Y_COMPROBANTES.md.
+
+Verificación final de Ficha 360°: ocho formularios/controles abrieron, permitieron selección, guardado y reapertura en el Designer real VS2026, sin pantalla roja. Los nueve PDFs de prueba se abrieron y renderizaron completos (once páginas) con el lector nativo de Windows; logo/tablas legibles. Cancelación real de ambos diálogos: cero eventos. Selección real con mouse en Socios y responsables completos en la grilla verificados. Rebuild Debug y Release: 0 errores / 0 advertencias; git diff --check correcto. Sin commit.

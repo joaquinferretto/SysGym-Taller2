@@ -1,4 +1,5 @@
 using System;
+using exxen2._0.capaVisual.Compartido.Controles;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -16,6 +17,15 @@ namespace exxen2._0.capaVisual.Recepcionista
     [DesignerCategory("Form")]
     public partial class GestionMembresiasFormulario : Form
     {
+        public event EventHandler<AccionEstadoSocioEventArgs> FichaSolicitada;
+        private void btnFicha_Click(object sender, EventArgs e)
+        {
+            var id = membresiaSeleccionada == null ? 0 : membresiaSeleccionada.IdSocio;
+            var evento = FichaSolicitada;
+            if (id > 0 && evento != null) evento(this, new AccionEstadoSocioEventArgs(id, AccionEstadoSocio.VerFicha));
+        }
+        private readonly int idSocioInicial;
+        public GestionMembresiasFormulario(UsuarioSistema usuario, Color colorPrimario, int idSocioInicial) : this(usuario, colorPrimario) { this.idSocioInicial = idSocioInicial; }
         private readonly UsuarioSistema usuario;
         private readonly MembresiaLogica logica;
         private readonly PlanLogica planes = new PlanLogica();
@@ -63,6 +73,15 @@ namespace exxen2._0.capaVisual.Recepcionista
                 CargarCombos();
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
+                if (idSocioInicial > 0)
+                {
+                    var inicial = membresiasCargadas.Where(m => m.IdSocio == idSocioInicial).OrderByDescending(m => m.Estado).ThenByDescending(m => m.FechaInicio).FirstOrDefault();
+                    if (inicial != null)
+                    {
+                        foreach (DataGridViewRow fila in tabla.Rows)
+                            if (Convert.ToInt32(fila.Cells[0].Value) == inicial.IdMembresia) { tabla.CurrentCell = fila.Cells[1]; fila.Selected = true; break; }
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -176,6 +195,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         /* Habilita las acciones disponibles según la selección y el estado del registro. */
         private void EstablecerModo(bool nueva)
         {
+            btnFicha.Enabled = !nueva && membresiaSeleccionada != null && FichaSolicitada != null;
             var puedeCrear = socio.Items.Count > 0 && plan.Items.Count > 0;
             if (nueva)
                 lblFormulario.Text = plan.Items.Count == 0 ? "Primero crea un plan" : (socio.Items.Count == 0 ? "No hay socios disponibles para una nueva membresía" : "Nueva membresía");

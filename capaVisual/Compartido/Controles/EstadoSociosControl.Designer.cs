@@ -31,6 +31,7 @@ namespace exxen2._0.capaVisual.Compartido.Controles
         private Button btnCuotas;
         private Button btnPago;
         private Button btnMembresia;
+        private Button btnFicha;
         private DataGridViewTextBoxColumn colIdSocio;
         private DataGridViewTextBoxColumn colSocio;
         private DataGridViewTextBoxColumn colDni;
@@ -80,6 +81,7 @@ namespace exxen2._0.capaVisual.Compartido.Controles
             this.btnCuotas = new System.Windows.Forms.Button();
             this.btnPago = new System.Windows.Forms.Button();
             this.btnMembresia = new System.Windows.Forms.Button();
+            this.btnFicha = new System.Windows.Forms.Button();
             this.indicadoresLayout.SuspendLayout();
             this.filtrosLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.filas)).BeginInit();
@@ -544,6 +546,17 @@ namespace exxen2._0.capaVisual.Compartido.Controles
             this.btnMembresia.TabIndex = 8;
             this.btnMembresia.Text = "Ver membresía";
             // 
+            // btnFicha
+            //
+            this.btnFicha.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnFicha.Enabled = false;
+            this.btnFicha.Location = new System.Drawing.Point(446, 360);
+            this.btnFicha.Name = "btnFicha";
+            this.btnFicha.Size = new System.Drawing.Size(160, 30);
+            this.btnFicha.TabIndex = 9;
+            this.btnFicha.Text = "Ver ficha completa";
+            this.btnFicha.Click += new System.EventHandler(this.btnFicha_Click);
+            //
             // EstadoSociosControl
             // 
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
@@ -556,6 +569,7 @@ namespace exxen2._0.capaVisual.Compartido.Controles
             this.Controls.Add(this.btnCuotas);
             this.Controls.Add(this.btnPago);
             this.Controls.Add(this.btnMembresia);
+            this.Controls.Add(this.btnFicha);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.MinimumSize = new System.Drawing.Size(700, 400);
             this.Name = "EstadoSociosControl";

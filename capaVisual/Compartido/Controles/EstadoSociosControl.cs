@@ -86,6 +86,7 @@ namespace exxen2._0.capaVisual.Compartido.Controles
             btnCuotas.Enabled = seleccionado;
             btnPago.Enabled = seleccionado;
             btnMembresia.Enabled = seleccionado;
+            btnFicha.Enabled = seleccionado;
         }
 
         private void SolicitarAccion(AccionEstadoSocio accion)
@@ -104,6 +105,8 @@ namespace exxen2._0.capaVisual.Compartido.Controles
         private void btnPago_Click(object sender, EventArgs e) { SolicitarAccion(AccionEstadoSocio.RegistrarPago); }
         private void btnMembresia_Click(object sender, EventArgs e) { SolicitarAccion(AccionEstadoSocio.VerMembresia); }
 
+        private void btnFicha_Click(object sender, EventArgs e) { SolicitarAccion(AccionEstadoSocio.VerFicha); }
+
         private void tarjeta_Click(object sender, EventArgs e)
         {
             var control = sender as Control;
@@ -114,7 +117,7 @@ namespace exxen2._0.capaVisual.Compartido.Controles
         }
     }
 
-    public enum AccionEstadoSocio { VerCuotas, RegistrarPago, VerMembresia }
+    public enum AccionEstadoSocio { VerCuotas, RegistrarPago, VerMembresia, VerFicha }
 
     public sealed class AccionEstadoSocioEventArgs : EventArgs
     {

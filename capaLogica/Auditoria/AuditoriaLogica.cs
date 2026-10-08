@@ -41,6 +41,8 @@ namespace exxen2._0.capaLogica.Auditoria
         public const string QuitarEntrenador = "QUITAR_ENTRENADOR";
         public const string ModificarConfiguracion = "MODIFICAR_CONFIGURACION";
         public const string GenerarReporteAnalisis = "GENERAR_REPORTE_ANALISIS";
+        public const string ExportarComprobantePago = "EXPORTAR_COMPROBANTE_PAGO";
+        public const string ExportarHistorialPagos = "EXPORTAR_HISTORIAL_PAGOS";
         private readonly int idUsuarioAutenticado;
 
         public AuditoriaLogica(int idUsuarioAutenticado)
@@ -60,7 +62,9 @@ namespace exxen2._0.capaLogica.Auditoria
                 new OpcionAuditoria { Codigo = CambiarEntrenador, Texto = "Cambió entrenador" },
                 new OpcionAuditoria { Codigo = QuitarEntrenador, Texto = "Quitó entrenador" },
                 new OpcionAuditoria { Codigo = ModificarConfiguracion, Texto = "Modificó configuración" },
-                new OpcionAuditoria { Codigo = GenerarReporteAnalisis, Texto = "Generó reporte de análisis" }
+                new OpcionAuditoria { Codigo = GenerarReporteAnalisis, Texto = "Generó reporte de análisis" },
+                new OpcionAuditoria { Codigo = ExportarComprobantePago, Texto = "Exportó comprobante de pago" },
+                new OpcionAuditoria { Codigo = ExportarHistorialPagos, Texto = "Exportó historial de pagos" }
             };
         }
 

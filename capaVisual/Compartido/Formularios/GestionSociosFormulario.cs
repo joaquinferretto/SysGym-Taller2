@@ -1,4 +1,5 @@
 using System;
+using exxen2._0.capaVisual.Compartido.Controles;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -15,6 +16,13 @@ namespace exxen2._0.capaVisual.Compartido
     [DesignerCategory("Form")]
     public partial class GestionSociosFormulario : Form
     {
+        public event EventHandler<AccionEstadoSocioEventArgs> FichaSolicitada;
+        private void btnFicha_Click(object sender, EventArgs e)
+        {
+            var id = idSeleccionado;
+            var evento = FichaSolicitada;
+            if (id > 0 && evento != null) evento(this, new AccionEstadoSocioEventArgs(id, AccionEstadoSocio.VerFicha));
+        }
         private readonly SocioLogica logica = new SocioLogica();
         private bool permitirEdicion;
         private List<Socio> sociosCargados = new List<Socio>();
@@ -192,6 +200,7 @@ namespace exxen2._0.capaVisual.Compartido
         {
             lblFormulario.Text = nuevoRegistro ? "Nuevo socio" : "Editar socio";
             estadoSocio.Text = activo ? "Activo" : "Inactivo";
+            btnFicha.Enabled = !nuevoRegistro && idSeleccionado > 0 && FichaSolicitada != null;
             guardar.Enabled = permitirEdicion && nuevoRegistro;
             actualizar.Enabled = permitirEdicion && !nuevoRegistro;
             darDeBaja.Enabled = permitirEdicion && !nuevoRegistro && activo;

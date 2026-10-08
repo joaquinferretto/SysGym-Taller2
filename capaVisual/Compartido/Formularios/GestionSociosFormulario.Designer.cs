@@ -59,6 +59,7 @@ namespace exxen2._0.capaVisual.Compartido
             base.Dispose(liberarRecursos);
         }
 
+        private System.Windows.Forms.Button btnFicha;
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
@@ -116,6 +117,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.panelListado.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).BeginInit();
             this.panelDetalle.SuspendLayout();
+            this.btnFicha = new System.Windows.Forms.Button();
             this.SuspendLayout();
             //
             // indicadorErrores
@@ -399,6 +401,7 @@ namespace exxen2._0.capaVisual.Compartido
             // panelDetalle
             //
             this.panelDetalle.AutoScroll = true;
+            this.panelDetalle.Controls.Add(this.btnFicha);
             this.panelDetalle.Controls.Add(this.lblFormulario);
             this.panelDetalle.Controls.Add(this.lblNombre);
             this.panelDetalle.Controls.Add(this.nombre);
@@ -706,6 +709,13 @@ namespace exxen2._0.capaVisual.Compartido
             //
             // GestionSociosFormulario
             //
+            this.btnFicha.Location = new System.Drawing.Point(16, 554);
+            this.btnFicha.Size = new System.Drawing.Size(350, 34);
+            this.btnFicha.Name = "btnFicha";
+            this.btnFicha.Text = "Ver ficha completa";
+            this.btnFicha.Enabled = false;
+            this.btnFicha.TabIndex = 30;
+            this.btnFicha.Click += new System.EventHandler(this.btnFicha_Click);
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));

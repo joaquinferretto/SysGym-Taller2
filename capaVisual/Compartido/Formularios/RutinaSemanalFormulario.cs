@@ -17,6 +17,13 @@ namespace exxen2._0.capaVisual.Compartido
         private readonly RutinaEjercicioLogica ejerciciosRutina = new RutinaEjercicioLogica();
         private readonly int idSocio;
         private readonly string nombreSocio;
+        private readonly int idRutinaSoloLectura;
+
+        public RutinaSemanalFormulario(int idSocio, string nombreSocio, Color colorPrimario, int idRutinaSoloLectura)
+            : this(idSocio, nombreSocio, colorPrimario)
+        {
+            this.idRutinaSoloLectura = idRutinaSoloLectura;
+        }
 
         /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
         public RutinaSemanalFormulario() : this(0, "Socio de diseno", Color.FromArgb(79, 70, 229))
@@ -39,7 +46,8 @@ namespace exxen2._0.capaVisual.Compartido
         {
             try
             {
-                MostrarSemana(ejerciciosRutina.ListarSemanaPorSocio(idSocio));
+                MostrarSemana(idRutinaSoloLectura > 0 ? ejerciciosRutina.ListarPorRutina(idRutinaSoloLectura)
+                    : ejerciciosRutina.ListarSemanaPorSocio(idSocio));
             }
             catch (Exception ex)
             {

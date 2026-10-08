@@ -268,6 +268,9 @@
     <Compile Include="capaVisual\Entrenador\MisSociosFormulario.Designer.cs">
       <DependentUpon>MisSociosFormulario.cs</DependentUpon>
     </Compile>
+    <Compile Include="capaLogica\FichaSocioLogica.cs" />
+    <Compile Include="capaVisual\Compartido\Formularios\FichaSocioFormulario.cs"><SubType>Form</SubType></Compile>
+    <Compile Include="capaVisual\Compartido\Formularios\FichaSocioFormulario.Designer.cs"><DependentUpon>FichaSocioFormulario.cs</DependentUpon></Compile>
     <Compile Include="Programa.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="capaVisual\Administrador\ConsultaRutinasAdministradorFormulario.resx">

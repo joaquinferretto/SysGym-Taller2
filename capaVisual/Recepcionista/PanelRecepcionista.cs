@@ -2,6 +2,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using exxen2._0.capaDatos.Entidades;
+using exxen2._0.capaLogica;
 using exxen2._0.capaVisual.Compartido;
 
 using exxen2._0.capaLogica.Navegacion;
@@ -105,10 +106,15 @@ namespace exxen2._0.capaVisual.Recepcionista
 
         private void inicioEstadoSocios_AccionSolicitada(object origen, AccionEstadoSocioEventArgs e)
         {
+            if (e.Accion == AccionEstadoSocio.VerFicha)
+            {
+                AbrirFicha(e.IdSocio);
+                return;
+            }
             if (e.Accion == AccionEstadoSocio.VerMembresia)
-                Abrir(btnMembresias, new GestionMembresiasFormulario(usuario), "Membresías | Gestión de membresías de socios");
+                Abrir(btnMembresias, CrearMembresias(e.IdSocio), "Membresías | Gestión de membresías de socios");
             else
-                Abrir(btnPagos, new GestionPagosFormulario(e.IdSocio, usuario), "Cuotas y pagos | Gestión de cuotas y pagos");
+                Abrir(btnPagos, CrearPagos(e.IdSocio), "Cuotas y pagos | Gestión de cuotas y pagos");
         }
 
         /* Cierra el módulo actual y restaura el inicio de recepción sin cerrar la sesión. */
@@ -129,21 +135,52 @@ namespace exxen2._0.capaVisual.Recepcionista
         }
 
         /* Al hacer clic en btnSocios, abre el módulo correspondiente dentro del panel principal. */
+        private GestionSociosFormulario CrearSocios(int id)
+        {
+            var form = id > 0 ? new GestionSociosFormulario(Color.FromArgb(5, 150, 105), id) : new GestionSociosFormulario(Color.FromArgb(5, 150, 105));
+            form.FichaSolicitada += Modulo_FichaSolicitada;
+            return form;
+        }
+        private GestionPagosFormulario CrearPagos(int id)
+        {
+            var form = new GestionPagosFormulario(id, usuario);
+            form.FichaSolicitada += Modulo_FichaSolicitada;
+            return form;
+        }
+        private GestionMembresiasFormulario CrearMembresias(int id)
+        {
+            var form = new GestionMembresiasFormulario(usuario, Color.FromArgb(5, 150, 105), id);
+            form.FichaSolicitada += Modulo_FichaSolicitada;
+            return form;
+        }
+        private void Modulo_FichaSolicitada(object sender, AccionEstadoSocioEventArgs e) { AbrirFicha(e.IdSocio); }
+        private void AbrirFicha(int id)
+        {
+            try
+            {
+                new FichaSocioLogica(usuario.IdUsuarioSistema).ValidarAcceso();
+                var form = new FichaSocioFormulario(id, usuario);
+                form.AccionSolicitada += inicioEstadoSocios_AccionSolicitada;
+                Abrir(btnSocios, form, "Ficha del socio | Situación actual e historial de pagos");
+            }
+            catch (Exception ex) { MessageBox.Show(this, ex.Message, "Ficha del socio", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+        }
+
         private void btnSocios_Click(object origen, EventArgs e)
         {
-            Abrir(btnSocios, new GestionSociosFormulario(Color.FromArgb(5, 150, 105)), "Socios | Gestión de socios e información personal");
+            Abrir(btnSocios, CrearSocios(0), "Socios | Gestión de socios e información personal");
         }
 
         /* Al hacer clic en btnMembresias, abre el módulo correspondiente dentro del panel principal. */
         private void btnMembresias_Click(object origen, EventArgs e)
         {
-            Abrir(btnMembresias, new GestionMembresiasFormulario(usuario), "Membresías | Gestión de membresías de socios");
+            Abrir(btnMembresias, CrearMembresias(0), "Membresías | Gestión de membresías de socios");
         }
 
         /* Al hacer clic en btnPagos, abre el módulo correspondiente dentro del panel principal. */
         private void btnPagos_Click(object origen, EventArgs e)
         {
-            Abrir(btnPagos, new GestionPagosFormulario(0, usuario), "Cuotas y pagos | Gestión de cuotas y pagos");
+            Abrir(btnPagos, CrearPagos(0), "Cuotas y pagos | Gestión de cuotas y pagos");
         }
 
         /* Al hacer clic en btnAsignar, abre el módulo correspondiente dentro del panel principal. */

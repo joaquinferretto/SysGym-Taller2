@@ -13,6 +13,7 @@ namespace exxen2._0.capaVisual.Recepcionista
 
         protected override void Dispose(bool liberarRecursos) { if (liberarRecursos && components != null) components.Dispose(); base.Dispose(liberarRecursos); }
 
+        private System.Windows.Forms.Button btnFicha;
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
@@ -51,6 +52,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).BeginInit();
             this.panelDetalle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.indicadorErrores)).BeginInit();
+            this.btnFicha = new System.Windows.Forms.Button();
             this.SuspendLayout();
             //
             // lblEstado
@@ -220,6 +222,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.panelDetalle.AutoScroll = true;
             this.panelDetalle.BackColor = System.Drawing.Color.White;
             this.panelDetalle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelDetalle.Controls.Add(this.btnFicha);
             this.panelDetalle.Controls.Add(this.lblFormulario);
             this.panelDetalle.Controls.Add(this.lblSocio);
             this.panelDetalle.Controls.Add(this.socio);
@@ -241,7 +244,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.panelDetalle.Margin = new System.Windows.Forms.Padding(0);
             this.panelDetalle.Name = "panelDetalle";
             this.panelDetalle.Padding = new System.Windows.Forms.Padding(16);
-            this.panelDetalle.Size = new System.Drawing.Size(396, 332);
+            this.panelDetalle.Size = new System.Drawing.Size(396, 400);
             this.panelDetalle.TabIndex = 1;
             //
             // lblFormulario
@@ -444,6 +447,13 @@ namespace exxen2._0.capaVisual.Recepcionista
             //
             // GestionMembresiasFormulario
             //
+            this.btnFicha.Location = new System.Drawing.Point(16, 350);
+            this.btnFicha.Size = new System.Drawing.Size(348, 34);
+            this.btnFicha.Name = "btnFicha";
+            this.btnFicha.Text = "Ver ficha completa";
+            this.btnFicha.Enabled = false;
+            this.btnFicha.TabIndex = 30;
+            this.btnFicha.Click += new System.EventHandler(this.btnFicha_Click);
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
