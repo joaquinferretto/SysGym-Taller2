@@ -247,7 +247,9 @@ namespace exxen2._0.capaVisual.Administrador
         /* Al hacer clic en btnReportes, abre el módulo correspondiente dentro del panel principal. */
         private void btnReportes_Click(object origen, EventArgs e)
         {
-            Abrir(btnReportes, new ReportesFormulario(), "Reportes | Consultas e indicadores");
+            var formulario = new ReportesFormulario(usuario);
+            formulario.FichaSolicitada += Modulo_FichaSolicitada;
+            Abrir(btnReportes, formulario, "Reportes | Listados operativos y exportación PDF");
         }
 
         private void btnAnalisis_Click(object origen, EventArgs e)

@@ -11,24 +11,6 @@ obj/
 .codegraph
 .codegraph/
 
-# Local Codex documentation
-AGENTS.md
-#docs/
-
-docs
-/docs
-docs/
-desktop.ini
-
-# Keep the project context and payment report reviewable
-!docs/
-docs/*
-!docs/PROJECT_CONTEXT.md
-!docs/ANALISIS_DATOS.md
-!docs/AUDITORIA_OPERACIONES.md
-!docs/REGLAS_CUOTAS.md
-!docs/REPORTE_ANALISIS_PDF.md
-!docs/REPORTES_Y_COMPROBANTES.md
-!docs/FICHA_SOCIO.md
-
-AGENTS.md
+# Archivos locales
+/AGENTS.md
+/docs/
