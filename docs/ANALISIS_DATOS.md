@@ -98,3 +98,13 @@ El formulario abrió en el Designer de Visual Studio 2026; se verificó guardar,
 ## Umbral de deuda configurable — 8 de octubre de 2026
 
 La distribución de deuda y el análisis individual reutilizan ahora el resumen de EstadoSociosLogica y su clasificación con MaxCuotasVencidasPermitidas vigente. Categorías: Al día (0 vencidas), Con deuda (mayor que 0 y menor al límite), Límite alcanzado (mayor o igual). Las lecturas de Análisis no persisten bajas ni auditan. No se modificaron otras consultas, filtros o gráficos; las reglas completas están en REGLAS_CUOTAS.md.
+
+## Exportación PDF — 8 de octubre de 2026
+
+Exportar reporte PDF utiliza exactamente ResultadoAnalisis y el período que el formulario ya aplicó. Modificar las fechas impide exportar un período todavía no aplicado; no se vuelve a consultar para preparar el documento. DatoMensual, DatoCategoria y los DTOs de la segunda etapa alimentan tablas e indicadores. Las imágenes provienen de copias serializadas de los Chart cargados, sin cambiar la lógica de gráficos o los controles permanentes.
+
+Ingresos/pagos/altas corresponden al rango; socios/deuda/planes/entrenadores/rutinas/ejercicios conservan la foto actual cargada. Cambiar configuración requiere reaplicar el análisis para actualizar pantalla y PDF juntos. El resumen informa deuda total, igual al indicador de pantalla, y su separación debajo/en límite. Período vacío no elimina los datos de estado actual.
+
+La comparación se captura solo tras comparar correctamente A/B y se invalida al editar esas fechas. El reporte general no incluye al socio individual. Tablas breves limitan 10 filas con aviso; los gráficos mantienen categorías y el top 10 preexistente. Se reutiliza PDFsharp/MigraDoc, sin consultas adicionales o cambios a ReportesPagosServicio. Ver REPORTE_ANALISIS_PDF.md para contenido, seguridad, auditoría y verificación.
+
+Verificación final de esta etapa: el botón Exportar y las nueve pestañas se seleccionaron en VS2026; Análisis y PanelAdministrador abrieron, guardaron y reabrieron sin pantalla roja, NullReferenceException o error de altura. Rebuild Debug y Release: 0 errores y 0 advertencias; git diff --check correcto. La prueba final terminó con SMOKE_PDF_ANALISIS_OK, incluidos Efectivo 3/Mercado Pago 1, indicadores visibles vs texto PDF, PNG independiente del tamaño y cancelación real. Sin commit.

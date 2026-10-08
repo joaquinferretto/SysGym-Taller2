@@ -82,6 +82,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="capaDatos\Entidades\ConfiguracionSistema.cs" />
+    <Compile Include="capaLogica\Reportes\ReporteAnalisisServicio.cs" />
+    <Compile Include="capaVisual\Compartido\ExportadorGraficosAnalisis.cs" />
+    <Compile Include="capaVisual\Administrador\AnalisisFormulario.Exportacion.cs"><DependentUpon>AnalisisFormulario.cs</DependentUpon></Compile>
     <Compile Include="capaLogica\ConfiguracionSistemaLogica.cs" />
     <Compile Include="capaVisual\Administrador\ConfiguracionFormulario.cs"><SubType>Form</SubType></Compile>
     <Compile Include="capaVisual\Administrador\ConfiguracionFormulario.Designer.cs"><DependentUpon>ConfiguracionFormulario.cs</DependentUpon></Compile>

@@ -27,5 +27,6 @@ docs/*
 !docs/ANALISIS_DATOS.md
 !docs/AUDITORIA_OPERACIONES.md
 !docs/REGLAS_CUOTAS.md
+!docs/REPORTE_ANALISIS_PDF.md
 
 AGENTS.md

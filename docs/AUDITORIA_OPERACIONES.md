@@ -60,6 +60,7 @@ La migración fue aplicada dos veces en la instancia local. Después de ambas, l
 | CAMBIAR_ENTRENADOR | `MembresiaEntrenadorLogica.CambiarEntrenador` | Entrenador anterior, nuevo entrenador y socio |
 | QUITAR_ENTRENADOR | `MembresiaEntrenadorLogica.DarDeBajaAsignacion` | Entrenador retirado y socio |
 | MODIFICAR_CONFIGURACION | `ConfiguracionSistemaLogica.Guardar` | Valores anteriores/nuevos de deuda, anticipación y aviso |
+| GENERAR_REPORTE_ANALISIS | `ReporteAnalisisServicio.Generar` | Período aplicado del reporte PDF generado |
 
 El método preexistente `ReactivarAsignacion`, si se utiliza, registra ASIGNAR_ENTRENADOR cuando recupera una asignación inactiva. Cambiar entrenador sin una asignación anterior se registra como ASIGNAR_ENTRENADOR. Elegir el mismo entrenador, volver a quitar una asignación ya inactiva o habilitar una membresía ya activa no crea un evento ficticio. La reactivación bloqueada por deuda tampoco crea REACTIVAR_MEMBRESIA.
 
@@ -111,10 +112,20 @@ Se repitió la integración completa después del Rebuild final con el mismo res
 
 ## Límites de esta etapa
 
-La auditoría cubre los ocho códigos indicados, no todas las escrituras de la aplicación. No incluye modificaciones de usuario, anulación/reembolso/edición de pagos, bajas de membresía, cambios de plan, mantenimiento automático, ni procesos externos a SysGym. No se hicieron cambios para auditar operaciones que no existen.
+La auditoría cubre los nueve códigos indicados, no todas las escrituras de la aplicación. No incluye modificaciones de usuario, anulación/reembolso/edición de pagos, bajas de membresía, cambios de plan, mantenimiento automático, ni procesos externos a SysGym. No se hicieron cambios para auditar operaciones que no existen.
 
 No se reconstruye historia previa ni se permiten eventos anónimos en esta etapa: IdUsuario es obligatorio. Los horarios dependen del reloj local del equipo que ejecuta SysGym. No hay paginación o exportación del historial ni protección criptográfica contra modificaciones por un administrador de la base. No existen operaciones de edición o borrado de auditoría en la aplicación.
 
 ## Verificación de configuración global — 8 de octubre de 2026
 
 La prueba aislada verificó cambio 2→3 atribuido al Admin, varios valores en un único evento, filtro/visualización en AuditoriaFormulario, ausencia de eventos por lecturas/no-op y rechazo de Recepcionista/Entrenador/sin sesión. Un CHECK temporal en la base de prueba forzó un fallo de auditoría: los valores y el historial conservaron su estado anterior. Se cambió la sesión real Admin→Recepcionista y el pago posterior conservó la identidad nueva. La base real solo recibió la migración aditiva y su fila global inicial; no recibió operaciones ni pagos ficticios.
+
+## Reporte PDF de Análisis — 8 de octubre de 2026
+
+La exportación es una operación explícita y auditada, aunque no modifica socios/pagos; las consultas habituales siguen sin auditar. GENERAR_REPORTE_ANALISIS se confirma después de renderizar y escribir el PDF. Cancelar SaveFileDialog, fallar al renderizar/escribir o no tener rol Admin no genera un evento de éxito. El evento utiliza el mismo ID autenticado recibido del panel; se resuelven nombre y rol activos en SQL.
+
+Entidad Analisis e IdEntidad 1 identifican el módulo, no un socio ni un archivo persistido como entidad. El detalle conserva el período aplicado. La operación aparece en el combo de AuditoriaFormulario y se presenta como «Generó reporte de análisis».
+
+Se verificó la cancelación real del diálogo y fallos de escritura/auditoría en una base aislada, sin eventos ficticios. El INSERT de auditoría se prepara sin commit antes de escribir y se confirma después; fallo de escritura revierte la transacción. Archivo y SQL no comparten transacción distribuida: un fallo de commit posterior a la escritura puede dejar un PDF válido aunque se informe error. Ver REPORTE_ANALISIS_PDF.md para contenido, consistencia, pruebas y límites.
+
+Verificación final de esta etapa: el botón Exportar y las nueve pestañas se seleccionaron en VS2026; Análisis y PanelAdministrador abrieron, guardaron y reabrieron sin pantalla roja, NullReferenceException o error de altura. Rebuild Debug y Release: 0 errores y 0 advertencias; git diff --check correcto. La prueba final terminó con SMOKE_PDF_ANALISIS_OK, incluidos Efectivo 3/Mercado Pago 1, indicadores visibles vs texto PDF, PNG independiente del tamaño y cancelación real. Sin commit.

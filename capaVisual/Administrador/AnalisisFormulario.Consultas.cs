@@ -34,6 +34,7 @@ namespace exxen2._0.capaVisual.Administrador
 
         private void comparar_Click(object sender, EventArgs e)
         {
+            comparacionActual = null;
             if (desdeA.Value.Date > hastaA.Value.Date || desdeB.Value.Date > hastaB.Value.Date)
             {
                 lblCompararEstado.Text = "Cada período requiere Desde anterior o igual a Hasta.";
@@ -50,6 +51,9 @@ namespace exxen2._0.capaVisual.Administrador
                 CargarComparacion(chartCompararIngresos, datos.Where(x => x.EsMoneda), "Ingresos", true);
                 CargarComparacion(chartCompararCantidades, datos.Where(x => !x.EsMoneda), "Pagos y altas", false);
                 lblCompararEstado.Text = "Variación de B respecto de A. Se comparan totales de los rangos elegidos. La deuda histórica no está disponible.";
+                comparacionActual = new exxen2._0.capaLogica.Reportes.ComparacionAnalisisPdf {
+                    DesdeA = desdeA.Value.Date, HastaA = hastaA.Value.Date,
+                    DesdeB = desdeB.Value.Date, HastaB = hastaB.Value.Date, Indicadores = datos };
             }
             catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblCompararEstado, ex); }
             finally { Cursor = Cursors.Default; }

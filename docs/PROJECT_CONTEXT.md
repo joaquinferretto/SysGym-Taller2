@@ -47,3 +47,15 @@ Pruebas en base aislada: límites 2/3, pagadas/anuladas, pago sin reactivación,
 Ver [REGLAS_CUOTAS.md](REGLAS_CUOTAS.md) y [AUDITORIA_OPERACIONES.md](AUDITORIA_OPERACIONES.md) para reglas, instalación, históricos y verificación.
 
 Verificación final: ConfiguracionFormulario, GestionMembresiasFormulario, EstadoSociosControl, AnalisisFormulario y PanelAdministrador abrieron en el Designer real de VS2026; se seleccionó un control, se guardó, cerró y reabrió cada documento, sin pantalla roja ni excepción. Rebuild Debug y Release: 0 errores y 0 advertencias. git diff --check: correcto. Sin commit.
+
+## Exportación PDF de Análisis — 8 de octubre de 2026
+
+Análisis incorpora Exportar reporte PDF junto a Aplicar. El formulario recibe al administrador autenticado del panel y conserva ResultadoAnalisis y período aplicado. El servicio ReporteAnalisisServicio recibe ese DTO y PNG de las series cargadas: no duplica consultas, modifica reglas de cuotas/deuda ni mezcla responsabilidades con ReportesPagosServicio.
+
+El documento usa PDFsharp/MigraDoc GDI 6.2.4 ya instalado: A4, logo, período, fecha/hora, responsable real, resumen, ingresos, socios/deuda/altas, planes, ingresos por plan, entrenadores, métodos, rutinas y ejercicios. Comparación A/B se incluye solo si está cargada y vigente; se excluye el socio individual. Movimiento del período y estado actual se distinguen expresamente.
+
+Chart.Serializer y SaveImage renderizan copias de tamaño fijo 1200×675; PNG/base64 y PDF se construyen en memoria. Los Chart originales conservan Size/Parent y la exportación no requiere maximizar o mostrar sus pestañas. Temporales del exportador: 0. El PDF se guarda mediante SaveFileDialog y GENERAR_REPORTE_ANALISIS solo se confirma si se escribe el archivo. La lógica exige Admin activo; cancelar y fallar no auditan éxito.
+
+Pruebas aisladas verificaron texto/cantidades en PDF contra el DTO cargado, períodos con datos/vacío/varios meses, comparación opcional y cambio de límite con reaplicación. Los cinco PDFs se abrieron y renderizaron completos mediante el lector nativo de Windows. Detalles, contenido y límites están en REPORTE_ANALISIS_PDF.md.
+
+Verificación final de esta etapa: el botón Exportar y las nueve pestañas se seleccionaron en VS2026; Análisis y PanelAdministrador abrieron, guardaron y reabrieron sin pantalla roja, NullReferenceException o error de altura. Rebuild Debug y Release: 0 errores y 0 advertencias; git diff --check correcto. La prueba final terminó con SMOKE_PDF_ANALISIS_OK, incluidos Efectivo 3/Mercado Pago 1, indicadores visibles vs texto PDF, PNG independiente del tamaño y cancelación real. Sin commit.

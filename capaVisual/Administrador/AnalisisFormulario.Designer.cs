@@ -11,6 +11,7 @@
         private System.Windows.Forms.DateTimePicker desde;
         private System.Windows.Forms.DateTimePicker hasta;
         private System.Windows.Forms.Button aplicar;
+        private System.Windows.Forms.Button exportarReporte;
         private System.Windows.Forms.TableLayoutPanel indicadores;
         private System.Windows.Forms.Label lblIngresosTitulo;
         private System.Windows.Forms.Label lblPagosTitulo;
@@ -100,6 +101,7 @@
             this.desde = new System.Windows.Forms.DateTimePicker();
             this.hasta = new System.Windows.Forms.DateTimePicker();
             this.aplicar = new System.Windows.Forms.Button();
+            this.exportarReporte = new System.Windows.Forms.Button();
             this.indicadores = new System.Windows.Forms.TableLayoutPanel();
             this.lblIngresosTitulo = new System.Windows.Forms.Label();
             this.lblPagosTitulo = new System.Windows.Forms.Label();
@@ -236,6 +238,7 @@
             this.encabezado.Controls.Add(this.lblHasta);
             this.encabezado.Controls.Add(this.hasta);
             this.encabezado.Controls.Add(this.aplicar);
+            this.encabezado.Controls.Add(this.exportarReporte);
             this.encabezado.Dock = System.Windows.Forms.DockStyle.Fill;
             this.encabezado.Size = new System.Drawing.Size(1074, 98);
             this.encabezado.Name = "encabezado";
@@ -266,6 +269,21 @@
             this.aplicar.Text = "Aplicar";
             this.aplicar.UseVisualStyleBackColor = true;
             this.aplicar.Click += new System.EventHandler(this.aplicar_Click);
+            this.desde.ValueChanged += new System.EventHandler(this.periodoReporte_Cambiado);
+            this.hasta.ValueChanged += new System.EventHandler(this.periodoReporte_Cambiado);
+            this.desdeA.ValueChanged += new System.EventHandler(this.periodoComparacion_Cambiado);
+            this.hastaA.ValueChanged += new System.EventHandler(this.periodoComparacion_Cambiado);
+            this.desdeB.ValueChanged += new System.EventHandler(this.periodoComparacion_Cambiado);
+            this.hastaB.ValueChanged += new System.EventHandler(this.periodoComparacion_Cambiado);
+            // exportarReporte
+            this.exportarReporte.Enabled = false;
+            this.exportarReporte.Location = new System.Drawing.Point(542, 56);
+            this.exportarReporte.Name = "exportarReporte";
+            this.exportarReporte.Size = new System.Drawing.Size(168, 30);
+            this.exportarReporte.TabIndex = 3;
+            this.exportarReporte.Text = "Exportar reporte PDF";
+            this.exportarReporte.UseVisualStyleBackColor = true;
+            this.exportarReporte.Click += new System.EventHandler(this.exportarReporte_Click);
             // indicadores
             this.indicadores.BackColor = System.Drawing.Color.White;
             this.indicadores.ColumnCount = 4;

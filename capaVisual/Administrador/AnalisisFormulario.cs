@@ -18,8 +18,12 @@ namespace exxen2._0.capaVisual.Administrador
         private readonly AnalisisConsultaLogica consultas = new AnalisisConsultaLogica();
         private bool cargandoSocios;
 
-        public AnalisisFormulario()
+        public AnalisisFormulario() : this(null) { }
+
+        public AnalisisFormulario(exxen2._0.capaDatos.Entidades.UsuarioSistema usuarioActual)
         {
+            reporte = new exxen2._0.capaLogica.Reportes.ReporteAnalisisServicio(usuarioActual == null ? 0 : usuarioActual.IdUsuarioSistema);
+            idUsuarioGenerador = usuarioActual == null ? 0 : usuarioActual.IdUsuarioSistema;
             InitializeComponent();
         }
 
@@ -45,6 +49,8 @@ namespace exxen2._0.capaVisual.Administrador
 
         private void Aplicar()
         {
+            resultadoActual = null;
+            exportarReporte.Enabled = false;
             if (desde.Value.Date > hasta.Value.Date)
             {
                 lblEstado.Text = "Desde debe ser anterior o igual a Hasta.";
@@ -90,6 +96,10 @@ namespace exxen2._0.capaVisual.Administrador
                 lblEjerciciosSinUso.Text = "Ejercicios activos sin uso: " + datos.EjerciciosSinUso.Count;
                 lblEstado.Text = "Actualizado. Ingresos y altas usan el período; socios, planes, entrenadores, rutinas y ejercicios muestran el estado actual.";
                 lblEstado.ForeColor = Color.FromArgb(51, 65, 85);
+                resultadoActual = datos;
+                desdeAplicado = desde.Value.Date;
+                hastaAplicado = hasta.Value.Date;
+                exportarReporte.Enabled = idUsuarioGenerador > 0;
             }
             catch (Exception ex)
             {

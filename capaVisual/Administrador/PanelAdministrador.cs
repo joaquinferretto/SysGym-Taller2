@@ -220,7 +220,7 @@ namespace exxen2._0.capaVisual.Administrador
 
         private void btnAnalisis_Click(object origen, EventArgs e)
         {
-            Abrir(btnAnalisis, new AnalisisFormulario(), "Análisis | Gráficos e indicadores del gimnasio");
+            Abrir(btnAnalisis, new AnalisisFormulario(usuario), "Análisis | Gráficos e indicadores del gimnasio");
         }
 
         private void btnAuditoria_Click(object origen, EventArgs e)

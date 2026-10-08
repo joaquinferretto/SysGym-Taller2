@@ -40,6 +40,7 @@ namespace exxen2._0.capaLogica.Auditoria
         public const string CambiarEntrenador = "CAMBIAR_ENTRENADOR";
         public const string QuitarEntrenador = "QUITAR_ENTRENADOR";
         public const string ModificarConfiguracion = "MODIFICAR_CONFIGURACION";
+        public const string GenerarReporteAnalisis = "GENERAR_REPORTE_ANALISIS";
         private readonly int idUsuarioAutenticado;
 
         public AuditoriaLogica(int idUsuarioAutenticado)
@@ -58,7 +59,8 @@ namespace exxen2._0.capaLogica.Auditoria
                 new OpcionAuditoria { Codigo = AsignarEntrenador, Texto = "Asignó entrenador" },
                 new OpcionAuditoria { Codigo = CambiarEntrenador, Texto = "Cambió entrenador" },
                 new OpcionAuditoria { Codigo = QuitarEntrenador, Texto = "Quitó entrenador" },
-                new OpcionAuditoria { Codigo = ModificarConfiguracion, Texto = "Modificó configuración" }
+                new OpcionAuditoria { Codigo = ModificarConfiguracion, Texto = "Modificó configuración" },
+                new OpcionAuditoria { Codigo = GenerarReporteAnalisis, Texto = "Generó reporte de análisis" }
             };
         }
 
@@ -98,7 +100,7 @@ namespace exxen2._0.capaLogica.Auditoria
             if (idEntidad <= 0 || string.IsNullOrWhiteSpace(entidad) || entidad.Length > 50 ||
                 string.IsNullOrWhiteSpace(detalle) || detalle.Length > 1000)
                 throw new ArgumentException("Los datos de la auditoría no son válidos.");
-            var usuario = ObtenerUsuario(datos, operacion == CrearUsuario || operacion == ModificarConfiguracion);
+            var usuario = ObtenerUsuario(datos, operacion == CrearUsuario || operacion == ModificarConfiguracion || operacion == GenerarReporteAnalisis);
             datos.AuditoriasOperaciones.Agregar(new AuditoriaOperacion
             {
                 FechaHora = DateTime.Now, IdUsuario = usuario.IdUsuarioSistema,
