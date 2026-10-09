@@ -4,8 +4,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using exxen2._0.capaLogica.Analisis;
 using exxen2._0.capaLogica.Reportes;
-using exxen2._0.capaLogica.Utilidades;
-using exxen2._0.capaVisual.Compartido;
+using exxen2._0.capaVisual.Compartido.Utilidades;
 
 namespace exxen2._0.capaVisual.Administrador
 {

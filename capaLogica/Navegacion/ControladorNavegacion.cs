@@ -46,7 +46,6 @@ namespace exxen2._0.capaLogica.Navegacion
             this.establecerModulo = establecerModulo;
             areaMdi = propietario.Controls.OfType<MdiClient>().First();  // WinForms lo crea al activar IsMdiContainer.
             PrepararAreaMdi();
-            Utilidades.ContrasteVisual.Aplicar(propietario);  // Cubre el panel, el inicio y cada módulo que se abra.
         }
 
         internal bool CambioCuentaSolicitado { get; private set; }

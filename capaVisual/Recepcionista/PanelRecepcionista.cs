@@ -1,4 +1,5 @@
 using System;
+using exxen2._0.capaVisual.Compartido.Utilidades;
 using System.Drawing;
 using System.Windows.Forms;
 using exxen2._0.capaDatos.Entidades;
@@ -7,7 +8,6 @@ using exxen2._0.capaVisual.Compartido;
 
 using exxen2._0.capaLogica.Navegacion;
 
-using exxen2._0.capaLogica.Utilidades;
 using exxen2._0.capaVisual.Compartido.Controles;
 
 namespace exxen2._0.capaVisual.Recepcionista
@@ -46,6 +46,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             InitializeComponent();
             Icon = Properties.Resources.SysGym;
             navegacion = new ControladorNavegacion(this, panelContenido, EstablecerModuloActual);
+            ContrasteVisual.Aplicar(this);
             inicioEstadoSocios.AccionSolicitada += inicioEstadoSocios_AccionSolicitada;
         }
 

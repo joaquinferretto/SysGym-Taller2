@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Forms;
 using exxen2._0.capaDatos.Entidades;
 
-namespace exxen2._0.capaLogica.Utilidades
+namespace exxen2._0.capaVisual.Compartido.Utilidades
 {
     /* Comparte entre los tres paneles principales el llenado del header global y el resaltado del menú lateral. */
     internal static class EncabezadoPanelHelper

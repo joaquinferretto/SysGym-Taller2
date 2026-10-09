@@ -83,11 +83,18 @@
   <ItemGroup>
     <Compile Include="capaDatos\Entidades\ConfiguracionSistema.cs" />
     <Compile Include="capaLogica\Reportes\ReporteAnalisisServicio.cs" />
-    <Compile Include="capaVisual\Compartido\ExportadorGraficosAnalisis.cs" />
-    <Compile Include="capaVisual\Administrador\AnalisisFormulario.Exportacion.cs"><DependentUpon>AnalisisFormulario.cs</DependentUpon></Compile>
+    <Compile Include="capaVisual\Compartido\Utilidades\ExportadorGraficosAnalisis.cs" />
+    <Compile Include="capaVisual\Administrador\AnalisisFormulario.Exportacion.cs">
+      <DependentUpon>AnalisisFormulario.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="capaLogica\ConfiguracionSistemaLogica.cs" />
-    <Compile Include="capaVisual\Administrador\ConfiguracionFormulario.cs"><SubType>Form</SubType></Compile>
-    <Compile Include="capaVisual\Administrador\ConfiguracionFormulario.Designer.cs"><DependentUpon>ConfiguracionFormulario.cs</DependentUpon></Compile>
+    <Compile Include="capaVisual\Administrador\ConfiguracionFormulario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="capaVisual\Administrador\ConfiguracionFormulario.Designer.cs">
+      <DependentUpon>ConfiguracionFormulario.cs</DependentUpon>
+    </Compile>
     <None Include="capaDatos\Database\AgregarConfiguracionSistema.sql" />
     <Compile Include="capaDatos\Contexto\ContextoGimnasio.cs" />
     <Compile Include="capaDatos\Repositorios\UnidadDeTrabajoGimnasio.cs" />
@@ -146,10 +153,14 @@
       <DependentUpon>InicioSesion.cs</DependentUpon>
     </Compile>
     <Compile Include="capaLogica\Navegacion\ControladorNavegacion.cs" />
-    <Compile Include="capaLogica\Utilidades\AyudaFormularioVisual.cs" />
-    <Compile Include="capaLogica\Utilidades\ContrasteVisual.cs" />
-    <Compile Include="capaLogica\Utilidades\EncabezadoPanelHelper.cs" />
-    <Compile Include="capaLogica\Utilidades\MenuDesplegableHelper.cs" />
+    <Compile Include="capaLogica\Navegacion\AccionEstadoSocio.cs" />
+    <Compile Include="capaLogica\Navegacion\AccionEstadoSocioEventArgs.cs" />
+    <Compile Include="capaLogica\Navegacion\SocioEstadoCuentaEventArgs.cs" />
+    <Compile Include="capaLogica\Navegacion\UsuarioActualizadoEventArgs.cs" />
+    <Compile Include="capaVisual\Compartido\Utilidades\AyudaFormularioVisual.cs" />
+    <Compile Include="capaVisual\Compartido\Utilidades\ContrasteVisual.cs" />
+    <Compile Include="capaVisual\Compartido\Utilidades\EncabezadoPanelHelper.cs" />
+    <Compile Include="capaVisual\Compartido\Utilidades\MenuDesplegableHelper.cs" />
     <Compile Include="capaVisual\Compartido\Formularios\GestionSociosFormulario.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -269,8 +280,12 @@
       <DependentUpon>MisSociosFormulario.cs</DependentUpon>
     </Compile>
     <Compile Include="capaLogica\FichaSocioLogica.cs" />
-    <Compile Include="capaVisual\Compartido\Formularios\FichaSocioFormulario.cs"><SubType>Form</SubType></Compile>
-    <Compile Include="capaVisual\Compartido\Formularios\FichaSocioFormulario.Designer.cs"><DependentUpon>FichaSocioFormulario.cs</DependentUpon></Compile>
+    <Compile Include="capaVisual\Compartido\Formularios\FichaSocioFormulario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="capaVisual\Compartido\Formularios\FichaSocioFormulario.Designer.cs">
+      <DependentUpon>FichaSocioFormulario.cs</DependentUpon>
+    </Compile>
     <Compile Include="capaLogica\Reportes\ReportesOperativosLogica.cs" />
     <Compile Include="capaLogica\Reportes\ReportesOperativosServicio.cs" />
     <Compile Include="Programa.cs" />
@@ -372,8 +387,6 @@
     <ItemGroup>
       <ImagenPersistidaInicial Include="capaDatos\Imagenes\**\*.*" />
     </ItemGroup>
-    <Copy SourceFiles="@(ImagenPersistidaInicial)"
-          DestinationFiles="@(ImagenPersistidaInicial->'$(OutDir)Datos\Imagenes\%(RecursiveDir)%(Filename)%(Extension)')"
-          SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(ImagenPersistidaInicial)" DestinationFiles="@(ImagenPersistidaInicial->'$(OutDir)Datos\Imagenes\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
   </Target>
 </Project>

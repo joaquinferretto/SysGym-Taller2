@@ -1,12 +1,12 @@
 
 using System;
+using exxen2._0.capaVisual.Compartido.Utilidades;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using exxen2._0.capaLogica;
 using exxen2._0.capaVisual.Compartido;
 
-using exxen2._0.capaLogica.Utilidades;
 
 namespace exxen2._0.capaVisual.Recepcionista
 {

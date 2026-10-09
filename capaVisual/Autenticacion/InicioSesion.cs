@@ -1,4 +1,5 @@
 using System;
+using exxen2._0.capaVisual.Compartido.Utilidades;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
@@ -10,7 +11,6 @@ using exxen2._0.capaVisual.Entrenador;
 using exxen2._0.capaVisual.Recepcionista;
 
 using exxen2._0.capaLogica.Navegacion;
-using exxen2._0.capaLogica.Utilidades;
 
 namespace exxen2._0.capaVisual.Autenticacion
 {

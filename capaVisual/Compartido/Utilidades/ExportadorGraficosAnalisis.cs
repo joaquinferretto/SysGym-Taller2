@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms.DataVisualization.Charting;
 
-namespace exxen2._0.capaVisual.Compartido
+namespace exxen2._0.capaVisual.Compartido.Utilidades
 {
     internal static class ExportadorGraficosAnalisis
     {

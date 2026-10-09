@@ -1,4 +1,5 @@
 using System;
+using exxen2._0.capaVisual.Compartido.Utilidades;
 using exxen2._0.capaVisual.Compartido.Controles;
 using System.Drawing;
 using System.Windows.Forms;
@@ -10,7 +11,6 @@ using exxen2._0.capaVisual.Recepcionista;
 
 using exxen2._0.capaLogica.Navegacion;
 
-using exxen2._0.capaLogica.Utilidades;
 
 namespace exxen2._0.capaVisual.Administrador
 {
@@ -49,6 +49,7 @@ namespace exxen2._0.capaVisual.Administrador
             InitializeComponent();
             Icon = Properties.Resources.SysGym;
             navegacion = new ControladorNavegacion(this, panelContenido, EstablecerModuloActual);
+            ContrasteVisual.Aplicar(this);
             inicioPanel.SocioDobleClic += inicioPanel_SocioDobleClic;
             inicioPanel.AccionSocioSolicitada += inicioPanel_AccionSocioSolicitada;
         }
@@ -290,14 +291,14 @@ namespace exxen2._0.capaVisual.Administrador
         }
 
         /* Al cargar la pantalla en ejecución, prepara sus datos iniciales sin realizar consultas desde el diseñador. */
-        private void inicioPanel_AccionSocioSolicitada(object origen, exxen2._0.capaVisual.Compartido.Controles.AccionEstadoSocioEventArgs e)
+        private void inicioPanel_AccionSocioSolicitada(object origen, exxen2._0.capaLogica.Navegacion.AccionEstadoSocioEventArgs e)
         {
             if (e.Accion == AccionEstadoSocio.VerFicha)
             {
                 AbrirFicha(e.IdSocio);
                 return;
             }
-            if (e.Accion == exxen2._0.capaVisual.Compartido.Controles.AccionEstadoSocio.VerMembresia)
+            if (e.Accion == exxen2._0.capaLogica.Navegacion.AccionEstadoSocio.VerMembresia)
                 Abrir(btnMembresias, CrearMembresias(e.IdSocio), "Membresías | Gestión de membresías de socios");
             else
                 Abrir(btnPagos, CrearPagos(e.IdSocio), "Cuotas y pagos | Gestión de cuotas y pagos");

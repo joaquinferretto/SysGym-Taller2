@@ -1,11 +1,11 @@
 using System;
+using exxen2._0.capaVisual.Compartido.Utilidades;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using exxen2._0.capaLogica.Analisis;
-using exxen2._0.capaLogica.Utilidades;
 
 namespace exxen2._0.capaVisual.Administrador
 {

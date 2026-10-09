@@ -3,8 +3,9 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
+using exxen2._0.capaLogica;
 
-namespace exxen2._0.capaLogica.Utilidades
+namespace exxen2._0.capaVisual.Compartido.Utilidades
 {
     /* Conserva el archivo externo para guardar y una copia normalizada solo para vista previa. */
     internal sealed class ImagenSeleccionada

@@ -1,10 +1,11 @@
+using exxen2._0.capaLogica.Navegacion;
+using exxen2._0.capaVisual.Compartido.Utilidades;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 using exxen2._0.capaLogica;
-using exxen2._0.capaLogica.Utilidades;
 
 namespace exxen2._0.capaVisual.Compartido.Controles
 {
@@ -115,14 +116,5 @@ namespace exxen2._0.capaVisual.Compartido.Controles
             var indice = filtroEstado.Items.IndexOf(filtro);
             if (indice >= 0) filtroEstado.SelectedIndex = indice;
         }
-    }
-
-    public enum AccionEstadoSocio { VerCuotas, RegistrarPago, VerMembresia, VerFicha }
-
-    public sealed class AccionEstadoSocioEventArgs : EventArgs
-    {
-        public AccionEstadoSocioEventArgs(int idSocio, AccionEstadoSocio accion) { IdSocio = idSocio; Accion = accion; }
-        public int IdSocio { get; private set; }
-        public AccionEstadoSocio Accion { get; private set; }
     }
 }

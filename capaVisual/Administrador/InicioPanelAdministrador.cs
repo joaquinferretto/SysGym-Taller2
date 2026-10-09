@@ -1,3 +1,4 @@
+using exxen2._0.capaLogica.Navegacion;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -172,16 +173,5 @@ namespace exxen2._0.capaVisual.Administrador
             tituloClima.Text = "Pronóstico semanal - " + clima.Ciudad;
             Actualizar();
         }
-    }
-
-    /* Transporta el socio elegido desde el estado de cuenta hasta el panel administrador. */
-    public sealed class SocioEstadoCuentaEventArgs : EventArgs
-    {
-        public SocioEstadoCuentaEventArgs(int idSocio)
-        {
-            IdSocio = idSocio;
-        }
-
-        public int IdSocio { get; private set; }
     }
 }

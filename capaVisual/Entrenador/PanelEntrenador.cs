@@ -1,4 +1,5 @@
 using System;
+using exxen2._0.capaVisual.Compartido.Utilidades;
 using System.Drawing;
 using System.Windows.Forms;
 using exxen2._0.capaDatos.Entidades;
@@ -6,7 +7,6 @@ using exxen2._0.capaVisual.Compartido;
 
 using exxen2._0.capaLogica.Navegacion;
 
-using exxen2._0.capaLogica.Utilidades;
 
 namespace exxen2._0.capaVisual.Entrenador
 {
@@ -43,6 +43,7 @@ namespace exxen2._0.capaVisual.Entrenador
             InitializeComponent();
             Icon = Properties.Resources.SysGym;
             navegacion = new ControladorNavegacion(this, panelContenido, EstablecerModuloActual);
+            ContrasteVisual.Aplicar(this);
         }
 
         /* Configura las secciones del menú lateral para que puedan expandirse y contraerse. */

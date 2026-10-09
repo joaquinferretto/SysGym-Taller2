@@ -1,3 +1,5 @@
+using exxen2._0.capaLogica.Navegacion;
+using exxen2._0.capaVisual.Compartido.Utilidades;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +11,6 @@ using exxen2._0.capaDatos.Entidades;
 using exxen2._0.capaLogica;
 using exxen2._0.capaVisual.Compartido;
 
-using exxen2._0.capaLogica.Utilidades;
 
 namespace exxen2._0.capaVisual.Administrador
 {
@@ -503,16 +504,5 @@ namespace exxen2._0.capaVisual.Administrador
                 fotoUsuario.Image = null;
             }
         }
-    }
-
-    /* Identifica al usuario que se acaba de modificar. */
-    public sealed class UsuarioActualizadoEventArgs : EventArgs
-    {
-        public UsuarioActualizadoEventArgs(int idUsuarioSistema)
-        {
-            IdUsuarioSistema = idUsuarioSistema;
-        }
-
-        public int IdUsuarioSistema { get; private set; }
     }
 }

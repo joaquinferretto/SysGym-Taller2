@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
-namespace exxen2._0.capaLogica.Utilidades
+namespace exxen2._0.capaVisual.Compartido.Utilidades
 {
     /* Mantiene legible el texto de los botones: fondo oscuro → letras blancas, fondo claro → letras oscuras. */
     // Se aplica sobre el panel principal y sobre cada diálogo: recorre sus controles y también los que se agreguen
