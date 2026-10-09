@@ -61,7 +61,6 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.lblEstadoFiltro = new System.Windows.Forms.Label();
             this.filtroEstado = new System.Windows.Forms.ComboBox();
             this.actualizar = new System.Windows.Forms.Button();
-            this.actualizar.ForeColor = System.Drawing.Color.FromArgb(48, 68, 95);
             this.lblEstado = new System.Windows.Forms.Label();
             this.splitContenido = new System.Windows.Forms.SplitContainer();
             this.lblListadoTitulo = new System.Windows.Forms.Label();
@@ -145,15 +144,25 @@ namespace exxen2._0.capaVisual.Recepcionista
             // actualizar
             //
             this.actualizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.actualizar.BackColor = System.Drawing.Color.FromArgb(231, 237, 247);
-            this.actualizar.FlatAppearance.BorderSize = 0;
-            this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.actualizar.Location = new System.Drawing.Point(358, 90);
             this.actualizar.Name = "actualizar";
+            this.actualizar.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.actualizar.FlatAppearance.BorderSize = 0;
+            this.actualizar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.actualizar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.actualizar.ForeColor = System.Drawing.Color.White;
+            this.actualizar.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.actualizar.Size = new System.Drawing.Size(166, 34);
             this.actualizar.TabIndex = 2;
             this.actualizar.Text = "Actualizar listado";
-            this.actualizar.UseVisualStyleBackColor = false;
             this.actualizar.Click += new System.EventHandler(this.actualizar_Click);
             //
             // lblEstado
@@ -500,46 +509,73 @@ namespace exxen2._0.capaVisual.Recepcionista
             //
             // asignar
             //
-            this.asignar.BackColor = System.Drawing.Color.FromArgb(72, 66, 217);
-            this.asignar.FlatAppearance.BorderSize = 0;
-            this.asignar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.asignar.ForeColor = System.Drawing.Color.White;
             this.asignar.Location = new System.Drawing.Point(16, 388);
             this.asignar.Name = "asignar";
+            this.asignar.BackColor = System.Drawing.Color.FromArgb(46, 125, 50);
+            this.asignar.FlatAppearance.BorderSize = 0;
+            this.asignar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(27, 75, 31);
+            this.asignar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(37, 101, 41);
+            this.asignar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.asignar.ForeColor = System.Drawing.Color.White;
+            this.asignar.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.asignar.Size = new System.Drawing.Size(148, 36);
             this.asignar.TabIndex = 5;
             this.asignar.Text = "Asignar entrenador";
-            this.asignar.UseVisualStyleBackColor = false;
             this.asignar.Visible = false;
             this.asignar.Click += new System.EventHandler(this.asignar_Click);
             //
             // cambiar
             //
-            this.cambiar.BackColor = System.Drawing.Color.FromArgb(72, 66, 217);
-            this.cambiar.FlatAppearance.BorderSize = 0;
-            this.cambiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cambiar.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
             this.cambiar.Location = new System.Drawing.Point(172, 388);
             this.cambiar.Name = "cambiar";
+            this.cambiar.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.cambiar.FlatAppearance.BorderSize = 0;
+            this.cambiar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.cambiar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.cambiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cambiar.ForeColor = System.Drawing.Color.White;
+            this.cambiar.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.cambiar.Size = new System.Drawing.Size(172, 36);
             this.cambiar.TabIndex = 6;
             this.cambiar.Text = "Cambiar entrenador";
-            this.cambiar.UseVisualStyleBackColor = false;
             this.cambiar.Visible = false;
             this.cambiar.Click += new System.EventHandler(this.cambiar_Click);
             //
             // darDeBaja
             //
-            this.darDeBaja.BackColor = System.Drawing.Color.FromArgb(255, 240, 240);
-            this.darDeBaja.FlatAppearance.BorderSize = 0;
-            this.darDeBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.darDeBaja.ForeColor = System.Drawing.Color.FromArgb(173, 36, 36);
             this.darDeBaja.Location = new System.Drawing.Point(352, 388);
             this.darDeBaja.Name = "darDeBaja";
+            this.darDeBaja.BackColor = System.Drawing.Color.FromArgb(198, 40, 40);
+            this.darDeBaja.FlatAppearance.BorderSize = 0;
+            this.darDeBaja.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(134, 26, 26);
+            this.darDeBaja.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(168, 32, 32);
+            this.darDeBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.darDeBaja.ForeColor = System.Drawing.Color.White;
+            this.darDeBaja.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.darDeBaja.Size = new System.Drawing.Size(148, 36);
             this.darDeBaja.TabIndex = 7;
             this.darDeBaja.Text = "Dar de baja";
-            this.darDeBaja.UseVisualStyleBackColor = false;
             this.darDeBaja.Visible = false;
             this.darDeBaja.Click += new System.EventHandler(this.darDeBaja_Click);
             //

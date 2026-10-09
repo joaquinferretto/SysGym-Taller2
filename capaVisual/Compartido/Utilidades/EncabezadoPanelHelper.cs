@@ -8,12 +8,12 @@ namespace exxen2._0.capaVisual.Compartido.Utilidades
     /* Comparte entre los tres paneles principales el llenado del header global y el resaltado del menú lateral. */
     internal static class EncabezadoPanelHelper
     {
-        private static readonly Color FondoOpcion = Color.FromArgb(248, 250, 252);
-        private static readonly Color BordeOpcion = Color.FromArgb(226, 232, 240);
-        private static readonly Color TextoOpcion = Color.FromArgb(51, 65, 85);
-        private static readonly Color FondoOpcionActiva = Color.FromArgb(238, 242, 255);
-        private static readonly Color BordeOpcionActiva = Color.FromArgb(199, 210, 254);
-        private static readonly Color TextoOpcionActiva = Color.FromArgb(67, 56, 202);
+        private static readonly Color FondoOpcion = Color.FromArgb(43, 36, 80);
+        private static readonly Color BordeOpcion = Color.FromArgb(43, 36, 80);
+        private static readonly Color TextoOpcion = Color.White;
+        private static readonly Color FondoOpcionActiva = Color.FromArgb(91, 75, 138);
+        private static readonly Color BordeOpcionActiva = Color.FromArgb(91, 75, 138);
+        private static readonly Color TextoOpcionActiva = Color.White;
 
         /* Muestra foto, nombre, rol, DNI y sexo reales del usuario de la sesión en los controles existentes del header. */
         internal static void MostrarUsuario(UsuarioSistema usuario, string rolPredeterminado, PictureBox foto, Label nombre, Label rol, Label dni, Label sexo)

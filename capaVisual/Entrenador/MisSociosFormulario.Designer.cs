@@ -163,16 +163,25 @@
             //
             // actualizar
             //
-            this.actualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(237)))), ((int)(((byte)(247)))));
-            this.actualizar.FlatAppearance.BorderSize = 0;
-            this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.actualizar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(68)))), ((int)(((byte)(95)))));
             this.actualizar.Location = new System.Drawing.Point(124, 106);
             this.actualizar.Name = "actualizar";
+            this.actualizar.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.actualizar.FlatAppearance.BorderSize = 0;
+            this.actualizar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.actualizar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.actualizar.ForeColor = System.Drawing.Color.White;
+            this.actualizar.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.actualizar.Size = new System.Drawing.Size(150, 32);
             this.actualizar.TabIndex = 3;
             this.actualizar.Text = "Actualizar listado";
-            this.actualizar.UseVisualStyleBackColor = false;
             this.actualizar.Click += new System.EventHandler(this.actualizar_Click);
             //
             // lblEstado
@@ -625,72 +634,108 @@
             // asignarRutina
             //
             this.asignarRutina.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.asignarRutina.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(66)))), ((int)(((byte)(217)))));
-            this.asignarRutina.FlatAppearance.BorderSize = 0;
-            this.asignarRutina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.asignarRutina.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.asignarRutina.ForeColor = System.Drawing.Color.White;
             this.asignarRutina.Location = new System.Drawing.Point(488, 510);
             this.asignarRutina.Margin = new System.Windows.Forms.Padding(0, 2, 8, 0);
             this.asignarRutina.Name = "asignarRutina";
+            this.asignarRutina.BackColor = System.Drawing.Color.FromArgb(46, 125, 50);
+            this.asignarRutina.FlatAppearance.BorderSize = 0;
+            this.asignarRutina.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(27, 75, 31);
+            this.asignarRutina.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(37, 101, 41);
+            this.asignarRutina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.asignarRutina.ForeColor = System.Drawing.Color.White;
+            this.asignarRutina.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.asignarRutina.Size = new System.Drawing.Size(136, 32);
             this.asignarRutina.TabIndex = 7;
             this.asignarRutina.Text = "Asignar rutina";
-            this.asignarRutina.UseVisualStyleBackColor = false;
             this.asignarRutina.Enabled = false;
             this.asignarRutina.Click += new System.EventHandler(this.asignarRutina_Click);
             //
             // verRutina
             //
             this.verRutina.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.verRutina.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(237)))), ((int)(((byte)(247)))));
-            this.verRutina.FlatAppearance.BorderSize = 0;
-            this.verRutina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.verRutina.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.verRutina.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(68)))), ((int)(((byte)(95)))));
             this.verRutina.Location = new System.Drawing.Point(317, 550);
             this.verRutina.Margin = new System.Windows.Forms.Padding(0, 2, 8, 0);
             this.verRutina.Name = "verRutina";
+            this.verRutina.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.verRutina.FlatAppearance.BorderSize = 0;
+            this.verRutina.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.verRutina.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.verRutina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.verRutina.ForeColor = System.Drawing.Color.White;
+            this.verRutina.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.verRutina.Size = new System.Drawing.Size(163, 32);
             this.verRutina.TabIndex = 9;
             this.verRutina.Text = "Ver / editar";
-            this.verRutina.UseVisualStyleBackColor = false;
             this.verRutina.Enabled = false;
             this.verRutina.Click += new System.EventHandler(this.verRutina_Click);
             //
             // crearPersonalizada
             //
             this.crearPersonalizada.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.crearPersonalizada.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(120)))), ((int)(((byte)(87)))));
-            this.crearPersonalizada.FlatAppearance.BorderSize = 0;
-            this.crearPersonalizada.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.crearPersonalizada.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.crearPersonalizada.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.crearPersonalizada.Location = new System.Drawing.Point(117, 550);
             this.crearPersonalizada.Margin = new System.Windows.Forms.Padding(0, 2, 8, 0);
             this.crearPersonalizada.Name = "crearPersonalizada";
+            this.crearPersonalizada.BackColor = System.Drawing.Color.FromArgb(46, 125, 50);
+            this.crearPersonalizada.FlatAppearance.BorderSize = 0;
+            this.crearPersonalizada.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(27, 75, 31);
+            this.crearPersonalizada.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(37, 101, 41);
+            this.crearPersonalizada.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.crearPersonalizada.ForeColor = System.Drawing.Color.White;
+            this.crearPersonalizada.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.crearPersonalizada.Size = new System.Drawing.Size(192, 32);
             this.crearPersonalizada.TabIndex = 8;
             this.crearPersonalizada.Text = "Crear personalizada";
-            this.crearPersonalizada.UseVisualStyleBackColor = false;
             this.crearPersonalizada.Enabled = false;
             this.crearPersonalizada.Click += new System.EventHandler(this.crearPersonalizada_Click);
             //
             // exportarPdf
             //
             this.exportarPdf.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.exportarPdf.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(237)))), ((int)(((byte)(247)))));
             this.exportarPdf.Enabled = false;
-            this.exportarPdf.FlatAppearance.BorderSize = 0;
-            this.exportarPdf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.exportarPdf.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.exportarPdf.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(68)))), ((int)(((byte)(95)))));
             this.exportarPdf.Location = new System.Drawing.Point(488, 550);
             this.exportarPdf.Name = "exportarPdf";
+            this.exportarPdf.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.exportarPdf.FlatAppearance.BorderSize = 0;
+            this.exportarPdf.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.exportarPdf.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.exportarPdf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.exportarPdf.ForeColor = System.Drawing.Color.White;
+            this.exportarPdf.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.exportarPdf.Size = new System.Drawing.Size(136, 32);
             this.exportarPdf.TabIndex = 10;
             this.exportarPdf.Text = "Exportar PDF";
-            this.exportarPdf.UseVisualStyleBackColor = false;
             this.exportarPdf.Click += new System.EventHandler(this.exportarPdf_Click);
             //
             // MisSociosFormulario

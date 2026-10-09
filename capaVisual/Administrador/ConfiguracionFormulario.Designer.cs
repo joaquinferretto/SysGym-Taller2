@@ -1,4 +1,4 @@
-namespace exxen2._0.capaVisual.Administrador
+﻿namespace exxen2._0.capaVisual.Administrador
 {
     partial class ConfiguracionFormulario
     {
@@ -116,6 +116,20 @@ namespace exxen2._0.capaVisual.Administrador
             // guardar
             this.guardar.Location = new System.Drawing.Point(26, 382);
             this.guardar.Name = "guardar";
+            this.guardar.BackColor = System.Drawing.Color.FromArgb(46, 125, 50);
+            this.guardar.FlatAppearance.BorderSize = 0;
+            this.guardar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(27, 75, 31);
+            this.guardar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(37, 101, 41);
+            this.guardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.guardar.ForeColor = System.Drawing.Color.White;
+            this.guardar.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.guardar.Size = new System.Drawing.Size(200, 44);
             this.guardar.TabIndex = 3;
             this.guardar.Text = "Guardar cambios";
@@ -140,7 +154,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.MinimumSize = new System.Drawing.Size(720, 590);
             this.Name = "ConfiguracionFormulario";
-            this.Text = "Configuración del sistema";
+            this.Text = "SysGym";
             this.Load += new System.EventHandler(this.ConfiguracionFormulario_Load);
             this.campos.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.maxVencidas)).EndInit();

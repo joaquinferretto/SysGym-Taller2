@@ -41,7 +41,7 @@ namespace exxen2._0.capaVisual.Administrador
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).BeginInit();
             this.SuspendLayout();
             // barraAcciones
-            // 
+            //
             this.barraAcciones.BackColor = System.Drawing.Color.White;
             this.barraAcciones.Controls.Add(this.actualizar);
             this.barraAcciones.Dock = System.Windows.Forms.DockStyle.Top;
@@ -50,26 +50,35 @@ namespace exxen2._0.capaVisual.Administrador
             this.barraAcciones.Padding = new System.Windows.Forms.Padding(16, 8, 16, 8);
             this.barraAcciones.Size = new System.Drawing.Size(1100, 52);
             this.barraAcciones.TabIndex = 1;
-            // 
+            //
             // actualizar
-            // 
-            this.actualizar.BackColor = System.Drawing.Color.FromArgb(231, 237, 247);
-            this.actualizar.FlatAppearance.BorderSize = 0;
-            this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.actualizar.ForeColor = System.Drawing.Color.FromArgb(48, 68, 95);
+            //
             this.actualizar.Location = new System.Drawing.Point(16, 8);
             this.actualizar.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
             this.actualizar.MinimumSize = new System.Drawing.Size(120, 34);
             this.actualizar.Name = "actualizar";
+            this.actualizar.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.actualizar.FlatAppearance.BorderSize = 0;
+            this.actualizar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.actualizar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.actualizar.ForeColor = System.Drawing.Color.White;
+            this.actualizar.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.actualizar.Padding = new System.Windows.Forms.Padding(12, 0, 12, 0);
             this.actualizar.Size = new System.Drawing.Size(120, 34);
             this.actualizar.TabIndex = 0;
             this.actualizar.Text = "Actualizar";
-            this.actualizar.UseVisualStyleBackColor = false;
             this.actualizar.Click += new System.EventHandler(this.actualizar_Click);
-            // 
+            //
             // lblEstado
-            // 
+            //
             this.lblEstado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
             this.lblEstado.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblEstado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
@@ -80,9 +89,9 @@ namespace exxen2._0.capaVisual.Administrador
             this.lblEstado.TabIndex = 3;
             this.lblEstado.Text = "";
             this.lblEstado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
+            //
             // panelContenido
-            // 
+            //
             this.panelContenido.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
             this.panelContenido.Controls.Add(this.tabla);
             this.panelContenido.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -91,14 +100,14 @@ namespace exxen2._0.capaVisual.Administrador
             this.panelContenido.Padding = new System.Windows.Forms.Padding(16);
             this.panelContenido.Size = new System.Drawing.Size(1100, 598);
             this.panelContenido.TabIndex = 2;
-            // 
+            //
             // tabla
-            // 
+            //
             this.tabla.AllowUserToAddRows = false;
             this.tabla.AllowUserToDeleteRows = false;
             this.tabla.AllowUserToResizeRows = false;
-            this.tabla.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.tabla.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabla.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.tabla.BackgroundColor = System.Drawing.Color.White;
@@ -119,49 +128,49 @@ namespace exxen2._0.capaVisual.Administrador
             this.tabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.tabla.Size = new System.Drawing.Size(1068, 566);
             this.tabla.TabIndex = 0;
-            // 
+            //
             // colId
-            // 
+            //
             this.colId.FillWeight = 60F;
             this.colId.HeaderText = "Id";
             this.colId.Name = "colId";
             this.colId.ReadOnly = true;
             this.colId.Visible = false;
-            // 
+            //
             // colRutina
-            // 
+            //
             this.colRutina.FillWeight = 190F;
             this.colRutina.HeaderText = "Rutina";
             this.colRutina.MinimumWidth = 90;
             this.colRutina.Name = "colRutina";
             this.colRutina.ReadOnly = true;
-            // 
+            //
             // colDescripcion
-            // 
+            //
             this.colDescripcion.FillWeight = 360F;
             this.colDescripcion.HeaderText = "Descripcion";
             this.colDescripcion.MinimumWidth = 90;
             this.colDescripcion.Name = "colDescripcion";
             this.colDescripcion.ReadOnly = true;
-            // 
+            //
             // colEntrenador
-            // 
+            //
             this.colEntrenador.FillWeight = 230F;
             this.colEntrenador.HeaderText = "Creada por";
             this.colEntrenador.MinimumWidth = 90;
             this.colEntrenador.Name = "colEntrenador";
             this.colEntrenador.ReadOnly = true;
-            // 
+            //
             // colAsignados
-            // 
+            //
             this.colAsignados.FillWeight = 140F;
             this.colAsignados.HeaderText = "Socios asignados";
             this.colAsignados.MinimumWidth = 90;
             this.colAsignados.Name = "colAsignados";
             this.colAsignados.ReadOnly = true;
-            // 
+            //
             // ConsultaRutinasAdministradorFormulario
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));

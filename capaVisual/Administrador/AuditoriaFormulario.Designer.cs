@@ -1,4 +1,4 @@
-namespace exxen2._0.capaVisual.Administrador
+﻿namespace exxen2._0.capaVisual.Administrador
 {
     partial class AuditoriaFormulario
     {
@@ -157,10 +157,23 @@ namespace exxen2._0.capaVisual.Administrador
             // aplicar
             this.aplicar.Location = new System.Drawing.Point(562, 123);
             this.aplicar.Name = "aplicar";
+            this.aplicar.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.aplicar.FlatAppearance.BorderSize = 0;
+            this.aplicar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.aplicar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.aplicar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.aplicar.ForeColor = System.Drawing.Color.White;
+            this.aplicar.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.aplicar.Size = new System.Drawing.Size(152, 32);
             this.aplicar.TabIndex = 5;
             this.aplicar.Text = "Aplicar filtros";
-            this.aplicar.UseVisualStyleBackColor = true;
             this.aplicar.Click += new System.EventHandler(this.aplicar_Click);
             // tabla
             this.tabla.AllowUserToAddRows = false;
@@ -228,14 +241,12 @@ namespace exxen2._0.capaVisual.Administrador
             // AuditoriaFormulario
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
-            this.AutoScrollMinSize = new System.Drawing.Size(780, 500);
             this.BackColor = System.Drawing.Color.FromArgb(248, 250, 252);
             this.ClientSize = new System.Drawing.Size(1100, 700);
             this.Controls.Add(this.disposicion);
             this.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.Name = "AuditoriaFormulario";
-            this.Text = "Auditoría";
+            this.Text = "SysGym";
             this.Load += new System.EventHandler(this.AuditoriaFormulario_Load);
             this.filtros.ResumeLayout(false);
             this.filtros.PerformLayout();

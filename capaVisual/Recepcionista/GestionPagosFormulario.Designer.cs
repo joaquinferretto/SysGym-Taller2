@@ -291,7 +291,6 @@ namespace exxen2._0.capaVisual.Recepcionista
             //
             // panelDetalle
             //
-            this.panelDetalle.AutoScroll = true;
             this.panelDetalle.BackColor = System.Drawing.Color.White;
             this.panelDetalle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelDetalle.Controls.Add(this.btnFicha);
@@ -468,62 +467,98 @@ namespace exxen2._0.capaVisual.Recepcionista
             //
             // nuevo
             //
-            this.nuevo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(120)))), ((int)(((byte)(87)))));
-            this.nuevo.FlatAppearance.BorderSize = 0;
-            this.nuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.nuevo.ForeColor = System.Drawing.Color.White;
             this.nuevo.Location = new System.Drawing.Point(16, 264);
             this.nuevo.Margin = new System.Windows.Forms.Padding(0, 0, 8, 8);
             this.nuevo.Name = "nuevo";
+            this.nuevo.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.nuevo.FlatAppearance.BorderSize = 0;
+            this.nuevo.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.nuevo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.nuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.nuevo.ForeColor = System.Drawing.Color.White;
+            this.nuevo.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.nuevo.Size = new System.Drawing.Size(112, 38);
             this.nuevo.TabIndex = 11;
             this.nuevo.Text = "+ Nuevo pago";
-            this.nuevo.UseVisualStyleBackColor = false;
             this.nuevo.Click += new System.EventHandler(this.nuevo_Click);
             //
             // registrar
             //
-            this.registrar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(66)))), ((int)(((byte)(217)))));
-            this.registrar.FlatAppearance.BorderSize = 0;
-            this.registrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.registrar.ForeColor = System.Drawing.Color.White;
             this.registrar.Location = new System.Drawing.Point(136, 264);
             this.registrar.Margin = new System.Windows.Forms.Padding(0, 0, 8, 8);
             this.registrar.Name = "registrar";
+            this.registrar.BackColor = System.Drawing.Color.FromArgb(46, 125, 50);
+            this.registrar.FlatAppearance.BorderSize = 0;
+            this.registrar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(27, 75, 31);
+            this.registrar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(37, 101, 41);
+            this.registrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.registrar.ForeColor = System.Drawing.Color.White;
+            this.registrar.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.registrar.Size = new System.Drawing.Size(112, 38);
             this.registrar.TabIndex = 12;
             this.registrar.Text = "Registrar pago";
-            this.registrar.UseVisualStyleBackColor = false;
             this.registrar.Click += new System.EventHandler(this.registrar_Click);
             //
             // anular
             //
-            this.anular.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.anular.FlatAppearance.BorderSize = 0;
-            this.anular.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.anular.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(173)))), ((int)(((byte)(36)))), ((int)(((byte)(36)))));
             this.anular.Location = new System.Drawing.Point(256, 264);
             this.anular.Margin = new System.Windows.Forms.Padding(0, 0, 8, 8);
             this.anular.Name = "anular";
+            this.anular.BackColor = System.Drawing.Color.FromArgb(198, 40, 40);
+            this.anular.FlatAppearance.BorderSize = 0;
+            this.anular.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(134, 26, 26);
+            this.anular.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(168, 32, 32);
+            this.anular.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.anular.ForeColor = System.Drawing.Color.White;
+            this.anular.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.anular.Size = new System.Drawing.Size(112, 38);
             this.anular.TabIndex = 13;
             this.anular.Text = "Anular";
-            this.anular.UseVisualStyleBackColor = false;
             this.anular.Click += new System.EventHandler(this.anular_Click);
             //
             // reembolsar
             //
-            this.reembolsar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.reembolsar.FlatAppearance.BorderSize = 0;
-            this.reembolsar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.reembolsar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(173)))), ((int)(((byte)(36)))), ((int)(((byte)(36)))));
             this.reembolsar.Location = new System.Drawing.Point(16, 310);
             this.reembolsar.Margin = new System.Windows.Forms.Padding(0, 0, 8, 8);
             this.reembolsar.Name = "reembolsar";
+            this.reembolsar.BackColor = System.Drawing.Color.FromArgb(183, 121, 31);
+            this.reembolsar.FlatAppearance.BorderSize = 0;
+            this.reembolsar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(118, 78, 19);
+            this.reembolsar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(152, 100, 25);
+            this.reembolsar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.reembolsar.ForeColor = System.Drawing.Color.White;
+            this.reembolsar.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.reembolsar.Size = new System.Drawing.Size(112, 38);
             this.reembolsar.TabIndex = 14;
             this.reembolsar.Text = "Reembolsar";
-            this.reembolsar.UseVisualStyleBackColor = false;
             this.reembolsar.Click += new System.EventHandler(this.reembolsar_Click);
             //
             // exportarComprobante
@@ -531,10 +566,23 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.exportarComprobante.Enabled = false;
             this.exportarComprobante.Location = new System.Drawing.Point(16, 356);
             this.exportarComprobante.Name = "exportarComprobante";
+            this.exportarComprobante.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.exportarComprobante.FlatAppearance.BorderSize = 0;
+            this.exportarComprobante.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.exportarComprobante.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.exportarComprobante.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.exportarComprobante.ForeColor = System.Drawing.Color.White;
+            this.exportarComprobante.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.exportarComprobante.Size = new System.Drawing.Size(170, 38);
             this.exportarComprobante.TabIndex = 15;
             this.exportarComprobante.Text = "Exportar comprobante";
-            this.exportarComprobante.UseVisualStyleBackColor = true;
             this.exportarComprobante.Click += new System.EventHandler(this.exportarComprobante_Click);
             //
             // exportarHistorial
@@ -542,10 +590,23 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.exportarHistorial.Enabled = false;
             this.exportarHistorial.Location = new System.Drawing.Point(194, 356);
             this.exportarHistorial.Name = "exportarHistorial";
+            this.exportarHistorial.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.exportarHistorial.FlatAppearance.BorderSize = 0;
+            this.exportarHistorial.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.exportarHistorial.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.exportarHistorial.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.exportarHistorial.ForeColor = System.Drawing.Color.White;
+            this.exportarHistorial.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.exportarHistorial.Size = new System.Drawing.Size(170, 38);
             this.exportarHistorial.TabIndex = 16;
             this.exportarHistorial.Text = "Exportar historial";
-            this.exportarHistorial.UseVisualStyleBackColor = true;
             this.exportarHistorial.Click += new System.EventHandler(this.exportarHistorial_Click);
             this.dialogoPdf.DefaultExt = "pdf";
             this.dialogoPdf.Filter = "Documento PDF (*.pdf)|*.pdf";
@@ -561,6 +622,20 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.btnFicha.Location = new System.Drawing.Point(16, 402);
             this.btnFicha.Size = new System.Drawing.Size(348, 34);
             this.btnFicha.Name = "btnFicha";
+            this.btnFicha.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.btnFicha.FlatAppearance.BorderSize = 0;
+            this.btnFicha.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.btnFicha.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.btnFicha.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFicha.ForeColor = System.Drawing.Color.White;
+            this.btnFicha.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.btnFicha.Text = "Ver ficha completa";
             this.btnFicha.Enabled = false;
             this.btnFicha.TabIndex = 30;

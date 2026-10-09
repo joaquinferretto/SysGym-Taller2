@@ -1,4 +1,4 @@
-namespace exxen2._0.capaVisual.Administrador
+﻿namespace exxen2._0.capaVisual.Administrador
 {
     partial class ReportesFormulario
     {
@@ -46,7 +46,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.col6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblResumen = new System.Windows.Forms.Label();
-            this.acciones = new System.Windows.Forms.FlowLayoutPanel();
+            this.acciones = new System.Windows.Forms.Panel();
             this.btnExportar = new System.Windows.Forms.Button();
             this.btnFicha = new System.Windows.Forms.Button();
             this.lblEstado = new System.Windows.Forms.Label();
@@ -99,7 +99,6 @@ namespace exxen2._0.capaVisual.Administrador
             //
             // indicadores
             //
-            this.indicadores.AutoScroll = true;
             this.indicadores.Controls.Add(this.lblSociosActivosValor);
             this.indicadores.Controls.Add(this.lblUsuariosActivosValor);
             this.indicadores.Controls.Add(this.lblMembresiasValor);
@@ -164,7 +163,6 @@ namespace exxen2._0.capaVisual.Administrador
             //
             // filtros
             //
-            this.filtros.AutoScroll = true;
             this.filtros.Margin = new System.Windows.Forms.Padding(0);
             this.filtros.Controls.Add(this.lblTipo);
             this.filtros.Controls.Add(this.tipoReporte);
@@ -225,6 +223,20 @@ namespace exxen2._0.capaVisual.Administrador
             //
             this.generar.Location = new System.Drawing.Point(673, 3);
             this.generar.Name = "generar";
+            this.generar.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.generar.FlatAppearance.BorderSize = 0;
+            this.generar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.generar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.generar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.generar.ForeColor = System.Drawing.Color.White;
+            this.generar.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.generar.Size = new System.Drawing.Size(130, 32);
             this.generar.TabIndex = 4;
             this.generar.Text = "Consultar";
@@ -232,7 +244,6 @@ namespace exxen2._0.capaVisual.Administrador
             //
             // panelFechas
             //
-            this.panelFechas.AutoScroll = true;
             this.panelFechas.Margin = new System.Windows.Forms.Padding(0);
             this.panelFechas.Controls.Add(this.lblDesde);
             this.panelFechas.Controls.Add(this.desde);
@@ -419,6 +430,20 @@ namespace exxen2._0.capaVisual.Administrador
             this.btnExportar.Enabled = false;
             this.btnExportar.Location = new System.Drawing.Point(3, 3);
             this.btnExportar.Name = "btnExportar";
+            this.btnExportar.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.btnExportar.FlatAppearance.BorderSize = 0;
+            this.btnExportar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.btnExportar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.btnExportar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExportar.ForeColor = System.Drawing.Color.White;
+            this.btnExportar.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.btnExportar.Size = new System.Drawing.Size(130, 32);
             this.btnExportar.TabIndex = 0;
             this.btnExportar.Text = "Exportar PDF";
@@ -429,6 +454,20 @@ namespace exxen2._0.capaVisual.Administrador
             this.btnFicha.Enabled = false;
             this.btnFicha.Location = new System.Drawing.Point(139, 3);
             this.btnFicha.Name = "btnFicha";
+            this.btnFicha.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.btnFicha.FlatAppearance.BorderSize = 0;
+            this.btnFicha.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.btnFicha.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.btnFicha.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFicha.ForeColor = System.Drawing.Color.White;
+            this.btnFicha.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.btnFicha.Size = new System.Drawing.Size(130, 32);
             this.btnFicha.TabIndex = 1;
             this.btnFicha.Text = "Ver ficha";
@@ -458,7 +497,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.MinimumSize = new System.Drawing.Size(900, 560);
             this.Name = "ReportesFormulario";
-            this.Text = "Reportes operativos";
+            this.Text = "SysGym";
             this.Load += new System.EventHandler(this.ReportesFormulario_Load);
             this.disposicion.ResumeLayout(false);
             this.indicadores.ResumeLayout(false);
@@ -475,7 +514,7 @@ namespace exxen2._0.capaVisual.Administrador
         private System.Windows.Forms.FlowLayoutPanel indicadores;
         private System.Windows.Forms.FlowLayoutPanel filtros;
         private System.Windows.Forms.FlowLayoutPanel panelFechas;
-        private System.Windows.Forms.FlowLayoutPanel acciones;
+        private System.Windows.Forms.Panel acciones;
         private System.Windows.Forms.Label lblTitulo;
         private System.Windows.Forms.Label lblSociosActivosValor;
         private System.Windows.Forms.Label lblUsuariosActivosValor;

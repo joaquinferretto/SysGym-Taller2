@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -69,7 +69,7 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             // panelMenu
             //
-            this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.panelMenu.BackColor = System.Drawing.Color.FromArgb(43, 36, 80);
             this.panelMenu.Controls.Add(this.panelOpciones);
             this.panelMenu.Controls.Add(this.picLogo);
             this.panelMenu.Controls.Add(this.btnSalir);
@@ -84,7 +84,7 @@ namespace exxen2._0.capaVisual.Entrenador
             // panelOpciones
             //
             this.panelOpciones.AutoScroll = true;
-            this.panelOpciones.BackColor = System.Drawing.Color.White;
+            this.panelOpciones.BackColor = System.Drawing.Color.FromArgb(43, 36, 80);
             this.panelOpciones.Controls.Add(this.lblTrabajo);
             this.panelOpciones.Controls.Add(this.btnSocios);
             this.panelOpciones.Controls.Add(this.btnRutinas);
@@ -100,23 +100,23 @@ namespace exxen2._0.capaVisual.Entrenador
             // lblTrabajo
             //
             this.lblTrabajo.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
-            this.lblTrabajo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
+this.lblTrabajo.ForeColor = System.Drawing.Color.FromArgb(203, 196, 229);
             this.lblTrabajo.Location = new System.Drawing.Point(14, 18);
             this.lblTrabajo.Margin = new System.Windows.Forms.Padding(0, 8, 0, 2);
             this.lblTrabajo.Name = "lblTrabajo";
             this.lblTrabajo.Size = new System.Drawing.Size(236, 22);
             this.lblTrabajo.TabIndex = 0;
             this.lblTrabajo.Tag = "MI TRABAJO";
-            this.lblTrabajo.Text = "▼ MI TRABAJO";
+            this.lblTrabajo.Text = "â–¼ MI TRABAJO";
             this.lblTrabajo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // btnSocios
             //
-            this.btnSocios.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            this.btnSocios.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.btnSocios.BackColor = System.Drawing.Color.FromArgb(43, 36, 80);
+            this.btnSocios.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(43, 36, 80);
             this.btnSocios.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSocios.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.btnSocios.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.btnSocios.ForeColor = System.Drawing.Color.White;
             this.btnSocios.Location = new System.Drawing.Point(14, 42);
             this.btnSocios.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
             this.btnSocios.Name = "btnSocios";
@@ -130,11 +130,11 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             // btnRutinas
             //
-            this.btnRutinas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            this.btnRutinas.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.btnRutinas.BackColor = System.Drawing.Color.FromArgb(43, 36, 80);
+            this.btnRutinas.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(43, 36, 80);
             this.btnRutinas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRutinas.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.btnRutinas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.btnRutinas.ForeColor = System.Drawing.Color.White;
             this.btnRutinas.Location = new System.Drawing.Point(14, 85);
             this.btnRutinas.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
             this.btnRutinas.Name = "btnRutinas";
@@ -149,23 +149,23 @@ namespace exxen2._0.capaVisual.Entrenador
             // lblCatalogo
             //
             this.lblCatalogo.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
-            this.lblCatalogo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
+this.lblCatalogo.ForeColor = System.Drawing.Color.FromArgb(203, 196, 229);
             this.lblCatalogo.Location = new System.Drawing.Point(14, 136);
             this.lblCatalogo.Margin = new System.Windows.Forms.Padding(0, 8, 0, 2);
             this.lblCatalogo.Name = "lblCatalogo";
             this.lblCatalogo.Size = new System.Drawing.Size(236, 22);
             this.lblCatalogo.TabIndex = 3;
             this.lblCatalogo.Tag = "CATALOGO";
-            this.lblCatalogo.Text = "▶ CATALOGO";
+            this.lblCatalogo.Text = "â–¶ CATALOGO";
             this.lblCatalogo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // btnEjercicios
             //
-            this.btnEjercicios.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            this.btnEjercicios.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.btnEjercicios.BackColor = System.Drawing.Color.FromArgb(43, 36, 80);
+            this.btnEjercicios.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(43, 36, 80);
             this.btnEjercicios.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEjercicios.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.btnEjercicios.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
+            this.btnEjercicios.ForeColor = System.Drawing.Color.White;
             this.btnEjercicios.Location = new System.Drawing.Point(14, 160);
             this.btnEjercicios.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
             this.btnEjercicios.Name = "btnEjercicios";
@@ -193,12 +193,12 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             // btnSalir
             //
-            this.btnSalir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.btnSalir.BackColor = System.Drawing.Color.FromArgb(43, 36, 80);
             this.btnSalir.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnSalir.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(254)))), ((int)(((byte)(202)))), ((int)(((byte)(202)))));
+            this.btnSalir.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(43, 36, 80);
             this.btnSalir.FlatAppearance.BorderSize = 0;
             this.btnSalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSalir.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(173)))), ((int)(((byte)(36)))), ((int)(((byte)(36)))));
+            this.btnSalir.ForeColor = System.Drawing.Color.White;
             this.btnSalir.Location = new System.Drawing.Point(0, 703);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
@@ -243,7 +243,7 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             this.lblUsuario.AutoEllipsis = true;
             this.lblUsuario.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
-            this.lblUsuario.ForeColor = System.Drawing.Color.White;
+this.lblUsuario.ForeColor = System.Drawing.Color.White;
             this.lblUsuario.Location = new System.Drawing.Point(92, 18);
             this.lblUsuario.Name = "lblUsuario";
             this.lblUsuario.Size = new System.Drawing.Size(200, 26);
@@ -255,7 +255,7 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             this.lblRol.AutoEllipsis = true;
             this.lblRol.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.lblRol.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(231)))), ((int)(((byte)(255)))));
+this.lblRol.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(231)))), ((int)(((byte)(255)))));
             this.lblRol.Location = new System.Drawing.Point(92, 46);
             this.lblRol.Name = "lblRol";
             this.lblRol.Size = new System.Drawing.Size(200, 22);
@@ -266,7 +266,7 @@ namespace exxen2._0.capaVisual.Entrenador
             // lblDniTitulo
             //
             this.lblDniTitulo.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.lblDniTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(231)))), ((int)(((byte)(255)))));
+this.lblDniTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(231)))), ((int)(((byte)(255)))));
             this.lblDniTitulo.Location = new System.Drawing.Point(308, 20);
             this.lblDniTitulo.Name = "lblDniTitulo";
             this.lblDniTitulo.Size = new System.Drawing.Size(110, 18);
@@ -277,7 +277,7 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             this.lblDni.AutoEllipsis = true;
             this.lblDni.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
-            this.lblDni.ForeColor = System.Drawing.Color.White;
+this.lblDni.ForeColor = System.Drawing.Color.White;
             this.lblDni.Location = new System.Drawing.Point(308, 40);
             this.lblDni.Name = "lblDni";
             this.lblDni.Size = new System.Drawing.Size(110, 24);
@@ -287,7 +287,7 @@ namespace exxen2._0.capaVisual.Entrenador
             // lblSexoTitulo
             //
             this.lblSexoTitulo.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.lblSexoTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(231)))), ((int)(((byte)(255)))));
+this.lblSexoTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(231)))), ((int)(((byte)(255)))));
             this.lblSexoTitulo.Location = new System.Drawing.Point(428, 20);
             this.lblSexoTitulo.Name = "lblSexoTitulo";
             this.lblSexoTitulo.Size = new System.Drawing.Size(110, 18);
@@ -298,7 +298,7 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             this.lblSexo.AutoEllipsis = true;
             this.lblSexo.Font = new System.Drawing.Font("Segoe UI Semibold", 10.5F, System.Drawing.FontStyle.Bold);
-            this.lblSexo.ForeColor = System.Drawing.Color.White;
+this.lblSexo.ForeColor = System.Drawing.Color.White;
             this.lblSexo.Location = new System.Drawing.Point(428, 40);
             this.lblSexo.Name = "lblSexo";
             this.lblSexo.Size = new System.Drawing.Size(110, 24);
@@ -311,7 +311,7 @@ namespace exxen2._0.capaVisual.Entrenador
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblModuloActual.AutoEllipsis = true;
             this.lblModuloActual.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold);
-            this.lblModuloActual.ForeColor = System.Drawing.Color.White;
+this.lblModuloActual.ForeColor = System.Drawing.Color.White;
             this.lblModuloActual.Location = new System.Drawing.Point(556, 16);
             this.lblModuloActual.Name = "lblModuloActual";
             this.lblModuloActual.Size = new System.Drawing.Size(252, 32);
@@ -325,7 +325,7 @@ namespace exxen2._0.capaVisual.Entrenador
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblSubtituloModulo.AutoEllipsis = true;
             this.lblSubtituloModulo.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.lblSubtituloModulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(231)))), ((int)(((byte)(255)))));
+this.lblSubtituloModulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(231)))), ((int)(((byte)(255)))));
             this.lblSubtituloModulo.Location = new System.Drawing.Point(556, 50);
             this.lblSubtituloModulo.Name = "lblSubtituloModulo";
             this.lblSubtituloModulo.Size = new System.Drawing.Size(252, 24);
@@ -336,32 +336,50 @@ namespace exxen2._0.capaVisual.Entrenador
             // btnVolver
             //
             this.btnVolver.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnVolver.BackColor = System.Drawing.Color.White;
             this.btnVolver.Enabled = false;
-            this.btnVolver.FlatAppearance.BorderSize = 0;
-            this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnVolver.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(66)))), ((int)(((byte)(217)))));
             this.btnVolver.Location = new System.Drawing.Point(824, 10);
             this.btnVolver.Name = "btnVolver";
+            this.btnVolver.BackColor = System.Drawing.Color.FromArgb(107, 114, 128);
+            this.btnVolver.FlatAppearance.BorderSize = 0;
+            this.btnVolver.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(72, 77, 88);
+            this.btnVolver.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(90, 96, 109);
+            this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnVolver.ForeColor = System.Drawing.Color.White;
+            this.btnVolver.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.btnVolver.Size = new System.Drawing.Size(168, 36);
             this.btnVolver.TabIndex = 9;
             this.btnVolver.Text = "Volver";
-            this.btnVolver.UseVisualStyleBackColor = false;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             //
             // btnCambiarCuenta
             //
             this.btnCambiarCuenta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCambiarCuenta.BackColor = System.Drawing.Color.White;
-            this.btnCambiarCuenta.FlatAppearance.BorderSize = 0;
-            this.btnCambiarCuenta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCambiarCuenta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(66)))), ((int)(((byte)(217)))));
             this.btnCambiarCuenta.Location = new System.Drawing.Point(824, 52);
             this.btnCambiarCuenta.Name = "btnCambiarCuenta";
+            this.btnCambiarCuenta.BackColor = System.Drawing.Color.FromArgb(107, 114, 128);
+            this.btnCambiarCuenta.FlatAppearance.BorderSize = 0;
+            this.btnCambiarCuenta.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(72, 77, 88);
+            this.btnCambiarCuenta.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(90, 96, 109);
+            this.btnCambiarCuenta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCambiarCuenta.ForeColor = System.Drawing.Color.White;
+            this.btnCambiarCuenta.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.btnCambiarCuenta.Size = new System.Drawing.Size(168, 36);
             this.btnCambiarCuenta.TabIndex = 10;
             this.btnCambiarCuenta.Text = "Cambiar de cuenta";
-            this.btnCambiarCuenta.UseVisualStyleBackColor = false;
             this.btnCambiarCuenta.Click += new System.EventHandler(this.btnCambiarCuenta_Click);
             //
             // panelContenido

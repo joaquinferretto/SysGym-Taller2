@@ -1,4 +1,4 @@
-namespace exxen2._0.capaVisual.Recepcionista
+﻿namespace exxen2._0.capaVisual.Recepcionista
 {
     partial class ConsultaEntrenadoresFormulario
     {
@@ -127,16 +127,25 @@ namespace exxen2._0.capaVisual.Recepcionista
             // actualizar
             //
             this.actualizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.actualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(237)))), ((int)(((byte)(247)))));
-            this.actualizar.FlatAppearance.BorderSize = 0;
-            this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.actualizar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(68)))), ((int)(((byte)(95)))));
             this.actualizar.Location = new System.Drawing.Point(302, 47);
             this.actualizar.Name = "actualizar";
+            this.actualizar.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.actualizar.FlatAppearance.BorderSize = 0;
+            this.actualizar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.actualizar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.actualizar.ForeColor = System.Drawing.Color.White;
+            this.actualizar.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.actualizar.Size = new System.Drawing.Size(119, 32);
             this.actualizar.TabIndex = 1;
             this.actualizar.Text = "Actualizar listado";
-            this.actualizar.UseVisualStyleBackColor = false;
             this.actualizar.Click += new System.EventHandler(this.actualizar_Click);
             //
             // tablaEntrenadores

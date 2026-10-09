@@ -19,7 +19,7 @@ namespace exxen2._0.capaVisual.Compartido
             panelEncabezado.BackColor = Color.FromArgb(79, 70, 229); panelEncabezado.Controls.Add(lblDescripcion); panelEncabezado.Controls.Add(lblTitulo); panelEncabezado.Controls.Add(btnVolver);
             lblTitulo.Font = new Font("Segoe UI", 18F, FontStyle.Bold); lblTitulo.ForeColor = Color.White; lblTitulo.Text = "Rutina semanal";
             lblDescripcion.ForeColor = Color.FromArgb(226, 232, 240); lblDescripcion.Text = "Entrenamiento del socio de lunes a viernes";
-            btnVolver.BackColor = Color.White; btnVolver.FlatStyle = FlatStyle.Flat; btnVolver.FlatAppearance.BorderSize = 0; btnVolver.ForeColor = System.Drawing.Color.FromArgb(72, 66, 217); btnVolver.Text = "Cerrar"; btnVolver.UseVisualStyleBackColor = false;
+            btnVolver.Text = "Cerrar";
             lblEstado.BackColor = Color.FromArgb(226, 232, 240); lblEstado.ForeColor = Color.FromArgb(51, 65, 85); lblEstado.Text = "Listo";
             panelContenido.BackColor = Color.FromArgb(248, 250, 252); panelContenido.Padding = new Padding(16); panelContenido.Controls.Add(tablaSemana);
             tablaSemana.BackgroundColor = Color.White; tablaSemana.BorderStyle = BorderStyle.None;
@@ -29,7 +29,14 @@ namespace exxen2._0.capaVisual.Compartido
             colMiercoles.HeaderText = "Miercoles"; colMiercoles.Name = "colMiercoles"; colMiercoles.MinimumWidth = 120;
             colJueves.HeaderText = "Jueves"; colJueves.Name = "colJueves"; colJueves.MinimumWidth = 120;
             colViernes.HeaderText = "Viernes"; colViernes.Name = "colViernes"; colViernes.MinimumWidth = 120;
-            panelEncabezado.Name = "panelEncabezado"; panelEncabezado.TabIndex = 0; lblTitulo.Name = "lblTitulo"; lblTitulo.TabIndex = 0; lblDescripcion.Name = "lblDescripcion"; lblDescripcion.TabIndex = 1; btnVolver.Name = "btnVolver"; btnVolver.TabIndex = 2;
+            panelEncabezado.Name = "panelEncabezado"; panelEncabezado.TabIndex = 0; lblTitulo.Name = "lblTitulo"; lblTitulo.TabIndex = 0; lblDescripcion.Name = "lblDescripcion"; lblDescripcion.TabIndex = 1; btnVolver.Name = "btnVolver";
+            this.btnVolver.BackColor = System.Drawing.Color.FromArgb(107, 114, 128);
+            this.btnVolver.FlatAppearance.BorderSize = 0;
+            this.btnVolver.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(72, 77, 88);
+            this.btnVolver.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(90, 96, 109);
+            this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnVolver.ForeColor = System.Drawing.Color.White;
+            this.btnVolver.UseVisualStyleBackColor = false; btnVolver.TabIndex = 2;
             lblEstado.Name = "lblEstado"; lblEstado.TabIndex = 2; panelContenido.Name = "panelContenido"; panelContenido.TabIndex = 1; tablaSemana.Name = "tablaSemana"; tablaSemana.TabIndex = 0;
 
             Controls.Add(panelContenido); Controls.Add(lblEstado); Controls.Add(panelEncabezado); AutoScaleMode = AutoScaleMode.Font; AutoScroll = false; BackColor = Color.FromArgb(241, 245, 249); ClientSize = new Size(1080, 620); Font = new Font("Segoe UI", 9.5F); MinimumSize = new Size(900, 520); this.Name = "RutinaSemanalFormulario"; StartPosition = FormStartPosition.CenterParent; Text = "SysGym";

@@ -265,9 +265,22 @@
             this.hasta.Size = new System.Drawing.Size(130, 24);
             this.aplicar.Location = new System.Drawing.Point(430, 56);
             this.aplicar.Name = "aplicar";
+            this.aplicar.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.aplicar.FlatAppearance.BorderSize = 0;
+            this.aplicar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.aplicar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.aplicar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.aplicar.ForeColor = System.Drawing.Color.White;
+            this.aplicar.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.aplicar.Size = new System.Drawing.Size(96, 30);
             this.aplicar.Text = "Aplicar";
-            this.aplicar.UseVisualStyleBackColor = true;
             this.aplicar.Click += new System.EventHandler(this.aplicar_Click);
             this.desde.ValueChanged += new System.EventHandler(this.periodoReporte_Cambiado);
             this.hasta.ValueChanged += new System.EventHandler(this.periodoReporte_Cambiado);
@@ -279,10 +292,23 @@
             this.exportarReporte.Enabled = false;
             this.exportarReporte.Location = new System.Drawing.Point(542, 56);
             this.exportarReporte.Name = "exportarReporte";
+            this.exportarReporte.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.exportarReporte.FlatAppearance.BorderSize = 0;
+            this.exportarReporte.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.exportarReporte.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.exportarReporte.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.exportarReporte.ForeColor = System.Drawing.Color.White;
+            this.exportarReporte.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.exportarReporte.Size = new System.Drawing.Size(168, 30);
             this.exportarReporte.TabIndex = 3;
             this.exportarReporte.Text = "Exportar reporte PDF";
-            this.exportarReporte.UseVisualStyleBackColor = true;
             this.exportarReporte.Click += new System.EventHandler(this.exportarReporte_Click);
             // indicadores
             this.indicadores.BackColor = System.Drawing.Color.White;
@@ -590,6 +616,20 @@
             this.comparar.Location = new System.Drawing.Point(510, 31);
             this.comparar.Size = new System.Drawing.Size(130, 32);
             this.comparar.Name = "comparar";
+            this.comparar.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.comparar.FlatAppearance.BorderSize = 0;
+            this.comparar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.comparar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.comparar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comparar.ForeColor = System.Drawing.Color.White;
+            this.comparar.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.comparar.Text = "Comparar períodos";
             this.comparar.Click += new System.EventHandler(this.comparar_Click);
             this.filtrosComparar.Controls.Add(this.comparar);
@@ -653,6 +693,20 @@
             this.btnBuscarSocio.Location = new System.Drawing.Point(392, 8);
             this.btnBuscarSocio.Size = new System.Drawing.Size(96, 30);
             this.btnBuscarSocio.Name = "btnBuscarSocio";
+            this.btnBuscarSocio.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.btnBuscarSocio.FlatAppearance.BorderSize = 0;
+            this.btnBuscarSocio.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.btnBuscarSocio.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.btnBuscarSocio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBuscarSocio.ForeColor = System.Drawing.Color.White;
+            this.btnBuscarSocio.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.btnBuscarSocio.Text = "Buscar";
             this.btnBuscarSocio.Click += new System.EventHandler(this.buscarSocio_Click);
             this.selectorSocio.Location = new System.Drawing.Point(12, 44);
@@ -661,7 +715,7 @@
             this.selectorSocio.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right);
             this.selectorSocio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.selectorSocio.SelectedIndexChanged += new System.EventHandler(this.selectorSocio_SelectedIndexChanged);
-            this.lblBusquedaEstado.Location = new System.Drawing.Point(12, 78);
+            this.lblBusquedaEstado.Location = new System.Drawing.Point(12, 74);
             this.lblBusquedaEstado.Size = new System.Drawing.Size(1038, 26);
             this.lblBusquedaEstado.Name = "lblBusquedaEstado";
             this.lblBusquedaEstado.Anchor = (System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right);
@@ -710,13 +764,11 @@
             this.categorias.SelectedIndex = 0;
             this.disposicion.Controls.Add(this.categorias, 0, 3);
             this.BackColor = System.Drawing.Color.FromArgb(248, 250, 252);
-            this.AutoScroll = true;
-            this.AutoScrollMinSize = new System.Drawing.Size(900, 600);
             this.ClientSize = new System.Drawing.Size(1080, 700);
             this.Controls.Add(this.disposicion);
             this.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.Name = "AnalisisFormulario";
-            this.Text = "Análisis";
+            this.Text = "SysGym";
             this.Load += new System.EventHandler(this.AnalisisFormulario_Load);
             this.encabezado.ResumeLayout(false);
             this.encabezado.PerformLayout();

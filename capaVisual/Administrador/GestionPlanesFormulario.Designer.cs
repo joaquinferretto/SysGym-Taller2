@@ -334,72 +334,117 @@ namespace exxen2._0.capaVisual.Administrador
             //
             // nuevo
             //
-            this.nuevo.BackColor = System.Drawing.Color.FromArgb(4, 120, 87);
-            this.nuevo.FlatAppearance.BorderSize = 0;
-            this.nuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.nuevo.ForeColor = System.Drawing.Color.White;
             this.nuevo.Location = new System.Drawing.Point(16, 188);
             this.nuevo.Name = "nuevo";
+            this.nuevo.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.nuevo.FlatAppearance.BorderSize = 0;
+            this.nuevo.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.nuevo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.nuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.nuevo.ForeColor = System.Drawing.Color.White;
+            this.nuevo.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.nuevo.Size = new System.Drawing.Size(112, 38);
             this.nuevo.TabIndex = 3;
             this.nuevo.Text = "+ Nuevo";
-            this.nuevo.UseVisualStyleBackColor = false;
             this.nuevo.Click += new System.EventHandler(this.nuevo_Click);
             //
             // guardar
             //
-            this.guardar.BackColor = System.Drawing.Color.FromArgb(72, 66, 217);
-            this.guardar.FlatAppearance.BorderSize = 0;
-            this.guardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.guardar.ForeColor = System.Drawing.Color.White;
             this.guardar.Location = new System.Drawing.Point(136, 188);
             this.guardar.Name = "guardar";
+            this.guardar.BackColor = System.Drawing.Color.FromArgb(46, 125, 50);
+            this.guardar.FlatAppearance.BorderSize = 0;
+            this.guardar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(27, 75, 31);
+            this.guardar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(37, 101, 41);
+            this.guardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.guardar.ForeColor = System.Drawing.Color.White;
+            this.guardar.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.guardar.Size = new System.Drawing.Size(112, 38);
             this.guardar.TabIndex = 4;
             this.guardar.Text = "Guardar";
-            this.guardar.UseVisualStyleBackColor = false;
             this.guardar.Click += new System.EventHandler(this.guardar_Click);
             //
             // actualizar
             //
-            this.actualizar.BackColor = System.Drawing.Color.FromArgb(72, 66, 217);
-            this.actualizar.FlatAppearance.BorderSize = 0;
-            this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.actualizar.ForeColor = System.Drawing.Color.FromArgb(255, 255, 255);
             this.actualizar.Location = new System.Drawing.Point(256, 188);
             this.actualizar.Name = "actualizar";
+            this.actualizar.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.actualizar.FlatAppearance.BorderSize = 0;
+            this.actualizar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.actualizar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.actualizar.ForeColor = System.Drawing.Color.White;
+            this.actualizar.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.actualizar.Size = new System.Drawing.Size(112, 38);
             this.actualizar.TabIndex = 5;
             this.actualizar.Text = "Modificar";
-            this.actualizar.UseVisualStyleBackColor = false;
             this.actualizar.Click += new System.EventHandler(this.actualizar_Click);
             //
             // darDeBaja
             //
-            this.darDeBaja.BackColor = System.Drawing.Color.FromArgb(255, 240, 240);
-            this.darDeBaja.FlatAppearance.BorderSize = 0;
-            this.darDeBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.darDeBaja.ForeColor = System.Drawing.Color.FromArgb(173, 36, 36);
             this.darDeBaja.Location = new System.Drawing.Point(16, 234);
             this.darDeBaja.Name = "darDeBaja";
+            this.darDeBaja.BackColor = System.Drawing.Color.FromArgb(198, 40, 40);
+            this.darDeBaja.FlatAppearance.BorderSize = 0;
+            this.darDeBaja.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(134, 26, 26);
+            this.darDeBaja.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(168, 32, 32);
+            this.darDeBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.darDeBaja.ForeColor = System.Drawing.Color.White;
+            this.darDeBaja.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.darDeBaja.Size = new System.Drawing.Size(112, 38);
             this.darDeBaja.TabIndex = 6;
             this.darDeBaja.Text = "Dar de baja";
-            this.darDeBaja.UseVisualStyleBackColor = false;
             this.darDeBaja.Click += new System.EventHandler(this.darDeBaja_Click);
             //
             // reactivar
             //
-            this.reactivar.BackColor = System.Drawing.Color.FromArgb(220, 252, 231);
-            this.reactivar.FlatAppearance.BorderSize = 0;
-            this.reactivar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.reactivar.ForeColor = System.Drawing.Color.FromArgb(22, 101, 52);
             this.reactivar.Location = new System.Drawing.Point(136, 234);
             this.reactivar.Name = "reactivar";
+            this.reactivar.BackColor = System.Drawing.Color.FromArgb(46, 125, 50);
+            this.reactivar.FlatAppearance.BorderSize = 0;
+            this.reactivar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(27, 75, 31);
+            this.reactivar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(37, 101, 41);
+            this.reactivar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.reactivar.ForeColor = System.Drawing.Color.White;
+            this.reactivar.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.reactivar.Size = new System.Drawing.Size(112, 38);
             this.reactivar.TabIndex = 7;
             this.reactivar.Text = "Reactivar";
-            this.reactivar.UseVisualStyleBackColor = false;
             this.reactivar.Click += new System.EventHandler(this.reactivar_Click);
             //
                         this.indicadorErrores.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;

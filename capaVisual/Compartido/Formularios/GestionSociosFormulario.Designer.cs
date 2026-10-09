@@ -139,34 +139,52 @@ namespace exxen2._0.capaVisual.Compartido
             //
             // btnSeleccionarFoto
             //
-            this.btnSeleccionarFoto.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(120)))), ((int)(((byte)(87)))));
-            this.btnSeleccionarFoto.FlatAppearance.BorderSize = 0;
-            this.btnSeleccionarFoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSeleccionarFoto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.btnSeleccionarFoto.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSeleccionarFoto.Location = new System.Drawing.Point(145, 425);
             this.btnSeleccionarFoto.Name = "btnSeleccionarFoto";
+            this.btnSeleccionarFoto.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.btnSeleccionarFoto.FlatAppearance.BorderSize = 0;
+            this.btnSeleccionarFoto.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.btnSeleccionarFoto.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.btnSeleccionarFoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSeleccionarFoto.ForeColor = System.Drawing.Color.White;
+            this.btnSeleccionarFoto.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.btnSeleccionarFoto.Size = new System.Drawing.Size(223, 36);
             this.btnSeleccionarFoto.TabIndex = 24;
             this.btnSeleccionarFoto.Text = "Seleccionar foto";
-            this.btnSeleccionarFoto.UseVisualStyleBackColor = false;
             this.btnSeleccionarFoto.Click += new System.EventHandler(this.btnSeleccionarFoto_Click);
             //
             // btnQuitarFoto
             //
-            this.btnQuitarFoto.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.btnQuitarFoto.FlatAppearance.BorderSize = 0;
-            this.btnQuitarFoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnQuitarFoto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(173)))), ((int)(((byte)(36)))), ((int)(((byte)(36)))));
             this.btnQuitarFoto.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnQuitarFoto.Location = new System.Drawing.Point(145, 467);
             this.btnQuitarFoto.Name = "btnQuitarFoto";
+            this.btnQuitarFoto.BackColor = System.Drawing.Color.FromArgb(198, 40, 40);
+            this.btnQuitarFoto.FlatAppearance.BorderSize = 0;
+            this.btnQuitarFoto.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(134, 26, 26);
+            this.btnQuitarFoto.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(168, 32, 32);
+            this.btnQuitarFoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnQuitarFoto.ForeColor = System.Drawing.Color.White;
+            this.btnQuitarFoto.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.btnQuitarFoto.Size = new System.Drawing.Size(223, 36);
             this.btnQuitarFoto.TabIndex = 25;
             this.btnQuitarFoto.Text = "Quitar foto";
-            this.btnQuitarFoto.UseVisualStyleBackColor = false;
             this.btnQuitarFoto.Click += new System.EventHandler(this.btnQuitarFoto_Click);
             //
             // sexo
@@ -400,7 +418,6 @@ namespace exxen2._0.capaVisual.Compartido
             //
             // panelDetalle
             //
-            this.panelDetalle.AutoScroll = true;
             this.panelDetalle.Controls.Add(this.btnFicha);
             this.panelDetalle.Controls.Add(this.lblFormulario);
             this.panelDetalle.Controls.Add(this.lblNombre);
@@ -587,74 +604,119 @@ namespace exxen2._0.capaVisual.Compartido
             //
             // nuevo
             //
-            this.nuevo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(120)))), ((int)(((byte)(87)))));
-            this.nuevo.FlatAppearance.BorderSize = 0;
-            this.nuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.nuevo.ForeColor = System.Drawing.Color.White;
             this.nuevo.Location = new System.Drawing.Point(16, 331);
             this.nuevo.Name = "nuevo";
+            this.nuevo.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.nuevo.FlatAppearance.BorderSize = 0;
+            this.nuevo.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.nuevo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.nuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.nuevo.ForeColor = System.Drawing.Color.White;
+            this.nuevo.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.nuevo.Size = new System.Drawing.Size(108, 38);
             this.nuevo.TabIndex = 17;
             this.nuevo.Text = "+ Nuevo socio";
-            this.nuevo.UseVisualStyleBackColor = false;
             this.nuevo.Click += new System.EventHandler(this.nuevo_Click);
             //
             // guardar
             //
-            this.guardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(66)))), ((int)(((byte)(217)))));
-            this.guardar.FlatAppearance.BorderSize = 0;
-            this.guardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.guardar.ForeColor = System.Drawing.Color.White;
             this.guardar.Location = new System.Drawing.Point(128, 331);
             this.guardar.Name = "guardar";
+            this.guardar.BackColor = System.Drawing.Color.FromArgb(46, 125, 50);
+            this.guardar.FlatAppearance.BorderSize = 0;
+            this.guardar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(27, 75, 31);
+            this.guardar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(37, 101, 41);
+            this.guardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.guardar.ForeColor = System.Drawing.Color.White;
+            this.guardar.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.guardar.Size = new System.Drawing.Size(108, 38);
             this.guardar.TabIndex = 18;
             this.guardar.Text = "Guardar";
-            this.guardar.UseVisualStyleBackColor = false;
             this.guardar.Click += new System.EventHandler(this.guardar_Click);
             //
             // actualizar
             //
-            this.actualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(66)))), ((int)(((byte)(217)))));
-            this.actualizar.FlatAppearance.BorderSize = 0;
-            this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.actualizar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.actualizar.Location = new System.Drawing.Point(240, 331);
             this.actualizar.Name = "actualizar";
+            this.actualizar.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.actualizar.FlatAppearance.BorderSize = 0;
+            this.actualizar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.actualizar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.actualizar.ForeColor = System.Drawing.Color.White;
+            this.actualizar.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.actualizar.Size = new System.Drawing.Size(108, 38);
             this.actualizar.TabIndex = 19;
             this.actualizar.Text = "Actualizar";
-            this.actualizar.UseVisualStyleBackColor = false;
             this.actualizar.Click += new System.EventHandler(this.actualizar_Click);
             //
             // calcularImc
             //
-            this.calcularImc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(237)))), ((int)(((byte)(247)))));
-            this.calcularImc.FlatAppearance.BorderSize = 0;
-            this.calcularImc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.calcularImc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(68)))), ((int)(((byte)(95)))));
             this.calcularImc.Location = new System.Drawing.Point(16, 375);
             this.calcularImc.Name = "calcularImc";
+            this.calcularImc.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.calcularImc.FlatAppearance.BorderSize = 0;
+            this.calcularImc.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.calcularImc.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.calcularImc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.calcularImc.ForeColor = System.Drawing.Color.White;
+            this.calcularImc.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.calcularImc.Size = new System.Drawing.Size(108, 38);
             this.calcularImc.TabIndex = 20;
             this.calcularImc.Text = "Calcular IMC";
-            this.calcularImc.UseVisualStyleBackColor = false;
             this.calcularImc.Click += new System.EventHandler(this.calcularImc_Click);
             //
             // verRutina
             //
-            this.verRutina.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(237)))), ((int)(((byte)(247)))));
-            this.verRutina.FlatAppearance.BorderSize = 0;
-            this.verRutina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.verRutina.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(68)))), ((int)(((byte)(95)))));
             this.verRutina.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.verRutina.Location = new System.Drawing.Point(145, 509);
             this.verRutina.Name = "verRutina";
+            this.verRutina.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.verRutina.FlatAppearance.BorderSize = 0;
+            this.verRutina.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.verRutina.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.verRutina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.verRutina.ForeColor = System.Drawing.Color.White;
+            this.verRutina.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.verRutina.Size = new System.Drawing.Size(223, 36);
             this.verRutina.TabIndex = 26;
             this.verRutina.Text = "Ver rutina semanal";
-            this.verRutina.UseVisualStyleBackColor = false;
             this.verRutina.Click += new System.EventHandler(this.verRutina_Click);
             //
             // lblEstadoSocio
@@ -681,30 +743,48 @@ namespace exxen2._0.capaVisual.Compartido
             //
             // darDeBaja
             //
-            this.darDeBaja.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.darDeBaja.FlatAppearance.BorderSize = 0;
-            this.darDeBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.darDeBaja.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(173)))), ((int)(((byte)(36)))), ((int)(((byte)(36)))));
             this.darDeBaja.Location = new System.Drawing.Point(128, 375);
             this.darDeBaja.Name = "darDeBaja";
+            this.darDeBaja.BackColor = System.Drawing.Color.FromArgb(198, 40, 40);
+            this.darDeBaja.FlatAppearance.BorderSize = 0;
+            this.darDeBaja.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(134, 26, 26);
+            this.darDeBaja.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(168, 32, 32);
+            this.darDeBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.darDeBaja.ForeColor = System.Drawing.Color.White;
+            this.darDeBaja.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.darDeBaja.Size = new System.Drawing.Size(108, 38);
             this.darDeBaja.TabIndex = 21;
             this.darDeBaja.Text = "Dar de baja";
-            this.darDeBaja.UseVisualStyleBackColor = false;
             this.darDeBaja.Click += new System.EventHandler(this.darDeBaja_Click);
             //
             // reactivar
             //
-            this.reactivar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(252)))), ((int)(((byte)(231)))));
-            this.reactivar.FlatAppearance.BorderSize = 0;
-            this.reactivar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.reactivar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(101)))), ((int)(((byte)(52)))));
             this.reactivar.Location = new System.Drawing.Point(240, 375);
             this.reactivar.Name = "reactivar";
+            this.reactivar.BackColor = System.Drawing.Color.FromArgb(46, 125, 50);
+            this.reactivar.FlatAppearance.BorderSize = 0;
+            this.reactivar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(27, 75, 31);
+            this.reactivar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(37, 101, 41);
+            this.reactivar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.reactivar.ForeColor = System.Drawing.Color.White;
+            this.reactivar.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.reactivar.Size = new System.Drawing.Size(108, 38);
             this.reactivar.TabIndex = 22;
             this.reactivar.Text = "Reactivar";
-            this.reactivar.UseVisualStyleBackColor = false;
             this.reactivar.Click += new System.EventHandler(this.reactivar_Click);
             //
             // GestionSociosFormulario
@@ -712,6 +792,20 @@ namespace exxen2._0.capaVisual.Compartido
             this.btnFicha.Location = new System.Drawing.Point(16, 554);
             this.btnFicha.Size = new System.Drawing.Size(350, 34);
             this.btnFicha.Name = "btnFicha";
+            this.btnFicha.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.btnFicha.FlatAppearance.BorderSize = 0;
+            this.btnFicha.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.btnFicha.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.btnFicha.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFicha.ForeColor = System.Drawing.Color.White;
+            this.btnFicha.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.btnFicha.Text = "Ver ficha completa";
             this.btnFicha.Enabled = false;
             this.btnFicha.TabIndex = 30;

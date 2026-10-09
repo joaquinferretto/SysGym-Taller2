@@ -234,24 +234,31 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             // nuevaRutina
             //
-            this.nuevaRutina.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(120)))), ((int)(((byte)(87)))));
             this.nuevaRutina.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.nuevaRutina.FlatAppearance.BorderSize = 0;
-            this.nuevaRutina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.nuevaRutina.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.nuevaRutina.Location = new System.Drawing.Point(16, 599);
             this.nuevaRutina.Margin = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.nuevaRutina.Name = "nuevaRutina";
+            this.nuevaRutina.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.nuevaRutina.FlatAppearance.BorderSize = 0;
+            this.nuevaRutina.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.nuevaRutina.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.nuevaRutina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.nuevaRutina.ForeColor = System.Drawing.Color.White;
+            this.nuevaRutina.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.nuevaRutina.Size = new System.Drawing.Size(320, 36);
             this.nuevaRutina.TabIndex = 0;
             this.nuevaRutina.Text = "+ Nueva rutina";
-            this.nuevaRutina.UseVisualStyleBackColor = false;
             this.nuevaRutina.Click += new System.EventHandler(this.nuevaRutina_Click);
             //
             // panelDetalle
             //
-            this.panelDetalle.AutoScroll = true;
-            this.panelDetalle.AutoScrollMinSize = new System.Drawing.Size(0, 604);
             this.panelDetalle.Controls.Add(this.lblDetalleTitulo);
             this.panelDetalle.Controls.Add(this.lblNombre);
             this.panelDetalle.Controls.Add(this.nombre);
@@ -353,63 +360,99 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             // guardarRutina
             //
-            this.guardarRutina.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(66)))), ((int)(((byte)(217)))));
-            this.guardarRutina.FlatAppearance.BorderSize = 0;
-            this.guardarRutina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.guardarRutina.ForeColor = System.Drawing.Color.White;
             this.guardarRutina.Location = new System.Drawing.Point(10, 102);
             this.guardarRutina.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
             this.guardarRutina.Name = "guardarRutina";
+            this.guardarRutina.BackColor = System.Drawing.Color.FromArgb(46, 125, 50);
+            this.guardarRutina.FlatAppearance.BorderSize = 0;
+            this.guardarRutina.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(27, 75, 31);
+            this.guardarRutina.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(37, 101, 41);
+            this.guardarRutina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.guardarRutina.ForeColor = System.Drawing.Color.White;
+            this.guardarRutina.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.guardarRutina.Size = new System.Drawing.Size(146, 32);
             this.guardarRutina.TabIndex = 5;
             this.guardarRutina.Text = "Guardar";
-            this.guardarRutina.UseVisualStyleBackColor = false;
             this.guardarRutina.Click += new System.EventHandler(this.guardarRutina_Click);
             //
             // actualizar
             //
-            this.actualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(66)))), ((int)(((byte)(217)))));
-            this.actualizar.FlatAppearance.BorderSize = 0;
-            this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.actualizar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.actualizar.Location = new System.Drawing.Point(162, 102);
             this.actualizar.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
             this.actualizar.Name = "actualizar";
+            this.actualizar.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.actualizar.FlatAppearance.BorderSize = 0;
+            this.actualizar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.actualizar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.actualizar.ForeColor = System.Drawing.Color.White;
+            this.actualizar.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.actualizar.Size = new System.Drawing.Size(108, 32);
             this.actualizar.TabIndex = 6;
             this.actualizar.Text = "Actualizar";
-            this.actualizar.UseVisualStyleBackColor = false;
             this.actualizar.Click += new System.EventHandler(this.actualizar_Click);
             //
             // darDeBaja
             //
-            this.darDeBaja.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.darDeBaja.FlatAppearance.BorderSize = 0;
-            this.darDeBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.darDeBaja.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(173)))), ((int)(((byte)(36)))), ((int)(((byte)(36)))));
             this.darDeBaja.Location = new System.Drawing.Point(276, 102);
             this.darDeBaja.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
             this.darDeBaja.Name = "darDeBaja";
+            this.darDeBaja.BackColor = System.Drawing.Color.FromArgb(198, 40, 40);
+            this.darDeBaja.FlatAppearance.BorderSize = 0;
+            this.darDeBaja.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(134, 26, 26);
+            this.darDeBaja.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(168, 32, 32);
+            this.darDeBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.darDeBaja.ForeColor = System.Drawing.Color.White;
+            this.darDeBaja.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.darDeBaja.Size = new System.Drawing.Size(108, 32);
             this.darDeBaja.TabIndex = 7;
             this.darDeBaja.Text = "Dar de baja";
-            this.darDeBaja.UseVisualStyleBackColor = false;
             this.darDeBaja.Visible = false;
             this.darDeBaja.Click += new System.EventHandler(this.darDeBaja_Click);
             //
             // reactivar
             //
-            this.reactivar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(252)))), ((int)(((byte)(231)))));
-            this.reactivar.FlatAppearance.BorderSize = 0;
-            this.reactivar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.reactivar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(101)))), ((int)(((byte)(52)))));
             this.reactivar.Location = new System.Drawing.Point(390, 102);
             this.reactivar.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
             this.reactivar.Name = "reactivar";
+            this.reactivar.BackColor = System.Drawing.Color.FromArgb(46, 125, 50);
+            this.reactivar.FlatAppearance.BorderSize = 0;
+            this.reactivar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(27, 75, 31);
+            this.reactivar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(37, 101, 41);
+            this.reactivar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.reactivar.ForeColor = System.Drawing.Color.White;
+            this.reactivar.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.reactivar.Size = new System.Drawing.Size(108, 32);
             this.reactivar.TabIndex = 8;
             this.reactivar.Text = "Reactivar";
-            this.reactivar.UseVisualStyleBackColor = false;
             this.reactivar.Visible = false;
             this.reactivar.Click += new System.EventHandler(this.reactivar_Click);
             //
@@ -428,47 +471,74 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             // agregarEjercicio
             //
-            this.agregarEjercicio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(120)))), ((int)(((byte)(87)))));
-            this.agregarEjercicio.FlatAppearance.BorderSize = 0;
-            this.agregarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.agregarEjercicio.ForeColor = System.Drawing.Color.White;
             this.agregarEjercicio.Location = new System.Drawing.Point(10, 178);
             this.agregarEjercicio.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
             this.agregarEjercicio.Name = "agregarEjercicio";
+            this.agregarEjercicio.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.agregarEjercicio.FlatAppearance.BorderSize = 0;
+            this.agregarEjercicio.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.agregarEjercicio.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.agregarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.agregarEjercicio.ForeColor = System.Drawing.Color.White;
+            this.agregarEjercicio.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.agregarEjercicio.Size = new System.Drawing.Size(152, 32);
             this.agregarEjercicio.TabIndex = 10;
             this.agregarEjercicio.Text = "+ Agregar ejercicio";
-            this.agregarEjercicio.UseVisualStyleBackColor = false;
             this.agregarEjercicio.Click += new System.EventHandler(this.agregarEjercicio_Click);
             //
             // actualizarEjercicio
             //
-            this.actualizarEjercicio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(237)))), ((int)(((byte)(247)))));
-            this.actualizarEjercicio.FlatAppearance.BorderSize = 0;
-            this.actualizarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.actualizarEjercicio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(68)))), ((int)(((byte)(95)))));
             this.actualizarEjercicio.Location = new System.Drawing.Point(168, 178);
             this.actualizarEjercicio.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
             this.actualizarEjercicio.Name = "actualizarEjercicio";
+            this.actualizarEjercicio.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.actualizarEjercicio.FlatAppearance.BorderSize = 0;
+            this.actualizarEjercicio.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.actualizarEjercicio.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.actualizarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.actualizarEjercicio.ForeColor = System.Drawing.Color.White;
+            this.actualizarEjercicio.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.actualizarEjercicio.Size = new System.Drawing.Size(92, 32);
             this.actualizarEjercicio.TabIndex = 11;
             this.actualizarEjercicio.Text = "Editar";
-            this.actualizarEjercicio.UseVisualStyleBackColor = false;
             this.actualizarEjercicio.Click += new System.EventHandler(this.actualizarEjercicio_Click);
             //
             // quitarEjercicio
             //
-            this.quitarEjercicio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.quitarEjercicio.FlatAppearance.BorderSize = 0;
-            this.quitarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.quitarEjercicio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(173)))), ((int)(((byte)(36)))), ((int)(((byte)(36)))));
             this.quitarEjercicio.Location = new System.Drawing.Point(266, 178);
             this.quitarEjercicio.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
             this.quitarEjercicio.Name = "quitarEjercicio";
+            this.quitarEjercicio.BackColor = System.Drawing.Color.FromArgb(198, 40, 40);
+            this.quitarEjercicio.FlatAppearance.BorderSize = 0;
+            this.quitarEjercicio.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(134, 26, 26);
+            this.quitarEjercicio.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(168, 32, 32);
+            this.quitarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.quitarEjercicio.ForeColor = System.Drawing.Color.White;
+            this.quitarEjercicio.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.quitarEjercicio.Size = new System.Drawing.Size(92, 32);
             this.quitarEjercicio.TabIndex = 12;
             this.quitarEjercicio.Text = "Quitar";
-            this.quitarEjercicio.UseVisualStyleBackColor = false;
             this.quitarEjercicio.Click += new System.EventHandler(this.quitarEjercicio_Click);
             //
             // tablaEjercicios
@@ -745,33 +815,51 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             // guardarEjercicio
             //
-            this.guardarEjercicio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(66)))), ((int)(((byte)(217)))));
-            this.guardarEjercicio.FlatAppearance.BorderSize = 0;
-            this.guardarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.guardarEjercicio.ForeColor = System.Drawing.Color.White;
             this.guardarEjercicio.Location = new System.Drawing.Point(10, 554);
             this.guardarEjercicio.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
             this.guardarEjercicio.Name = "guardarEjercicio";
+            this.guardarEjercicio.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.guardarEjercicio.FlatAppearance.BorderSize = 0;
+            this.guardarEjercicio.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
+            this.guardarEjercicio.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.guardarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.guardarEjercicio.ForeColor = System.Drawing.Color.White;
+            this.guardarEjercicio.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.guardarEjercicio.Size = new System.Drawing.Size(160, 32);
             this.guardarEjercicio.TabIndex = 29;
             this.guardarEjercicio.Text = "Agregar";
-            this.guardarEjercicio.UseVisualStyleBackColor = false;
             this.guardarEjercicio.Visible = false;
             this.guardarEjercicio.Click += new System.EventHandler(this.guardarEjercicio_Click);
             //
             // cancelarEjercicio
             //
-            this.cancelarEjercicio.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(237)))), ((int)(((byte)(247)))));
-            this.cancelarEjercicio.FlatAppearance.BorderSize = 0;
-            this.cancelarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cancelarEjercicio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(68)))), ((int)(((byte)(95)))));
             this.cancelarEjercicio.Location = new System.Drawing.Point(176, 554);
             this.cancelarEjercicio.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
             this.cancelarEjercicio.Name = "cancelarEjercicio";
+            this.cancelarEjercicio.BackColor = System.Drawing.Color.FromArgb(107, 114, 128);
+            this.cancelarEjercicio.FlatAppearance.BorderSize = 0;
+            this.cancelarEjercicio.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(72, 77, 88);
+            this.cancelarEjercicio.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(90, 96, 109);
+            this.cancelarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cancelarEjercicio.ForeColor = System.Drawing.Color.White;
+            this.cancelarEjercicio.UseVisualStyleBackColor = false;
+
+
+
+
+
+
+
             this.cancelarEjercicio.Size = new System.Drawing.Size(108, 32);
             this.cancelarEjercicio.TabIndex = 30;
             this.cancelarEjercicio.Text = "Cancelar";
-            this.cancelarEjercicio.UseVisualStyleBackColor = false;
             this.cancelarEjercicio.Visible = false;
             this.cancelarEjercicio.Click += new System.EventHandler(this.cancelarEjercicio_Click);
             //
