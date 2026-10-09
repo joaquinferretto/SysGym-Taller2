@@ -8,12 +8,12 @@ namespace exxen2._0.capaVisual.Compartido.Utilidades
     /* Comparte entre los tres paneles principales el llenado del header global y el resaltado del menú lateral. */
     internal static class EncabezadoPanelHelper
     {
-        private static readonly Color FondoOpcion = Color.FromArgb(43, 36, 80);
-        private static readonly Color BordeOpcion = Color.FromArgb(43, 36, 80);
-        private static readonly Color TextoOpcion = Color.White;
-        private static readonly Color FondoOpcionActiva = Color.FromArgb(91, 75, 138);
-        private static readonly Color BordeOpcionActiva = Color.FromArgb(91, 75, 138);
-        private static readonly Color TextoOpcionActiva = Color.White;
+        private static readonly Color FondoOpcion = Color.FromArgb(248, 249, 251);
+        private static readonly Color BordeOpcion = Color.FromArgb(248, 249, 251);
+        private static readonly Color TextoOpcion = Color.FromArgb(45, 43, 53);
+        private static readonly Color FondoOpcionActiva = Color.FromArgb(238, 234, 245);
+        private static readonly Color BordeOpcionActiva = Color.FromArgb(220, 212, 233);
+        private static readonly Color TextoOpcionActiva = Color.FromArgb(78, 59, 112);
 
         /* Muestra foto, nombre, rol, DNI y sexo reales del usuario de la sesión en los controles existentes del header. */
         internal static void MostrarUsuario(UsuarioSistema usuario, string rolPredeterminado, PictureBox foto, Label nombre, Label rol, Label dni, Label sexo)
@@ -46,6 +46,8 @@ namespace exxen2._0.capaVisual.Compartido.Utilidades
                 var esActiva = ReferenceEquals(boton, activa);
                 boton.BackColor = esActiva ? FondoOpcionActiva : FondoOpcion;
                 boton.FlatAppearance.BorderColor = esActiva ? BordeOpcionActiva : BordeOpcion;
+                boton.FlatAppearance.MouseOverBackColor = Color.FromArgb(242, 239, 247);
+                boton.FlatAppearance.MouseDownBackColor = Color.FromArgb(231, 226, 239);
                 boton.ForeColor = esActiva ? TextoOpcionActiva : TextoOpcion;
                 boton.Font = new Font(boton.Font, esActiva ? FontStyle.Bold : FontStyle.Regular);
             }

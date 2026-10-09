@@ -27,9 +27,9 @@ namespace exxen2._0.capaVisual.Administrador
                 LabelFormat = "C0", Color = Color.FromArgb(79, 70, 229), ToolTip = "#VALX: #VALY{C2}" };
             foreach (var dato in valores.AsEnumerable().Reverse()) serie.Points.AddXY(dato.Nombre, dato.Importe);
             chart.Series.Add(serie);
-            chart.ChartAreas[0].AxisX.Interval = 1;
-            chart.ChartAreas[0].AxisY.Minimum = 0;
-            chart.ChartAreas[0].AxisY.LabelStyle.Format = "C0";
+            chart.ChartAreas[0].AxisY.Interval = 1;
+            chart.ChartAreas[0].AxisX.Minimum = 0;
+            chart.ChartAreas[0].AxisX.LabelStyle.Format = "C0";
         }
 
         private void comparar_Click(object sender, EventArgs e)
@@ -50,6 +50,7 @@ namespace exxen2._0.capaVisual.Administrador
                         dato.ValorB.ToString(dato.EsMoneda ? "C2" : "N0"), FormatearVariacion(dato.VariacionPorcentual));
                 CargarComparacion(chartCompararIngresos, datos.Where(x => x.EsMoneda), "Ingresos", true);
                 CargarComparacion(chartCompararCantidades, datos.Where(x => !x.EsMoneda), "Pagos y altas", false);
+                EstilizarGraficos();
                 lblCompararEstado.Text = "Variación de B respecto de A. Se comparan totales de los rangos elegidos. La deuda histórica no está disponible.";
                 comparacionActual = new exxen2._0.capaLogica.Reportes.ComparacionAnalisisPdf {
                     DesdeA = desdeA.Value.Date, HastaA = hastaA.Value.Date,
@@ -67,13 +68,14 @@ namespace exxen2._0.capaVisual.Administrador
             {
                 chart.Titles.Add("Sin datos para el período seleccionado"); return;
             }
-            var a = new Series("Período A") { ChartType = SeriesChartType.Column, IsValueShownAsLabel = true,
+            var a = new Series("Período A") { ChartType = SeriesChartType.Column, Color = Color.FromArgb(91, 75, 138), IsValueShownAsLabel = true,
                 LabelFormat = moneda ? "C0" : "N0", ToolTip = moneda ? "A - #VALX: #VALY{C2}" : "A - #VALX: #VALY{N0}" };
-            var b = new Series("Período B") { ChartType = SeriesChartType.Column, IsValueShownAsLabel = true,
+            var b = new Series("Período B") { ChartType = SeriesChartType.Column, Color = Color.FromArgb(46, 125, 112), IsValueShownAsLabel = true,
                 LabelFormat = moneda ? "C0" : "N0", ToolTip = moneda ? "B - #VALX: #VALY{C2}" : "B - #VALX: #VALY{N0}" };
             foreach (var valor in valores) { a.Points.AddXY(valor.Nombre, valor.ValorA); b.Points.AddXY(valor.Nombre, valor.ValorB); }
             chart.Series.Add(a); chart.Series.Add(b);
             chart.ChartAreas[0].AxisX.Interval = 1;
+            chart.ChartAreas[0].AxisX.LabelStyle.Angle = -25;
             chart.ChartAreas[0].AxisY.Minimum = 0;
             chart.ChartAreas[0].AxisY.LabelStyle.Format = moneda ? "C0" : "N0";
         }
@@ -92,6 +94,7 @@ namespace exxen2._0.capaVisual.Administrador
                 selectorSocio.SelectedIndex = -1;
                 gridSocio.Rows.Clear(); chartSocio.Series.Clear(); chartSocio.Titles.Clear();
                 chartSocio.Titles.Add("Seleccione un socio para consultar sus pagos");
+                EstilizarGraficos();
                 lblBusquedaEstado.Text = opciones.Count == 0 ? "Sin socios para la búsqueda." :
                     "Seleccione un socio. Se muestran hasta 100 resultados; use nombre o DNI para acotar.";
             }
@@ -128,6 +131,7 @@ namespace exxen2._0.capaVisual.Administrador
                     (datos.AntiguedadMeses.Value / 12) + " años, " + (datos.AntiguedadMeses.Value % 12) + " meses" : "No disponible");
                 if (datos.TieneHistoriaParaGraficar) CargarMensual(chartSocio, datos.PagosPorMes, "Pagos históricos del socio", true);
                 else chartSocio.Titles.Add("Sin movimientos suficientes para graficar.");
+                EstilizarGraficos();
                 lblBusquedaEstado.Text = "Consulta individual: pagos históricos y deuda actual. El filtro principal no limita esta vista.";
             }
             catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblBusquedaEstado, ex); }

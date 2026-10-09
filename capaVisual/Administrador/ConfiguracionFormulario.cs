@@ -43,7 +43,9 @@ namespace exxen2._0.capaVisual.Administrador
             {
                 var cambio = logica.Guardar((int)maxVencidas.Value, (int)maxAnticipacion.Value, (int)diasAviso.Value);
                 lblEstado.ForeColor = System.Drawing.Color.FromArgb(51, 65, 85);
-                lblEstado.Text = cambio ? "Cambios guardados. Actualizá los listados para ver las reglas nuevas. Las reactivaciones siguen siendo manuales." : "No hay cambios para guardar.";
+                lblEstado.Text = cambio
+                    ? "Configuración guardada. Se aplicará en próximas operaciones y consultas. Las reactivaciones siguen siendo manuales."
+                    : "No hay cambios para guardar.";
             }
             catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex); }
         }

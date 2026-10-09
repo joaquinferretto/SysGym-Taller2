@@ -69,7 +69,7 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             // panelMenu
             //
-            this.panelMenu.BackColor = System.Drawing.Color.FromArgb(43, 36, 80);
+            this.panelMenu.BackColor = System.Drawing.Color.FromArgb(243, 244, 247);
             this.panelMenu.Controls.Add(this.panelOpciones);
             this.panelMenu.Controls.Add(this.picLogo);
             this.panelMenu.Controls.Add(this.btnSalir);
@@ -84,7 +84,7 @@ namespace exxen2._0.capaVisual.Entrenador
             // panelOpciones
             //
             this.panelOpciones.AutoScroll = true;
-            this.panelOpciones.BackColor = System.Drawing.Color.FromArgb(43, 36, 80);
+            this.panelOpciones.BackColor = System.Drawing.Color.FromArgb(248, 249, 251);
             this.panelOpciones.Controls.Add(this.lblTrabajo);
             this.panelOpciones.Controls.Add(this.btnSocios);
             this.panelOpciones.Controls.Add(this.btnRutinas);
@@ -100,7 +100,7 @@ namespace exxen2._0.capaVisual.Entrenador
             // lblTrabajo
             //
             this.lblTrabajo.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
-this.lblTrabajo.ForeColor = System.Drawing.Color.FromArgb(203, 196, 229);
+this.lblTrabajo.ForeColor = System.Drawing.Color.FromArgb(104, 99, 113);
             this.lblTrabajo.Location = new System.Drawing.Point(14, 18);
             this.lblTrabajo.Margin = new System.Windows.Forms.Padding(0, 8, 0, 2);
             this.lblTrabajo.Name = "lblTrabajo";
@@ -112,11 +112,13 @@ this.lblTrabajo.ForeColor = System.Drawing.Color.FromArgb(203, 196, 229);
             //
             // btnSocios
             //
-            this.btnSocios.BackColor = System.Drawing.Color.FromArgb(43, 36, 80);
-            this.btnSocios.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(43, 36, 80);
+            this.btnSocios.BackColor = System.Drawing.Color.FromArgb(248, 249, 251);
+            this.btnSocios.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(248, 249, 251);
+            this.btnSocios.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(242, 239, 247);
+            this.btnSocios.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(231, 226, 239);
             this.btnSocios.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSocios.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.btnSocios.ForeColor = System.Drawing.Color.White;
+            this.btnSocios.ForeColor = System.Drawing.Color.FromArgb(45, 43, 53);
             this.btnSocios.Location = new System.Drawing.Point(14, 42);
             this.btnSocios.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
             this.btnSocios.Name = "btnSocios";
@@ -130,11 +132,13 @@ this.lblTrabajo.ForeColor = System.Drawing.Color.FromArgb(203, 196, 229);
             //
             // btnRutinas
             //
-            this.btnRutinas.BackColor = System.Drawing.Color.FromArgb(43, 36, 80);
-            this.btnRutinas.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(43, 36, 80);
+            this.btnRutinas.BackColor = System.Drawing.Color.FromArgb(248, 249, 251);
+            this.btnRutinas.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(248, 249, 251);
+            this.btnRutinas.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(242, 239, 247);
+            this.btnRutinas.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(231, 226, 239);
             this.btnRutinas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRutinas.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.btnRutinas.ForeColor = System.Drawing.Color.White;
+            this.btnRutinas.ForeColor = System.Drawing.Color.FromArgb(45, 43, 53);
             this.btnRutinas.Location = new System.Drawing.Point(14, 85);
             this.btnRutinas.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
             this.btnRutinas.Name = "btnRutinas";
@@ -149,7 +153,7 @@ this.lblTrabajo.ForeColor = System.Drawing.Color.FromArgb(203, 196, 229);
             // lblCatalogo
             //
             this.lblCatalogo.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
-this.lblCatalogo.ForeColor = System.Drawing.Color.FromArgb(203, 196, 229);
+this.lblCatalogo.ForeColor = System.Drawing.Color.FromArgb(104, 99, 113);
             this.lblCatalogo.Location = new System.Drawing.Point(14, 136);
             this.lblCatalogo.Margin = new System.Windows.Forms.Padding(0, 8, 0, 2);
             this.lblCatalogo.Name = "lblCatalogo";
@@ -161,11 +165,13 @@ this.lblCatalogo.ForeColor = System.Drawing.Color.FromArgb(203, 196, 229);
             //
             // btnEjercicios
             //
-            this.btnEjercicios.BackColor = System.Drawing.Color.FromArgb(43, 36, 80);
-            this.btnEjercicios.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(43, 36, 80);
+            this.btnEjercicios.BackColor = System.Drawing.Color.FromArgb(248, 249, 251);
+            this.btnEjercicios.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(248, 249, 251);
+            this.btnEjercicios.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(242, 239, 247);
+            this.btnEjercicios.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(231, 226, 239);
             this.btnEjercicios.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEjercicios.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.btnEjercicios.ForeColor = System.Drawing.Color.White;
+            this.btnEjercicios.ForeColor = System.Drawing.Color.FromArgb(45, 43, 53);
             this.btnEjercicios.Location = new System.Drawing.Point(14, 160);
             this.btnEjercicios.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
             this.btnEjercicios.Name = "btnEjercicios";
@@ -193,12 +199,14 @@ this.lblCatalogo.ForeColor = System.Drawing.Color.FromArgb(203, 196, 229);
             //
             // btnSalir
             //
-            this.btnSalir.BackColor = System.Drawing.Color.FromArgb(43, 36, 80);
+            this.btnSalir.BackColor = System.Drawing.Color.FromArgb(248, 249, 251);
             this.btnSalir.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnSalir.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(43, 36, 80);
+            this.btnSalir.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(248, 249, 251);
+            this.btnSalir.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(242, 239, 247);
+            this.btnSalir.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(231, 226, 239);
             this.btnSalir.FlatAppearance.BorderSize = 0;
             this.btnSalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSalir.ForeColor = System.Drawing.Color.White;
+            this.btnSalir.ForeColor = System.Drawing.Color.FromArgb(45, 43, 53);
             this.btnSalir.Location = new System.Drawing.Point(0, 703);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);

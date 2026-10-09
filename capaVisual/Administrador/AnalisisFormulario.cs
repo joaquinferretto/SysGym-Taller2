@@ -17,6 +17,9 @@ namespace exxen2._0.capaVisual.Administrador
         private readonly AnalisisLogica logica = new AnalisisLogica();
         private readonly AnalisisConsultaLogica consultas = new AnalisisConsultaLogica();
         private bool cargandoSocios;
+        private static readonly Font FuenteTituloGrafico = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+        private static readonly Font FuenteEjesGrafico = new Font("Segoe UI", 8.5F, FontStyle.Regular);
+        private static readonly Font FuenteDatosGrafico = new Font("Segoe UI", 8F, FontStyle.Regular);
 
         public AnalisisFormulario() : this(null) { }
 
@@ -25,6 +28,59 @@ namespace exxen2._0.capaVisual.Administrador
             reporte = new exxen2._0.capaLogica.Reportes.ReporteAnalisisServicio(usuarioActual == null ? 0 : usuarioActual.IdUsuarioSistema);
             idUsuarioGenerador = usuarioActual == null ? 0 : usuarioActual.IdUsuarioSistema;
             InitializeComponent();
+            EstilizarGraficos();
+        }
+
+        private void EstilizarGraficos()
+        {
+            var graficos = new[]
+            {
+                chartIngresos, chartMetodos, chartAltas, chartActivos, chartDeuda,
+                chartPlanes, chartEntrenadores, chartIngresosPlan, chartRutinas,
+                chartEjercicios, chartCompararIngresos, chartCompararCantidades, chartSocio
+            };
+            foreach (var grafico in graficos)
+                EstilizarGrafico(grafico);
+        }
+
+        private static void EstilizarGrafico(Chart grafico)
+        {
+            grafico.AntiAliasing = AntiAliasingStyles.All;
+            grafico.TextAntiAliasingQuality = TextAntiAliasingQuality.High;
+            foreach (Title tituloGrafico in grafico.Titles)
+            {
+                tituloGrafico.Font = FuenteTituloGrafico;
+                tituloGrafico.ForeColor = Color.FromArgb(30, 41, 59);
+            }
+            foreach (Legend leyenda in grafico.Legends)
+            {
+                leyenda.Font = FuenteEjesGrafico;
+                leyenda.Docking = Docking.Bottom;
+                leyenda.Alignment = StringAlignment.Center;
+                leyenda.LegendStyle = LegendStyle.Row;
+            }
+
+            var esBarraHorizontal = grafico.Series.Any(serie => serie.ChartType == SeriesChartType.Bar);
+            var esCircular = grafico.Series.Any(serie => serie.ChartType == SeriesChartType.Pie || serie.ChartType == SeriesChartType.Doughnut);
+            foreach (ChartArea area in grafico.ChartAreas)
+            {
+                area.BackColor = Color.White;
+                area.AxisX.LabelStyle.Font = FuenteEjesGrafico;
+                area.AxisY.LabelStyle.Font = FuenteEjesGrafico;
+                area.AxisX.LineColor = Color.FromArgb(203, 213, 225);
+                area.AxisY.LineColor = Color.FromArgb(203, 213, 225);
+                area.AxisX.MajorGrid.Enabled = !esCircular && esBarraHorizontal;
+                area.AxisY.MajorGrid.Enabled = !esCircular && !esBarraHorizontal;
+                area.AxisX.MajorGrid.LineColor = Color.FromArgb(226, 232, 240);
+                area.AxisY.MajorGrid.LineColor = Color.FromArgb(226, 232, 240);
+                area.AxisX.MajorGrid.LineDashStyle = ChartDashStyle.Dot;
+                area.AxisY.MajorGrid.LineDashStyle = ChartDashStyle.Dot;
+            }
+            foreach (Series serie in grafico.Series)
+            {
+                serie.Font = FuenteDatosGrafico;
+                serie.LabelForeColor = Color.FromArgb(51, 65, 85);
+            }
         }
 
         private void AnalisisFormulario_Load(object sender, EventArgs e)
@@ -94,6 +150,7 @@ namespace exxen2._0.capaVisual.Administrador
                 CargarBarras(chartEjercicios, datos.EjerciciosTop, SeriesChartType.Bar, "Top 10 ejercicios: rutinas distintas");
                 gridEjerciciosSinUso.DataSource = datos.EjerciciosSinUso;
                 lblEjerciciosSinUso.Text = "Ejercicios activos sin uso: " + datos.EjerciciosSinUso.Count;
+                EstilizarGraficos();
                 lblEstado.Text = "Actualizado. Ingresos y altas usan el período; socios, planes, entrenadores, rutinas y ejercicios muestran el estado actual.";
                 lblEstado.ForeColor = Color.FromArgb(51, 65, 85);
                 resultadoActual = datos;
@@ -184,10 +241,20 @@ namespace exxen2._0.capaVisual.Administrador
             foreach (var dato in tipo == SeriesChartType.Bar ? valores.AsEnumerable().Reverse() : valores)
                 serie.Points.AddXY(dato.Nombre, dato.Cantidad);
             chart.Series.Add(serie);
-            chart.ChartAreas[0].AxisX.Interval = 1;
-            chart.ChartAreas[0].AxisX.LabelStyle.Angle = tipo == SeriesChartType.Column ? -45 : 0;
-            chart.ChartAreas[0].AxisY.Minimum = 0;
-            chart.ChartAreas[0].AxisY.LabelStyle.Format = "N0";
+            if (tipo == SeriesChartType.Bar)
+            {
+                chart.ChartAreas[0].AxisY.Interval = 1;
+                chart.ChartAreas[0].AxisY.LabelStyle.Angle = 0;
+                chart.ChartAreas[0].AxisX.Minimum = 0;
+                chart.ChartAreas[0].AxisX.LabelStyle.Format = "N0";
+            }
+            else
+            {
+                chart.ChartAreas[0].AxisX.Interval = 1;
+                chart.ChartAreas[0].AxisX.LabelStyle.Angle = -35;
+                chart.ChartAreas[0].AxisY.Minimum = 0;
+                chart.ChartAreas[0].AxisY.LabelStyle.Format = "N0";
+            }
         }
     }
 }

@@ -267,7 +267,7 @@ this.lblSubtituloModulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)
             //
             // panelMenu
             //
-            this.panelMenu.BackColor = System.Drawing.Color.FromArgb(43, 36, 80);
+            this.panelMenu.BackColor = System.Drawing.Color.FromArgb(243, 244, 247);
             this.panelMenu.Controls.Add(this.panelOpciones);
             this.panelMenu.Controls.Add(this.picLogo);
             this.panelMenu.Controls.Add(this.btnSalir);
@@ -282,7 +282,7 @@ this.lblSubtituloModulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)
             // panelOpciones
             //
             this.panelOpciones.AutoScroll = true;
-            this.panelOpciones.BackColor = System.Drawing.Color.FromArgb(43, 36, 80);
+            this.panelOpciones.BackColor = System.Drawing.Color.FromArgb(248, 249, 251);
             this.panelOpciones.Controls.Add(this.lblClientes);
             this.panelOpciones.Controls.Add(this.btnSocios);
             this.panelOpciones.Controls.Add(this.btnMembresias);
@@ -301,7 +301,7 @@ this.lblSubtituloModulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)
             // lblClientes
             //
             this.lblClientes.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
-this.lblClientes.ForeColor = System.Drawing.Color.FromArgb(203, 196, 229);
+this.lblClientes.ForeColor = System.Drawing.Color.FromArgb(104, 99, 113);
             this.lblClientes.Location = new System.Drawing.Point(14, 18);
             this.lblClientes.Margin = new System.Windows.Forms.Padding(0, 8, 0, 2);
             this.lblClientes.Name = "lblClientes";
@@ -313,11 +313,13 @@ this.lblClientes.ForeColor = System.Drawing.Color.FromArgb(203, 196, 229);
             //
             // btnSocios
             //
-            this.btnSocios.BackColor = System.Drawing.Color.FromArgb(43, 36, 80);
-            this.btnSocios.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(43, 36, 80);
+            this.btnSocios.BackColor = System.Drawing.Color.FromArgb(248, 249, 251);
+            this.btnSocios.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(248, 249, 251);
+            this.btnSocios.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(242, 239, 247);
+            this.btnSocios.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(231, 226, 239);
             this.btnSocios.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSocios.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.btnSocios.ForeColor = System.Drawing.Color.White;
+            this.btnSocios.ForeColor = System.Drawing.Color.FromArgb(45, 43, 53);
             this.btnSocios.Location = new System.Drawing.Point(14, 42);
             this.btnSocios.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
             this.btnSocios.Name = "btnSocios";
@@ -331,18 +333,20 @@ this.lblClientes.ForeColor = System.Drawing.Color.FromArgb(203, 196, 229);
             //
             // btnMembresias
             //
-            this.btnMembresias.BackColor = System.Drawing.Color.FromArgb(43, 36, 80);
-            this.btnMembresias.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(43, 36, 80);
+            this.btnMembresias.BackColor = System.Drawing.Color.FromArgb(248, 249, 251);
+            this.btnMembresias.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(248, 249, 251);
+            this.btnMembresias.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(242, 239, 247);
+            this.btnMembresias.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(231, 226, 239);
             this.btnMembresias.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMembresias.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.btnMembresias.ForeColor = System.Drawing.Color.White;
+            this.btnMembresias.ForeColor = System.Drawing.Color.FromArgb(45, 43, 53);
             this.btnMembresias.Location = new System.Drawing.Point(14, 85);
             this.btnMembresias.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
             this.btnMembresias.Name = "btnMembresias";
             this.btnMembresias.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
             this.btnMembresias.Size = new System.Drawing.Size(236, 38);
             this.btnMembresias.TabIndex = 2;
-            this.btnMembresias.Text = "MembresÃ­as";
+            this.btnMembresias.Text = "Membresías";
             this.btnMembresias.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnMembresias.UseVisualStyleBackColor = false;
             this.btnMembresias.Click += new System.EventHandler(this.btnMembresias_Click);
@@ -350,7 +354,7 @@ this.lblClientes.ForeColor = System.Drawing.Color.FromArgb(203, 196, 229);
             // lblCaja
             //
             this.lblCaja.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
-this.lblCaja.ForeColor = System.Drawing.Color.FromArgb(203, 196, 229);
+this.lblCaja.ForeColor = System.Drawing.Color.FromArgb(104, 99, 113);
             this.lblCaja.Location = new System.Drawing.Point(14, 136);
             this.lblCaja.Margin = new System.Windows.Forms.Padding(0, 8, 0, 2);
             this.lblCaja.Name = "lblCaja";
@@ -362,11 +366,13 @@ this.lblCaja.ForeColor = System.Drawing.Color.FromArgb(203, 196, 229);
             //
             // btnPagos
             //
-            this.btnPagos.BackColor = System.Drawing.Color.FromArgb(43, 36, 80);
-            this.btnPagos.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(43, 36, 80);
+            this.btnPagos.BackColor = System.Drawing.Color.FromArgb(248, 249, 251);
+            this.btnPagos.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(248, 249, 251);
+            this.btnPagos.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(242, 239, 247);
+            this.btnPagos.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(231, 226, 239);
             this.btnPagos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPagos.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.btnPagos.ForeColor = System.Drawing.Color.White;
+            this.btnPagos.ForeColor = System.Drawing.Color.FromArgb(45, 43, 53);
             this.btnPagos.Location = new System.Drawing.Point(14, 160);
             this.btnPagos.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
             this.btnPagos.Name = "btnPagos";
@@ -382,7 +388,7 @@ this.lblCaja.ForeColor = System.Drawing.Color.FromArgb(203, 196, 229);
             // lblEntrenadores
             //
             this.lblEntrenadores.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
-this.lblEntrenadores.ForeColor = System.Drawing.Color.FromArgb(203, 196, 229);
+this.lblEntrenadores.ForeColor = System.Drawing.Color.FromArgb(104, 99, 113);
             this.lblEntrenadores.Location = new System.Drawing.Point(14, 211);
             this.lblEntrenadores.Margin = new System.Windows.Forms.Padding(0, 8, 0, 2);
             this.lblEntrenadores.Name = "lblEntrenadores";
@@ -394,11 +400,13 @@ this.lblEntrenadores.ForeColor = System.Drawing.Color.FromArgb(203, 196, 229);
             //
             // btnAsignar
             //
-            this.btnAsignar.BackColor = System.Drawing.Color.FromArgb(43, 36, 80);
-            this.btnAsignar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(43, 36, 80);
+            this.btnAsignar.BackColor = System.Drawing.Color.FromArgb(248, 249, 251);
+            this.btnAsignar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(248, 249, 251);
+            this.btnAsignar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(242, 239, 247);
+            this.btnAsignar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(231, 226, 239);
             this.btnAsignar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAsignar.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.btnAsignar.ForeColor = System.Drawing.Color.White;
+            this.btnAsignar.ForeColor = System.Drawing.Color.FromArgb(45, 43, 53);
             this.btnAsignar.Location = new System.Drawing.Point(14, 235);
             this.btnAsignar.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
             this.btnAsignar.Name = "btnAsignar";
@@ -413,11 +421,13 @@ this.lblEntrenadores.ForeColor = System.Drawing.Color.FromArgb(203, 196, 229);
             //
             // btnConsultar
             //
-            this.btnConsultar.BackColor = System.Drawing.Color.FromArgb(43, 36, 80);
-            this.btnConsultar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(43, 36, 80);
+            this.btnConsultar.BackColor = System.Drawing.Color.FromArgb(248, 249, 251);
+            this.btnConsultar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(248, 249, 251);
+            this.btnConsultar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(242, 239, 247);
+            this.btnConsultar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(231, 226, 239);
             this.btnConsultar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnConsultar.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.btnConsultar.ForeColor = System.Drawing.Color.White;
+            this.btnConsultar.ForeColor = System.Drawing.Color.FromArgb(45, 43, 53);
             this.btnConsultar.Location = new System.Drawing.Point(14, 278);
             this.btnConsultar.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
             this.btnConsultar.Name = "btnConsultar";
@@ -432,12 +442,14 @@ this.lblEntrenadores.ForeColor = System.Drawing.Color.FromArgb(203, 196, 229);
             //
             // btnSalir
             //
-            this.btnSalir.BackColor = System.Drawing.Color.FromArgb(43, 36, 80);
+            this.btnSalir.BackColor = System.Drawing.Color.FromArgb(248, 249, 251);
             this.btnSalir.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btnSalir.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(43, 36, 80);
+            this.btnSalir.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(248, 249, 251);
+            this.btnSalir.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(242, 239, 247);
+            this.btnSalir.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(231, 226, 239);
             this.btnSalir.FlatAppearance.BorderSize = 0;
             this.btnSalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSalir.ForeColor = System.Drawing.Color.White;
+            this.btnSalir.ForeColor = System.Drawing.Color.FromArgb(45, 43, 53);
             this.btnSalir.Location = new System.Drawing.Point(0, 607);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);

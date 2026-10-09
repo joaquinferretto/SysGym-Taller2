@@ -29,7 +29,7 @@ namespace exxen2._0.capaLogica
             var configuracion = datos.ConfiguracionesSistema.ConsultarSoloLectura()
                 .SingleOrDefault(c => c.IdConfiguracion == 1);
             if (configuracion == null)
-                throw new InvalidOperationException("Falta la configuración global. Aplicá AgregarConfiguracionSistema.sql.");
+                throw new InvalidOperationException("No se encontró la configuración del sistema. Contactá al administrador.");
             return configuracion;
         }
 
@@ -40,9 +40,9 @@ namespace exxen2._0.capaLogica
             {
                 auditoria.ObtenerUsuario(datos, true);
                 if (maxVencidas < 1 || maxVencidas > 120 || maxAnticipacion < 0 || maxAnticipacion > 120 || diasAviso < 0 || diasAviso > 365)
-                    throw new ArgumentException("Cuotas vencidas: 1 a 120; anticipación: 0 a 120 meses; aviso: 0 a 365 días.");
+                    throw new ArgumentException("Revisá los valores: las cuotas vencidas deben estar entre 1 y 120, la anticipación entre 0 y 120 meses y los días de aviso entre 0 y 365.");
                 var configuracion = datos.ConfiguracionesSistema.Buscar(1);
-                if (configuracion == null) throw new InvalidOperationException("Falta la configuración global.");
+                if (configuracion == null) throw new InvalidOperationException("No se encontró la configuración del sistema. Contactá al administrador.");
                 var cambios = new List<string>();
                 if (configuracion.MaxCuotasVencidasPermitidas != maxVencidas)
                     cambios.Add("Límite de cuotas vencidas cambiado de " + configuracion.MaxCuotasVencidasPermitidas + " a " + maxVencidas);
