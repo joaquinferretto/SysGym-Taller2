@@ -102,6 +102,7 @@ namespace exxen2._0.capaVisual.Administrador
             var tarjeta = new Panel
             {
                 BackColor = Color.FromArgb(248, 250, 252),
+                Size = new Size(148, 110),
                 Dock = DockStyle.Fill,
                 Margin = new Padding(3, 2, 3, 2)
             };

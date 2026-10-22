@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -10,6 +10,10 @@ namespace exxen2._0.capaVisual.Recepcionista
         private ErrorProvider indicadorErrores;
         private Label lblEstado; private TableLayoutPanel panelContenido; private Panel panelListado; private Label lblListado; private Label lblAyuda; private Panel panelDetalle; private Label lblFormulario; private Label lblSocio; private Label lblPlan; private Label lblInicio; private Label lblEstadoMembresia; private Label estadoMembresia; private DataGridView tabla; private DataGridViewTextBoxColumn colId; private DataGridViewTextBoxColumn colSocio; private DataGridViewTextBoxColumn colDni; private DataGridViewTextBoxColumn colPlan; private DataGridViewTextBoxColumn colInicio; private DataGridViewTextBoxColumn colEstado;
         private TextBox buscador; private ComboBox socio; private ComboBox plan; private DateTimePicker inicio; private Button nuevo; private Button crear; private Button actualizar; private Button habilitar; private Button deshabilitar; private Button generarCuota;
+        private ContextMenuStrip menuMembresias;
+        private ToolStripMenuItem fichaMenu;
+        private ToolStripMenuItem habilitarMenu;
+        private ToolStripMenuItem deshabilitarMenu;
 
         protected override void Dispose(bool liberarRecursos) { if (liberarRecursos && components != null) components.Dispose(); base.Dispose(liberarRecursos); }
 
@@ -27,10 +31,15 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.colPlan = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colInicio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.menuMembresias = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.fichaMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.habilitarMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.deshabilitarMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.buscador = new System.Windows.Forms.TextBox();
             this.lblAyuda = new System.Windows.Forms.Label();
             this.lblListado = new System.Windows.Forms.Label();
             this.panelDetalle = new System.Windows.Forms.Panel();
+            this.btnFicha = new System.Windows.Forms.Button();
             this.lblFormulario = new System.Windows.Forms.Label();
             this.lblSocio = new System.Windows.Forms.Label();
             this.socio = new System.Windows.Forms.ComboBox();
@@ -50,9 +59,9 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.panelContenido.SuspendLayout();
             this.panelListado.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).BeginInit();
+            this.menuMembresias.SuspendLayout();
             this.panelDetalle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.indicadorErrores)).BeginInit();
-            this.btnFicha = new System.Windows.Forms.Button();
             this.SuspendLayout();
             //
             // lblEstado
@@ -119,22 +128,27 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.colPlan,
             this.colInicio,
             this.colEstado});
+            this.tabla.ContextMenuStrip = this.menuMembresias;
             this.tabla.Location = new System.Drawing.Point(16, 106);
             this.tabla.Margin = new System.Windows.Forms.Padding(0);
             this.tabla.MultiSelect = false;
             this.tabla.Name = "tabla";
             this.tabla.ReadOnly = true;
             this.tabla.RowHeadersVisible = false;
+            this.tabla.RowHeadersWidth = 51;
             this.tabla.RowTemplate.Height = 30;
             this.tabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.tabla.Size = new System.Drawing.Size(598, 412);
             this.tabla.TabIndex = 3;
+            this.tabla.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tabla_CellDoubleClick);
+            this.tabla.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tabla_CellMouseDown);
             this.tabla.SelectionChanged += new System.EventHandler(this.tabla_SelectionChanged);
             //
             // colId
             //
             this.colId.FillWeight = 50F;
             this.colId.HeaderText = "Id";
+            this.colId.MinimumWidth = 6;
             this.colId.Name = "colId";
             this.colId.ReadOnly = true;
             this.colId.Visible = false;
@@ -178,6 +192,37 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.colEstado.Name = "colEstado";
             this.colEstado.ReadOnly = true;
             //
+            // menuMembresias
+            //
+            this.menuMembresias.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuMembresias.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fichaMenu,
+            this.habilitarMenu,
+            this.deshabilitarMenu});
+            this.menuMembresias.Name = "menuMembresias";
+            this.menuMembresias.Size = new System.Drawing.Size(203, 76);
+            //
+            // fichaMenu
+            //
+            this.fichaMenu.Name = "fichaMenu";
+            this.fichaMenu.Size = new System.Drawing.Size(202, 24);
+            this.fichaMenu.Text = "Ver ficha completa";
+            this.fichaMenu.Click += new System.EventHandler(this.btnFicha_Click);
+            //
+            // habilitarMenu
+            //
+            this.habilitarMenu.Name = "habilitarMenu";
+            this.habilitarMenu.Size = new System.Drawing.Size(202, 24);
+            this.habilitarMenu.Text = "Reactivar";
+            this.habilitarMenu.Click += new System.EventHandler(this.habilitar_Click);
+            //
+            // deshabilitarMenu
+            //
+            this.deshabilitarMenu.Name = "deshabilitarMenu";
+            this.deshabilitarMenu.Size = new System.Drawing.Size(202, 24);
+            this.deshabilitarMenu.Text = "Dar de baja";
+            this.deshabilitarMenu.Click += new System.EventHandler(this.deshabilitar_Click);
+            //
             // buscador
             //
             this.buscador.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -186,7 +231,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.buscador.Location = new System.Drawing.Point(16, 70);
             this.buscador.Margin = new System.Windows.Forms.Padding(0, 0, 0, 10);
             this.buscador.Name = "buscador";
-            this.buscador.Size = new System.Drawing.Size(598, 26);
+            this.buscador.Size = new System.Drawing.Size(598, 29);
             this.buscador.TabIndex = 2;
             this.buscador.TextChanged += new System.EventHandler(this.buscador_TextChanged);
             //
@@ -219,6 +264,8 @@ namespace exxen2._0.capaVisual.Recepcionista
             //
             // panelDetalle
             //
+            this.panelDetalle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelDetalle.BackColor = System.Drawing.Color.White;
             this.panelDetalle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelDetalle.Controls.Add(this.btnFicha);
@@ -237,14 +284,29 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.panelDetalle.Controls.Add(this.habilitar);
             this.panelDetalle.Controls.Add(this.deshabilitar);
             this.panelDetalle.Controls.Add(this.generarCuota);
-            this.panelDetalle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelDetalle.Location = new System.Drawing.Point(664, 16);
             this.panelDetalle.Margin = new System.Windows.Forms.Padding(0);
             this.panelDetalle.Name = "panelDetalle";
             this.panelDetalle.Padding = new System.Windows.Forms.Padding(16);
             this.panelDetalle.Size = new System.Drawing.Size(396, 400);
             this.panelDetalle.TabIndex = 1;
+            //
+            // btnFicha
+            //
+            this.btnFicha.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(75)))), ((int)(((byte)(138)))));
+            this.btnFicha.Enabled = false;
+            this.btnFicha.FlatAppearance.BorderSize = 0;
+            this.btnFicha.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(48)))), ((int)(((byte)(89)))));
+            this.btnFicha.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(61)))), ((int)(((byte)(112)))));
+            this.btnFicha.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFicha.ForeColor = System.Drawing.Color.White;
+            this.btnFicha.Location = new System.Drawing.Point(16, 350);
+            this.btnFicha.Name = "btnFicha";
+            this.btnFicha.Size = new System.Drawing.Size(348, 34);
+            this.btnFicha.TabIndex = 30;
+            this.btnFicha.Text = "Ver ficha completa";
+            this.btnFicha.UseVisualStyleBackColor = false;
+            this.btnFicha.Click += new System.EventHandler(this.btnFicha_Click);
             //
             // lblFormulario
             //
@@ -278,7 +340,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.socio.Location = new System.Drawing.Point(140, 64);
             this.socio.Margin = new System.Windows.Forms.Padding(0, 3, 16, 8);
             this.socio.Name = "socio";
-            this.socio.Size = new System.Drawing.Size(222, 25);
+            this.socio.Size = new System.Drawing.Size(222, 29);
             this.socio.TabIndex = 2;
             //
             // lblPlan
@@ -301,7 +363,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.plan.Location = new System.Drawing.Point(140, 102);
             this.plan.Margin = new System.Windows.Forms.Padding(0, 3, 16, 8);
             this.plan.Name = "plan";
-            this.plan.Size = new System.Drawing.Size(222, 25);
+            this.plan.Size = new System.Drawing.Size(222, 29);
             this.plan.TabIndex = 4;
             //
             // lblInicio
@@ -324,7 +386,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.inicio.Location = new System.Drawing.Point(140, 138);
             this.inicio.Margin = new System.Windows.Forms.Padding(0, 3, 16, 8);
             this.inicio.Name = "inicio";
-            this.inicio.Size = new System.Drawing.Size(222, 24);
+            this.inicio.Size = new System.Drawing.Size(222, 29);
             this.inicio.TabIndex = 6;
             this.inicio.ValueChanged += new System.EventHandler(this.inicio_ValueChanged);
             //
@@ -351,146 +413,103 @@ namespace exxen2._0.capaVisual.Recepcionista
             //
             // nuevo
             //
+            this.nuevo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(114)))), ((int)(((byte)(128)))));
+            this.nuevo.FlatAppearance.BorderSize = 0;
+            this.nuevo.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(77)))), ((int)(((byte)(88)))));
+            this.nuevo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(96)))), ((int)(((byte)(109)))));
+            this.nuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.nuevo.ForeColor = System.Drawing.Color.White;
             this.nuevo.Location = new System.Drawing.Point(16, 226);
             this.nuevo.Margin = new System.Windows.Forms.Padding(0, 0, 8, 8);
             this.nuevo.Name = "nuevo";
-            this.nuevo.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
-            this.nuevo.FlatAppearance.BorderSize = 0;
-            this.nuevo.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
-            this.nuevo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
-            this.nuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.nuevo.ForeColor = System.Drawing.Color.White;
-            this.nuevo.UseVisualStyleBackColor = false;
-
-
-
-
-
-
-
             this.nuevo.Size = new System.Drawing.Size(112, 38);
             this.nuevo.TabIndex = 9;
             this.nuevo.Text = "+ Nueva";
+            this.nuevo.UseVisualStyleBackColor = false;
             this.nuevo.Click += new System.EventHandler(this.nuevo_Click);
             //
             // crear
             //
+            this.crear.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.crear.FlatAppearance.BorderSize = 0;
+            this.crear.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(75)))), ((int)(((byte)(31)))));
+            this.crear.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(101)))), ((int)(((byte)(41)))));
+            this.crear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.crear.ForeColor = System.Drawing.Color.White;
             this.crear.Location = new System.Drawing.Point(136, 226);
             this.crear.Margin = new System.Windows.Forms.Padding(0, 0, 8, 8);
             this.crear.Name = "crear";
-            this.crear.BackColor = System.Drawing.Color.FromArgb(46, 125, 50);
-            this.crear.FlatAppearance.BorderSize = 0;
-            this.crear.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(27, 75, 31);
-            this.crear.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(37, 101, 41);
-            this.crear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.crear.ForeColor = System.Drawing.Color.White;
-            this.crear.UseVisualStyleBackColor = false;
-
-
-
-
-
-
-
             this.crear.Size = new System.Drawing.Size(112, 38);
             this.crear.TabIndex = 10;
-            this.crear.Text = "Crear";
-            this.crear.Click += new System.EventHandler(this.crear_Click);
+            this.crear.Text = "Guardar";
+            this.crear.UseVisualStyleBackColor = false;
+            this.crear.Click += new System.EventHandler(this.guardar_Click);
             //
             // actualizar
             //
+            this.actualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(75)))), ((int)(((byte)(138)))));
+            this.actualizar.FlatAppearance.BorderSize = 0;
+            this.actualizar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(48)))), ((int)(((byte)(89)))));
+            this.actualizar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(61)))), ((int)(((byte)(112)))));
+            this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.actualizar.ForeColor = System.Drawing.Color.White;
             this.actualizar.Location = new System.Drawing.Point(256, 226);
             this.actualizar.Margin = new System.Windows.Forms.Padding(0, 0, 8, 8);
             this.actualizar.Name = "actualizar";
-            this.actualizar.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
-            this.actualizar.FlatAppearance.BorderSize = 0;
-            this.actualizar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
-            this.actualizar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
-            this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.actualizar.ForeColor = System.Drawing.Color.White;
-            this.actualizar.UseVisualStyleBackColor = false;
-
-
-
-
-
-
-
             this.actualizar.Size = new System.Drawing.Size(112, 38);
             this.actualizar.TabIndex = 11;
             this.actualizar.Text = "Actualizar";
-            this.actualizar.Click += new System.EventHandler(this.actualizar_Click);
+            this.actualizar.UseVisualStyleBackColor = false;
             //
             // habilitar
             //
+            this.habilitar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.habilitar.FlatAppearance.BorderSize = 0;
+            this.habilitar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(75)))), ((int)(((byte)(31)))));
+            this.habilitar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(101)))), ((int)(((byte)(41)))));
+            this.habilitar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.habilitar.ForeColor = System.Drawing.Color.White;
             this.habilitar.Location = new System.Drawing.Point(16, 272);
             this.habilitar.Margin = new System.Windows.Forms.Padding(0, 0, 8, 8);
             this.habilitar.Name = "habilitar";
-            this.habilitar.BackColor = System.Drawing.Color.FromArgb(46, 125, 50);
-            this.habilitar.FlatAppearance.BorderSize = 0;
-            this.habilitar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(27, 75, 31);
-            this.habilitar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(37, 101, 41);
-            this.habilitar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.habilitar.ForeColor = System.Drawing.Color.White;
-            this.habilitar.UseVisualStyleBackColor = false;
-
-
-
-
-
-
-
             this.habilitar.Size = new System.Drawing.Size(112, 38);
             this.habilitar.TabIndex = 12;
             this.habilitar.Text = "Reactivar";
+            this.habilitar.UseVisualStyleBackColor = false;
             this.habilitar.Click += new System.EventHandler(this.habilitar_Click);
             //
             // deshabilitar
             //
+            this.deshabilitar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.deshabilitar.FlatAppearance.BorderSize = 0;
+            this.deshabilitar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(134)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            this.deshabilitar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.deshabilitar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.deshabilitar.ForeColor = System.Drawing.Color.White;
             this.deshabilitar.Location = new System.Drawing.Point(136, 272);
             this.deshabilitar.Margin = new System.Windows.Forms.Padding(0, 0, 8, 8);
             this.deshabilitar.Name = "deshabilitar";
-            this.deshabilitar.BackColor = System.Drawing.Color.FromArgb(198, 40, 40);
-            this.deshabilitar.FlatAppearance.BorderSize = 0;
-            this.deshabilitar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(134, 26, 26);
-            this.deshabilitar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(168, 32, 32);
-            this.deshabilitar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.deshabilitar.ForeColor = System.Drawing.Color.White;
-            this.deshabilitar.UseVisualStyleBackColor = false;
-
-
-
-
-
-
-
             this.deshabilitar.Size = new System.Drawing.Size(112, 38);
             this.deshabilitar.TabIndex = 13;
             this.deshabilitar.Text = "Dar de baja";
+            this.deshabilitar.UseVisualStyleBackColor = false;
             this.deshabilitar.Click += new System.EventHandler(this.deshabilitar_Click);
             //
             // generarCuota
             //
+            this.generarCuota.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.generarCuota.FlatAppearance.BorderSize = 0;
+            this.generarCuota.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(75)))), ((int)(((byte)(31)))));
+            this.generarCuota.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(101)))), ((int)(((byte)(41)))));
+            this.generarCuota.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.generarCuota.ForeColor = System.Drawing.Color.White;
             this.generarCuota.Location = new System.Drawing.Point(256, 272);
             this.generarCuota.Margin = new System.Windows.Forms.Padding(0, 0, 8, 8);
             this.generarCuota.Name = "generarCuota";
-            this.generarCuota.BackColor = System.Drawing.Color.FromArgb(46, 125, 50);
-            this.generarCuota.FlatAppearance.BorderSize = 0;
-            this.generarCuota.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(27, 75, 31);
-            this.generarCuota.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(37, 101, 41);
-            this.generarCuota.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.generarCuota.ForeColor = System.Drawing.Color.White;
-            this.generarCuota.UseVisualStyleBackColor = false;
-
-
-
-
-
-
-
             this.generarCuota.Size = new System.Drawing.Size(112, 38);
             this.generarCuota.TabIndex = 14;
             this.generarCuota.Text = "Generar cuota";
+            this.generarCuota.UseVisualStyleBackColor = false;
             this.generarCuota.Click += new System.EventHandler(this.generarCuota_Click);
             //
             // indicadorErrores
@@ -500,28 +519,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             //
             // GestionMembresiasFormulario
             //
-            this.btnFicha.Location = new System.Drawing.Point(16, 350);
-            this.btnFicha.Size = new System.Drawing.Size(348, 34);
-            this.btnFicha.Name = "btnFicha";
-            this.btnFicha.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
-            this.btnFicha.FlatAppearance.BorderSize = 0;
-            this.btnFicha.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
-            this.btnFicha.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
-            this.btnFicha.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFicha.ForeColor = System.Drawing.Color.White;
-            this.btnFicha.UseVisualStyleBackColor = false;
-
-
-
-
-
-
-
-            this.btnFicha.Text = "Ver ficha completa";
-            this.btnFicha.Enabled = false;
-            this.btnFicha.TabIndex = 30;
-            this.btnFicha.Click += new System.EventHandler(this.btnFicha_Click);
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
             this.ClientSize = new System.Drawing.Size(1076, 598);
@@ -535,7 +533,9 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.Load += new System.EventHandler(this.GestionMembresiasFormulario_Load);
             this.panelContenido.ResumeLayout(false);
             this.panelListado.ResumeLayout(false);
+            this.panelListado.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).EndInit();
+            this.menuMembresias.ResumeLayout(false);
             this.panelDetalle.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.indicadorErrores)).EndInit();
             this.ResumeLayout(false);

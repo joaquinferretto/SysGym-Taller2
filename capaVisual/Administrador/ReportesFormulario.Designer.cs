@@ -1,4 +1,4 @@
-﻿namespace exxen2._0.capaVisual.Administrador
+namespace exxen2._0.capaVisual.Administrador
 {
     partial class ReportesFormulario
     {
@@ -10,6 +10,7 @@
         }
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -45,10 +46,11 @@
             this.col5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.menuReportes = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.verFichaMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.lblResumen = new System.Windows.Forms.Label();
             this.acciones = new System.Windows.Forms.Panel();
             this.btnExportar = new System.Windows.Forms.Button();
-            this.btnFicha = new System.Windows.Forms.Button();
             this.lblEstado = new System.Windows.Forms.Label();
             this.dialogoPdf = new System.Windows.Forms.SaveFileDialog();
             this.disposicion.SuspendLayout();
@@ -56,6 +58,7 @@
             this.filtros.SuspendLayout();
             this.panelFechas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).BeginInit();
+            this.menuReportes.SuspendLayout();
             this.acciones.SuspendLayout();
             this.SuspendLayout();
             //
@@ -163,16 +166,16 @@
             //
             // filtros
             //
-            this.filtros.Margin = new System.Windows.Forms.Padding(0);
             this.filtros.Controls.Add(this.lblTipo);
             this.filtros.Controls.Add(this.tipoReporte);
             this.filtros.Controls.Add(this.lblBuscar);
             this.filtros.Controls.Add(this.buscador);
             this.filtros.Controls.Add(this.generar);
             this.filtros.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.filtros.Location = new System.Drawing.Point(15, 85);
+            this.filtros.Location = new System.Drawing.Point(12, 82);
+            this.filtros.Margin = new System.Windows.Forms.Padding(0);
             this.filtros.Name = "filtros";
-            this.filtros.Size = new System.Drawing.Size(1070, 36);
+            this.filtros.Size = new System.Drawing.Size(1076, 42);
             this.filtros.TabIndex = 2;
             this.filtros.WrapContents = false;
             //
@@ -221,39 +224,32 @@
             //
             // generar
             //
-            this.generar.Location = new System.Drawing.Point(673, 3);
-            this.generar.Name = "generar";
-            this.generar.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.generar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(75)))), ((int)(((byte)(138)))));
             this.generar.FlatAppearance.BorderSize = 0;
-            this.generar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
-            this.generar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.generar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(48)))), ((int)(((byte)(89)))));
+            this.generar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(61)))), ((int)(((byte)(112)))));
             this.generar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.generar.ForeColor = System.Drawing.Color.White;
-            this.generar.UseVisualStyleBackColor = false;
-
-
-
-
-
-
-
+            this.generar.Location = new System.Drawing.Point(673, 3);
+            this.generar.Name = "generar";
             this.generar.Size = new System.Drawing.Size(130, 32);
             this.generar.TabIndex = 4;
             this.generar.Text = "Consultar";
+            this.generar.UseVisualStyleBackColor = false;
             this.generar.Click += new System.EventHandler(this.generar_Click);
             //
             // panelFechas
             //
-            this.panelFechas.Margin = new System.Windows.Forms.Padding(0);
             this.panelFechas.Controls.Add(this.lblDesde);
             this.panelFechas.Controls.Add(this.desde);
             this.panelFechas.Controls.Add(this.lblHasta);
             this.panelFechas.Controls.Add(this.hasta);
             this.panelFechas.Controls.Add(this.lblCriterio);
             this.panelFechas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelFechas.Location = new System.Drawing.Point(15, 127);
+            this.panelFechas.Location = new System.Drawing.Point(12, 124);
+            this.panelFechas.Margin = new System.Windows.Forms.Padding(0);
             this.panelFechas.Name = "panelFechas";
-            this.panelFechas.Size = new System.Drawing.Size(1070, 38);
+            this.panelFechas.Size = new System.Drawing.Size(1076, 44);
             this.panelFechas.TabIndex = 3;
             this.panelFechas.WrapContents = false;
             //
@@ -320,6 +316,7 @@
             this.col5,
             this.col6,
             this.col7});
+            this.tabla.ContextMenuStrip = this.menuReportes;
             this.tabla.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabla.Location = new System.Drawing.Point(15, 171);
             this.tabla.MultiSelect = false;
@@ -331,6 +328,7 @@
             this.tabla.Size = new System.Drawing.Size(1070, 392);
             this.tabla.TabIndex = 4;
             this.tabla.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tabla_CellDoubleClick);
+            this.tabla.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tabla_CellMouseDown);
             this.tabla.SelectionChanged += new System.EventHandler(this.tabla_SelectionChanged);
             //
             // col1
@@ -405,6 +403,21 @@
             this.col7.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.col7.Visible = false;
             //
+            // menuReportes
+            //
+            this.menuReportes.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuReportes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.verFichaMenu});
+            this.menuReportes.Name = "menuReportes";
+            this.menuReportes.Size = new System.Drawing.Size(136, 28);
+            //
+            // verFichaMenu
+            //
+            this.verFichaMenu.Name = "verFichaMenu";
+            this.verFichaMenu.Size = new System.Drawing.Size(135, 24);
+            this.verFichaMenu.Text = "Ver ficha";
+            this.verFichaMenu.Click += new System.EventHandler(this.btnFicha_Click);
+            //
             // lblResumen
             //
             this.lblResumen.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -418,7 +431,6 @@
             // acciones
             //
             this.acciones.Controls.Add(this.btnExportar);
-            this.acciones.Controls.Add(this.btnFicha);
             this.acciones.Dock = System.Windows.Forms.DockStyle.Fill;
             this.acciones.Location = new System.Drawing.Point(15, 599);
             this.acciones.Name = "acciones";
@@ -427,51 +439,20 @@
             //
             // btnExportar
             //
+            this.btnExportar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(75)))), ((int)(((byte)(138)))));
             this.btnExportar.Enabled = false;
-            this.btnExportar.Location = new System.Drawing.Point(3, 3);
-            this.btnExportar.Name = "btnExportar";
-            this.btnExportar.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
             this.btnExportar.FlatAppearance.BorderSize = 0;
-            this.btnExportar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
-            this.btnExportar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.btnExportar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(48)))), ((int)(((byte)(89)))));
+            this.btnExportar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(61)))), ((int)(((byte)(112)))));
             this.btnExportar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExportar.ForeColor = System.Drawing.Color.White;
-            this.btnExportar.UseVisualStyleBackColor = false;
-
-
-
-
-
-
-
+            this.btnExportar.Location = new System.Drawing.Point(3, 3);
+            this.btnExportar.Name = "btnExportar";
             this.btnExportar.Size = new System.Drawing.Size(130, 32);
             this.btnExportar.TabIndex = 0;
             this.btnExportar.Text = "Exportar PDF";
+            this.btnExportar.UseVisualStyleBackColor = false;
             this.btnExportar.Click += new System.EventHandler(this.btnExportar_Click);
-            //
-            // btnFicha
-            //
-            this.btnFicha.Enabled = false;
-            this.btnFicha.Location = new System.Drawing.Point(139, 3);
-            this.btnFicha.Name = "btnFicha";
-            this.btnFicha.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
-            this.btnFicha.FlatAppearance.BorderSize = 0;
-            this.btnFicha.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
-            this.btnFicha.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
-            this.btnFicha.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFicha.ForeColor = System.Drawing.Color.White;
-            this.btnFicha.UseVisualStyleBackColor = false;
-
-
-
-
-
-
-
-            this.btnFicha.Size = new System.Drawing.Size(130, 32);
-            this.btnFicha.TabIndex = 1;
-            this.btnFicha.Text = "Ver ficha";
-            this.btnFicha.Click += new System.EventHandler(this.btnFicha_Click);
             //
             // lblEstado
             //
@@ -506,6 +487,7 @@
             this.filtros.PerformLayout();
             this.panelFechas.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).EndInit();
+            this.menuReportes.ResumeLayout(false);
             this.acciones.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -532,9 +514,10 @@
         private System.Windows.Forms.DateTimePicker hasta;
         private System.Windows.Forms.Label lblCriterio;
         private System.Windows.Forms.DataGridView tabla;
+        private System.Windows.Forms.ContextMenuStrip menuReportes;
+        private System.Windows.Forms.ToolStripMenuItem verFichaMenu;
         private System.Windows.Forms.Label lblResumen;
         private System.Windows.Forms.Button btnExportar;
-        private System.Windows.Forms.Button btnFicha;
         private System.Windows.Forms.Label lblEstado;
         private System.Windows.Forms.SaveFileDialog dialogoPdf;
         private System.Windows.Forms.DataGridViewTextBoxColumn col1;

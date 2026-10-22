@@ -41,7 +41,7 @@ namespace exxen2._0.capaLogica.Reportes
         private static readonly CultureInfo Argentina = CultureInfo.GetCultureInfo("es-AR");
         private readonly AuditoriaLogica auditoria;
         public ReportesOperativosLogica(int idUsuarioAutenticado) { auditoria = new AuditoriaLogica(idUsuarioAutenticado); }
-        public void ValidarAcceso() { auditoria.ValidarAcceso(); }
+        public void ValidarAcceso() { auditoria.ValidarOperador(); }
         public static string[] Nombres()
         {
             return new[] { "Deuda pendiente", "Socios en límite de deuda", "Socios sin entrenador", "Socios sin rutina", "Próximos vencimientos", "Membresías inactivas" };
@@ -50,9 +50,10 @@ namespace exxen2._0.capaLogica.Reportes
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                auditoria.ObtenerUsuario(datos, true);
+                var usuario = auditoria.ObtenerUsuario(datos);
                 return new IndicadoresOperativos { Socios = datos.Socios.ConsultarSoloLectura().Count(s => s.Estado),
-                    Usuarios = datos.UsuariosSistema.ConsultarSoloLectura().Count(u => u.Estado && u.Rol.Estado),
+                    Usuarios = ValidacionesGimnasio.EsAdministradorActivo(usuario)
+                        ? datos.UsuariosSistema.ConsultarSoloLectura().Count(u => u.Estado && u.Rol.Estado) : 0,
                     Membresias = datos.Membresias.ConsultarSoloLectura().Count(m => m.Estado),
                     Rutinas = datos.Rutinas.ConsultarSoloLectura().Count(r => r.Estado),
                     Ejercicios = datos.Ejercicios.ConsultarSoloLectura().Count(e => e.Estado) };
@@ -67,7 +68,7 @@ namespace exxen2._0.capaLogica.Reportes
             if (texto.Length > 100) throw new ArgumentException("La búsqueda admite hasta 100 caracteres.");
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                auditoria.ObtenerUsuario(datos, true);
+                auditoria.ObtenerUsuario(datos);
                 var configuracion = ConfiguracionSistemaLogica.ObtenerEnContexto(datos);
                 var resultado = new ResultadoReporteOperativo { Tipo = tipo, Titulo = Nombres()[(int)tipo],
                     Filas = new List<ReporteOperativoFila>(), FechaConsulta = DateTime.Now,

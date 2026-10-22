@@ -112,16 +112,14 @@ namespace exxen2._0.capaLogica.Reportes
             finanzas.AddParagraph("Total: " + Moneda(r.TotalIngresos) + " · Pagos: " + Numero(r.CantidadPagos));
             finanzas.AddParagraph("Ingresos del período anterior: " + Moneda(r.IngresosPeriodoAnterior) + " · Variación: " + Porcentaje(r.VariacionIngresosPorcentual));
             Grafico(finanzas, "Ingresos", r.IngresosPorMes.Any(x => x.Valor != 0), graficos);
-            TablaBreve(finanzas, new[] { "Mes", "Ingresos" }, r.IngresosPorMes.Select(x => Fila(x.Mes.ToString("MMMM yyyy", Argentina), Moneda(x.Valor))));
-            if (r.VariacionUltimoMesPorcentual.HasValue) finanzas.AddParagraph("Último mes respecto del anterior: " + Porcentaje(r.VariacionUltimoMesPorcentual));
-
+            TablaMensual(finanzas, new[] { "Mes", "Ingresos" }, r.IngresosPorMes.Select(x => Fila(x.Mes.ToString("MMMM yyyy", Argentina), Moneda(x.Valor))));
             Categorias(doc, "Socios · Activos e inactivos", "Activos", r.EstadoSocios, graficos, "Distribución actual de socios.");
             Categorias(doc, "Socios · Estado de deuda", "Deuda", r.EstadoDeuda, graficos, "Al día: 0 vencidas. Con deuda: debajo del límite. Límite alcanzado: umbral configurable alcanzado. Solo cuentan cuotas Pendiente vencidas.");
             var altas = Seccion(doc, "Socios · Altas por mes");
             altas.AddParagraph("Altas del período: " + Numero(r.TotalAltas));
             altas.AddParagraph("Los socios históricos sin fecha de alta no se incluyen en esta serie. Sin fecha de alta: " + Numero(r.SociosSinFechaAlta) + ".");
             Grafico(altas, "Altas", r.AltasPorMes.Any(x => x.Valor != 0), graficos);
-            TablaBreve(altas, new[] { "Mes", "Altas" }, r.AltasPorMes.Select(x => Fila(x.Mes.ToString("MMMM yyyy", Argentina), Numero(x.Valor))));
+            TablaMensual(altas, new[] { "Mes", "Altas" }, r.AltasPorMes.Select(x => Fila(x.Mes.ToString("MMMM yyyy", Argentina), Numero(x.Valor))));
 
             Categorias(doc, "Planes más contratados", "Planes", r.Planes, graficos, "Cantidad de socios actuales por plan; no representa dinero cobrado.");
             var ingresosPlan = Seccion(doc, "Ingresos por plan");
@@ -193,6 +191,13 @@ namespace exxen2._0.capaLogica.Reportes
             if (valores.Count > 10) s.AddParagraph("Se muestran 10 de " + valores.Count + " filas. El gráfico conserva los datos de la pantalla.");
         }
 
+        private static void TablaMensual(Section s, string[] columnas, IEnumerable<string[]> filas)
+        {
+            var valores = filas.ToList();
+            if (valores.Count == 0) { s.AddParagraph(SinDatos); return; }
+            Tabla(s, columnas, valores);
+        }
+
         private static void Tabla(Section s, string[] columnas, IEnumerable<string[]> filas)
         {
             var t = s.AddTable();
@@ -217,7 +222,7 @@ namespace exxen2._0.capaLogica.Reportes
         private static int Cantidad(IEnumerable<DatoCategoria> categorias, string nombre) { return categorias.Where(x => x.Nombre == nombre).Sum(x => x.Cantidad); }
         private static string Numero(decimal valor) { return valor.ToString("N0", Argentina); }
         private static string Moneda(decimal valor) { return valor.ToString("C2", Argentina); }
-        private static string Porcentaje(decimal? valor) { return valor.HasValue ? valor.Value.ToString("0.##", Argentina) + " %" : "— (base sin movimiento)"; }
+        private static string Porcentaje(decimal? valor) { return valor.HasValue ? valor.Value.ToString("0.00", Argentina) + " %" : "— (base sin movimiento)"; }
         private static string Periodo(DateTime desde, DateTime hasta) { return desde.ToString("dd/MM/yyyy", Argentina) + " - " + hasta.ToString("dd/MM/yyyy", Argentina); }
     }
 }

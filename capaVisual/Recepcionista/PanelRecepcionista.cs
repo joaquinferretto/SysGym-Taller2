@@ -64,7 +64,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         {
             var posicionY = 18;
             posicionY = MenuDesplegableHelper.ColocarSeccion(lblClientes, clientesExpandida, posicionY, btnSocios, btnMembresias);
-            posicionY = MenuDesplegableHelper.ColocarSeccion(lblCaja, cajaExpandida, posicionY, btnPagos);
+            posicionY = MenuDesplegableHelper.ColocarSeccion(lblCaja, cajaExpandida, posicionY, btnPagos, btnReportes);
             posicionY = MenuDesplegableHelper.ColocarSeccion(lblEntrenadores, entrenadoresExpandida, posicionY, btnAsignar, btnConsultar);
             panelOpciones.AutoScrollMinSize = new Size(0, posicionY);
         }
@@ -194,6 +194,13 @@ namespace exxen2._0.capaVisual.Recepcionista
         private void btnConsultar_Click(object origen, EventArgs e)
         {
             Abrir(btnConsultar, new ConsultaEntrenadoresFormulario(), "Consultar entrenador | Entrenadores y socios asignados");
+        }
+
+        private void btnReportes_Click(object origen, EventArgs e)
+        {
+            var formulario = new exxen2._0.capaVisual.Administrador.ReportesFormulario(usuario);
+            formulario.FichaSolicitada += Modulo_FichaSolicitada;
+            Abrir(btnReportes, formulario, "Reportes operativos | Deuda, vencimientos y seguimiento de socios");
         }
 
         /* Al cargar la pantalla en ejecución, prepara sus datos iniciales sin realizar consultas desde el diseñador. */

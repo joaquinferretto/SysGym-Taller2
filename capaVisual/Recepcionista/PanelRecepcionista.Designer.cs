@@ -27,6 +27,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         private Button btnMembresias;
         private Label lblCaja;
         private Button btnPagos;
+        private Button btnReportes;
         private Label lblEntrenadores;
         private Button btnAsignar;
         private Button btnConsultar;
@@ -63,6 +64,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.btnMembresias = new System.Windows.Forms.Button();
             this.lblCaja = new System.Windows.Forms.Label();
             this.btnPagos = new System.Windows.Forms.Button();
+            this.btnReportes = new System.Windows.Forms.Button();
             this.lblEntrenadores = new System.Windows.Forms.Label();
             this.btnAsignar = new System.Windows.Forms.Button();
             this.btnConsultar = new System.Windows.Forms.Button();
@@ -288,6 +290,7 @@ this.lblSubtituloModulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)
             this.panelOpciones.Controls.Add(this.btnMembresias);
             this.panelOpciones.Controls.Add(this.lblCaja);
             this.panelOpciones.Controls.Add(this.btnPagos);
+            this.panelOpciones.Controls.Add(this.btnReportes);
             this.panelOpciones.Controls.Add(this.lblEntrenadores);
             this.panelOpciones.Controls.Add(this.btnAsignar);
             this.panelOpciones.Controls.Add(this.btnConsultar);
@@ -384,6 +387,25 @@ this.lblCaja.ForeColor = System.Drawing.Color.FromArgb(104, 99, 113);
             this.btnPagos.UseVisualStyleBackColor = false;
             this.btnPagos.Visible = false;
             this.btnPagos.Click += new System.EventHandler(this.btnPagos_Click);
+            //
+            this.btnReportes.BackColor = System.Drawing.Color.FromArgb(248, 249, 251);
+            this.btnReportes.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(248, 249, 251);
+            this.btnReportes.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(242, 239, 247);
+            this.btnReportes.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(231, 226, 239);
+            this.btnReportes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReportes.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.btnReportes.ForeColor = System.Drawing.Color.FromArgb(45, 43, 53);
+            this.btnReportes.Location = new System.Drawing.Point(14, 203);
+            this.btnReportes.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.btnReportes.Name = "btnReportes";
+            this.btnReportes.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
+            this.btnReportes.Size = new System.Drawing.Size(236, 38);
+            this.btnReportes.TabIndex = 4;
+            this.btnReportes.Text = "Reportes operativos";
+            this.btnReportes.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnReportes.UseVisualStyleBackColor = false;
+            this.btnReportes.Visible = false;
+            this.btnReportes.Click += new System.EventHandler(this.btnReportes_Click);
             //
             // lblEntrenadores
             //
@@ -485,7 +507,7 @@ this.lblEntrenadores.ForeColor = System.Drawing.Color.FromArgb(104, 99, 113);
             this.inicioEstadoSocios.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
             this.inicioEstadoSocios.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.inicioEstadoSocios.Location = new System.Drawing.Point(0, 0);
-            this.inicioEstadoSocios.MinimumSize = new System.Drawing.Size(700, 400);
+            this.inicioEstadoSocios.MinimumSize = new System.Drawing.Size(700, 320);
             this.inicioEstadoSocios.Name = "inicioEstadoSocios";
             this.inicioEstadoSocios.Size = new System.Drawing.Size(1008, 557);
             this.inicioEstadoSocios.TabIndex = 2;

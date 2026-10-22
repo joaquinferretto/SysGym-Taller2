@@ -2,6 +2,7 @@ using exxen2._0.capaLogica.Navegacion;
 using exxen2._0.capaVisual.Compartido.Utilidades;
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Forms;
 using exxen2._0.capaDatos.Entidades;
 using exxen2._0.capaLogica.Reportes;
@@ -17,14 +18,17 @@ namespace exxen2._0.capaVisual.Administrador
         private ResultadoReporteOperativo resultadoActual;
         private bool cargando;
         private bool autorizado;
+        private readonly bool esAdministrador;
         public event EventHandler<AccionEstadoSocioEventArgs> FichaSolicitada;
         public ReportesFormulario() : this(null) { }
         public ReportesFormulario(UsuarioSistema usuario)
         {
             var id = usuario == null ? 0 : usuario.IdUsuarioSistema;
+            esAdministrador = exxen2._0.capaLogica.ValidacionesGimnasio.EsAdministradorActivo(usuario);
             logica = new ReportesOperativosLogica(id);
             servicio = new ReportesOperativosServicio(id);
             InitializeComponent();
+            lblUsuariosActivosValor.Visible = esAdministrador;
         }
         private void ReportesFormulario_Load(object sender, EventArgs e)
         {
@@ -71,10 +75,10 @@ namespace exxen2._0.capaVisual.Administrador
                     var indice = tabla.Rows.Add(valores);
                     tabla.Rows[indice].Tag = fila.IdSocio;
                 }
-                tabla.ClearSelection(); btnFicha.Enabled = false;
+                tabla.ClearSelection();
+                ActualizarAcciones();
                 lblResumen.Text = resultadoActual.Resumen;
                 lblEstado.Text = resultadoActual.Filas.Count == 0 ? "Sin resultados para los filtros seleccionados." : "Consulta: " + resultadoActual.FechaConsulta.ToString("dd/MM/yyyy HH:mm");
-                btnExportar.Enabled = resultadoActual.Filas.Count > 0;
                 lblCriterio.Text = resultadoActual.Filtros;
                 if (vencimientos)
                 {
@@ -99,18 +103,35 @@ namespace exxen2._0.capaVisual.Administrador
         }
         private void Invalidar()
         {
-            resultadoActual = null; btnExportar.Enabled = false; btnFicha.Enabled = false;
+            resultadoActual = null;
             tabla.Rows.Clear(); lblResumen.Text = string.Empty;
+            ActualizarAcciones();
         }
         private void tabla_SelectionChanged(object sender, EventArgs e)
         {
-            btnFicha.Enabled = resultadoActual != null && tabla.CurrentRow != null && tabla.CurrentRow.Selected && FichaSolicitada != null;
+            ActualizarAcciones();
+        }
+        private void tabla_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right || e.RowIndex < 0) return;
+            var celda = e.ColumnIndex >= 0
+                ? tabla.Rows[e.RowIndex].Cells[e.ColumnIndex]
+                : tabla.Rows[e.RowIndex].Cells.Cast<DataGridViewCell>().First(c => c.Visible);
+            tabla.CurrentCell = celda;
+            tabla.ClearSelection();
+            tabla.Rows[e.RowIndex].Selected = true;
+            ActualizarAcciones();
+        }
+        private void ActualizarAcciones()
+        {
+            btnExportar.Enabled = resultadoActual != null && resultadoActual.Filas.Count > 0;
+            verFichaMenu.Enabled = resultadoActual != null && tabla.SelectedRows.Count == 1 && FichaSolicitada != null;
         }
         private void btnFicha_Click(object sender, EventArgs e)
         {
-            if (tabla.CurrentRow == null || !tabla.CurrentRow.Selected || resultadoActual == null) return;
+            if (tabla.SelectedRows.Count != 1 || resultadoActual == null) return;
             var evento = FichaSolicitada;
-            if (evento != null) evento(this, new AccionEstadoSocioEventArgs(Convert.ToInt32(tabla.CurrentRow.Tag), AccionEstadoSocio.VerFicha));
+            if (evento != null) evento(this, new AccionEstadoSocioEventArgs(Convert.ToInt32(tabla.SelectedRows[0].Tag), AccionEstadoSocio.VerFicha));
         }
         private void tabla_CellDoubleClick(object sender, DataGridViewCellEventArgs e) { if (e.RowIndex >= 0) btnFicha_Click(sender, EventArgs.Empty); }
         private void btnExportar_Click(object sender, EventArgs e)

@@ -19,6 +19,7 @@ namespace exxen2._0.capaLogica
         public bool LimiteAlcanzado { get; set; }
         public string EstadoDeuda { get; set; }
         public int CuotasPendientes { get; set; }
+        public int CuotasPorVencer { get; set; }
         public DateTime? FechaAlta { get; set; }
         public decimal DeudaTotal { get; set; }
         public DateTime? UltimoPago { get; set; }
@@ -36,6 +37,7 @@ namespace exxen2._0.capaLogica
         public int LimiteAlcanzado { get; set; }
         public int CuotasPendientes { get; set; }
         public int VencenHoy { get; set; }
+        public int CuotasVencidas { get; set; }
         public int VencenEnPlazoAviso { get; set; }
         public int DiasAvisoVencimiento { get; set; }
     }
@@ -121,6 +123,7 @@ namespace exxen2._0.capaLogica
                     LimiteAlcanzado = resultado.Count(s => s.LimiteAlcanzado),
                     CuotasPendientes = todasLasCuotas.Count,
                     VencenHoy = todasLasCuotas.Count(c => c.FechaHasta.Date == hoy),
+                    CuotasVencidas = todasLasCuotas.Count(c => c.FechaHasta.Date < hoy),
                     DiasAvisoVencimiento = configuracion.DiasAvisoVencimiento,
                     VencenEnPlazoAviso = todasLasCuotas.Count(c => c.FechaHasta.Date >= hoy && c.FechaHasta.Date <= hoy.AddDays(configuracion.DiasAvisoVencimiento))
                 };
@@ -154,6 +157,8 @@ namespace exxen2._0.capaLogica
                 LimiteAlcanzado = moroso,
                 EstadoDeuda = ClasificarDeuda(vencidas.Count, configuracion.MaxCuotasVencidasPermitidas),
                 CuotasPendientes = pendientes.Count,
+                CuotasPorVencer = pendientes.Count(c => c.FechaHasta.Date >= DateTime.Today &&
+                    c.FechaHasta.Date <= DateTime.Today.AddDays(configuracion.DiasAvisoVencimiento)),
                 FechaAlta = socio.FechaAlta,
                 DeudaTotal = pendientes.Sum(c => Math.Max(0m, c.Importe - (c.Pago != null && c.Pago.Estado == EstadosTransaccionPago.Aprobado ? c.Pago.Importe : 0m))),
                 UltimoPago = pagos.Count == 0 ? (DateTime?)null : pagos.Max(),

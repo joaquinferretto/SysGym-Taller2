@@ -104,7 +104,7 @@
             this.descripcionVencidas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.descripcionVencidas.Name = "descripcionVencidas";
             this.descripcionVencidas.Padding = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.descripcionVencidas.Text = "Cantidad máxima de cuotas vencidas que puede tener un socio antes de que su membresía pase a inactiva.";
+            this.descripcionVencidas.Text = "Al llegar a esta cantidad de cuotas vencidas sin pagar, la membresía pasa a inactiva. Con 2, la segunda cuota vencida alcanza el límite.";
             this.descripcionVencidas.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // descripcionAnticipacion
             this.descripcionAnticipacion.Dock = System.Windows.Forms.DockStyle.Fill;

@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -32,6 +32,9 @@ namespace exxen2._0.capaVisual.Administrador
         private Button actualizar;
         private Button darDeBaja;
         private Button reactivar;
+        private ContextMenuStrip menuPlanes;
+        private ToolStripMenuItem darDeBajaMenu;
+        private ToolStripMenuItem reactivarMenu;
 
         protected override void Dispose(bool liberarRecursos)
         {
@@ -59,25 +62,34 @@ namespace exxen2._0.capaVisual.Administrador
             this.colNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPrecio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.menuPlanes = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.darDeBajaMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.reactivarMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.lblFormulario = new System.Windows.Forms.Label();
             this.lblNombre = new System.Windows.Forms.Label();
-            this.lblDescripcionPlan = new System.Windows.Forms.Label();
-            this.lblPrecio = new System.Windows.Forms.Label();
             this.nombre = new System.Windows.Forms.TextBox();
+            this.lblDescripcionPlan = new System.Windows.Forms.Label();
             this.descripcion = new System.Windows.Forms.TextBox();
+            this.lblPrecio = new System.Windows.Forms.Label();
             this.precio = new System.Windows.Forms.TextBox();
             this.nuevo = new System.Windows.Forms.Button();
             this.guardar = new System.Windows.Forms.Button();
             this.actualizar = new System.Windows.Forms.Button();
             this.darDeBaja = new System.Windows.Forms.Button();
             this.reactivar = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.indicadorErrores)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContenido)).BeginInit();
             this.splitContenido.Panel1.SuspendLayout();
             this.splitContenido.Panel2.SuspendLayout();
             this.splitContenido.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.indicadorErrores)).BeginInit();
+            this.menuPlanes.SuspendLayout();
             this.SuspendLayout();
+            //
+            // indicadorErrores
+            //
+            this.indicadorErrores.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.indicadorErrores.ContainerControl = this;
             //
             // lblEstado
             //
@@ -129,7 +141,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.splitContenido.Panel2.Padding = new System.Windows.Forms.Padding(16);
             this.splitContenido.Panel2MinSize = 396;
             this.splitContenido.Size = new System.Drawing.Size(1068, 622);
-            this.splitContenido.SplitterDistance = 656;
+            this.splitContenido.SplitterDistance = 572;
             this.splitContenido.SplitterWidth = 16;
             this.splitContenido.TabIndex = 0;
             //
@@ -141,7 +153,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.lblListado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
             this.lblListado.Location = new System.Drawing.Point(16, 16);
             this.lblListado.Name = "lblListado";
-            this.lblListado.Size = new System.Drawing.Size(622, 28);
+            this.lblListado.Size = new System.Drawing.Size(538, 28);
             this.lblListado.TabIndex = 0;
             this.lblListado.Text = "Planes";
             this.lblListado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -153,7 +165,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.lblBuscar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(116)))), ((int)(((byte)(139)))));
             this.lblBuscar.Location = new System.Drawing.Point(16, 44);
             this.lblBuscar.Name = "lblBuscar";
-            this.lblBuscar.Size = new System.Drawing.Size(622, 20);
+            this.lblBuscar.Size = new System.Drawing.Size(538, 20);
             this.lblBuscar.TabIndex = 1;
             this.lblBuscar.Text = "Busca por nombre o descripción";
             this.lblBuscar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -165,7 +177,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.buscador.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.buscador.Location = new System.Drawing.Point(16, 70);
             this.buscador.Name = "buscador";
-            this.buscador.Size = new System.Drawing.Size(408, 26);
+            this.buscador.Size = new System.Drawing.Size(324, 29);
             this.buscador.TabIndex = 0;
             this.buscador.TextChanged += new System.EventHandler(this.buscador_TextChanged);
             //
@@ -174,7 +186,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.lblFiltroEstado.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblFiltroEstado.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
             this.lblFiltroEstado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
-            this.lblFiltroEstado.Location = new System.Drawing.Point(430, 70);
+            this.lblFiltroEstado.Location = new System.Drawing.Point(346, 70);
             this.lblFiltroEstado.Name = "lblFiltroEstado";
             this.lblFiltroEstado.Size = new System.Drawing.Size(52, 26);
             this.lblFiltroEstado.TabIndex = 2;
@@ -189,7 +201,7 @@ namespace exxen2._0.capaVisual.Administrador
             "Todos",
             "Activos",
             "Inactivos"});
-            this.filtroEstado.Location = new System.Drawing.Point(490, 70);
+            this.filtroEstado.Location = new System.Drawing.Point(406, 70);
             this.filtroEstado.Name = "filtroEstado";
             this.filtroEstado.Size = new System.Drawing.Size(148, 29);
             this.filtroEstado.TabIndex = 1;
@@ -212,6 +224,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.colNombre,
             this.colPrecio,
             this.colEstado});
+            this.tabla.ContextMenuStrip = this.menuPlanes;
             this.tabla.Location = new System.Drawing.Point(16, 106);
             this.tabla.MultiSelect = false;
             this.tabla.Name = "tabla";
@@ -220,8 +233,9 @@ namespace exxen2._0.capaVisual.Administrador
             this.tabla.RowHeadersWidth = 51;
             this.tabla.RowTemplate.Height = 30;
             this.tabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tabla.Size = new System.Drawing.Size(622, 498);
+            this.tabla.Size = new System.Drawing.Size(538, 498);
             this.tabla.TabIndex = 2;
+            this.tabla.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tabla_CellMouseDown);
             this.tabla.SelectionChanged += new System.EventHandler(this.tabla_SelectionChanged);
             //
             // colId
@@ -255,6 +269,29 @@ namespace exxen2._0.capaVisual.Administrador
             this.colEstado.Name = "colEstado";
             this.colEstado.ReadOnly = true;
             //
+            // menuPlanes
+            //
+            this.menuPlanes.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuPlanes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.darDeBajaMenu,
+            this.reactivarMenu});
+            this.menuPlanes.Name = "menuPlanes";
+            this.menuPlanes.Size = new System.Drawing.Size(157, 52);
+            //
+            // darDeBajaMenu
+            //
+            this.darDeBajaMenu.Name = "darDeBajaMenu";
+            this.darDeBajaMenu.Size = new System.Drawing.Size(156, 24);
+            this.darDeBajaMenu.Text = "Dar de baja";
+            this.darDeBajaMenu.Click += new System.EventHandler(this.darDeBaja_Click);
+            //
+            // reactivarMenu
+            //
+            this.reactivarMenu.Name = "reactivarMenu";
+            this.reactivarMenu.Size = new System.Drawing.Size(156, 24);
+            this.reactivarMenu.Text = "Reactivar";
+            this.reactivarMenu.Click += new System.EventHandler(this.reactivar_Click);
+            //
             // lblFormulario
             //
             this.lblFormulario.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -286,7 +323,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.nombre.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.nombre.Location = new System.Drawing.Point(140, 62);
             this.nombre.Name = "nombre";
-            this.nombre.Size = new System.Drawing.Size(238, 26);
+            this.nombre.Size = new System.Drawing.Size(238, 29);
             this.nombre.TabIndex = 0;
             //
             // lblDescripcionPlan
@@ -307,7 +344,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.descripcion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.descripcion.Location = new System.Drawing.Point(140, 100);
             this.descripcion.Name = "descripcion";
-            this.descripcion.Size = new System.Drawing.Size(238, 26);
+            this.descripcion.Size = new System.Drawing.Size(238, 29);
             this.descripcion.TabIndex = 1;
             //
             // lblPrecio
@@ -328,130 +365,92 @@ namespace exxen2._0.capaVisual.Administrador
             this.precio.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.precio.Location = new System.Drawing.Point(140, 138);
             this.precio.Name = "precio";
-            this.precio.Size = new System.Drawing.Size(238, 26);
+            this.precio.Size = new System.Drawing.Size(238, 29);
             this.precio.TabIndex = 2;
             this.precio.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.precio_KeyPress);
             //
             // nuevo
             //
-            this.nuevo.Location = new System.Drawing.Point(16, 188);
-            this.nuevo.Name = "nuevo";
-            this.nuevo.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.nuevo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(114)))), ((int)(((byte)(128)))));
             this.nuevo.FlatAppearance.BorderSize = 0;
-            this.nuevo.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
-            this.nuevo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.nuevo.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(77)))), ((int)(((byte)(88)))));
+            this.nuevo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(96)))), ((int)(((byte)(109)))));
             this.nuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.nuevo.ForeColor = System.Drawing.Color.White;
-            this.nuevo.UseVisualStyleBackColor = false;
-
-
-
-
-
-
-
+            this.nuevo.Location = new System.Drawing.Point(16, 188);
+            this.nuevo.Name = "nuevo";
             this.nuevo.Size = new System.Drawing.Size(112, 38);
             this.nuevo.TabIndex = 3;
             this.nuevo.Text = "+ Nuevo";
+            this.nuevo.UseVisualStyleBackColor = false;
             this.nuevo.Click += new System.EventHandler(this.nuevo_Click);
             //
             // guardar
             //
-            this.guardar.Location = new System.Drawing.Point(136, 188);
-            this.guardar.Name = "guardar";
-            this.guardar.BackColor = System.Drawing.Color.FromArgb(46, 125, 50);
+            this.guardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.guardar.FlatAppearance.BorderSize = 0;
-            this.guardar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(27, 75, 31);
-            this.guardar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(37, 101, 41);
+            this.guardar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(75)))), ((int)(((byte)(31)))));
+            this.guardar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(101)))), ((int)(((byte)(41)))));
             this.guardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.guardar.ForeColor = System.Drawing.Color.White;
-            this.guardar.UseVisualStyleBackColor = false;
-
-
-
-
-
-
-
+            this.guardar.Location = new System.Drawing.Point(136, 188);
+            this.guardar.Name = "guardar";
             this.guardar.Size = new System.Drawing.Size(112, 38);
             this.guardar.TabIndex = 4;
             this.guardar.Text = "Guardar";
+            this.guardar.UseVisualStyleBackColor = false;
             this.guardar.Click += new System.EventHandler(this.guardar_Click);
             //
             // actualizar
             //
-            this.actualizar.Location = new System.Drawing.Point(256, 188);
-            this.actualizar.Name = "actualizar";
-            this.actualizar.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.actualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(75)))), ((int)(((byte)(138)))));
             this.actualizar.FlatAppearance.BorderSize = 0;
-            this.actualizar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
-            this.actualizar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.actualizar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(48)))), ((int)(((byte)(89)))));
+            this.actualizar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(61)))), ((int)(((byte)(112)))));
             this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.actualizar.ForeColor = System.Drawing.Color.White;
-            this.actualizar.UseVisualStyleBackColor = false;
-
-
-
-
-
-
-
+            this.actualizar.Location = new System.Drawing.Point(256, 188);
+            this.actualizar.Name = "actualizar";
             this.actualizar.Size = new System.Drawing.Size(112, 38);
             this.actualizar.TabIndex = 5;
             this.actualizar.Text = "Modificar";
-            this.actualizar.Click += new System.EventHandler(this.actualizar_Click);
+            this.actualizar.UseVisualStyleBackColor = false;
             //
             // darDeBaja
             //
-            this.darDeBaja.Location = new System.Drawing.Point(16, 234);
-            this.darDeBaja.Name = "darDeBaja";
-            this.darDeBaja.BackColor = System.Drawing.Color.FromArgb(198, 40, 40);
+            this.darDeBaja.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.darDeBaja.FlatAppearance.BorderSize = 0;
-            this.darDeBaja.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(134, 26, 26);
-            this.darDeBaja.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(168, 32, 32);
+            this.darDeBaja.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(134)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            this.darDeBaja.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.darDeBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.darDeBaja.ForeColor = System.Drawing.Color.White;
-            this.darDeBaja.UseVisualStyleBackColor = false;
-
-
-
-
-
-
-
+            this.darDeBaja.Location = new System.Drawing.Point(16, 234);
+            this.darDeBaja.Name = "darDeBaja";
             this.darDeBaja.Size = new System.Drawing.Size(112, 38);
             this.darDeBaja.TabIndex = 6;
             this.darDeBaja.Text = "Dar de baja";
+            this.darDeBaja.UseVisualStyleBackColor = false;
             this.darDeBaja.Click += new System.EventHandler(this.darDeBaja_Click);
             //
             // reactivar
             //
-            this.reactivar.Location = new System.Drawing.Point(136, 234);
-            this.reactivar.Name = "reactivar";
-            this.reactivar.BackColor = System.Drawing.Color.FromArgb(46, 125, 50);
+            this.reactivar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.reactivar.FlatAppearance.BorderSize = 0;
-            this.reactivar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(27, 75, 31);
-            this.reactivar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(37, 101, 41);
+            this.reactivar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(75)))), ((int)(((byte)(31)))));
+            this.reactivar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(101)))), ((int)(((byte)(41)))));
             this.reactivar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.reactivar.ForeColor = System.Drawing.Color.White;
-            this.reactivar.UseVisualStyleBackColor = false;
-
-
-
-
-
-
-
+            this.reactivar.Location = new System.Drawing.Point(136, 234);
+            this.reactivar.Name = "reactivar";
             this.reactivar.Size = new System.Drawing.Size(112, 38);
             this.reactivar.TabIndex = 7;
             this.reactivar.Text = "Reactivar";
+            this.reactivar.UseVisualStyleBackColor = false;
             this.reactivar.Click += new System.EventHandler(this.reactivar_Click);
             //
-                        this.indicadorErrores.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
-            this.indicadorErrores.ContainerControl = this;
-// GestionPlanesFormulario
+            // GestionPlanesFormulario
             //
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
             this.ClientSize = new System.Drawing.Size(1100, 680);
@@ -464,6 +463,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "SysGym";
             this.Load += new System.EventHandler(this.GestionPlanesFormulario_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.indicadorErrores)).EndInit();
             this.splitContenido.Panel1.ResumeLayout(false);
             this.splitContenido.Panel1.PerformLayout();
             this.splitContenido.Panel2.ResumeLayout(false);
@@ -471,7 +471,7 @@ namespace exxen2._0.capaVisual.Administrador
             ((System.ComponentModel.ISupportInitialize)(this.splitContenido)).EndInit();
             this.splitContenido.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.indicadorErrores)).EndInit();
+            this.menuPlanes.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

@@ -130,6 +130,8 @@ namespace exxen2._0.capaVisual.Entrenador
                 // La fila actual automática al mostrarse la grilla no es una selección del usuario.
                 if (tabla.CurrentRow == null || !tabla.CurrentRow.Selected || tabla.CurrentRow.Cells[0].Value == null)
                 {
+                    idRutina = 0;
+                    idRutinaEjercicio = 0;
                     AplicarEstadoControles();
                     return;
                 }
@@ -140,8 +142,6 @@ namespace exxen2._0.capaVisual.Entrenador
                 estadoRutinaSeleccionada = rutina.Estado;
                 nombre.Text = rutina.Nombre;
                 descripcion.Text = rutina.Descripcion ?? string.Empty;
-                darDeBaja.Visible = rutina.Estado;
-                reactivar.Visible = !rutina.Estado;
                 EstablecerPermisoEdicion(rutina);
                 CargarDetalleDeRutina();
             }
@@ -203,7 +203,7 @@ namespace exxen2._0.capaVisual.Entrenador
 
         private void LimpiarDetalleEjercicio()
         {
-            indicadorErrores.Clear();
+            LimpiarErroresDelDetalle();
             ejercicio.SelectedIndex = -1;
             dia.SelectedIndex = -1;
             series.Clear();
@@ -217,6 +217,7 @@ namespace exxen2._0.capaVisual.Entrenador
         {
             if (cargandoDetalle || tablaEjercicios.CurrentRow == null || !tablaEjercicios.CurrentRow.Selected)
             {
+                idRutinaEjercicio = 0;
                 AplicarEstadoControles();
                 return;
             }
@@ -275,9 +276,7 @@ namespace exxen2._0.capaVisual.Entrenador
             tablaEjercicios.Rows.Clear();
             LimpiarDetalleEjercicio();
             guardarRutina.Text = "Guardar rutina";
-            darDeBaja.Visible = false;
-            reactivar.Visible = false;
-            indicadorErrores.Clear();
+            LimpiarErroresDelDetalle();
             AplicarEstadoControles();
         }
 
@@ -389,11 +388,50 @@ namespace exxen2._0.capaVisual.Entrenador
             guardarEjercicio.Visible = rutinaActiva && editandoEjercicio;
             guardarEjercicio.Text = modoEditorEjercicio == ModoEditorEjercicio.Edicion ? "Guardar cambios" : "Agregar";
             cancelarEjercicio.Visible = rutinaActiva && editandoEjercicio;
+            ActualizarAcciones();
             lblDetalleEjercicio.Text = modoEditorEjercicio == ModoEditorEjercicio.Nuevo
                 ? "Detalle del ejercicio · Nuevo"
                 : modoEditorEjercicio == ModoEditorEjercicio.Edicion
                     ? "Detalle del ejercicio · Editar"
                     : "Detalle del ejercicio";
+        }
+
+        private void ActualizarAcciones()
+        {
+            var hayRutina = idRutina > 0;
+            var rutinaActiva = hayRutina && estadoRutinaSeleccionada && puedeEditarRutina;
+            var visualizandoEjercicio = modoEditorEjercicio == ModoEditorEjercicio.Visualizacion;
+            nuevaRutina.Visible = hayRutina && !esRutinaPersonalizada && visualizandoEjercicio;
+            actualizar.Visible = false;
+            darDeBaja.Visible = hayRutina && estadoRutinaSeleccionada;
+            reactivar.Visible = hayRutina && !estadoRutinaSeleccionada;
+            agregarEjercicio.Visible = rutinaActiva && visualizandoEjercicio;
+            actualizarEjercicio.Visible = rutinaActiva && visualizandoEjercicio && idRutinaEjercicio > 0;
+            quitarEjercicio.Visible = false;
+            actualizarMenu.Enabled = hayRutina;
+            darDeBajaMenu.Visible = rutinaActiva;
+            reactivarMenu.Visible = hayRutina && puedeEditarRutina && !estadoRutinaSeleccionada;
+            darDeBajaMenu.Enabled = rutinaActiva;
+            reactivarMenu.Enabled = hayRutina && puedeEditarRutina && !estadoRutinaSeleccionada;
+            quitarEjercicioMenu.Enabled = rutinaActiva && visualizandoEjercicio && idRutinaEjercicio > 0;
+        }
+
+        private void tabla_CellMouseDown(object origen, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right || e.RowIndex < 0) return;
+            tabla.ClearSelection();
+            tabla.CurrentCell = tabla.Rows[e.RowIndex].Cells[1];
+            tabla.Rows[e.RowIndex].Selected = true;
+            tabla_SelectionChanged(tabla, EventArgs.Empty);
+        }
+
+        private void tablaEjercicios_CellMouseDown(object origen, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right || e.RowIndex < 0) return;
+            tablaEjercicios.ClearSelection();
+            tablaEjercicios.CurrentCell = tablaEjercicios.Rows[e.RowIndex].Cells[1];
+            tablaEjercicios.Rows[e.RowIndex].Selected = true;
+            tablaEjercicios_SelectionChanged(tablaEjercicios, EventArgs.Empty);
         }
 
         private void EstablecerModoEditorEjercicio(ModoEditorEjercicio modo)
@@ -470,7 +508,7 @@ namespace exxen2._0.capaVisual.Entrenador
                 }
             }
             EstablecerModoEditorEjercicio(ModoEditorEjercicio.Visualizacion);
-            indicadorErrores.Clear();
+            LimpiarErroresDelDetalle();
         }
 
         // Reparte el ancho entre campos existentes, sin crear contenedores ni controles.
@@ -601,6 +639,11 @@ namespace exxen2._0.capaVisual.Entrenador
         }
 
         /* Retira el aviso anterior al corregir un control. */
+        private void LimpiarErroresDelDetalle()
+        {
+            indicadorErrores.Clear();
+        }
+
         private void campoValidado_Cambiado(object origen, EventArgs e)
         {
             var control = origen as Control;
@@ -611,7 +654,7 @@ namespace exxen2._0.capaVisual.Entrenador
         /* Verifica el nombre antes de crear o modificar una rutina. */
         private bool ValidarFormularioRutina()
         {
-            indicadorErrores.Clear();
+            LimpiarErroresDelDetalle();
             var valido = AyudaFormularioVisual.ValidarRequerido(indicadorErrores, nombre, "El nombre de la rutina es obligatorio.");
             if (!valido)
                 AyudaFormularioVisual.EnfocarPrimerError(indicadorErrores, nombre);
@@ -621,7 +664,7 @@ namespace exxen2._0.capaVisual.Entrenador
         /* Verifica todos los campos activos antes de agregar o modificar un ejercicio. */
         private bool ValidarDetalleEjercicio()
         {
-            indicadorErrores.Clear();
+            LimpiarErroresDelDetalle();
             var valido = AyudaFormularioVisual.ValidarCombo(indicadorErrores, ejercicio, "Seleccioná un ejercicio.");
             valido = AyudaFormularioVisual.ValidarCombo(indicadorErrores, dia, "Seleccioná un día.") & valido;
             valido = AyudaFormularioVisual.ValidarEntero(indicadorErrores, series, "series", true, false) & valido;
@@ -649,8 +692,15 @@ namespace exxen2._0.capaVisual.Entrenador
 
         private void actualizar_Click(object origen, EventArgs e)
         {
+            var idAnterior = idRutina;
             Cargar();
-            CargarDetalleDeRutina();
+            foreach (DataGridViewRow fila in tabla.Rows)
+            {
+                if (Convert.ToInt32(fila.Cells[0].Value) != idAnterior) continue;
+                tabla.CurrentCell = fila.Cells[1];
+                fila.Selected = true;
+                break;
+            }
         }
 
     }

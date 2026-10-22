@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -52,6 +52,12 @@ namespace exxen2._0.capaVisual.Compartido
         private DataGridViewTextBoxColumn colDni;
         private DataGridViewTextBoxColumn colNacimiento;
         private DataGridViewTextBoxColumn colEstado;
+        private ContextMenuStrip menuSocios;
+        private ToolStripMenuItem fichaMenu;
+        private ToolStripMenuItem rutinaMenu;
+        private ToolStripMenuItem imcMenu;
+        private ToolStripMenuItem darDeBajaMenu;
+        private ToolStripMenuItem reactivarMenu;
 
         protected override void Dispose(bool liberarRecursos)
         {
@@ -84,7 +90,14 @@ namespace exxen2._0.capaVisual.Compartido
             this.colDni = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNacimiento = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.menuSocios = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.fichaMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.rutinaMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.imcMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.darDeBajaMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.reactivarMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.panelDetalle = new System.Windows.Forms.Panel();
+            this.btnFicha = new System.Windows.Forms.Button();
             this.lblFormulario = new System.Windows.Forms.Label();
             this.lblNombre = new System.Windows.Forms.Label();
             this.nombre = new System.Windows.Forms.TextBox();
@@ -98,15 +111,15 @@ namespace exxen2._0.capaVisual.Compartido
             this.peso = new System.Windows.Forms.TextBox();
             this.lblAltura = new System.Windows.Forms.Label();
             this.altura = new System.Windows.Forms.TextBox();
+            this.lblEstadoSocio = new System.Windows.Forms.Label();
+            this.estadoSocio = new System.Windows.Forms.Label();
             this.nuevo = new System.Windows.Forms.Button();
             this.guardar = new System.Windows.Forms.Button();
             this.actualizar = new System.Windows.Forms.Button();
             this.calcularImc = new System.Windows.Forms.Button();
-            this.verRutina = new System.Windows.Forms.Button();
             this.darDeBaja = new System.Windows.Forms.Button();
             this.reactivar = new System.Windows.Forms.Button();
-            this.lblEstadoSocio = new System.Windows.Forms.Label();
-            this.estadoSocio = new System.Windows.Forms.Label();
+            this.verRutina = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.indicadorErrores)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fotoSocio)).BeginInit();
             this.panelContenido.SuspendLayout();
@@ -116,8 +129,8 @@ namespace exxen2._0.capaVisual.Compartido
             this.contenedorContenido.SuspendLayout();
             this.panelListado.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).BeginInit();
+            this.menuSocios.SuspendLayout();
             this.panelDetalle.SuspendLayout();
-            this.btnFicha = new System.Windows.Forms.Button();
             this.SuspendLayout();
             //
             // indicadorErrores
@@ -141,63 +154,49 @@ namespace exxen2._0.capaVisual.Compartido
             //
             this.btnSeleccionarFoto.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSeleccionarFoto.Location = new System.Drawing.Point(145, 425);
-            this.btnSeleccionarFoto.Name = "btnSeleccionarFoto";
-            this.btnSeleccionarFoto.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
+            this.btnSeleccionarFoto.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(75)))), ((int)(((byte)(138)))));
             this.btnSeleccionarFoto.FlatAppearance.BorderSize = 0;
-            this.btnSeleccionarFoto.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
-            this.btnSeleccionarFoto.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
+            this.btnSeleccionarFoto.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(48)))), ((int)(((byte)(89)))));
+            this.btnSeleccionarFoto.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(61)))), ((int)(((byte)(112)))));
             this.btnSeleccionarFoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSeleccionarFoto.ForeColor = System.Drawing.Color.White;
-            this.btnSeleccionarFoto.UseVisualStyleBackColor = false;
-
-
-
-
-
-
-
+            this.btnSeleccionarFoto.Location = new System.Drawing.Point(145, 425);
+            this.btnSeleccionarFoto.Name = "btnSeleccionarFoto";
             this.btnSeleccionarFoto.Size = new System.Drawing.Size(223, 36);
             this.btnSeleccionarFoto.TabIndex = 24;
             this.btnSeleccionarFoto.Text = "Seleccionar foto";
+            this.btnSeleccionarFoto.UseVisualStyleBackColor = false;
             this.btnSeleccionarFoto.Click += new System.EventHandler(this.btnSeleccionarFoto_Click);
             //
             // btnQuitarFoto
             //
             this.btnQuitarFoto.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnQuitarFoto.Location = new System.Drawing.Point(145, 467);
-            this.btnQuitarFoto.Name = "btnQuitarFoto";
-            this.btnQuitarFoto.BackColor = System.Drawing.Color.FromArgb(198, 40, 40);
+            this.btnQuitarFoto.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.btnQuitarFoto.FlatAppearance.BorderSize = 0;
-            this.btnQuitarFoto.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(134, 26, 26);
-            this.btnQuitarFoto.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(168, 32, 32);
+            this.btnQuitarFoto.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(134)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            this.btnQuitarFoto.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnQuitarFoto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnQuitarFoto.ForeColor = System.Drawing.Color.White;
-            this.btnQuitarFoto.UseVisualStyleBackColor = false;
-
-
-
-
-
-
-
+            this.btnQuitarFoto.Location = new System.Drawing.Point(145, 467);
+            this.btnQuitarFoto.Name = "btnQuitarFoto";
             this.btnQuitarFoto.Size = new System.Drawing.Size(223, 36);
             this.btnQuitarFoto.TabIndex = 25;
             this.btnQuitarFoto.Text = "Quitar foto";
+            this.btnQuitarFoto.UseVisualStyleBackColor = false;
             this.btnQuitarFoto.Click += new System.EventHandler(this.btnQuitarFoto_Click);
             //
             // sexo
             //
+            this.sexo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.sexo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.sexo.Items.AddRange(new object[] {
             "Masculino",
             "Femenino"});
-            this.sexo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.sexo.Location = new System.Drawing.Point(142, 261);
             this.sexo.Name = "sexo";
-            this.sexo.Size = new System.Drawing.Size(226, 25);
+            this.sexo.Size = new System.Drawing.Size(226, 29);
             this.sexo.TabIndex = 14;
             this.sexo.SelectedIndexChanged += new System.EventHandler(this.sexo_SelectedIndexChanged);
             //
@@ -315,7 +314,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.buscador.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.buscador.Location = new System.Drawing.Point(19, 75);
             this.buscador.Name = "buscador";
-            this.buscador.Size = new System.Drawing.Size(412, 24);
+            this.buscador.Size = new System.Drawing.Size(412, 29);
             this.buscador.TabIndex = 0;
             this.buscador.TextChanged += new System.EventHandler(this.buscador_TextChanged);
             //
@@ -341,7 +340,7 @@ namespace exxen2._0.capaVisual.Compartido
             "Inactivos"});
             this.filtroEstado.Location = new System.Drawing.Point(489, 75);
             this.filtroEstado.Name = "filtroEstado";
-            this.filtroEstado.Size = new System.Drawing.Size(142, 25);
+            this.filtroEstado.Size = new System.Drawing.Size(142, 29);
             this.filtroEstado.TabIndex = 2;
             this.filtroEstado.SelectedIndexChanged += new System.EventHandler(this.filtroEstado_SelectedIndexChanged);
             //
@@ -364,6 +363,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.colNacimiento,
             this.colEstado});
             this.panelListado.SetColumnSpan(this.tabla, 3);
+            this.tabla.ContextMenuStrip = this.menuSocios;
             this.tabla.Location = new System.Drawing.Point(19, 121);
             this.tabla.MultiSelect = false;
             this.tabla.Name = "tabla";
@@ -374,6 +374,8 @@ namespace exxen2._0.capaVisual.Compartido
             this.tabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.tabla.Size = new System.Drawing.Size(612, 476);
             this.tabla.TabIndex = 3;
+            this.tabla.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tabla_CellDoubleClick);
+            this.tabla.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tabla_CellMouseDown);
             this.tabla.SelectionChanged += new System.EventHandler(this.tabla_SelectionChanged);
             //
             // colId
@@ -416,6 +418,53 @@ namespace exxen2._0.capaVisual.Compartido
             this.colEstado.Name = "colEstado";
             this.colEstado.ReadOnly = true;
             //
+            // menuSocios
+            //
+            this.menuSocios.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuSocios.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fichaMenu,
+            this.rutinaMenu,
+            this.imcMenu,
+            this.darDeBajaMenu,
+            this.reactivarMenu});
+            this.menuSocios.Name = "menuSocios";
+            this.menuSocios.Size = new System.Drawing.Size(203, 124);
+            //
+            // fichaMenu
+            //
+            this.fichaMenu.Name = "fichaMenu";
+            this.fichaMenu.Size = new System.Drawing.Size(202, 24);
+            this.fichaMenu.Text = "Ver ficha completa";
+            this.fichaMenu.Click += new System.EventHandler(this.btnFicha_Click);
+            //
+            // rutinaMenu
+            //
+            this.rutinaMenu.Name = "rutinaMenu";
+            this.rutinaMenu.Size = new System.Drawing.Size(202, 24);
+            this.rutinaMenu.Text = "Ver rutina semanal";
+            this.rutinaMenu.Click += new System.EventHandler(this.verRutina_Click);
+            //
+            // imcMenu
+            //
+            this.imcMenu.Name = "imcMenu";
+            this.imcMenu.Size = new System.Drawing.Size(202, 24);
+            this.imcMenu.Text = "Calcular IMC";
+            this.imcMenu.Click += new System.EventHandler(this.calcularImc_Click);
+            //
+            // darDeBajaMenu
+            //
+            this.darDeBajaMenu.Name = "darDeBajaMenu";
+            this.darDeBajaMenu.Size = new System.Drawing.Size(202, 24);
+            this.darDeBajaMenu.Text = "Dar de baja";
+            this.darDeBajaMenu.Click += new System.EventHandler(this.darDeBaja_Click);
+            //
+            // reactivarMenu
+            //
+            this.reactivarMenu.Name = "reactivarMenu";
+            this.reactivarMenu.Size = new System.Drawing.Size(202, 24);
+            this.reactivarMenu.Text = "Reactivar";
+            this.reactivarMenu.Click += new System.EventHandler(this.reactivar_Click);
+            //
             // panelDetalle
             //
             this.panelDetalle.Controls.Add(this.btnFicha);
@@ -453,12 +502,29 @@ namespace exxen2._0.capaVisual.Compartido
             this.panelDetalle.Size = new System.Drawing.Size(400, 618);
             this.panelDetalle.TabIndex = 1;
             //
+            // btnFicha
+            //
+            this.btnFicha.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(75)))), ((int)(((byte)(138)))));
+            this.btnFicha.Enabled = false;
+            this.btnFicha.FlatAppearance.BorderSize = 0;
+            this.btnFicha.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(48)))), ((int)(((byte)(89)))));
+            this.btnFicha.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(61)))), ((int)(((byte)(112)))));
+            this.btnFicha.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFicha.ForeColor = System.Drawing.Color.White;
+            this.btnFicha.Location = new System.Drawing.Point(16, 554);
+            this.btnFicha.Name = "btnFicha";
+            this.btnFicha.Size = new System.Drawing.Size(350, 34);
+            this.btnFicha.TabIndex = 30;
+            this.btnFicha.Text = "Ver ficha completa";
+            this.btnFicha.UseVisualStyleBackColor = false;
+            this.btnFicha.Click += new System.EventHandler(this.btnFicha_Click);
+            //
             // lblFormulario
             //
-            this.lblFormulario.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
-            this.lblFormulario.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
             this.lblFormulario.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblFormulario.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.lblFormulario.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
             this.lblFormulario.Location = new System.Drawing.Point(16, 16);
             this.lblFormulario.MinimumSize = new System.Drawing.Size(0, 32);
             this.lblFormulario.Name = "lblFormulario";
@@ -480,13 +546,13 @@ namespace exxen2._0.capaVisual.Compartido
             //
             // nombre
             //
-            this.nombre.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.nombre.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.nombre.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.nombre.Location = new System.Drawing.Point(142, 51);
             this.nombre.MaxLength = 100;
             this.nombre.Name = "nombre";
-            this.nombre.Size = new System.Drawing.Size(226, 24);
+            this.nombre.Size = new System.Drawing.Size(226, 29);
             this.nombre.TabIndex = 2;
             this.nombre.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nombre_KeyPress);
             //
@@ -503,13 +569,13 @@ namespace exxen2._0.capaVisual.Compartido
             //
             // apellido
             //
-            this.apellido.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.apellido.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.apellido.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.apellido.Location = new System.Drawing.Point(142, 86);
             this.apellido.MaxLength = 100;
             this.apellido.Name = "apellido";
-            this.apellido.Size = new System.Drawing.Size(226, 24);
+            this.apellido.Size = new System.Drawing.Size(226, 29);
             this.apellido.TabIndex = 4;
             this.apellido.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.apellido_KeyPress);
             //
@@ -526,13 +592,13 @@ namespace exxen2._0.capaVisual.Compartido
             //
             // dni
             //
-            this.dni.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.dni.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dni.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.dni.Location = new System.Drawing.Point(142, 121);
             this.dni.MaxLength = 20;
             this.dni.Name = "dni";
-            this.dni.Size = new System.Drawing.Size(226, 24);
+            this.dni.Size = new System.Drawing.Size(226, 29);
             this.dni.TabIndex = 6;
             this.dni.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dni_KeyPress);
             //
@@ -549,13 +615,13 @@ namespace exxen2._0.capaVisual.Compartido
             //
             // fechaNacimiento
             //
-            this.fechaNacimiento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.fechaNacimiento.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.fechaNacimiento.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.fechaNacimiento.Location = new System.Drawing.Point(142, 156);
             this.fechaNacimiento.Name = "fechaNacimiento";
             this.fechaNacimiento.ShowCheckBox = true;
-            this.fechaNacimiento.Size = new System.Drawing.Size(226, 24);
+            this.fechaNacimiento.Size = new System.Drawing.Size(226, 29);
             this.fechaNacimiento.TabIndex = 8;
             //
             // lblPeso
@@ -571,12 +637,12 @@ namespace exxen2._0.capaVisual.Compartido
             //
             // peso
             //
-            this.peso.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.peso.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.peso.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.peso.Location = new System.Drawing.Point(142, 191);
             this.peso.Name = "peso";
-            this.peso.Size = new System.Drawing.Size(226, 24);
+            this.peso.Size = new System.Drawing.Size(226, 29);
             this.peso.TabIndex = 10;
             this.peso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.peso_KeyPress);
             //
@@ -593,131 +659,14 @@ namespace exxen2._0.capaVisual.Compartido
             //
             // altura
             //
-            this.altura.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.altura.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.altura.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.altura.Location = new System.Drawing.Point(142, 226);
             this.altura.Name = "altura";
-            this.altura.Size = new System.Drawing.Size(226, 24);
+            this.altura.Size = new System.Drawing.Size(226, 29);
             this.altura.TabIndex = 12;
             this.altura.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.altura_KeyPress);
-            //
-            // nuevo
-            //
-            this.nuevo.Location = new System.Drawing.Point(16, 331);
-            this.nuevo.Name = "nuevo";
-            this.nuevo.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
-            this.nuevo.FlatAppearance.BorderSize = 0;
-            this.nuevo.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
-            this.nuevo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
-            this.nuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.nuevo.ForeColor = System.Drawing.Color.White;
-            this.nuevo.UseVisualStyleBackColor = false;
-
-
-
-
-
-
-
-            this.nuevo.Size = new System.Drawing.Size(108, 38);
-            this.nuevo.TabIndex = 17;
-            this.nuevo.Text = "+ Nuevo socio";
-            this.nuevo.Click += new System.EventHandler(this.nuevo_Click);
-            //
-            // guardar
-            //
-            this.guardar.Location = new System.Drawing.Point(128, 331);
-            this.guardar.Name = "guardar";
-            this.guardar.BackColor = System.Drawing.Color.FromArgb(46, 125, 50);
-            this.guardar.FlatAppearance.BorderSize = 0;
-            this.guardar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(27, 75, 31);
-            this.guardar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(37, 101, 41);
-            this.guardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.guardar.ForeColor = System.Drawing.Color.White;
-            this.guardar.UseVisualStyleBackColor = false;
-
-
-
-
-
-
-
-            this.guardar.Size = new System.Drawing.Size(108, 38);
-            this.guardar.TabIndex = 18;
-            this.guardar.Text = "Guardar";
-            this.guardar.Click += new System.EventHandler(this.guardar_Click);
-            //
-            // actualizar
-            //
-            this.actualizar.Location = new System.Drawing.Point(240, 331);
-            this.actualizar.Name = "actualizar";
-            this.actualizar.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
-            this.actualizar.FlatAppearance.BorderSize = 0;
-            this.actualizar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
-            this.actualizar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
-            this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.actualizar.ForeColor = System.Drawing.Color.White;
-            this.actualizar.UseVisualStyleBackColor = false;
-
-
-
-
-
-
-
-            this.actualizar.Size = new System.Drawing.Size(108, 38);
-            this.actualizar.TabIndex = 19;
-            this.actualizar.Text = "Actualizar";
-            this.actualizar.Click += new System.EventHandler(this.actualizar_Click);
-            //
-            // calcularImc
-            //
-            this.calcularImc.Location = new System.Drawing.Point(16, 375);
-            this.calcularImc.Name = "calcularImc";
-            this.calcularImc.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
-            this.calcularImc.FlatAppearance.BorderSize = 0;
-            this.calcularImc.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
-            this.calcularImc.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
-            this.calcularImc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.calcularImc.ForeColor = System.Drawing.Color.White;
-            this.calcularImc.UseVisualStyleBackColor = false;
-
-
-
-
-
-
-
-            this.calcularImc.Size = new System.Drawing.Size(108, 38);
-            this.calcularImc.TabIndex = 20;
-            this.calcularImc.Text = "Calcular IMC";
-            this.calcularImc.Click += new System.EventHandler(this.calcularImc_Click);
-            //
-            // verRutina
-            //
-            this.verRutina.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.verRutina.Location = new System.Drawing.Point(145, 509);
-            this.verRutina.Name = "verRutina";
-            this.verRutina.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
-            this.verRutina.FlatAppearance.BorderSize = 0;
-            this.verRutina.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
-            this.verRutina.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
-            this.verRutina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.verRutina.ForeColor = System.Drawing.Color.White;
-            this.verRutina.UseVisualStyleBackColor = false;
-
-
-
-
-
-
-
-            this.verRutina.Size = new System.Drawing.Size(223, 36);
-            this.verRutina.TabIndex = 26;
-            this.verRutina.Text = "Ver rutina semanal";
-            this.verRutina.Click += new System.EventHandler(this.verRutina_Click);
             //
             // lblEstadoSocio
             //
@@ -741,76 +690,122 @@ namespace exxen2._0.capaVisual.Compartido
             this.estadoSocio.Text = "Activo";
             this.estadoSocio.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
+            // nuevo
+            //
+            this.nuevo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(114)))), ((int)(((byte)(128)))));
+            this.nuevo.FlatAppearance.BorderSize = 0;
+            this.nuevo.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(77)))), ((int)(((byte)(88)))));
+            this.nuevo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(96)))), ((int)(((byte)(109)))));
+            this.nuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.nuevo.ForeColor = System.Drawing.Color.White;
+            this.nuevo.Location = new System.Drawing.Point(16, 331);
+            this.nuevo.Name = "nuevo";
+            this.nuevo.Size = new System.Drawing.Size(108, 38);
+            this.nuevo.TabIndex = 17;
+            this.nuevo.Text = "+ Nuevo socio";
+            this.nuevo.UseVisualStyleBackColor = false;
+            this.nuevo.Click += new System.EventHandler(this.nuevo_Click);
+            //
+            // guardar
+            //
+            this.guardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
+            this.guardar.FlatAppearance.BorderSize = 0;
+            this.guardar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(75)))), ((int)(((byte)(31)))));
+            this.guardar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(101)))), ((int)(((byte)(41)))));
+            this.guardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.guardar.ForeColor = System.Drawing.Color.White;
+            this.guardar.Location = new System.Drawing.Point(128, 331);
+            this.guardar.Name = "guardar";
+            this.guardar.Size = new System.Drawing.Size(108, 38);
+            this.guardar.TabIndex = 18;
+            this.guardar.Text = "Guardar";
+            this.guardar.UseVisualStyleBackColor = false;
+            this.guardar.Click += new System.EventHandler(this.guardar_Click);
+            //
+            // actualizar
+            //
+            this.actualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(75)))), ((int)(((byte)(138)))));
+            this.actualizar.FlatAppearance.BorderSize = 0;
+            this.actualizar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(48)))), ((int)(((byte)(89)))));
+            this.actualizar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(61)))), ((int)(((byte)(112)))));
+            this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.actualizar.ForeColor = System.Drawing.Color.White;
+            this.actualizar.Location = new System.Drawing.Point(240, 331);
+            this.actualizar.Name = "actualizar";
+            this.actualizar.Size = new System.Drawing.Size(108, 38);
+            this.actualizar.TabIndex = 19;
+            this.actualizar.Text = "Actualizar";
+            this.actualizar.UseVisualStyleBackColor = false;
+            //
+            // calcularImc
+            //
+            this.calcularImc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(75)))), ((int)(((byte)(138)))));
+            this.calcularImc.FlatAppearance.BorderSize = 0;
+            this.calcularImc.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(48)))), ((int)(((byte)(89)))));
+            this.calcularImc.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(61)))), ((int)(((byte)(112)))));
+            this.calcularImc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.calcularImc.ForeColor = System.Drawing.Color.White;
+            this.calcularImc.Location = new System.Drawing.Point(16, 375);
+            this.calcularImc.Name = "calcularImc";
+            this.calcularImc.Size = new System.Drawing.Size(108, 38);
+            this.calcularImc.TabIndex = 20;
+            this.calcularImc.Text = "Calcular IMC";
+            this.calcularImc.UseVisualStyleBackColor = false;
+            this.calcularImc.Click += new System.EventHandler(this.calcularImc_Click);
+            //
             // darDeBaja
             //
-            this.darDeBaja.Location = new System.Drawing.Point(128, 375);
-            this.darDeBaja.Name = "darDeBaja";
-            this.darDeBaja.BackColor = System.Drawing.Color.FromArgb(198, 40, 40);
+            this.darDeBaja.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.darDeBaja.FlatAppearance.BorderSize = 0;
-            this.darDeBaja.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(134, 26, 26);
-            this.darDeBaja.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(168, 32, 32);
+            this.darDeBaja.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(134)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            this.darDeBaja.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.darDeBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.darDeBaja.ForeColor = System.Drawing.Color.White;
-            this.darDeBaja.UseVisualStyleBackColor = false;
-
-
-
-
-
-
-
+            this.darDeBaja.Location = new System.Drawing.Point(128, 375);
+            this.darDeBaja.Name = "darDeBaja";
             this.darDeBaja.Size = new System.Drawing.Size(108, 38);
             this.darDeBaja.TabIndex = 21;
             this.darDeBaja.Text = "Dar de baja";
+            this.darDeBaja.UseVisualStyleBackColor = false;
             this.darDeBaja.Click += new System.EventHandler(this.darDeBaja_Click);
             //
             // reactivar
             //
-            this.reactivar.Location = new System.Drawing.Point(240, 375);
-            this.reactivar.Name = "reactivar";
-            this.reactivar.BackColor = System.Drawing.Color.FromArgb(46, 125, 50);
+            this.reactivar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.reactivar.FlatAppearance.BorderSize = 0;
-            this.reactivar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(27, 75, 31);
-            this.reactivar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(37, 101, 41);
+            this.reactivar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(75)))), ((int)(((byte)(31)))));
+            this.reactivar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(101)))), ((int)(((byte)(41)))));
             this.reactivar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.reactivar.ForeColor = System.Drawing.Color.White;
-            this.reactivar.UseVisualStyleBackColor = false;
-
-
-
-
-
-
-
+            this.reactivar.Location = new System.Drawing.Point(240, 375);
+            this.reactivar.Name = "reactivar";
             this.reactivar.Size = new System.Drawing.Size(108, 38);
             this.reactivar.TabIndex = 22;
             this.reactivar.Text = "Reactivar";
+            this.reactivar.UseVisualStyleBackColor = false;
             this.reactivar.Click += new System.EventHandler(this.reactivar_Click);
+            //
+            // verRutina
+            //
+            this.verRutina.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.verRutina.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(75)))), ((int)(((byte)(138)))));
+            this.verRutina.FlatAppearance.BorderSize = 0;
+            this.verRutina.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(58)))), ((int)(((byte)(48)))), ((int)(((byte)(89)))));
+            this.verRutina.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(61)))), ((int)(((byte)(112)))));
+            this.verRutina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.verRutina.ForeColor = System.Drawing.Color.White;
+            this.verRutina.Location = new System.Drawing.Point(145, 509);
+            this.verRutina.Name = "verRutina";
+            this.verRutina.Size = new System.Drawing.Size(223, 36);
+            this.verRutina.TabIndex = 26;
+            this.verRutina.Text = "Ver rutina semanal";
+            this.verRutina.UseVisualStyleBackColor = false;
+            this.verRutina.Click += new System.EventHandler(this.verRutina_Click);
             //
             // GestionSociosFormulario
             //
-            this.btnFicha.Location = new System.Drawing.Point(16, 554);
-            this.btnFicha.Size = new System.Drawing.Size(350, 34);
-            this.btnFicha.Name = "btnFicha";
-            this.btnFicha.BackColor = System.Drawing.Color.FromArgb(91, 75, 138);
-            this.btnFicha.FlatAppearance.BorderSize = 0;
-            this.btnFicha.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(58, 48, 89);
-            this.btnFicha.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(74, 61, 112);
-            this.btnFicha.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFicha.ForeColor = System.Drawing.Color.White;
-            this.btnFicha.UseVisualStyleBackColor = false;
-
-
-
-
-
-
-
-            this.btnFicha.Text = "Ver ficha completa";
-            this.btnFicha.Enabled = false;
-            this.btnFicha.TabIndex = 30;
-            this.btnFicha.Click += new System.EventHandler(this.btnFicha_Click);
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
             this.ClientSize = new System.Drawing.Size(1100, 680);
@@ -832,6 +827,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.panelListado.ResumeLayout(false);
             this.panelListado.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).EndInit();
+            this.menuSocios.ResumeLayout(false);
             this.panelDetalle.ResumeLayout(false);
             this.panelDetalle.PerformLayout();
             this.ResumeLayout(false);

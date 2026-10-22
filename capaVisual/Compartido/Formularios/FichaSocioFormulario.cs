@@ -53,12 +53,8 @@ namespace exxen2._0.capaVisual.Compartido
                     "\r\nMembresía actual — Deuda: " + ficha.Estado.DeudaTotal.ToString("C") + "   ·   Pendientes: " + ficha.Estado.CuotasPendientes +
                     "   ·   Vencidas: " + ficha.Estado.CuotasVencidas + "\r\nÚltimo pago: " + Fecha(ficha.UltimoPago) +
                     "   ·   Próximo vencimiento: " + Fecha(ficha.Estado.ProximoVencimiento);
-                btnPago.Enabled = ficha.Estado.IdMembresia > 0;
-                btnMembresia.Enabled = ficha.Estado.IdMembresia > 0;
-                btnRutina.Enabled = ficha.TieneRutina;
-                btnHistorial.Enabled = true;
-                btnExportarTodos.Enabled = true;
                 MostrarPagos(false);
+                ActualizarAcciones();
             }
             catch (Exception ex) { lblEstado.Text = "No se pudo cargar la ficha: " + ex.Message; }
         }
@@ -68,13 +64,14 @@ namespace exxen2._0.capaVisual.Compartido
             tabla.Rows.Clear();
             foreach (var pago in todos ? ficha.Pagos : ficha.Pagos.Take(20))
             {
-                var indice = tabla.Rows.Add(pago.Fecha.ToString("dd/MM/yyyy HH:mm"), pago.Desde.ToString("dd/MM/yyyy") + " - " + pago.Hasta.ToString("dd/MM/yyyy"),
+                var fechaPago = pago.Fecha.TimeOfDay == TimeSpan.Zero ? pago.Fecha.ToString("dd/MM/yyyy") : pago.Fecha.ToString("dd/MM/yyyy HH:mm");
+                var indice = tabla.Rows.Add(fechaPago, pago.Desde.ToString("dd/MM/yyyy") + " - " + pago.Hasta.ToString("dd/MM/yyyy"),
                     pago.Metodo, pago.Importe.ToString("C"), pago.RegistradoPor);
                 tabla.Rows[indice].Tag = pago;
             }
             tabla.ClearSelection();
-            btnExportarPago.Enabled = false;
             lblEstado.Text = ficha.CantidadPagos == 0 ? "Sin pagos registrados" : "Mostrando " + tabla.Rows.Count + " de " + ficha.CantidadPagos + " pagos aprobados";
+            ActualizarAcciones();
         }
 
         private ReportesPagosServicio.PagoExportable PagoSeleccionado()
@@ -83,8 +80,30 @@ namespace exxen2._0.capaVisual.Compartido
         }
         private void tabla_SelectionChanged(object sender, EventArgs e)
         {
+            ActualizarAcciones();
+        }
+        private void tabla_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right || e.RowIndex < 0) return;
+            var celda = e.ColumnIndex >= 0
+                ? tabla.Rows[e.RowIndex].Cells[e.ColumnIndex]
+                : tabla.Rows[e.RowIndex].Cells.Cast<DataGridViewCell>().First(c => c.Visible);
+            tabla.CurrentCell = celda;
+            tabla.ClearSelection();
+            tabla.Rows[e.RowIndex].Selected = true;
+            ActualizarAcciones();
+        }
+        private void ActualizarAcciones()
+        {
+            var cargada = ficha != null;
+            var tieneMembresia = cargada && ficha.Estado.IdMembresia > 0;
+            btnHistorial.Enabled = cargada;
+            btnPago.Enabled = tieneMembresia;
+            verMembresiaMenu.Enabled = tieneMembresia;
+            verRutinaMenu.Enabled = cargada && ficha.TieneRutina;
+            btnExportarHistorial.Enabled = cargada;
             var pago = PagoSeleccionado();
-            btnExportarPago.Enabled = pago != null && pago.Estado == EstadosTransaccionPago.Aprobado;
+            exportarPagoMenu.Enabled = pago != null && pago.Estado == EstadosTransaccionPago.Aprobado;
         }
         private void btnHistorial_Click(object sender, EventArgs e) { if (ficha != null) MostrarPagos(true); }
         private void btnPago_Click(object sender, EventArgs e) { Solicitar(AccionEstadoSocio.RegistrarPago); }
@@ -105,7 +124,7 @@ namespace exxen2._0.capaVisual.Compartido
         {
             if (ficha == null) return;
             var pago = PagoSeleccionado();
-            if (!todos && pago == null) return;
+            if (!todos && (pago == null || pago.Estado != EstadosTransaccionPago.Aprobado)) return;
             try
             {
                 dialogoPdf.FileName = todos ? reportes.NombreHistorialSugerido(idSocio) : reportes.NombreComprobanteSugerido(pago.Id);

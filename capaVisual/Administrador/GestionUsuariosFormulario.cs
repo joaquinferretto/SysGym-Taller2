@@ -110,6 +110,7 @@ namespace exxen2._0.capaVisual.Administrador
             tabla.ClearSelection();
             cargandoTabla = false;
             lblEstado.Text = tabla.Rows.Count + " usuario(s) encontrado(s)";
+            if (idSeleccionado != 0) nuevo_Click(null, EventArgs.Empty);
         }
 
         /* Compara el texto de búsqueda sin distinguir mayúsculas y admite valores vacíos. */
@@ -121,8 +122,13 @@ namespace exxen2._0.capaVisual.Administrador
         /* Al cambiar la fila seleccionada, toma su identificador y actualiza los datos o acciones del registro. */
         private void tabla_SelectionChanged(object origen, EventArgs e)
         {
-            if (cargandoTabla || tabla.CurrentRow == null || !tabla.CurrentRow.Selected)
+            if (cargandoTabla)
                 return;
+            if (tabla.CurrentRow == null || !tabla.CurrentRow.Selected)
+            {
+                nuevo_Click(null, EventArgs.Empty);
+                return;
+            }
             try
             {
                 idSeleccionado = Convert.ToInt32(tabla.CurrentRow.Cells[0].Value);
@@ -144,7 +150,7 @@ namespace exxen2._0.capaVisual.Administrador
                 if (usuario.Rol != null)
                     rol.SelectedValue = usuario.IdRol;
                 lblCreadoPor.Text = "Creado por: " + (usuario.UsuarioCreador == null ? "Sin información" : usuario.UsuarioCreador.Nombre + " " + usuario.UsuarioCreador.Apellido);
-                indicadorErrores.Clear();
+                LimpiarErroresDelDetalle();
                 EstablecerModo(false, usuario.Estado);
             }
             catch (Exception ex)
@@ -189,7 +195,7 @@ namespace exxen2._0.capaVisual.Administrador
             if (rol.Items.Count > 0)
                 rol.SelectedIndex = 0;
             tabla.ClearSelection();
-            indicadorErrores.Clear();
+            LimpiarErroresDelDetalle();
             EstablecerModo(true, true);
             nombre.Focus();
         }
@@ -198,10 +204,32 @@ namespace exxen2._0.capaVisual.Administrador
         private void EstablecerModo(bool nuevoRegistro, bool activo)
         {
             lblFormulario.Text = nuevoRegistro ? "Nuevo usuario" : "Editar usuario";
-            guardar.Enabled = nuevoRegistro;
+            guardar.Enabled = true;
             actualizar.Enabled = !nuevoRegistro;
             darDeBaja.Enabled = !nuevoRegistro && activo;
             reactivar.Enabled = !nuevoRegistro && !activo;
+            ActualizarAcciones();
+        }
+
+        private void ActualizarAcciones()
+        {
+            actualizar.Visible = false;
+            darDeBaja.Visible = idSeleccionado > 0 && estadoSeleccionado;
+            reactivar.Visible = idSeleccionado > 0 && !estadoSeleccionado;
+            btnQuitarFoto.Visible = fotoSeleccionada != null || !string.IsNullOrWhiteSpace(fotoRutaSeleccionada);
+            darDeBajaMenu.Enabled = idSeleccionado > 0 && estadoSeleccionado;
+            reactivarMenu.Enabled = idSeleccionado > 0 && !estadoSeleccionado;
+            darDeBajaMenu.Visible = darDeBajaMenu.Enabled;
+            reactivarMenu.Visible = reactivarMenu.Enabled;
+        }
+
+        private void tabla_CellMouseDown(object origen, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right || e.RowIndex < 0) return;
+            tabla.ClearSelection();
+            tabla.CurrentCell = tabla.Rows[e.RowIndex].Cells[1];
+            tabla.Rows[e.RowIndex].Selected = true;
+            tabla_SelectionChanged(tabla, EventArgs.Empty);
         }
 
         /* Recoge los campos de personal y comprueba que se haya seleccionado un rol. */
@@ -225,8 +253,19 @@ namespace exxen2._0.capaVisual.Administrador
             };
         }
 
-        /* Al hacer clic en guardar, valida los campos y envía el registro a la capa lógica. */
+        /* Guardar crea o modifica el usuario según exista una fila seleccionada. */
         private void guardar_Click(object origen, EventArgs e)
+        {
+            if (idSeleccionado != 0)
+            {
+                ModificarUsuario();
+                return;
+            }
+
+            CrearUsuario();
+        }
+
+        private void CrearUsuario()
         {
             try
             {
@@ -250,10 +289,10 @@ namespace exxen2._0.capaVisual.Administrador
                 lblEstado.Visible = true;
                 MessageBox.Show(mensaje, "Usuarios", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+
         }
 
-        /* Al hacer clic en actualizar, valida los campos y guarda las modificaciones mediante la capa lógica. */
-        private void actualizar_Click(object origen, EventArgs e)
+        private void ModificarUsuario()
         {
             try
             {
@@ -272,6 +311,7 @@ namespace exxen2._0.capaVisual.Administrador
             {
                 AyudaFormularioVisual.MostrarError(lblEstado, ex);
             }
+
         }
 
         /* Al hacer clic en darDeBaja, solicita la baja lógica del registro seleccionado y actualiza el listado. */
@@ -418,6 +458,11 @@ namespace exxen2._0.capaVisual.Administrador
         }
 
         /* Al corregir un campo editable, retira su aviso anterior hasta la próxima validación. */
+        private void LimpiarErroresDelDetalle()
+        {
+            indicadorErrores.Clear();
+        }
+
         private void campoValidado_Cambiado(object origen, EventArgs e)
         {
             var control = origen as Control;
@@ -427,7 +472,7 @@ namespace exxen2._0.capaVisual.Administrador
 
         private bool ValidarFormulario(bool alta)
         {
-            indicadorErrores.Clear();
+            LimpiarErroresDelDetalle();
             var valido = AyudaFormularioVisual.ValidarNombre(indicadorErrores, nombre, "nombre");
             valido = AyudaFormularioVisual.ValidarNombre(indicadorErrores, apellido, "apellido") & valido;
             valido = AyudaFormularioVisual.ValidarDni(indicadorErrores, dni) & valido;
@@ -459,6 +504,7 @@ namespace exxen2._0.capaVisual.Administrador
                     return;
                 AyudaFormularioVisual.MostrarFoto(fotoUsuario, seleccion.VistaPrevia, SexoSeleccionado());
                 fotoSeleccionada = seleccion;
+                ActualizarAcciones();
             }
             catch (Exception ex)
             {
@@ -478,6 +524,7 @@ namespace exxen2._0.capaVisual.Administrador
             fotoSeleccionada = null;
             fotoRutaSeleccionada = null;
             sexo_SelectedIndexChanged(origen, e);
+            ActualizarAcciones();
         }
 
         /* Al cambiar el sexo sin foto propia, actualiza el avatar de la vista previa. */

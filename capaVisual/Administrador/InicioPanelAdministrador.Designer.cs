@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -7,6 +7,7 @@ namespace exxen2._0.capaVisual.Administrador
     partial class InicioPanelAdministrador
     {
         private IContainer components;
+        private TableLayoutPanel contenidoLayout;
         private Label lblResumen;
         private Label tituloClima;
         private Label estadoClima;
@@ -35,6 +36,7 @@ namespace exxen2._0.capaVisual.Administrador
         private void InitializeComponent()
         {
             components = new Container();
+            contenidoLayout = new TableLayoutPanel();
             lblResumen = new Label();
             tituloClima = new Label();
             estadoClima = new Label();
@@ -186,42 +188,68 @@ namespace exxen2._0.capaVisual.Administrador
             lblResumen.Location = new Point(20, 20);
             lblResumen.Size = new Size(896, 48);
             lblResumen.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            Controls.Add(lblResumen);
+
             tituloClima.Name = "tituloClima";
             tituloClima.Location = new Point(36, 68);
             tituloClima.Size = new Size(590, 44);
             tituloClima.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            Controls.Add(tituloClima);
+
             estadoClima.Name = "estadoClima";
             estadoClima.Location = new Point(626, 68);
             estadoClima.Size = new Size(274, 44);
             estadoClima.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            Controls.Add(estadoClima);
+
             listaClima.Name = "listaClima";
             listaClima.Location = new Point(20, 112);
             listaClima.Size = new Size(896, 130);
             listaClima.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            Controls.Add(listaClima);
+
             lblTituloCuotas.Name = "lblTituloCuotas";
             lblTituloCuotas.Location = new Point(36, 242);
             lblTituloCuotas.Size = new Size(350, 44);
             lblTituloCuotas.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            Controls.Add(lblTituloCuotas);
+
             resumenCuotas.Name = "resumenCuotas";
             resumenCuotas.Location = new Point(386, 242);
             resumenCuotas.Size = new Size(514, 44);
             resumenCuotas.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            Controls.Add(resumenCuotas);
+
             tablaCuotas.Name = "tablaCuotas";
             tablaCuotas.Location = new Point(20, 286);
             tablaCuotas.Size = new Size(896, 364);
             tablaCuotas.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
-            Controls.Add(tablaCuotas);
+
             estadoSocios.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
             estadoSocios.Location = new Point(20, 242);
             estadoSocios.Name = "estadoSocios";
             estadoSocios.Size = new Size(896, 420);
-            Controls.Add(estadoSocios);
+
+            contenidoLayout.Name = "contenidoLayout";
+            contenidoLayout.Dock = DockStyle.Fill;
+            contenidoLayout.Padding = new Padding(12);
+            contenidoLayout.ColumnCount = 2;
+            contenidoLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 65F));
+            contenidoLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35F));
+            contenidoLayout.RowCount = 4;
+            contenidoLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            contenidoLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 28F));
+            contenidoLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 140F));
+            contenidoLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            lblResumen.Dock = DockStyle.Fill;
+            tituloClima.Dock = DockStyle.Fill;
+            estadoClima.Dock = DockStyle.Fill;
+            listaClima.Dock = DockStyle.Fill;
+            estadoSocios.Dock = DockStyle.Fill;
+            estadoSocios.MinimumSize = Size.Empty;
+            contenidoLayout.Controls.Add(lblResumen, 0, 0);
+            contenidoLayout.SetColumnSpan(lblResumen, 2);
+            contenidoLayout.Controls.Add(tituloClima, 0, 1);
+            contenidoLayout.Controls.Add(estadoClima, 1, 1);
+            contenidoLayout.Controls.Add(listaClima, 0, 2);
+            contenidoLayout.SetColumnSpan(listaClima, 2);
+            contenidoLayout.Controls.Add(estadoSocios, 0, 3);
+            contenidoLayout.SetColumnSpan(estadoSocios, 2);
+            Controls.Add(contenidoLayout);
             Load += new System.EventHandler(InicioPanelAdministrador_Load);
         }
     }

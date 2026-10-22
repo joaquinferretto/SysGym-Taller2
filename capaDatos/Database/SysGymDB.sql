@@ -1,9 +1,11 @@
-﻿/* Creación de la base de datos */
+/* Creacion de la base */
 
 CREATE DATABASE SysGymDB;
 GO
 
 USE SysGymDB;
+GO
+SET QUOTED_IDENTIFIER ON;
 GO
 
 /* Roles y usuarios */
@@ -42,7 +44,7 @@ CREATE TABLE UsuarioSistema (
 );
 GO
 
-/* Auditoría de operaciones exitosas; no se reconstruyen movimientos históricos. */
+/* Auditoria */
 CREATE TABLE AuditoriaOperacion (
     IdAuditoria INT IDENTITY(1,1) PRIMARY KEY,
     FechaHora DATETIME2 NOT NULL,
@@ -68,7 +70,7 @@ CREATE TABLE Socio (
     Nombre NVARCHAR(100) NOT NULL,
     Apellido NVARCHAR(100) NOT NULL,
     FechaNacimiento DATETIME2 NULL,
-    FechaAlta DATETIME2 NULL, -- Históricos sin fecha comprobable permanecen NULL.
+    FechaAlta DATETIME2 NULL, -- Fecha historica opcional.
     Peso DECIMAL(6,2) NULL,
     Altura DECIMAL(5,2) NULL,
     FotoRuta NVARCHAR(260) NULL,
@@ -111,7 +113,7 @@ CREATE TABLE Rutina (
 );
 GO
 
-/* Planes y membresías */
+/* Planes y membresias */
 
 CREATE TABLE [Plan] (
     IdPlan INT IDENTITY(1,1) PRIMARY KEY,
@@ -271,7 +273,7 @@ CREATE TABLE CuotaMembresia (
 );
 GO
 
-/* Asociación entre rutinas y ejercicios */
+/* RutinaEjercicio */
 
 CREATE TABLE RutinaEjercicio (
     IdRutinaEjercicio INT IDENTITY(1,1) PRIMARY KEY,
@@ -300,7 +302,7 @@ CREATE TABLE RutinaEjercicio (
     CONSTRAINT CK_RutinaEjercicio_Orden
         CHECK (Orden > 0),
 
-    /* 1 lunes a 5 viernes; nulo cuando el ejercicio todavia no tiene dia */
+    /* Dias de rutina */
     CONSTRAINT CK_RutinaEjercicio_DiaSemana
         CHECK (DiaSemana IS NULL OR DiaSemana BETWEEN 1 AND 5),
 
@@ -312,12 +314,12 @@ CREATE TABLE RutinaEjercicio (
 );
 GO
 
-/* Índices de consultas habituales */
+/* Indices */
 
 CREATE INDEX IX_Membresia_IdSocio
     ON Membresia(IdSocio);
 
-/* Un pago no puede asociarse a dos cuotas, pero las cuotas pendientes pueden tener NULL */
+/* Indice de cuotas */
 
 CREATE UNIQUE INDEX UX_CuotaMembresia_IdRegistroPago
     ON CuotaMembresia(IdRegistroPago)
@@ -345,10 +347,7 @@ IF NOT EXISTS (SELECT 1 FROM dbo.ConfiguracionSistema WHERE IdConfiguracion = 1)
 COMMIT TRANSACTION;
 
 GO
-/* Datos iniciales. Ultima actualizacion: 22 de septiembre de 2026.
-   Solo sentencias INSERT: sin ciclos, variables, procedimientos ni funciones propias.
-   Ejecutar una sola vez sobre la base recien creada. Las claves foraneas se resuelven
-   con subconsultas simples por su clave natural (Username, DNI, Nombre). */
+/* Datos iniciales */
 
 INSERT INTO Rol (Descripcion, Estado)
 VALUES
@@ -356,15 +355,13 @@ VALUES
     (N'Recepcionista', 1),
     (N'Entrenador', 1);
 
-/* Usuarios del sistema: SanMartin (administrador original) y tres usuarios de origen aleman,
-   uno por rol. Klaus, Greta y Lukas usan la clave de prueba Prueba123! (hash Argon2id). Sus fotos estan en capaDatos/Imagenes/Usuarios.
-   Nunca usar estas claves en produccion. */
+/* Usuarios del sistema */
 INSERT INTO UsuarioSistema (Nombre, Apellido, DNI, Telefono, FechaNacimiento, Salario, Username, Password, FotoRuta, Sexo, Estado, IdRol)
 VALUES
-    (N'San', N'Martin', N'30000001', NULL, NULL, 0, N'SanMartin', N'ARGON2ID:19:65536:3:2:fk55JlSsiyw0cDMfppSqSg==:+OMMPicxIZ0iPl0t7h0mNrg59Ysq3F5HKt/gNrYPuqU=', NULL, NULL, 1, 1),
-    (N'Klaus', N'Schneider', N'28451736', N'1147218365', '19800612', 950000, N'klaus.schneider', N'ARGON2ID:19:65536:3:2:UzjfnbF3n+md5BTKCQfiIA==:jJLuZEShyp0cWykdXKDVbXM4xpdItsG98tfSyzCx0sU=', N'Imagenes\Usuarios\7e665f53c5f54ac1ba1192da2609e7b1.jpg', N'M', 1, 1),
-    (N'Greta', N'Hoffmann', N'33617290', N'1158340172', '19880923', 720000, N'greta.hoffmann', N'ARGON2ID:19:65536:3:2:UzjfnbF3n+md5BTKCQfiIA==:jJLuZEShyp0cWykdXKDVbXM4xpdItsG98tfSyzCx0sU=', N'Imagenes\Usuarios\1b5f13461f324ba59a3f927204fa637a.jpg', N'F', 1, 2),
-    (N'Lukas', N'Becker', N'36072814', N'1163927458', '19920304', 810000, N'lukas.becker', N'ARGON2ID:19:65536:3:2:UzjfnbF3n+md5BTKCQfiIA==:jJLuZEShyp0cWykdXKDVbXM4xpdItsG98tfSyzCx0sU=', N'Imagenes\Usuarios\31c5235ceec7401cb94ab63107735658.jpg', N'M', 1, 3);
+    (N'San', N'Martin', N'30000001', N'3794651082', '19840716', 1350000, N'san.martin', N'ARGON2ID:19:65536:3:2:3/HafUE7Hs7qtb19PEE5lg==:Ddmcc2XJ0UW2O6IAvOgE1dvLfpN0Q7ZGJQAMiex0+Ws=', NULL, N'M', 1, 1),
+    (N'Klaus', N'Schneider', N'28451736', N'1147218365', '19800612', 950000, N'klaus.schneider', N'ARGON2ID:19:65536:3:2:H5Pvgpdu7mZ3PqfybaPqww==:YpexbCtYb9/FXFA5w6+i8bXtds9IN23ccIF8/mm0b40=', N'Imagenes\Usuarios\7e665f53c5f54ac1ba1192da2609e7b1.jpg', N'M', 1, 1),
+    (N'Greta', N'Hoffmann', N'33617290', N'1158340172', '19880923', 720000, N'greta.hoffmann', N'ARGON2ID:19:65536:3:2:LakJj1tgK8KYhU4t6HKcZg==:q230nzMnE+8P3fx2DvS0Y4+MbXO6kuf4m26JdknhmZU=', N'Imagenes\Usuarios\1b5f13461f324ba59a3f927204fa637a.jpg', N'F', 1, 2),
+    (N'Lukas', N'Becker', N'36072814', N'1163927458', '19920304', 810000, N'lukas.becker', N'ARGON2ID:19:65536:3:2:scAe6Ok6nEP/5KsIkIzG4g==:NA+/8oS/XNQqagO/6byvaDw28qT9RpQia6McWQN2V3w=', N'Imagenes\Usuarios\31c5235ceec7401cb94ab63107735658.jpg', N'M', 1, 3);
 
 INSERT INTO PagoEfectivo (Estado)
 VALUES (1);
@@ -377,7 +374,7 @@ VALUES
     (1, N'Mercado Pago', 1, NULL),
     (1, N'Pago en efectivo', NULL, 1);
 
-/* Ejercicios: 82 ejercicios del catalogo, agrupados por zona. Incluye cardio y acondicionamiento. */
+/* Ejercicios */
 INSERT INTO Ejercicio (Nombre, Descripcion, Estado)
 VALUES
     -- Pecho
@@ -470,8 +467,7 @@ VALUES
     (N'Sogas de batalla', N'Resistencia de tren superior y cardio.', 1),
     (N'Caminata del granjero', N'Agarre, trapecio y zona media cargando peso.', 1);
 
-/* Imagenes base de ejercicios: los archivos estan en capaDatos/Imagenes/Ejercicios/{id}
-   y el proyecto los copia a Datos\Imagenes al compilar. SQL solo guarda la ruta relativa. */
+/* Imagenes de ejercicios */
 INSERT INTO EjercicioImagen (IdEjercicio, RutaRelativa, Orden)
 VALUES
     ((SELECT IdEjercicio FROM Ejercicio WHERE Nombre = N'Press de banca'), N'Imagenes\Ejercicios\1\a64931fc2f4646a8a6e49d562d24ac6c.jpg', 1),
@@ -541,7 +537,7 @@ VALUES
     ((SELECT IdEjercicio FROM Ejercicio WHERE Nombre = N'Swing con kettlebell'), N'Imagenes\Ejercicios\80\d835134a31f54dc3b514c6b5ea85f312.jpg', 1),
     ((SELECT IdEjercicio FROM Ejercicio WHERE Nombre = N'Sogas de batalla'), N'Imagenes\Ejercicios\81\edb44dc6ae0b4da1bda1449db30d5c61.jpg', 1);
 
-/* Rutinas: 6 generales y 20 plantillas; todas creadas por el entrenador Lukas Becker. */
+/* Rutinas */
 INSERT INTO Rutina (Nombre, Descripcion, FechaCreacion, FechaInicio, FechaFin, Estado, IdEntrenador)
 VALUES
     (N'Comienzo 1', N'Adaptacion general para iniciar el entrenamiento.', '20260901', NULL, NULL, 1, (SELECT IdUsuarioSistema FROM UsuarioSistema WHERE Username = N'lukas.becker')),
@@ -571,7 +567,7 @@ VALUES
     (N'Gluteos en banco', N'Extension de cadera con hip thrust.', '20260901', '20260901', NULL, 1, (SELECT IdUsuarioSistema FROM UsuarioSistema WHERE Username = N'lukas.becker')),
     (N'Piernas unilaterales', N'Zancadas para trabajo unilateral.', '20260901', '20260901', NULL, 1, (SELECT IdUsuarioSistema FROM UsuarioSistema WHERE Username = N'lukas.becker'));
 
-/* Socios: 30 socios de origen italiano (15 mujeres y 15 hombres). Rizzo y Martinelli estan de baja para probar la reactivacion. */
+/* Socios */
 INSERT INTO Socio (DNI, Nombre, Apellido, FechaNacimiento, Peso, Altura, FotoRuta, Sexo, Estado)
 VALUES
     (N'38514072', N'Marco', N'Rossi', '19900412', 82.50, 1.78, NULL, N'M', 1),
@@ -605,11 +601,9 @@ VALUES
     (N'30268471', N'Antonio', N'Rizzo', '19830707', 97.20, 1.79, NULL, N'M', 0),
     (N'41307529', N'Ilaria', N'Martinelli', '19980916', 58.80, 1.66, NULL, N'F', 0);
 
-/* Inserciones de RutinaEjercicio: cada plantilla reparte siete ejercicios por dia,
-   agrupados por musculo, de lunes a viernes. Un mismo ejercicio puede repetirse en
-   dias distintos. Orden es la posicion dentro del dia. */
+/* RutinaEjercicio */
 
-/* Comienzo 1: Lunes pecho y biceps / Martes espalda y triceps / Miercoles piernas / Jueves hombros y core / Viernes full */
+/* RutinaEjercicio */
 INSERT INTO RutinaEjercicio (Series, Repeticiones, Peso, Descanso, Orden, DiaSemana, Estado, IdRutina, IdEjercicio)
 VALUES
     (4, 10, NULL, 90, 1, 1, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Comienzo 1'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Press de banca' AND Estado = 1 ORDER BY IdEjercicio)),
@@ -648,7 +642,7 @@ VALUES
     (3, 8, NULL, 150, 6, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Comienzo 1'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Peso muerto convencional' AND Estado = 1 ORDER BY IdEjercicio)),
     (3, 30, NULL, 45, 7, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Comienzo 1'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Escaladores' AND Estado = 1 ORDER BY IdEjercicio));
 
-/* Hipertrofia 1: Lunes pecho y biceps / Martes espalda y triceps / Miercoles piernas / Jueves hombros y core / Viernes full */
+/* RutinaEjercicio */
 INSERT INTO RutinaEjercicio (Series, Repeticiones, Peso, Descanso, Orden, DiaSemana, Estado, IdRutina, IdEjercicio)
 VALUES
     (4, 10, NULL, 90, 1, 1, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Hipertrofia 1'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Press de banca' AND Estado = 1 ORDER BY IdEjercicio)),
@@ -687,7 +681,7 @@ VALUES
     (3, 8, NULL, 150, 6, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Hipertrofia 1'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Peso muerto convencional' AND Estado = 1 ORDER BY IdEjercicio)),
     (3, 30, NULL, 45, 7, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Hipertrofia 1'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Escaladores' AND Estado = 1 ORDER BY IdEjercicio));
 
-/* Hipertrofia 2: Lunes espalda y triceps / Martes pecho y biceps / Miercoles piernas / Jueves hombros y core / Viernes full */
+/* RutinaEjercicio */
 INSERT INTO RutinaEjercicio (Series, Repeticiones, Peso, Descanso, Orden, DiaSemana, Estado, IdRutina, IdEjercicio)
 VALUES
     (4, 8, NULL, 120, 1, 1, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Hipertrofia 2'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Dominadas' AND Estado = 1 ORDER BY IdEjercicio)),
@@ -726,7 +720,7 @@ VALUES
     (3, 8, NULL, 150, 6, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Hipertrofia 2'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Peso muerto convencional' AND Estado = 1 ORDER BY IdEjercicio)),
     (3, 30, NULL, 45, 7, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Hipertrofia 2'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Escaladores' AND Estado = 1 ORDER BY IdEjercicio));
 
-/* Fuerza: Lunes piernas / Martes pecho y biceps / Miercoles espalda y triceps / Jueves hombros y core / Viernes full */
+/* RutinaEjercicio */
 INSERT INTO RutinaEjercicio (Series, Repeticiones, Peso, Descanso, Orden, DiaSemana, Estado, IdRutina, IdEjercicio)
 VALUES
     (4, 8, NULL, 150, 1, 1, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Fuerza'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Sentadilla con barra' AND Estado = 1 ORDER BY IdEjercicio)),
@@ -765,7 +759,7 @@ VALUES
     (3, 8, NULL, 150, 6, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Fuerza'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Peso muerto convencional' AND Estado = 1 ORDER BY IdEjercicio)),
     (3, 30, NULL, 45, 7, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Fuerza'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Escaladores' AND Estado = 1 ORDER BY IdEjercicio));
 
-/* Powerlifting: Lunes piernas / Martes pecho y biceps / Miercoles espalda y triceps / Jueves hombros y core / Viernes full */
+/* RutinaEjercicio */
 INSERT INTO RutinaEjercicio (Series, Repeticiones, Peso, Descanso, Orden, DiaSemana, Estado, IdRutina, IdEjercicio)
 VALUES
     (4, 8, NULL, 150, 1, 1, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Powerlifting'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Sentadilla con barra' AND Estado = 1 ORDER BY IdEjercicio)),
@@ -804,7 +798,7 @@ VALUES
     (3, 8, NULL, 150, 6, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Powerlifting'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Peso muerto convencional' AND Estado = 1 ORDER BY IdEjercicio)),
     (3, 30, NULL, 45, 7, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Powerlifting'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Escaladores' AND Estado = 1 ORDER BY IdEjercicio));
 
-/* Cardio: Lunes pecho y biceps / Martes espalda y triceps / Miercoles piernas / Jueves hombros y core / Viernes full */
+/* RutinaEjercicio */
 INSERT INTO RutinaEjercicio (Series, Repeticiones, Peso, Descanso, Orden, DiaSemana, Estado, IdRutina, IdEjercicio)
 VALUES
     (4, 10, NULL, 90, 1, 1, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Cardio'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Press de banca' AND Estado = 1 ORDER BY IdEjercicio)),
@@ -843,7 +837,7 @@ VALUES
     (3, 8, NULL, 150, 6, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Cardio'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Peso muerto convencional' AND Estado = 1 ORDER BY IdEjercicio)),
     (3, 30, NULL, 45, 7, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Cardio'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Escaladores' AND Estado = 1 ORDER BY IdEjercicio));
 
-/* Pecho con barra: Lunes pecho y biceps / Martes espalda y triceps / Miercoles piernas / Jueves hombros y core / Viernes full */
+/* RutinaEjercicio */
 INSERT INTO RutinaEjercicio (Series, Repeticiones, Peso, Descanso, Orden, DiaSemana, Estado, IdRutina, IdEjercicio)
 VALUES
     (4, 10, NULL, 90, 1, 1, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Pecho con barra'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Press de banca' AND Estado = 1 ORDER BY IdEjercicio)),
@@ -882,7 +876,7 @@ VALUES
     (3, 8, NULL, 150, 6, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Pecho con barra'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Peso muerto convencional' AND Estado = 1 ORDER BY IdEjercicio)),
     (3, 30, NULL, 45, 7, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Pecho con barra'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Escaladores' AND Estado = 1 ORDER BY IdEjercicio));
 
-/* Pecho inclinado: Lunes pecho y biceps / Martes espalda y triceps / Miercoles piernas / Jueves hombros y core / Viernes full */
+/* RutinaEjercicio */
 INSERT INTO RutinaEjercicio (Series, Repeticiones, Peso, Descanso, Orden, DiaSemana, Estado, IdRutina, IdEjercicio)
 VALUES
     (4, 10, NULL, 90, 1, 1, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Pecho inclinado'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Press de banca' AND Estado = 1 ORDER BY IdEjercicio)),
@@ -921,7 +915,7 @@ VALUES
     (3, 8, NULL, 150, 6, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Pecho inclinado'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Peso muerto convencional' AND Estado = 1 ORDER BY IdEjercicio)),
     (3, 30, NULL, 45, 7, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Pecho inclinado'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Escaladores' AND Estado = 1 ORDER BY IdEjercicio));
 
-/* Aperturas de pecho: Lunes pecho y biceps / Martes espalda y triceps / Miercoles piernas / Jueves hombros y core / Viernes full */
+/* RutinaEjercicio */
 INSERT INTO RutinaEjercicio (Series, Repeticiones, Peso, Descanso, Orden, DiaSemana, Estado, IdRutina, IdEjercicio)
 VALUES
     (4, 10, NULL, 90, 1, 1, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Aperturas de pecho'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Press de banca' AND Estado = 1 ORDER BY IdEjercicio)),
@@ -960,7 +954,7 @@ VALUES
     (3, 8, NULL, 150, 6, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Aperturas de pecho'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Peso muerto convencional' AND Estado = 1 ORDER BY IdEjercicio)),
     (3, 30, NULL, 45, 7, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Aperturas de pecho'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Escaladores' AND Estado = 1 ORDER BY IdEjercicio));
 
-/* Fondos de tren superior: Lunes pecho y biceps / Martes espalda y triceps / Miercoles piernas / Jueves hombros y core / Viernes full */
+/* RutinaEjercicio */
 INSERT INTO RutinaEjercicio (Series, Repeticiones, Peso, Descanso, Orden, DiaSemana, Estado, IdRutina, IdEjercicio)
 VALUES
     (4, 10, NULL, 90, 1, 1, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Fondos de tren superior'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Press de banca' AND Estado = 1 ORDER BY IdEjercicio)),
@@ -999,7 +993,7 @@ VALUES
     (3, 8, NULL, 150, 6, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Fondos de tren superior'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Peso muerto convencional' AND Estado = 1 ORDER BY IdEjercicio)),
     (3, 30, NULL, 45, 7, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Fondos de tren superior'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Escaladores' AND Estado = 1 ORDER BY IdEjercicio));
 
-/* Espalda en polea: Lunes espalda y triceps / Martes pecho y biceps / Miercoles piernas / Jueves hombros y core / Viernes full */
+/* RutinaEjercicio */
 INSERT INTO RutinaEjercicio (Series, Repeticiones, Peso, Descanso, Orden, DiaSemana, Estado, IdRutina, IdEjercicio)
 VALUES
     (4, 8, NULL, 120, 1, 1, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Espalda en polea'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Dominadas' AND Estado = 1 ORDER BY IdEjercicio)),
@@ -1038,7 +1032,7 @@ VALUES
     (3, 8, NULL, 150, 6, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Espalda en polea'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Peso muerto convencional' AND Estado = 1 ORDER BY IdEjercicio)),
     (3, 30, NULL, 45, 7, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Espalda en polea'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Escaladores' AND Estado = 1 ORDER BY IdEjercicio));
 
-/* Remo de fuerza: Lunes espalda y triceps / Martes pecho y biceps / Miercoles piernas / Jueves hombros y core / Viernes full */
+/* RutinaEjercicio */
 INSERT INTO RutinaEjercicio (Series, Repeticiones, Peso, Descanso, Orden, DiaSemana, Estado, IdRutina, IdEjercicio)
 VALUES
     (4, 8, NULL, 120, 1, 1, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Remo de fuerza'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Dominadas' AND Estado = 1 ORDER BY IdEjercicio)),
@@ -1077,7 +1071,7 @@ VALUES
     (3, 8, NULL, 150, 6, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Remo de fuerza'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Peso muerto convencional' AND Estado = 1 ORDER BY IdEjercicio)),
     (3, 30, NULL, 45, 7, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Remo de fuerza'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Escaladores' AND Estado = 1 ORDER BY IdEjercicio));
 
-/* Espalda controlada: Lunes espalda y triceps / Martes pecho y biceps / Miercoles piernas / Jueves hombros y core / Viernes full */
+/* RutinaEjercicio */
 INSERT INTO RutinaEjercicio (Series, Repeticiones, Peso, Descanso, Orden, DiaSemana, Estado, IdRutina, IdEjercicio)
 VALUES
     (4, 8, NULL, 120, 1, 1, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Espalda controlada'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Dominadas' AND Estado = 1 ORDER BY IdEjercicio)),
@@ -1116,7 +1110,7 @@ VALUES
     (3, 8, NULL, 150, 6, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Espalda controlada'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Peso muerto convencional' AND Estado = 1 ORDER BY IdEjercicio)),
     (3, 30, NULL, 45, 7, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Espalda controlada'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Escaladores' AND Estado = 1 ORDER BY IdEjercicio));
 
-/* Estabilidad de hombros: Lunes hombros y core / Martes pecho y biceps / Miercoles espalda y triceps / Jueves piernas / Viernes full */
+/* RutinaEjercicio */
 INSERT INTO RutinaEjercicio (Series, Repeticiones, Peso, Descanso, Orden, DiaSemana, Estado, IdRutina, IdEjercicio)
 VALUES
     (4, 10, NULL, 90, 1, 1, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Estabilidad de hombros'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Press militar' AND Estado = 1 ORDER BY IdEjercicio)),
@@ -1155,7 +1149,7 @@ VALUES
     (3, 8, NULL, 150, 6, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Estabilidad de hombros'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Peso muerto convencional' AND Estado = 1 ORDER BY IdEjercicio)),
     (3, 30, NULL, 45, 7, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Estabilidad de hombros'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Escaladores' AND Estado = 1 ORDER BY IdEjercicio));
 
-/* Press de hombros: Lunes hombros y core / Martes pecho y biceps / Miercoles espalda y triceps / Jueves piernas / Viernes full */
+/* RutinaEjercicio */
 INSERT INTO RutinaEjercicio (Series, Repeticiones, Peso, Descanso, Orden, DiaSemana, Estado, IdRutina, IdEjercicio)
 VALUES
     (4, 10, NULL, 90, 1, 1, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Press de hombros'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Press militar' AND Estado = 1 ORDER BY IdEjercicio)),
@@ -1194,7 +1188,7 @@ VALUES
     (3, 8, NULL, 150, 6, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Press de hombros'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Peso muerto convencional' AND Estado = 1 ORDER BY IdEjercicio)),
     (3, 30, NULL, 45, 7, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Press de hombros'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Escaladores' AND Estado = 1 ORDER BY IdEjercicio));
 
-/* Hombros laterales: Lunes hombros y core / Martes pecho y biceps / Miercoles espalda y triceps / Jueves piernas / Viernes full */
+/* RutinaEjercicio */
 INSERT INTO RutinaEjercicio (Series, Repeticiones, Peso, Descanso, Orden, DiaSemana, Estado, IdRutina, IdEjercicio)
 VALUES
     (4, 10, NULL, 90, 1, 1, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Hombros laterales'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Press militar' AND Estado = 1 ORDER BY IdEjercicio)),
@@ -1233,7 +1227,7 @@ VALUES
     (3, 8, NULL, 150, 6, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Hombros laterales'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Peso muerto convencional' AND Estado = 1 ORDER BY IdEjercicio)),
     (3, 30, NULL, 45, 7, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Hombros laterales'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Escaladores' AND Estado = 1 ORDER BY IdEjercicio));
 
-/* Biceps con barra: Lunes hombros y core / Martes pecho y biceps / Miercoles espalda y triceps / Jueves piernas / Viernes full */
+/* RutinaEjercicio */
 INSERT INTO RutinaEjercicio (Series, Repeticiones, Peso, Descanso, Orden, DiaSemana, Estado, IdRutina, IdEjercicio)
 VALUES
     (4, 10, NULL, 90, 1, 1, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Biceps con barra'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Press militar' AND Estado = 1 ORDER BY IdEjercicio)),
@@ -1272,7 +1266,7 @@ VALUES
     (3, 8, NULL, 150, 6, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Biceps con barra'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Peso muerto convencional' AND Estado = 1 ORDER BY IdEjercicio)),
     (3, 30, NULL, 45, 7, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Biceps con barra'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Escaladores' AND Estado = 1 ORDER BY IdEjercicio));
 
-/* Brazos con mancuernas: Lunes hombros y core / Martes pecho y biceps / Miercoles espalda y triceps / Jueves piernas / Viernes full */
+/* RutinaEjercicio */
 INSERT INTO RutinaEjercicio (Series, Repeticiones, Peso, Descanso, Orden, DiaSemana, Estado, IdRutina, IdEjercicio)
 VALUES
     (4, 10, NULL, 90, 1, 1, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Brazos con mancuernas'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Press militar' AND Estado = 1 ORDER BY IdEjercicio)),
@@ -1311,7 +1305,7 @@ VALUES
     (3, 8, NULL, 150, 6, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Brazos con mancuernas'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Peso muerto convencional' AND Estado = 1 ORDER BY IdEjercicio)),
     (3, 30, NULL, 45, 7, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Brazos con mancuernas'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Escaladores' AND Estado = 1 ORDER BY IdEjercicio));
 
-/* Triceps en polea: Lunes hombros y core / Martes pecho y biceps / Miercoles espalda y triceps / Jueves piernas / Viernes full */
+/* RutinaEjercicio */
 INSERT INTO RutinaEjercicio (Series, Repeticiones, Peso, Descanso, Orden, DiaSemana, Estado, IdRutina, IdEjercicio)
 VALUES
     (4, 10, NULL, 90, 1, 1, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Triceps en polea'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Press militar' AND Estado = 1 ORDER BY IdEjercicio)),
@@ -1350,7 +1344,7 @@ VALUES
     (3, 8, NULL, 150, 6, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Triceps en polea'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Peso muerto convencional' AND Estado = 1 ORDER BY IdEjercicio)),
     (3, 30, NULL, 45, 7, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Triceps en polea'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Escaladores' AND Estado = 1 ORDER BY IdEjercicio));
 
-/* Sentadilla inicial: Lunes piernas / Martes pecho y biceps / Miercoles espalda y triceps / Jueves hombros y core / Viernes full */
+/* RutinaEjercicio */
 INSERT INTO RutinaEjercicio (Series, Repeticiones, Peso, Descanso, Orden, DiaSemana, Estado, IdRutina, IdEjercicio)
 VALUES
     (4, 8, NULL, 150, 1, 1, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Sentadilla inicial'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Sentadilla con barra' AND Estado = 1 ORDER BY IdEjercicio)),
@@ -1389,7 +1383,7 @@ VALUES
     (3, 8, NULL, 150, 6, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Sentadilla inicial'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Peso muerto convencional' AND Estado = 1 ORDER BY IdEjercicio)),
     (3, 30, NULL, 45, 7, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Sentadilla inicial'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Escaladores' AND Estado = 1 ORDER BY IdEjercicio));
 
-/* Piernas en prensa: Lunes piernas / Martes pecho y biceps / Miercoles espalda y triceps / Jueves hombros y core / Viernes full */
+/* RutinaEjercicio */
 INSERT INTO RutinaEjercicio (Series, Repeticiones, Peso, Descanso, Orden, DiaSemana, Estado, IdRutina, IdEjercicio)
 VALUES
     (4, 8, NULL, 150, 1, 1, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Piernas en prensa'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Sentadilla con barra' AND Estado = 1 ORDER BY IdEjercicio)),
@@ -1428,7 +1422,7 @@ VALUES
     (3, 8, NULL, 150, 6, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Piernas en prensa'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Peso muerto convencional' AND Estado = 1 ORDER BY IdEjercicio)),
     (3, 30, NULL, 45, 7, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Piernas en prensa'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Escaladores' AND Estado = 1 ORDER BY IdEjercicio));
 
-/* Cadena posterior: Lunes piernas / Martes pecho y biceps / Miercoles espalda y triceps / Jueves hombros y core / Viernes full */
+/* RutinaEjercicio */
 INSERT INTO RutinaEjercicio (Series, Repeticiones, Peso, Descanso, Orden, DiaSemana, Estado, IdRutina, IdEjercicio)
 VALUES
     (4, 8, NULL, 150, 1, 1, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Cadena posterior'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Sentadilla con barra' AND Estado = 1 ORDER BY IdEjercicio)),
@@ -1467,7 +1461,7 @@ VALUES
     (3, 8, NULL, 150, 6, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Cadena posterior'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Peso muerto convencional' AND Estado = 1 ORDER BY IdEjercicio)),
     (3, 30, NULL, 45, 7, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Cadena posterior'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Escaladores' AND Estado = 1 ORDER BY IdEjercicio));
 
-/* Cuadriceps en maquina: Lunes piernas / Martes pecho y biceps / Miercoles espalda y triceps / Jueves hombros y core / Viernes full */
+/* RutinaEjercicio */
 INSERT INTO RutinaEjercicio (Series, Repeticiones, Peso, Descanso, Orden, DiaSemana, Estado, IdRutina, IdEjercicio)
 VALUES
     (4, 8, NULL, 150, 1, 1, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Cuadriceps en maquina'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Sentadilla con barra' AND Estado = 1 ORDER BY IdEjercicio)),
@@ -1506,7 +1500,7 @@ VALUES
     (3, 8, NULL, 150, 6, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Cuadriceps en maquina'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Peso muerto convencional' AND Estado = 1 ORDER BY IdEjercicio)),
     (3, 30, NULL, 45, 7, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Cuadriceps en maquina'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Escaladores' AND Estado = 1 ORDER BY IdEjercicio));
 
-/* Isquiotibiales: Lunes piernas / Martes pecho y biceps / Miercoles espalda y triceps / Jueves hombros y core / Viernes full */
+/* RutinaEjercicio */
 INSERT INTO RutinaEjercicio (Series, Repeticiones, Peso, Descanso, Orden, DiaSemana, Estado, IdRutina, IdEjercicio)
 VALUES
     (4, 8, NULL, 150, 1, 1, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Isquiotibiales'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Sentadilla con barra' AND Estado = 1 ORDER BY IdEjercicio)),
@@ -1545,7 +1539,7 @@ VALUES
     (3, 8, NULL, 150, 6, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Isquiotibiales'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Peso muerto convencional' AND Estado = 1 ORDER BY IdEjercicio)),
     (3, 30, NULL, 45, 7, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Isquiotibiales'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Escaladores' AND Estado = 1 ORDER BY IdEjercicio));
 
-/* Gluteos en banco: Lunes piernas / Martes pecho y biceps / Miercoles espalda y triceps / Jueves hombros y core / Viernes full */
+/* RutinaEjercicio */
 INSERT INTO RutinaEjercicio (Series, Repeticiones, Peso, Descanso, Orden, DiaSemana, Estado, IdRutina, IdEjercicio)
 VALUES
     (4, 8, NULL, 150, 1, 1, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Gluteos en banco'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Sentadilla con barra' AND Estado = 1 ORDER BY IdEjercicio)),
@@ -1584,7 +1578,7 @@ VALUES
     (3, 8, NULL, 150, 6, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Gluteos en banco'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Peso muerto convencional' AND Estado = 1 ORDER BY IdEjercicio)),
     (3, 30, NULL, 45, 7, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Gluteos en banco'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Escaladores' AND Estado = 1 ORDER BY IdEjercicio));
 
-/* Piernas unilaterales: Lunes piernas / Martes pecho y biceps / Miercoles espalda y triceps / Jueves hombros y core / Viernes full */
+/* RutinaEjercicio */
 INSERT INTO RutinaEjercicio (Series, Repeticiones, Peso, Descanso, Orden, DiaSemana, Estado, IdRutina, IdEjercicio)
 VALUES
     (4, 8, NULL, 150, 1, 1, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Piernas unilaterales'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Sentadilla con barra' AND Estado = 1 ORDER BY IdEjercicio)),
@@ -1623,15 +1617,13 @@ VALUES
     (3, 8, NULL, 150, 6, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Piernas unilaterales'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Peso muerto convencional' AND Estado = 1 ORDER BY IdEjercicio)),
     (3, 30, NULL, 45, 7, 5, 1, (SELECT IdRutina FROM Rutina WHERE Nombre = N'Piernas unilaterales'), (SELECT TOP (1) IdEjercicio FROM Ejercicio WHERE Nombre = N'Escaladores' AND Estado = 1 ORDER BY IdEjercicio));
 
-/* Planes: Normal y Premium */
+/* Planes */
 INSERT INTO [Plan] (Nombre, Descripcion, Precio, Estado)
 VALUES
     (N'Normal', N'Acceso al gimnasio.', 15000, 1),
     (N'Premium', N'Acceso al gimnasio con seguimiento de un entrenador.', 25000, 1);
 
-/* Membresias: 30 (15 Premium y 15 Normal), registradas por la recepcionista Greta Hoffmann.
-   Los socios 1 a 24 tienen rutina asignada (Membresia.IdRutina); los ultimos 6 no, para probar Asignar/Crear personalizada.
-   Las dos membresias de los socios dados de baja quedan inactivas. */
+/* Membresias */
 INSERT INTO Membresia (FechaInicio, FechaVencimiento, Estado, IdPlan, IdSocio, IdUsuarioSistema, IdRutina)
 VALUES
     ('20260901', '20260930', 1, (SELECT IdPlan FROM [Plan] WHERE Nombre = N'Premium'), (SELECT IdSocio FROM Socio WHERE DNI = N'38514072'), (SELECT IdUsuarioSistema FROM UsuarioSistema WHERE Username = N'greta.hoffmann'), (SELECT IdRutina FROM Rutina WHERE Nombre = N'Pecho con barra')),
@@ -1665,7 +1657,7 @@ VALUES
     ('20260901', '20260930', 0, (SELECT IdPlan FROM [Plan] WHERE Nombre = N'Normal'), (SELECT IdSocio FROM Socio WHERE DNI = N'30268471'), (SELECT IdUsuarioSistema FROM UsuarioSistema WHERE Username = N'greta.hoffmann'), NULL),
     ('20260901', '20260930', 0, (SELECT IdPlan FROM [Plan] WHERE Nombre = N'Normal'), (SELECT IdSocio FROM Socio WHERE DNI = N'41307529'), (SELECT IdUsuarioSistema FROM UsuarioSistema WHERE Username = N'greta.hoffmann'), NULL);
 
-/* MercadoPago: referencias ficticias de los cobros acreditados por Mercado Pago; no son cobros reales. */
+/* MercadoPago */
 INSERT INTO MercadoPago (ExternalReference, StatusDetail, FechaAprobacion)
 VALUES
     (N'CUOTA-SEP26-38514072', N'Pago acreditado', '20260902'),
@@ -1676,7 +1668,7 @@ VALUES
     (N'CUOTA-SEP26-33875104', N'Pago acreditado', '20260902'),
     (N'CUOTA-SEP26-37014896', N'Pago acreditado', '20260902');
 
-/* MetodoPago: un metodo por cobro (Mercado Pago o efectivo en pesos). */
+/* MetodoPago */
 INSERT INTO MetodoPago (Estado, Observaciones, IdNroPagoMP, IdPagoEfectivo)
 VALUES
     (1, N'Mercado Pago - Rossi Marco - septiembre', (SELECT IdNroPagoMP FROM MercadoPago WHERE ExternalReference = N'CUOTA-SEP26-38514072'), NULL),
@@ -1695,7 +1687,7 @@ VALUES
     (1, N'Mercado Pago - Conti Simone - septiembre', (SELECT IdNroPagoMP FROM MercadoPago WHERE ExternalReference = N'CUOTA-SEP26-37014896'), NULL),
     (1, N'Efectivo - Galli Beatrice - septiembre', NULL, 1);
 
-/* Pagos: 15 cobros aprobados de la cuota de septiembre. */
+/* Pagos */
 INSERT INTO Pago (Fecha, Descripcion, Importe, Estado, IdMetodoPago)
 VALUES
     ('20260902', N'Cuota septiembre - 38514072', 25000, N'Aprobado', (SELECT IdMetodoPago FROM MetodoPago WHERE Observaciones = N'Mercado Pago - Rossi Marco - septiembre')),
@@ -1714,7 +1706,7 @@ VALUES
     ('20260902', N'Cuota septiembre - 37014896', 15000, N'Aprobado', (SELECT IdMetodoPago FROM MetodoPago WHERE Observaciones = N'Mercado Pago - Conti Simone - septiembre')),
     ('20260902', N'Cuota septiembre - 35486120', 15000, N'Aprobado', (SELECT IdMetodoPago FROM MetodoPago WHERE Observaciones = N'Efectivo - Galli Beatrice - septiembre'));
 
-/* Cuotas de septiembre: 15 pagadas (con su pago) y 15 pendientes (sin pago asociado). */
+/* Cuotas */
 INSERT INTO CuotaMembresia (FechaDesde, FechaHasta, Importe, EstadoPago, IdRegistroPago, IdMembresia)
 VALUES
     ('20260901', '20260930', 25000, N'Pagada', (SELECT IdRegistroPago FROM Pago WHERE Descripcion = N'Cuota septiembre - 38514072'), (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'38514072') AND FechaInicio = '20260901')),
@@ -1748,7 +1740,7 @@ VALUES
     ('20260901', '20260930', 15000, N'Pendiente', NULL, (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'30268471') AND FechaInicio = '20260901')),
     ('20260901', '20260930', 15000, N'Pendiente', NULL, (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'41307529') AND FechaInicio = '20260901'));
 
-/* Asignacion de entrenador: Lukas Becker acompaña a las 15 membresias Premium. */
+/* MembresiaEntrenador */
 INSERT INTO MembresiaEntrenador (Estado, IdMembresia, IdEntrenador)
 VALUES
     (1, (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'38514072') AND FechaInicio = '20260901'), (SELECT IdUsuarioSistema FROM UsuarioSistema WHERE Username = N'lukas.becker')),

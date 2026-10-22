@@ -9,7 +9,7 @@ namespace exxen2._0.capaLogica
 {
     /* Coordina las operaciones y validaciones de negocio de membresías. */
     // Membresía = relación entre un socio y un plan. Un socio tiene una sola membresía (histórica);
-    // al crearla se genera su primera cuota. Con 2 o más cuotas vencidas sin pagar se da de baja sola.
+    // al crearla se genera su primera cuota. Se inactiva al alcanzar el límite configurado de cuotas vencidas impagas.
     // La usan GestionMembresiasFormulario, GestionPagosFormulario y ReportesFormulario.
     public class MembresiaLogica
     {
@@ -172,7 +172,9 @@ namespace exxen2._0.capaLogica
                 auditoria.ObtenerUsuario(datos);
                 var membresia = ObtenerMembresia(datos, idMembresia);
                 var estabaInactiva = !membresia.Estado;
-                if (DebeDarseDeBajaPorDeuda(ContarCuotasVencidasImpagasEnContexto(datos, idMembresia), ConfiguracionSistemaLogica.ObtenerEnContexto(datos).MaxCuotasVencidasPermitidas))
+                var cuotasVencidas = ContarCuotasVencidasImpagasEnContexto(datos, idMembresia);
+                var limiteVencidas = ConfiguracionSistemaLogica.ObtenerEnContexto(datos).MaxCuotasVencidasPermitidas;
+                if (DebeDarseDeBajaPorDeuda(cuotasVencidas, limiteVencidas))
                 {
                     CambiarEstadoEnContexto(datos, membresia, false);
                     reactivacionBloqueada = true;
@@ -234,7 +236,9 @@ namespace exxen2._0.capaLogica
         internal static void ActualizarEstadoPorDeudaEnContexto(IUnidadDeTrabajo datos, int idMembresia)
         {
             var membresia = ObtenerMembresia(datos, idMembresia);
-            if (DebeDarseDeBajaPorDeuda(ContarCuotasVencidasImpagasEnContexto(datos, idMembresia), ConfiguracionSistemaLogica.ObtenerEnContexto(datos).MaxCuotasVencidasPermitidas))
+            var cuotasVencidas = ContarCuotasVencidasImpagasEnContexto(datos, idMembresia);
+            var limiteVencidas = ConfiguracionSistemaLogica.ObtenerEnContexto(datos).MaxCuotasVencidasPermitidas;
+            if (DebeDarseDeBajaPorDeuda(cuotasVencidas, limiteVencidas))
                 CambiarEstadoEnContexto(datos, membresia, false);
         }
 

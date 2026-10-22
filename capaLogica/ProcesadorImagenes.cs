@@ -45,7 +45,7 @@ namespace exxen2._0.capaLogica
 
         private const int IdOrientacionExif = 0x0112;
 
-        /* Valida el contenido real y devuelve un JPEG o PNG nuevo de 800x800. */
+        /* Valida el contenido real y devuelve un JPEG o PNG de hasta 800x800, conservando sus proporciones. */
         public static ImagenNormalizada Procesar(byte[] contenido)
         {
             ValidarTamano(contenido);
@@ -76,10 +76,6 @@ namespace exxen2._0.capaLogica
                         return new ImagenNormalizada(memoria.ToArray(), extension, NombreFormato(formato), decodificada.Width, decodificada.Height);
                     }
                 }
-            }
-            catch (InvalidOperationException)
-            {
-                throw;
             }
             catch (ArgumentException excepcion)
             {

@@ -35,7 +35,29 @@ namespace exxen2._0.capaVisual.Compartido.Utilidades
                 }
                 foreach (var texto in copia.Titles) texto.Font = titulo;
                 foreach (var leyenda in copia.Legends) { leyenda.Font = fuente; leyenda.IsTextAutoFit = false; }
-                foreach (var serie in copia.Series) { serie.Font = fuente; serie.MarkerSize = Math.Max(serie.MarkerSize, 12); }
+                foreach (var serie in copia.Series)
+                {
+                    serie.Font = fuente;
+                    serie.MarkerSize = Math.Max(serie.MarkerSize, 12);
+                    if (serie.ChartType == SeriesChartType.Line && serie.IsValueShownAsLabel)
+                    {
+                        // Reaplica la posición tras aumentar el tamaño del marcador para el PNG.
+                        serie.SmartLabelStyle.Enabled = true;
+                        serie.SmartLabelStyle.IsMarkerOverlappingAllowed = false;
+                        serie.SmartLabelStyle.MovingDirection = LabelAlignmentStyles.Top;
+                        serie.SmartLabelStyle.MaxMovingDistance = 100;
+                    }
+                }
+                foreach (var area in copia.ChartAreas)
+                {
+                    var maximo = copia.Series.Where(s => s.ChartType == SeriesChartType.Line)
+                        .SelectMany(s => s.Points).Select(p => p.YValues[0]).DefaultIfEmpty().Max();
+                    if (maximo > 0)
+                    {
+                        area.AxisY.Minimum = 0;
+                        area.AxisY.Maximum = maximo * 1.2;
+                    }
+                }
                 copia.SaveImage(imagen, ChartImageFormat.Png);
                 return imagen.ToArray();
             }

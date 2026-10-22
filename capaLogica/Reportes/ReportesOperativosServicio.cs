@@ -29,7 +29,7 @@ namespace exxen2._0.capaLogica.Reportes
             var ruta = Path.GetFullPath(destino);
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                var usuario = auditoria.ObtenerUsuario(datos, true);
+                var usuario = auditoria.ObtenerUsuario(datos);
                 var documento = new Document();
                 documento.Info.Title = reporte.Titulo;
                 documento.Info.Author = usuario.Nombre + " " + usuario.Apellido;

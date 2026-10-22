@@ -33,6 +33,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             tabla.Validating += tabla_Validating;
             entrenador.Validating += entrenador_Validating;
             entrenador.SelectedIndexChanged += entrenador_SelectedIndexChanged;
+            filtroEstado.SelectedIndex = 0;
         }
 
         /* Carga entrenadores activos mostrando nombre completo y DNI como identidad visible. */
@@ -70,7 +71,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             cargandoTabla = true;
             tabla.Rows.Clear();
             foreach (var m in listado)
-                tabla.Rows.Add(m.IdMembresia, m.NombreSocio, m.NombrePlan, m.NombreEntrenador, m.EstadoMembresia ? "Vigente" : "Inactiva");
+                tabla.Rows.Add(m.IdMembresia, m.NombreSocio, m.NombrePlan, NombreEntrenadorVisible(m.NombreEntrenador), m.EstadoMembresia ? "Vigente" : "Inactiva");
             tabla.ClearSelection();
             cargandoTabla = false;
             PrepararFichaVacia();
@@ -83,11 +84,22 @@ namespace exxen2._0.capaVisual.Recepcionista
             return !string.IsNullOrEmpty(valor) && valor.IndexOf(criterio, StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
+        private static string NombreEntrenadorVisible(string nombreEntrenador)
+        {
+            if (string.IsNullOrWhiteSpace(nombreEntrenador)) return nombreEntrenador;
+            var finNombre = nombreEntrenador.IndexOf(" - DNI ", StringComparison.OrdinalIgnoreCase);
+            return finNombre < 0 ? nombreEntrenador : nombreEntrenador.Substring(0, finNombre);
+        }
+
         /* Al seleccionar una membresía, carga su contexto y las acciones posibles sobre ella. */
         private void tabla_SelectionChanged(object origen, EventArgs e)
         {
-            if (cargandoTabla || tabla.CurrentRow == null || !tabla.CurrentRow.Selected || tabla.CurrentRow.Cells[0].Value == null)
+            if (cargandoTabla) return;
+            if (tabla.SelectedRows.Count != 1 || tabla.CurrentRow == null || tabla.CurrentRow.Cells[0].Value == null)
+            {
+                PrepararFichaVacia();
                 return;
+            }
             idSeleccionado = Convert.ToInt32(tabla.CurrentRow.Cells[0].Value);
             var item = membresiasCargadas.FirstOrDefault(m => m.IdMembresia == idSeleccionado);
             if (item == null) return;
@@ -99,15 +111,9 @@ namespace exxen2._0.capaVisual.Recepcionista
             txtVencimiento.Text = item.CuotaHasta.HasValue ? item.CuotaHasta.Value.ToString("dd/MM/yyyy") : "Sin cuotas";
             txtEstadoMembresia.Text = item.EstadoMembresia ? "Vigente" : "Inactiva";
             txtEntrenadorActual.Text = item.NombreEntrenador;
-            if (item.Asignado && entrenador.Items.Count > 0) entrenador.SelectedValue = item.IdEntrenador; else entrenador.SelectedIndex = -1;
-            asignar.Visible = !item.Asignado;
-            cambiar.Visible = item.Asignado;
-            darDeBaja.Visible = item.Asignado;
-            asignar.Enabled = item.EstadoMembresia;
-            cambiar.Enabled = item.EstadoMembresia;
-            entrenador.Enabled = item.EstadoMembresia;
-            darDeBaja.Enabled = item.EstadoMembresia;
-            lblDetalleTitulo.Text = "Vinculación de la membresía";
+            entrenador.SelectedIndex = -1;
+            ActualizarAcciones();
+            lblDetalleTitulo.Text = string.Empty;
         }
 
         /* Deja la ficha sin acciones hasta que el usuario elija una membresía inequívoca. */
@@ -116,8 +122,43 @@ namespace exxen2._0.capaVisual.Recepcionista
             idSeleccionado = 0; idAsignacionSeleccionada = 0;
             indicadorErrores.Clear();
             txtSocio.Text = "Seleccioná una membresía"; txtDni.Text = "-"; txtPlan.Text = "-"; txtVencimiento.Text = "-"; txtEstadoMembresia.Text = "-"; txtEntrenadorActual.Text = "Sin asignar";
-            entrenador.SelectedIndex = -1; entrenador.Enabled = false;
-            asignar.Visible = false; cambiar.Visible = false; darDeBaja.Visible = false;
+            entrenador.SelectedIndex = -1;
+            ActualizarAcciones();
+        }
+
+        /* Mantiene las acciones visibles y habilitadas según la asignación seleccionada. */
+        private void ActualizarAcciones()
+        {
+            var item = idSeleccionado == 0
+                ? null
+                : membresiasCargadas.FirstOrDefault(m => m.IdMembresia == idSeleccionado);
+            var haySeleccion = item != null;
+            var asignado = haySeleccion && item.Asignado;
+            var membresiaActiva = haySeleccion && item.EstadoMembresia;
+
+            asignar.Visible = haySeleccion && !asignado;
+            cambiar.Visible = haySeleccion && asignado;
+            darDeBaja.Visible = haySeleccion && asignado;
+            asignar.Enabled = membresiaActiva;
+            cambiar.Enabled = membresiaActiva;
+            darDeBaja.Enabled = membresiaActiva;
+            entrenador.Enabled = membresiaActiva;
+            actualizarMenu.Enabled = true;
+        }
+
+        /* El clic derecho deja seleccionada la fila que originó el menú contextual. */
+        private void tabla_CellMouseDown(object origen, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right || e.RowIndex < 0)
+                return;
+
+            var celda = e.ColumnIndex >= 0
+                ? tabla.Rows[e.RowIndex].Cells[e.ColumnIndex]
+                : tabla.Rows[e.RowIndex].Cells.Cast<DataGridViewCell>().First(c => c.Visible);
+            tabla.CurrentCell = celda;
+            tabla.ClearSelection();
+            tabla.Rows[e.RowIndex].Selected = true;
+            ActualizarAcciones();
         }
 
         /* Al hacer clic en asignar, vincula el entrenador elegido a la membresía seleccionada. */

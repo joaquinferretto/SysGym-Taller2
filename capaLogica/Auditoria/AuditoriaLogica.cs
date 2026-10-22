@@ -106,7 +106,7 @@ namespace exxen2._0.capaLogica.Auditoria
             if (idEntidad <= 0 || string.IsNullOrWhiteSpace(entidad) || entidad.Length > 50 ||
                 string.IsNullOrWhiteSpace(detalle) || detalle.Length > 1000)
                 throw new ArgumentException("Los datos de la auditoría no son válidos.");
-            var usuario = ObtenerUsuario(datos, operacion == CrearUsuario || operacion == ModificarConfiguracion || operacion == GenerarReporteAnalisis || operacion == ExportarReporteOperativo);
+            var usuario = ObtenerUsuario(datos, operacion == CrearUsuario || operacion == ModificarConfiguracion || operacion == GenerarReporteAnalisis);
             datos.AuditoriasOperaciones.Agregar(new AuditoriaOperacion
             {
                 FechaHora = DateTime.Now, IdUsuario = usuario.IdUsuarioSistema,

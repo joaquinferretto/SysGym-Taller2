@@ -162,9 +162,9 @@ namespace exxen2._0.capaVisual.Recepcionista
         /* Al cambiar la fila seleccionada, toma su identificador y actualiza los datos o acciones del registro. */
         private void tabla_SelectionChanged(object origen, EventArgs e)
         {
-            if (cargandoTabla || tabla.CurrentRow == null || !tabla.CurrentRow.Selected)
+            if (cargandoTabla || tabla.SelectedRows.Count != 1)
                 return;
-            var idCuota = Convert.ToInt32(tabla.CurrentRow.Cells[0].Value);
+            var idCuota = Convert.ToInt32(tabla.SelectedRows[0].Cells[0].Value);
             var seleccionada = cuotasCargadas.FirstOrDefault(c => c.IdCuotaMembresia == idCuota);
             if (seleccionada != null)
                 MostrarCuota(seleccionada);
@@ -185,6 +185,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             actualizandoFormulario = false;
             SeleccionarPrimeraPendiente();
             ActualizarExportaciones();
+            ActualizarAcciones();
         }
 
         /* Al elegir otra membresía, prepara su primera cuota pendiente si no se están cargando los controles. */
@@ -217,7 +218,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         /* Carga el período y los datos de la cuota seleccionada y habilita las acciones correspondientes. */
         private void MostrarCuota(CuotaMembresia seleccionada, bool modoNuevo = false)
         {
-            indicadorErrores.Clear();
+            LimpiarErroresDelDetalle();
             actualizandoFormulario = true;
             idCuotaSeleccionada = seleccionada.IdCuotaMembresia;
             idPagoSeleccionado = seleccionada.IdRegistroPago ?? 0;
@@ -246,23 +247,24 @@ namespace exxen2._0.capaVisual.Recepcionista
         /* Limpia la selección y deshabilita las operaciones cuando no hay una cuota disponible. */
         private void MostrarSinCuota(string mensaje)
         {
-            indicadorErrores.Clear();
+            LimpiarErroresDelDetalle();
             idCuotaSeleccionada = 0;
             idPagoSeleccionado = 0;
             lblRegistradoPor.Text = "Registrado por: Sin información";
             cuota.Clear();
             importe.Clear();
             lblFormulario.Text = mensaje;
-            btnFicha.Enabled = ObtenerSocioSeleccionado() > 0 && FichaSolicitada != null;
             registrar.Enabled = false;
             anular.Enabled = false;
             reembolsar.Enabled = false;
             exportarComprobante.Enabled = false;
-            exportarHistorial.Enabled = false;
+            verFichaMenu.Enabled = false;
+            exportarHistorialMenu.Enabled = false;
             importe.ReadOnly = true;
             metodo.Enabled = false;
             estado.Enabled = false;
             membresia.Enabled = true;
+            ActualizarAcciones();
         }
 
         /* Habilita las acciones disponibles según la selección y el estado del registro. */
@@ -277,6 +279,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             registrar.Enabled = !tienePago && seleccionada.EstadoPago == EstadosCuota.Pendiente;
             anular.Enabled = tienePago && seleccionada.Pago.Estado != EstadosTransaccionPago.Anulado && seleccionada.Pago.Estado != EstadosTransaccionPago.Reembolsado;
             reembolsar.Enabled = tienePago && seleccionada.Pago.Estado == EstadosTransaccionPago.Aprobado;
+            ActualizarAcciones();
         }
 
         /* Al hacer clic en registrar, valida los campos y registra la operación mediante la capa lógica. */
@@ -310,9 +313,10 @@ namespace exxen2._0.capaVisual.Recepcionista
                     throw new InvalidOperationException("Selecciona un pago.");
                 if (MessageBox.Show("Anular el pago seleccionado?", "Confirmar anulacion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                     return;
+                var idCuota = idCuotaSeleccionada;
                 logica.AnularPago(idPagoSeleccionado);
                 Cargar();
-                nuevo_Click(null, EventArgs.Empty);
+                SeleccionarCuotaActualizada(idCuota);
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Pago anulado.");
             }
             catch (Exception ex)
@@ -330,15 +334,37 @@ namespace exxen2._0.capaVisual.Recepcionista
                     throw new InvalidOperationException("Selecciona un pago.");
                 if (MessageBox.Show("Reembolsar el pago seleccionado?", "Confirmar reembolso", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                     return;
+                var idCuota = idCuotaSeleccionada;
                 logica.ReembolsarPago(idPagoSeleccionado);
                 Cargar();
-                nuevo_Click(null, EventArgs.Empty);
+                SeleccionarCuotaActualizada(idCuota);
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Pago reembolsado.");
             }
             catch (Exception ex)
             {
                 AyudaFormularioVisual.MostrarError(lblEstado, ex);
             }
+        }
+
+        private void SeleccionarCuotaActualizada(int idCuota)
+        {
+            var fila = tabla.Rows.Cast<DataGridViewRow>().FirstOrDefault(r => Convert.ToInt32(r.Cells[0].Value) == idCuota);
+            if (fila == null)
+            {
+                buscador.Clear();
+                filtroEstado.SelectedIndex = 0;
+                fila = tabla.Rows.Cast<DataGridViewRow>().FirstOrDefault(r => Convert.ToInt32(r.Cells[0].Value) == idCuota);
+            }
+            if (fila == null)
+            {
+                MostrarSinCuota("La cuota actualizada no está disponible en el listado.");
+                return;
+            }
+            tabla.ClearSelection();
+            tabla.CurrentCell = fila.Cells[2];
+            fila.Selected = true;
+            var cuotaActualizada = cuotasCargadas.First(c => c.IdCuotaMembresia == idCuota);
+            MostrarCuota(cuotaActualizada);
         }
 
         private void exportarComprobante_Click(object origen, EventArgs e)
@@ -385,11 +411,44 @@ namespace exxen2._0.capaVisual.Recepcionista
             var seleccionada = cuotasCargadas.FirstOrDefault(c => c.IdCuotaMembresia == idCuotaSeleccionada);
             var pagado = seleccionada != null && seleccionada.EstadoPago == EstadosCuota.Pagada &&
                 seleccionada.Pago != null && seleccionada.Pago.Estado == EstadosTransaccionPago.Aprobado;
-            btnFicha.Enabled = ObtenerSocioSeleccionado() > 0 && FichaSolicitada != null;
+            verFichaMenu.Enabled = tabla.SelectedRows.Count == 1 && ObtenerSocioSeleccionado() > 0 && FichaSolicitada != null;
             exportarComprobante.Enabled = pagado;
             var idSocio = ObtenerSocioSeleccionado();
-            exportarHistorial.Enabled = idSocio > 0 && cuotasCargadas.Any(c => c.Membresia != null && c.Membresia.IdSocio == idSocio &&
+            exportarHistorialMenu.Enabled = tabla.SelectedRows.Count == 1 && idSocio > 0 && cuotasCargadas.Any(c => c.Membresia != null && c.Membresia.IdSocio == idSocio &&
                 c.EstadoPago == EstadosCuota.Pagada && c.Pago != null && c.Pago.Estado == EstadosTransaccionPago.Aprobado);
+            ActualizarAcciones();
+        }
+
+        private void ActualizarAcciones()
+        {
+            var seleccionada = cuotasCargadas.FirstOrDefault(c => c.IdCuotaMembresia == idCuotaSeleccionada);
+            var tienePago = seleccionada != null && seleccionada.Pago != null && seleccionada.IdRegistroPago.HasValue;
+            var aprobado = tienePago && seleccionada.Pago.Estado == EstadosTransaccionPago.Aprobado;
+            nuevo.Visible = !tienePago;
+            registrar.Visible = !tienePago && seleccionada != null && seleccionada.EstadoPago == EstadosCuota.Pendiente && !seleccionada.IdRegistroPago.HasValue;
+            anular.Visible = tienePago && anular.Enabled;
+            reembolsar.Visible = aprobado && reembolsar.Enabled;
+            exportarComprobante.Visible = aprobado && exportarComprobante.Enabled;
+            nuevo.Location = new Point(16, 264);
+            registrar.Location = new Point(194, 264);
+            anular.Location = new Point(16, 264);
+            reembolsar.Location = new Point(194, 264);
+            exportarComprobante.Location = new Point(16, 310);
+        }
+
+        private void tabla_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right || e.RowIndex < 0) return;
+            tabla.ClearSelection();
+            tabla.Rows[e.RowIndex].Selected = true;
+        }
+
+        private void tabla_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            tabla.ClearSelection();
+            tabla.Rows[e.RowIndex].Selected = true;
+            btnFicha_Click(sender, EventArgs.Empty);
         }
 
         /* Compone el nombre que se muestra en pantalla y contempla socios no disponibles. */
@@ -491,6 +550,11 @@ namespace exxen2._0.capaVisual.Recepcionista
         }
 
         /* Retira el aviso anterior al corregir un valor o selección. */
+        private void LimpiarErroresDelDetalle()
+        {
+            indicadorErrores.Clear();
+        }
+
         private void campoValidado_Cambiado(object origen, EventArgs e)
         {
             var control = origen as Control;
@@ -501,7 +565,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         /* Valida la cuota y los datos editables antes de registrar el pago. */
         private bool ValidarFormulario()
         {
-            indicadorErrores.Clear();
+            LimpiarErroresDelDetalle();
             var valido = ValidarCuotaSeleccionada();
             valido = AyudaFormularioVisual.ValidarDecimal(indicadorErrores, importe, "importe", true, false) & valido;
             valido = AyudaFormularioVisual.ValidarCombo(indicadorErrores, metodo, "Seleccioná un método de pago.") & valido;

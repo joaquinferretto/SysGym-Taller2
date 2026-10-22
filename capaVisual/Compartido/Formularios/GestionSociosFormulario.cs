@@ -132,6 +132,7 @@ namespace exxen2._0.capaVisual.Compartido
             tabla.ClearSelection();
             cargandoTabla = false;
             lblEstado.Text = tabla.Rows.Count + " socio(s) encontrado(s)";
+            if (idSeleccionado != 0) nuevo_Click(null, EventArgs.Empty);
         }
 
         /* Compara el texto de búsqueda sin distinguir mayúsculas y admite valores vacíos. */
@@ -143,8 +144,13 @@ namespace exxen2._0.capaVisual.Compartido
         /* Al cambiar la fila seleccionada, toma su identificador y actualiza los datos o acciones del registro. */
         private void tabla_SelectionChanged(object origen, EventArgs e)
         {
-            if (cargandoTabla || tabla.CurrentRow == null || !tabla.CurrentRow.Selected)
+            if (cargandoTabla)
                 return;
+            if (tabla.CurrentRow == null || !tabla.CurrentRow.Selected)
+            {
+                nuevo_Click(null, EventArgs.Empty);
+                return;
+            }
             try
             {
                 idSeleccionado = Convert.ToInt32(tabla.CurrentRow.Cells[0].Value);
@@ -164,7 +170,7 @@ namespace exxen2._0.capaVisual.Compartido
                     fechaNacimiento.Value = socio.FechaNacimiento.Value;
                 peso.Text = socio.Peso.HasValue ? socio.Peso.Value.ToString("0.##") : string.Empty;
                 altura.Text = socio.Altura.HasValue ? socio.Altura.Value.ToString("0.00") : string.Empty;
-                indicadorErrores.Clear();
+                LimpiarErroresDelDetalle();
                 EstablecerModo(false, socio.Estado);
             }
             catch (Exception ex)
@@ -190,7 +196,7 @@ namespace exxen2._0.capaVisual.Compartido
             fechaNacimiento.Value = fechaNacimiento.MaxDate;
             fechaNacimiento.Checked = true;
             tabla.ClearSelection();
-            indicadorErrores.Clear();
+            LimpiarErroresDelDetalle();
             EstablecerModo(true, true);
             if (permitirEdicion)
                 nombre.Focus();
@@ -202,10 +208,52 @@ namespace exxen2._0.capaVisual.Compartido
             lblFormulario.Text = nuevoRegistro ? "Nuevo socio" : "Editar socio";
             estadoSocio.Text = activo ? "Activo" : "Inactivo";
             btnFicha.Enabled = !nuevoRegistro && idSeleccionado > 0 && FichaSolicitada != null;
-            guardar.Enabled = permitirEdicion && nuevoRegistro;
+            guardar.Enabled = permitirEdicion;
             actualizar.Enabled = permitirEdicion && !nuevoRegistro;
             darDeBaja.Enabled = permitirEdicion && !nuevoRegistro && activo;
             reactivar.Enabled = permitirEdicion && !nuevoRegistro && !activo;
+            ActualizarAcciones();
+        }
+
+        private void ActualizarAcciones()
+        {
+            nuevo.Visible = permitirEdicion && idSeleccionado > 0;
+            guardar.Visible = permitirEdicion;
+            guardar.Location = idSeleccionado > 0 ? new Point(128, 331) : new Point(16, 331);
+            actualizar.Visible = false;
+            darDeBaja.Visible = permitirEdicion && idSeleccionado > 0 && estadoSeleccionado;
+            reactivar.Visible = permitirEdicion && idSeleccionado > 0 && !estadoSeleccionado;
+            btnFicha.Visible = false;
+            verRutina.Visible = false;
+            calcularImc.Visible = idSeleccionado == 0;
+            btnSeleccionarFoto.Visible = permitirEdicion;
+            btnQuitarFoto.Visible = permitirEdicion && (fotoSeleccionada != null || !string.IsNullOrWhiteSpace(fotoRutaSeleccionada));
+            fichaMenu.Enabled = idSeleccionado > 0 && FichaSolicitada != null;
+            rutinaMenu.Enabled = idSeleccionado > 0;
+            imcMenu.Enabled = idSeleccionado > 0;
+            darDeBajaMenu.Visible = permitirEdicion && idSeleccionado > 0 && estadoSeleccionado;
+            reactivarMenu.Visible = permitirEdicion && idSeleccionado > 0 && !estadoSeleccionado;
+            darDeBajaMenu.Enabled = permitirEdicion && idSeleccionado > 0 && estadoSeleccionado;
+            reactivarMenu.Enabled = permitirEdicion && idSeleccionado > 0 && !estadoSeleccionado;
+        }
+
+        private void tabla_CellMouseDown(object origen, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right || e.RowIndex < 0) return;
+            tabla.ClearSelection();
+            tabla.CurrentCell = tabla.Rows[e.RowIndex].Cells[1];
+            tabla.Rows[e.RowIndex].Selected = true;
+            tabla_SelectionChanged(tabla, EventArgs.Empty);
+        }
+
+        private void tabla_CellDoubleClick(object origen, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            tabla.ClearSelection();
+            tabla.CurrentCell = tabla.Rows[e.RowIndex].Cells[1];
+            tabla.Rows[e.RowIndex].Selected = true;
+            tabla_SelectionChanged(tabla, EventArgs.Empty);
+            btnFicha_Click(origen, EventArgs.Empty);
         }
 
         /* Selecciona en la grilla el socio solicitado por una pantalla de origen. */
@@ -240,8 +288,19 @@ namespace exxen2._0.capaVisual.Compartido
             };
         }
 
-        /* Al hacer clic en guardar, valida los campos y envía el registro a la capa lógica. */
+        /* Guardar crea o modifica el socio según exista una fila seleccionada. */
         private void guardar_Click(object origen, EventArgs e)
+        {
+            if (idSeleccionado != 0)
+            {
+                ModificarSocio();
+                return;
+            }
+
+            CrearSocio();
+        }
+
+        private void CrearSocio()
         {
             try
             {
@@ -258,10 +317,10 @@ namespace exxen2._0.capaVisual.Compartido
             {
                 AyudaFormularioVisual.MostrarError(lblEstado, ex, true);
             }
+
         }
 
-        /* Al hacer clic en actualizar, valida los campos y guarda las modificaciones mediante la capa lógica. */
-        private void actualizar_Click(object origen, EventArgs e)
+        private void ModificarSocio()
         {
             try
             {
@@ -279,6 +338,7 @@ namespace exxen2._0.capaVisual.Compartido
             {
                 AyudaFormularioVisual.MostrarError(lblEstado, ex);
             }
+
         }
 
         /* Al hacer clic en dar de baja, confirma y desactiva al socio (y su membresía activa) sin borrar su historial. */
@@ -472,6 +532,11 @@ namespace exxen2._0.capaVisual.Compartido
         }
 
         /* Retira el aviso anterior mientras el usuario corrige el campo. */
+        private void LimpiarErroresDelDetalle()
+        {
+            indicadorErrores.Clear();
+        }
+
         private void campoValidado_Cambiado(object origen, EventArgs e)
         {
             var control = origen as Control;
@@ -482,7 +547,7 @@ namespace exxen2._0.capaVisual.Compartido
         /* Valida todos los datos editables antes de invocar la capa lógica. */
         private bool ValidarFormulario()
         {
-            indicadorErrores.Clear();
+            LimpiarErroresDelDetalle();
             var valido = AyudaFormularioVisual.ValidarNombre(indicadorErrores, nombre, "nombre");
             valido = AyudaFormularioVisual.ValidarNombre(indicadorErrores, apellido, "apellido") & valido;
             valido = AyudaFormularioVisual.ValidarDni(indicadorErrores, dni) & valido;
@@ -535,6 +600,7 @@ namespace exxen2._0.capaVisual.Compartido
                 AyudaFormularioVisual.MostrarFoto(fotoSocio, seleccion.VistaPrevia, SexoSeleccionado());
                 fotoSeleccionada = seleccion.Contenido;
                 fotoRutaSeleccionada = null;
+                ActualizarAcciones();
             }
             catch (Exception ex)
             {
@@ -554,6 +620,7 @@ namespace exxen2._0.capaVisual.Compartido
             fotoSeleccionada = null;
             fotoRutaSeleccionada = null;
             sexo_SelectedIndexChanged(origen, e);
+            ActualizarAcciones();
         }
 
         /* Al cambiar el sexo sin foto propia, actualiza el avatar de la vista previa. */

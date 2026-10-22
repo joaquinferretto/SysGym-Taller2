@@ -38,20 +38,19 @@ namespace exxen2._0.capaVisual.Compartido.Controles
                 valorLimiteAlcanzado.Text = resumen.LimiteAlcanzado.ToString();
                 valorPendientes.Text = resumen.CuotasPendientes.ToString();
                 var avisos = new List<string>();
-                if (resumen.LimiteAlcanzado > 0)
-                    avisos.Add(resumen.LimiteAlcanzado + " socios alcanzaron el límite de deuda");
-                if (resumen.VencenHoy > 0)
-                    avisos.Add(resumen.VencenHoy + " cuotas vencen hoy");
+                if (resumen.CuotasVencidas > 0)
+                    avisos.Add(resumen.CuotasVencidas + " cuotas vencidas");
                 if (resumen.VencenEnPlazoAviso > 0)
-                    avisos.Add(resumen.VencenEnPlazoAviso + " cuotas vencen entre hoy y los próximos " + resumen.DiasAvisoVencimiento + " días");
-                if (resumen.ConDeuda > 0)
-                    avisos.Add(resumen.ConDeuda + " socios tienen deuda debajo del límite");
+                    avisos.Add(resumen.VencenEnPlazoAviso + " cuotas por vencer en " + resumen.DiasAvisoVencimiento + " días (incluye " + resumen.VencenHoy + " hoy)");
                 alertas.Text = avisos.Count == 0 ? "Sin avisos pendientes" : string.Join("  ·  ", avisos);
                 AplicarFiltro();
             }
             catch (Exception ex)
             {
-                filas.Rows.Clear();
+                socios.Clear();
+                AplicarFiltro();
+                foreach (var valor in new[] { valorActivos, valorInactivos, valorAlDia, valorConDeuda, valorLimiteAlcanzado, valorPendientes })
+                    valor.Text = "—";
                 alertas.Text = "No se pudo cargar el estado de socios: " + ex.Message;
             }
         }
@@ -67,15 +66,20 @@ namespace exxen2._0.capaVisual.Compartido.Controles
             else if (filtro == "1 cuota vencida") resultado = resultado.Where(s => s.CuotasVencidas == 1);
             else if (filtro == "Límite alcanzado") resultado = resultado.Where(s => s.LimiteAlcanzado);
             else if (filtro == "Inactivos") resultado = resultado.Where(s => !s.Activo);
+            else if (filtro == "Activos") resultado = resultado.Where(s => s.Activo);
+            else if (filtro == "Cuotas pendientes") resultado = resultado.Where(s => s.CuotasPendientes > 0);
+            else if (filtro == "Cuotas vencidas") resultado = resultado.Where(s => s.CuotasVencidas > 0);
+            else if (filtro == "Cuotas por vencer") resultado = resultado.Where(s => s.CuotasPorVencer > 0);
             if (!string.IsNullOrWhiteSpace(texto))
                 resultado = resultado.Where(s => Contiene(s.Socio, texto) || Contiene(s.DNI, texto));
             cargando = true;
             filas.Rows.Clear();
             foreach (var socio in resultado)
                 filas.Rows.Add(socio.IdSocio, socio.Socio, socio.DNI, socio.Plan, socio.EstadoMembresia,
-                    socio.EstadoPago, socio.CuotasVencidas, socio.DeudaTotal.ToString("C"),
-                    Fecha(socio.UltimoPago), Fecha(socio.ProximoVencimiento));
+                    socio.EstadoPago, socio.CuotasVencidas, socio.DeudaTotal,
+                    socio.UltimoPago, socio.ProximoVencimiento);
             filas.ClearSelection();
+            filas.CurrentCell = null;
             cargando = false;
             ActualizarAcciones();
             cantidad.Text = filas.Rows.Count == 1 ? "1 socio" : filas.Rows.Count + " socios";
@@ -83,30 +87,42 @@ namespace exxen2._0.capaVisual.Compartido.Controles
 
         private void ActualizarAcciones()
         {
-            var seleccionado = filas.CurrentRow != null && filas.CurrentRow.Selected;
-            btnCuotas.Enabled = seleccionado;
+            var seleccionado = filas.SelectedRows.Count == 1;
             btnPago.Enabled = seleccionado;
-            btnMembresia.Enabled = seleccionado;
             btnFicha.Enabled = seleccionado;
+            verCuotasMenu.Enabled = seleccionado;
+            verMembresiaMenu.Enabled = seleccionado;
         }
 
         private void SolicitarAccion(AccionEstadoSocio accion)
         {
-            if (filas.CurrentRow == null) return;
+            if (filas.SelectedRows.Count != 1) return;
             var evento = AccionSolicitada;
-            if (evento != null) evento(this, new AccionEstadoSocioEventArgs(Convert.ToInt32(filas.CurrentRow.Cells["colIdSocio"].Value), accion));
+            if (evento != null) evento(this, new AccionEstadoSocioEventArgs(Convert.ToInt32(filas.SelectedRows[0].Cells["colIdSocio"].Value), accion));
         }
 
-        private static string Fecha(DateTime? fecha) { return fecha.HasValue ? fecha.Value.ToString("dd/MM/yyyy") : "-"; }
         private static bool Contiene(string valor, string texto) { return !string.IsNullOrEmpty(valor) && valor.IndexOf(texto, StringComparison.OrdinalIgnoreCase) >= 0; }
         private void filtroEstado_SelectedIndexChanged(object sender, EventArgs e) { AplicarFiltro(); }
         private void buscador_TextChanged(object sender, EventArgs e) { AplicarFiltro(); }
         private void filas_SelectionChanged(object sender, EventArgs e) { if (!cargando) ActualizarAcciones(); }
-        private void btnCuotas_Click(object sender, EventArgs e) { SolicitarAccion(AccionEstadoSocio.VerCuotas); }
         private void btnPago_Click(object sender, EventArgs e) { SolicitarAccion(AccionEstadoSocio.RegistrarPago); }
-        private void btnMembresia_Click(object sender, EventArgs e) { SolicitarAccion(AccionEstadoSocio.VerMembresia); }
 
         private void btnFicha_Click(object sender, EventArgs e) { SolicitarAccion(AccionEstadoSocio.VerFicha); }
+        private void verCuotasMenu_Click(object sender, EventArgs e) { SolicitarAccion(AccionEstadoSocio.VerCuotas); }
+        private void verMembresiaMenu_Click(object sender, EventArgs e) { SolicitarAccion(AccionEstadoSocio.VerMembresia); }
+        private void filas_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            filas.ClearSelection();
+            filas.Rows[e.RowIndex].Selected = true;
+            SolicitarAccion(AccionEstadoSocio.VerFicha);
+        }
+        private void filas_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right || e.RowIndex < 0) return;
+            filas.ClearSelection();
+            filas.Rows[e.RowIndex].Selected = true;
+        }
 
         private void tarjeta_Click(object sender, EventArgs e)
         {

@@ -72,6 +72,7 @@ namespace exxen2._0.capaVisual.Administrador
             tabla.ClearSelection();
             cargandoTabla = false;
             lblEstado.Text = tabla.Rows.Count + " plan(es) encontrado(s)";
+            if (idSeleccionado != 0) nuevo_Click(null, EventArgs.Empty);
         }
 
         private static bool Contiene(string valor, string criterio)
@@ -81,7 +82,12 @@ namespace exxen2._0.capaVisual.Administrador
 
         private void tabla_SelectionChanged(object origen, EventArgs e)
         {
-            if (cargandoTabla || tabla.CurrentRow == null || !tabla.CurrentRow.Selected) return;
+            if (cargandoTabla) return;
+            if (tabla.CurrentRow == null || !tabla.CurrentRow.Selected)
+            {
+                nuevo_Click(null, EventArgs.Empty);
+                return;
+            }
             try
             {
                 idSeleccionado = Convert.ToInt32(tabla.CurrentRow.Cells[0].Value);
@@ -91,7 +97,7 @@ namespace exxen2._0.capaVisual.Administrador
                 nombre.Text = plan.Nombre;
                 descripcion.Text = plan.Descripcion ?? string.Empty;
                 precio.Text = plan.Precio.ToString("0.00");
-                indicadorErrores.Clear();
+                LimpiarErroresDelDetalle();
                 EstablecerModo(false, plan.Estado);
             }
             catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex); }
@@ -105,7 +111,7 @@ namespace exxen2._0.capaVisual.Administrador
             descripcion.Clear();
             precio.Clear();
             tabla.ClearSelection();
-            indicadorErrores.Clear();
+            LimpiarErroresDelDetalle();
             EstablecerModo(true, true);
             nombre.Focus();
         }
@@ -113,10 +119,31 @@ namespace exxen2._0.capaVisual.Administrador
         private void EstablecerModo(bool nuevoRegistro, bool activo)
         {
             lblFormulario.Text = nuevoRegistro ? "Nuevo plan" : "Editar plan";
-            guardar.Enabled = nuevoRegistro;
+            guardar.Enabled = true;
             actualizar.Enabled = !nuevoRegistro;
             darDeBaja.Enabled = !nuevoRegistro && activo;
             reactivar.Enabled = !nuevoRegistro && !activo;
+            ActualizarAcciones();
+        }
+
+        private void ActualizarAcciones()
+        {
+            actualizar.Visible = false;
+            darDeBaja.Visible = idSeleccionado > 0 && estadoSeleccionado;
+            reactivar.Visible = idSeleccionado > 0 && !estadoSeleccionado;
+            darDeBajaMenu.Enabled = idSeleccionado > 0 && estadoSeleccionado;
+            reactivarMenu.Enabled = idSeleccionado > 0 && !estadoSeleccionado;
+            darDeBajaMenu.Visible = darDeBajaMenu.Enabled;
+            reactivarMenu.Visible = reactivarMenu.Enabled;
+        }
+
+        private void tabla_CellMouseDown(object origen, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right || e.RowIndex < 0) return;
+            tabla.ClearSelection();
+            tabla.CurrentCell = tabla.Rows[e.RowIndex].Cells[1];
+            tabla.Rows[e.RowIndex].Selected = true;
+            tabla_SelectionChanged(tabla, EventArgs.Empty);
         }
 
         private Plan LeerPlan()
@@ -131,7 +158,19 @@ namespace exxen2._0.capaVisual.Administrador
             };
         }
 
+        /* Guardar crea o modifica el plan según exista una fila seleccionada. */
         private void guardar_Click(object origen, EventArgs e)
+        {
+            if (idSeleccionado != 0)
+            {
+                ModificarPlan();
+                return;
+            }
+
+            CrearPlan();
+        }
+
+        private void CrearPlan()
         {
             try
             {
@@ -143,9 +182,10 @@ namespace exxen2._0.capaVisual.Administrador
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Plan creado correctamente.", true);
             }
             catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex, true); }
+
         }
 
-        private void actualizar_Click(object origen, EventArgs e)
+        private void ModificarPlan()
         {
             try
             {
@@ -157,6 +197,7 @@ namespace exxen2._0.capaVisual.Administrador
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Plan actualizado correctamente.");
             }
             catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex); }
+
         }
 
         private void darDeBaja_Click(object origen, EventArgs e)
@@ -211,6 +252,11 @@ namespace exxen2._0.capaVisual.Administrador
         }
 
         /* Retira el icono anterior mientras el usuario corrige el valor. */
+        private void LimpiarErroresDelDetalle()
+        {
+            indicadorErrores.Clear();
+        }
+
         private void campoValidado_Cambiado(object origen, EventArgs e)
         {
             var control = origen as Control;
@@ -221,7 +267,7 @@ namespace exxen2._0.capaVisual.Administrador
         /* Repite las validaciones visuales antes de crear o actualizar. */
         private bool ValidarFormulario()
         {
-            indicadorErrores.Clear();
+            LimpiarErroresDelDetalle();
             var valido = AyudaFormularioVisual.ValidarRequerido(indicadorErrores, nombre, "El nombre del plan es obligatorio.");
             valido = AyudaFormularioVisual.ValidarDecimal(indicadorErrores, precio, "precio", true, false) & valido;
             if (!valido)

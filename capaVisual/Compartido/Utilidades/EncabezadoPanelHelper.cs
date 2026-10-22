@@ -33,6 +33,7 @@ namespace exxen2._0.capaVisual.Compartido.Utilidades
             lblTitulo.Text = enInicio ? tituloInicio : partes[0].Trim();
             lblSubtitulo.Text = enInicio ? subtituloInicio : partes.Length > 1 ? partes[1].Trim() : string.Empty;
             volver.Enabled = !enInicio;
+            volver.Visible = !enInicio;
         }
 
         /* Resalta la opción del menú correspondiente al módulo abierto; null deja todas sin resaltar. */

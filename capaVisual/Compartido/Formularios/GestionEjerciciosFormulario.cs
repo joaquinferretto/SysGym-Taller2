@@ -65,8 +65,13 @@ namespace exxen2._0.capaVisual.Compartido
         /* Al seleccionar una fila, carga automáticamente sus datos y acciones contextuales. */
         private void tabla_SelectionChanged(object origen, EventArgs e)
         {
-            if (cargandoTabla || tabla.CurrentRow == null || !tabla.CurrentRow.Selected || tabla.CurrentRow.Cells[0].Value == null)
+            if (cargandoTabla)
                 return;
+            if (tabla.CurrentRow == null || !tabla.CurrentRow.Selected || tabla.CurrentRow.Cells[0].Value == null)
+            {
+                nuevo_Click(null, EventArgs.Empty);
+                return;
+            }
             idSeleccionado = Convert.ToInt32(tabla.CurrentRow.Cells[0].Value);
             nombre.Text = Convert.ToString(tabla.CurrentRow.Cells[1].Value);
             descripcion.Text = Convert.ToString(tabla.CurrentRow.Cells[2].Value);
@@ -76,9 +81,7 @@ namespace exxen2._0.capaVisual.Compartido
             lblEstadoValor.ForeColor = estadoSeleccionado ? Color.FromArgb(22, 101, 52) : Color.FromArgb(185, 28, 28);
             lblDetalleTitulo.Text = "Ficha / Edición del ejercicio";
             guardar.Text = "Actualizar";
-            darDeBaja.Visible = estadoSeleccionado;
-            reactivar.Visible = !estadoSeleccionado;
-            guardar.Visible = true;
+            ActualizarAcciones();
         }
 
         /* Prepara la ficha para iniciar un alta sin conservar datos del registro anterior. */
@@ -92,11 +95,33 @@ namespace exxen2._0.capaVisual.Compartido
             descripcion.Clear();
             lblDetalleTitulo.Text = "Nuevo ejercicio";
             guardar.Text = "Guardar";
-            guardar.Visible = true;
-            darDeBaja.Visible = false;
-            reactivar.Visible = false;
             CargarImagenes();
             indicadorErrores.Clear();
+            ActualizarAcciones();
+        }
+
+        private void ActualizarAcciones()
+        {
+            actualizar.Visible = false;
+            nuevo.Visible = idSeleccionado > 0;
+            darDeBaja.Visible = idSeleccionado > 0 && estadoSeleccionado;
+            reactivar.Visible = idSeleccionado > 0 && !estadoSeleccionado;
+            guardar.Visible = true;
+            agregarImagen.Visible = idSeleccionado > 0;
+            quitarImagen.Visible = idSeleccionado > 0 && imagenSeleccionada != null;
+            darDeBajaMenu.Visible = idSeleccionado > 0 && estadoSeleccionado;
+            reactivarMenu.Visible = idSeleccionado > 0 && !estadoSeleccionado;
+            darDeBajaMenu.Enabled = idSeleccionado > 0 && estadoSeleccionado;
+            reactivarMenu.Enabled = idSeleccionado > 0 && !estadoSeleccionado;
+        }
+
+        private void tabla_CellMouseDown(object origen, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right || e.RowIndex < 0) return;
+            tabla.ClearSelection();
+            tabla.CurrentCell = tabla.Rows[e.RowIndex].Cells[1];
+            tabla.Rows[e.RowIndex].Selected = true;
+            tabla_SelectionChanged(tabla, EventArgs.Empty);
         }
 
         /* Al hacer clic en nuevo, deja la ficha lista para crear un ejercicio. */
@@ -231,6 +256,7 @@ namespace exxen2._0.capaVisual.Compartido
         {
             imagenSeleccionada = (origen as PictureBox)?.Tag as EjercicioImagen;
             quitarImagen.Enabled = imagenSeleccionada != null;
+            ActualizarAcciones();
             foreach (Control control in galeriaImagenes.Controls)
             {
                 var miniatura = control as PictureBox;
@@ -245,6 +271,7 @@ namespace exxen2._0.capaVisual.Compartido
             lblImagenes.Text = "Imágenes (" + cantidad + "/" + ProcesadorImagenes.MaxImagenesPorEjercicio + ")";
             agregarImagen.Enabled = idSeleccionado > 0 && cantidad < ProcesadorImagenes.MaxImagenesPorEjercicio;
             quitarImagen.Enabled = false;
+            ActualizarAcciones();
         }
 
         /* Agrega una imagen validada al catálogo sin copiarla hasta confirmar la operación en lógica. */

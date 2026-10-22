@@ -95,7 +95,6 @@
     <Compile Include="capaVisual\Administrador\ConfiguracionFormulario.Designer.cs">
       <DependentUpon>ConfiguracionFormulario.cs</DependentUpon>
     </Compile>
-    <None Include="capaDatos\Database\AgregarConfiguracionSistema.sql" />
     <Compile Include="capaDatos\Contexto\ContextoGimnasio.cs" />
     <Compile Include="capaDatos\Repositorios\UnidadDeTrabajoGimnasio.cs" />
     <Compile Include="capaDatos\Entidades\Ejercicio.cs" />
@@ -290,6 +289,9 @@
     <Compile Include="capaLogica\Reportes\ReportesOperativosServicio.cs" />
     <Compile Include="Programa.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="capaVisual\Administrador\AnalisisFormulario.resx">
+      <DependentUpon>AnalisisFormulario.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="capaVisual\Administrador\ConsultaRutinasAdministradorFormulario.resx">
       <DependentUpon>ConsultaRutinasAdministradorFormulario.cs</DependentUpon>
     </EmbeddedResource>
@@ -310,6 +312,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="capaVisual\Compartido\Controles\EstadoSociosControl.resx">
       <DependentUpon>EstadoSociosControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="capaVisual\Compartido\Formularios\FichaSocioFormulario.resx">
+      <DependentUpon>FichaSocioFormulario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="capaVisual\Compartido\Formularios\GestionEjerciciosFormulario.resx">
       <DependentUpon>GestionEjerciciosFormulario.cs</DependentUpon>
@@ -334,6 +339,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="capaVisual\Recepcionista\GestionMembresiasFormulario.resx">
       <DependentUpon>GestionMembresiasFormulario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="capaVisual\Recepcionista\GestionPagosFormulario.resx">
+      <DependentUpon>GestionPagosFormulario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="capaVisual\Recepcionista\PanelRecepcionista.resx">
       <DependentUpon>PanelRecepcionista.cs</DependentUpon>
@@ -376,9 +384,7 @@
     <PackageReference Include="Imazen.WebP.NativeRuntime.win-x86" Version="1.6.1" />
     <PackageReference Include="Konscious.Security.Cryptography.Argon2" Version="1.3.1" />
     <None Include="capaDatos\Database\SysGymDB.sql" />
-    <None Include="capaDatos\Database\MigrarEjercicioImagen.sql" />
-    <None Include="capaDatos\Database\AgregarSocioFechaAlta.sql" />
-    <None Include="capaDatos\Database\AgregarAuditoriaOperaciones.sql" />
+    <None Include="capaDatos\Database\SysGymDatos.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- Las imágenes persistidas se leen por ruta desde Datos junto al ejecutable.

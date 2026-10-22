@@ -101,6 +101,7 @@ namespace exxen2._0.capaLogica.Navegacion
             }
 
             formularioActual = formulario;
+            formulario.Text = string.Empty;  // Evita que MDI agregue "[SysGym]" al título del panel.
             formulario.MdiParent = propietario;  // Ensamble MDI: el módulo pasa a vivir dentro del área MDI.
             formulario.FormBorderStyle = FormBorderStyle.None;
             formulario.ControlBox = false;  // Sin botones de ventana ni menú de sistema.

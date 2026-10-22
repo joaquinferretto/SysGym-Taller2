@@ -75,9 +75,7 @@ namespace exxen2._0.capaLogica.Analisis
                 var meses = pagos.GroupBy(p => new { p.Fecha.Year, p.Fecha.Month })
                     .Select(g => new { g.Key.Year, g.Key.Month, Total = g.Sum(p => p.Importe) })
                     .ToList().ToDictionary(x => new DateTime(x.Year, x.Month, 1), x => x.Total);
-                resultado.IngresosPorMes = new List<DatoMensual>();
-                for (var mes = new DateTime(desde.Year, desde.Month, 1); mes <= hasta; mes = mes.AddMonths(1))
-                    resultado.IngresosPorMes.Add(new DatoMensual { Mes = mes, Valor = meses.ContainsKey(mes) ? meses[mes] : 0m });
+                resultado.IngresosPorMes = CompletarMeses(desde, hasta, meses);
                 resultado.TotalIngresos = resultado.IngresosPorMes.Sum(m => m.Valor);
                 if (resultado.IngresosPorMes.Count >= 2)
                 {

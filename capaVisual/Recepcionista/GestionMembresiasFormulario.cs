@@ -149,14 +149,20 @@ namespace exxen2._0.capaVisual.Recepcionista
             tabla.ClearSelection();
             cargandoTabla = false;
             lblEstado.Text = tabla.Rows.Count + " membresia(s) encontrada(s)";
+            if (idSeleccionado != 0) nuevo_Click(null, EventArgs.Empty);
         }
 
         /* Al cambiar la fila seleccionada, toma su identificador y actualiza los datos o acciones del registro. */
         private void tabla_SelectionChanged(object origen, EventArgs e)
         {
-            if (cargandoTabla || tabla.CurrentRow == null || !tabla.CurrentRow.Selected)
+            if (cargandoTabla)
                 return;
-            idSeleccionado = Convert.ToInt32(tabla.CurrentRow.Cells[0].Value);
+            if (tabla.SelectedRows.Count != 1)
+            {
+                nuevo_Click(null, EventArgs.Empty);
+                return;
+            }
+            idSeleccionado = Convert.ToInt32(tabla.SelectedRows[0].Cells[0].Value);
             membresiaSeleccionada = membresiasCargadas.FirstOrDefault(m => m.IdMembresia == idSeleccionado);
             if (membresiaSeleccionada == null)
                 return;
@@ -168,7 +174,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             inicio.Enabled = false;
             socio.Enabled = false;
             plan.Enabled = true;
-            indicadorErrores.Clear();
+            LimpiarErroresDelDetalle();
             EstablecerModo(false);
             lblFormulario.Text = "Membresía de " + NombreSocio(membresiaSeleccionada);
         }
@@ -189,7 +195,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             inicio.Value = DateTime.Today;
             inicio.Enabled = true;
             estadoMembresia.Text = "Activa";
-            indicadorErrores.Clear();
+            LimpiarErroresDelDetalle();
             EstablecerModo(true);
         }
 
@@ -200,7 +206,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             var puedeCrear = socio.Items.Count > 0 && plan.Items.Count > 0;
             if (nueva)
                 lblFormulario.Text = plan.Items.Count == 0 ? "Primero crea un plan" : (socio.Items.Count == 0 ? "No hay socios disponibles para una nueva membresía" : "Nueva membresía");
-            crear.Enabled = nueva && puedeCrear;
+            crear.Enabled = !nueva || puedeCrear;
             actualizar.Enabled = !nueva;
             habilitar.Enabled = !nueva && membresiaSeleccionada != null && !membresiaSeleccionada.Estado;
             deshabilitar.Enabled = !nueva && membresiaSeleccionada != null && membresiaSeleccionada.Estado;
@@ -218,10 +224,56 @@ namespace exxen2._0.capaVisual.Recepcionista
                     AyudaFormularioVisual.MostrarError(lblEstado, ex);
                 }
             }
+            ActualizarAcciones();
         }
 
-        /* Al hacer clic en crear, registra la membresía y su primera cuota mediante MembresiaLogica. */
-        private void crear_Click(object origen, EventArgs e)
+        private void ActualizarAcciones()
+        {
+            actualizar.Visible = false;
+            habilitar.Visible = membresiaSeleccionada != null && idSeleccionado > 0 && !membresiaSeleccionada.Estado;
+            deshabilitar.Visible = membresiaSeleccionada != null && idSeleccionado > 0 && membresiaSeleccionada.Estado;
+            btnFicha.Visible = false;
+            generarCuota.Visible = membresiaSeleccionada != null && membresiaSeleccionada.Estado;
+            generarCuota.Location = new Point(256, 226);
+            fichaMenu.Enabled = membresiaSeleccionada != null && FichaSolicitada != null;
+            habilitarMenu.Visible = membresiaSeleccionada != null && !membresiaSeleccionada.Estado;
+            deshabilitarMenu.Visible = membresiaSeleccionada != null && membresiaSeleccionada.Estado;
+            habilitarMenu.Enabled = membresiaSeleccionada != null && !membresiaSeleccionada.Estado;
+            deshabilitarMenu.Enabled = membresiaSeleccionada != null && membresiaSeleccionada.Estado;
+        }
+
+        private void tabla_CellMouseDown(object origen, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right || e.RowIndex < 0) return;
+            tabla.ClearSelection();
+            tabla.CurrentCell = tabla.Rows[e.RowIndex].Cells[1];
+            tabla.Rows[e.RowIndex].Selected = true;
+            tabla_SelectionChanged(tabla, EventArgs.Empty);
+        }
+
+        private void tabla_CellDoubleClick(object origen, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            tabla.ClearSelection();
+            tabla.CurrentCell = tabla.Rows[e.RowIndex].Cells[1];
+            tabla.Rows[e.RowIndex].Selected = true;
+            tabla_SelectionChanged(tabla, EventArgs.Empty);
+            btnFicha_Click(origen, EventArgs.Empty);
+        }
+
+        /* Guardar crea la membresía o modifica la seleccionada según el estado del formulario. */
+        private void guardar_Click(object origen, EventArgs e)
+        {
+            if (membresiaSeleccionada != null)
+            {
+                ModificarMembresia();
+                return;
+            }
+
+            CrearMembresia();
+        }
+
+        private void CrearMembresia()
         {
             try
             {
@@ -236,10 +288,10 @@ namespace exxen2._0.capaVisual.Recepcionista
             {
                 AyudaFormularioVisual.MostrarError(lblEstado, ex, true);
             }
+
         }
 
-        /* Al hacer clic en actualizar, valida los campos y guarda las modificaciones mediante la capa lógica. */
-        private void actualizar_Click(object origen, EventArgs e)
+        private void ModificarMembresia()
         {
             try
             {
@@ -259,6 +311,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             {
                 AyudaFormularioVisual.MostrarError(lblEstado, ex);
             }
+
         }
 
         /* Al hacer clic en reactivar, habilita la misma membresía mediante la capa lógica. */
@@ -384,6 +437,11 @@ namespace exxen2._0.capaVisual.Recepcionista
         }
 
         /* Retira el aviso anterior cuando cambia una selección o fecha. */
+        private void LimpiarErroresDelDetalle()
+        {
+            indicadorErrores.Clear();
+        }
+
         private void campoValidado_Cambiado(object origen, EventArgs e)
         {
             var control = origen as Control;
@@ -394,7 +452,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         /* Valida las selecciones antes de crear o modificar una membresía. */
         private bool ValidarFormulario(bool nueva)
         {
-            indicadorErrores.Clear();
+            LimpiarErroresDelDetalle();
             var valido = true;
             if (nueva)
                 valido = AyudaFormularioVisual.ValidarCombo(indicadorErrores, socio, "Seleccioná un socio.");
