@@ -1,0 +1,1599 @@
+# Créditos de imágenes de ejercicios
+
+Los cuadros de secuencia se recortaron para quitar márgenes transparentes, se recolorearon con trazos negros sobre fondo blanco y se normalizaron con el ProcesadorImagenes de SysGym (validación, orientación y máximo 800 × 800). Cada imagen conserva la licencia y la autoría indicadas por Workout Guide.
+
+## ID 1 — Press de banca
+
+Orden 1: Imagenes/Ejercicios/1/a77d71e063e147a1addfbf5434c62d7e.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/bench-press/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/1/1eaa56f2a078406caff66f4763c6bc92.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/bench-press/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/1/a330c06675024d589dc37bef03f8dde6.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/bench-press/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0042-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 2 — Press inclinado con mancuernas
+
+Orden 1: Imagenes/Ejercicios/2/6417327a7ed44808b674ebb36ca0d279.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/incline-dumbbell-press/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/2/76bc5f83831f4b378a4edd366e1f636e.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/incline-dumbbell-press/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/2/6fc7983111df481bbf6629ca9929c52e.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/incline-dumbbell-press/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0061-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 3 — Aperturas con mancuernas
+
+Orden 1: Imagenes/Ejercicios/3/dcdecc3939aa4c05b77e9fe91c13a0e2.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/dumbbell-fly/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/3/7b5bac744b0a4f74887f378976d88ec9.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/dumbbell-fly/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/3/196d776401c64f2bb8dd77b02b33bfcc.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/dumbbell-fly/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0056-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 4 — Fondos en paralelas
+
+Orden 1: Imagenes/Ejercicios/4/a6f25d89e77849fda3134aba1f4136cc.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/chest-dip/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/4/1347b8020b2c4855b116fc3210c1e7b2.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/chest-dip/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0054-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/4/7c2fc78a83624cf783eb3876345ba0d1.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/chest-dip/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 5 — Press plano con mancuernas
+
+Orden 1: Imagenes/Ejercicios/5/c04dbee37a8b48a4b27135f6d64d4d9f.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/dumbbell-bench-press/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/5/4830c202ec5c4285ae6c401284fd0862.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/dumbbell-bench-press/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/5/ddc0818e747440fe8c26cee8ea53c69f.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/dumbbell-bench-press/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0055-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 6 — Cruce en polea
+
+Orden 1: Imagenes/Ejercicios/6/0a050caff3bb443cbf8941bbe18f88e5.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/cable-fly/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/6/52c21518e2744506beb494c05b2f57a8.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/cable-fly/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/6/081dd93a4c424e03bf3b6ce058c383c4.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/cable-fly/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0048-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 7 — Press declinado con barra
+
+Orden 1: Imagenes/Ejercicios/7/c36efa0b58b446ca8199a4e4be112701.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/decline-bench-press/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/7/5898e28ae60f4312b6830ba2e82dde6a.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/decline-bench-press/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/7/99699e2f244c4231a3780a70296d3571.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/decline-bench-press/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0051-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 8 — Press inclinado con barra
+
+Orden 1: Imagenes/Ejercicios/8/01fadddcc67c4eea8bf3387c455afa91.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/incline-bench-press/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/8/f225e388215940599d56f47e0848732f.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/incline-bench-press/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/8/fd90109303c240739c424722b51b89c0.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/incline-bench-press/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0043-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 9 — Contractora de pecho
+
+Orden 1: Imagenes/Ejercicios/9/4f7b7ad2c00649a6bd78f8a9c4e857de.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/pec-deck/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/9/650685969af14a10848623323799bf6c.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/pec-deck/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/9/e02f4866642c46e998c137f685dd5872.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/pec-deck/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 10 — Flexiones de brazos
+
+Orden 1: Imagenes/Ejercicios/10/4083dc90ff4547f3b7b8cdf61336828a.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/push-up/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/10/386faca6b1dc444593390e09bca7e8e2.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/push-up/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0077-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/10/d9a9748ed0d14ae2a50f71365e882e91.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/push-up/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 11 — Jalon al pecho
+
+Orden 1: Imagenes/Ejercicios/11/77f528dbac0f4687a7063f6925a54c17.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/lat-pulldown/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/11/3797cc7703ca40658b16f4f72bdf2130.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/lat-pulldown/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/11/39405257e6f7496988a72ce05cf2e498.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/lat-pulldown/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0093-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 12 — Remo con barra
+
+Orden 1: Imagenes/Ejercicios/12/1169cf1f4f9c41ff9e113b82282a925f.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/barbell-row/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/12/aee77cff0c0246469c59dccb20dd0703.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/barbell-row/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/12/2c7c04317a864e9688014262cd06f8b0.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/barbell-row/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0026-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 13 — Remo sentado en polea
+
+Orden 1: Imagenes/Ejercicios/13/02b7da6becc8411a9332bf6f76eca253.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/seated-row/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/13/774948f3b8364fc297f38787ebfd7c14.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/seated-row/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/13/6a3f2d1109b34a40bb38f00994d68027.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/seated-row/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0025-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 14 — Face pull
+
+Orden 1: Imagenes/Ejercicios/14/8688c182723c455086b418ca6f6f98ec.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/face-pull/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/14/4d7846c2c6734baeb53f68746eb378fa.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/face-pull/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/14/ed26a336f82541dda268b093dd36181e.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/face-pull/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 15 — Dominadas
+
+Orden 1: Imagenes/Ejercicios/15/24989379f0ec41a8ba3495b990e2c60b.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/pull-up/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/15/df3b893a156d4424ac8582b2ef03ea8e.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/pull-up/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/15/196e654690844893b21ef94b967b3bcc.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/pull-up/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0087-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 16 — Remo con mancuerna
+
+Orden 1: Imagenes/Ejercicios/16/910856d804d743bcb8129159253449cd.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/one-arm-dumbbell-row/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/16/38065f4302b145e38be3aa9f3a6632e2.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/one-arm-dumbbell-row/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/16/3778df020d5f4174b5293acbef9e7317.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/one-arm-dumbbell-row/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 17 — Pullover en polea
+
+Orden 1: Imagenes/Ejercicios/17/1ae21b7dbc4e4e409e9f3256eebf5aed.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/straight-arm-pulldown/frame-2.png
+Frame de origen: 2; dibujo de línea de Workout Guide, ya procesado por ProcesadorImagenes y reubicado localmente sin alterar la pose.
+
+## ID 18 — Peso muerto convencional
+
+Orden 1: Imagenes/Ejercicios/18/1140d889b4b44212b490a7881c8d2b18.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/deadlift/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/18/1d7db49d934f40d8be7f3b8c5e837c5e.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/deadlift/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/18/cea40f54ad83479f86eb095b04f86a02.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/deadlift/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0099-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 19 — Remo en T
+
+Orden 1: Imagenes/Ejercicios/19/2673dd889a364886b5fee9c358ae7d4e.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/t-bar-row/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/19/525c7771bbe248cc9a288b225b846776.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/t-bar-row/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/19/97492a13f5684c02b2c9abbc0851873d.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/t-bar-row/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0029-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 20 — Jalon con agarre cerrado
+
+Orden 1: Imagenes/Ejercicios/20/b521556117704ae089884f79e6c71f80.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/close-grip-lat-pulldown/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/20/82f4cf475faa4c659ae7a154f722ebd1.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/close-grip-lat-pulldown/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/20/2c92816e97b44498a873c38cc23e7ba2.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/close-grip-lat-pulldown/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0096-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 21 — Hiperextensiones lumbares
+
+Orden 1: Imagenes/Ejercicios/21/79b11cdaa7ac48bc92d3e002e4d2fbc0.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/back-extension/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/21/b6f094a553ab4d9eb16d52e29c442d1f.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/back-extension/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/21/439bee90a13a40a88cf1c8011aa6f926.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/back-extension/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0103-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 22 — Encogimientos para trapecio
+
+Orden 1: Imagenes/Ejercicios/22/07c77c184fa246669cf94c076db182e8.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/dumbbell-shrug/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/22/95fd89c23a9b4c0993db3860b3604a05.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/dumbbell-shrug/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0005-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/22/93d529b499ed44f5a9da173513530dbe.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/dumbbell-shrug/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 23 — Press militar
+
+Orden 1: Imagenes/Ejercicios/23/7d9f5b1752d94cd6bd3d1bc407c71681.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/overhead-press/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/23/b6aefe9f9a9b48d7acbb367a4329fa96.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/overhead-press/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/23/14ab734265ba40ab8094f793b4e19e31.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/overhead-press/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 24 — Elevaciones laterales
+
+Orden 1: Imagenes/Ejercicios/24/d5517455e5c14289bd849340e023e64d.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/lateral-raise/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/24/e39712f064a84a618b838938b5fa13b4.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/lateral-raise/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/24/f58f292f2f304301a5549fcbff41967c.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/lateral-raise/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0018-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 25 — Press Arnold
+
+Orden 1: Imagenes/Ejercicios/25/006a9356e405454e9b9dbc4b557f0606.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/arnold-press/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/25/327f55368e434cfe83c43d539d6ee0d9.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/arnold-press/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/25/d223383d3fac462f8fea1578ea927752.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/arnold-press/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 26 — Elevaciones frontales
+
+Orden 1: Imagenes/Ejercicios/26/ed5962884a764a66abab095eb31dad55.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/front-raise/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/26/f2af3bdff2f1495b917953b1bbd513e0.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/front-raise/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/26/253736e51b1147b8b9927df485c5bb1b.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/front-raise/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0033-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 27 — Pajaro con mancuernas
+
+Orden 1: Imagenes/Ejercicios/27/92bac0388be14614b5665fbff0e06b1c.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/rear-delt-fly/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/27/e85519bb9b924082bae3dc15d18b88c7.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/rear-delt-fly/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/27/68854d05b6d0494a9fcb08dbebdafaa8.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/rear-delt-fly/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 28 — Press de hombros con mancuernas
+
+Orden 1: Imagenes/Ejercicios/28/20b41b4652954fe59db148bfa79c1487.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/seated-dumbbell-press/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/28/7de2b0a5c4e04bc695857e9c88952f90.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/seated-dumbbell-press/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/28/507b68613f684bf8a6042ab5a12a524c.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/seated-dumbbell-press/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 29 — Press de hombros en maquina
+
+Orden 1: Imagenes/Ejercicios/29/0008c1228a8343a6b0f4278bed8f062a.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/machine-shoulder-press/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/29/7d2e952025484b718f89eda066cf23c0.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/machine-shoulder-press/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/29/6160502720cb4468aa07b595baa8fbb4.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/machine-shoulder-press/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 30 — Remo al menton
+
+Orden 1: Imagenes/Ejercicios/30/af4446b996144d2ea90980669efc350b.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/upright-row/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/30/fc3fcae315f74cc0a048cfefcb9e7360.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/upright-row/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/30/adeb08f2ed304e8393bea726ddd750ee.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/upright-row/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0014-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 31 — Curl de biceps con barra
+
+Orden 1: Imagenes/Ejercicios/31/188d3a421a8e49458f5fccda94e79c19.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/ez-bar-curl/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/31/7237143dc66c4d5eb7d420dd4a02eab2.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/ez-bar-curl/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/31/36d3b11cfa5741e8a4b4886fe9c84b4b.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/ez-bar-curl/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0226-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 32 — Curl martillo
+
+Orden 1: Imagenes/Ejercicios/32/68af05a8bddb4ccd9bb6f92e57fda822.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/hammer-curl/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/32/427be59ca47544b3a264375f87e0845d.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/hammer-curl/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/32/d5f96e56587b43adacec06b1144b7100.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/hammer-curl/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0227-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 33 — Curl en banco inclinado
+
+Orden 1: Imagenes/Ejercicios/33/0a8c01f4167d42d39d0954ac08afa4a0.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/incline-dumbbell-curl/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/33/99ef265d51b1457e851ad9b75b89a702.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/incline-dumbbell-curl/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0214-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/33/d040c697f2684f8098f8255790e910ad.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/incline-dumbbell-curl/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 34 — Curl concentrado
+
+Orden 1: Imagenes/Ejercicios/34/ad580af555884e36b37730477e7218a5.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/concentration-curl/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/34/de8b21f27dfb46938ac5a7872555f20d.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/concentration-curl/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0220-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/34/d56df006905b4fdf93dd6df66d962a52.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/concentration-curl/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 35 — Curl en polea baja
+
+Orden 1: Imagenes/Ejercicios/35/1e659e4ed3d1438c9be2bebc23ec5c0a.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/cable-curl/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/35/61c44ba5cce948b28bb3afdb6b61de93.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/cable-curl/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/35/a6717fa0295a402e866c196fc20ba9a7.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/cable-curl/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0212-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 36 — Curl en banco Scott
+
+Orden 1: Imagenes/Ejercicios/36/73c345ee743648b9a4cdb5ff6f8e0ba6.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/preacher-curl/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/36/96b01413ef7347d194885e9ba9d11f51.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/preacher-curl/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/36/d3fbf87f11d14dafbc63ee56d400cc8a.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/preacher-curl/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0236-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 37 — Extension de triceps en polea
+
+Orden 1: Imagenes/Ejercicios/37/0ed79d02dad1414685486b2a434bb354.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/tricep-pushdown/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/37/92d4649effc74f4180045c86906f08c6.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/tricep-pushdown/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0205-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/37/d9f982fc170e4214aed6896dbed7dde4.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/tricep-pushdown/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 38 — Press frances
+
+Orden 1: Imagenes/Ejercicios/38/02910fd1a76d4e48aa369d9663de107f.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/skull-crusher/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/38/5bac8e54da824d869fae5faea4c4739b.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/skull-crusher/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0183-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/38/99c94885d0c34f16ae90aa7ff459d152.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/skull-crusher/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 39 — Patada de triceps
+
+Orden 1: Imagenes/Ejercicios/39/677cc07ed7b64012bfaf0ae24685b95a.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/tricep-kickback/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/39/f3a3f5d151964c98ab8e00df20c0208a.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/tricep-kickback/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/39/3c7f81957a554a3b8795fcea46f17eee.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/tricep-kickback/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0204-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 40 — Fondos en banco
+
+Orden 1: Imagenes/Ejercicios/40/a05bcc5929474dbaa1ea72965e1ffc8d.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/bench-dip/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/40/eeeaaacd936e4535889ef45b1f4b3f61.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/bench-dip/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0162-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/40/fa38787b743e4c2782907137d6bcaf96.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/bench-dip/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 41 — Extension de triceps sobre la cabeza
+
+Orden 1: Imagenes/Ejercicios/41/57e9f9bb0fff4335bc6cd071c82dbd40.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/dumbbell-overhead-tricep-extension/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/41/38ec16385e284a1e852f50b0a40f73fb.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/dumbbell-overhead-tricep-extension/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0194-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/41/d186654606014f87999e2a63acb1fdeb.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/dumbbell-overhead-tricep-extension/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 42 — Press de banca agarre cerrado
+
+Orden 1: Imagenes/Ejercicios/42/b523a181f43d4e59a86674ceb1f34419.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/close-grip-bench-press/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/42/f358815f2d4e464aa51b6208f4c8b670.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/close-grip-bench-press/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0049-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/42/163c5e0ba0f5454baadf5d0cf1fedf2d.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/close-grip-bench-press/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 43 — Curl de antebrazo
+
+Orden 1: Imagenes/Ejercicios/43/f3929d42a87d41669badde5769351873.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/wrist-curl/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Un cuadro: se conserva el frame 1 para evitar reutilizarlo en el ID 98.
+
+## ID 44 — Sentadilla con barra
+
+Orden 1: Imagenes/Ejercicios/44/e2af9cae689d4f1f9ec43be0a4335d63.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/squat/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/44/ea6c80631f47459f8c37ff66e2e2b91f.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/squat/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0122-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/44/a886f7ffbb64451095c03523500c4ce8.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/squat/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 45 — Prensa de piernas
+
+Orden 1: Imagenes/Ejercicios/45/8d4cefb357314eba8ffb6e3b9d5e48ea.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/leg-press/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/45/3773641f4dbf46b896ff44cf6b60e7dd.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/leg-press/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0127-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/45/bfec493744b548588325cacdc11f3d33.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/leg-press/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 46 — Peso muerto rumano
+
+Orden 1: Imagenes/Ejercicios/46/e57fb227bdbb488d8a700fd7ecadb63c.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/romanian-deadlift/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/46/67e4bcad45094366bccdc9ce82a581ea.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/romanian-deadlift/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0118-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/46/e87c9cb7339346efa43b1473a65e8039.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/romanian-deadlift/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 47 — Extension de cuadriceps
+
+Orden 1: Imagenes/Ejercicios/47/0f3404f0fb6a4bc98b760b7ecf8ab51c.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/leg-extension/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/47/8f4a44ddcd7c4664b309cfbb38cb2947.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/leg-extension/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/47/f43831b87a464d7f9e44a72bf3cd0dff.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/leg-extension/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0142-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 48 — Curl femoral
+
+Orden 1: Imagenes/Ejercicios/48/8297f4d73a0b4a6d89cb368b4491314c.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/lying-leg-curl/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/48/6da58a693aed423c9bf24f7e2848ddb1.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/lying-leg-curl/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/48/13211114998144dea9c16ec03d1fce1c.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/lying-leg-curl/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0117-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 49 — Hip thrust
+
+Orden 1: Imagenes/Ejercicios/49/ce0fa5b69ba4498bbf6cbfc8a423aefe.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/hip-thrust/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/49/27630f4de4384e52a3b62debd1c2a559.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/hip-thrust/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/49/b6df2fd8eb3c4a47bb288727246419a6.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/hip-thrust/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 50 — Zancadas
+
+Orden 1: Imagenes/Ejercicios/50/a6c3c6bbc6dc405da77052792474aa27.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/forward-lunge/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/50/8e20e726d2dc491b98747aa61dfc6300.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/forward-lunge/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/50/e17050a6dbf34521b586bfd1661a3fac.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/forward-lunge/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 51 — Elevacion de talones
+
+Orden 1: Imagenes/Ejercicios/51/27bfaf23150a45118f23cf3b3a739f61.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/standing-calf-raise/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/51/d60aeb87a8814a25b10fd6605d3fdf67.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/standing-calf-raise/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0282-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/51/d76ad4cb817b4658a974e68460dad0a8.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/standing-calf-raise/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 52 — Sentadilla bulgara
+
+Orden 1: Imagenes/Ejercicios/52/63f528afeb0f49c6be9a524a4d3784eb.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/bulgarian-split-squat/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/52/5148c278db9c41c38bbc8f480d8958c6.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/bulgarian-split-squat/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/52/6b44e7213bd94013bef5ed221720877f.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/bulgarian-split-squat/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 53 — Abductores en maquina
+
+Orden 1: Imagenes/Ejercicios/53/6ca343660b3543598cd18bf6fe37aea1.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/hip-abduction-machine/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/53/c800c72f3aa44a8ba323d5bd4047a86c.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/hip-abduction-machine/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/53/8fed62367ef244fba331ab764a44eb8a.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/hip-abduction-machine/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.; contraste aumentado para ennegrecer los trazos y reprocesada con ProcesadorImagenes.
+
+## ID 54 — Sentadilla frontal
+
+Orden 1: Imagenes/Ejercicios/54/668507c737284e4fbaa04df562412ff9.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/front-squat/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/54/5968b620c5cd4234984ef6ba3f228681.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/front-squat/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0138-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/54/c76a7e7d32764a4cb429b2b36adb1b14.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/front-squat/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 55 — Sentadilla hack
+
+Orden 1: Imagenes/Ejercicios/55/fdbf34c8b75940e0abf303e9b71d66b5.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/hack-squat/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/55/4fd1211d31a34d9d90e779c16fe1d444.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/hack-squat/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0123-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/55/3fc019c7b2314c3c9070357e4e655bb2.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/hack-squat/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 56 — Sentadilla goblet
+
+Orden 1: Imagenes/Ejercicios/56/ffb513c895b6430b80ba22cc6cad422e.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/goblet-squat/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/56/ecd0849e15e344619faa4f965ceed5f3.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/goblet-squat/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/56/9238ea035d5b4deba04b6e3e8349eb7f.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/goblet-squat/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 57 — Peso muerto sumo
+
+Orden 1: Imagenes/Ejercicios/57/4364ca3c3af640edbadd52d209f0ce1f.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/sumo-deadlift/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/57/067a590530434ca582364c430c0fa6fd.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/sumo-deadlift/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/57/336e1fbd7ed84f54b6f531a480102db1.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/sumo-deadlift/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 58 — Aductores en maquina
+
+Orden 1: Imagenes/Ejercicios/58/35e17897995d4a70817d1ecf6cb6e987.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/hip-adduction-machine/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/58/8179abc3f8cf4469a94cc15ba8104ecd.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/hip-adduction-machine/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/58/40b051beb56e4f4499727635f6f616a8.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/hip-adduction-machine/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 59 — Subida al cajon
+
+Orden 1: Imagenes/Ejercicios/59/09e5d0543b044d34bb758a2a22e15a26.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/step-up/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Secuencia parcial: los cuadros 1 y 2 disponibles aquí corresponden a los frames 2 y 3; el frame inicial se reserva para el ID 102 para evitar hashes repetidos.
+
+Orden 2: Imagenes/Ejercicios/59/eae8b541499943ecbafd6c3fc5536087.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/step-up/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 60 — Puente de gluteos
+
+Orden 1: Imagenes/Ejercicios/60/0c60ab3ce4044f8cbf298218154512f2.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/glute-bridge/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/60/15717101ae6f4db3a7055e0f1751e13d.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/glute-bridge/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/60/8a068a67485649e1b6bc69d75e2d3607.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/glute-bridge/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0109-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 61 — Patada de gluteo en polea
+
+Orden 1: Imagenes/Ejercicios/61/01e3c97a00dc49959791a3d722907d3a.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/cable-kickback/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/61/6fe422c47a264f9ca85f887a99d50543.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/cable-kickback/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/61/ed1dcaa0204545e787d5ada84f2e89a9.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/cable-kickback/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0112-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 62 — Elevacion de talones sentado
+
+Orden 1: Imagenes/Ejercicios/62/aff5c3bafece440b8c4f1e742b437fb5.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/seated-calf-raise/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/62/04df4d92b27442fa8bde2cb6667d609d.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/seated-calf-raise/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0279-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/62/abbf0de723d14ce1a4090de9941e3fae.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/seated-calf-raise/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 63 — Plancha abdominal
+
+Orden 1: Imagenes/Ejercicios/63/c0695827a8bb4df3bf244797f2a925b1.jpg
+Autor, licencia y fuente: no documentados en los archivos actuales del proyecto; imagen preexistente conservada.
+Imagen recortada al contenido, ampliada para que la figura ocupe al menos el 70% del cuadro y normalizada con ProcesadorImagenes.
+
+## ID 64 — Crunch abdominal
+
+Orden 1: Imagenes/Ejercicios/64/2bea747e6a374e45a533e256c1f2688d.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/crunch/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/64/3b0e81d7b6014027b1ca2a87c1fa2163.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/crunch/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/64/e2752cb137a04312807648b2a645fe21.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/crunch/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0291-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 65 — Escaladores
+
+Orden 1: Imagenes/Ejercicios/65/1401831e11334ed0a26eec0f198693a4.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/mountain-climber/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/65/2af02f79fe3147f4a33af9db53c8ce04.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/mountain-climber/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/65/bd03e4e4f11543ebb6a3fb11fed44cd7.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/mountain-climber/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 66 — Elevacion de piernas colgado
+
+Orden 1: Imagenes/Ejercicios/66/6f877ac54dd74b95bc96d21456af4ebf.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/hanging-leg-raise/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/66/fc417ed979e44efaa021a6d5e410e936.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/hanging-leg-raise/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/66/01b3344b9b104d358144026cc1c21032.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/hanging-leg-raise/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 67 — Rueda abdominal
+
+Orden 1: Imagenes/Ejercicios/67/705df799b28243e2ae55d72ab3a9fc78.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/ab-wheel/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 68 — Giro ruso
+
+Orden 1: Imagenes/Ejercicios/68/faab029a28d44601a8f466dd4e9a2929.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/russian-twist/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/68/3b4bf10039694b3c820babc6cc8c3feb.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/russian-twist/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/68/552632a205c04281b6dfba24eb8d6771.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/russian-twist/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 69 — Plancha lateral
+
+Orden 1: Imagenes/Ejercicios/69/716e5e48b36a4667b6e0cae4bcd5a4b0.jpg
+Autor, licencia y fuente: no documentados en los archivos actuales del proyecto; imagen preexistente conservada.
+Imagen recortada al contenido, ampliada para que la figura ocupe al menos el 70% del cuadro y normalizada con ProcesadorImagenes.
+
+## ID 70 — Crunch en polea
+
+Orden 1: Imagenes/Ejercicios/70/ec039a8000f54cd9826f658ae58378f8.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/cable-crunch/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0288-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/70/83abb110b1d44cde92c4431e2cf684f9.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/cable-crunch/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 71 — Bicho muerto
+
+Orden 1: Imagenes/Ejercicios/71/dc53c60fb737498facf3a33cee3c5d5b.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/dead-bug/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.; contraste aumentado para ennegrecer los trazos y reprocesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/71/5a5a88c4ff924bbf952aa20731dfe48d.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/dead-bug/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/71/a1c637d6637f4bb1bfbcdf6c0f672312.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/dead-bug/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 72 — Cinta de correr
+
+Orden 1: Imagenes/Ejercicios/72/ff69c5b54d004df189a4ef1855b35dc0.jpg
+Autor, licencia y fuente: no documentados en los archivos actuales del proyecto; imagen preexistente conservada.
+
+## ID 73 — Bicicleta fija
+
+Orden 1: Imagenes/Ejercicios/73/853e93dffa484db0b8a19059ad796ed6.jpg
+Autor, licencia y fuente: no documentados en los archivos actuales del proyecto; imagen preexistente conservada.
+
+## ID 74 — Eliptica
+
+Orden 1: Imagenes/Ejercicios/74/f00a8e379b4b4f439476c7d34482f375.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/elliptical/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/74/0aa5f1e1af2844b499c7459c3102170e.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/elliptical/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/74/26ea688f332d49b8b4aa029884a6f66a.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/elliptical/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 75 — Remo ergometro
+
+Orden 1: Imagenes/Ejercicios/75/ceb2e2ff4e1e47fd99e42a008d00fcd9.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/rowing/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/75/c4e53791a08946b3b38da864344dffab.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/rowing/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/75/9adea8f6d40a49d787c3f610964a5521.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/rowing/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 76 — Escaladora
+
+Orden 1: Imagenes/Ejercicios/76/6ad161ff365e4e3d95c66a94ff230ab7.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/stair-climber/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/76/14494a9b87a94b099364bd572f8a97c9.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/stair-climber/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/76/702b1e281f314aafa5928f5d699bd8e1.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/stair-climber/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 77 — Salto con soga
+
+Orden 1: Imagenes/Ejercicios/77/47ff881cc00c427faee2cdfc4e27195e.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/jump-rope/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/77/12a5428a126b41f8aa963787a98c8af7.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/jump-rope/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/77/840e40a39aa8406c93d97c8f4bcd45d1.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/jump-rope/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 78 — Burpees
+
+Orden 1: Imagenes/Ejercicios/78/d5a3ed964f554bcba3c77cbe8dd51f04.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/burpee/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/78/7defdeaa94984fab97e5b34c912b14d2.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/burpee/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/78/cffd9496b59d49868d3037ac0ba0404b.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/burpee/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 79 — Salto al cajon
+
+Orden 1: Imagenes/Ejercicios/79/832da073532b453d87230587afa97ba3.jpg
+Autor, licencia y fuente: no documentados en los archivos actuales del proyecto; imagen preexistente conservada.
+
+## ID 80 — Swing con kettlebell
+
+Orden 1: Imagenes/Ejercicios/80/16fb350d131b4f5db1b2c69fabff77e8.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/kettlebell-swing/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/80/2154e7888a024e18bad365332e529427.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/kettlebell-swing/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/80/dcd16089ccc142e4a3e9c4eb4ff5e27d.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/kettlebell-swing/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 81 — Sogas de batalla
+
+Orden 1: Imagenes/Ejercicios/81/b6a61ae0116f4cba945a7790131ba289.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/battle-ropes/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/81/f3bf7c6bbf48489daf1ba0cd8b6fe7bc.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/battle-ropes/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/81/8614e347ebe14c72af8d4576d7a0bce4.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/battle-ropes/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 82 — Caminata del granjero
+
+Orden 1: Imagenes/Ejercicios/82/0f6279ceb9e94b1cb63e064a72b440fc.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/farmer-carry/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.; contraste aumentado para ennegrecer los trazos y reprocesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/82/fdcbec6bbb62494790209da8f69523a8.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/farmer-carry/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Secuencia parcial: los cuadros 1 y 2 disponibles aquí corresponden a los frames 2 y 3; el frame 1 se reserva para el ID 101 para evitar hashes repetidos.
+
+## ID 83 — Sentadilla goblet
+
+Orden 1: Imagenes/Ejercicios/83/ec3ee3def2ec4caa8200d3c76842f702.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/heel-elevated-goblet-squat/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/83/5778fa1c137e4591b92e939d9d067393.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/heel-elevated-goblet-squat/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Equivalencia cercana: sentadilla goblet con talones elevados.
+
+Orden 3: Imagenes/Ejercicios/83/61a11384372f4bd3861d0d4410a687a0.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/heel-elevated-goblet-squat/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 84 — Peso muerto rumano con mancuernas
+
+Orden 1: Imagenes/Ejercicios/84/6596a589b66e4d80948b32683bb79db1.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/dumbbell-romanian-deadlift/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/84/67d27bb7380a476f8e8f3bc43ea5775d.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/dumbbell-romanian-deadlift/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/84/9ad85089242047c0bfb58020cf94accd.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/dumbbell-romanian-deadlift/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 85 — Prensa inclinada a una pierna
+
+Orden 1: Imagenes/Ejercicios/85/72c523a619d54a1290b52085dcc0d540.jpg
+Autor, licencia y fuente: no documentados en los archivos actuales del proyecto; imagen preexistente conservada.
+
+## ID 86 — Puente de glúteos con barra
+
+Orden 1: Imagenes/Ejercicios/86/cc380e1c126045b2993cf8fee82e5f73.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/barbell-glute-bridge/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/86/a732a556ead44163b1081c190afea229.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/barbell-glute-bridge/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/86/913385ca22454bb88d8376211a3c7d57.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/barbell-glute-bridge/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 87 — Sentadilla dividida en máquina Smith
+
+Orden 1: Imagenes/Ejercicios/87/67afe75e73e34366abd3e8473dd7d2dc.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/smith-machine-bulgarian-split-squat/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/87/fba2a1b92d3540d9b26c0bfa290e7e63.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/smith-machine-bulgarian-split-squat/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/87/3404d2075c2147a599fc093fa1621990.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/smith-machine-bulgarian-split-squat/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Equivalencia cercana: zancada búlgara en máquina Smith.
+
+## ID 88 — Extensión de cadera en polea
+
+Orden 1: Imagenes/Ejercicios/88/9760e5b535e54020b0558c20acb6f09a.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/machine-glute-kickback/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/88/21747203b38b43a9ae2b8cc51d1882e3.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/machine-glute-kickback/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Equivalencia aproximada: patada de glúteo en máquina, mismo patrón de extensión de cadera.
+
+Orden 3: Imagenes/Ejercicios/88/1c7fa3b57a014f68a7cae92377c1dc66.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/machine-glute-kickback/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.; contraste aumentado para ennegrecer los trazos y reprocesada con ProcesadorImagenes.
+
+## ID 89 — Curl femoral sentado
+
+Orden 1: Imagenes/Ejercicios/89/202230a5f7374eccbe57f51d5914e714.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/seated-leg-curl/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/89/eef7fd3909034d0b8204aaf21d2fe420.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/seated-leg-curl/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0119-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/89/f464e506c3e8438a912c03e3261e368a.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/seated-leg-curl/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 90 — Elevación de talones en prensa
+
+Orden 1: Imagenes/Ejercicios/90/0e8521fad1284391a71363f7c1e3647c.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/leg-press-calf-raise/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/90/0276a9af99cc42bd9b1db9a8da04b6fc.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/leg-press-calf-raise/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0273-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/90/3c889c1b1e2a447fab70a0aa9ea0a8b9.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/leg-press-calf-raise/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Equivalencia cercana: elevación de talones en prensa, sentado y con flexión plantar.
+
+## ID 91 — Pallof press en polea
+
+Orden 1: Imagenes/Ejercicios/91/b5114b6c432f4c909c909b39f91fd449.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/pallof-press/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.; contraste aumentado para ennegrecer los trazos y reprocesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/91/247306bd8d0b4495a0ce6bd4ad9cd2a9.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/pallof-press/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/91/3a57def537db49c5bd772fc68f18356d.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/pallof-press/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 92 — Plancha con toque de hombro
+
+Orden 1: Imagenes/Ejercicios/92/ae8d2ecff93b492e8aef20409540c38b.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/plank-shoulder-tap/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/92/d513bcd46a724b818e73092a003de47e.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/plank-shoulder-tap/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/92/f129cf33835043529ad90e1c7ee3e1ac.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/plank-shoulder-tap/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 93 — Caminata lateral con banda
+
+Orden 1: Imagenes/Ejercicios/93/4d1d227454ba47d98f805de405d1bd5b.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/banded-lateral-walk/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/93/e86cc803a87e46fca52929a7e877ea34.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/banded-lateral-walk/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/93/6cfe3c74afd941b1908bd6e957adbd08.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/banded-lateral-walk/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 94 — Remo unilateral en polea baja
+
+Orden 1: Imagenes/Ejercicios/94/304e0437e6f04e75b530f91f21c59830.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/single-arm-cable-row/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/94/47f0a3c20caf4b47bb1d9990c95c93ce.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/single-arm-cable-row/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/94/6e49c335eef34bd6937ef36c3cb9baae.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/single-arm-cable-row/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 95 — Press de pecho en máquina
+
+Orden 1: Imagenes/Ejercicios/95/462e7f43ecfb4d2dab658dbd1ddb1620.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/machine-chest-press/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/95/49df1b1f2b0e4922af5041aafd23b23e.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/machine-chest-press/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/95/39b92c8c4bfa4441a760bf847e4b8b25.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/machine-chest-press/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0066-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 96 — Jalón con brazos rectos
+
+Orden 1: Imagenes/Ejercicios/96/238fef35b7ac4d89b47b2d64e8740bd8.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/straight-arm-pulldown/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 2: Imagenes/Ejercicios/96/ba0f657417a24263a156f470d3d029e2.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/straight-arm-pulldown/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0092-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 97 — Elevación Y en banco inclinado
+
+Orden 1: Imagenes/Ejercicios/97/aff7ab25236f4944a5d37a53f2fdce04.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/prone-y-raise/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/97/5ca0f547de504405a9508cb753238b58.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/prone-y-raise/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/97/d67ebd823ec640c3becffde796cca472.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/prone-y-raise/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 98 — Curl inverso con barra
+
+Orden 1: Imagenes/Ejercicios/98/44a86229d712431e86b9ea8c073241f5.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/wrist-curl/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/98/2ddc60e0be594824925beba1d0ac0491.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/wrist-curl/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Secuencia parcial: el frame 1 se reserva para el ID 43, que usa el mismo movimiento de antebrazo.
+
+## ID 99 — Extensión de tríceps con cuerda
+
+Orden 1: Imagenes/Ejercicios/99/9dacda9f97cb498da0daea283069f365.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/rope-tricep-pushdown/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/99/c949680370a247dea5a6bcf60c3ca16e.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/rope-tricep-pushdown/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/99/51f1c1c8c3df45f58c6ddf4b28d01b11.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/rope-tricep-pushdown/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0206-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 100 — Sentadilla isométrica en pared
+
+Orden 1: Imagenes/Ejercicios/100/6207e2ee35be43619de7618e30bcc74d.jpg
+Autor, licencia y fuente: no documentados en los archivos actuales del proyecto; imagen preexistente conservada.
+
+## ID 101 — Marcha del granjero
+
+Orden 1: Imagenes/Ejercicios/101/befaf0f062254ef79f07ac272a505a0a.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/farmer-carry/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Un cuadro: el resto del dibujo Farmer Carry se usa en el ID 82 para evitar duplicar archivos entre los registros equivalentes.
+
+## ID 102 — Step up con mancuernas
+
+Orden 1: Imagenes/Ejercicios/102/6135abeee9fe4049aed08f76596882e6.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/step-up/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0137-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Un cuadro: el resto del dibujo Step-Up se usa en el ID 59 para evitar duplicar archivos entre los registros equivalentes; el dibujo no muestra mancuernas.
+
+## ID 103 — Pull-apart con banda
+
+Orden 1: Imagenes/Ejercicios/103/c52425b38f4d4ac2a061bcf9a51736bb.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/band-pull-apart/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.; contraste aumentado para ennegrecer los trazos y reprocesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/103/b1b35890206c46daa17fdd7914c6f962.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/band-pull-apart/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/103/4fae29836f6044458b9c2e5a9e5ff39b.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/band-pull-apart/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 104 — Buenos días con banda
+
+Orden 1: Imagenes/Ejercicios/104/825f007aa77a466aa2bfdf8388a50437.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/good-morning/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/104/97d1dabaa596479ea79e859b311c8abd.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/good-morning/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+Orden 3: Imagenes/Ejercicios/104/d47990cb874e4142b3e12ae7d8178cc9.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/good-morning/frame-1.png
+Origen adaptado: Everkinetic, https://github.com/everkinetic/data/blob/main/dist/svg/0101-tension.svg
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+
+## ID 105 — Dead bug con banda
+
+Orden 1: Imagenes/Ejercicios/105/3aee533687f04f3b9c98ce0a90a03ec7.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/banded-dead-bug/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/105/50db8b486a394ad3b9e333cd5ba7d9d4.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/banded-dead-bug/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/105/408631e6d0964592a87d75dfd4b78323.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/banded-dead-bug/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Equivalencia aproximada: dead bug con banda elástica; el dibujo no incluye pelota.
+
+## ID 106 — Abducción de cadera en máquina
+
+Orden 1: Imagenes/Ejercicios/106/604947bf6f924929add0cac752f6d864.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/hip-abduction-machine/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/106/8dc3a85545d74f49ad5929552a37722b.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/hip-abduction-machine/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/106/125b9ab37fce4d489f32488f3929668a.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/hip-abduction-machine/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.; contraste aumentado para ennegrecer los trazos y reprocesada con ProcesadorImagenes.
+
+## ID 107 — Saltos de patinador
+
+Orden 1: Imagenes/Ejercicios/107/7f5a30eb94544c39861820a4c64f9e71.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/skater-hop/frame-2.png
+Frame de origen: 2; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 2: Imagenes/Ejercicios/107/5533a3ec604a44cfa681d2bee87d6bb0.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/skater-hop/frame-1.png
+Frame de origen: 1; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
+Orden 3: Imagenes/Ejercicios/107/18e93d3c9b7643cb9a37b8be2e165123.jpg
+Autor: Bryl Lim | Licencia: CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
+Fuente: https://github.com/bryllim/workout-guide/blob/main/packages/workout-guide/assets/skater-hop/frame-3.png
+Frame de origen: 3; recortada, compuesta sobre blanco y procesada con ProcesadorImagenes.
