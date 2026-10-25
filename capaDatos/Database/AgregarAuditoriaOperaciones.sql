@@ -1,4 +1,4 @@
-/* SysGym — 8 de octubre de 2026. Ejecutar en la base existente, sin borrar ni reconstruir datos. */
+﻿/* SysGym — 8 de octubre de 2026. Ejecutar en la base existente, sin borrar ni reconstruir datos. */
 SET XACT_ABORT ON;
 BEGIN TRANSACTION;
 

@@ -1,4 +1,4 @@
-USE SysGymDB;
+﻿USE SysGymDB;
 GO
 -- Actualización aditiva. No reconstruye ni inventa fechas históricas.
 IF COL_LENGTH('dbo.Socio', 'FechaAlta') IS NULL

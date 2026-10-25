@@ -1,4 +1,4 @@
-/* 20/09/2026. Migración aditiva para SysGymDB existente.
+﻿/* 20/09/2026. Migración aditiva para SysGymDB existente.
    Ejercicio admite cero, una o varias imágenes. No modifica registros existentes.
    No ejecutar SysGymDB.sql completo sobre una base con datos. */
 USE SysGymDB;

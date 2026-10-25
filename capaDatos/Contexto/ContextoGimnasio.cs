@@ -145,6 +145,8 @@ namespace exxen2._0.capaDatos.Contexto
             modelo.Entity<MercadoPago>().ToTable("MercadoPago");
             modelo.Entity<PagoEfectivo>().ToTable("PagoEfectivo");
             modelo.Entity<Rutina>().ToTable("Rutina");
+            modelo.Entity<Rutina>().Property(r => r.Objetivo).HasMaxLength(30);
+            modelo.Entity<Rutina>().Property(r => r.Nivel).HasMaxLength(20);
             modelo.Entity<Ejercicio>().ToTable("Ejercicio");
             modelo.Entity<RutinaEjercicio>().ToTable("RutinaEjercicio");
             modelo.Entity<EjercicioImagen>().ToTable("EjercicioImagen");
@@ -171,6 +173,7 @@ namespace exxen2._0.capaDatos.Contexto
             modelo.Entity<MembresiaEntrenador>().HasRequired(me => me.Entrenador).WithMany(u => u.MembresiasComoEntrenador).HasForeignKey(me => me.IdEntrenador).WillCascadeOnDelete(false);
             modelo.Entity<CuotaMembresia>().HasRequired(c => c.Membresia).WithMany(m => m.Cuotas).HasForeignKey(c => c.IdMembresia).WillCascadeOnDelete(false);
             modelo.Entity<CuotaMembresia>().HasOptional(c => c.Pago).WithMany(p => p.Cuotas).HasForeignKey(c => c.IdRegistroPago).WillCascadeOnDelete(false);
+            modelo.Entity<Pago>().HasOptional(p => p.CuotaAsociada).WithMany().HasForeignKey(p => p.IdCuotaMembresia).WillCascadeOnDelete(false);
             modelo.Entity<Pago>().HasRequired(p => p.MetodoPago).WithMany(mp => mp.Pagos).HasForeignKey(p => p.IdMetodoPago).WillCascadeOnDelete(false);
             modelo.Entity<Pago>().HasOptional(p => p.UsuarioRegistro).WithMany(u => u.PagosRegistrados).HasForeignKey(p => p.IdUsuarioRegistro).WillCascadeOnDelete(false);
             modelo.Entity<MetodoPago>().HasOptional(mp => mp.MercadoPago).WithMany(mp => mp.MetodosPago).HasForeignKey(mp => mp.IdNroPagoMP).WillCascadeOnDelete(false);

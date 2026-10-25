@@ -30,6 +30,10 @@ namespace exxen2._0.capaDatos.Entidades
         public DateTime? FechaInicio { get; set; }  // Inicio de vigencia (opcional).
         public DateTime? FechaFin { get; set; }  // Fin de vigencia (opcional).
         public bool Estado { get; set; }  // true = activo; false = dado de baja (baja lógica, no se borra).
+        [StringLength(30)]
+        public string Objetivo { get; set; }
+        [StringLength(20)]
+        public string Nivel { get; set; }
         public int IdEntrenador { get; set; }  // FK: autor; solo él o un administrador pueden editarla.
 
         [ForeignKey("IdEntrenador")]  // Une esta navegación con la columna IdEntrenador (clave foránea).
