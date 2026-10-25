@@ -1,4 +1,4 @@
-﻿namespace exxen2._0.capaVisual.Administrador
+namespace exxen2._0.capaVisual.Administrador
 {
     partial class AnalisisFormulario
     {

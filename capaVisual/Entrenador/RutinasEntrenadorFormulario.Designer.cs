@@ -148,10 +148,11 @@ namespace exxen2._0.capaVisual.Entrenador
             this.lblEstado.BackColor = System.Drawing.Color.Transparent;
             this.lblEstado.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblEstado.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.lblEstado.Location = new System.Drawing.Point(0, 651);
+            this.lblEstado.Location = new System.Drawing.Point(0, 814);
+            this.lblEstado.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEstado.Name = "lblEstado";
-            this.lblEstado.Padding = new System.Windows.Forms.Padding(18, 0, 12, 0);
-            this.lblEstado.Size = new System.Drawing.Size(1100, 29);
+            this.lblEstado.Padding = new System.Windows.Forms.Padding(22, 0, 15, 0);
+            this.lblEstado.Size = new System.Drawing.Size(1375, 36);
             this.lblEstado.TabIndex = 1;
             this.lblEstado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
@@ -167,13 +168,14 @@ namespace exxen2._0.capaVisual.Entrenador
             this.panelContenido.Controls.Add(this.panelDetalle, 1, 0);
             this.panelContenido.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelContenido.Location = new System.Drawing.Point(0, 0);
+            this.panelContenido.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panelContenido.Name = "panelContenido";
-            this.panelContenido.Padding = new System.Windows.Forms.Padding(16);
+            this.panelContenido.Padding = new System.Windows.Forms.Padding(20, 20, 20, 20);
             this.panelContenido.RowCount = 3;
-            this.panelContenido.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.panelContenido.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.panelContenido.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.panelContenido.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
-            this.panelContenido.Size = new System.Drawing.Size(1100, 651);
+            this.panelContenido.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
+            this.panelContenido.Size = new System.Drawing.Size(1375, 814);
             this.panelContenido.TabIndex = 0;
             //
             // lblListadoTitulo
@@ -181,9 +183,10 @@ namespace exxen2._0.capaVisual.Entrenador
             this.lblListadoTitulo.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblListadoTitulo.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
             this.lblListadoTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.lblListadoTitulo.Location = new System.Drawing.Point(19, 16);
+            this.lblListadoTitulo.Location = new System.Drawing.Point(24, 20);
+            this.lblListadoTitulo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblListadoTitulo.Name = "lblListadoTitulo";
-            this.lblListadoTitulo.Size = new System.Drawing.Size(314, 30);
+            this.lblListadoTitulo.Size = new System.Drawing.Size(392, 38);
             this.lblListadoTitulo.TabIndex = 2;
             this.lblListadoTitulo.Text = "Rutinas";
             this.lblListadoTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -204,7 +207,8 @@ namespace exxen2._0.capaVisual.Entrenador
             this.colEstado});
             this.tabla.ContextMenuStrip = this.menuRutinas;
             this.tabla.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabla.Location = new System.Drawing.Point(19, 51);
+            this.tabla.Location = new System.Drawing.Point(24, 64);
+            this.tabla.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabla.MultiSelect = false;
             this.tabla.Name = "tabla";
             this.tabla.ReadOnly = true;
@@ -212,7 +216,7 @@ namespace exxen2._0.capaVisual.Entrenador
             this.tabla.RowHeadersWidth = 51;
             this.tabla.RowTemplate.Height = 28;
             this.tabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tabla.Size = new System.Drawing.Size(314, 537);
+            this.tabla.Size = new System.Drawing.Size(392, 671);
             this.tabla.TabIndex = 1;
             this.tabla.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tabla_CellMouseDown);
             this.tabla.SelectionChanged += new System.EventHandler(this.tabla_SelectionChanged);
@@ -288,10 +292,10 @@ namespace exxen2._0.capaVisual.Entrenador
             this.nuevaRutina.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(96)))), ((int)(((byte)(109)))));
             this.nuevaRutina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.nuevaRutina.ForeColor = System.Drawing.Color.White;
-            this.nuevaRutina.Location = new System.Drawing.Point(16, 599);
-            this.nuevaRutina.Margin = new System.Windows.Forms.Padding(0, 8, 0, 0);
+            this.nuevaRutina.Location = new System.Drawing.Point(20, 749);
+            this.nuevaRutina.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.nuevaRutina.Name = "nuevaRutina";
-            this.nuevaRutina.Size = new System.Drawing.Size(320, 36);
+            this.nuevaRutina.Size = new System.Drawing.Size(400, 45);
             this.nuevaRutina.TabIndex = 0;
             this.nuevaRutina.Text = "+ Nueva rutina";
             this.nuevaRutina.UseVisualStyleBackColor = false;
@@ -331,11 +335,11 @@ namespace exxen2._0.capaVisual.Entrenador
             this.panelDetalle.Controls.Add(this.guardarEjercicio);
             this.panelDetalle.Controls.Add(this.cancelarEjercicio);
             this.panelDetalle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelDetalle.Location = new System.Drawing.Point(344, 24);
-            this.panelDetalle.Margin = new System.Windows.Forms.Padding(8);
+            this.panelDetalle.Location = new System.Drawing.Point(430, 30);
+            this.panelDetalle.Margin = new System.Windows.Forms.Padding(10, 10, 10, 10);
             this.panelDetalle.Name = "panelDetalle";
             this.panelContenido.SetRowSpan(this.panelDetalle, 3);
-            this.panelDetalle.Size = new System.Drawing.Size(732, 603);
+            this.panelDetalle.Size = new System.Drawing.Size(915, 754);
             this.panelDetalle.TabIndex = 1;
             this.panelDetalle.SizeChanged += new System.EventHandler(this.panelDetalle_SizeChanged);
             //
@@ -345,9 +349,10 @@ namespace exxen2._0.capaVisual.Entrenador
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblDetalleTitulo.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
             this.lblDetalleTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.lblDetalleTitulo.Location = new System.Drawing.Point(10, 0);
+            this.lblDetalleTitulo.Location = new System.Drawing.Point(12, 0);
+            this.lblDetalleTitulo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDetalleTitulo.Name = "lblDetalleTitulo";
-            this.lblDetalleTitulo.Size = new System.Drawing.Size(656, 28);
+            this.lblDetalleTitulo.Size = new System.Drawing.Size(820, 35);
             this.lblDetalleTitulo.TabIndex = 0;
             this.lblDetalleTitulo.Text = "Rutina seleccionada";
             this.lblDetalleTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -356,10 +361,10 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             this.lblNombre.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
             this.lblNombre.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.lblNombre.Location = new System.Drawing.Point(10, 34);
-            this.lblNombre.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.lblNombre.Location = new System.Drawing.Point(12, 42);
+            this.lblNombre.Margin = new System.Windows.Forms.Padding(0, 2, 10, 2);
             this.lblNombre.Name = "lblNombre";
-            this.lblNombre.Size = new System.Drawing.Size(100, 24);
+            this.lblNombre.Size = new System.Drawing.Size(125, 30);
             this.lblNombre.TabIndex = 1;
             this.lblNombre.Text = "Nombre:";
             this.lblNombre.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -369,20 +374,20 @@ namespace exxen2._0.capaVisual.Entrenador
             this.nombre.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.nombre.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.nombre.Location = new System.Drawing.Point(116, 34);
-            this.nombre.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.nombre.Location = new System.Drawing.Point(145, 42);
+            this.nombre.Margin = new System.Windows.Forms.Padding(0, 2, 10, 2);
             this.nombre.Name = "nombre";
-            this.nombre.Size = new System.Drawing.Size(550, 29);
+            this.nombre.Size = new System.Drawing.Size(687, 29);
             this.nombre.TabIndex = 2;
             //
             // lblDescripcionRutina
             //
             this.lblDescripcionRutina.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
             this.lblDescripcionRutina.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.lblDescripcionRutina.Location = new System.Drawing.Point(10, 66);
-            this.lblDescripcionRutina.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.lblDescripcionRutina.Location = new System.Drawing.Point(12, 82);
+            this.lblDescripcionRutina.Margin = new System.Windows.Forms.Padding(0, 2, 10, 2);
             this.lblDescripcionRutina.Name = "lblDescripcionRutina";
-            this.lblDescripcionRutina.Size = new System.Drawing.Size(100, 24);
+            this.lblDescripcionRutina.Size = new System.Drawing.Size(125, 30);
             this.lblDescripcionRutina.TabIndex = 3;
             this.lblDescripcionRutina.Text = "Descripción:";
             this.lblDescripcionRutina.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -392,10 +397,10 @@ namespace exxen2._0.capaVisual.Entrenador
             this.descripcion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.descripcion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.descripcion.Location = new System.Drawing.Point(116, 66);
-            this.descripcion.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.descripcion.Location = new System.Drawing.Point(145, 82);
+            this.descripcion.Margin = new System.Windows.Forms.Padding(0, 2, 10, 2);
             this.descripcion.Name = "descripcion";
-            this.descripcion.Size = new System.Drawing.Size(550, 29);
+            this.descripcion.Size = new System.Drawing.Size(687, 29);
             this.descripcion.TabIndex = 4;
             //
             // guardarRutina
@@ -406,10 +411,10 @@ namespace exxen2._0.capaVisual.Entrenador
             this.guardarRutina.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(101)))), ((int)(((byte)(41)))));
             this.guardarRutina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.guardarRutina.ForeColor = System.Drawing.Color.White;
-            this.guardarRutina.Location = new System.Drawing.Point(10, 102);
-            this.guardarRutina.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
+            this.guardarRutina.Location = new System.Drawing.Point(12, 128);
+            this.guardarRutina.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
             this.guardarRutina.Name = "guardarRutina";
-            this.guardarRutina.Size = new System.Drawing.Size(146, 32);
+            this.guardarRutina.Size = new System.Drawing.Size(182, 40);
             this.guardarRutina.TabIndex = 5;
             this.guardarRutina.Text = "Guardar";
             this.guardarRutina.UseVisualStyleBackColor = false;
@@ -423,10 +428,10 @@ namespace exxen2._0.capaVisual.Entrenador
             this.actualizar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(61)))), ((int)(((byte)(112)))));
             this.actualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.actualizar.ForeColor = System.Drawing.Color.White;
-            this.actualizar.Location = new System.Drawing.Point(162, 102);
-            this.actualizar.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
+            this.actualizar.Location = new System.Drawing.Point(202, 128);
+            this.actualizar.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
             this.actualizar.Name = "actualizar";
-            this.actualizar.Size = new System.Drawing.Size(108, 32);
+            this.actualizar.Size = new System.Drawing.Size(135, 40);
             this.actualizar.TabIndex = 6;
             this.actualizar.Text = "Actualizar";
             this.actualizar.UseVisualStyleBackColor = false;
@@ -440,10 +445,10 @@ namespace exxen2._0.capaVisual.Entrenador
             this.darDeBaja.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.darDeBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.darDeBaja.ForeColor = System.Drawing.Color.White;
-            this.darDeBaja.Location = new System.Drawing.Point(276, 102);
-            this.darDeBaja.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
+            this.darDeBaja.Location = new System.Drawing.Point(345, 128);
+            this.darDeBaja.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
             this.darDeBaja.Name = "darDeBaja";
-            this.darDeBaja.Size = new System.Drawing.Size(108, 32);
+            this.darDeBaja.Size = new System.Drawing.Size(135, 40);
             this.darDeBaja.TabIndex = 7;
             this.darDeBaja.Text = "Dar de baja";
             this.darDeBaja.UseVisualStyleBackColor = false;
@@ -458,10 +463,10 @@ namespace exxen2._0.capaVisual.Entrenador
             this.reactivar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(101)))), ((int)(((byte)(41)))));
             this.reactivar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.reactivar.ForeColor = System.Drawing.Color.White;
-            this.reactivar.Location = new System.Drawing.Point(390, 102);
-            this.reactivar.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
+            this.reactivar.Location = new System.Drawing.Point(488, 128);
+            this.reactivar.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
             this.reactivar.Name = "reactivar";
-            this.reactivar.Size = new System.Drawing.Size(108, 32);
+            this.reactivar.Size = new System.Drawing.Size(135, 40);
             this.reactivar.TabIndex = 8;
             this.reactivar.Text = "Reactivar";
             this.reactivar.UseVisualStyleBackColor = false;
@@ -474,9 +479,10 @@ namespace exxen2._0.capaVisual.Entrenador
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblEjerciciosTitulo.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
             this.lblEjerciciosTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.lblEjerciciosTitulo.Location = new System.Drawing.Point(10, 144);
+            this.lblEjerciciosTitulo.Location = new System.Drawing.Point(12, 180);
+            this.lblEjerciciosTitulo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEjerciciosTitulo.Name = "lblEjerciciosTitulo";
-            this.lblEjerciciosTitulo.Size = new System.Drawing.Size(656, 28);
+            this.lblEjerciciosTitulo.Size = new System.Drawing.Size(820, 35);
             this.lblEjerciciosTitulo.TabIndex = 9;
             this.lblEjerciciosTitulo.Text = "Ejercicios de la rutina";
             this.lblEjerciciosTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -489,10 +495,10 @@ namespace exxen2._0.capaVisual.Entrenador
             this.agregarEjercicio.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(61)))), ((int)(((byte)(112)))));
             this.agregarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.agregarEjercicio.ForeColor = System.Drawing.Color.White;
-            this.agregarEjercicio.Location = new System.Drawing.Point(10, 178);
-            this.agregarEjercicio.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
+            this.agregarEjercicio.Location = new System.Drawing.Point(12, 222);
+            this.agregarEjercicio.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
             this.agregarEjercicio.Name = "agregarEjercicio";
-            this.agregarEjercicio.Size = new System.Drawing.Size(152, 32);
+            this.agregarEjercicio.Size = new System.Drawing.Size(190, 40);
             this.agregarEjercicio.TabIndex = 10;
             this.agregarEjercicio.Text = "+ Agregar ejercicio";
             this.agregarEjercicio.UseVisualStyleBackColor = false;
@@ -506,10 +512,10 @@ namespace exxen2._0.capaVisual.Entrenador
             this.actualizarEjercicio.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(61)))), ((int)(((byte)(112)))));
             this.actualizarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.actualizarEjercicio.ForeColor = System.Drawing.Color.White;
-            this.actualizarEjercicio.Location = new System.Drawing.Point(168, 178);
-            this.actualizarEjercicio.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
+            this.actualizarEjercicio.Location = new System.Drawing.Point(210, 222);
+            this.actualizarEjercicio.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
             this.actualizarEjercicio.Name = "actualizarEjercicio";
-            this.actualizarEjercicio.Size = new System.Drawing.Size(92, 32);
+            this.actualizarEjercicio.Size = new System.Drawing.Size(115, 40);
             this.actualizarEjercicio.TabIndex = 11;
             this.actualizarEjercicio.Text = "Editar";
             this.actualizarEjercicio.UseVisualStyleBackColor = false;
@@ -523,10 +529,10 @@ namespace exxen2._0.capaVisual.Entrenador
             this.quitarEjercicio.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.quitarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.quitarEjercicio.ForeColor = System.Drawing.Color.White;
-            this.quitarEjercicio.Location = new System.Drawing.Point(266, 178);
-            this.quitarEjercicio.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
+            this.quitarEjercicio.Location = new System.Drawing.Point(332, 222);
+            this.quitarEjercicio.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
             this.quitarEjercicio.Name = "quitarEjercicio";
-            this.quitarEjercicio.Size = new System.Drawing.Size(92, 32);
+            this.quitarEjercicio.Size = new System.Drawing.Size(115, 40);
             this.quitarEjercicio.TabIndex = 12;
             this.quitarEjercicio.Text = "Quitar";
             this.quitarEjercicio.UseVisualStyleBackColor = false;
@@ -553,7 +559,8 @@ namespace exxen2._0.capaVisual.Entrenador
             this.colDetallePeso,
             this.colDetalleDescanso});
             this.tablaEjercicios.ContextMenuStrip = this.menuEjerciciosRutina;
-            this.tablaEjercicios.Location = new System.Drawing.Point(10, 218);
+            this.tablaEjercicios.Location = new System.Drawing.Point(12, 272);
+            this.tablaEjercicios.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tablaEjercicios.MultiSelect = false;
             this.tablaEjercicios.Name = "tablaEjercicios";
             this.tablaEjercicios.ReadOnly = true;
@@ -561,7 +568,7 @@ namespace exxen2._0.capaVisual.Entrenador
             this.tablaEjercicios.RowHeadersWidth = 51;
             this.tablaEjercicios.RowTemplate.Height = 28;
             this.tablaEjercicios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tablaEjercicios.Size = new System.Drawing.Size(656, 171);
+            this.tablaEjercicios.Size = new System.Drawing.Size(820, 214);
             this.tablaEjercicios.TabIndex = 13;
             this.tablaEjercicios.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tablaEjercicios_CellMouseDown);
             this.tablaEjercicios.SelectionChanged += new System.EventHandler(this.tablaEjercicios_SelectionChanged);
@@ -650,9 +657,10 @@ namespace exxen2._0.capaVisual.Entrenador
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblDetalleEjercicio.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
             this.lblDetalleEjercicio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.lblDetalleEjercicio.Location = new System.Drawing.Point(9, 384);
+            this.lblDetalleEjercicio.Location = new System.Drawing.Point(11, 480);
+            this.lblDetalleEjercicio.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDetalleEjercicio.Name = "lblDetalleEjercicio";
-            this.lblDetalleEjercicio.Size = new System.Drawing.Size(656, 28);
+            this.lblDetalleEjercicio.Size = new System.Drawing.Size(820, 35);
             this.lblDetalleEjercicio.TabIndex = 14;
             this.lblDetalleEjercicio.Text = "Detalle del ejercicio";
             this.lblDetalleEjercicio.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -661,10 +669,10 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             this.lblEjercicio.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
             this.lblEjercicio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.lblEjercicio.Location = new System.Drawing.Point(10, 414);
-            this.lblEjercicio.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.lblEjercicio.Location = new System.Drawing.Point(12, 518);
+            this.lblEjercicio.Margin = new System.Windows.Forms.Padding(0, 2, 10, 2);
             this.lblEjercicio.Name = "lblEjercicio";
-            this.lblEjercicio.Size = new System.Drawing.Size(90, 24);
+            this.lblEjercicio.Size = new System.Drawing.Size(112, 30);
             this.lblEjercicio.TabIndex = 15;
             this.lblEjercicio.Text = "Ejercicio:";
             this.lblEjercicio.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -672,20 +680,20 @@ namespace exxen2._0.capaVisual.Entrenador
             // ejercicio
             //
             this.ejercicio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ejercicio.Location = new System.Drawing.Point(106, 414);
-            this.ejercicio.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.ejercicio.Location = new System.Drawing.Point(132, 518);
+            this.ejercicio.Margin = new System.Windows.Forms.Padding(0, 2, 10, 2);
             this.ejercicio.Name = "ejercicio";
-            this.ejercicio.Size = new System.Drawing.Size(150, 29);
+            this.ejercicio.Size = new System.Drawing.Size(186, 29);
             this.ejercicio.TabIndex = 16;
             //
             // lblDia
             //
             this.lblDia.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
             this.lblDia.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.lblDia.Location = new System.Drawing.Point(268, 414);
-            this.lblDia.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.lblDia.Location = new System.Drawing.Point(335, 518);
+            this.lblDia.Margin = new System.Windows.Forms.Padding(0, 2, 10, 2);
             this.lblDia.Name = "lblDia";
-            this.lblDia.Size = new System.Drawing.Size(110, 24);
+            this.lblDia.Size = new System.Drawing.Size(138, 30);
             this.lblDia.TabIndex = 17;
             this.lblDia.Text = "Día:";
             this.lblDia.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -698,23 +706,23 @@ namespace exxen2._0.capaVisual.Entrenador
             this.dia.Items.AddRange(new object[] {
             "Lunes",
             "Martes",
-            "Miercoles",
+            "Miércoles",
             "Jueves",
             "Viernes"});
-            this.dia.Location = new System.Drawing.Point(384, 414);
-            this.dia.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.dia.Location = new System.Drawing.Point(480, 518);
+            this.dia.Margin = new System.Windows.Forms.Padding(0, 2, 10, 2);
             this.dia.Name = "dia";
-            this.dia.Size = new System.Drawing.Size(282, 29);
+            this.dia.Size = new System.Drawing.Size(352, 29);
             this.dia.TabIndex = 18;
             //
             // lblSeries
             //
             this.lblSeries.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
             this.lblSeries.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.lblSeries.Location = new System.Drawing.Point(10, 446);
-            this.lblSeries.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.lblSeries.Location = new System.Drawing.Point(12, 558);
+            this.lblSeries.Margin = new System.Windows.Forms.Padding(0, 2, 10, 2);
             this.lblSeries.Name = "lblSeries";
-            this.lblSeries.Size = new System.Drawing.Size(90, 24);
+            this.lblSeries.Size = new System.Drawing.Size(112, 30);
             this.lblSeries.TabIndex = 19;
             this.lblSeries.Text = "Series:";
             this.lblSeries.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -722,10 +730,10 @@ namespace exxen2._0.capaVisual.Entrenador
             // series
             //
             this.series.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.series.Location = new System.Drawing.Point(106, 446);
-            this.series.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.series.Location = new System.Drawing.Point(132, 558);
+            this.series.Margin = new System.Windows.Forms.Padding(0, 2, 10, 2);
             this.series.Name = "series";
-            this.series.Size = new System.Drawing.Size(150, 29);
+            this.series.Size = new System.Drawing.Size(187, 29);
             this.series.TabIndex = 20;
             this.series.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.series_KeyPress);
             //
@@ -733,10 +741,10 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             this.lblRepeticiones.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
             this.lblRepeticiones.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.lblRepeticiones.Location = new System.Drawing.Point(268, 446);
-            this.lblRepeticiones.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.lblRepeticiones.Location = new System.Drawing.Point(335, 558);
+            this.lblRepeticiones.Margin = new System.Windows.Forms.Padding(0, 2, 10, 2);
             this.lblRepeticiones.Name = "lblRepeticiones";
-            this.lblRepeticiones.Size = new System.Drawing.Size(110, 24);
+            this.lblRepeticiones.Size = new System.Drawing.Size(138, 30);
             this.lblRepeticiones.TabIndex = 21;
             this.lblRepeticiones.Text = "Repeticiones:";
             this.lblRepeticiones.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -746,10 +754,10 @@ namespace exxen2._0.capaVisual.Entrenador
             this.repeticiones.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.repeticiones.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.repeticiones.Location = new System.Drawing.Point(384, 446);
-            this.repeticiones.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.repeticiones.Location = new System.Drawing.Point(480, 558);
+            this.repeticiones.Margin = new System.Windows.Forms.Padding(0, 2, 10, 2);
             this.repeticiones.Name = "repeticiones";
-            this.repeticiones.Size = new System.Drawing.Size(282, 29);
+            this.repeticiones.Size = new System.Drawing.Size(352, 29);
             this.repeticiones.TabIndex = 22;
             this.repeticiones.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.repeticiones_KeyPress);
             //
@@ -757,10 +765,10 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             this.lblPeso.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
             this.lblPeso.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.lblPeso.Location = new System.Drawing.Point(10, 478);
-            this.lblPeso.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.lblPeso.Location = new System.Drawing.Point(12, 598);
+            this.lblPeso.Margin = new System.Windows.Forms.Padding(0, 2, 10, 2);
             this.lblPeso.Name = "lblPeso";
-            this.lblPeso.Size = new System.Drawing.Size(90, 24);
+            this.lblPeso.Size = new System.Drawing.Size(112, 30);
             this.lblPeso.TabIndex = 23;
             this.lblPeso.Text = "Peso:";
             this.lblPeso.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -768,10 +776,10 @@ namespace exxen2._0.capaVisual.Entrenador
             // peso
             //
             this.peso.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.peso.Location = new System.Drawing.Point(106, 478);
-            this.peso.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.peso.Location = new System.Drawing.Point(132, 598);
+            this.peso.Margin = new System.Windows.Forms.Padding(0, 2, 10, 2);
             this.peso.Name = "peso";
-            this.peso.Size = new System.Drawing.Size(150, 29);
+            this.peso.Size = new System.Drawing.Size(187, 29);
             this.peso.TabIndex = 24;
             this.peso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.peso_KeyPress);
             //
@@ -779,10 +787,10 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             this.lblDescanso.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
             this.lblDescanso.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.lblDescanso.Location = new System.Drawing.Point(268, 478);
-            this.lblDescanso.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.lblDescanso.Location = new System.Drawing.Point(335, 598);
+            this.lblDescanso.Margin = new System.Windows.Forms.Padding(0, 2, 10, 2);
             this.lblDescanso.Name = "lblDescanso";
-            this.lblDescanso.Size = new System.Drawing.Size(110, 24);
+            this.lblDescanso.Size = new System.Drawing.Size(138, 30);
             this.lblDescanso.TabIndex = 25;
             this.lblDescanso.Text = "Descanso:";
             this.lblDescanso.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -792,10 +800,10 @@ namespace exxen2._0.capaVisual.Entrenador
             this.descanso.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.descanso.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.descanso.Location = new System.Drawing.Point(384, 478);
-            this.descanso.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.descanso.Location = new System.Drawing.Point(480, 598);
+            this.descanso.Margin = new System.Windows.Forms.Padding(0, 2, 10, 2);
             this.descanso.Name = "descanso";
-            this.descanso.Size = new System.Drawing.Size(282, 29);
+            this.descanso.Size = new System.Drawing.Size(352, 29);
             this.descanso.TabIndex = 26;
             this.descanso.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.descanso_KeyPress);
             //
@@ -803,10 +811,10 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             this.lblOrden.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
             this.lblOrden.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.lblOrden.Location = new System.Drawing.Point(10, 510);
-            this.lblOrden.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.lblOrden.Location = new System.Drawing.Point(12, 638);
+            this.lblOrden.Margin = new System.Windows.Forms.Padding(0, 2, 10, 2);
             this.lblOrden.Name = "lblOrden";
-            this.lblOrden.Size = new System.Drawing.Size(90, 24);
+            this.lblOrden.Size = new System.Drawing.Size(112, 30);
             this.lblOrden.TabIndex = 27;
             this.lblOrden.Text = "Orden:";
             this.lblOrden.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -814,10 +822,10 @@ namespace exxen2._0.capaVisual.Entrenador
             // orden
             //
             this.orden.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.orden.Location = new System.Drawing.Point(106, 510);
-            this.orden.Margin = new System.Windows.Forms.Padding(0, 2, 8, 2);
+            this.orden.Location = new System.Drawing.Point(132, 638);
+            this.orden.Margin = new System.Windows.Forms.Padding(0, 2, 10, 2);
             this.orden.Name = "orden";
-            this.orden.Size = new System.Drawing.Size(150, 29);
+            this.orden.Size = new System.Drawing.Size(187, 29);
             this.orden.TabIndex = 28;
             this.orden.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.orden_KeyPress);
             //
@@ -829,10 +837,10 @@ namespace exxen2._0.capaVisual.Entrenador
             this.guardarEjercicio.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(61)))), ((int)(((byte)(112)))));
             this.guardarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.guardarEjercicio.ForeColor = System.Drawing.Color.White;
-            this.guardarEjercicio.Location = new System.Drawing.Point(10, 554);
-            this.guardarEjercicio.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
+            this.guardarEjercicio.Location = new System.Drawing.Point(12, 692);
+            this.guardarEjercicio.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
             this.guardarEjercicio.Name = "guardarEjercicio";
-            this.guardarEjercicio.Size = new System.Drawing.Size(160, 32);
+            this.guardarEjercicio.Size = new System.Drawing.Size(200, 40);
             this.guardarEjercicio.TabIndex = 29;
             this.guardarEjercicio.Text = "Agregar";
             this.guardarEjercicio.UseVisualStyleBackColor = false;
@@ -847,10 +855,10 @@ namespace exxen2._0.capaVisual.Entrenador
             this.cancelarEjercicio.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(96)))), ((int)(((byte)(109)))));
             this.cancelarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cancelarEjercicio.ForeColor = System.Drawing.Color.White;
-            this.cancelarEjercicio.Location = new System.Drawing.Point(176, 554);
-            this.cancelarEjercicio.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
+            this.cancelarEjercicio.Location = new System.Drawing.Point(220, 692);
+            this.cancelarEjercicio.Margin = new System.Windows.Forms.Padding(0, 0, 8, 0);
             this.cancelarEjercicio.Name = "cancelarEjercicio";
-            this.cancelarEjercicio.Size = new System.Drawing.Size(108, 32);
+            this.cancelarEjercicio.Size = new System.Drawing.Size(135, 40);
             this.cancelarEjercicio.TabIndex = 30;
             this.cancelarEjercicio.Text = "Cancelar";
             this.cancelarEjercicio.UseVisualStyleBackColor = false;
@@ -862,11 +870,12 @@ namespace exxen2._0.capaVisual.Entrenador
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
-            this.ClientSize = new System.Drawing.Size(1100, 680);
+            this.ClientSize = new System.Drawing.Size(1375, 850);
             this.Controls.Add(this.panelContenido);
             this.Controls.Add(this.lblEstado);
             this.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.MinimumSize = new System.Drawing.Size(900, 560);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MinimumSize = new System.Drawing.Size(1120, 688);
             this.Name = "RutinasEntrenadorFormulario";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "SysGym";

@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -9,6 +9,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         private IContainer components = null;
         private Panel panelEncabezado;
         private PictureBox picLogo;
+        private Panel panelLogo;
         private PictureBox picUsuario;
         private Label lblUsuario;
         private Label lblRol;
@@ -58,6 +59,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.btnCambiarCuenta = new System.Windows.Forms.Button();
             this.picLogo = new System.Windows.Forms.PictureBox();
             this.panelMenu = new System.Windows.Forms.Panel();
+            this.panelLogo = new System.Windows.Forms.Panel();
             this.panelOpciones = new System.Windows.Forms.Panel();
             this.lblClientes = new System.Windows.Forms.Label();
             this.btnSocios = new System.Windows.Forms.Button();
@@ -76,6 +78,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             ((System.ComponentModel.ISupportInitialize)(this.picUsuario)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.panelMenu.SuspendLayout();
+            this.panelLogo.SuspendLayout();
             this.panelOpciones.SuspendLayout();
             this.panelContenido.SuspendLayout();
             this.panelInicio.SuspendLayout();
@@ -256,28 +259,41 @@ this.lblSubtituloModulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)
             //
             // picLogo
             //
-            this.picLogo.BackColor = System.Drawing.Color.White;
-            this.picLogo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.picLogo.BackColor = System.Drawing.Color.FromArgb(33, 33, 33);
+            this.picLogo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picLogo.Image = global::exxen2._0.Properties.Resources.SysGymLogo;
             this.picLogo.Location = new System.Drawing.Point(0, 0);
+            this.picLogo.Margin = new System.Windows.Forms.Padding(0);
             this.picLogo.Name = "picLogo";
-            this.picLogo.Padding = new System.Windows.Forms.Padding(18, 12, 18, 12);
+            this.picLogo.Padding = new System.Windows.Forms.Padding(0);
             this.picLogo.Size = new System.Drawing.Size(273, 96);
             this.picLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picLogo.TabIndex = 0;
             this.picLogo.TabStop = false;
             //
+            // panelLogo
+            //
+            this.panelLogo.BackColor = System.Drawing.Color.FromArgb(33, 33, 33);
+            this.panelLogo.Controls.Add(this.picLogo);
+            this.panelLogo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelLogo.Location = new System.Drawing.Point(0, 0);
+            this.panelLogo.Margin = new System.Windows.Forms.Padding(0);
+            this.panelLogo.Name = "panelLogo";
+            this.panelLogo.Padding = new System.Windows.Forms.Padding(0);
+            this.panelLogo.Size = new System.Drawing.Size(273, 96);
+            this.panelLogo.TabIndex = 0;
+            //
             // panelMenu
             //
             this.panelMenu.BackColor = System.Drawing.Color.FromArgb(243, 244, 247);
             this.panelMenu.Controls.Add(this.panelOpciones);
-            this.panelMenu.Controls.Add(this.picLogo);
+            this.panelMenu.Controls.Add(this.panelLogo);
             this.panelMenu.Controls.Add(this.btnSalir);
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelMenu.Location = new System.Drawing.Point(0, 0);
             this.panelMenu.MinimumSize = new System.Drawing.Size(264, 0);
             this.panelMenu.Name = "panelMenu";
-            this.panelMenu.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
+            this.panelMenu.Padding = new System.Windows.Forms.Padding(0);
             this.panelMenu.Size = new System.Drawing.Size(274, 653);
             this.panelMenu.TabIndex = 0;
             //
@@ -529,13 +545,14 @@ this.lblEntrenadores.ForeColor = System.Drawing.Color.FromArgb(104, 99, 113);
             this.Text = "SysGym";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.PanelRecepcionista_Load);
-            this.panelEncabezado.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picUsuario)).EndInit();
+            this.panelEncabezado.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
-            this.panelMenu.ResumeLayout(false);
+            this.panelLogo.ResumeLayout(false);
             this.panelOpciones.ResumeLayout(false);
-            this.panelContenido.ResumeLayout(false);
             this.panelInicio.ResumeLayout(false);
+            this.panelContenido.ResumeLayout(false);
+            this.panelMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

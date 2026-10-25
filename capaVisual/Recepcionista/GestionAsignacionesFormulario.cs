@@ -179,10 +179,17 @@ namespace exxen2._0.capaVisual.Recepcionista
             try
             {
                 if (!ValidarFormularioAsignacion()) return;
+                var idEntrenadorElegido = Convert.ToInt32(entrenador.SelectedValue);
+                var membresiaActual = membresiasCargadas.FirstOrDefault(m => m.IdMembresia == idSeleccionado);
+                if (cambiarEntrenador && membresiaActual != null && membresiaActual.IdEntrenador == idEntrenadorElegido)
+                {
+                    AyudaFormularioVisual.MostrarError(lblEstado, new InvalidOperationException("El socio ya tiene asignado ese entrenador"));
+                    return;
+                }
                 if (cambiarEntrenador && MessageBox.Show("¿Reemplazar el entrenador actual de la membresía?", "Confirmar cambio", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                     return;
-                if (cambiarEntrenador) logica.CambiarEntrenador(idSeleccionado, Convert.ToInt32(entrenador.SelectedValue));
-                else logica.AsignarEntrenador(idSeleccionado, Convert.ToInt32(entrenador.SelectedValue));
+                if (cambiarEntrenador) logica.CambiarEntrenador(idSeleccionado, idEntrenadorElegido);
+                else logica.AsignarEntrenador(idSeleccionado, idEntrenadorElegido);
                 CargarListado();
                 AyudaFormularioVisual.MostrarExito(lblEstado, cambiarEntrenador ? "Entrenador cambiado." : "Entrenador asignado.", true);
             }

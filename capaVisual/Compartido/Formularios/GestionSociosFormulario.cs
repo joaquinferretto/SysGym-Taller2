@@ -18,13 +18,15 @@ namespace exxen2._0.capaVisual.Compartido
     public partial class GestionSociosFormulario : Form
     {
         public event EventHandler<AccionEstadoSocioEventArgs> FichaSolicitada;
+        public event EventHandler<AccionEstadoSocioEventArgs> MembresiaSolicitada;
         private void btnFicha_Click(object sender, EventArgs e)
         {
             var id = idSeleccionado;
             var evento = FichaSolicitada;
             if (id > 0 && evento != null) evento(this, new AccionEstadoSocioEventArgs(id, AccionEstadoSocio.VerFicha));
         }
-        private readonly SocioLogica logica = new SocioLogica();
+        private readonly SocioLogica logica;
+        private readonly MembresiaLogica membresias;
         private bool permitirEdicion;
         private List<Socio> sociosCargados = new List<Socio>();
         private int idSeleccionado;
@@ -42,6 +44,8 @@ namespace exxen2._0.capaVisual.Compartido
         /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
         public GestionSociosFormulario(Color colorPrimario, bool permitirEdicion = true)
         {
+            logica = new SocioLogica();
+            membresias = new MembresiaLogica();
             this.permitirEdicion = permitirEdicion;
             this.colorPrimario = colorPrimario;
             InitializeComponent();
@@ -90,6 +94,15 @@ namespace exxen2._0.capaVisual.Compartido
         {
             if (idSocioInicial <= 0)
                 throw new ArgumentException("El socio seleccionado no es válido.", "idSocioInicial");
+            this.idSocioInicial = idSocioInicial;
+        }
+
+        public GestionSociosFormulario(Color colorPrimario, UsuarioSistema usuario, int idSocioInicial = 0)
+            : this(colorPrimario)
+        {
+            if (usuario == null) throw new ArgumentNullException("usuario");
+            logica = new SocioLogica(usuario.IdUsuarioSistema);
+            membresias = new MembresiaLogica(usuario.IdUsuarioSistema);
             this.idSocioInicial = idSocioInicial;
         }
 
@@ -219,7 +232,6 @@ namespace exxen2._0.capaVisual.Compartido
         {
             nuevo.Visible = permitirEdicion && idSeleccionado > 0;
             guardar.Visible = permitirEdicion;
-            guardar.Location = idSeleccionado > 0 ? new Point(128, 331) : new Point(16, 331);
             actualizar.Visible = false;
             darDeBaja.Visible = permitirEdicion && idSeleccionado > 0 && estadoSeleccionado;
             reactivar.Visible = permitirEdicion && idSeleccionado > 0 && !estadoSeleccionado;
@@ -362,7 +374,7 @@ namespace exxen2._0.capaVisual.Compartido
             }
         }
 
-        /* Al hacer clic en reactivar, vuelve a dejar activo al socio seleccionado. */
+        /* Reactiva primero al socio; la membresía conserva su validación y auditoría independientes. */
         private void reactivar_Click(object origen, EventArgs e)
         {
             try
@@ -370,10 +382,42 @@ namespace exxen2._0.capaVisual.Compartido
                 if (!permitirEdicion || idSeleccionado == 0)
                     throw new InvalidOperationException("Selecciona un socio.");
                 var idSocio = idSeleccionado;
+                var seleccionado = logica.ObtenerPorId(idSocio);
+                var nombreSocio = seleccionado.Nombre + " " + seleccionado.Apellido;
                 logica.Reactivar(idSocio);
+                var historial = membresias.ObtenerPorSocio(idSocio);
+                var membresia = historial.FirstOrDefault();
+                var mensaje = "Socio reactivado.";
+                var abrirMembresias = false;
+                if (membresia != null && !membresia.Estado &&
+                    MessageBox.Show(this, "¿Reactivar también la membresía de " + nombreSocio + "?", "Reactivar membresía",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    try
+                    {
+                        membresias.Habilitar(membresia.IdMembresia);
+                        mensaje = "Socio y membresía reactivados.";
+                    }
+                    catch (Exception ex)
+                    {
+                        mensaje = ex.Message;
+                    }
+                }
+                else if (membresia == null &&
+                    MessageBox.Show(this, nombreSocio + " no tiene membresía. ¿Crear una ahora?", "Crear membresía",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    abrirMembresias = true;
                 Cargar();
                 SeleccionarSocio(idSocio);
-                AyudaFormularioVisual.MostrarExito(lblEstado, "Socio reactivado. Su membresía se reactiva desde Membresías.");
+                if (mensaje == "El socio alcanzó el límite de cuotas vencidas permitido.")
+                    AyudaFormularioVisual.MostrarError(lblEstado, new InvalidOperationException(mensaje));
+                else
+                    AyudaFormularioVisual.MostrarExito(lblEstado, mensaje);
+                if (abrirMembresias)
+                {
+                    var evento = MembresiaSolicitada;
+                    if (evento != null) evento(this, new AccionEstadoSocioEventArgs(idSocio, AccionEstadoSocio.VerMembresia));
+                }
             }
             catch (Exception ex)
             {
@@ -522,7 +566,7 @@ namespace exxen2._0.capaVisual.Compartido
         /* Al salir del peso opcional, valida su formato y positividad si fue informado. */
         private void peso_Validating(object origen, CancelEventArgs e)
         {
-            AyudaFormularioVisual.ValidarDecimal(indicadorErrores, peso, "peso", false, false);
+            ValidarPeso();
         }
 
         /* Al salir de la altura opcional, exige metros positivos con parte decimal. */
@@ -552,7 +596,7 @@ namespace exxen2._0.capaVisual.Compartido
             valido = AyudaFormularioVisual.ValidarNombre(indicadorErrores, apellido, "apellido") & valido;
             valido = AyudaFormularioVisual.ValidarDni(indicadorErrores, dni) & valido;
             valido = ValidarFechaNacimiento() & valido;
-            valido = AyudaFormularioVisual.ValidarDecimal(indicadorErrores, peso, "peso", false, false) & valido;
+            valido = ValidarPeso() & valido;
             valido = ValidarAltura() & valido;
             if (!valido)
                 AyudaFormularioVisual.EnfocarPrimerError(indicadorErrores, nombre, apellido, dni, fechaNacimiento, peso, altura);
@@ -578,8 +622,23 @@ namespace exxen2._0.capaVisual.Compartido
                 if (string.IsNullOrWhiteSpace(altura.Text))
                     return;
                 var valor = AyudaFormularioVisual.DecimalPositivo(altura, "altura");
+                if (valor < 0.80m || valor > 2.50m)
+                    throw new InvalidOperationException("La altura debe estar entre 0,80 y 2,50 m.");
                 if (decimal.Truncate(valor) == valor)
                     throw new InvalidOperationException("La altura debe incluir decimales, por ejemplo 1,80 m.");
+            });
+        }
+
+        /* Valida el rango permitido para el peso opcional del socio. */
+        private bool ValidarPeso()
+        {
+            return AyudaFormularioVisual.ValidarConError(indicadorErrores, peso, delegate
+            {
+                if (string.IsNullOrWhiteSpace(peso.Text))
+                    return;
+                var valor = AyudaFormularioVisual.DecimalPositivo(peso, "peso");
+                if (valor < 20m || valor > 300m)
+                    throw new InvalidOperationException("El peso debe estar entre 20 y 300 kg.");
             });
         }
 

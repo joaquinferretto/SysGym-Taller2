@@ -1,4 +1,4 @@
-using exxen2._0.capaLogica.Navegacion;
+﻿using exxen2._0.capaLogica.Navegacion;
 using exxen2._0.capaVisual.Compartido.Utilidades;
 using System;
 using exxen2._0.capaVisual.Compartido.Controles;
@@ -38,6 +38,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         private bool cargandoTabla;
         private bool actualizandoFormulario;
         private readonly int idUsuarioAutenticado;
+        private readonly string nombreUsuarioAutenticado;
         /* Inicializa los componentes existentes y las dependencias de la pantalla sin consultar la base de datos. */
         public GestionPagosFormulario()
             : this(0, null)
@@ -53,6 +54,10 @@ namespace exxen2._0.capaVisual.Recepcionista
         {
             idSocioInicial = idSocio;
             idUsuarioAutenticado = usuarioActual == null ? 0 : usuarioActual.IdUsuarioSistema;
+            var nombreUsuario = usuarioActual == null ? null : (usuarioActual.Nombre + " " + usuarioActual.Apellido).Trim();
+            nombreUsuarioAutenticado = string.IsNullOrWhiteSpace(nombreUsuario)
+                ? "Usuario actual"
+                : nombreUsuario;
             logica = new PagoLogica(idUsuarioAutenticado);
             reportes = new ReportesPagosServicio(idUsuarioAutenticado);
             InitializeComponent();
@@ -201,14 +206,17 @@ namespace exxen2._0.capaVisual.Recepcionista
             var opcionSeleccionada = membresia.SelectedItem as OpcionMembresiaPago;
             if (opcionSeleccionada == null || !opcionSeleccionada.Habilitada)
             {
-                MostrarSinCuota("Selecciona una membresia activa.");
+                MostrarSinCuota("Selecciona una membresía activa.");
                 return;
             }
 
-            var pendiente = cuotasCargadas.Where(c => c.IdMembresia == opcionSeleccionada.IdMembresia && c.EstadoPago == EstadosCuota.Pendiente && !c.IdRegistroPago.HasValue).OrderBy(c => c.FechaDesde).FirstOrDefault();
+            var pendiente = cuotasCargadas.Where(c => c.IdMembresia == opcionSeleccionada.IdMembresia &&
+                c.EstadoPago == EstadosCuota.Pendiente && (!c.IdRegistroPago.HasValue ||
+                    (c.Pago != null && (c.Pago.Estado == EstadosTransaccionPago.Anulado || c.Pago.Estado == EstadosTransaccionPago.Reembolsado))))
+                .OrderBy(c => c.FechaDesde).FirstOrDefault();
             if (pendiente == null)
             {
-                MostrarSinCuota("La membresia no tiene cuotas pendientes disponibles.");
+                MostrarSinCuota("La membresía no tiene cuotas pendientes.");
                 return;
             }
 
@@ -219,11 +227,17 @@ namespace exxen2._0.capaVisual.Recepcionista
         private void MostrarCuota(CuotaMembresia seleccionada, bool modoNuevo = false)
         {
             LimpiarErroresDelDetalle();
+            lblAvisoCuota.Visible = false;
             actualizandoFormulario = true;
             idCuotaSeleccionada = seleccionada.IdCuotaMembresia;
             idPagoSeleccionado = seleccionada.IdRegistroPago ?? 0;
             var registrador = seleccionada.Pago == null ? null : seleccionada.Pago.UsuarioRegistro;
-            lblRegistradoPor.Text = "Registrado por: " + (registrador == null ? "Sin información" : registrador.Nombre + " " + registrador.Apellido);
+            var preparandoPago = seleccionada.EstadoPago == EstadosCuota.Pendiente &&
+                (!seleccionada.IdRegistroPago.HasValue || (seleccionada.Pago != null &&
+                    (seleccionada.Pago.Estado == EstadosTransaccionPago.Anulado || seleccionada.Pago.Estado == EstadosTransaccionPago.Reembolsado)));
+            lblRegistradoPor.Text = modoNuevo || preparandoPago
+                ? "Se registrará como: " + nombreUsuarioAutenticado
+                : "Registrado por: " + (registrador == null ? "Sin información" : registrador.Nombre + " " + registrador.Apellido);
             membresia.SelectedValue = seleccionada.IdMembresia;
             cuota.Text = Periodo(seleccionada);
             importe.Text = seleccionada.Importe.ToString("0.00");
@@ -241,6 +255,9 @@ namespace exxen2._0.capaVisual.Recepcionista
 
             actualizandoFormulario = false;
             EstablecerModo(seleccionada, modoNuevo);
+            if (seleccionada.EstadoPago == EstadosCuota.Pendiente && seleccionada.Pago != null &&
+                (seleccionada.Pago.Estado == EstadosTransaccionPago.Anulado || seleccionada.Pago.Estado == EstadosTransaccionPago.Reembolsado))
+                estado.SelectedItem = EstadosTransaccionPago.Aprobado;
             ActualizarExportaciones();
         }
 
@@ -250,10 +267,12 @@ namespace exxen2._0.capaVisual.Recepcionista
             LimpiarErroresDelDetalle();
             idCuotaSeleccionada = 0;
             idPagoSeleccionado = 0;
-            lblRegistradoPor.Text = "Registrado por: Sin información";
+            lblRegistradoPor.Text = string.Empty;
+            lblFormulario.Text = "Registrar pago";
+            lblAvisoCuota.Text = mensaje;
+            lblAvisoCuota.Visible = true;
             cuota.Clear();
             importe.Clear();
-            lblFormulario.Text = mensaje;
             registrar.Enabled = false;
             anular.Enabled = false;
             reembolsar.Enabled = false;
@@ -271,12 +290,16 @@ namespace exxen2._0.capaVisual.Recepcionista
         private void EstablecerModo(CuotaMembresia seleccionada, bool modoNuevo)
         {
             var tienePago = seleccionada.Pago != null && seleccionada.IdRegistroPago.HasValue;
-            lblFormulario.Text = tienePago ? "Detalle del pago - " + seleccionada.Pago.Estado : (modoNuevo ? "Nuevo pago - Cuota pendiente" : "Registrar cuota pendiente");
+            var puedeRegistrar = seleccionada.EstadoPago == EstadosCuota.Pendiente && (!tienePago ||
+                seleccionada.Pago.Estado == EstadosTransaccionPago.Anulado || seleccionada.Pago.Estado == EstadosTransaccionPago.Reembolsado);
+            lblFormulario.Text = puedeRegistrar ? (tienePago ? "Registrar nuevo pago - " + seleccionada.Pago.Estado :
+                (modoNuevo ? "Nuevo pago - Cuota pendiente" : "Registrar cuota pendiente")) :
+                (tienePago ? "Detalle del pago - " + seleccionada.Pago.Estado : "Cuota " + seleccionada.EstadoPago);
             membresia.Enabled = !tienePago;
-            importe.ReadOnly = tienePago;
-            metodo.Enabled = !tienePago;
-            estado.Enabled = !tienePago;
-            registrar.Enabled = !tienePago && seleccionada.EstadoPago == EstadosCuota.Pendiente;
+            importe.ReadOnly = !puedeRegistrar;
+            metodo.Enabled = puedeRegistrar;
+            estado.Enabled = puedeRegistrar;
+            registrar.Enabled = puedeRegistrar;
             anular.Enabled = tienePago && seleccionada.Pago.Estado != EstadosTransaccionPago.Anulado && seleccionada.Pago.Estado != EstadosTransaccionPago.Reembolsado;
             reembolsar.Enabled = tienePago && seleccionada.Pago.Estado == EstadosTransaccionPago.Aprobado;
             ActualizarAcciones();
@@ -290,7 +313,7 @@ namespace exxen2._0.capaVisual.Recepcionista
                 if (!ValidarFormulario())
                     return;
                 var idMembresiaCobro = Convert.ToInt32(membresia.SelectedValue);
-                logica.RegistrarPago(new Pago { Importe = AyudaFormularioVisual.DecimalPositivo(importe, "importe"), IdMetodoPago = Convert.ToInt32(metodo.SelectedValue), Estado = Convert.ToString(estado.SelectedItem), Fecha = DateTime.Now, Descripcion = "Pago registrado en recepcion" }, idCuotaSeleccionada);
+                logica.RegistrarPago(new Pago { Importe = AyudaFormularioVisual.DecimalPositivo(importe, "importe"), IdMetodoPago = Convert.ToInt32(metodo.SelectedValue), Estado = Convert.ToString(estado.SelectedItem), Fecha = DateTime.Now, Descripcion = "Pago registrado en recepción" }, idCuotaSeleccionada);
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
                 membresia.SelectedValue = idMembresiaCobro;
@@ -311,7 +334,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             {
                 if (idPagoSeleccionado == 0)
                     throw new InvalidOperationException("Selecciona un pago.");
-                if (MessageBox.Show("Anular el pago seleccionado?", "Confirmar anulacion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                if (MessageBox.Show("¿Anular el pago seleccionado?", "Confirmar anulación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                     return;
                 var idCuota = idCuotaSeleccionada;
                 logica.AnularPago(idPagoSeleccionado);
@@ -415,7 +438,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             exportarComprobante.Enabled = pagado;
             var idSocio = ObtenerSocioSeleccionado();
             exportarHistorialMenu.Enabled = tabla.SelectedRows.Count == 1 && idSocio > 0 && cuotasCargadas.Any(c => c.Membresia != null && c.Membresia.IdSocio == idSocio &&
-                c.EstadoPago == EstadosCuota.Pagada && c.Pago != null && c.Pago.Estado == EstadosTransaccionPago.Aprobado);
+                c.IdRegistroPago.HasValue);
             ActualizarAcciones();
         }
 
@@ -424,16 +447,13 @@ namespace exxen2._0.capaVisual.Recepcionista
             var seleccionada = cuotasCargadas.FirstOrDefault(c => c.IdCuotaMembresia == idCuotaSeleccionada);
             var tienePago = seleccionada != null && seleccionada.Pago != null && seleccionada.IdRegistroPago.HasValue;
             var aprobado = tienePago && seleccionada.Pago.Estado == EstadosTransaccionPago.Aprobado;
-            nuevo.Visible = !tienePago;
-            registrar.Visible = !tienePago && seleccionada != null && seleccionada.EstadoPago == EstadosCuota.Pendiente && !seleccionada.IdRegistroPago.HasValue;
+            var puedeRegistrar = seleccionada != null && seleccionada.EstadoPago == EstadosCuota.Pendiente &&
+                (!tienePago || seleccionada.Pago.Estado == EstadosTransaccionPago.Anulado || seleccionada.Pago.Estado == EstadosTransaccionPago.Reembolsado);
+            nuevo.Visible = seleccionada != null && (!tienePago || puedeRegistrar);
+            registrar.Visible = puedeRegistrar;
             anular.Visible = tienePago && anular.Enabled;
             reembolsar.Visible = aprobado && reembolsar.Enabled;
             exportarComprobante.Visible = aprobado && exportarComprobante.Enabled;
-            nuevo.Location = new Point(16, 264);
-            registrar.Location = new Point(194, 264);
-            anular.Location = new Point(16, 264);
-            reembolsar.Location = new Point(194, 264);
-            exportarComprobante.Location = new Point(16, 310);
         }
 
         private void tabla_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)

@@ -138,8 +138,9 @@ namespace exxen2._0.capaVisual.Recepcionista
         /* Al hacer clic en btnSocios, abre el módulo correspondiente dentro del panel principal. */
         private GestionSociosFormulario CrearSocios(int id)
         {
-            var form = id > 0 ? new GestionSociosFormulario(Color.FromArgb(5, 150, 105), id) : new GestionSociosFormulario(Color.FromArgb(5, 150, 105));
+            var form = new GestionSociosFormulario(Color.FromArgb(5, 150, 105), usuario, id);
             form.FichaSolicitada += Modulo_FichaSolicitada;
+            form.MembresiaSolicitada += inicioEstadoSocios_AccionSolicitada;
             return form;
         }
         private GestionPagosFormulario CrearPagos(int id)

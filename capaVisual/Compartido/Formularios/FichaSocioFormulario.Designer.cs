@@ -65,27 +65,29 @@ namespace exxen2._0.capaVisual.Compartido
             this.disposicion.Controls.Add(this.lblEstado, 0, 6);
             this.disposicion.Dock = System.Windows.Forms.DockStyle.Fill;
             this.disposicion.Location = new System.Drawing.Point(0, 0);
-            this.disposicion.MinimumSize = new System.Drawing.Size(850, 620);
+            this.disposicion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.disposicion.MinimumSize = new System.Drawing.Size(1062, 775);
             this.disposicion.Name = "disposicion";
-            this.disposicion.Padding = new System.Windows.Forms.Padding(12);
+            this.disposicion.Padding = new System.Windows.Forms.Padding(15, 15, 15, 15);
             this.disposicion.RowCount = 7;
-            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 120F));
-            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 130F));
-            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 150F));
+            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 162F));
+            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 125F));
             this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
-            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
-            this.disposicion.Size = new System.Drawing.Size(1000, 700);
+            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.disposicion.Size = new System.Drawing.Size(1250, 875);
             this.disposicion.TabIndex = 0;
             //
             // lblTitulo
             //
             this.lblTitulo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Bold);
-            this.lblTitulo.Location = new System.Drawing.Point(15, 12);
+            this.lblTitulo.Location = new System.Drawing.Point(19, 15);
+            this.lblTitulo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(970, 32);
+            this.lblTitulo.Size = new System.Drawing.Size(1212, 40);
             this.lblTitulo.TabIndex = 0;
             this.lblTitulo.Text = "FICHA DEL SOCIO";
             //
@@ -95,16 +97,18 @@ namespace exxen2._0.capaVisual.Compartido
             this.encabezado.Controls.Add(this.lblNombre);
             this.encabezado.Controls.Add(this.lblDatos);
             this.encabezado.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.encabezado.Location = new System.Drawing.Point(15, 47);
+            this.encabezado.Location = new System.Drawing.Point(19, 59);
+            this.encabezado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.encabezado.Name = "encabezado";
-            this.encabezado.Size = new System.Drawing.Size(970, 114);
+            this.encabezado.Size = new System.Drawing.Size(1212, 142);
             this.encabezado.TabIndex = 1;
             //
             // fotoSocio
             //
-            this.fotoSocio.Location = new System.Drawing.Point(0, 4);
+            this.fotoSocio.Location = new System.Drawing.Point(0, 5);
+            this.fotoSocio.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.fotoSocio.Name = "fotoSocio";
-            this.fotoSocio.Size = new System.Drawing.Size(104, 104);
+            this.fotoSocio.Size = new System.Drawing.Size(130, 130);
             this.fotoSocio.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.fotoSocio.TabIndex = 0;
             this.fotoSocio.TabStop = false;
@@ -112,17 +116,19 @@ namespace exxen2._0.capaVisual.Compartido
             // lblNombre
             //
             this.lblNombre.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblNombre.Location = new System.Drawing.Point(120, 2);
+            this.lblNombre.Location = new System.Drawing.Point(150, 2);
+            this.lblNombre.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNombre.Name = "lblNombre";
-            this.lblNombre.Size = new System.Drawing.Size(820, 32);
+            this.lblNombre.Size = new System.Drawing.Size(1025, 40);
             this.lblNombre.TabIndex = 1;
             this.lblNombre.Text = "Nombre y apellido";
             //
             // lblDatos
             //
-            this.lblDatos.Location = new System.Drawing.Point(120, 36);
+            this.lblDatos.Location = new System.Drawing.Point(150, 45);
+            this.lblDatos.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDatos.Name = "lblDatos";
-            this.lblDatos.Size = new System.Drawing.Size(820, 76);
+            this.lblDatos.Size = new System.Drawing.Size(1025, 95);
             this.lblDatos.TabIndex = 2;
             this.lblDatos.Text = "DNI · Estado\r\nNacimiento · Alta · Antigüedad";
             //
@@ -136,21 +142,23 @@ namespace exxen2._0.capaVisual.Compartido
             this.secciones.Controls.Add(this.lblEntrenador, 1, 0);
             this.secciones.Controls.Add(this.lblRutina, 2, 0);
             this.secciones.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.secciones.Location = new System.Drawing.Point(15, 167);
+            this.secciones.Location = new System.Drawing.Point(19, 209);
+            this.secciones.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.secciones.Name = "secciones";
             this.secciones.RowCount = 1;
             this.secciones.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.secciones.Size = new System.Drawing.Size(970, 124);
+            this.secciones.Size = new System.Drawing.Size(1212, 154);
             this.secciones.TabIndex = 2;
             //
             // lblMembresia
             //
             this.lblMembresia.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
             this.lblMembresia.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblMembresia.Location = new System.Drawing.Point(3, 0);
+            this.lblMembresia.Location = new System.Drawing.Point(4, 0);
+            this.lblMembresia.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMembresia.Name = "lblMembresia";
-            this.lblMembresia.Padding = new System.Windows.Forms.Padding(8);
-            this.lblMembresia.Size = new System.Drawing.Size(420, 124);
+            this.lblMembresia.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.lblMembresia.Size = new System.Drawing.Size(525, 154);
             this.lblMembresia.TabIndex = 0;
             this.lblMembresia.Text = "MEMBRESÍA\r\nPlan · Estado\r\nInicio · Cuotas hasta\r\nDeuda · Límite";
             //
@@ -158,10 +166,11 @@ namespace exxen2._0.capaVisual.Compartido
             //
             this.lblEntrenador.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
             this.lblEntrenador.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblEntrenador.Location = new System.Drawing.Point(429, 0);
+            this.lblEntrenador.Location = new System.Drawing.Point(537, 0);
+            this.lblEntrenador.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEntrenador.Name = "lblEntrenador";
-            this.lblEntrenador.Padding = new System.Windows.Forms.Padding(8);
-            this.lblEntrenador.Size = new System.Drawing.Size(265, 124);
+            this.lblEntrenador.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.lblEntrenador.Size = new System.Drawing.Size(331, 154);
             this.lblEntrenador.TabIndex = 1;
             this.lblEntrenador.Text = "ENTRENADOR\r\nSin asignar";
             //
@@ -169,20 +178,22 @@ namespace exxen2._0.capaVisual.Compartido
             //
             this.lblRutina.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
             this.lblRutina.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblRutina.Location = new System.Drawing.Point(700, 0);
+            this.lblRutina.Location = new System.Drawing.Point(876, 0);
+            this.lblRutina.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblRutina.Name = "lblRutina";
-            this.lblRutina.Padding = new System.Windows.Forms.Padding(8);
-            this.lblRutina.Size = new System.Drawing.Size(267, 124);
+            this.lblRutina.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.lblRutina.Size = new System.Drawing.Size(332, 154);
             this.lblRutina.TabIndex = 2;
             this.lblRutina.Text = "RUTINA\r\nSin rutina";
             //
             // lblFinanzas
             //
             this.lblFinanzas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblFinanzas.Location = new System.Drawing.Point(15, 294);
+            this.lblFinanzas.Location = new System.Drawing.Point(19, 367);
+            this.lblFinanzas.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblFinanzas.Name = "lblFinanzas";
-            this.lblFinanzas.Padding = new System.Windows.Forms.Padding(4, 8, 4, 0);
-            this.lblFinanzas.Size = new System.Drawing.Size(970, 100);
+            this.lblFinanzas.Padding = new System.Windows.Forms.Padding(5, 10, 5, 0);
+            this.lblFinanzas.Size = new System.Drawing.Size(1212, 125);
             this.lblFinanzas.TabIndex = 3;
             this.lblFinanzas.Text = "RESUMEN FINANCIERO\r\nTotal abonado · Pagos · Cuotas pagadas\r\nDeuda · Pendientes · " +
     "Vencidas\r\nÚltimo pago · Próximo vencimiento";
@@ -203,14 +214,15 @@ namespace exxen2._0.capaVisual.Compartido
             this.colRegistrador});
             this.tabla.ContextMenuStrip = this.menuPagos;
             this.tabla.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabla.Location = new System.Drawing.Point(15, 397);
+            this.tabla.Location = new System.Drawing.Point(19, 496);
+            this.tabla.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabla.MultiSelect = false;
             this.tabla.Name = "tabla";
             this.tabla.ReadOnly = true;
             this.tabla.RowHeadersVisible = false;
             this.tabla.RowHeadersWidth = 51;
             this.tabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tabla.Size = new System.Drawing.Size(970, 216);
+            this.tabla.Size = new System.Drawing.Size(1212, 270);
             this.tabla.TabIndex = 4;
             this.tabla.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tabla_CellMouseDown);
             this.tabla.SelectionChanged += new System.EventHandler(this.tabla_SelectionChanged);
@@ -296,9 +308,10 @@ namespace exxen2._0.capaVisual.Compartido
             this.acciones.Controls.Add(this.btnPago);
             this.acciones.Controls.Add(this.btnExportarHistorial);
             this.acciones.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.acciones.Location = new System.Drawing.Point(15, 619);
+            this.acciones.Location = new System.Drawing.Point(19, 774);
+            this.acciones.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.acciones.Name = "acciones";
-            this.acciones.Size = new System.Drawing.Size(970, 42);
+            this.acciones.Size = new System.Drawing.Size(1212, 52);
             this.acciones.TabIndex = 5;
             //
             // btnHistorial
@@ -310,9 +323,10 @@ namespace exxen2._0.capaVisual.Compartido
             this.btnHistorial.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(61)))), ((int)(((byte)(112)))));
             this.btnHistorial.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnHistorial.ForeColor = System.Drawing.Color.White;
-            this.btnHistorial.Location = new System.Drawing.Point(0, 3);
+            this.btnHistorial.Location = new System.Drawing.Point(0, 4);
+            this.btnHistorial.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnHistorial.Name = "btnHistorial";
-            this.btnHistorial.Size = new System.Drawing.Size(180, 36);
+            this.btnHistorial.Size = new System.Drawing.Size(225, 45);
             this.btnHistorial.TabIndex = 0;
             this.btnHistorial.Text = "Ver historial completo";
             this.btnHistorial.UseVisualStyleBackColor = false;
@@ -327,9 +341,10 @@ namespace exxen2._0.capaVisual.Compartido
             this.btnPago.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(101)))), ((int)(((byte)(41)))));
             this.btnPago.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPago.ForeColor = System.Drawing.Color.White;
-            this.btnPago.Location = new System.Drawing.Point(190, 3);
+            this.btnPago.Location = new System.Drawing.Point(238, 4);
+            this.btnPago.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnPago.Name = "btnPago";
-            this.btnPago.Size = new System.Drawing.Size(180, 36);
+            this.btnPago.Size = new System.Drawing.Size(225, 45);
             this.btnPago.TabIndex = 1;
             this.btnPago.Text = "Registrar pago";
             this.btnPago.UseVisualStyleBackColor = false;
@@ -343,9 +358,10 @@ namespace exxen2._0.capaVisual.Compartido
             this.btnExportarHistorial.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(61)))), ((int)(((byte)(112)))));
             this.btnExportarHistorial.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExportarHistorial.ForeColor = System.Drawing.Color.White;
-            this.btnExportarHistorial.Location = new System.Drawing.Point(380, 3);
+            this.btnExportarHistorial.Location = new System.Drawing.Point(475, 4);
+            this.btnExportarHistorial.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnExportarHistorial.Name = "btnExportarHistorial";
-            this.btnExportarHistorial.Size = new System.Drawing.Size(180, 36);
+            this.btnExportarHistorial.Size = new System.Drawing.Size(225, 45);
             this.btnExportarHistorial.TabIndex = 2;
             this.btnExportarHistorial.Text = "Exportar historial PDF";
             this.btnExportarHistorial.UseVisualStyleBackColor = false;
@@ -354,9 +370,10 @@ namespace exxen2._0.capaVisual.Compartido
             // lblEstado
             //
             this.lblEstado.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblEstado.Location = new System.Drawing.Point(15, 664);
+            this.lblEstado.Location = new System.Drawing.Point(19, 830);
+            this.lblEstado.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEstado.Name = "lblEstado";
-            this.lblEstado.Size = new System.Drawing.Size(970, 24);
+            this.lblEstado.Size = new System.Drawing.Size(1212, 30);
             this.lblEstado.TabIndex = 6;
             this.lblEstado.Text = "Seleccioná un socio para consultar su ficha.";
             //
@@ -370,10 +387,11 @@ namespace exxen2._0.capaVisual.Compartido
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1000, 700);
+            this.ClientSize = new System.Drawing.Size(1250, 875);
             this.Controls.Add(this.disposicion);
             this.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.MinimumSize = new System.Drawing.Size(900, 660);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MinimumSize = new System.Drawing.Size(1120, 813);
             this.Name = "FichaSocioFormulario";
             this.Text = "SysGym";
             this.Load += new System.EventHandler(this.FichaSocioFormulario_Load);

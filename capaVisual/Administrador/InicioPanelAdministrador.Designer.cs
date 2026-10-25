@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -165,6 +165,7 @@ namespace exxen2._0.capaVisual.Administrador
             colSituacion.Name = "colSituacion";
             colSituacion.ReadOnly = true;
             colSituacion.MinimumWidth = 92;
+
 
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(241, 245, 249);

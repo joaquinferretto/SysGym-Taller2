@@ -61,11 +61,11 @@ namespace exxen2._0.capaVisual.Compartido.Controles
             var texto = buscador.Text.Trim();
             var filtro = Convert.ToString(filtroEstado.SelectedItem);
             IEnumerable<EstadoSocioDashboard> resultado = socios;
-            if (filtro == "Al día") resultado = resultado.Where(s => s.EstadoDeuda == "Al día");
-            else if (filtro == "Con deuda") resultado = resultado.Where(s => s.CuotasVencidas > 0 && !s.LimiteAlcanzado);
+            if (filtro == "Al día") resultado = resultado.Where(s => s.Activo && s.CuotasVencidas == 0);
+            else if (filtro == "Con deuda") resultado = resultado.Where(s => s.Activo && s.CuotasVencidas > 0 && !s.LimiteAlcanzado);
             else if (filtro == "1 cuota vencida") resultado = resultado.Where(s => s.CuotasVencidas == 1);
             else if (filtro == "Límite alcanzado") resultado = resultado.Where(s => s.LimiteAlcanzado);
-            else if (filtro == "Inactivos") resultado = resultado.Where(s => !s.Activo);
+            else if (filtro == "Inactivos") resultado = resultado.Where(s => !s.Activo && !s.LimiteAlcanzado);
             else if (filtro == "Activos") resultado = resultado.Where(s => s.Activo);
             else if (filtro == "Cuotas pendientes") resultado = resultado.Where(s => s.CuotasPendientes > 0);
             else if (filtro == "Cuotas vencidas") resultado = resultado.Where(s => s.CuotasVencidas > 0);

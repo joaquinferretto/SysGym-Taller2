@@ -169,8 +169,9 @@ namespace exxen2._0.capaVisual.Administrador
         /* Al hacer clic en btnSocios, abre el módulo correspondiente dentro del panel principal. */
         private GestionSociosFormulario CrearSocios(int id)
         {
-            var form = id > 0 ? new GestionSociosFormulario(Color.FromArgb(79, 70, 229), id) : new GestionSociosFormulario(Color.FromArgb(79, 70, 229));
+            var form = new GestionSociosFormulario(Color.FromArgb(79, 70, 229), usuario, id);
             form.FichaSolicitada += Modulo_FichaSolicitada;
+            form.MembresiaSolicitada += inicioPanel_AccionSocioSolicitada;
             return form;
         }
         private GestionPagosFormulario CrearPagos(int id)
@@ -276,7 +277,7 @@ namespace exxen2._0.capaVisual.Administrador
             try
             {
                 new ConfiguracionSistemaLogica(usuario.IdUsuarioSistema).ValidarAcceso();
-                Abrir(btnConfiguracion, new ConfiguracionFormulario(usuario), "Configuración | Cuotas y pagos");
+                Abrir(btnConfiguracion, new ConfiguracionFormulario(usuario), "Configuración | Parámetros generales del sistema");
             }
             catch (Exception ex)
             {

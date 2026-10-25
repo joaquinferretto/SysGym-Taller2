@@ -16,7 +16,7 @@ namespace exxen2._0.capaVisual.Entrenador
     public partial class RutinasEntrenadorFormulario : Form
     {
         private readonly UsuarioSistema usuario;
-        private readonly RutinaLogica rutinas = new RutinaLogica();
+        private readonly RutinaLogica rutinas;
         private readonly RutinaEjercicioLogica ejerciciosRutina = new RutinaEjercicioLogica();
         private readonly EjercicioLogica ejercicios = new EjercicioLogica();
         private int idRutina;
@@ -40,6 +40,7 @@ namespace exxen2._0.capaVisual.Entrenador
 
         public RutinasEntrenadorFormulario()
         {
+            rutinas = new RutinaLogica();
             InitializeComponent();
             Icon = Properties.Resources.SysGym;
             ConfigurarValidaciones();
@@ -49,6 +50,7 @@ namespace exxen2._0.capaVisual.Entrenador
         {
             if (usuario == null) throw new ArgumentNullException("usuario");
             this.usuario = usuario;
+            rutinas = new RutinaLogica(usuario.IdUsuarioSistema);
             InitializeComponent();
             Icon = Properties.Resources.SysGym;
             ConfigurarValidaciones();

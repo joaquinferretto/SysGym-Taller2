@@ -277,7 +277,7 @@ namespace exxen2._0.capaVisual.Compartido.Utilidades
 
         internal static bool ValidarDni(ErrorProvider errores, TextBox campo)
         {
-            return ValidarConError(errores, campo, delegate { ValidacionesGimnasio.ValidarDni(campo.Text.Trim()); });
+            return ValidarConError(errores, campo, delegate { ValidacionesGimnasio.ValidarDni(campo.Text); });
         }
 
         internal static bool ValidarNombreUsuario(ErrorProvider errores, TextBox campo)

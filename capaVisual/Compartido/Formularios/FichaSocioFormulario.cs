@@ -45,7 +45,7 @@ namespace exxen2._0.capaVisual.Compartido
                 AyudaFormularioVisual.MostrarFotoRuta(fotoSocio, s.FotoRuta, s.Sexo);
                 lblMembresia.Text = "MEMBRESÍA\r\n" + ficha.Estado.Plan + " · " + ficha.Estado.EstadoMembresia +
                     "\r\nInicio: " + Fecha(ficha.InicioMembresia) + " · Cuotas hasta: " + Fecha(ficha.CubiertaHasta) +
-                    "\r\n" + ficha.Estado.EstadoDeuda.ToUpperInvariant() + " · Límite: " + ficha.LimiteDeuda + " vencidas";
+                    "\r\n" + ficha.Estado.EstadoDeuda + " · Límite: " + ficha.LimiteDeuda + " vencidas";
                 lblEntrenador.Text = "ENTRENADOR\r\n" + ficha.Entrenador + "\r\n" + ficha.EstadoAsignacion;
                 lblRutina.Text = "RUTINA\r\n" + ficha.Rutina + "\r\nEjercicios: " + ficha.CantidadEjercicios;
                 lblFinanzas.Text = "RESUMEN FINANCIERO\r\nTotal abonado histórico: " + ficha.TotalAbonado.ToString("C") +
@@ -66,11 +66,12 @@ namespace exxen2._0.capaVisual.Compartido
             {
                 var fechaPago = pago.Fecha.TimeOfDay == TimeSpan.Zero ? pago.Fecha.ToString("dd/MM/yyyy") : pago.Fecha.ToString("dd/MM/yyyy HH:mm");
                 var indice = tabla.Rows.Add(fechaPago, pago.Desde.ToString("dd/MM/yyyy") + " - " + pago.Hasta.ToString("dd/MM/yyyy"),
-                    pago.Metodo, pago.Importe.ToString("C"), pago.RegistradoPor);
+                    pago.Metodo + (pago.Estado == EstadosTransaccionPago.Aprobado ? "" : " (" + pago.Estado + ")"),
+                    pago.Importe.ToString("C"), pago.RegistradoPor);
                 tabla.Rows[indice].Tag = pago;
             }
             tabla.ClearSelection();
-            lblEstado.Text = ficha.CantidadPagos == 0 ? "Sin pagos registrados" : "Mostrando " + tabla.Rows.Count + " de " + ficha.CantidadPagos + " pagos aprobados";
+            lblEstado.Text = ficha.Pagos.Count == 0 ? "Sin pagos registrados" : "Mostrando " + tabla.Rows.Count + " de " + ficha.Pagos.Count + " pagos (" + ficha.CantidadPagos + " aprobados)";
             ActualizarAcciones();
         }
 

@@ -15,7 +15,7 @@ namespace exxen2._0.capaVisual.Entrenador
     [System.ComponentModel.DesignerCategory("Form")]
     public partial class MisSociosFormulario : Form
     {
-        private readonly RutinaLogica rutinas = new RutinaLogica();
+        private readonly RutinaLogica rutinas;
         private readonly RutinaEjercicioLogica ejerciciosRutina = new RutinaEjercicioLogica();
         private readonly UsuarioSistema usuario;
         private readonly bool modoAdministrador;
@@ -31,6 +31,7 @@ namespace exxen2._0.capaVisual.Entrenador
         {
             if (usuario == null) throw new ArgumentNullException("usuario");
             this.usuario = usuario;
+            rutinas = new RutinaLogica(usuario.IdUsuarioSistema);
             InitializeComponent();
             rutinaDisponible.Validating += rutinaDisponible_Validating;
             rutinaDisponible.SelectedIndexChanged += rutinaDisponible_SelectedIndexChanged;
@@ -56,10 +57,16 @@ namespace exxen2._0.capaVisual.Entrenador
 
         private void CargarRutinasDisponibles()
         {
+            var objetivoElegido = Convert.ToString(objetivo.SelectedItem);
+            var nivelElegido = Convert.ToString(nivel.SelectedItem);
+            var disponibles = rutinas.ListarActivas();
+            disponibles = objetivoElegido == "Libre"
+                ? disponibles.Where(r => string.IsNullOrEmpty(r.Objetivo) && string.IsNullOrEmpty(r.Nivel)).ToList()
+                : disponibles.Where(r => r.Objetivo == objetivoElegido && r.Nivel == nivelElegido).ToList();
             rutinaDisponible.DataSource = null;
             rutinaDisponible.DisplayMember = "Nombre";
             rutinaDisponible.ValueMember = "IdRutina";
-            rutinaDisponible.DataSource = rutinas.ListarActivas();
+            rutinaDisponible.DataSource = disponibles;
         }
 
         private void AplicarFiltro(int? idSocioMantener = null)
@@ -128,14 +135,24 @@ namespace exxen2._0.capaVisual.Entrenador
             txtPlan.Text = socioSeleccionado.NombrePlan;
             txtEntrenador.Text = socioSeleccionado.NombreEntrenador;
             txtVencimiento.Text = socioSeleccionado.CuotaHasta.HasValue ? socioSeleccionado.CuotaHasta.Value.ToString("dd/MM/yyyy") : "Sin cuotas";
-            txtRutina.Text = socioSeleccionado.TieneRutina ? socioSeleccionado.NombreRutina : "Sin rutina asignada";
+            txtRutina.Text = !socioSeleccionado.TieneRutina ? "Libre / sin rutina" :
+                string.IsNullOrEmpty(socioSeleccionado.Objetivo) ? "Libre / " + socioSeleccionado.NombreRutina :
+                socioSeleccionado.Objetivo + " – " + socioSeleccionado.Nivel;
+            var imc = RutinaLogica.CalcularImc(socioSeleccionado.Peso, socioSeleccionado.Altura);
+            var sugerencia = RutinaLogica.SugerirObjetivo(socioSeleccionado.Peso, socioSeleccionado.Altura);
+            lblSugerencia.Text = imc.HasValue
+                ? "IMC: " + imc.Value.ToString("0.0") + ". Sugerencia según IMC: " + sugerencia + ".\r\nEs orientativa; el entrenador decide."
+                : "IMC no disponible. Sin sugerencia.";
+            objetivo.SelectedItem = string.IsNullOrEmpty(socioSeleccionado.Objetivo) ? "Libre" : socioSeleccionado.Objetivo;
+            if (!string.IsNullOrEmpty(socioSeleccionado.Nivel)) nivel.SelectedItem = socioSeleccionado.Nivel;
+            CargarRutinasDisponibles();
             CargarRutinaSemanal(socioSeleccionado.IdSocio);
 
             asignarRutina.Text = socioSeleccionado.TieneRutina ? "Cambiar rutina" : "Asignar rutina";
             ActualizarAcciones();
             lblAccionInfo.Text = socioSeleccionado.TieneRutina
-                ? "La rutina se muestra abajo. Podes cambiarla o editar sus ejercicios."
-                : "Selecciona una rutina del catalogo o crea una personalizada.";
+                ? "La rutina se muestra abajo. Podés cambiarla o editar sus ejercicios."
+                : "Seleccioná una rutina del catálogo o creá una personalizada.";
         }
 
         private void MostrarFichaVacia()
@@ -148,6 +165,7 @@ namespace exxen2._0.capaVisual.Entrenador
             txtEntrenador.Text = "-";
             txtVencimiento.Text = "-";
             txtRutina.Text = "-";
+            lblSugerencia.Text = "IMC no disponible. Sin sugerencia.";
             lblAccionInfo.Text = "Selecciona un socio para ver su rutina y acciones.";
             tablaRutina.Rows.Clear();
             asignarRutina.Text = "Asignar rutina";
@@ -161,7 +179,7 @@ namespace exxen2._0.capaVisual.Entrenador
             var haySocio = socioSeleccionado != null;
             rutinaDisponible.Enabled = haySocio;
             asignarRutina.Enabled = haySocio && rutinaDisponible.SelectedItem is Rutina;
-            crearPersonalizada.Enabled = haySocio && !socioSeleccionado.TieneRutina;
+            crearPersonalizada.Enabled = haySocio;
             verRutina.Enabled = haySocio && socioSeleccionado.TieneRutina;
         }
 
@@ -232,7 +250,7 @@ namespace exxen2._0.capaVisual.Entrenador
                 var idSocio = socioSeleccionado.IdSocio;
                 rutinas.AsignarRutina(socioSeleccionado.IdMembresia, rutina.IdRutina);
                 Cargar(idSocio);
-                AyudaFormularioVisual.MostrarExito(lblEstado, "La rutina fue asignada a la membresia.", true);
+                AyudaFormularioVisual.MostrarExito(lblEstado, "La rutina fue asignada a la membresía.", true);
             }
             catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex, true); }
         }
@@ -272,6 +290,9 @@ namespace exxen2._0.capaVisual.Entrenador
         private void MisSociosFormulario_Load(object origen, EventArgs e)
         {
             if (AyudaFormularioVisual.EnModoDisenio(this)) return;
+            objetivo.SelectedIndex = 0;
+            nivel.SelectedIndex = 0;
+            filtroRutina.SelectedIndex = 0;
             if (!modoAdministrador)
             {
                 // Para el entrenador, los socios asignados son sus alumnos.
@@ -295,6 +316,13 @@ namespace exxen2._0.capaVisual.Entrenador
         }
         private void actualizar_Click(object origen, EventArgs e) { Cargar(socioSeleccionado == null ? (int?)null : socioSeleccionado.IdSocio); }
 
+        private void tabla_CellMouseDown(object origen, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right || e.RowIndex < 0) return;
+            tabla.ClearSelection();
+            tabla.Rows[e.RowIndex].Selected = true;
+        }
+
         /* Al salir del catálogo, exige una rutina cuando la acción de asignar está disponible. */
         private void rutinaDisponible_Validating(object origen, System.ComponentModel.CancelEventArgs e)
         {
@@ -305,6 +333,14 @@ namespace exxen2._0.capaVisual.Entrenador
         private void rutinaDisponible_SelectedIndexChanged(object origen, EventArgs e)
         {
             indicadorErrores.SetError(rutinaDisponible, string.Empty);
+            ActualizarAcciones();
+        }
+
+        private void filtroModelo_SelectedIndexChanged(object origen, EventArgs e)
+        {
+            if (rutinaDisponible == null || objetivo == null || nivel == null) return;
+            nivel.Enabled = Convert.ToString(objetivo.SelectedItem) != "Libre";
+            if (!AyudaFormularioVisual.EnModoDisenio(this)) CargarRutinasDisponibles();
             ActualizarAcciones();
         }
 

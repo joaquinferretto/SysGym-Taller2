@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -26,7 +26,7 @@ namespace exxen2._0.capaVisual.Compartido
             tablaSemana.Columns.AddRange(new DataGridViewColumn[] { colLunes, colMartes, colMiercoles, colJueves, colViernes });
             colLunes.HeaderText = "Lunes"; colLunes.Name = "colLunes"; colLunes.MinimumWidth = 120;
             colMartes.HeaderText = "Martes"; colMartes.Name = "colMartes"; colMartes.MinimumWidth = 120;
-            colMiercoles.HeaderText = "Miercoles"; colMiercoles.Name = "colMiercoles"; colMiercoles.MinimumWidth = 120;
+            colMiercoles.HeaderText = "Miércoles"; colMiercoles.Name = "colMiercoles"; colMiercoles.MinimumWidth = 120;
             colJueves.HeaderText = "Jueves"; colJueves.Name = "colJueves"; colJueves.MinimumWidth = 120;
             colViernes.HeaderText = "Viernes"; colViernes.Name = "colViernes"; colViernes.MinimumWidth = 120;
             panelEncabezado.Name = "panelEncabezado"; panelEncabezado.TabIndex = 0; lblTitulo.Name = "lblTitulo"; lblTitulo.TabIndex = 0; lblDescripcion.Name = "lblDescripcion"; lblDescripcion.TabIndex = 1; btnVolver.Name = "btnVolver";

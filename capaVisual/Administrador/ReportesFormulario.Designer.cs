@@ -76,27 +76,29 @@ namespace exxen2._0.capaVisual.Administrador
             this.disposicion.Controls.Add(this.lblEstado, 0, 7);
             this.disposicion.Dock = System.Windows.Forms.DockStyle.Fill;
             this.disposicion.Location = new System.Drawing.Point(0, 0);
+            this.disposicion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.disposicion.Name = "disposicion";
-            this.disposicion.Padding = new System.Windows.Forms.Padding(12);
+            this.disposicion.Padding = new System.Windows.Forms.Padding(15, 15, 15, 15);
             this.disposicion.RowCount = 8;
-            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
+            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
             this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
-            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
+            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 52F));
+            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
             this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
-            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.disposicion.Size = new System.Drawing.Size(1100, 680);
+            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
+            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 52F));
+            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
+            this.disposicion.Size = new System.Drawing.Size(1375, 850);
             this.disposicion.TabIndex = 0;
             //
             // lblTitulo
             //
             this.lblTitulo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Bold);
-            this.lblTitulo.Location = new System.Drawing.Point(15, 12);
+            this.lblTitulo.Location = new System.Drawing.Point(19, 15);
+            this.lblTitulo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(1070, 36);
+            this.lblTitulo.Size = new System.Drawing.Size(1337, 45);
             this.lblTitulo.TabIndex = 0;
             this.lblTitulo.Text = "REPORTES OPERATIVOS";
             //
@@ -108,17 +110,18 @@ namespace exxen2._0.capaVisual.Administrador
             this.indicadores.Controls.Add(this.lblRutinasActivasValor);
             this.indicadores.Controls.Add(this.lblEjerciciosValor);
             this.indicadores.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.indicadores.Location = new System.Drawing.Point(15, 51);
+            this.indicadores.Location = new System.Drawing.Point(19, 64);
+            this.indicadores.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.indicadores.Name = "indicadores";
-            this.indicadores.Size = new System.Drawing.Size(1070, 28);
+            this.indicadores.Size = new System.Drawing.Size(1337, 34);
             this.indicadores.TabIndex = 1;
             this.indicadores.WrapContents = false;
             //
             // lblSociosActivosValor
             //
             this.lblSociosActivosValor.AutoSize = true;
-            this.lblSociosActivosValor.Location = new System.Drawing.Point(0, 6);
-            this.lblSociosActivosValor.Margin = new System.Windows.Forms.Padding(0, 6, 18, 0);
+            this.lblSociosActivosValor.Location = new System.Drawing.Point(0, 8);
+            this.lblSociosActivosValor.Margin = new System.Windows.Forms.Padding(0, 8, 22, 0);
             this.lblSociosActivosValor.Name = "lblSociosActivosValor";
             this.lblSociosActivosValor.Size = new System.Drawing.Size(120, 21);
             this.lblSociosActivosValor.TabIndex = 0;
@@ -127,8 +130,8 @@ namespace exxen2._0.capaVisual.Administrador
             // lblUsuariosActivosValor
             //
             this.lblUsuariosActivosValor.AutoSize = true;
-            this.lblUsuariosActivosValor.Location = new System.Drawing.Point(138, 6);
-            this.lblUsuariosActivosValor.Margin = new System.Windows.Forms.Padding(0, 6, 18, 0);
+            this.lblUsuariosActivosValor.Location = new System.Drawing.Point(142, 8);
+            this.lblUsuariosActivosValor.Margin = new System.Windows.Forms.Padding(0, 8, 22, 0);
             this.lblUsuariosActivosValor.Name = "lblUsuariosActivosValor";
             this.lblUsuariosActivosValor.Size = new System.Drawing.Size(136, 21);
             this.lblUsuariosActivosValor.TabIndex = 1;
@@ -137,8 +140,8 @@ namespace exxen2._0.capaVisual.Administrador
             // lblMembresiasValor
             //
             this.lblMembresiasValor.AutoSize = true;
-            this.lblMembresiasValor.Location = new System.Drawing.Point(292, 6);
-            this.lblMembresiasValor.Margin = new System.Windows.Forms.Padding(0, 6, 18, 0);
+            this.lblMembresiasValor.Location = new System.Drawing.Point(300, 8);
+            this.lblMembresiasValor.Margin = new System.Windows.Forms.Padding(0, 8, 22, 0);
             this.lblMembresiasValor.Name = "lblMembresiasValor";
             this.lblMembresiasValor.Size = new System.Drawing.Size(187, 21);
             this.lblMembresiasValor.TabIndex = 2;
@@ -147,8 +150,8 @@ namespace exxen2._0.capaVisual.Administrador
             // lblRutinasActivasValor
             //
             this.lblRutinasActivasValor.AutoSize = true;
-            this.lblRutinasActivasValor.Location = new System.Drawing.Point(497, 6);
-            this.lblRutinasActivasValor.Margin = new System.Windows.Forms.Padding(0, 6, 18, 0);
+            this.lblRutinasActivasValor.Location = new System.Drawing.Point(509, 8);
+            this.lblRutinasActivasValor.Margin = new System.Windows.Forms.Padding(0, 8, 22, 0);
             this.lblRutinasActivasValor.Name = "lblRutinasActivasValor";
             this.lblRutinasActivasValor.Size = new System.Drawing.Size(126, 21);
             this.lblRutinasActivasValor.TabIndex = 3;
@@ -157,8 +160,8 @@ namespace exxen2._0.capaVisual.Administrador
             // lblEjerciciosValor
             //
             this.lblEjerciciosValor.AutoSize = true;
-            this.lblEjerciciosValor.Location = new System.Drawing.Point(641, 6);
-            this.lblEjerciciosValor.Margin = new System.Windows.Forms.Padding(0, 6, 18, 0);
+            this.lblEjerciciosValor.Location = new System.Drawing.Point(657, 8);
+            this.lblEjerciciosValor.Margin = new System.Windows.Forms.Padding(0, 8, 22, 0);
             this.lblEjerciciosValor.Name = "lblEjerciciosValor";
             this.lblEjerciciosValor.Size = new System.Drawing.Size(170, 21);
             this.lblEjerciciosValor.TabIndex = 4;
@@ -172,18 +175,19 @@ namespace exxen2._0.capaVisual.Administrador
             this.filtros.Controls.Add(this.buscador);
             this.filtros.Controls.Add(this.generar);
             this.filtros.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.filtros.Location = new System.Drawing.Point(12, 82);
+            this.filtros.Location = new System.Drawing.Point(15, 102);
             this.filtros.Margin = new System.Windows.Forms.Padding(0);
             this.filtros.Name = "filtros";
-            this.filtros.Size = new System.Drawing.Size(1076, 42);
+            this.filtros.Size = new System.Drawing.Size(1345, 52);
             this.filtros.TabIndex = 2;
             this.filtros.WrapContents = false;
             //
             // lblTipo
             //
-            this.lblTipo.Location = new System.Drawing.Point(3, 0);
+            this.lblTipo.Location = new System.Drawing.Point(4, 0);
+            this.lblTipo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTipo.Name = "lblTipo";
-            this.lblTipo.Size = new System.Drawing.Size(110, 28);
+            this.lblTipo.Size = new System.Drawing.Size(138, 35);
             this.lblTipo.TabIndex = 0;
             this.lblTipo.Text = "Tipo de reporte:";
             this.lblTipo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -198,27 +202,30 @@ namespace exxen2._0.capaVisual.Administrador
             "Socios sin rutina",
             "Próximos vencimientos",
             "Membresías inactivas"});
-            this.tipoReporte.Location = new System.Drawing.Point(119, 3);
+            this.tipoReporte.Location = new System.Drawing.Point(150, 4);
+            this.tipoReporte.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tipoReporte.Name = "tipoReporte";
-            this.tipoReporte.Size = new System.Drawing.Size(250, 29);
+            this.tipoReporte.Size = new System.Drawing.Size(312, 29);
             this.tipoReporte.TabIndex = 1;
             this.tipoReporte.SelectedIndexChanged += new System.EventHandler(this.tipoReporte_SelectedIndexChanged);
             //
             // lblBuscar
             //
-            this.lblBuscar.Location = new System.Drawing.Point(375, 0);
+            this.lblBuscar.Location = new System.Drawing.Point(470, 0);
+            this.lblBuscar.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblBuscar.Name = "lblBuscar";
-            this.lblBuscar.Size = new System.Drawing.Size(76, 28);
+            this.lblBuscar.Size = new System.Drawing.Size(95, 35);
             this.lblBuscar.TabIndex = 2;
             this.lblBuscar.Text = "Socio/DNI:";
             this.lblBuscar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
             // buscador
             //
-            this.buscador.Location = new System.Drawing.Point(457, 3);
+            this.buscador.Location = new System.Drawing.Point(573, 4);
+            this.buscador.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buscador.MaxLength = 100;
             this.buscador.Name = "buscador";
-            this.buscador.Size = new System.Drawing.Size(210, 29);
+            this.buscador.Size = new System.Drawing.Size(262, 29);
             this.buscador.TabIndex = 3;
             this.buscador.TextChanged += new System.EventHandler(this.filtros_Cambiados);
             //
@@ -230,9 +237,10 @@ namespace exxen2._0.capaVisual.Administrador
             this.generar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(61)))), ((int)(((byte)(112)))));
             this.generar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.generar.ForeColor = System.Drawing.Color.White;
-            this.generar.Location = new System.Drawing.Point(673, 3);
+            this.generar.Location = new System.Drawing.Point(843, 4);
+            this.generar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.generar.Name = "generar";
-            this.generar.Size = new System.Drawing.Size(130, 32);
+            this.generar.Size = new System.Drawing.Size(162, 40);
             this.generar.TabIndex = 4;
             this.generar.Text = "Consultar";
             this.generar.UseVisualStyleBackColor = false;
@@ -246,18 +254,19 @@ namespace exxen2._0.capaVisual.Administrador
             this.panelFechas.Controls.Add(this.hasta);
             this.panelFechas.Controls.Add(this.lblCriterio);
             this.panelFechas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelFechas.Location = new System.Drawing.Point(12, 124);
+            this.panelFechas.Location = new System.Drawing.Point(15, 154);
             this.panelFechas.Margin = new System.Windows.Forms.Padding(0);
             this.panelFechas.Name = "panelFechas";
-            this.panelFechas.Size = new System.Drawing.Size(1076, 44);
+            this.panelFechas.Size = new System.Drawing.Size(1345, 55);
             this.panelFechas.TabIndex = 3;
             this.panelFechas.WrapContents = false;
             //
             // lblDesde
             //
-            this.lblDesde.Location = new System.Drawing.Point(3, 0);
+            this.lblDesde.Location = new System.Drawing.Point(4, 0);
+            this.lblDesde.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDesde.Name = "lblDesde";
-            this.lblDesde.Size = new System.Drawing.Size(48, 28);
+            this.lblDesde.Size = new System.Drawing.Size(60, 35);
             this.lblDesde.TabIndex = 0;
             this.lblDesde.Text = "Desde:";
             this.lblDesde.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -265,18 +274,20 @@ namespace exxen2._0.capaVisual.Administrador
             // desde
             //
             this.desde.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.desde.Location = new System.Drawing.Point(57, 3);
+            this.desde.Location = new System.Drawing.Point(72, 4);
+            this.desde.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.desde.Name = "desde";
             this.desde.ShowCheckBox = true;
-            this.desde.Size = new System.Drawing.Size(140, 29);
+            this.desde.Size = new System.Drawing.Size(174, 29);
             this.desde.TabIndex = 1;
             this.desde.ValueChanged += new System.EventHandler(this.filtros_Cambiados);
             //
             // lblHasta
             //
-            this.lblHasta.Location = new System.Drawing.Point(203, 0);
+            this.lblHasta.Location = new System.Drawing.Point(254, 0);
+            this.lblHasta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblHasta.Name = "lblHasta";
-            this.lblHasta.Size = new System.Drawing.Size(48, 28);
+            this.lblHasta.Size = new System.Drawing.Size(60, 35);
             this.lblHasta.TabIndex = 2;
             this.lblHasta.Text = "Hasta:";
             this.lblHasta.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -284,18 +295,20 @@ namespace exxen2._0.capaVisual.Administrador
             // hasta
             //
             this.hasta.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.hasta.Location = new System.Drawing.Point(257, 3);
+            this.hasta.Location = new System.Drawing.Point(322, 4);
+            this.hasta.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.hasta.Name = "hasta";
             this.hasta.ShowCheckBox = true;
-            this.hasta.Size = new System.Drawing.Size(140, 29);
+            this.hasta.Size = new System.Drawing.Size(174, 29);
             this.hasta.TabIndex = 3;
             this.hasta.ValueChanged += new System.EventHandler(this.filtros_Cambiados);
             //
             // lblCriterio
             //
-            this.lblCriterio.Location = new System.Drawing.Point(403, 0);
+            this.lblCriterio.Location = new System.Drawing.Point(504, 0);
+            this.lblCriterio.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCriterio.Name = "lblCriterio";
-            this.lblCriterio.Size = new System.Drawing.Size(500, 34);
+            this.lblCriterio.Size = new System.Drawing.Size(625, 42);
             this.lblCriterio.TabIndex = 4;
             this.lblCriterio.Text = "Las fechas acotan el plazo de aviso configurado.";
             this.lblCriterio.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -318,14 +331,15 @@ namespace exxen2._0.capaVisual.Administrador
             this.col7});
             this.tabla.ContextMenuStrip = this.menuReportes;
             this.tabla.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabla.Location = new System.Drawing.Point(15, 171);
+            this.tabla.Location = new System.Drawing.Point(19, 213);
+            this.tabla.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabla.MultiSelect = false;
             this.tabla.Name = "tabla";
             this.tabla.ReadOnly = true;
             this.tabla.RowHeadersVisible = false;
             this.tabla.RowHeadersWidth = 51;
             this.tabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tabla.Size = new System.Drawing.Size(1070, 392);
+            this.tabla.Size = new System.Drawing.Size(1337, 490);
             this.tabla.TabIndex = 4;
             this.tabla.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tabla_CellDoubleClick);
             this.tabla.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tabla_CellMouseDown);
@@ -421,9 +435,10 @@ namespace exxen2._0.capaVisual.Administrador
             // lblResumen
             //
             this.lblResumen.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblResumen.Location = new System.Drawing.Point(15, 566);
+            this.lblResumen.Location = new System.Drawing.Point(19, 707);
+            this.lblResumen.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblResumen.Name = "lblResumen";
-            this.lblResumen.Size = new System.Drawing.Size(1070, 30);
+            this.lblResumen.Size = new System.Drawing.Size(1337, 38);
             this.lblResumen.TabIndex = 5;
             this.lblResumen.Text = "Cantidad: -";
             this.lblResumen.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -432,9 +447,10 @@ namespace exxen2._0.capaVisual.Administrador
             //
             this.acciones.Controls.Add(this.btnExportar);
             this.acciones.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.acciones.Location = new System.Drawing.Point(15, 599);
+            this.acciones.Location = new System.Drawing.Point(19, 749);
+            this.acciones.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.acciones.Name = "acciones";
-            this.acciones.Size = new System.Drawing.Size(1070, 36);
+            this.acciones.Size = new System.Drawing.Size(1337, 44);
             this.acciones.TabIndex = 6;
             //
             // btnExportar
@@ -446,9 +462,10 @@ namespace exxen2._0.capaVisual.Administrador
             this.btnExportar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(61)))), ((int)(((byte)(112)))));
             this.btnExportar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExportar.ForeColor = System.Drawing.Color.White;
-            this.btnExportar.Location = new System.Drawing.Point(3, 3);
+            this.btnExportar.Location = new System.Drawing.Point(4, 4);
+            this.btnExportar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnExportar.Name = "btnExportar";
-            this.btnExportar.Size = new System.Drawing.Size(130, 32);
+            this.btnExportar.Size = new System.Drawing.Size(162, 40);
             this.btnExportar.TabIndex = 0;
             this.btnExportar.Text = "Exportar PDF";
             this.btnExportar.UseVisualStyleBackColor = false;
@@ -457,9 +474,10 @@ namespace exxen2._0.capaVisual.Administrador
             // lblEstado
             //
             this.lblEstado.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblEstado.Location = new System.Drawing.Point(15, 638);
+            this.lblEstado.Location = new System.Drawing.Point(19, 797);
+            this.lblEstado.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEstado.Name = "lblEstado";
-            this.lblEstado.Size = new System.Drawing.Size(1070, 30);
+            this.lblEstado.Size = new System.Drawing.Size(1337, 38);
             this.lblEstado.TabIndex = 7;
             this.lblEstado.Text = "Seleccioná un reporte para consultar.";
             //
@@ -473,10 +491,11 @@ namespace exxen2._0.capaVisual.Administrador
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1100, 680);
+            this.ClientSize = new System.Drawing.Size(1375, 850);
             this.Controls.Add(this.disposicion);
             this.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.MinimumSize = new System.Drawing.Size(900, 560);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MinimumSize = new System.Drawing.Size(1120, 688);
             this.Name = "ReportesFormulario";
             this.Text = "SysGym";
             this.Load += new System.EventHandler(this.ReportesFormulario_Load);

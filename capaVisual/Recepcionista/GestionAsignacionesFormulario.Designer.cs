@@ -107,9 +107,10 @@ namespace exxen2._0.capaVisual.Recepcionista
             //
             // lblBuscar
             //
-            this.lblBuscar.Location = new System.Drawing.Point(16, 54);
+            this.lblBuscar.Location = new System.Drawing.Point(20, 68);
+            this.lblBuscar.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblBuscar.Name = "lblBuscar";
-            this.lblBuscar.Size = new System.Drawing.Size(58, 26);
+            this.lblBuscar.Size = new System.Drawing.Size(72, 32);
             this.lblBuscar.TabIndex = 0;
             this.lblBuscar.Text = "Buscar:";
             this.lblBuscar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -119,18 +120,20 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.buscador.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buscador.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.buscador.Location = new System.Drawing.Point(78, 54);
+            this.buscador.Location = new System.Drawing.Point(98, 68);
+            this.buscador.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buscador.Name = "buscador";
-            this.buscador.Size = new System.Drawing.Size(188, 29);
+            this.buscador.Size = new System.Drawing.Size(372, 29);
             this.buscador.TabIndex = 0;
             this.buscador.TextChanged += new System.EventHandler(this.buscador_TextChanged);
             //
             // lblEstadoFiltro
             //
             this.lblEstadoFiltro.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblEstadoFiltro.Location = new System.Drawing.Point(276, 54);
+            this.lblEstadoFiltro.Location = new System.Drawing.Point(483, 68);
+            this.lblEstadoFiltro.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEstadoFiltro.Name = "lblEstadoFiltro";
-            this.lblEstadoFiltro.Size = new System.Drawing.Size(54, 26);
+            this.lblEstadoFiltro.Size = new System.Drawing.Size(68, 32);
             this.lblEstadoFiltro.TabIndex = 1;
             this.lblEstadoFiltro.Text = "Estado:";
             this.lblEstadoFiltro.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -143,9 +146,10 @@ namespace exxen2._0.capaVisual.Recepcionista
             "Todos",
             "Asignados",
             "Sin asignar"});
-            this.filtroEstado.Location = new System.Drawing.Point(334, 54);
+            this.filtroEstado.Location = new System.Drawing.Point(556, 68);
+            this.filtroEstado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.filtroEstado.Name = "filtroEstado";
-            this.filtroEstado.Size = new System.Drawing.Size(134, 29);
+            this.filtroEstado.Size = new System.Drawing.Size(166, 29);
             this.filtroEstado.TabIndex = 1;
             this.filtroEstado.SelectedIndexChanged += new System.EventHandler(this.filtroEstado_SelectedIndexChanged);
             //
@@ -153,10 +157,11 @@ namespace exxen2._0.capaVisual.Recepcionista
             //
             this.lblEstado.BackColor = System.Drawing.Color.Transparent;
             this.lblEstado.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblEstado.Location = new System.Drawing.Point(16, 636);
+            this.lblEstado.Location = new System.Drawing.Point(20, 795);
+            this.lblEstado.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEstado.Name = "lblEstado";
-            this.lblEstado.Padding = new System.Windows.Forms.Padding(16, 0, 8, 0);
-            this.lblEstado.Size = new System.Drawing.Size(1068, 28);
+            this.lblEstado.Padding = new System.Windows.Forms.Padding(20, 0, 10, 0);
+            this.lblEstado.Size = new System.Drawing.Size(1335, 35);
             this.lblEstado.TabIndex = 3;
             this.lblEstado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
@@ -166,7 +171,8 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.splitContenido.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitContenido.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContenido.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.splitContenido.Location = new System.Drawing.Point(16, 16);
+            this.splitContenido.Location = new System.Drawing.Point(20, 20);
+            this.splitContenido.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.splitContenido.Name = "splitContenido";
             //
             // splitContenido.Panel1
@@ -178,7 +184,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.splitContenido.Panel1.Controls.Add(this.lblEstadoFiltro);
             this.splitContenido.Panel1.Controls.Add(this.filtroEstado);
             this.splitContenido.Panel1.Controls.Add(this.tabla);
-            this.splitContenido.Panel1.Padding = new System.Windows.Forms.Padding(16);
+            this.splitContenido.Panel1.Padding = new System.Windows.Forms.Padding(20, 20, 20, 20);
             this.splitContenido.Panel1MinSize = 420;
             //
             // splitContenido.Panel2
@@ -203,11 +209,11 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.splitContenido.Panel2.Controls.Add(this.asignar);
             this.splitContenido.Panel2.Controls.Add(this.cambiar);
             this.splitContenido.Panel2.Controls.Add(this.darDeBaja);
-            this.splitContenido.Panel2.Padding = new System.Windows.Forms.Padding(16);
+            this.splitContenido.Panel2.Padding = new System.Windows.Forms.Padding(20, 20, 20, 20);
             this.splitContenido.Panel2MinSize = 480;
-            this.splitContenido.Size = new System.Drawing.Size(1068, 620);
-            this.splitContenido.SplitterDistance = 476;
-            this.splitContenido.SplitterWidth = 12;
+            this.splitContenido.Size = new System.Drawing.Size(1335, 775);
+            this.splitContenido.SplitterDistance = 732;
+            this.splitContenido.SplitterWidth = 15;
             this.splitContenido.TabIndex = 4;
             //
             // lblListadoTitulo
@@ -216,9 +222,10 @@ namespace exxen2._0.capaVisual.Recepcionista
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblListadoTitulo.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
             this.lblListadoTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.lblListadoTitulo.Location = new System.Drawing.Point(16, 12);
+            this.lblListadoTitulo.Location = new System.Drawing.Point(20, 15);
+            this.lblListadoTitulo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblListadoTitulo.Name = "lblListadoTitulo";
-            this.lblListadoTitulo.Size = new System.Drawing.Size(452, 34);
+            this.lblListadoTitulo.Size = new System.Drawing.Size(703, 42);
             this.lblListadoTitulo.TabIndex = 0;
             this.lblListadoTitulo.Text = "Membresías y asignación";
             this.lblListadoTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -241,7 +248,8 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.colEntrenador,
             this.colEstado});
             this.tabla.ContextMenuStrip = this.menuAsignaciones;
-            this.tabla.Location = new System.Drawing.Point(16, 100);
+            this.tabla.Location = new System.Drawing.Point(20, 125);
+            this.tabla.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabla.MultiSelect = false;
             this.tabla.Name = "tabla";
             this.tabla.ReadOnly = true;
@@ -249,7 +257,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.tabla.RowHeadersWidth = 51;
             this.tabla.RowTemplate.Height = 30;
             this.tabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tabla.Size = new System.Drawing.Size(452, 504);
+            this.tabla.Size = new System.Drawing.Size(703, 631);
             this.tabla.TabIndex = 3;
             this.tabla.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.tabla_CellMouseDown);
             this.tabla.SelectionChanged += new System.EventHandler(this.tabla_SelectionChanged);
@@ -314,9 +322,10 @@ namespace exxen2._0.capaVisual.Recepcionista
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblVinculacion.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
             this.lblVinculacion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.lblVinculacion.Location = new System.Drawing.Point(16, 12);
+            this.lblVinculacion.Location = new System.Drawing.Point(20, 15);
+            this.lblVinculacion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblVinculacion.Name = "lblVinculacion";
-            this.lblVinculacion.Size = new System.Drawing.Size(484, 34);
+            this.lblVinculacion.Size = new System.Drawing.Size(459, 42);
             this.lblVinculacion.TabIndex = 0;
             this.lblVinculacion.Text = "Vinculación";
             //
@@ -326,19 +335,20 @@ namespace exxen2._0.capaVisual.Recepcionista
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblDetalleTitulo.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.lblDetalleTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(70)))), ((int)(((byte)(229)))));
-            this.lblDetalleTitulo.Location = new System.Drawing.Point(16, 48);
+            this.lblDetalleTitulo.Location = new System.Drawing.Point(20, 60);
+            this.lblDetalleTitulo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDetalleTitulo.Name = "lblDetalleTitulo";
-            this.lblDetalleTitulo.Size = new System.Drawing.Size(484, 30);
+            this.lblDetalleTitulo.Size = new System.Drawing.Size(459, 38);
             this.lblDetalleTitulo.TabIndex = 0;
             this.lblDetalleTitulo.Text = "Seleccioná una membresía";
             //
             // lblSocio
             //
             this.lblSocio.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
-            this.lblSocio.Location = new System.Drawing.Point(16, 94);
-            this.lblSocio.Margin = new System.Windows.Forms.Padding(0, 0, 12, 0);
+            this.lblSocio.Location = new System.Drawing.Point(20, 118);
+            this.lblSocio.Margin = new System.Windows.Forms.Padding(0, 0, 15, 0);
             this.lblSocio.Name = "lblSocio";
-            this.lblSocio.Size = new System.Drawing.Size(134, 26);
+            this.lblSocio.Size = new System.Drawing.Size(168, 32);
             this.lblSocio.TabIndex = 0;
             this.lblSocio.Text = "Socio";
             this.lblSocio.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -349,10 +359,11 @@ namespace exxen2._0.capaVisual.Recepcionista
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSocio.BackColor = System.Drawing.Color.White;
             this.txtSocio.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.txtSocio.Location = new System.Drawing.Point(158, 94);
+            this.txtSocio.Location = new System.Drawing.Point(198, 118);
+            this.txtSocio.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtSocio.Name = "txtSocio";
             this.txtSocio.ReadOnly = true;
-            this.txtSocio.Size = new System.Drawing.Size(342, 29);
+            this.txtSocio.Size = new System.Drawing.Size(280, 29);
             this.txtSocio.TabIndex = 1;
             this.txtSocio.TabStop = false;
             this.txtSocio.Text = "Seleccioná una membresía";
@@ -360,10 +371,10 @@ namespace exxen2._0.capaVisual.Recepcionista
             // lblDni
             //
             this.lblDni.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
-            this.lblDni.Location = new System.Drawing.Point(16, 134);
-            this.lblDni.Margin = new System.Windows.Forms.Padding(0, 0, 12, 0);
+            this.lblDni.Location = new System.Drawing.Point(20, 168);
+            this.lblDni.Margin = new System.Windows.Forms.Padding(0, 0, 15, 0);
             this.lblDni.Name = "lblDni";
-            this.lblDni.Size = new System.Drawing.Size(134, 26);
+            this.lblDni.Size = new System.Drawing.Size(168, 32);
             this.lblDni.TabIndex = 2;
             this.lblDni.Text = "DNI";
             this.lblDni.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -374,10 +385,11 @@ namespace exxen2._0.capaVisual.Recepcionista
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtDni.BackColor = System.Drawing.Color.White;
             this.txtDni.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.txtDni.Location = new System.Drawing.Point(158, 134);
+            this.txtDni.Location = new System.Drawing.Point(198, 168);
+            this.txtDni.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtDni.Name = "txtDni";
             this.txtDni.ReadOnly = true;
-            this.txtDni.Size = new System.Drawing.Size(342, 29);
+            this.txtDni.Size = new System.Drawing.Size(280, 29);
             this.txtDni.TabIndex = 3;
             this.txtDni.TabStop = false;
             this.txtDni.Text = "-";
@@ -385,10 +397,10 @@ namespace exxen2._0.capaVisual.Recepcionista
             // lblPlan
             //
             this.lblPlan.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
-            this.lblPlan.Location = new System.Drawing.Point(16, 174);
-            this.lblPlan.Margin = new System.Windows.Forms.Padding(0, 0, 12, 0);
+            this.lblPlan.Location = new System.Drawing.Point(20, 218);
+            this.lblPlan.Margin = new System.Windows.Forms.Padding(0, 0, 15, 0);
             this.lblPlan.Name = "lblPlan";
-            this.lblPlan.Size = new System.Drawing.Size(134, 26);
+            this.lblPlan.Size = new System.Drawing.Size(168, 32);
             this.lblPlan.TabIndex = 4;
             this.lblPlan.Text = "Plan";
             this.lblPlan.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -399,10 +411,11 @@ namespace exxen2._0.capaVisual.Recepcionista
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPlan.BackColor = System.Drawing.Color.White;
             this.txtPlan.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.txtPlan.Location = new System.Drawing.Point(158, 174);
+            this.txtPlan.Location = new System.Drawing.Point(198, 218);
+            this.txtPlan.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtPlan.Name = "txtPlan";
             this.txtPlan.ReadOnly = true;
-            this.txtPlan.Size = new System.Drawing.Size(342, 29);
+            this.txtPlan.Size = new System.Drawing.Size(280, 29);
             this.txtPlan.TabIndex = 5;
             this.txtPlan.TabStop = false;
             this.txtPlan.Text = "-";
@@ -410,10 +423,10 @@ namespace exxen2._0.capaVisual.Recepcionista
             // lblVencimiento
             //
             this.lblVencimiento.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
-            this.lblVencimiento.Location = new System.Drawing.Point(16, 214);
-            this.lblVencimiento.Margin = new System.Windows.Forms.Padding(0, 0, 12, 0);
+            this.lblVencimiento.Location = new System.Drawing.Point(20, 268);
+            this.lblVencimiento.Margin = new System.Windows.Forms.Padding(0, 0, 15, 0);
             this.lblVencimiento.Name = "lblVencimiento";
-            this.lblVencimiento.Size = new System.Drawing.Size(134, 26);
+            this.lblVencimiento.Size = new System.Drawing.Size(168, 32);
             this.lblVencimiento.TabIndex = 6;
             this.lblVencimiento.Text = "Cuota hasta";
             this.lblVencimiento.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -424,10 +437,11 @@ namespace exxen2._0.capaVisual.Recepcionista
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtVencimiento.BackColor = System.Drawing.Color.White;
             this.txtVencimiento.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.txtVencimiento.Location = new System.Drawing.Point(158, 214);
+            this.txtVencimiento.Location = new System.Drawing.Point(198, 268);
+            this.txtVencimiento.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtVencimiento.Name = "txtVencimiento";
             this.txtVencimiento.ReadOnly = true;
-            this.txtVencimiento.Size = new System.Drawing.Size(342, 29);
+            this.txtVencimiento.Size = new System.Drawing.Size(280, 29);
             this.txtVencimiento.TabIndex = 7;
             this.txtVencimiento.TabStop = false;
             this.txtVencimiento.Text = "-";
@@ -435,10 +449,10 @@ namespace exxen2._0.capaVisual.Recepcionista
             // lblEstadoMembresia
             //
             this.lblEstadoMembresia.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
-            this.lblEstadoMembresia.Location = new System.Drawing.Point(16, 254);
-            this.lblEstadoMembresia.Margin = new System.Windows.Forms.Padding(0, 0, 12, 0);
+            this.lblEstadoMembresia.Location = new System.Drawing.Point(20, 318);
+            this.lblEstadoMembresia.Margin = new System.Windows.Forms.Padding(0, 0, 15, 0);
             this.lblEstadoMembresia.Name = "lblEstadoMembresia";
-            this.lblEstadoMembresia.Size = new System.Drawing.Size(134, 26);
+            this.lblEstadoMembresia.Size = new System.Drawing.Size(168, 32);
             this.lblEstadoMembresia.TabIndex = 8;
             this.lblEstadoMembresia.Text = "Estado membresía";
             this.lblEstadoMembresia.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -449,10 +463,11 @@ namespace exxen2._0.capaVisual.Recepcionista
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtEstadoMembresia.BackColor = System.Drawing.Color.White;
             this.txtEstadoMembresia.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.txtEstadoMembresia.Location = new System.Drawing.Point(158, 254);
+            this.txtEstadoMembresia.Location = new System.Drawing.Point(198, 318);
+            this.txtEstadoMembresia.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtEstadoMembresia.Name = "txtEstadoMembresia";
             this.txtEstadoMembresia.ReadOnly = true;
-            this.txtEstadoMembresia.Size = new System.Drawing.Size(342, 29);
+            this.txtEstadoMembresia.Size = new System.Drawing.Size(280, 29);
             this.txtEstadoMembresia.TabIndex = 9;
             this.txtEstadoMembresia.TabStop = false;
             this.txtEstadoMembresia.Text = "-";
@@ -460,10 +475,10 @@ namespace exxen2._0.capaVisual.Recepcionista
             // lblEntrenadorActual
             //
             this.lblEntrenadorActual.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
-            this.lblEntrenadorActual.Location = new System.Drawing.Point(16, 294);
-            this.lblEntrenadorActual.Margin = new System.Windows.Forms.Padding(0, 0, 12, 0);
+            this.lblEntrenadorActual.Location = new System.Drawing.Point(20, 368);
+            this.lblEntrenadorActual.Margin = new System.Windows.Forms.Padding(0, 0, 15, 0);
             this.lblEntrenadorActual.Name = "lblEntrenadorActual";
-            this.lblEntrenadorActual.Size = new System.Drawing.Size(134, 26);
+            this.lblEntrenadorActual.Size = new System.Drawing.Size(168, 32);
             this.lblEntrenadorActual.TabIndex = 10;
             this.lblEntrenadorActual.Text = "Entrenador actual";
             this.lblEntrenadorActual.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -474,10 +489,11 @@ namespace exxen2._0.capaVisual.Recepcionista
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtEntrenadorActual.BackColor = System.Drawing.Color.White;
             this.txtEntrenadorActual.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(65)))), ((int)(((byte)(85)))));
-            this.txtEntrenadorActual.Location = new System.Drawing.Point(158, 294);
+            this.txtEntrenadorActual.Location = new System.Drawing.Point(198, 368);
+            this.txtEntrenadorActual.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtEntrenadorActual.Name = "txtEntrenadorActual";
             this.txtEntrenadorActual.ReadOnly = true;
-            this.txtEntrenadorActual.Size = new System.Drawing.Size(342, 29);
+            this.txtEntrenadorActual.Size = new System.Drawing.Size(280, 29);
             this.txtEntrenadorActual.TabIndex = 11;
             this.txtEntrenadorActual.TabStop = false;
             this.txtEntrenadorActual.Text = "Sin asignar";
@@ -485,10 +501,10 @@ namespace exxen2._0.capaVisual.Recepcionista
             // lblNuevoEntrenador
             //
             this.lblNuevoEntrenador.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
-            this.lblNuevoEntrenador.Location = new System.Drawing.Point(16, 334);
-            this.lblNuevoEntrenador.Margin = new System.Windows.Forms.Padding(0, 0, 12, 0);
+            this.lblNuevoEntrenador.Location = new System.Drawing.Point(20, 418);
+            this.lblNuevoEntrenador.Margin = new System.Windows.Forms.Padding(0, 0, 15, 0);
             this.lblNuevoEntrenador.Name = "lblNuevoEntrenador";
-            this.lblNuevoEntrenador.Size = new System.Drawing.Size(134, 26);
+            this.lblNuevoEntrenador.Size = new System.Drawing.Size(168, 32);
             this.lblNuevoEntrenador.TabIndex = 12;
             this.lblNuevoEntrenador.Text = "Nuevo entrenador";
             this.lblNuevoEntrenador.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -501,10 +517,10 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.entrenador.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.entrenador.DropDownWidth = 520;
             this.entrenador.Enabled = false;
-            this.entrenador.Location = new System.Drawing.Point(158, 334);
+            this.entrenador.Location = new System.Drawing.Point(198, 418);
             this.entrenador.Margin = new System.Windows.Forms.Padding(0);
             this.entrenador.Name = "entrenador";
-            this.entrenador.Size = new System.Drawing.Size(342, 29);
+            this.entrenador.Size = new System.Drawing.Size(280, 29);
             this.entrenador.TabIndex = 0;
             //
             // asignar
@@ -515,9 +531,10 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.asignar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(101)))), ((int)(((byte)(41)))));
             this.asignar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.asignar.ForeColor = System.Drawing.Color.White;
-            this.asignar.Location = new System.Drawing.Point(16, 388);
+            this.asignar.Location = new System.Drawing.Point(20, 485);
+            this.asignar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.asignar.Name = "asignar";
-            this.asignar.Size = new System.Drawing.Size(148, 36);
+            this.asignar.Size = new System.Drawing.Size(185, 45);
             this.asignar.TabIndex = 5;
             this.asignar.Text = "Asignar entrenador";
             this.asignar.UseVisualStyleBackColor = false;
@@ -532,9 +549,10 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.cambiar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(61)))), ((int)(((byte)(112)))));
             this.cambiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cambiar.ForeColor = System.Drawing.Color.White;
-            this.cambiar.Location = new System.Drawing.Point(172, 388);
+            this.cambiar.Location = new System.Drawing.Point(215, 485);
+            this.cambiar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cambiar.Name = "cambiar";
-            this.cambiar.Size = new System.Drawing.Size(172, 36);
+            this.cambiar.Size = new System.Drawing.Size(215, 45);
             this.cambiar.TabIndex = 6;
             this.cambiar.Text = "Cambiar entrenador";
             this.cambiar.UseVisualStyleBackColor = false;
@@ -549,9 +567,10 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.darDeBaja.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.darDeBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.darDeBaja.ForeColor = System.Drawing.Color.White;
-            this.darDeBaja.Location = new System.Drawing.Point(352, 388);
+            this.darDeBaja.Location = new System.Drawing.Point(440, 485);
+            this.darDeBaja.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.darDeBaja.Name = "darDeBaja";
-            this.darDeBaja.Size = new System.Drawing.Size(148, 36);
+            this.darDeBaja.Size = new System.Drawing.Size(185, 45);
             this.darDeBaja.TabIndex = 7;
             this.darDeBaja.Text = "Dar de baja";
             this.darDeBaja.UseVisualStyleBackColor = false;
@@ -563,13 +582,14 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
-            this.ClientSize = new System.Drawing.Size(1100, 680);
+            this.ClientSize = new System.Drawing.Size(1375, 850);
             this.Controls.Add(this.splitContenido);
             this.Controls.Add(this.lblEstado);
             this.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.MinimumSize = new System.Drawing.Size(900, 560);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MinimumSize = new System.Drawing.Size(1120, 688);
             this.Name = "GestionAsignacionesFormulario";
-            this.Padding = new System.Windows.Forms.Padding(16);
+            this.Padding = new System.Windows.Forms.Padding(20, 20, 20, 20);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "SysGym";
             this.Load += new System.EventHandler(this.GestionAsignacionesFormulario_Load);

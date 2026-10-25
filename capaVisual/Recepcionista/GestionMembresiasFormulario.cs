@@ -1,4 +1,4 @@
-using exxen2._0.capaLogica.Navegacion;
+﻿using exxen2._0.capaLogica.Navegacion;
 using exxen2._0.capaVisual.Compartido.Utilidades;
 using System;
 using exxen2._0.capaVisual.Compartido.Controles;
@@ -29,6 +29,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         public GestionMembresiasFormulario(UsuarioSistema usuario, Color colorPrimario, int idSocioInicial) : this(usuario, colorPrimario) { this.idSocioInicial = idSocioInicial; }
         private readonly UsuarioSistema usuario;
         private readonly MembresiaLogica logica;
+        private readonly RutinaLogica rutinas;
         private readonly PlanLogica planes = new PlanLogica();
         private readonly CuotaMembresiaLogica cuotas = new CuotaMembresiaLogica();
         private List<Membresia> membresiasCargadas = new List<Membresia>();
@@ -52,6 +53,7 @@ namespace exxen2._0.capaVisual.Recepcionista
                 throw new ArgumentNullException("usuario");
             this.usuario = usuario;
             logica = new MembresiaLogica(usuario.IdUsuarioSistema);
+            rutinas = new RutinaLogica(usuario.IdUsuarioSistema);
             InitializeComponent();
             ConfigurarValidaciones();
         }
@@ -64,6 +66,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             socio.SelectedIndexChanged += campoValidado_Cambiado;
             plan.SelectedIndexChanged += campoValidado_Cambiado;
             inicio.ValueChanged += campoValidado_Cambiado;
+            socio.SelectedIndexChanged += socio_SelectedIndexChanged;
         }
 
         /* Carga las opciones y los registros necesarios y prepara el formulario para una nueva operación. */
@@ -82,6 +85,8 @@ namespace exxen2._0.capaVisual.Recepcionista
                         foreach (DataGridViewRow fila in tabla.Rows)
                             if (Convert.ToInt32(fila.Cells[0].Value) == inicial.IdMembresia) { tabla.CurrentCell = fila.Cells[1]; fila.Selected = true; break; }
                     }
+                    else if (socio.Items.Count > 0)
+                        socio.SelectedValue = idSocioInicial;
                 }
             }
             catch (Exception ex)
@@ -102,7 +107,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         private void CargarSociosDisponiblesParaAlta()
         {
             socio.DataSource = logica.ListarSociosDisponiblesParaAlta()
-                .Select(s => new OpcionSocioMembresia { IdSocio = s.IdSocio, Texto = s.Apellido + ", " + s.Nombre + " - DNI " + s.DNI })
+                .Select(s => new OpcionSocioMembresia { IdSocio = s.IdSocio, Texto = s.Apellido + ", " + s.Nombre })
                 .ToList();
             socio.DisplayMember = "Texto";
             socio.ValueMember = "IdSocio";
@@ -112,7 +117,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         private void CargarSocioDeMembresia(Membresia membresia)
         {
             var opciones = logica.ListarSociosDisponiblesParaAlta()
-                .Select(s => new OpcionSocioMembresia { IdSocio = s.IdSocio, Texto = s.Apellido + ", " + s.Nombre + " - DNI " + s.DNI })
+                .Select(s => new OpcionSocioMembresia { IdSocio = s.IdSocio, Texto = s.Apellido + ", " + s.Nombre })
                 .ToList();
             if (membresia.Socio != null && !opciones.Any(o => o.IdSocio == membresia.IdSocio))
                 opciones.Add(new OpcionSocioMembresia { IdSocio = membresia.IdSocio, Texto = membresia.Socio.Apellido + ", " + membresia.Socio.Nombre + " - DNI " + membresia.Socio.DNI });
@@ -148,7 +153,7 @@ namespace exxen2._0.capaVisual.Recepcionista
                 tabla.Rows.Add(membresiaActual.IdMembresia, NombreSocio(membresiaActual), membresiaActual.Socio == null ? "-" : membresiaActual.Socio.DNI, NombrePlan(membresiaActual), membresiaActual.FechaInicio.ToString("dd/MM/yyyy"), membresiaActual.Estado ? "Activa" : "Inactiva");
             tabla.ClearSelection();
             cargandoTabla = false;
-            lblEstado.Text = tabla.Rows.Count + " membresia(s) encontrada(s)";
+            lblEstado.Text = tabla.Rows.Count + (tabla.Rows.Count == 1 ? " membresía encontrada" : " membresías encontradas");
             if (idSeleccionado != 0) nuevo_Click(null, EventArgs.Empty);
         }
 
@@ -171,9 +176,14 @@ namespace exxen2._0.capaVisual.Recepcionista
             plan.SelectedValue = membresiaSeleccionada.IdPlan;
             inicio.Value = membresiaSeleccionada.FechaInicio;
             estadoMembresia.Text = membresiaSeleccionada.Estado ? "Activa" : "Inactiva";
+            objetivo.SelectedItem = membresiaSeleccionada.Rutina == null || string.IsNullOrEmpty(membresiaSeleccionada.Rutina.Objetivo)
+                ? "Libre" : membresiaSeleccionada.Rutina.Objetivo;
+            if (membresiaSeleccionada.Rutina != null && !string.IsNullOrEmpty(membresiaSeleccionada.Rutina.Nivel))
+                nivel.SelectedItem = membresiaSeleccionada.Rutina.Nivel;
+            ActualizarSugerencia();
             inicio.Enabled = false;
             socio.Enabled = false;
-            plan.Enabled = true;
+            plan.Enabled = membresiaSeleccionada.Estado;
             LimpiarErroresDelDetalle();
             EstablecerModo(false);
             lblFormulario.Text = "Membresía de " + NombreSocio(membresiaSeleccionada);
@@ -195,6 +205,9 @@ namespace exxen2._0.capaVisual.Recepcionista
             inicio.Value = DateTime.Today;
             inicio.Enabled = true;
             estadoMembresia.Text = "Activa";
+            objetivo.SelectedIndex = 0;
+            nivel.SelectedIndex = Convert.ToString(objetivo.SelectedItem) == "Libre" ? -1 : 0;
+            ActualizarSugerencia();
             LimpiarErroresDelDetalle();
             EstablecerModo(true);
         }
@@ -204,10 +217,21 @@ namespace exxen2._0.capaVisual.Recepcionista
         {
             btnFicha.Enabled = !nueva && membresiaSeleccionada != null && FichaSolicitada != null;
             var puedeCrear = socio.Items.Count > 0 && plan.Items.Count > 0;
+            var puedeCambiarPlan = !nueva && membresiaSeleccionada != null && membresiaSeleccionada.Estado;
             if (nueva)
                 lblFormulario.Text = plan.Items.Count == 0 ? "Primero crea un plan" : (socio.Items.Count == 0 ? "No hay socios disponibles para una nueva membresía" : "Nueva membresía");
-            crear.Enabled = !nueva || puedeCrear;
-            actualizar.Enabled = !nueva;
+            crear.Text = nueva ? "Guardar" : "Cambiar plan";
+            crear.BackColor = nueva ? Color.FromArgb(46, 125, 50) : Color.FromArgb(91, 75, 138);
+            crear.FlatAppearance.MouseDownBackColor = nueva ? Color.FromArgb(27, 75, 31) : Color.FromArgb(58, 48, 89);
+            crear.FlatAppearance.MouseOverBackColor = nueva ? Color.FromArgb(37, 101, 41) : Color.FromArgb(74, 61, 112);
+            crear.Visible = nueva || puedeCambiarPlan;
+            crear.Enabled = nueva ? puedeCrear : puedeCambiarPlan;
+            nuevo.Visible = nueva;
+            nuevaExistente.Visible = !nueva;
+            plan.Enabled = nueva || puedeCambiarPlan;
+            actualizar.Enabled = puedeCambiarPlan;
+            objetivo.Enabled = nueva || puedeCambiarPlan;
+            nivel.Enabled = (nueva || puedeCambiarPlan) && Convert.ToString(objetivo.SelectedItem) != "Libre";
             habilitar.Enabled = !nueva && membresiaSeleccionada != null && !membresiaSeleccionada.Estado;
             deshabilitar.Enabled = !nueva && membresiaSeleccionada != null && membresiaSeleccionada.Estado;
             generarCuota.Enabled = false;
@@ -229,12 +253,13 @@ namespace exxen2._0.capaVisual.Recepcionista
 
         private void ActualizarAcciones()
         {
-            actualizar.Visible = false;
+            actualizar.Visible = membresiaSeleccionada != null && membresiaSeleccionada.Estado;
+            actualizar.Text = membresiaSeleccionada != null && membresiaSeleccionada.IdRutina.HasValue
+                ? "Cambiar rutina" : "Asignar rutina";
             habilitar.Visible = membresiaSeleccionada != null && idSeleccionado > 0 && !membresiaSeleccionada.Estado;
             deshabilitar.Visible = membresiaSeleccionada != null && idSeleccionado > 0 && membresiaSeleccionada.Estado;
             btnFicha.Visible = false;
             generarCuota.Visible = membresiaSeleccionada != null && membresiaSeleccionada.Estado;
-            generarCuota.Location = new Point(256, 226);
             fichaMenu.Enabled = membresiaSeleccionada != null && FichaSolicitada != null;
             habilitarMenu.Visible = membresiaSeleccionada != null && !membresiaSeleccionada.Estado;
             deshabilitarMenu.Visible = membresiaSeleccionada != null && membresiaSeleccionada.Estado;
@@ -266,7 +291,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         {
             if (membresiaSeleccionada != null)
             {
-                ModificarMembresia();
+                CambiarPlanSeleccionada();
                 return;
             }
 
@@ -279,10 +304,13 @@ namespace exxen2._0.capaVisual.Recepcionista
             {
                 if (!ValidarFormulario(true))
                     return;
-                logica.Crear(new Membresia { IdSocio = Convert.ToInt32(socio.SelectedValue), IdPlan = Convert.ToInt32(plan.SelectedValue), IdUsuarioSistema = usuario.IdUsuarioSistema, FechaInicio = inicio.Value.Date });
+                var idRutina = RutinaModeloSeleccionada();
+                logica.Crear(new Membresia { IdSocio = Convert.ToInt32(socio.SelectedValue), IdPlan = Convert.ToInt32(plan.SelectedValue), IdUsuarioSistema = usuario.IdUsuarioSistema, FechaInicio = inicio.Value.Date, IdRutina = idRutina });
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
-                AyudaFormularioVisual.MostrarExito(lblEstado, "Membresia creada y primera cuota generada.", true);
+                AyudaFormularioVisual.MostrarExito(lblEstado, idRutina.HasValue
+                    ? "Membresía creada con rutina modelo y primera cuota."
+                    : "Membresía creada y primera cuota generada. El entrenador asignará una rutina personalizada.", true);
             }
             catch (Exception ex)
             {
@@ -291,21 +319,21 @@ namespace exxen2._0.capaVisual.Recepcionista
 
         }
 
-        private void ModificarMembresia()
+        private void CambiarPlanSeleccionada()
         {
             try
             {
                 if (membresiaSeleccionada == null)
-                    throw new InvalidOperationException("Selecciona una membresia.");
-                if (!ValidarFormulario(false))
+                    throw new InvalidOperationException("Selecciona una membresía.");
+                if (!membresiaSeleccionada.Estado)
+                    throw new InvalidOperationException("No se puede cambiar el plan de una membresía inactiva.");
+                if (!AyudaFormularioVisual.ValidarCombo(indicadorErrores, plan, "Seleccioná un plan."))
                     return;
                 var idPlan = Convert.ToInt32(plan.SelectedValue);
-                if (idPlan != membresiaSeleccionada.IdPlan)
-                    logica.CambiarPlan(membresiaSeleccionada.IdMembresia, idPlan);
-                logica.Modificar(new Membresia { IdMembresia = membresiaSeleccionada.IdMembresia, IdSocio = membresiaSeleccionada.IdSocio, IdPlan = idPlan, IdUsuarioSistema = membresiaSeleccionada.IdUsuarioSistema, FechaInicio = inicio.Value.Date, Estado = membresiaSeleccionada.Estado });
+                logica.CambiarPlan(membresiaSeleccionada.IdMembresia, idPlan);
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
-                AyudaFormularioVisual.MostrarExito(lblEstado, "Membresia actualizada.");
+                AyudaFormularioVisual.MostrarExito(lblEstado, "Plan de la membresía cambiado.");
             }
             catch (Exception ex)
             {
@@ -314,13 +342,68 @@ namespace exxen2._0.capaVisual.Recepcionista
 
         }
 
+        private int? RutinaModeloSeleccionada()
+        {
+            var elegido = Convert.ToString(objetivo.SelectedItem);
+            if (elegido == "Libre") return null;
+            var nivelElegido = Convert.ToString(nivel.SelectedItem);
+            if (string.IsNullOrEmpty(elegido) || string.IsNullOrEmpty(nivelElegido))
+                throw new InvalidOperationException("Seleccioná objetivo y nivel.");
+            var modelo = rutinas.ListarModelos(elegido, nivelElegido).SingleOrDefault();
+            if (modelo == null)
+                throw new InvalidOperationException("No existe una rutina modelo activa para esa combinación.");
+            return modelo.IdRutina;
+        }
+
+        private void asignarRutina_Click(object origen, EventArgs e)
+        {
+            try
+            {
+                if (membresiaSeleccionada == null || !membresiaSeleccionada.Estado)
+                    throw new InvalidOperationException("Seleccioná una membresía activa.");
+                var idRutina = RutinaModeloSeleccionada();
+                rutinas.AsignarRutina(membresiaSeleccionada.IdMembresia, idRutina);
+                Cargar();
+                nuevo_Click(null, EventArgs.Empty);
+                AyudaFormularioVisual.MostrarExito(lblEstado, idRutina.HasValue
+                    ? "Rutina modelo asignada a la membresía."
+                    : "Membresía sin rutina. El entrenador asignará una rutina personalizada.");
+            }
+            catch (Exception ex) { AyudaFormularioVisual.MostrarError(lblEstado, ex); }
+        }
+
+        private void objetivo_SelectedIndexChanged(object origen, EventArgs e)
+        {
+            var libre = Convert.ToString(objetivo.SelectedItem) == "Libre";
+            if (libre)
+                nivel.SelectedIndex = -1;
+            else if (nivel.SelectedIndex < 0 && nivel.Items.Count > 0)
+                nivel.SelectedIndex = 0;
+            nivel.Enabled = objetivo.Enabled && !libre;
+        }
+
+        private void socio_SelectedIndexChanged(object origen, EventArgs e) { ActualizarSugerencia(); }
+
+        private void ActualizarSugerencia()
+        {
+            var id = socio.SelectedValue is int ? (int)socio.SelectedValue : 0;
+            if (id <= 0) { lblSugerencia.Text = "IMC no disponible. Sin sugerencia."; return; }
+            var seleccionado = membresiaSeleccionada != null && membresiaSeleccionada.IdSocio == id
+                ? membresiaSeleccionada.Socio : new SocioLogica().ObtenerPorId(id);
+            var imc = seleccionado == null ? null : RutinaLogica.CalcularImc(seleccionado.Peso, seleccionado.Altura);
+            var sugerencia = seleccionado == null ? null : RutinaLogica.SugerirObjetivo(seleccionado.Peso, seleccionado.Altura);
+            lblSugerencia.Text = imc.HasValue
+                ? "IMC: " + imc.Value.ToString("0.0") + ". Sugerencia según IMC: " + sugerencia + ". Es orientativa."
+                : "IMC no disponible. Sin sugerencia.";
+        }
+
         /* Al hacer clic en reactivar, habilita la misma membresía mediante la capa lógica. */
         private void habilitar_Click(object origen, EventArgs e)
         {
             try
             {
                 if (idSeleccionado == 0)
-                    throw new InvalidOperationException("Selecciona una membresia.");
+                    throw new InvalidOperationException("Selecciona una membresía.");
                 logica.Habilitar(idSeleccionado);
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
@@ -338,7 +421,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             try
             {
                 if (idSeleccionado == 0)
-                    throw new InvalidOperationException("Selecciona una membresia.");
+                    throw new InvalidOperationException("Selecciona una membresía.");
                 if (MessageBox.Show("¿Dar de baja la membresía seleccionada?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                     return;
                 logica.Deshabilitar(idSeleccionado);
@@ -358,7 +441,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             try
             {
                 if (idSeleccionado == 0)
-                    throw new InvalidOperationException("Selecciona una membresia.");
+                    throw new InvalidOperationException("Selecciona una membresía.");
                 var cuotaGenerada = cuotas.GenerarSiguienteCuota(idSeleccionado);
                 EstablecerModo(false);
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Cuota generada: " + cuotaGenerada.FechaDesde.ToString("dd/MM/yyyy") + " al " + cuotaGenerada.FechaHasta.ToString("dd/MM/yyyy") + ".", true);

@@ -1,4 +1,4 @@
-﻿namespace exxen2._0.capaVisual.Recepcionista
+namespace exxen2._0.capaVisual.Recepcionista
 {
     partial class ConsultaEntrenadoresFormulario
     {

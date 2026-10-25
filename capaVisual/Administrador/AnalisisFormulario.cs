@@ -89,11 +89,12 @@ namespace exxen2._0.capaVisual.Administrador
                 if (area.AxisY.LabelStyle.Format == "C0")
                 {
                     var maximo = grafico.Series.SelectMany(s => s.Points).Select(p => p.YValues[0]).DefaultIfEmpty().Max();
-                    if (maximo > 0)
+                    if (EsNumeroFinito(maximo) && maximo > 0)
                     {
                         var escala = Math.Pow(10, Math.Floor(Math.Log10(maximo / 3)));
                         var paso = maximo / 3 / escala;
-                        area.AxisY.Interval = (paso <= 1 ? 1 : paso <= 2 ? 2 : paso <= 5 ? 5 : 10) * escala;
+                        var intervalo = (paso <= 1 ? 1 : paso <= 2 ? 2 : paso <= 5 ? 5 : 10) * escala;
+                        area.AxisY.Interval = EsNumeroFinito(intervalo) && intervalo > 0 ? intervalo : double.NaN;
                     }
                 }
                 area.AxisX.MajorGrid.LineColor = Color.FromArgb(226, 232, 240);
@@ -119,7 +120,7 @@ namespace exxen2._0.capaVisual.Administrador
             if (AyudaFormularioVisual.EnModoDisenio(this))
                 return;
             var hoy = DateTime.Today;
-            desde.Value = new DateTime(hoy.Year, hoy.Month, 1);
+            desde.Value = new DateTime(hoy.Year, hoy.Month, 1).AddMonths(-11);
             hasta.Value = hoy;
             desdeA.Value = new DateTime(hoy.Year, hoy.Month, 1).AddMonths(-1);
             hastaA.Value = new DateTime(hoy.Year, hoy.Month, 1).AddDays(-1);
@@ -208,6 +209,10 @@ namespace exxen2._0.capaVisual.Administrador
 
         private static void CargarMensual(Chart chart, IEnumerable<DatoMensual> datos, string titulo = "Ingresos por mes", bool dinero = true)
         {
+            var valores = datos.ToList();
+            if (valores.Any(d => double.IsNaN((double)d.Valor) || double.IsInfinity((double)d.Valor)))
+                throw new InvalidOperationException("El gráfico mensual recibió un importe no finito.");
+            var rangoAmplio = valores.Count > 24;
             chart.Series.Clear();
             chart.Annotations.Clear();
             chart.Titles.Clear();
@@ -219,21 +224,21 @@ namespace exxen2._0.capaVisual.Administrador
                 Color = Color.FromArgb(79, 70, 229),
                 MarkerStyle = MarkerStyle.Circle,
                 MarkerSize = 7,
-                IsValueShownAsLabel = true,
+                IsValueShownAsLabel = !rangoAmplio,
                 LabelFormat = dinero ? "C0" : "N0",
-                SmartLabelStyle = { Enabled = true, IsMarkerOverlappingAllowed = false, MovingDirection = LabelAlignmentStyles.Top, MaxMovingDistance = 100 }
+                SmartLabelStyle = { Enabled = !rangoAmplio, IsMarkerOverlappingAllowed = false, MovingDirection = LabelAlignmentStyles.Top, MaxMovingDistance = 100 }
             };
             serie.ToolTip = dinero ? "#VALX: #VALY{C2}" : "#VALX: #VALY{N0}";
-            foreach (var dato in datos)
+            foreach (var dato in valores)
                 serie.Points.AddXY(dato.Mes.ToString("MMM yy", CultureInfo.CurrentCulture), dato.Valor);
             chart.Series.Add(serie);
-            chart.ChartAreas[0].AxisX.Interval = 1;
-            chart.ChartAreas[0].AxisX.LabelStyle.Angle = -45;
+            chart.ChartAreas[0].AxisX.Interval = rangoAmplio ? 6 : 1;
+            chart.ChartAreas[0].AxisX.LabelStyle.Angle = rangoAmplio ? 0 : -45;
             chart.ChartAreas[0].AxisY.Minimum = 0;
             var maximo = serie.Points.Select(p => p.YValues[0]).DefaultIfEmpty().Max();
-            chart.ChartAreas[0].AxisY.Maximum = maximo > 0 ? maximo * 1.2 : double.NaN;
+            chart.ChartAreas[0].AxisY.Maximum = EsNumeroFinito(maximo) && maximo > 0 ? maximo * 1.2 : double.NaN;
             chart.ChartAreas[0].AxisY.LabelStyle.Format = dinero ? "C0" : "N0";
-            if (!datos.Any(d => d.Valor != 0))
+            if (!valores.Any(d => d.Valor != 0))
                 MostrarSinDatos(chart);
         }
 
@@ -315,10 +320,20 @@ namespace exxen2._0.capaVisual.Administrador
 
         private static double CalcularIntervaloEje(double maximo)
         {
+            if (!EsNumeroFinito(maximo) || maximo <= 0)
+                return 1;
             var intervaloBase = maximo / 5d;
             var magnitud = Math.Pow(10, Math.Floor(Math.Log10(intervaloBase)));
+            if (!EsNumeroFinito(magnitud) || magnitud <= 0)
+                return 1;
             var normalizado = intervaloBase / magnitud;
-            return (normalizado <= 1 ? 1 : normalizado <= 2 ? 2 : normalizado <= 5 ? 5 : 10) * magnitud;
+            var intervalo = (normalizado <= 1 ? 1 : normalizado <= 2 ? 2 : normalizado <= 5 ? 5 : 10) * magnitud;
+            return EsNumeroFinito(intervalo) && intervalo > 0 ? intervalo : 1;
+        }
+
+        private static bool EsNumeroFinito(double valor)
+        {
+            return !double.IsNaN(valor) && !double.IsInfinity(valor);
         }
 
         private static void MostrarSinDatos(Chart chart, string texto = "Sin datos para esta consulta")
