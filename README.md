@@ -81,7 +81,7 @@ El sistema contempla tres roles. La tabla resume el acceso disponible desde los 
 | Membresías y cuotas | Sí | Sí | Consulta de membresías de sus alumnos |
 | Pagos | Sí | Sí | No |
 | Asignar o consultar entrenadores | Sí | Sí | No |
-| Rutinas | Sí | No | Consulta y gestiona rutinas; modifica las que tiene autorización para editar |
+| Rutinas | Sí | Asigna rutinas modelo por objetivo y nivel | Consulta y gestiona rutinas; modifica las que tiene autorización para editar |
 | Ejercicios | Sí | No | Sí |
 | Reportes operativos | Sí | Sí | No |
 | Análisis general | Sí | No | No |
@@ -125,6 +125,7 @@ El administrador gestiona el conjunto de módulos administrativos. El recepcioni
 - **RF-07.** El sistema debe permitir consultar, registrar, modificar, dar de baja y reactivar socios.
 - **RF-08.** El sistema debe permitir buscar socios y consultar sus datos personales, estado, fecha de alta, peso, altura e índice de masa corporal cuando los datos necesarios estén disponibles.
 - **RF-09.** El sistema debe permitir asociar o quitar una fotografía del socio.
+- Al dar de baja a un socio se inactiva su membresía activa. Al reactivar al socio se ofrece reactivar por separado su membresía, con la validación de deuda habitual; si no tiene membresía, se ofrece crearla. Rechazar cualquiera de las ofertas deja solo al socio activo.
 
 #### Planes
 
@@ -133,7 +134,7 @@ El administrador gestiona el conjunto de módulos administrativos. El recepcioni
 
 #### Membresías y cuotas
 
-- **RF-12.** El sistema debe permitir crear y consultar la membresía de un socio y asociarla a un plan.
+- **RF-12.** El sistema debe permitir crear y consultar la membresía de un socio y asociarla a un plan; también debe permitir cambiar a un plan activo solo mientras la membresía esté activa, aplicando el precio nuevo a cuotas futuras y conservando el importe de las cuotas existentes.
 - **RF-13.** El sistema debe permitir generar cuotas mensuales consecutivas y conservar el importe correspondiente a cada período.
 - **RF-14.** El sistema debe permitir configurar la cantidad de cuotas vencidas permitidas antes de inactivar al socio y su membresía.
 - **RF-15.** El sistema debe inactivar automáticamente al socio y su membresía cuando alcance el límite de deuda configurado.
@@ -141,11 +142,12 @@ El administrador gestiona el conjunto de módulos administrativos. El recepcioni
 - **RF-17.** El sistema debe permitir configurar con cuánta anticipación se pueden generar cuotas.
 - **RF-18.** El sistema debe impedir generar nuevas cuotas cuando el socio haya alcanzado el límite de cuotas vencidas o cuando el período solicitado supere la anticipación configurada.
 - **RF-19.** El sistema debe permitir consultar las cuotas de una membresía, sus períodos, importes y estados.
+- Al crear una membresía, Recepción o Administración puede asignar en la misma transacción una rutina modelo activa por objetivo y nivel, o elegir Libre para dejarla sin rutina. En una membresía activa pueden cambiar la rutina modelo o dejarla Libre; Recepción no puede asignar rutinas libres ni crear o editar rutinas.
 
 #### Pagos
 
-- **RF-20.** El sistema debe permitir registrar el pago de una cuota mediante efectivo o Mercado Pago.
-- **RF-21.** El sistema debe permitir consultar el estado de los pagos y asociar cada pago con su cuota correspondiente.
+- **RF-20.** El sistema debe permitir registrar el pago de una cuota mediante efectivo o Mercado Pago, incluso después de anular o reembolsar su pago anterior, sin perder ese pago del historial.
+- **RF-21.** El sistema debe permitir consultar el estado de los pagos y asociar cada pago con su cuota correspondiente; la cuota conserva la referencia a su pago vigente.
 - **RF-22.** El sistema debe permitir anular pagos aprobados y registrar el reembolso de pagos aprobados.
 - **RF-23.** El sistema debe permitir consultar el historial de pagos y exportar comprobantes e historiales a PDF.
 
@@ -162,6 +164,7 @@ El administrador gestiona el conjunto de módulos administrativos. El recepcioni
 - **RF-29.** El sistema debe permitir asociar imágenes a los ejercicios y administrar su galería.
 - **RF-30.** El sistema debe permitir asignar una rutina a una membresía y consultar la rutina semanal de un socio.
 - **RF-31.** El sistema debe permitir exportar a PDF la rutina asignada a un socio.
+- Las rutinas modelo combinan Fuerza, Hipertrofia o Acondicionamiento con nivel Principiante, Intermedio o Avanzado. La sugerencia según IMC es orientativa: un IMC menor a 18,5 propone Hipertrofia; de 18,5 a menos de 25, Hipertrofia o Fuerza; de 25 a menos de 30, Acondicionamiento; desde 30, Acondicionamiento – Principiante. Sin peso o altura no hay sugerencia. El IMC no distingue músculo de grasa y no determina automáticamente el nivel ni reemplaza la decisión del entrenador.
 
 #### Estado de socios y avisos
 
@@ -191,11 +194,13 @@ El administrador gestiona el conjunto de módulos administrativos. El recepcioni
 #### Auditoría
 
 - **RF-45.** El sistema debe permitir consultar operaciones registradas, el usuario responsable, la fecha, la entidad afectada y el detalle disponible.
-- **RF-46.** El sistema debe registrar automáticamente, con el usuario responsable y la fecha, las operaciones auditadas: registrar pagos, crear usuarios, crear o reactivar membresías, asignar, cambiar o quitar entrenadores, modificar la configuración, exportar comprobantes e historiales de pago, reportes operativos y el análisis general a PDF.
+- **RF-46.** El sistema debe registrar automáticamente, con el usuario responsable y la fecha, las operaciones auditadas: registrar, anular y reembolsar pagos; crear usuarios; crear, reactivar o dar de baja membresías; dar de baja o reactivar socios; cambiar el plan de una membresía activa; asignar o cambiar su rutina; asignar, cambiar o quitar entrenadores; modificar la configuración; exportar comprobantes e historiales de pago; y generar reportes operativos o el análisis general a PDF.
 
 #### Configuración del sistema
 
 - **RF-47.** El sistema debe permitir consultar y modificar parámetros generales relacionados con deuda, anticipación de cuotas y avisos de vencimiento.
+
+Las bases nuevas parten de 2 cuotas vencidas permitidas, 2 meses de anticipación para generar cuotas y 7 días de aviso (2/2/7).
 
 #### Inicio del administrador
 
@@ -260,9 +265,9 @@ El siguiente diagrama presenta el modelo entidad-relación de SysGym.
 | Socio | Datos personales, estado y fecha de alta de una persona del gimnasio. |
 | Plan | Nombre, descripción, precio y estado de un plan. |
 | Membresía y MembresiaEntrenador | Relación del socio con un plan, una rutina y las asignaciones de entrenador. |
-| CuotaMembresia | Período, importe y estado de pago de cada cuota. |
-| Pago y MetodoPago | Registro de pagos y del método utilizado. |
-| Rutina, Ejercicio y RutinaEjercicio | Rutinas, catálogo de ejercicios y organización semanal. |
+| CuotaMembresia | Período, importe, estado y referencia al pago vigente de cada cuota. |
+| Pago y MetodoPago | Registro de pagos, método utilizado y cuota histórica a la que pertenece cada pago mediante `Pago.IdCuotaMembresia`. |
+| Rutina, Ejercicio y RutinaEjercicio | Rutinas libres o modelos clasificados con `Rutina.Objetivo` y `Rutina.Nivel`, catálogo de ejercicios y organización semanal. |
 | AuditoriaOperacion | Registro de operaciones realizadas por usuarios. |
 | ConfiguracionSistema | Parámetros generales de deuda, cuotas y avisos. |
 
@@ -296,7 +301,8 @@ Las solicitudes de la interfaz pasan por la capa lógica antes de llegar a la ca
 ### Pasos
 
 1. Abrir `exxen2.0.slnx` o `exxen2.0.csproj` en Visual Studio.
-2. Crear una base nueva ejecutando [`capaDatos/Database/SysGymDB.sql`](capaDatos/Database/SysGymDB.sql) desde SQL Server Management Studio o con `sqlcmd`.
+2. Crear una base nueva: en SQL Server Management Studio, abrir `capaDatos/Database/SysGymDB.sql` y ejecutarlo. Desde `sqlcmd`, indicar la codificación UTF-8 con `-f 65001` (por ejemplo, `sqlcmd -S .\\SQLEXPRESS -E -f 65001 -i capaDatos/Database/SysGymDB.sql`).
+   Para una base existente, aplicar [`capaDatos/Database/AgregarCuotaEnPago.sql`](capaDatos/Database/AgregarCuotaEnPago.sql) antes de ejecutar esta versión de la aplicación. La migración es repetible y conserva la asociación histórica de los pagos existentes.
 3. Configurar en [`App.config`](App.config) la conexión a la instancia de SQL Server disponible y verificar que las credenciales tengan acceso a la base.
 4. Restaurar los paquetes NuGet de la solución.
 5. Compilar y ejecutar el proyecto.
@@ -312,3 +318,5 @@ Las cuentas incluidas en la base recién creada son:
 | `san.martin` | Administrador | `N8!vQ2#xL6@r` |
 | `greta.hoffmann` | Recepcionista | `H4p$N8x!cT3%` |
 | `lukas.becker` | Entrenador | `B9&kZ5!rW2q` |
+
+Crédito de imágenes de ejercicios: autoría, licencia, fuente y adaptaciones por archivo en [CREDITOS.txt](capaDatos/Imagenes/Ejercicios/CREDITOS.txt). Las imágenes derivadas de Workout Guide se mantienen bajo CC BY-SA 4.0.
