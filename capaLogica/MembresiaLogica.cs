@@ -25,7 +25,8 @@ namespace exxen2._0.capaLogica
             using (var datos = new UnidadDeTrabajoGimnasio())  // Abre la conexión; al salir del bloque se cierra sola, aunque haya error (try-with-resources).
             using (var transaccion = datos.IniciarTransaccion())  // Transacción: si algo falla antes de Confirmar(), se deshace todo.
             {
-                membresia.IdUsuarioSistema = auditoria.ObtenerUsuario(datos).IdUsuarioSistema;
+                var operador = auditoria.ObtenerUsuario(datos);
+                membresia.IdUsuarioSistema = operador.IdUsuarioSistema;
                 ValidarMembresia(membresia);
                 var socio = datos.Socios.Buscar(membresia.IdSocio);  // Busca por clave primaria; si no existe devuelve null.
                 var plan = datos.Planes.Buscar(membresia.IdPlan);
@@ -34,8 +35,17 @@ namespace exxen2._0.capaLogica
                 if (datos.Membresias.Any(m => m.IdSocio == membresia.IdSocio))  // ¿Existe al menos uno? (no trae filas).
                     throw new InvalidOperationException("El socio ya tiene una membresía histórica. Reactivá esa misma membresía desde la gestión de membresías.");  // Regla incumplida: corta la operación y el formulario muestra este mensaje.
 
+                Rutina rutinaInicial = null;
+                if (membresia.IdRutina.HasValue)
+                {
+                    rutinaInicial = datos.Rutinas.Buscar(membresia.IdRutina.Value);
+                    if (rutinaInicial == null || !rutinaInicial.Estado)
+                        throw new InvalidOperationException("La rutina seleccionada no existe o está inactiva.");
+                    if (ValidacionesGimnasio.EsRecepcionistaActivo(operador) &&
+                        (string.IsNullOrEmpty(rutinaInicial.Objetivo) || string.IsNullOrEmpty(rutinaInicial.Nivel)))
+                        throw new UnauthorizedAccessException("Recepción solo puede asignar rutinas modelo por objetivo y nivel.");
+                }
                 membresia.Estado = true;
-                membresia.IdRutina = null;
                 if (membresia.FechaInicio == default(DateTime))
                     membresia.FechaInicio = DateTime.Today;
                 // La membresía no vence por mes: FechaVencimiento es una columna heredada que guarda el fin
@@ -48,6 +58,9 @@ namespace exxen2._0.capaLogica
                 CuotaMembresiaLogica.CrearPrimeraCuotaEnContexto(datos, membresia, plan);
                 auditoria.RegistrarOperacion(datos, AuditoriaLogica.CrearMembresia, "Membresia", membresia.IdMembresia,
                     "Membresía " + plan.Nombre + " creada para " + socio.Nombre + " " + socio.Apellido);
+                if (rutinaInicial != null)
+                    auditoria.RegistrarOperacion(datos, AuditoriaLogica.AsignarRutina, "Membresia", membresia.IdMembresia,
+                        "Rutina Sin rutina → " + rutinaInicial.Nombre + " para " + socio.Nombre + " " + socio.Apellido);
                 datos.GuardarCambios();
                 transaccion.Confirmar();  // Recién acá quedan grabados todos los cambios de la transacción.
                 return membresia;
@@ -149,16 +162,31 @@ namespace exxen2._0.capaLogica
         public void CambiarPlan(int idMembresia, int idPlan)
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
+            using (var transaccion = datos.IniciarTransaccion())
             {
+                auditoria.ObtenerUsuario(datos);
                 var membresia = datos.Membresias.Buscar(idMembresia);
-                var plan = datos.Planes.Buscar(idPlan);
                 if (membresia == null)
                     throw new InvalidOperationException("La membresía no existe.");
+                if (!membresia.Estado)
+                    throw new InvalidOperationException("No se puede cambiar el plan de una membresía inactiva.");
+
+                if (membresia.IdPlan == idPlan)
+                    throw new InvalidOperationException("La membresía ya tiene ese plan");
+
+                var planAnterior = datos.Planes.Buscar(membresia.IdPlan);
+                var plan = datos.Planes.Buscar(idPlan);
                 if (plan == null || !plan.Estado)
                     throw new InvalidOperationException("El plan seleccionado se encuentra inactivo o no existe.");
 
                 membresia.IdPlan = plan.IdPlan;
                 datos.GuardarCambios();
+                var socio = datos.Socios.Buscar(membresia.IdSocio);
+                auditoria.RegistrarOperacion(datos, AuditoriaLogica.CambiarPlan, "Membresia", membresia.IdMembresia,
+                    "Plan " + (planAnterior == null ? "no disponible" : planAnterior.Nombre) + " → " + plan.Nombre +
+                    " para " + socio.Nombre + " " + socio.Apellido);
+                datos.GuardarCambios();
+                transaccion.Confirmar();
             }
         }
 
@@ -176,7 +204,8 @@ namespace exxen2._0.capaLogica
                 var limiteVencidas = ConfiguracionSistemaLogica.ObtenerEnContexto(datos).MaxCuotasVencidasPermitidas;
                 if (DebeDarseDeBajaPorDeuda(cuotasVencidas, limiteVencidas))
                 {
-                    CambiarEstadoEnContexto(datos, membresia, false);
+                    if (!estabaInactiva)
+                        CambiarEstadoEnContexto(datos, membresia, false);
                     reactivacionBloqueada = true;
                 }
                 else
@@ -201,10 +230,18 @@ namespace exxen2._0.capaLogica
         public void Deshabilitar(int idMembresia)
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
+            using (var transaccion = datos.IniciarTransaccion())
             {
+                auditoria.ObtenerUsuario(datos);
                 var membresia = ObtenerMembresia(datos, idMembresia);
+                if (!membresia.Estado)
+                    throw new InvalidOperationException("La membresía ya está inactiva.");
                 CambiarEstadoEnContexto(datos, membresia, false);
+                var socio = datos.Socios.Buscar(membresia.IdSocio);
+                auditoria.RegistrarOperacion(datos, AuditoriaLogica.BajaMembresia, "Membresia", membresia.IdMembresia,
+                    "Membresía de " + socio.Nombre + " " + socio.Apellido + " dada de baja");
                 datos.GuardarCambios();
+                transaccion.Confirmar();
             }
         }
 
@@ -238,7 +275,7 @@ namespace exxen2._0.capaLogica
             var membresia = ObtenerMembresia(datos, idMembresia);
             var cuotasVencidas = ContarCuotasVencidasImpagasEnContexto(datos, idMembresia);
             var limiteVencidas = ConfiguracionSistemaLogica.ObtenerEnContexto(datos).MaxCuotasVencidasPermitidas;
-            if (DebeDarseDeBajaPorDeuda(cuotasVencidas, limiteVencidas))
+            if (membresia.Estado && DebeDarseDeBajaPorDeuda(cuotasVencidas, limiteVencidas))
                 CambiarEstadoEnContexto(datos, membresia, false);
         }
 
@@ -257,7 +294,7 @@ namespace exxen2._0.capaLogica
             if (idsParaDarDeBaja.Count == 0)
                 return;
 
-            var membresias = datos.Membresias.Where(m => idsParaDarDeBaja.Contains(m.IdMembresia)).ToList();
+            var membresias = datos.Membresias.Where(m => idsParaDarDeBaja.Contains(m.IdMembresia) && m.Estado).ToList();
             foreach (var membresia in membresias)  // Recorre cada elemento (como el for-each de Java).
                 membresia.Estado = false;
 

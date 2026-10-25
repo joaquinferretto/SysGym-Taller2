@@ -170,7 +170,7 @@ namespace exxen2._0.capaLogica
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
                 EvaluarTodasLasMembresiasPorDeudaEnContexto(datos);
-                return datos.CuotasMembresia.ConsultarSoloLectura("Pago", "Membresia.Socio", "Membresia.Plan").Where(c => c.EstadoPago == EstadosCuota.Pendiente || c.EstadoPago == EstadosCuota.Pagada || c.EstadoPago == EstadosCuota.Anulada).OrderByDescending(c => c.FechaDesde).ThenBy(c => c.Membresia.Socio.Apellido).ThenBy(c => c.Membresia.Socio.Nombre).ToList();  // Ordena (ORDER BY).
+                return datos.CuotasMembresia.ConsultarSoloLectura("Pago", "Pago.UsuarioRegistro", "Membresia.Socio", "Membresia.Plan").Where(c => c.EstadoPago == EstadosCuota.Pendiente || c.EstadoPago == EstadosCuota.Pagada || c.EstadoPago == EstadosCuota.Anulada).OrderByDescending(c => c.FechaDesde).ThenBy(c => c.Membresia.Socio.Apellido).ThenBy(c => c.Membresia.Socio.Nombre).ToList();  // Ordena (ORDER BY).
             }
         }
 

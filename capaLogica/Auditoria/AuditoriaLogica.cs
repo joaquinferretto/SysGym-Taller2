@@ -33,8 +33,15 @@ namespace exxen2._0.capaLogica.Auditoria
     {
         public const int LimiteRegistros = 500;
         public const string RegistrarPago = "REGISTRAR_PAGO";
+        public const string AnularPago = "ANULAR_PAGO";
+        public const string ReembolsarPago = "REEMBOLSAR_PAGO";
         public const string CrearUsuario = "CREAR_USUARIO";
         public const string CrearMembresia = "CREAR_MEMBRESIA";
+        public const string AsignarRutina = "ASIGNAR_RUTINA";
+        public const string BajaSocio = "BAJA_SOCIO";
+        public const string ReactivarSocio = "REACTIVAR_SOCIO";
+        public const string BajaMembresia = "BAJA_MEMBRESIA";
+        public const string CambiarPlan = "CAMBIAR_PLAN";
         public const string ReactivarMembresia = "REACTIVAR_MEMBRESIA";
         public const string AsignarEntrenador = "ASIGNAR_ENTRENADOR";
         public const string CambiarEntrenador = "CAMBIAR_ENTRENADOR";
@@ -56,8 +63,15 @@ namespace exxen2._0.capaLogica.Auditoria
             return new List<OpcionAuditoria>
             {
                 new OpcionAuditoria { Codigo = RegistrarPago, Texto = "Registró pago" },
+                new OpcionAuditoria { Codigo = AnularPago, Texto = "Anuló pago" },
+                new OpcionAuditoria { Codigo = ReembolsarPago, Texto = "Reembolsó pago" },
                 new OpcionAuditoria { Codigo = CrearUsuario, Texto = "Creó usuario" },
                 new OpcionAuditoria { Codigo = CrearMembresia, Texto = "Creó membresía" },
+                new OpcionAuditoria { Codigo = AsignarRutina, Texto = "Asignó rutina" },
+                new OpcionAuditoria { Codigo = BajaSocio, Texto = "Dio de baja a un socio" },
+                new OpcionAuditoria { Codigo = ReactivarSocio, Texto = "Reactivó a un socio" },
+                new OpcionAuditoria { Codigo = BajaMembresia, Texto = "Dio de baja una membresía" },
+                new OpcionAuditoria { Codigo = CambiarPlan, Texto = "Cambió el plan de una membresía" },
                 new OpcionAuditoria { Codigo = ReactivarMembresia, Texto = "Reactivó membresía" },
                 new OpcionAuditoria { Codigo = AsignarEntrenador, Texto = "Asignó entrenador" },
                 new OpcionAuditoria { Codigo = CambiarEntrenador, Texto = "Cambió entrenador" },
@@ -71,7 +85,7 @@ namespace exxen2._0.capaLogica.Auditoria
         }
 
         /* Autoriza contra el usuario/rol actual de SQL, no contra una selección o etiqueta visual. */
-        internal UsuarioSistema ObtenerUsuario(IUnidadDeTrabajo datos, bool soloAdministrador = false)
+        internal UsuarioSistema ObtenerUsuario(IUnidadDeTrabajo datos, bool soloAdministrador = false, bool permiteEntrenador = false)
         {
             if (idUsuarioAutenticado <= 0)
                 throw new InvalidOperationException("No hay un usuario autenticado para esta operación.");
@@ -81,9 +95,11 @@ namespace exxen2._0.capaLogica.Auditoria
                 throw new InvalidOperationException("El usuario autenticado o su rol no está activo.");
             var admin = ValidacionesGimnasio.EsAdministradorActivo(usuario);
             var recepcion = ValidacionesGimnasio.EsRecepcionistaActivo(usuario);
-            if (!admin && (soloAdministrador || !recepcion))
+            var entrenador = permiteEntrenador && ValidacionesGimnasio.EsEntrenadorActivo(usuario);
+            if (!admin && (soloAdministrador || (!recepcion && !entrenador)))
                 throw new UnauthorizedAccessException(soloAdministrador
                     ? "Esta operación requiere un Administrador activo."
+                    : permiteEntrenador ? "La operación requiere Administrador, Recepcionista o Entrenador activo."
                     : "La operación requiere Administrador o Recepcionista.");
             return usuario;
         }
@@ -106,7 +122,8 @@ namespace exxen2._0.capaLogica.Auditoria
             if (idEntidad <= 0 || string.IsNullOrWhiteSpace(entidad) || entidad.Length > 50 ||
                 string.IsNullOrWhiteSpace(detalle) || detalle.Length > 1000)
                 throw new ArgumentException("Los datos de la auditoría no son válidos.");
-            var usuario = ObtenerUsuario(datos, operacion == CrearUsuario || operacion == ModificarConfiguracion || operacion == GenerarReporteAnalisis);
+            var usuario = ObtenerUsuario(datos, operacion == CrearUsuario || operacion == ModificarConfiguracion || operacion == GenerarReporteAnalisis,
+                operacion == AsignarRutina);
             datos.AuditoriasOperaciones.Agregar(new AuditoriaOperacion
             {
                 FechaHora = DateTime.Now, IdUsuario = usuario.IdUsuarioSistema,

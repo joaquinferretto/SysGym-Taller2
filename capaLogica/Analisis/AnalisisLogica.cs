@@ -185,14 +185,14 @@ namespace exxen2._0.capaLogica.Analisis
             resultado.EstadoSocios = new List<DatoCategoria>
             {
                 new DatoCategoria { Nombre = "Activos", Cantidad = estado.SociosActivos },
-                new DatoCategoria { Nombre = "Inactivos", Cantidad = estado.SociosInactivos }
+                new DatoCategoria { Nombre = "Inactivos", Cantidad = estado.SociosInactivosTotales }
             };
             var limite = estado.LimiteAlcanzado;
             var conDeuda = estado.ConDeuda;
             resultado.SociosConDeuda = conDeuda + limite;
             resultado.EstadoDeuda = new List<DatoCategoria>
             {
-                new DatoCategoria { Nombre = "Al día", Cantidad = resultado.TotalSocios - conDeuda - limite },
+                new DatoCategoria { Nombre = "Al día", Cantidad = estado.AlDia },
                 new DatoCategoria { Nombre = "Con deuda", Cantidad = conDeuda },
                 new DatoCategoria { Nombre = "Límite alcanzado", Cantidad = limite }
             };

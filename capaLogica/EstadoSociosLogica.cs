@@ -32,6 +32,7 @@ namespace exxen2._0.capaLogica
         public List<EstadoSocioDashboard> Socios { get; set; }
         public int SociosActivos { get; set; }
         public int SociosInactivos { get; set; }
+        public int SociosInactivosTotales { get; set; }
         public int AlDia { get; set; }
         public int ConDeuda { get; set; }
         public int LimiteAlcanzado { get; set; }
@@ -63,7 +64,140 @@ namespace exxen2._0.capaLogica
 
         internal List<EstadoSocioDashboard> ConsultarParaReportes(string busqueda, bool conVencidas, bool activosRegistrados, ConfiguracionSistema configuracion)
         {
-            return ObtenerResumen(false, null, busqueda, conVencidas, activosRegistrados, configuracion).Socios;
+            using (var datos = new UnidadDeTrabajoGimnasio())
+            {
+                var configuracionAplicada = configuracion ?? ConfiguracionSistemaLogica.ObtenerEnContexto(datos);
+                var texto = (busqueda ?? string.Empty).Trim();
+                return conVencidas
+                    ? ConsultarParaReportesConDeuda(datos, texto, activosRegistrados, configuracionAplicada)
+                    : ConsultarParaReportesSinDeuda(datos, texto, activosRegistrados, configuracionAplicada);
+            }
+        }
+
+        /* Proyecta el estado mínimo para reportes sin deuda; solo consulta un conteo SQL de vencidas. */
+        private static List<EstadoSocioDashboard> ConsultarParaReportesSinDeuda(IUnidadDeTrabajo datos, string texto, bool activosRegistrados, ConfiguracionSistema configuracion)
+        {
+            var sociosConsulta = datos.Socios.ConsultarSoloLectura();
+            if (activosRegistrados) sociosConsulta = sociosConsulta.Where(s => s.Estado);
+            if (texto.Length > 0)
+                sociosConsulta = sociosConsulta.Where(s => (s.Nombre + " " + s.Apellido).Contains(texto) ||
+                    (s.Apellido + ", " + s.Nombre).Contains(texto) || s.DNI.Contains(texto));
+
+            var socios = sociosConsulta.OrderBy(s => s.Apellido).ThenBy(s => s.Nombre)
+                .Select(s => new { s.IdSocio, s.Nombre, s.Apellido, s.DNI, s.Estado }).ToList();
+            var idsSocios = socios.Select(s => s.IdSocio).ToList();
+            var hoy = DateTime.Today;
+            var membresias = datos.Membresias.ConsultarSoloLectura().Where(m => idsSocios.Contains(m.IdSocio))
+                .Select(m => new MembresiaReporteResumen
+                {
+                    IdMembresia = m.IdMembresia,
+                    IdSocio = m.IdSocio,
+                    Estado = m.Estado,
+                    FechaInicio = m.FechaInicio,
+                    Plan = m.Plan.Nombre,
+                    CuotasVencidas = m.Cuotas.Count(c => c.EstadoPago == EstadosCuota.Pendiente && c.FechaHasta < hoy)
+                }).ToList();
+            var porSocio = membresias.GroupBy(m => m.IdSocio)
+                .ToDictionary(g => g.Key, g => g.OrderByDescending(m => m.Estado).ThenByDescending(m => m.FechaInicio).First());
+            var limite = configuracion.MaxCuotasVencidasPermitidas;
+
+            return socios.Select(s =>
+            {
+                MembresiaReporteResumen membresia;
+                porSocio.TryGetValue(s.IdSocio, out membresia);
+                var tieneMembresia = membresia != null;
+                var vencidas = tieneMembresia ? membresia.CuotasVencidas : 0;
+                var moroso = tieneMembresia && MembresiaLogica.DebeDarseDeBajaPorDeuda(vencidas, limite);
+                var activo = s.Estado && (!tieneMembresia || membresia.Estado) && !moroso;
+                return new EstadoSocioDashboard
+                {
+                    IdSocio = s.IdSocio,
+                    IdMembresia = tieneMembresia ? membresia.IdMembresia : 0,
+                    Socio = (s.Apellido + ", " + s.Nombre).Trim(' ', ','),
+                    DNI = s.DNI,
+                    Plan = !tieneMembresia || string.IsNullOrEmpty(membresia.Plan) ? "Sin membresía" : membresia.Plan,
+                    EstadoMembresia = !tieneMembresia ? "Sin membresía" : activo ? "Activa" : "Inactiva",
+                    CuotasVencidas = vencidas,
+                    LimiteAlcanzado = moroso,
+                    EstadoDeuda = ClasificarDeuda(vencidas, limite),
+                    Activo = activo
+                };
+            }).ToList();
+        }
+
+        /* Para reportes de deuda, resume todas las membresías y carga cuotas/pagos solo de la seleccionada. */
+        private static List<EstadoSocioDashboard> ConsultarParaReportesConDeuda(IUnidadDeTrabajo datos, string texto, bool activosRegistrados, ConfiguracionSistema configuracion)
+        {
+            var membresiasConsulta = datos.Membresias.ConsultarSoloLectura();
+            if (activosRegistrados) membresiasConsulta = membresiasConsulta.Where(m => m.Socio.Estado);
+            if (texto.Length > 0)
+                membresiasConsulta = membresiasConsulta.Where(m => (m.Socio.Nombre + " " + m.Socio.Apellido).Contains(texto) ||
+                    (m.Socio.Apellido + ", " + m.Socio.Nombre).Contains(texto) || m.Socio.DNI.Contains(texto));
+
+            var hoy = DateTime.Today;
+            var resumenes = membresiasConsulta.Select(m => new MembresiaReporteResumen
+            {
+                IdMembresia = m.IdMembresia,
+                IdSocio = m.IdSocio,
+                Estado = m.Estado,
+                FechaInicio = m.FechaInicio,
+                NombreSocio = m.Socio.Nombre,
+                ApellidoSocio = m.Socio.Apellido,
+                DNI = m.Socio.DNI,
+                EstadoSocio = m.Socio.Estado,
+                Plan = m.Plan.Nombre,
+                CuotasVencidas = m.Cuotas.Count(c => c.EstadoPago == EstadosCuota.Pendiente && c.FechaHasta < hoy),
+                DeudaTotal = m.Cuotas.Where(c => c.EstadoPago == EstadosCuota.Pendiente)
+                    .Select(c => (decimal?)(c.Importe > (c.Pago != null && c.Pago.Estado == EstadosTransaccionPago.Aprobado ? c.Pago.Importe : 0m)
+                        ? c.Importe - (c.Pago != null && c.Pago.Estado == EstadosTransaccionPago.Aprobado ? c.Pago.Importe : 0m)
+                        : 0m)).Sum() ?? 0m
+            }).ToList();
+            var seleccionadas = resumenes.GroupBy(m => m.IdSocio)
+                .Select(g => new
+                {
+                    TodasTienenDeuda = g.Any(m => m.CuotasVencidas > 0),
+                    Actual = g.OrderByDescending(m => m.Estado).ThenByDescending(m => m.FechaInicio).First()
+                })
+                .Where(g => g.TodasTienenDeuda && g.Actual.CuotasVencidas > 0)
+                .Select(g => g.Actual)
+                .OrderBy(m => m.ApellidoSocio)
+                .ThenBy(m => m.NombreSocio)
+                .ToList();
+            var limite = configuracion.MaxCuotasVencidasPermitidas;
+            return seleccionadas.Select(m =>
+                {
+                    var moroso = MembresiaLogica.DebeDarseDeBajaPorDeuda(m.CuotasVencidas, limite);
+                    var activo = m.EstadoSocio && m.Estado && !moroso;
+                    return new EstadoSocioDashboard
+                {
+                        IdSocio = m.IdSocio,
+                        IdMembresia = m.IdMembresia,
+                        Socio = (m.ApellidoSocio + ", " + m.NombreSocio).Trim(' ', ','),
+                        DNI = m.DNI,
+                        Plan = string.IsNullOrEmpty(m.Plan) ? "Sin membresía" : m.Plan,
+                        EstadoMembresia = activo ? "Activa" : "Inactiva",
+                        CuotasVencidas = m.CuotasVencidas,
+                        LimiteAlcanzado = moroso,
+                        EstadoDeuda = ClasificarDeuda(m.CuotasVencidas, limite),
+                        DeudaTotal = m.DeudaTotal,
+                        Activo = activo
+                    };
+                }).ToList();
+        }
+
+        private sealed class MembresiaReporteResumen
+        {
+            public int IdMembresia { get; set; }
+            public int IdSocio { get; set; }
+            public bool Estado { get; set; }
+            public DateTime FechaInicio { get; set; }
+            public string NombreSocio { get; set; }
+            public string ApellidoSocio { get; set; }
+            public string DNI { get; set; }
+            public bool EstadoSocio { get; set; }
+            public string Plan { get; set; }
+            public int CuotasVencidas { get; set; }
+            public decimal DeudaTotal { get; set; }
         }
 
         public static string ClasificarDeuda(int cuotasVencidas)
@@ -91,7 +225,7 @@ namespace exxen2._0.capaLogica
                         transaccion.Confirmar();
                     }
                 }
-                var consulta = datos.Socios.ConsultarSoloLectura("Membresias.Plan", "Membresias.Cuotas.Pago");
+                var consulta = datos.Socios.ConsultarSoloLectura();
                 if (idSocio.HasValue) consulta = consulta.Where(s => s.IdSocio == idSocio.Value);
                 var texto = (busqueda ?? string.Empty).Trim();
                 if (texto.Length > 0) consulta = consulta.Where(s => (s.Nombre + " " + s.Apellido).Contains(texto) || (s.Apellido + ", " + s.Nombre).Contains(texto) || s.DNI.Contains(texto));
@@ -101,33 +235,149 @@ namespace exxen2._0.capaLogica
                     var hoyFiltro = DateTime.Today;
                     consulta = consulta.Where(s => s.Membresias.Any(m => m.Cuotas.Any(c => c.EstadoPago == EstadosCuota.Pendiente && c.FechaHasta < hoyFiltro)));
                 }
-                var socios = consulta.OrderBy(s => s.Apellido).ThenBy(s => s.Nombre).ToList();
+                var socios = consulta.OrderBy(s => s.Apellido).ThenBy(s => s.Nombre)
+                    .Select(s => new SocioEstadoResumen
+                    {
+                        IdSocio = s.IdSocio,
+                        Nombre = s.Nombre,
+                        Apellido = s.Apellido,
+                        DNI = s.DNI,
+                        FechaAlta = s.FechaAlta,
+                        Activo = s.Estado
+                    }).ToList();
+                var idsSocios = socios.Select(s => s.IdSocio).ToList();
+                var membresias = idsSocios.Count == 0
+                    ? new List<MembresiaEstadoResumen>()
+                    : datos.Membresias.ConsultarSoloLectura("Plan")
+                        .Where(m => idsSocios.Contains(m.IdSocio))
+                        .Select(m => new MembresiaEstadoResumen
+                        {
+                            IdMembresia = m.IdMembresia,
+                            IdSocio = m.IdSocio,
+                            Estado = m.Estado,
+                            FechaInicio = m.FechaInicio,
+                            NombrePlan = m.Plan.Nombre
+                        }).ToList();
+                var idsMembresias = membresias.Select(m => m.IdMembresia).ToList();
+                var cuotas = idsMembresias.Count == 0
+                    ? new List<CuotaEstadoResumen>()
+                    : datos.CuotasMembresia.ConsultarSoloLectura("Pago")
+                        .Where(c => idsMembresias.Contains(c.IdMembresia))
+                        .Select(c => new CuotaEstadoResumen
+                        {
+                            IdCuotaMembresia = c.IdCuotaMembresia,
+                            IdMembresia = c.IdMembresia,
+                            FechaHasta = c.FechaHasta,
+                            Importe = c.Importe,
+                            EstadoPago = c.EstadoPago,
+                            IdRegistroPago = c.Pago == null ? (int?)null : c.Pago.IdRegistroPago,
+                            EstadoTransaccion = c.Pago == null ? null : c.Pago.Estado,
+                            ImportePago = c.Pago == null ? (decimal?)null : c.Pago.Importe,
+                            FechaPago = c.Pago == null ? (DateTime?)null : c.Pago.Fecha
+                        }).ToList();
+                var cuotasPorMembresia = cuotas.GroupBy(c => c.IdMembresia)
+                    .ToDictionary(g => g.Key, g => g.Select(c => new CuotaMembresia
+                    {
+                        IdCuotaMembresia = c.IdCuotaMembresia,
+                        IdMembresia = c.IdMembresia,
+                        FechaHasta = c.FechaHasta,
+                        Importe = c.Importe,
+                        EstadoPago = c.EstadoPago,
+                        IdRegistroPago = c.IdRegistroPago,
+                        Pago = c.IdRegistroPago.HasValue
+                            ? new Pago
+                            {
+                                IdRegistroPago = c.IdRegistroPago.Value,
+                                Estado = c.EstadoTransaccion,
+                                Importe = c.ImportePago ?? 0m,
+                                Fecha = c.FechaPago ?? DateTime.MinValue
+                            }
+                            : null
+                    }).ToList());
+                var membresiasPorSocio = membresias.GroupBy(m => m.IdSocio)
+                    .ToDictionary(g => g.Key, g => g.OrderByDescending(m => m.Estado).ThenByDescending(m => m.FechaInicio).FirstOrDefault());
                 var resultado = new List<EstadoSocioDashboard>();
                 foreach (var socio in socios)
                 {
-                    var membresia = socio.Membresias.OrderByDescending(m => m.Estado)
-                        .ThenByDescending(m => m.FechaInicio).FirstOrDefault();
-                    resultado.Add(ProyectarEstado(socio, membresia, configuracion));
+                    MembresiaEstadoResumen membresiaResumen;
+                    membresiasPorSocio.TryGetValue(socio.IdSocio, out membresiaResumen);
+                    var socioEntidad = new Socio
+                    {
+                        IdSocio = socio.IdSocio,
+                        Nombre = socio.Nombre,
+                        Apellido = socio.Apellido,
+                        DNI = socio.DNI,
+                        FechaAlta = socio.FechaAlta,
+                        Estado = socio.Activo
+                    };
+                    Membresia membresia = null;
+                    if (membresiaResumen != null)
+                    {
+                        List<CuotaMembresia> cuotasMembresia;
+                        cuotasPorMembresia.TryGetValue(membresiaResumen.IdMembresia, out cuotasMembresia);
+                        membresia = new Membresia
+                        {
+                            IdMembresia = membresiaResumen.IdMembresia,
+                            IdSocio = membresiaResumen.IdSocio,
+                            Estado = membresiaResumen.Estado,
+                            FechaInicio = membresiaResumen.FechaInicio,
+                            Plan = new Plan { Nombre = membresiaResumen.NombrePlan },
+                            Cuotas = cuotasMembresia ?? new List<CuotaMembresia>()
+                        };
+                    }
+                    resultado.Add(ProyectarEstado(socioEntidad, membresia, configuracion));
                 }
 
-                var todasLasCuotas = socios.SelectMany(s => s.Membresias)
-                    .SelectMany(m => m.Cuotas).Where(c => c.EstadoPago == EstadosCuota.Pendiente).ToList();
                 var hoy = DateTime.Today;
                 return new ResumenEstadoSocios
                 {
                     Socios = resultado,
                     SociosActivos = resultado.Count(s => s.Activo),
-                    SociosInactivos = resultado.Count(s => !s.Activo),
-                    AlDia = resultado.Count(s => s.EstadoDeuda == "Al día"),
-                    ConDeuda = resultado.Count(s => s.CuotasVencidas > 0 && !s.LimiteAlcanzado),
+                    SociosInactivos = resultado.Count(s => !s.Activo && !s.LimiteAlcanzado),
+                    SociosInactivosTotales = resultado.Count(s => !s.Activo),
+                    AlDia = resultado.Count(s => s.Activo && s.CuotasVencidas == 0),
+                    ConDeuda = resultado.Count(s => s.Activo && s.CuotasVencidas > 0 && !s.LimiteAlcanzado),
                     LimiteAlcanzado = resultado.Count(s => s.LimiteAlcanzado),
-                    CuotasPendientes = todasLasCuotas.Count,
-                    VencenHoy = todasLasCuotas.Count(c => c.FechaHasta.Date == hoy),
-                    CuotasVencidas = todasLasCuotas.Count(c => c.FechaHasta.Date < hoy),
+                    CuotasPendientes = cuotas.Count(c => c.EstadoPago == EstadosCuota.Pendiente),
+                    VencenHoy = cuotas.Count(c => c.EstadoPago == EstadosCuota.Pendiente && c.FechaHasta.Date == hoy),
+                    CuotasVencidas = cuotas.Count(c => c.EstadoPago == EstadosCuota.Pendiente && c.FechaHasta.Date < hoy),
                     DiasAvisoVencimiento = configuracion.DiasAvisoVencimiento,
-                    VencenEnPlazoAviso = todasLasCuotas.Count(c => c.FechaHasta.Date >= hoy && c.FechaHasta.Date <= hoy.AddDays(configuracion.DiasAvisoVencimiento))
+                    VencenEnPlazoAviso = cuotas.Count(c => c.EstadoPago == EstadosCuota.Pendiente &&
+                        c.FechaHasta.Date >= hoy && c.FechaHasta.Date <= hoy.AddDays(configuracion.DiasAvisoVencimiento))
                 };
             }
+        }
+
+        private sealed class SocioEstadoResumen
+        {
+            public int IdSocio { get; set; }
+            public string Nombre { get; set; }
+            public string Apellido { get; set; }
+            public string DNI { get; set; }
+            public DateTime? FechaAlta { get; set; }
+            public bool Activo { get; set; }
+        }
+
+        private sealed class MembresiaEstadoResumen
+        {
+            public int IdMembresia { get; set; }
+            public int IdSocio { get; set; }
+            public bool Estado { get; set; }
+            public DateTime FechaInicio { get; set; }
+            public string NombrePlan { get; set; }
+        }
+
+        private sealed class CuotaEstadoResumen
+        {
+            public int IdCuotaMembresia { get; set; }
+            public int IdMembresia { get; set; }
+            public DateTime FechaHasta { get; set; }
+            public decimal Importe { get; set; }
+            public string EstadoPago { get; set; }
+            public int? IdRegistroPago { get; set; }
+            public string EstadoTransaccion { get; set; }
+            public decimal? ImportePago { get; set; }
+            public DateTime? FechaPago { get; set; }
         }
 
         // Misma proyección para membresías específicas en reportes, sin una segunda fórmula de deuda.
@@ -171,8 +421,8 @@ namespace exxen2._0.capaLogica
             int cuotasPendientes, bool tieneMembresia, int limite)
         {
             if (MembresiaLogica.DebeDarseDeBajaPorDeuda(cuotasVencidas, limite)) return "Límite alcanzado";
-            if (!socioActivo || (tieneMembresia && !membresiaActiva)) return "INACTIVO";
-            if (!tieneMembresia) return "SIN MEMBRESÍA";
+            if (!socioActivo || (tieneMembresia && !membresiaActiva)) return "Inactivo";
+            if (!tieneMembresia) return "Sin membresía";
             if (cuotasVencidas > 0) return "Con deuda";
             return "Al día";
         }

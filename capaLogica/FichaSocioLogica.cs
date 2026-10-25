@@ -64,9 +64,11 @@ namespace exxen2._0.capaLogica
                     TieneRutina = rutina != null, IdRutina = rutina == null ? 0 : rutina.IdRutina,
                     CantidadEjercicios = rutina == null ? 0 : rutina.Ejercicios.Count(e => e.Estado),
                     Antiguedad = Antiguedad(socio.FechaAlta),
-                    Pagos = historial.Pagos, TotalAbonado = historial.Pagos.Sum(p => p.Importe), CantidadPagos = historial.Pagos.Count,
+                    Pagos = historial.Pagos, TotalAbonado = historial.Pagos.Where(p => p.Estado == EstadosTransaccionPago.Aprobado && p.CuotaPagada).Sum(p => p.Importe),
+                    CantidadPagos = historial.Pagos.Count(p => p.Estado == EstadosTransaccionPago.Aprobado && p.CuotaPagada),
                     CuotasPagadas = datos.CuotasMembresia.ConsultarSoloLectura().Count(c => c.Membresia.IdSocio == idSocio && c.EstadoPago == EstadosCuota.Pagada),
-                    UltimoPago = historial.Pagos.Count == 0 ? (DateTime?)null : historial.Pagos[0].Fecha
+                    UltimoPago = historial.Pagos.Where(p => p.Estado == EstadosTransaccionPago.Aprobado && p.CuotaPagada)
+                        .Select(p => (DateTime?)p.Fecha).FirstOrDefault()
                 };
             }
         }

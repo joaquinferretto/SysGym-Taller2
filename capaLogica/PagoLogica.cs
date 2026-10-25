@@ -62,9 +62,11 @@ namespace exxen2._0.capaLogica
                     throw new InvalidOperationException("La cuota se encuentra anulada.");
                 }
 
-                if (cuota.IdRegistroPago.HasValue)  // HasValue: ¿el valor opcional (int?, DateTime?) tiene dato?
+                if (cuota.EstadoPago != EstadosCuota.Pendiente ||
+                    (cuota.IdRegistroPago.HasValue && (cuota.Pago == null ||
+                        (cuota.Pago.Estado != EstadosTransaccionPago.Anulado && cuota.Pago.Estado != EstadosTransaccionPago.Reembolsado))))
                 {
-                    throw new InvalidOperationException("La cuota ya está asociada a un pago.");
+                    throw new InvalidOperationException("La cuota ya tiene un pago vigente o no está pendiente.");
                 }
 
                 ValidarMetodoPago(datos, pago.IdMetodoPago);
@@ -73,6 +75,7 @@ namespace exxen2._0.capaLogica
                     ValidarImporteAprobado(cuota, pago.Importe);
                 }
 
+                pago.IdCuotaMembresia = cuota.IdCuotaMembresia;
                 datos.Pagos.Agregar(pago);  // Deja el objeto listo para INSERT (se ejecuta en GuardarCambios).
                 datos.GuardarCambios();  // EF envía a SQL los INSERT/UPDATE pendientes.
                 cuota.IdRegistroPago = pago.IdRegistroPago;  // Vincula el pago con la cuota (FK en CuotaMembresia).
@@ -97,7 +100,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return datos.Pagos.ConsultarSoloLectura("MetodoPago", "Cuotas").SingleOrDefault(p => p.IdRegistroPago == idRegistroPago);  // Solo lectura: EF no vigila cambios (más liviano para listar).
+                return datos.Pagos.ConsultarSoloLectura("MetodoPago", "Cuotas", "CuotaAsociada").SingleOrDefault(p => p.IdRegistroPago == idRegistroPago);  // Solo lectura: EF no vigila cambios (más liviano para listar).
             }
         }
 
@@ -106,7 +109,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return datos.CuotasMembresia.ConsultarSoloLectura("Pago").Where(c => c.IdCuotaMembresia == idCuotaMembresia && c.IdRegistroPago.HasValue && c.Pago != null).Select(c => c.Pago).ToList();  // Acá se ejecuta la consulta en SQL y se trae la lista.
+                return datos.Pagos.ConsultarSoloLectura("MetodoPago").Where(p => p.IdCuotaMembresia == idCuotaMembresia).OrderBy(p => p.Fecha).ThenBy(p => p.IdRegistroPago).ToList();
             }
         }
 
@@ -115,7 +118,7 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                return datos.CuotasMembresia.ConsultarSoloLectura("Pago").Where(c => c.IdMembresia == idMembresia && c.IdRegistroPago.HasValue && c.Pago != null).Select(c => c.Pago).Distinct().OrderBy(p => p.Fecha).ThenBy(p => p.IdRegistroPago).ToList();  // Where = filtro (como filter de Streams / WHERE de SQL). "x => ..." es una lambda.
+                return datos.Pagos.ConsultarSoloLectura("MetodoPago").Where(p => p.CuotaAsociada.IdMembresia == idMembresia).OrderBy(p => p.Fecha).ThenBy(p => p.IdRegistroPago).ToList();
             }
         }
 
@@ -180,13 +183,16 @@ namespace exxen2._0.capaLogica
             using (var datos = new UnidadDeTrabajoGimnasio())
             using (var transaccion = datos.IniciarTransaccion())
             {
+                var auditoria = new AuditoriaLogica(idUsuarioAutenticado);
+                auditoria.ObtenerUsuario(datos);
                 var pago = datos.Pagos.Buscar(idRegistroPago);  // Busca por clave primaria; si no existe devuelve null.
                 if (pago == null)
                 {
                     throw new InvalidOperationException("El pago no existe.");
                 }
 
-                var cuotas = datos.CuotasMembresia.Where(c => c.IdRegistroPago == idRegistroPago).ToList();
+                var estadoAnterior = pago.Estado;
+                var cuotas = datos.CuotasMembresia.Consultar("Membresia.Socio").Where(c => c.IdRegistroPago == idRegistroPago).ToList();
                 if (cuotas.Count == 0)
                 {
                     throw new InvalidOperationException("El pago no está asociado a ninguna cuota.");
@@ -220,6 +226,25 @@ namespace exxen2._0.capaLogica
 
                 foreach (var idMembresia in cuotas.Select(c => c.IdMembresia).Distinct())
                     MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(datos, idMembresia);
+
+                if (estadoAnterior != nuevoEstado)
+                {
+                    var operacion = nuevoEstado == EstadosTransaccionPago.Anulado
+                        ? AuditoriaLogica.AnularPago
+                        : nuevoEstado == EstadosTransaccionPago.Reembolsado
+                            ? AuditoriaLogica.ReembolsarPago
+                            : null;
+                    if (operacion != null)
+                    {
+                        var socio = cuotas[0].Membresia.Socio;
+                        var metodo = datos.MetodosPago.Buscar(pago.IdMetodoPago);
+                        var accion = nuevoEstado == EstadosTransaccionPago.Anulado ? "anulado" : "reembolsado";
+                        auditoria.RegistrarOperacion(datos, operacion, "Pago", pago.IdRegistroPago,
+                            "Pago #" + pago.IdRegistroPago + " " + accion + " para " + socio.Nombre + " " + socio.Apellido +
+                            " por " + pago.Importe.ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("es-AR")) +
+                            " mediante " + ObtenerNombreTipoMetodoPago(metodo));
+                    }
+                }
                 datos.GuardarCambios();
                 transaccion.Confirmar();
             }

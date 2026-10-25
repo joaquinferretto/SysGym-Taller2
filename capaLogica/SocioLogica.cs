@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using exxen2._0.capaDatos.Entidades;
 using exxen2._0.capaDatos.Repositorios;
+using exxen2._0.capaLogica.Auditoria;
 
 namespace exxen2._0.capaLogica
 {
@@ -11,6 +12,9 @@ namespace exxen2._0.capaLogica
     // La usan GestionSociosFormulario y ReportesFormulario.
     public class SocioLogica
     {
+        private readonly AuditoriaLogica auditoria;
+        public SocioLogica() : this(0) { }
+        public SocioLogica(int idUsuarioAutenticado) { auditoria = new AuditoriaLogica(idUsuarioAutenticado); }
         /* Valida y registra socios mediante la unidad de trabajo, conservando sus reglas de alta. */
         public Socio Crear(Socio socio)
         {
@@ -163,6 +167,7 @@ namespace exxen2._0.capaLogica
             using (var datos = new UnidadDeTrabajoGimnasio())
             using (var transaccion = datos.IniciarTransaccion())
             {
+                auditoria.ObtenerUsuario(datos);
                 var socio = datos.Socios.Buscar(idSocio);
                 if (socio == null)
                     throw new InvalidOperationException("El socio no existe.");
@@ -172,7 +177,13 @@ namespace exxen2._0.capaLogica
                 socio.Estado = false;
                 // Un socio inactivo no puede conservar una membresía activa.
                 foreach (var membresia in datos.Membresias.Where(m => m.IdSocio == idSocio && m.Estado).ToList())
+                {
                     membresia.Estado = false;
+                    auditoria.RegistrarOperacion(datos, AuditoriaLogica.BajaMembresia, "Membresia", membresia.IdMembresia,
+                        "Membresía de " + socio.Nombre + " " + socio.Apellido + " dada de baja junto con el socio");
+                }
+                auditoria.RegistrarOperacion(datos, AuditoriaLogica.BajaSocio, "Socio", socio.IdSocio,
+                    "Socio " + socio.Nombre + " " + socio.Apellido + " dado de baja");
                 datos.GuardarCambios();
                 transaccion.Confirmar();
             }
@@ -182,7 +193,9 @@ namespace exxen2._0.capaLogica
         public void Reactivar(int idSocio)
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
+            using (var transaccion = datos.IniciarTransaccion())
             {
+                auditoria.ObtenerUsuario(datos);
                 var socio = datos.Socios.Buscar(idSocio);
                 if (socio == null)
                     throw new InvalidOperationException("El socio no existe.");
@@ -190,7 +203,10 @@ namespace exxen2._0.capaLogica
                     throw new InvalidOperationException("El socio ya está activo.");
 
                 socio.Estado = true;
+                auditoria.RegistrarOperacion(datos, AuditoriaLogica.ReactivarSocio, "Socio", socio.IdSocio,
+                    "Socio " + socio.Nombre + " " + socio.Apellido + " reactivado");
                 datos.GuardarCambios();
+                transaccion.Confirmar();
             }
         }
 
@@ -226,14 +242,14 @@ namespace exxen2._0.capaLogica
             ValidacionesGimnasio.ValidarNombre(socio.Apellido, "apellido");
             ValidacionesGimnasio.ValidarEdadMinima(socio.FechaNacimiento, 13, "El socio debe tener al menos 13 años.");
 
-            if (socio.Peso.HasValue && socio.Peso.Value <= 0)
+            if (socio.Peso.HasValue && (socio.Peso.Value < 20 || socio.Peso.Value > 300))
             {
-                throw new InvalidOperationException("El peso debe ser mayor que cero.");
+                throw new InvalidOperationException("El peso debe estar entre 20 y 300 kg.");
             }
 
-            if (socio.Altura.HasValue && socio.Altura.Value <= 0)
+            if (socio.Altura.HasValue && (socio.Altura.Value < 0.80m || socio.Altura.Value > 2.50m))
             {
-                throw new InvalidOperationException("La altura debe ser mayor que cero.");
+                throw new InvalidOperationException("La altura debe estar entre 0,80 y 2,50 m.");
             }
 
             ValidarAlturaFraccionaria(socio.Altura);

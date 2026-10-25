@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using exxen2._0.capaDatos.Entidades;
 using exxen2._0.capaDatos.Repositorios;
+using exxen2._0.capaLogica.Auditoria;
 
 namespace exxen2._0.capaLogica
 {
@@ -18,6 +19,10 @@ namespace exxen2._0.capaLogica
         public DateTime? CuotaHasta { get; set; }
         public string NombreEntrenador { get; set; }
         public string NombreRutina { get; set; }
+        public string Objetivo { get; set; }
+        public string Nivel { get; set; }
+        public decimal? Peso { get; set; }
+        public decimal? Altura { get; set; }
         public bool TieneRutina { get { return IdRutina.HasValue; } }  // HasValue: ¿el valor opcional (int?, DateTime?) tiene dato?
     }
 
@@ -27,12 +32,56 @@ namespace exxen2._0.capaLogica
     // La usan RutinasEntrenadorFormulario, MisSociosFormulario, ConsultaRutinasAdministradorFormulario y ReportesFormulario.
     public class RutinaLogica
     {
+        private readonly int idUsuarioAutenticado;
+        private readonly AuditoriaLogica auditoria;
+        public RutinaLogica() : this(0) { }
+        public RutinaLogica(int idUsuarioAutenticado)
+        {
+            this.idUsuarioAutenticado = idUsuarioAutenticado;
+            auditoria = new AuditoriaLogica(idUsuarioAutenticado);
+        }
+
+        public static decimal? CalcularImc(decimal? peso, decimal? altura)
+        {
+            if (!peso.HasValue || !altura.HasValue || peso <= 0 || altura <= 0) return null;
+            return Math.Round(peso.Value / (altura.Value * altura.Value), 2);
+        }
+
+        public static string SugerirObjetivo(decimal? peso, decimal? altura)
+        {
+            var imc = CalcularImc(peso, altura);
+            if (!imc.HasValue) return null;
+            if (imc < 18.5m) return "Hipertrofia";
+            if (imc < 25m) return "Hipertrofia o Fuerza";
+            if (imc < 30m) return "Acondicionamiento";
+            return "Acondicionamiento – Principiante";
+        }
+
+        public List<Rutina> ListarModelos(string objetivo, string nivel)
+        {
+            using (var datos = new UnidadDeTrabajoGimnasio())
+                return datos.Rutinas.ConsultarSoloLectura().Where(r => r.Estado && r.Objetivo == objetivo && r.Nivel == nivel)
+                    .OrderBy(r => r.Nombre).ToList();
+        }
+
+        private UsuarioSistema ObtenerGestorRutinas(IUnidadDeTrabajo datos)
+        {
+            var usuario = datos.UsuariosSistema.ConsultarSoloLectura("Rol")
+                .SingleOrDefault(u => u.IdUsuarioSistema == idUsuarioAutenticado);
+            if (!ValidacionesGimnasio.PuedeGestionarRutinas(usuario))
+                throw new UnauthorizedAccessException("Crear o editar rutinas requiere un Entrenador o Administrador activo.");
+            return usuario;
+        }
+
         /* Valida y registra una rutina reutilizable en el catalogo. */
         public Rutina Crear(Rutina rutina)
         {
             ValidarDatos(rutina);
             using (var datos = new UnidadDeTrabajoGimnasio())  // Abre la conexión; al salir del bloque se cierra sola, aunque haya error (try-with-resources).
             {
+                var usuario = ObtenerGestorRutinas(datos);
+                if (rutina.IdEntrenador != usuario.IdUsuarioSistema)
+                    throw new UnauthorizedAccessException("El autor de la rutina debe ser el usuario autenticado.");
                 ValidarEntrenador(datos, rutina.IdEntrenador);
                 rutina.Estado = true;
                 if (rutina.FechaCreacion == default(DateTime))
@@ -59,6 +108,9 @@ namespace exxen2._0.capaLogica
             using (var datos = new UnidadDeTrabajoGimnasio())
             using (var transaccion = datos.IniciarTransaccion())  // Transacción: si algo falla antes de Confirmar(), se deshace todo.
             {
+                var usuario = ObtenerGestorRutinas(datos);
+                if (rutina.IdEntrenador != usuario.IdUsuarioSistema)
+                    throw new UnauthorizedAccessException("El autor de la rutina debe ser el usuario autenticado.");
                 ValidarEntrenador(datos, rutina.IdEntrenador);
                 var membresia = datos.Membresias.Consultar("Plan", "Socio")  // Consulta con seguimiento: si se modifica el objeto, GuardarCambios hace el UPDATE.
                     .SingleOrDefault(m => m.IdMembresia == idMembresia);  // Devuelve el único que cumple o null.
@@ -73,7 +125,11 @@ namespace exxen2._0.capaLogica
 
                 datos.Rutinas.Agregar(rutina);
                 datos.GuardarCambios();
+                var anterior = membresia.IdRutina.HasValue ? datos.Rutinas.Buscar(membresia.IdRutina.Value) : null;
                 membresia.IdRutina = rutina.IdRutina;
+                auditoria.RegistrarOperacion(datos, AuditoriaLogica.AsignarRutina, "Membresia", membresia.IdMembresia,
+                    "Rutina " + (anterior == null ? "Sin rutina" : anterior.Nombre) + " → " + rutina.Nombre +
+                    " para " + membresia.Socio.Nombre + " " + membresia.Socio.Apellido);
                 datos.GuardarCambios();
                 transaccion.Confirmar();  // Recién acá quedan grabados todos los cambios de la transacción.
                 return rutina;
@@ -81,29 +137,46 @@ namespace exxen2._0.capaLogica
         }
 
         /* Vincula una rutina activa del catalogo a la membresia sin copiar ni borrar ejercicios. */
-        public void AsignarRutina(int idMembresia, int idRutina)
+        public void AsignarRutina(int idMembresia, int? idRutina)
         {
-            if (idMembresia <= 0 || idRutina <= 0)
+            if (idMembresia <= 0 || (idRutina.HasValue && idRutina.Value <= 0))
             {
-                throw new InvalidOperationException("La membresia y la rutina son obligatorias.");
+                throw new InvalidOperationException("La membresía o la rutina no son válidas.");
             }
 
             using (var datos = new UnidadDeTrabajoGimnasio())
+            using (var transaccion = datos.IniciarTransaccion())
             {
+                var usuario = datos.UsuariosSistema.ConsultarSoloLectura("Rol")
+                    .SingleOrDefault(u => u.IdUsuarioSistema == idUsuarioAutenticado);
+                var esAdministrador = ValidacionesGimnasio.EsAdministradorActivo(usuario);
+                var esRecepcionista = ValidacionesGimnasio.EsRecepcionistaActivo(usuario);
+                if (!esAdministrador && !esRecepcionista && !ValidacionesGimnasio.PuedeGestionarRutinas(usuario))
+                    throw new UnauthorizedAccessException("La operación requiere un usuario activo autorizado.");
                 MembresiaLogica.ActualizarEstadoPorDeudaEnContexto(datos, idMembresia);
-                datos.GuardarCambios();
                 var membresia = datos.Membresias.Consultar("Plan", "Socio")
                     .SingleOrDefault(m => m.IdMembresia == idMembresia);
                 ValidarMembresiaParaRutina(membresia);
+                if (!esAdministrador && !esRecepcionista)
+                    ValidarPermisoSobreMembresia(datos, idMembresia, usuario.IdUsuarioSistema);
 
-                var rutina = datos.Rutinas.Buscar(idRutina);  // Busca por clave primaria; si no existe devuelve null.
-                if (rutina == null || !rutina.Estado)
+                var rutina = idRutina.HasValue ? datos.Rutinas.Buscar(idRutina.Value) : null;
+                if (idRutina.HasValue && (rutina == null || !rutina.Estado))
                 {
                     throw new InvalidOperationException("La rutina seleccionada no existe o esta inactiva.");
                 }
+                if (esRecepcionista && rutina != null && (string.IsNullOrEmpty(rutina.Objetivo) || string.IsNullOrEmpty(rutina.Nivel)))
+                    throw new UnauthorizedAccessException("Recepción solo puede asignar rutinas modelo por objetivo y nivel.");
+                if (membresia.IdRutina == idRutina)
+                    throw new InvalidOperationException("La membresía ya tiene esa rutina.");
 
+                var anterior = membresia.IdRutina.HasValue ? datos.Rutinas.Buscar(membresia.IdRutina.Value) : null;
                 membresia.IdRutina = idRutina;
+                auditoria.RegistrarOperacion(datos, AuditoriaLogica.AsignarRutina, "Membresia", membresia.IdMembresia,
+                    "Rutina " + (anterior == null ? "Sin rutina" : anterior.Nombre) + " → " + (rutina == null ? "Sin rutina" : rutina.Nombre) +
+                    " para " + membresia.Socio.Nombre + " " + membresia.Socio.Apellido);
                 datos.GuardarCambios();
+                transaccion.Confirmar();
             }
         }
 
@@ -113,6 +186,9 @@ namespace exxen2._0.capaLogica
             ValidarDatos(rutina);
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
+                var usuario = ObtenerGestorRutinas(datos);
+                if (idEditor != usuario.IdUsuarioSistema)
+                    throw new UnauthorizedAccessException("El editor debe ser el usuario autenticado.");
                 var existente = datos.Rutinas.Buscar(rutina.IdRutina);
                 if (existente == null)
                 {
@@ -288,6 +364,8 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
+                if (ObtenerGestorRutinas(datos).IdUsuarioSistema != idEditor)
+                    throw new UnauthorizedAccessException("El editor debe ser el usuario autenticado.");
                 var rutina = datos.Rutinas.Buscar(idRutina);
                 if (rutina == null)
                 {
@@ -305,6 +383,8 @@ namespace exxen2._0.capaLogica
         {
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
+                if (ObtenerGestorRutinas(datos).IdUsuarioSistema != idEditor)
+                    throw new UnauthorizedAccessException("El editor debe ser el usuario autenticado.");
                 var rutina = datos.Rutinas.Buscar(idRutina);
                 if (rutina == null)
                 {
@@ -333,6 +413,10 @@ namespace exxen2._0.capaLogica
                 CuotaHasta = CuotaMembresiaLogica.CubiertaHasta(membresia.Cuotas),
                 NombreEntrenador = usuario == null ? "Sin asignar" : usuario.Apellido + ", " + usuario.Nombre,
                 NombreRutina = membresia.Rutina == null ? string.Empty : membresia.Rutina.Nombre
+                ,Objetivo = membresia.Rutina == null ? null : membresia.Rutina.Objetivo
+                ,Nivel = membresia.Rutina == null ? null : membresia.Rutina.Nivel
+                ,Peso = membresia.Socio == null ? null : membresia.Socio.Peso
+                ,Altura = membresia.Socio == null ? null : membresia.Socio.Altura
             };
         }
 
@@ -376,6 +460,13 @@ namespace exxen2._0.capaLogica
             {
                 throw new InvalidOperationException("El nombre de la rutina es obligatorio.");
             }
+
+            var objetivoValido = new[] { "Fuerza", "Hipertrofia", "Acondicionamiento" };
+            var nivelValido = new[] { "Principiante", "Intermedio", "Avanzado" };
+            if ((rutina.Objetivo == null) != (rutina.Nivel == null) ||
+                (rutina.Objetivo != null && !objetivoValido.Contains(rutina.Objetivo)) ||
+                (rutina.Nivel != null && !nivelValido.Contains(rutina.Nivel)))
+                throw new InvalidOperationException("Objetivo y nivel deben ser una combinación válida o quedar ambos vacíos para una rutina libre.");
 
             if (rutina.FechaInicio.HasValue && rutina.FechaFin.HasValue && rutina.FechaFin.Value < rutina.FechaInicio.Value)
             {

@@ -28,6 +28,7 @@ namespace exxen2._0.capaLogica.Reportes
             public decimal Importe { get; set; }
             public string Metodo { get; set; }
             public string Estado { get; set; }
+            public bool CuotaPagada { get; set; }
             public string RegistradoPor { get; set; }
         }
 
@@ -136,7 +137,7 @@ namespace exxen2._0.capaLogica.Reportes
                 fila.Cells[5].AddParagraph(pago.Estado);
             }
             var total = seccion.AddParagraph(pagos.Pagos.Count + " pago(s)  ·  Total abonado: " +
-                pagos.Pagos.Sum(p => p.Importe).ToString("C", CultureInfo.CurrentCulture));
+                pagos.Pagos.Where(p => p.Estado == EstadosTransaccionPago.Aprobado && p.CuotaPagada).Sum(p => p.Importe).ToString("C", CultureInfo.CurrentCulture));
             total.Format.SpaceBefore = Unit.FromPoint(12);
             total.Format.Font.Bold = true;
             AgregarLinea(seccion, "Primer pago registrado", pagos.Pagos.Count == 0 ? "Sin información" : pagos.Pagos.Min(p => p.Fecha).ToString("dd/MM/yyyy"));
@@ -151,10 +152,11 @@ namespace exxen2._0.capaLogica.Reportes
             if (idPago <= 0) throw new InvalidOperationException("Seleccioná un pago válido.");
             using (var datos = new UnidadDeTrabajoGimnasio())
             {
-                var pago = datos.Pagos.ConsultarSoloLectura("MetodoPago.MercadoPago", "MetodoPago.PagoEfectivo", "UsuarioRegistro.Rol", "Cuotas.Membresia.Socio", "Cuotas.Membresia.Plan")
+                var pago = datos.Pagos.ConsultarSoloLectura("MetodoPago.MercadoPago", "MetodoPago.PagoEfectivo", "UsuarioRegistro.Rol", "CuotaAsociada.Membresia.Socio", "CuotaAsociada.Membresia.Plan")
                     .SingleOrDefault(p => p.IdRegistroPago == idPago);
-                var cuota = pago == null ? null : pago.Cuotas.FirstOrDefault(c => c.EstadoPago == EstadosCuota.Pagada);
-                if (pago == null || pago.Estado != EstadosTransaccionPago.Aprobado || cuota == null)
+                var cuota = pago == null ? null : pago.CuotaAsociada;
+                if (pago == null || pago.Estado != EstadosTransaccionPago.Aprobado || cuota == null ||
+                    cuota.EstadoPago != EstadosCuota.Pagada || cuota.IdRegistroPago != pago.IdRegistroPago)
                     throw new InvalidOperationException("El pago seleccionado no está aprobado o no corresponde a una cuota pagada.");
                 return Proyectar(pago, cuota);
             }
@@ -167,12 +169,10 @@ namespace exxen2._0.capaLogica.Reportes
             {
                 var socio = datos.Socios.ConsultarSoloLectura("Membresias.Plan").SingleOrDefault(s => s.IdSocio == idSocio);
                 if (socio == null) throw new InvalidOperationException("El socio no existe.");
-                var cuotasPagadas = datos.CuotasMembresia.ConsultarSoloLectura("Pago.MetodoPago.MercadoPago", "Pago.MetodoPago.PagoEfectivo", "Pago.UsuarioRegistro.Rol", "Membresia.Socio", "Membresia.Plan")
-                    .Where(c => c.Membresia.IdSocio == idSocio && c.EstadoPago == EstadosCuota.Pagada &&
-                        c.IdRegistroPago.HasValue && c.Pago.Estado == EstadosTransaccionPago.Aprobado)
-                    .OrderByDescending(c => c.Pago.Fecha).ThenByDescending(c => c.Pago.IdRegistroPago).ToList();
-                var pagos = cuotasPagadas.GroupBy(c => c.IdRegistroPago.Value)
-                    .Select(grupo => grupo.First()).Select(c => Proyectar(c.Pago, c)).ToList();
+                var registros = datos.Pagos.ConsultarSoloLectura("MetodoPago.MercadoPago", "MetodoPago.PagoEfectivo", "UsuarioRegistro.Rol", "CuotaAsociada.Membresia.Socio", "CuotaAsociada.Membresia.Plan")
+                    .Where(p => p.CuotaAsociada.Membresia.IdSocio == idSocio)
+                    .OrderByDescending(p => p.Fecha).ThenByDescending(p => p.IdRegistroPago).ToList();
+                var pagos = registros.Select(p => Proyectar(p, p.CuotaAsociada)).ToList();
                 var plan = socio.Membresias.OrderByDescending(m => m.Estado).ThenByDescending(m => m.FechaInicio).FirstOrDefault();
                 return new HistorialExportable
                 {
@@ -203,6 +203,7 @@ namespace exxen2._0.capaLogica.Reportes
                 Importe = pago.Importe,
                 Metodo = metodo == null ? "-" : metodo.IdNroPagoMP.HasValue ? "Mercado Pago" : metodo.IdPagoEfectivo.HasValue ? "Efectivo" : "Otro",
                 Estado = pago.Estado,
+                CuotaPagada = cuota.EstadoPago == EstadosCuota.Pagada && cuota.IdRegistroPago == pago.IdRegistroPago,
                 RegistradoPor = pago.UsuarioRegistro == null ? "Sin información" : pago.UsuarioRegistro.Nombre + " " + pago.UsuarioRegistro.Apellido +
                     (pago.UsuarioRegistro.Rol == null ? "" : " - " + pago.UsuarioRegistro.Rol.Descripcion)
             };

@@ -10,7 +10,8 @@ namespace exxen2._0.capaLogica
     public static class ValidacionesGimnasio
     {
         public const int LongitudMaximaNombrePersona = 100;
-        public const int LongitudMaximaDni = 20;
+        public const int LongitudMinimaDni = 7;
+        public const int LongitudMaximaDni = 8;
         public const int LongitudMaximaNombreUsuario = 50;
         public const int TamanoMaximoFoto = ProcesadorImagenes.TamanoMaximoBytes;
 
@@ -25,15 +26,12 @@ namespace exxen2._0.capaLogica
                 throw new InvalidOperationException("El " + campo + " contiene caracteres no válidos.");
         }
 
-        /* Valida el DNI en el formato numerico que conserva el modelo actual. */
+        /* Exige un DNI de siete u ocho dígitos, sin separadores ni otros caracteres. */
         public static void ValidarDni(string dni)
         {
-            if (string.IsNullOrWhiteSpace(dni))
-                throw new InvalidOperationException("El DNI es obligatorio.");
-            if (dni.Trim().Length > LongitudMaximaDni)
-                throw new InvalidOperationException("El DNI no puede superar " + LongitudMaximaDni + " dígitos.");
-            if (dni.Any(caracter => caracter < '0' || caracter > '9'))
-                throw new InvalidOperationException("El DNI solo puede contener números.");
+            if (string.IsNullOrEmpty(dni) || dni.Length < LongitudMinimaDni || dni.Length > LongitudMaximaDni ||
+                dni.Any(caracter => caracter < '0' || caracter > '9'))
+                throw new InvalidOperationException("El DNI debe tener 7 u 8 dígitos");
         }
 
         /* Valida el identificador de acceso sin aplicarle las reglas de nombres personales. */
@@ -87,13 +85,13 @@ namespace exxen2._0.capaLogica
         public const int PrimerDiaRutina = 1;
         public const int UltimoDiaRutina = 5;
 
-        private static readonly string[] DiasRutina = { "Lunes", "Martes", "Miercoles", "Jueves", "Viernes" };
+        private static readonly string[] DiasRutina = { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes" };
 
         /* Valida que el día de la rutina quede sin asignar o dentro de la semana de lunes a viernes. */
         public static void ValidarDiaRutina(int? dia)
         {
             if (dia.HasValue && (dia.Value < PrimerDiaRutina || dia.Value > UltimoDiaRutina))
-                throw new InvalidOperationException("El dia de la rutina debe estar entre lunes y viernes.");
+                throw new InvalidOperationException("El día de la rutina debe estar entre lunes y viernes.");
         }
 
         /* Traduce el número de día de la rutina al nombre que se muestra en pantalla. */
