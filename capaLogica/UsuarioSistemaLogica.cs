@@ -114,7 +114,6 @@ namespace exxen2._0.capaLogica
                 usuario.Estado = true;
                 usuario.Salario = 0;
                 usuario.FechaNacimiento = null;
-                usuario.Sexo = null;
                 usuario.FotoRuta = null;
                 usuario.Clave = GenerarClave(clave);
                 datos.UsuariosSistema.Agregar(usuario);
@@ -446,6 +445,8 @@ namespace exxen2._0.capaLogica
             ValidacionesGimnasio.ValidarNombre(usuario.Apellido, "apellido");
             ValidacionesGimnasio.ValidarDni(usuario.DNI);
             ValidacionesGimnasio.ValidarNombreUsuario(usuario.NombreUsuario);
+            if (usuario.Sexo != "M" && usuario.Sexo != "F")
+                throw new InvalidOperationException("El sexo es obligatorio para registrar el Administrador inicial.");
         }
 
         /* Normaliza una ruta administrada y conserva null cuando el usuario no tiene foto. */

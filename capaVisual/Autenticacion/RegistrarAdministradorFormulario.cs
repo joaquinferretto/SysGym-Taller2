@@ -25,6 +25,7 @@ namespace exxen2._0.capaVisual.Autenticacion
             var valido = AyudaFormularioVisual.ValidarNombre(indicadorErrores, nombre, "nombre");
             valido = AyudaFormularioVisual.ValidarNombre(indicadorErrores, apellido, "apellido") & valido;
             valido = AyudaFormularioVisual.ValidarDni(indicadorErrores, dni) & valido;
+            valido = AyudaFormularioVisual.ValidarCombo(indicadorErrores, sexo, "Seleccioná un sexo.") & valido;
             valido = AyudaFormularioVisual.ValidarNombreUsuario(indicadorErrores, nombreUsuario) & valido;
             valido = AyudaFormularioVisual.ValidarRequerido(indicadorErrores, clave, "La contraseña es obligatoria.") & valido;
             valido = AyudaFormularioVisual.ValidarConError(indicadorErrores, confirmarClave, delegate
@@ -36,7 +37,7 @@ namespace exxen2._0.capaVisual.Autenticacion
             }) & valido;
 
             if (!valido)
-                AyudaFormularioVisual.EnfocarPrimerError(indicadorErrores, nombre, apellido, dni, nombreUsuario, clave, confirmarClave);
+                AyudaFormularioVisual.EnfocarPrimerError(indicadorErrores, nombre, apellido, dni, sexo, nombreUsuario, clave, confirmarClave);
             return valido;
         }
 
@@ -54,7 +55,8 @@ namespace exxen2._0.capaVisual.Autenticacion
                     Nombre = nombre.Text.Trim(),
                     Apellido = apellido.Text.Trim(),
                     DNI = dni.Text.Trim(),
-                    NombreUsuario = nombreUsuario.Text.Trim()
+                    NombreUsuario = nombreUsuario.Text.Trim(),
+                    Sexo = sexo.SelectedIndex == 0 ? "M" : "F"
                 }, clave.Text);
                 registroCompletado = true;
                 DialogResult = DialogResult.OK;

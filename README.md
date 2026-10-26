@@ -336,22 +336,20 @@ Crédito de imágenes de ejercicios: autoría, licencia, fuente y adaptaciones p
 
 ### Generar el instalador de SysGym
 
-El instalador se compila con Inno Setup 6. En la PC de desarrollo se utilizó Inno Setup 6.7.3. Antes de compilar, descargá los redistribuibles oficiales indicados abajo dentro de `Instalador/Redist`; esa carpeta y `Instalador/Salida` están excluidas de Git.
+El instalador se compila con Inno Setup 6. En la PC de desarrollo se utilizó Inno Setup 6.7.3. Antes de compilar, descargá los redistribuibles oficiales indicados abajo dentro de `Instalador/Redist`; esa carpeta y `Instalador/Salida` están excluidas de Git. .NET Framework 4.8 no se incluye porque Windows 10 y 11 ya lo incorporan.
 
 | Dependencia | Versión incluida | Origen oficial |
 | --- | --- | --- |
-| .NET Framework 4.8 Runtime, instalador offline x86/x64 | 4.8.04115.00 | [Descarga de .NET Framework 4.8](https://go.microsoft.com/fwlink/?linkid=2088631) |
 | SQL Server Express LocalDB x64 | 16.0.1000.6 (SQL Server 2022) | [SQL Server 2022 Express](https://go.microsoft.com/fwlink/?linkid=2215160), medio LocalDB |
 | Visual C++ Redistributable x64 | 14.51.36247.0 | [Último redistribuible compatible de Visual C++](https://aka.ms/vc14/vc_redist.x64.exe) |
 
-SysGym detecta .NET Framework 4.8 mediante el valor `Release` del registro (mínimo 528040), Visual C++ x64 y LocalDB 2019, 2022 o 2025. Si falta una dependencia, el instalador la instala en modo silencioso. LocalDB 2022 se obtiene del instalador oficial de SQL Server Express con la opción de descarga `LocalDB`; se incluye únicamente `SqlLocalDB.msi` en el Setup.
+SysGym detecta .NET Framework 4.8 mediante el valor `Release` del registro (mínimo 528040). Si no está disponible, muestra el enlace oficial de [descarga de .NET Framework 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) y cancela la instalación. El instalador detecta Visual C++ x64 y LocalDB 2019, 2022 o 2025; instala en modo silencioso los redistribuibles incluidos que falten. LocalDB 2022 se obtiene del instalador oficial de SQL Server Express con la opción de descarga `LocalDB`; se incluye únicamente `SqlLocalDB.msi` en el Setup.
 
 Para preparar las dependencias en `Instalador/Redist`, usá PowerShell desde la raíz del repositorio:
 
 ```powershell
 $redist = Join-Path (Get-Location) 'Instalador\Redist'
 New-Item -ItemType Directory -Force -Path $redist | Out-Null
-Invoke-WebRequest 'https://go.microsoft.com/fwlink/?linkid=2088631' -OutFile (Join-Path $redist 'ndp48-x86-x64-allos-enu.exe')
 Invoke-WebRequest 'https://aka.ms/vc14/vc_redist.x64.exe' -OutFile (Join-Path $redist 'vc_redist.x64.exe')
 $bootstrapper = Join-Path $env:TEMP 'SQL2022-SSEI-Expr.exe'
 $media = Join-Path $redist 'SQL2022'

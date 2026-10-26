@@ -12,12 +12,14 @@ namespace exxen2._0.capaVisual.Autenticacion
         private Label lblNombre;
         private Label lblApellido;
         private Label lblDni;
+        private Label lblSexo;
         private Label lblUsuario;
         private Label lblClave;
         private Label lblConfirmarClave;
         private TextBox nombre;
         private TextBox apellido;
         private TextBox dni;
+        private ComboBox sexo;
         private TextBox nombreUsuario;
         private TextBox clave;
         private TextBox confirmarClave;
@@ -36,8 +38,8 @@ namespace exxen2._0.capaVisual.Autenticacion
         {
             components = new Container();
             titulo = new Label(); ayuda = new Label(); lblNombre = new Label(); lblApellido = new Label();
-            lblDni = new Label(); lblUsuario = new Label(); lblClave = new Label(); lblConfirmarClave = new Label();
-            nombre = new TextBox(); apellido = new TextBox(); dni = new TextBox(); nombreUsuario = new TextBox();
+            lblDni = new Label(); lblSexo = new Label(); lblUsuario = new Label(); lblClave = new Label(); lblConfirmarClave = new Label();
+            nombre = new TextBox(); apellido = new TextBox(); dni = new TextBox(); sexo = new ComboBox(); nombreUsuario = new TextBox();
             clave = new TextBox(); confirmarClave = new TextBox(); lblEstado = new Label(); btnRegistrar = new Button();
             barraSuperior = new Panel(); indicadorErrores = new ErrorProvider(components);
             ((ISupportInitialize)indicadorErrores).BeginInit();
@@ -45,7 +47,7 @@ namespace exxen2._0.capaVisual.Autenticacion
 
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(241, 245, 249);
-            ClientSize = new Size(560, 690);
+            ClientSize = new Size(560, 620);
             ControlBox = true;
             Font = new Font("Segoe UI", 10F);
             FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -79,26 +81,37 @@ namespace exxen2._0.capaVisual.Autenticacion
             ayuda.Text = "Completá los datos para habilitar el acceso inicial al sistema.";
 
             PrepararEtiqueta(lblNombre, "Nombre", 40, 118);
-            PrepararEtiqueta(lblApellido, "Apellido", 40, 192);
-            PrepararEtiqueta(lblDni, "DNI", 40, 266);
-            PrepararEtiqueta(lblUsuario, "Usuario", 40, 340);
-            PrepararEtiqueta(lblClave, "Contraseña", 40, 414);
-            PrepararEtiqueta(lblConfirmarClave, "Confirmar contraseña", 40, 488);
+            PrepararEtiqueta(lblApellido, "Apellido", 40, 176);
+            PrepararEtiqueta(lblDni, "DNI", 40, 234);
+            PrepararEtiqueta(lblSexo, "Sexo", 40, 292);
+            PrepararEtiqueta(lblUsuario, "Usuario", 40, 350);
+            PrepararEtiqueta(lblClave, "Contraseña", 40, 408);
+            PrepararEtiqueta(lblConfirmarClave, "Confirmar contraseña", 40, 466);
             PrepararCampo(nombre, 40, 144, 480, 30, 0);
-            PrepararCampo(apellido, 40, 218, 480, 30, 1);
-            PrepararCampo(dni, 40, 292, 480, 30, 2);
-            PrepararCampo(nombreUsuario, 40, 366, 480, 30, 3);
-            PrepararCampo(clave, 40, 440, 480, 30, 4);
-            PrepararCampo(confirmarClave, 40, 514, 480, 30, 5);
+            PrepararCampo(apellido, 40, 202, 480, 30, 1);
+            PrepararCampo(dni, 40, 260, 480, 30, 2);
+            sexo.DropDownStyle = ComboBoxStyle.DropDownList;
+            sexo.Items.AddRange(new object[] { "Masculino", "Femenino" });
+            sexo.BackColor = Color.White;
+            sexo.Font = new Font("Segoe UI", 10.5F);
+            sexo.ForeColor = Color.FromArgb(15, 23, 42);
+            sexo.SelectedIndex = -1;
+            sexo.Location = new Point(40, 318);
+            sexo.Name = "sexo";
+            sexo.Size = new Size(480, 30);
+            sexo.TabIndex = 3;
+            PrepararCampo(nombreUsuario, 40, 376, 480, 30, 4);
+            PrepararCampo(clave, 40, 434, 480, 30, 5);
+            PrepararCampo(confirmarClave, 40, 492, 480, 30, 6);
             clave.UseSystemPasswordChar = true;
             confirmarClave.UseSystemPasswordChar = true;
 
             lblEstado.AutoSize = false;
             lblEstado.Font = new Font("Segoe UI", 9F);
             lblEstado.ForeColor = Color.FromArgb(107, 114, 128);
-            lblEstado.Location = new Point(40, 552);
+            lblEstado.Location = new Point(40, 530);
             lblEstado.Name = "lblEstado";
-            lblEstado.Size = new Size(480, 42);
+            lblEstado.Size = new Size(480, 34);
 
             btnRegistrar.BackColor = Color.FromArgb(46, 125, 50);
             btnRegistrar.FlatAppearance.BorderSize = 0;
@@ -107,7 +120,7 @@ namespace exxen2._0.capaVisual.Autenticacion
             btnRegistrar.FlatStyle = FlatStyle.Flat;
             btnRegistrar.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
             btnRegistrar.ForeColor = Color.White;
-            btnRegistrar.Location = new Point(40, 610);
+            btnRegistrar.Location = new Point(40, 570);
             btnRegistrar.Name = "btnRegistrar";
             btnRegistrar.Size = new Size(480, 40);
             btnRegistrar.Text = "Registrar administrador";
@@ -117,6 +130,7 @@ namespace exxen2._0.capaVisual.Autenticacion
             indicadorErrores.ContainerControl = this;
             Controls.Add(titulo); Controls.Add(ayuda); Controls.Add(lblNombre); Controls.Add(nombre);
             Controls.Add(lblApellido); Controls.Add(apellido); Controls.Add(lblDni); Controls.Add(dni);
+            Controls.Add(lblSexo); Controls.Add(sexo);
             Controls.Add(lblUsuario); Controls.Add(nombreUsuario); Controls.Add(lblClave); Controls.Add(clave);
             Controls.Add(lblConfirmarClave); Controls.Add(confirmarClave); Controls.Add(lblEstado); Controls.Add(btnRegistrar);
             Controls.Add(barraSuperior);
@@ -128,6 +142,7 @@ namespace exxen2._0.capaVisual.Autenticacion
             nombre.Validating += nombre_Validating;
             apellido.Validating += nombre_Validating;
             dni.Validating += dni_Validating;
+            sexo.SelectedIndexChanged += campo_TextChanged;
             nombreUsuario.Validating += nombreUsuario_Validating;
             nombre.TextChanged += campo_TextChanged; apellido.TextChanged += campo_TextChanged;
             dni.TextChanged += campo_TextChanged; nombreUsuario.TextChanged += campo_TextChanged;

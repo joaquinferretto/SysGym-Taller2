@@ -47,7 +47,6 @@ Source: "..\capaDatos\Database\SysGymDB.sql"; DestDir: "{app}\capaDatos\Database
 Source: "..\capaDatos\Database\SysGymBaseInstalacion.sql"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\capaDatos\Imagenes\Ejercicios\*"; DestDir: "{commonappdata}\SysGym\Imagenes\Ejercicios"; Flags: ignoreversion recursesubdirs createallsubdirs uninsneveruninstall
 Source: "..\Manual\Manual de usuario SysGym.pdf"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Redist\ndp48-x86-x64-allos-enu.exe"; DestDir: "{tmp}"; Flags: dontcopy
 Source: "Redist\vc_redist.x64.exe"; DestDir: "{tmp}"; Flags: dontcopy
 Source: "Redist\SqlLocalDB-2022-x64.msi"; DestDir: "{tmp}"; Flags: dontcopy
 
@@ -100,23 +99,20 @@ end;
 function PrepareToInstall(var NeedsRestart: Boolean): String;
 var
   ExitCode: Integer;
-  DotNetInstaller: String;
   VcInstaller: String;
   LocalDbInstaller: String;
 begin
   Result := '';
-  DotNetInstaller := ExpandConstant('{tmp}\ndp48-x86-x64-allos-enu.exe');
   VcInstaller := ExpandConstant('{tmp}\vc_redist.x64.exe');
   LocalDbInstaller := ExpandConstant('{tmp}\SqlLocalDB-2022-x64.msi');
 
   if not DotNet48Installed then
   begin
-    ExtractTemporaryFile('ndp48-x86-x64-allos-enu.exe');
-    if not RunPrerequisite(DotNetInstaller, '/q /norestart', NeedsRestart, ExitCode) then
-    begin
-      Result := '.NET Framework 4.8 no se pudo instalar (código ' + IntToStr(ExitCode) + ').';
-      Exit;
-    end;
+    MsgBox('SysGym requiere .NET Framework 4.8 y no se detecto una version compatible.' + #13#10 + #13#10 +
+      'Descarguelo desde la pagina oficial de Microsoft:' + #13#10 +
+      'https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48', mbError, MB_OK);
+    Result := '.NET Framework 4.8 es necesario. Descarguelo desde https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48 y vuelva a iniciar la instalacion.';
+    Exit;
   end;
 
   if not VisualCppX64Installed then

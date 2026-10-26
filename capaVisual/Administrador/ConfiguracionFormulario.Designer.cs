@@ -298,7 +298,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.descartar.Name = "descartar";
             this.descartar.Size = new System.Drawing.Size(120, 34);
             this.descartar.TabIndex = 4;
-            this.descartar.Text = "Descartar cambios";
+            this.descartar.Text = "Descartar";
             this.descartar.UseVisualStyleBackColor = false;
             this.descartar.Click += new System.EventHandler(this.descartar_Click);
             // guardar
