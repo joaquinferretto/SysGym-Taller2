@@ -2,15 +2,15 @@
 
 ## Especificación de Requisitos de Software
 
-**Taller 2 — UTN FRRe**
+**Taller 2 — UNNE**
 
 **Fecha:** 21 de octubre de 2026
 
 ### Integrantes
 
-1. (Apellido, Nombre)
-2. (Apellido, Nombre)
-3. (Apellido, Nombre)
+1. Ferretto Joaquin Daniel 45247702  
+2. Leonardo Oscar Canteros 44213011
+
 
 ## 1. Introducción
 
