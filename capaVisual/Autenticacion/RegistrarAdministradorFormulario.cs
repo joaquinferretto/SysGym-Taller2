@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel;
-using System.Data.SqlClient;
 using System.Windows.Forms;
 using exxen2._0.capaDatos.Entidades;
 using exxen2._0.capaLogica;
@@ -41,15 +40,16 @@ namespace exxen2._0.capaVisual.Autenticacion
             return valido;
         }
 
-        private void btnRegistrar_Click(object sender, EventArgs e)
+        private async void btnRegistrar_Click(object sender, EventArgs e)
         {
             if (!ValidarFormulario())
                 return;
 
             btnRegistrar.Enabled = false;
+            UseWaitCursor = true;
             try
             {
-                logica.RegistrarPrimerAdministrador(new UsuarioSistema
+                await logica.RegistrarPrimerAdministradorAsync(new UsuarioSistema
                 {
                     Nombre = nombre.Text.Trim(),
                     Apellido = apellido.Text.Trim(),
@@ -63,28 +63,15 @@ namespace exxen2._0.capaVisual.Autenticacion
             catch (Exception ex)
             {
                 lblEstado.ForeColor = System.Drawing.Color.FromArgb(185, 28, 28);
-                lblEstado.Text = EsErrorSql(ex)
-                    ? "No se pudo conectar con SQL Server. Verifique que esté instalado y en ejecución."
-                    : ex.Message;
+                lblEstado.Text = AyudaFormularioVisual.ObtenerMensajeError(ex, "No se pudo registrar el Administrador.");
                 btnRegistrar.Enabled = true;
             }
-        }
-
-        private static bool EsErrorSql(Exception excepcion)
-        {
-            if (excepcion == null)
-                return false;
-            if (excepcion is SqlException)
-                return true;
-
-            var agregado = excepcion as AggregateException;
-            if (agregado != null)
+            finally
             {
-                foreach (var interna in agregado.InnerExceptions)
-                    if (EsErrorSql(interna))
-                        return true;
+                UseWaitCursor = false;
+                if (!registroCompletado)
+                    btnRegistrar.Enabled = true;
             }
-            return EsErrorSql(excepcion.InnerException);
         }
 
         private void nombre_KeyPress(object sender, KeyPressEventArgs e)

@@ -28,6 +28,11 @@ namespace exxen2._0.capaLogica
             AdministracionBaseDatos.CrearBaseDesdeScript(rutaScript);
         }
 
+        public void PrepararDatosBaseInstalada(string rutaScript)
+        {
+            AdministracionBaseDatos.PrepararDatosBaseInstalada(rutaScript);
+        }
+
         public bool HayAdministradorActivo()
         {
             using (var datos = new UnidadDeTrabajoGimnasio())

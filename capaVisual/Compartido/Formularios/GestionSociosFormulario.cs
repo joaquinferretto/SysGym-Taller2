@@ -400,7 +400,7 @@ namespace exxen2._0.capaVisual.Compartido
                     }
                     catch (Exception ex)
                     {
-                        mensaje = ex.Message;
+                        mensaje = AyudaFormularioVisual.ObtenerMensajeError(ex);
                     }
                 }
                 else if (membresia == null &&

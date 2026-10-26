@@ -402,7 +402,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, "El archivo no pudo generarse. " + ex.Message, "Error al exportar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, "El archivo no pudo generarse. " + AyudaFormularioVisual.ObtenerMensajeError(ex), "Error al exportar", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -419,7 +419,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, "El archivo no pudo generarse. " + ex.Message, "Error al exportar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, "El archivo no pudo generarse. " + AyudaFormularioVisual.ObtenerMensajeError(ex), "Error al exportar", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

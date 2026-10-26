@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using exxen2._0.capaLogica;
 using exxen2._0.capaVisual.Compartido.Controles;
+using exxen2._0.capaVisual.Compartido.Utilidades;
 
 namespace exxen2._0.capaVisual.Administrador
 {
@@ -69,8 +70,13 @@ namespace exxen2._0.capaVisual.Administrador
         private static string ObtenerDetalleError(Exception excepcion)
         {
             var detalle = excepcion;
+            while (detalle is AggregateException && detalle.InnerException != null)
+                detalle = detalle.InnerException;
             while (detalle.InnerException != null) detalle = detalle.InnerException;
-            return detalle is TaskCanceledException ? "El servicio demoro demasiado en responder." : detalle.Message;
+            var alternativo = detalle is TaskCanceledException
+                ? "El pronóstico demoró demasiado en responder."
+                : "No se pudo obtener el pronóstico; se muestran los datos disponibles.";
+            return AyudaFormularioVisual.ObtenerMensajeError(excepcion, alternativo);
         }
 
         private void MostrarClimaSinConexion()

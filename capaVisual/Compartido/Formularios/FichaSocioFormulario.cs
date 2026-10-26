@@ -56,7 +56,7 @@ namespace exxen2._0.capaVisual.Compartido
                 MostrarPagos(false);
                 ActualizarAcciones();
             }
-            catch (Exception ex) { lblEstado.Text = "No se pudo cargar la ficha: " + ex.Message; }
+            catch (Exception ex) { lblEstado.Text = "No se pudo cargar la ficha: " + AyudaFormularioVisual.ObtenerMensajeError(ex); }
         }
 
         private void MostrarPagos(bool todos)
@@ -134,7 +134,7 @@ namespace exxen2._0.capaVisual.Compartido
                 else reportes.GenerarComprobante(pago.Id, dialogoPdf.FileName);
                 lblEstado.Text = "PDF guardado correctamente.";
             }
-            catch (Exception ex) { lblEstado.Text = "No se pudo exportar: " + ex.Message; }
+            catch (Exception ex) { lblEstado.Text = "No se pudo exportar: " + AyudaFormularioVisual.ObtenerMensajeError(ex); }
         }
         private static string Fecha(DateTime? fecha) { return fecha.HasValue ? fecha.Value.ToString("dd/MM/yyyy") : "Sin información"; }
     }

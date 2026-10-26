@@ -311,7 +311,7 @@ Las solicitudes de la interfaz pasan por la capa lógica antes de llegar a la ca
 1. Abrir `exxen2.0.slnx` o `exxen2.0.csproj` en Visual Studio.
 2. Configurar en [`App.config`](App.config) la conexión a la instancia de SQL Server disponible. La cuenta debe poder conectarse al servidor y crear la base configurada si todavía no existe.
 3. Restaurar los paquetes NuGet de la solución.
-4. Compilar y ejecutar el proyecto. En el primer inicio, SysGym ofrece crear la base con `capaDatos/Database/SysGymDB.sql`; después solicita registrar el primer Administrador y muestra el inicio de sesión.
+4. Compilar y ejecutar el proyecto. En el primer inicio, SysGym ofrece crear la base con `capaDatos/Database/SysGymDB.sql`; después solicita registrar el primer Administrador y muestra el inicio de sesión. La instalación agrega los catálogos y rutinas modelo desde `capaDatos/Database/SysGymBaseInstalacion.sql`, sin cuentas ni socios.
 5. Para preparar el conjunto de datos de desarrollo, ejecutar en orden `SysGymDB.sql` y `SysGymDatos.sql`. El primero crea el esquema, los roles y la configuración global 2/2/7; el segundo carga las cuentas de desarrollo y los datos de ejemplo. Desde `sqlcmd`, por ejemplo:
 
    ```powershell
@@ -333,3 +333,43 @@ Las cuentas se cargan únicamente al ejecutar `SysGymDatos.sql` para desarrollo.
 | `lukas.becker` | Entrenador | `B9&kZ5!rW2q` |
 
 Crédito de imágenes de ejercicios: autoría, licencia, fuente y adaptaciones por archivo en [CREDITOS.txt](capaDatos/Imagenes/Ejercicios/CREDITOS.txt). Las imágenes derivadas de Workout Guide se mantienen bajo CC BY-SA 4.0.
+
+### Generar el instalador de SysGym
+
+El instalador se compila con Inno Setup 6. En la PC de desarrollo se utilizó Inno Setup 6.7.3. Antes de compilar, descargá los redistribuibles oficiales indicados abajo dentro de `Instalador/Redist`; esa carpeta y `Instalador/Salida` están excluidas de Git.
+
+| Dependencia | Versión incluida | Origen oficial |
+| --- | --- | --- |
+| .NET Framework 4.8 Runtime, instalador offline x86/x64 | 4.8.04115.00 | [Descarga de .NET Framework 4.8](https://go.microsoft.com/fwlink/?linkid=2088631) |
+| SQL Server Express LocalDB x64 | 16.0.1000.6 (SQL Server 2022) | [SQL Server 2022 Express](https://go.microsoft.com/fwlink/?linkid=2215160), medio LocalDB |
+| Visual C++ Redistributable x64 | 14.51.36247.0 | [Último redistribuible compatible de Visual C++](https://aka.ms/vc14/vc_redist.x64.exe) |
+
+SysGym detecta .NET Framework 4.8 mediante el valor `Release` del registro (mínimo 528040), Visual C++ x64 y LocalDB 2019, 2022 o 2025. Si falta una dependencia, el instalador la instala en modo silencioso. LocalDB 2022 se obtiene del instalador oficial de SQL Server Express con la opción de descarga `LocalDB`; se incluye únicamente `SqlLocalDB.msi` en el Setup.
+
+Para preparar las dependencias en `Instalador/Redist`, usá PowerShell desde la raíz del repositorio:
+
+```powershell
+$redist = Join-Path (Get-Location) 'Instalador\Redist'
+New-Item -ItemType Directory -Force -Path $redist | Out-Null
+Invoke-WebRequest 'https://go.microsoft.com/fwlink/?linkid=2088631' -OutFile (Join-Path $redist 'ndp48-x86-x64-allos-enu.exe')
+Invoke-WebRequest 'https://aka.ms/vc14/vc_redist.x64.exe' -OutFile (Join-Path $redist 'vc_redist.x64.exe')
+$bootstrapper = Join-Path $env:TEMP 'SQL2022-SSEI-Expr.exe'
+$media = Join-Path $redist 'SQL2022'
+Invoke-WebRequest 'https://go.microsoft.com/fwlink/?linkid=2215160' -OutFile $bootstrapper
+& $bootstrapper /Action=Download /MediaType=LocalDB /Quiet /MediaPath=$media
+$localDb = Get-ChildItem -LiteralPath $media -Filter 'SqlLocalDB.msi' -Recurse | Select-Object -First 1
+Copy-Item -LiteralPath $localDb.FullName -Destination (Join-Path $redist 'SqlLocalDB-2022-x64.msi')
+Remove-Item -LiteralPath $media -Recurse -Force
+Remove-Item -LiteralPath $bootstrapper -Force
+```
+
+Compilá Release y ejecutá el compilador de Inno Setup:
+
+```powershell
+MSBuild.exe .\exxen2.0.slnx /t:Rebuild /p:Configuration=Release
+& "$env:LOCALAPPDATA\Programs\Inno Setup 6\ISCC.exe" .\Instalador\SysGym.iss
+```
+
+El resultado es `Instalador/Salida/SysGym-Setup.exe`. El instalador incluye el ejecutable Release, sus DLL, una configuración separada para `(localdb)\MSSQLLocalDB`, el esquema y la configuración de SysGym, el ícono y las imágenes de ejercicios con sus créditos. Luego de registrar el primer Administrador, carga los métodos de pago, planes, ejercicios con imágenes y nueve rutinas modelo desde `SysGymBaseInstalacion.sql`. No incluye `SysGymDatos.sql`, usuarios de desarrollo ni socios de prueba. El manual `Manual/Manual de usuario SysGym.pdf` se agrega automáticamente cuando está disponible.
+
+La instalación conserva la base, las imágenes y las copias de seguridad en `%ProgramData%\SysGym`, incluso al desinstalar. Las rutas persistidas en la base son relativas y se resuelven bajo `%ProgramData%\SysGym` en la instalación y bajo `Datos` junto al ejecutable en Debug.

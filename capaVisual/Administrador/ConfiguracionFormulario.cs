@@ -82,8 +82,9 @@ namespace exxen2._0.capaVisual.Administrador
             }
         }
 
-        private void btnCrearCopia_Click(object sender, EventArgs e)
+        private async void btnCrearCopia_Click(object sender, EventArgs e)
         {
+            var operacionCompletada = false;
             try
             {
                 using (var dialogo = new SaveFileDialog
@@ -99,8 +100,11 @@ namespace exxen2._0.capaVisual.Administrador
                 {
                     if (dialogo.ShowDialog(this) != DialogResult.OK)
                         return;
-                    copias.CrearCopia(dialogo.FileName);
+
+                    CambiarEstadoProcesamientoCopias(true);
+                    await copias.CrearCopiaAsync(dialogo.FileName);
                 }
+                operacionCompletada = true;
                 CargarEstadoCopias();
                 MessageBox.Show(this, "La copia de seguridad se guardó correctamente.", "SysGym", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -108,9 +112,15 @@ namespace exxen2._0.capaVisual.Administrador
             {
                 AyudaFormularioVisual.MostrarError(lblEstado, ex);
             }
+            finally
+            {
+                CambiarEstadoProcesamientoCopias(false);
+                if (!operacionCompletada && !IsDisposed)
+                    CargarEstadoCopias();
+            }
         }
 
-        private void btnRestaurarCopia_Click(object sender, EventArgs e)
+        private async void btnRestaurarCopia_Click(object sender, EventArgs e)
         {
             using (var dialogo = new OpenFileDialog
             {
@@ -127,9 +137,12 @@ namespace exxen2._0.capaVisual.Administrador
                     "Confirmar restauración", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
                     return;
 
+                var reiniciar = false;
+                CambiarEstadoProcesamientoCopias(true);
                 try
                 {
-                    copias.RestaurarCopia(dialogo.FileName);
+                    await copias.RestaurarCopiaAsync(dialogo.FileName);
+                    reiniciar = true;
                     MessageBox.Show(this, "La copia se restauró correctamente. SysGym se reiniciará.",
                         "SysGym", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Application.Restart();
@@ -137,7 +150,8 @@ namespace exxen2._0.capaVisual.Administrador
                 }
                 catch (RestauracionCompletadaException ex)
                 {
-                    MessageBox.Show(this, ex.Message + " SysGym se reiniciará.",
+                    reiniciar = true;
+                    MessageBox.Show(this, AyudaFormularioVisual.ObtenerMensajeError(ex) + " SysGym se reiniciará.",
                         "SysGym", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     Application.Restart();
                     Close();
@@ -146,7 +160,20 @@ namespace exxen2._0.capaVisual.Administrador
                 {
                     AyudaFormularioVisual.MostrarError(lblEstado, ex);
                 }
+                finally
+                {
+                    CambiarEstadoProcesamientoCopias(false);
+                    if (!reiniciar && !IsDisposed)
+                        CargarEstadoCopias();
+                }
             }
+        }
+
+        private void CambiarEstadoProcesamientoCopias(bool procesando)
+        {
+            btnCrearCopia.Enabled = !procesando;
+            btnRestaurarCopia.Enabled = !procesando;
+            UseWaitCursor = procesando;
         }
 
         private void guardar_Click(object sender, EventArgs e)

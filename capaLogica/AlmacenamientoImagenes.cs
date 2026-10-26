@@ -1,11 +1,10 @@
 using System;
+using System.Configuration;
 using System.IO;
 
 namespace exxen2._0.capaLogica
 {
     /* Centraliza las carpetas administradas por SysGym y las rutas relativas de sus imágenes. */
-    // Guarda las imágenes como archivos en la carpeta Datos\Imagenes junto al .exe
-    // y devuelve la ruta relativa que se guarda en SQL.
     public static class AlmacenamientoImagenes
     {
         private const string CarpetaImagenes = "Imagenes";
@@ -13,7 +12,34 @@ namespace exxen2._0.capaLogica
         private const string CarpetaUsuarios = "Usuarios";
         private const string CarpetaEjercicios = "Ejercicios";
 
-        /* Guarda una foto de socio dentro de Datos/Imagenes/Socios y devuelve la ruta relativa. */
+        /* La instalación usa ProgramData; Debug conserva la carpeta Datos junto al ejecutable. */
+        public static string DirectorioRaiz
+        {
+            get
+            {
+                return EsInstalacion()
+                    ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "SysGym")
+                    : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Datos");
+            }
+        }
+
+        /* Ubicación de los archivos MDF/LDF de la instalación. */
+        public static string DirectorioBaseDatos
+        {
+            get { return EsInstalacion() ? Path.Combine(DirectorioRaiz, "Datos") : DirectorioRaiz; }
+        }
+
+        /* Prepara las carpetas comunes y configura DataDirectory para las capas de persistencia. */
+        public static void PrepararDirectorios()
+        {
+            Directory.CreateDirectory(DirectorioRaiz);
+            Directory.CreateDirectory(DirectorioBaseDatos);
+            Directory.CreateDirectory(Path.Combine(DirectorioRaiz, CarpetaImagenes, CarpetaEjercicios));
+            Directory.CreateDirectory(Path.Combine(DirectorioRaiz, CarpetaImagenes, CarpetaSocios));
+            AppDomain.CurrentDomain.SetData("DataDirectory", DirectorioBaseDatos);
+        }
+
+        /* Guarda una foto de socio en la carpeta compartida de imágenes y devuelve la ruta relativa. */
         public static string GuardarSocio(byte[] contenido)
         {
             return Guardar(contenido, CarpetaSocios);
@@ -25,7 +51,7 @@ namespace exxen2._0.capaLogica
             return Guardar(contenido, CarpetaUsuarios);
         }
 
-        /* Guarda una imagen de ejercicio dentro de Datos/Imagenes/Ejercicios/{id}. */
+        /* Guarda una imagen de ejercicio dentro de Imagenes/Ejercicios/{id}. */
         public static string GuardarEjercicio(byte[] contenido, int idEjercicio)
         {
             if (idEjercicio <= 0)
@@ -34,21 +60,21 @@ namespace exxen2._0.capaLogica
             return Guardar(contenido, Path.Combine(CarpetaEjercicios, idEjercicio.ToString()));
         }
 
-        /* Resuelve una ruta relativa de imagen dentro de la carpeta portable Datos. */
+        /* Resuelve una ruta relativa dentro de la raíz de datos activa. */
         public static string RutaAbsoluta(string rutaRelativa)
         {
             if (string.IsNullOrWhiteSpace(rutaRelativa))
                 return null;
 
             ValidarRutaRelativa(rutaRelativa);
-            var baseDatos = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Datos"));
-            var ruta = Path.GetFullPath(Path.Combine(baseDatos, rutaRelativa.Replace('/', Path.DirectorySeparatorChar).Replace('\\', Path.DirectorySeparatorChar)));
-            if (!ruta.StartsWith(baseDatos + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase))
+            var raiz = Path.GetFullPath(DirectorioRaiz);
+            var ruta = Path.GetFullPath(Path.Combine(raiz, rutaRelativa.Replace('/', Path.DirectorySeparatorChar).Replace('\\', Path.DirectorySeparatorChar)));
+            if (!ruta.StartsWith(raiz + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase))
                 throw new InvalidOperationException("La ruta de imagen no es válida.");
             return ruta;
         }
 
-        /* Comprueba que la base no reciba rutas absolutas ni recorridos fuera de Datos. */
+        /* Comprueba que la base no reciba rutas absolutas ni recorridos fuera de la carpeta raíz. */
         public static void ValidarRutaRelativa(string rutaRelativa)
         {
             if (string.IsNullOrWhiteSpace(rutaRelativa))
@@ -68,7 +94,7 @@ namespace exxen2._0.capaLogica
         private static string Guardar(byte[] contenido, string carpeta)
         {
             var normalizada = ProcesadorImagenes.Procesar(contenido);
-            var carpetaAbsoluta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Datos", CarpetaImagenes, carpeta);
+            var carpetaAbsoluta = Path.Combine(DirectorioRaiz, CarpetaImagenes, carpeta);
             Directory.CreateDirectory(carpetaAbsoluta);
             var nombre = Guid.NewGuid().ToString("N") + normalizada.Extension;
             var rutaAbsoluta = Path.Combine(carpetaAbsoluta, nombre);
@@ -91,6 +117,11 @@ namespace exxen2._0.capaLogica
                     File.Delete(rutaAbsoluta);
                 throw;
             }
+        }
+
+        private static bool EsInstalacion()
+        {
+            return string.Equals(ConfigurationManager.AppSettings["SysGymModoInstalado"], "true", StringComparison.OrdinalIgnoreCase);
         }
     }
 }

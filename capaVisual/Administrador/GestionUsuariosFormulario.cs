@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using exxen2._0.capaDatos.Entidades;
 using exxen2._0.capaLogica;
@@ -254,18 +255,18 @@ namespace exxen2._0.capaVisual.Administrador
         }
 
         /* Guardar crea o modifica el usuario según exista una fila seleccionada. */
-        private void guardar_Click(object origen, EventArgs e)
+        private async void guardar_Click(object origen, EventArgs e)
         {
             if (idSeleccionado != 0)
             {
-                ModificarUsuario();
+                await ModificarUsuarioAsync();
                 return;
             }
 
-            CrearUsuario();
+            await CrearUsuarioAsync();
         }
 
-        private void CrearUsuario()
+        private async Task CrearUsuarioAsync()
         {
             try
             {
@@ -273,7 +274,9 @@ namespace exxen2._0.capaVisual.Administrador
                     return;
                 if (!ValidarFormulario(true))
                     return;
-                logica.Crear(LeerUsuario(), clave.Text, fotoSeleccionada == null ? null : fotoSeleccionada.Contenido, idUsuarioAutenticado);
+                guardar.Enabled = false;
+                UseWaitCursor = true;
+                await logica.CrearAsync(LeerUsuario(), clave.Text, fotoSeleccionada == null ? null : fotoSeleccionada.Contenido, idUsuarioAutenticado);
                 Cargar();
                 nuevo_Click(null, EventArgs.Empty);
                 AyudaFormularioVisual.MostrarExito(lblEstado, "Usuario creado correctamente.", true);
@@ -281,18 +284,21 @@ namespace exxen2._0.capaVisual.Administrador
             }
             catch (Exception ex)
             {
-                var mensaje = ex is InvalidOperationException || ex is ArgumentException
-                    ? ex.Message
-                    : "No se pudo crear el usuario.";
+                var mensaje = AyudaFormularioVisual.ObtenerMensajeError(ex, "No se pudo crear el usuario.");
                 lblEstado.Text = mensaje;
                 lblEstado.ForeColor = Color.Red;
                 lblEstado.Visible = true;
                 MessageBox.Show(mensaje, "Usuarios", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+            finally
+            {
+                UseWaitCursor = false;
+                guardar.Enabled = true;
+            }
 
         }
 
-        private void ModificarUsuario()
+        private async Task ModificarUsuarioAsync()
         {
             try
             {
@@ -301,7 +307,9 @@ namespace exxen2._0.capaVisual.Administrador
                 if (!ValidarFormulario(false))
                     return;
                 var idUsuario = idSeleccionado;
-                logica.Modificar(LeerUsuario(), clave.Text, fotoSeleccionada == null ? null : fotoSeleccionada.Contenido);
+                guardar.Enabled = false;
+                UseWaitCursor = true;
+                await logica.ModificarAsync(LeerUsuario(), clave.Text, fotoSeleccionada == null ? null : fotoSeleccionada.Contenido);
                 Cargar();
                 SeleccionarUsuario(idUsuario);
                 UsuarioActualizado?.Invoke(this, new UsuarioActualizadoEventArgs(idUsuario));
@@ -310,6 +318,11 @@ namespace exxen2._0.capaVisual.Administrador
             catch (Exception ex)
             {
                 AyudaFormularioVisual.MostrarError(lblEstado, ex);
+            }
+            finally
+            {
+                UseWaitCursor = false;
+                guardar.Enabled = true;
             }
 
         }

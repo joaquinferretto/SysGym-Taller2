@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using exxen2._0.capaDatos.Entidades;
 using exxen2._0.capaDatos.Repositorios;
 using Konscious.Security.Cryptography;
@@ -79,6 +80,11 @@ namespace exxen2._0.capaLogica
             }
         }
 
+        public Task<UsuarioSistema> CrearAsync(UsuarioSistema usuario, string clave, byte[] fotoContenido, int idUsuarioCreador)
+        {
+            return Task.Run(() => Crear(usuario, clave, fotoContenido, idUsuarioCreador));
+        }
+
         /* Registra el primer Administrador cuando la base todavía no tiene uno activo. */
         public UsuarioSistema RegistrarPrimerAdministrador(UsuarioSistema usuario, string clave)
         {
@@ -116,6 +122,11 @@ namespace exxen2._0.capaLogica
                 transaccion.Confirmar();
                 return usuario;
             }
+        }
+
+        public Task<UsuarioSistema> RegistrarPrimerAdministradorAsync(UsuarioSistema usuario, string clave)
+        {
+            return Task.Run(() => RegistrarPrimerAdministrador(usuario, clave));
         }
 
         /* Valida y guarda los cambios de usuarios del sistema sobre el registro existente. */
@@ -174,6 +185,11 @@ namespace exxen2._0.capaLogica
                     throw;
                 }
             }
+        }
+
+        public Task<UsuarioSistema> ModificarAsync(UsuarioSistema usuario, string nuevaClave, byte[] fotoContenido)
+        {
+            return Task.Run(() => Modificar(usuario, nuevaClave, fotoContenido));
         }
 
         /* Busca el registro de usuarios del sistema por identificador y devuelve los datos disponibles. */
@@ -306,6 +322,11 @@ namespace exxen2._0.capaLogica
 
                 return VerificarClave(clave, usuario.Clave) ? usuario : null;
             }
+        }
+
+        public Task<UsuarioSistema> AutenticarAsync(string nombreUsuario, string clave)
+        {
+            return Task.Run(() => Autenticar(nombreUsuario, clave));
         }
 
         /* Genera una sal aleatoria y almacena la contraseña derivada con sus parámetros Argon2id. */

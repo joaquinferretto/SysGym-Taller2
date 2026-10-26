@@ -35,10 +35,12 @@ namespace exxen2._0
             var inicializacion = new InicializacionSistemaLogica();
             try
             {
+                AlmacenamientoImagenes.PrepararDirectorios();
                 inicializacion.ValidarConexionServidor();
             }
-            catch
+            catch (Exception ex)
             {
+                RegistrarDetalleErrorGlobal(ex);
                 MessageBox.Show("No se pudo conectar con SQL Server. Verifique que esté instalado y en ejecución.",
                     "SysGym", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
@@ -66,10 +68,12 @@ namespace exxen2._0
                             return false;
                     }
                 }
+                inicializacion.PrepararDatosBaseInstalada(Path.Combine(Application.StartupPath, "SysGymBaseInstalacion.sql"));
                 return true;
             }
             catch (Exception ex)
             {
+                RegistrarDetalleErrorGlobal(ex);
                 if (EsErrorSql(ex))
                 {
                     MessageBox.Show("No se pudo conectar con SQL Server. Verifique que esté instalado y en ejecución.",
@@ -96,17 +100,7 @@ namespace exxen2._0
 
         private static void RegistrarErrorGlobal(Exception excepcion)
         {
-            try
-            {
-                var rutaLog = Path.Combine(Application.StartupPath, "SysGym-error.log");
-                File.AppendAllText(rutaLog, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + Environment.NewLine +
-                    excepcion + Environment.NewLine + Environment.NewLine);
-            }
-            catch (Exception error)
-            {
-                Trace.WriteLine("No se pudo escribir el log global de SysGym: " + error);
-            }
-
+            RegistrarDetalleErrorGlobal(excepcion);
             try
             {
                 MessageBox.Show("Ocurrió un error inesperado. Si el problema continúa, avisá al administrador.",
@@ -116,6 +110,23 @@ namespace exxen2._0
             {
                 Trace.WriteLine("No se pudo mostrar el mensaje global de SysGym: " + error);
             }
+        }
+
+        private static void RegistrarDetalleErrorGlobal(Exception excepcion)
+        {
+            try
+            {
+                var raiz = AlmacenamientoImagenes.DirectorioRaiz;
+                Directory.CreateDirectory(raiz);
+                var rutaLog = Path.Combine(raiz, "SysGym-error.log");
+                File.AppendAllText(rutaLog, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + Environment.NewLine +
+                    excepcion + Environment.NewLine + Environment.NewLine);
+            }
+            catch (Exception error)
+            {
+                Trace.WriteLine("No se pudo escribir el log global de SysGym: " + error);
+            }
+
         }
     }
 }

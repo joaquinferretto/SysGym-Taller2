@@ -51,7 +51,7 @@ namespace exxen2._0.capaVisual.Compartido.Controles
                 AplicarFiltro();
                 foreach (var valor in new[] { valorActivos, valorInactivos, valorAlDia, valorConDeuda, valorLimiteAlcanzado, valorPendientes })
                     valor.Text = "—";
-                alertas.Text = "No se pudo cargar el estado de socios: " + ex.Message;
+                alertas.Text = "No se pudo cargar el estado de socios: " + AyudaFormularioVisual.ObtenerMensajeError(ex);
             }
         }
 

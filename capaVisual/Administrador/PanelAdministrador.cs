@@ -196,7 +196,7 @@ namespace exxen2._0.capaVisual.Administrador
                 form.AccionSolicitada += inicioPanel_AccionSocioSolicitada;
                 Abrir(btnSocios, form, "Ficha del socio | Situación actual e historial de pagos");
             }
-            catch (Exception ex) { MessageBox.Show(this, ex.Message, "Ficha del socio", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+            catch (Exception ex) { MessageBox.Show(this, AyudaFormularioVisual.ObtenerMensajeError(ex), "Ficha del socio", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
         }
 
         private void btnSocios_Click(object origen, EventArgs e)
@@ -268,7 +268,7 @@ namespace exxen2._0.capaVisual.Administrador
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Auditoría", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(AyudaFormularioVisual.ObtenerMensajeError(ex), "Auditoría", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -281,7 +281,7 @@ namespace exxen2._0.capaVisual.Administrador
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Configuración", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(AyudaFormularioVisual.ObtenerMensajeError(ex), "Configuración", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

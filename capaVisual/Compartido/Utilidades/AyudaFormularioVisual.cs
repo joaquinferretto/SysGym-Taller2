@@ -2,6 +2,9 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Data.SqlClient;
+using System.Text;
 using System.Windows.Forms;
 using exxen2._0.capaLogica;
 
@@ -111,9 +114,7 @@ namespace exxen2._0.capaVisual.Compartido.Utilidades
         /* Informa el error en la pantalla y en un mensaje para que el usuario pueda corregir la operación. */
         internal static void MostrarError(Label estado, Exception excepcion, bool resaltar = false)
         {
-            var mensaje = excepcion is InvalidOperationException || excepcion is ArgumentException
-                ? excepcion.Message
-                : "No se pudo completar la operación.";
+            var mensaje = ObtenerMensajeError(excepcion);
             if (estado != null)
             {
                 estado.Text = mensaje;
@@ -124,6 +125,130 @@ namespace exxen2._0.capaVisual.Compartido.Utilidades
                 }
             }
             MessageBox.Show(mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        /* Devuelve un mensaje apto para mostrar y registra el detalle completo, incluso errores de EF y SQL. */
+        internal static string ObtenerMensajeError(Exception excepcion, string mensajeAlternativo = null)
+        {
+            if (excepcion == null)
+                return mensajeAlternativo ?? "No se pudo completar la operación.";
+
+            RegistrarDetalleError(excepcion);
+            if (ContieneSqlException(excepcion))
+                return "No se pudo conectar con SQL Server. Verifique que esté instalado y en ejecución.";
+
+            var error = DesenvolverAgregado(excepcion);
+            if (error is InvalidOperationException || error is ArgumentException ||
+                error is FileNotFoundException || error is DirectoryNotFoundException)
+                return error.Message;
+
+            return mensajeAlternativo ?? "No se pudo completar la operación.";
+        }
+
+        private static Exception DesenvolverAgregado(Exception excepcion)
+        {
+            var actual = excepcion;
+            while (actual is AggregateException)
+            {
+                var agregado = ((AggregateException)actual).Flatten();
+                if (agregado.InnerExceptions.Count == 0)
+                    break;
+                actual = agregado.InnerExceptions[0];
+            }
+            return actual;
+        }
+
+        private static bool ContieneSqlException(Exception excepcion)
+        {
+            if (excepcion == null)
+                return false;
+            if (excepcion is SqlException)
+                return true;
+            var agregado = excepcion as AggregateException;
+            if (agregado != null && agregado.Flatten().InnerExceptions.Any(ContieneSqlException))
+                return true;
+            return ContieneSqlException(excepcion.InnerException);
+        }
+
+        private static void RegistrarDetalleError(Exception excepcion)
+        {
+            try
+            {
+                var raiz = AlmacenamientoImagenes.DirectorioRaiz;
+                Directory.CreateDirectory(raiz);
+                var ruta = Path.Combine(raiz, "SysGym-error.log");
+                var detalle = new StringBuilder()
+                    .AppendLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture))
+                    .AppendLine(excepcion.ToString());
+
+                foreach (var agregado in ObtenerAgregados(excepcion))
+                    foreach (var interna in agregado.Flatten().InnerExceptions)
+                        detalle.AppendLine("AggregateException.InnerException:").AppendLine(interna.ToString());
+
+                foreach (var validacion in ObtenerErroresValidacion(excepcion))
+                    foreach (var entidad in validacion.EntityValidationErrors)
+                        foreach (var error in entidad.ValidationErrors)
+                            detalle.Append("EntityValidation: ").Append(entidad.Entry.Entity.GetType().Name)
+                                .Append('.').Append(error.PropertyName).Append(": ").AppendLine(error.ErrorMessage);
+
+                foreach (var sql in ObtenerSqlExceptions(excepcion))
+                    foreach (SqlError error in sql.Errors)
+                        detalle.Append("SqlException ").Append(error.Number).Append(" (línea ").Append(error.LineNumber)
+                            .Append("): ").AppendLine(error.Message);
+
+                File.AppendAllText(ruta, detalle.AppendLine().ToString(), Encoding.UTF8);
+            }
+            catch
+            {
+                // Un fallo de logging no debe impedir que la interfaz presente el error original.
+            }
+        }
+
+        private static System.Collections.Generic.IEnumerable<AggregateException> ObtenerAgregados(Exception excepcion)
+        {
+            var agregado = excepcion as AggregateException;
+            if (agregado != null)
+            {
+                yield return agregado;
+                foreach (var interna in agregado.InnerExceptions)
+                    foreach (var anidado in ObtenerAgregados(interna))
+                        yield return anidado;
+            }
+            else if (excepcion.InnerException != null)
+            {
+                foreach (var anidado in ObtenerAgregados(excepcion.InnerException))
+                    yield return anidado;
+            }
+        }
+
+        private static System.Collections.Generic.IEnumerable<SqlException> ObtenerSqlExceptions(Exception excepcion)
+        {
+            var sql = excepcion as SqlException;
+            if (sql != null)
+                yield return sql;
+            var agregado = excepcion as AggregateException;
+            if (agregado != null)
+                foreach (var interna in agregado.InnerExceptions)
+                    foreach (var anidado in ObtenerSqlExceptions(interna))
+                        yield return anidado;
+            else if (excepcion.InnerException != null)
+                foreach (var anidado in ObtenerSqlExceptions(excepcion.InnerException))
+                    yield return anidado;
+        }
+
+        private static System.Collections.Generic.IEnumerable<System.Data.Entity.Validation.DbEntityValidationException> ObtenerErroresValidacion(Exception excepcion)
+        {
+            var validacion = excepcion as System.Data.Entity.Validation.DbEntityValidationException;
+            if (validacion != null)
+                yield return validacion;
+            var agregado = excepcion as AggregateException;
+            if (agregado != null)
+                foreach (var interna in agregado.InnerExceptions)
+                    foreach (var anidado in ObtenerErroresValidacion(interna))
+                        yield return anidado;
+            else if (excepcion.InnerException != null)
+                foreach (var anidado in ObtenerErroresValidacion(excepcion.InnerException))
+                    yield return anidado;
         }
 
         /* Actualiza el mensaje de estado después de completar una operación. */

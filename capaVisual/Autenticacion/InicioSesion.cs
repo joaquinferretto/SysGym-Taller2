@@ -30,13 +30,15 @@ namespace exxen2._0.capaVisual.Autenticacion
         }
 
         /* Al hacer clic en btnIngresar, valida las credenciales y abre el panel principal del rol autenticado. */
-        private void btnIngresar_Click(object origen, EventArgs e)
+        private async void btnIngresar_Click(object origen, EventArgs e)
         {
+            if (!ValidarCampos())
+                return;
+            btnIngresar.Enabled = false;
+            UseWaitCursor = true;
             try
             {
-                if (!ValidarCampos())
-                    return;
-                var usuario = usuarioSistemaLogica.Autenticar(txtNombreUsuario.Text.Trim(), txtClave.Text);
+                var usuario = await usuarioSistemaLogica.AutenticarAsync(txtNombreUsuario.Text.Trim(), txtClave.Text);
                 if (usuario == null)
                 {
                     indicadorErrores.SetError(txtClave, "El usuario o la contraseña no son correctos.");
@@ -54,18 +56,14 @@ namespace exxen2._0.capaVisual.Autenticacion
             }
             catch (Exception ex)
             {
-                var mensaje = EsErrorSql(ex)
-                    ? "No se pudo conectar con SQL Server. Verifique que esté instalado y en ejecución."
-                    : "No se pudo iniciar sesión.\n\n" + ex.Message;
+                var mensaje = AyudaFormularioVisual.ObtenerMensajeError(ex, "No se pudo iniciar sesión.");
                 MessageBox.Show(mensaje, "SysGym", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private static bool EsErrorSql(Exception excepcion)
-        {
-            if (excepcion == null) return false;
-            if (excepcion is SqlException) return true;
-            return EsErrorSql(excepcion.InnerException);
+            finally
+            {
+                UseWaitCursor = false;
+                btnIngresar.Enabled = true;
+            }
         }
 
         /* Al hacer clic en btnSalir, inicia el cierre de la pantalla. */

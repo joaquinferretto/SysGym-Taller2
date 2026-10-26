@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using exxen2._0.capaDatos.Servicios;
 using exxen2._0.capaDatos.Repositorios;
 using exxen2._0.capaLogica.Auditoria;
@@ -70,6 +71,11 @@ namespace exxen2._0.capaLogica
             }
         }
 
+        public Task CrearCopiaAsync(string destino)
+        {
+            return Task.Run(() => CrearCopia(destino));
+        }
+
         public void RestaurarCopia(string ruta)
         {
             ValidarAcceso();
@@ -82,6 +88,11 @@ namespace exxen2._0.capaLogica
             {
                 throw new RestauracionCompletadaException(ex);
             }
+        }
+
+        public Task RestaurarCopiaAsync(string ruta)
+        {
+            return Task.Run(() => RestaurarCopia(ruta));
         }
 
         private void RegistrarOperacion(string operacion, string detalle)

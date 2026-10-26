@@ -165,7 +165,7 @@ namespace exxen2._0.capaVisual.Recepcionista
                 form.AccionSolicitada += inicioEstadoSocios_AccionSolicitada;
                 Abrir(btnSocios, form, "Ficha del socio | Situación actual e historial de pagos");
             }
-            catch (Exception ex) { MessageBox.Show(this, ex.Message, "Ficha del socio", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+            catch (Exception ex) { MessageBox.Show(this, AyudaFormularioVisual.ObtenerMensajeError(ex), "Ficha del socio", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
         }
 
         private void btnSocios_Click(object origen, EventArgs e)

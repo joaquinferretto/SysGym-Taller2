@@ -43,7 +43,7 @@ namespace exxen2._0.capaVisual.Administrador
                 cargando = false;
                 Consultar();
             }
-            catch (Exception ex) { cargando = false; lblEstado.Text = "No se pudo cargar Reportes: " + ex.Message; }
+            catch (Exception ex) { cargando = false; lblEstado.Text = "No se pudo cargar Reportes: " + AyudaFormularioVisual.ObtenerMensajeError(ex); }
         }
         private void tipoReporte_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -94,7 +94,7 @@ namespace exxen2._0.capaVisual.Administrador
                 lblRutinasActivasValor.Text = "Rutinas activas: " + indicadores.Rutinas;
                 lblEjerciciosValor.Text = "Ejercicios disponibles: " + indicadores.Ejercicios;
             }
-            catch (Exception ex) { cargando = false; Invalidar(); lblEstado.Text = "No se pudo consultar: " + ex.Message; }
+            catch (Exception ex) { cargando = false; Invalidar(); lblEstado.Text = "No se pudo consultar: " + AyudaFormularioVisual.ObtenerMensajeError(ex); }
         }
         private void filtros_Cambiados(object sender, EventArgs e)
         {
@@ -144,7 +144,7 @@ namespace exxen2._0.capaVisual.Administrador
                 ExportarActual(dialogoPdf.FileName);
                 lblEstado.Text = "Reporte PDF guardado correctamente.";
             }
-            catch (Exception ex) { lblEstado.Text = "No se pudo exportar: " + ex.Message; }
+            catch (Exception ex) { lblEstado.Text = "No se pudo exportar: " + AyudaFormularioVisual.ObtenerMensajeError(ex); }
         }
         private void ExportarActual(string destino)
         {
