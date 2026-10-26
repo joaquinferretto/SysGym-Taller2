@@ -1,6 +1,7 @@
 using System;
 using exxen2._0.capaVisual.Compartido.Utilidades;
 using System.ComponentModel;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Windows.Forms;
 using exxen2._0.capaDatos.Entidades;
@@ -53,8 +54,18 @@ namespace exxen2._0.capaVisual.Autenticacion
             }
             catch (Exception ex)
             {
-                MessageBox.Show("No se pudo iniciar sesión.\n\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                var mensaje = EsErrorSql(ex)
+                    ? "No se pudo conectar con SQL Server. Verifique que esté instalado y en ejecución."
+                    : "No se pudo iniciar sesión.\n\n" + ex.Message;
+                MessageBox.Show(mensaje, "SysGym", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private static bool EsErrorSql(Exception excepcion)
+        {
+            if (excepcion == null) return false;
+            if (excepcion is SqlException) return true;
+            return EsErrorSql(excepcion.InnerException);
         }
 
         /* Al hacer clic en btnSalir, inicia el cierre de la pantalla. */

@@ -79,6 +79,45 @@ namespace exxen2._0.capaLogica
             }
         }
 
+        /* Registra el primer Administrador cuando la base todavía no tiene uno activo. */
+        public UsuarioSistema RegistrarPrimerAdministrador(UsuarioSistema usuario, string clave)
+        {
+            ValidarDatosIniciales(usuario);
+            if (string.IsNullOrWhiteSpace(clave))
+                throw new InvalidOperationException("La contraseña es obligatoria.");
+
+            using (var datos = new UnidadDeTrabajoGimnasio())
+            using (var transaccion = datos.IniciarTransaccion())
+            {
+                var administradorActivo = datos.UsuariosSistema.ConsultarSoloLectura("Rol")
+                    .Any(u => u.Estado && u.Rol != null && u.Rol.Estado && u.Rol.Descripcion == "Administrador");
+                if (administradorActivo)
+                    throw new InvalidOperationException("Ya existe un Administrador activo. Iniciá sesión para registrar otros usuarios.");
+
+                var rol = datos.Roles.SingleOrDefault(r => r.Descripcion == "Administrador" && r.Estado);
+                if (rol == null)
+                    throw new InvalidOperationException("No se encontró el rol Administrador en la base de datos.");
+                ValidarUnicidad(datos, usuario.DNI, usuario.NombreUsuario, 0);
+
+                usuario.Nombre = usuario.Nombre.Trim();
+                usuario.Apellido = usuario.Apellido.Trim();
+                usuario.DNI = usuario.DNI.Trim();
+                usuario.NombreUsuario = usuario.NombreUsuario.Trim();
+                usuario.IdRol = rol.IdRol;
+                usuario.Rol = rol;
+                usuario.Estado = true;
+                usuario.Salario = 0;
+                usuario.FechaNacimiento = null;
+                usuario.Sexo = null;
+                usuario.FotoRuta = null;
+                usuario.Clave = GenerarClave(clave);
+                datos.UsuariosSistema.Agregar(usuario);
+                datos.GuardarCambios();
+                transaccion.Confirmar();
+                return usuario;
+            }
+        }
+
         /* Valida y guarda los cambios de usuarios del sistema sobre el registro existente. */
         public UsuarioSistema Modificar(UsuarioSistema usuario, string nuevaClave = null)
         {
@@ -376,6 +415,16 @@ namespace exxen2._0.capaLogica
             }
             ValidacionesGimnasio.ValidarFotoYSexo(null, usuario.Sexo);
             AlmacenamientoImagenes.ValidarRutaRelativa(usuario.FotoRuta);
+        }
+
+        private static void ValidarDatosIniciales(UsuarioSistema usuario)
+        {
+            if (usuario == null)
+                throw new ArgumentNullException("usuario");
+            ValidacionesGimnasio.ValidarNombre(usuario.Nombre, "nombre");
+            ValidacionesGimnasio.ValidarNombre(usuario.Apellido, "apellido");
+            ValidacionesGimnasio.ValidarDni(usuario.DNI);
+            ValidacionesGimnasio.ValidarNombreUsuario(usuario.NombreUsuario);
         }
 
         /* Normaliza una ruta administrada y conserva null cuando el usuario no tiene foto. */

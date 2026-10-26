@@ -24,6 +24,10 @@ namespace exxen2._0.capaVisual.Administrador
         private System.Windows.Forms.NumericUpDown diasAviso;
         private System.Windows.Forms.Label criterio;
         private System.Windows.Forms.Label lblEstado;
+        private System.Windows.Forms.GroupBox grupoCopias;
+        private System.Windows.Forms.Label lblUltimaCopia;
+        private System.Windows.Forms.Button btnCrearCopia;
+        private System.Windows.Forms.Button btnRestaurarCopia;
         private System.Windows.Forms.Button descartar;
         private System.Windows.Forms.Button guardar;
 
@@ -56,6 +60,10 @@ namespace exxen2._0.capaVisual.Administrador
             this.diasAviso = new System.Windows.Forms.NumericUpDown();
             this.criterio = new System.Windows.Forms.Label();
             this.lblEstado = new System.Windows.Forms.Label();
+            this.grupoCopias = new System.Windows.Forms.GroupBox();
+            this.lblUltimaCopia = new System.Windows.Forms.Label();
+            this.btnCrearCopia = new System.Windows.Forms.Button();
+            this.btnRestaurarCopia = new System.Windows.Forms.Button();
             this.descartar = new System.Windows.Forms.Button();
             this.guardar = new System.Windows.Forms.Button();
             this.grupoCuotas.SuspendLayout();
@@ -99,7 +107,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.grupoCuotas.Location = new System.Drawing.Point(24, 92);
             this.grupoCuotas.Name = "grupoCuotas";
             this.grupoCuotas.Padding = new System.Windows.Forms.Padding(12);
-            this.grupoCuotas.Size = new System.Drawing.Size(800, 530);
+            this.grupoCuotas.Size = new System.Drawing.Size(800, 480);
             this.grupoCuotas.TabIndex = 2;
             this.grupoCuotas.TabStop = false;
             this.grupoCuotas.Text = "Cuotas y pagos";
@@ -264,7 +272,7 @@ namespace exxen2._0.capaVisual.Administrador
             // criterio
             this.criterio.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.criterio.ForeColor = System.Drawing.Color.FromArgb(107, 114, 128);
-            this.criterio.Location = new System.Drawing.Point(20, 356);
+            this.criterio.Location = new System.Drawing.Point(20, 350);
             this.criterio.Name = "criterio";
             this.criterio.Size = new System.Drawing.Size(760, 28);
             this.criterio.TabIndex = 4;
@@ -273,9 +281,9 @@ namespace exxen2._0.capaVisual.Administrador
             // lblEstado
             this.lblEstado.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblEstado.ForeColor = System.Drawing.Color.FromArgb(107, 114, 128);
-            this.lblEstado.Location = new System.Drawing.Point(20, 390);
+            this.lblEstado.Location = new System.Drawing.Point(20, 382);
             this.lblEstado.Name = "lblEstado";
-            this.lblEstado.Size = new System.Drawing.Size(760, 42);
+            this.lblEstado.Size = new System.Drawing.Size(760, 36);
             this.lblEstado.TabIndex = 5;
             this.lblEstado.Text = "Los cambios se aplican a las próximas operaciones y consultas.";
             // descartar
@@ -286,7 +294,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.descartar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(243, 244, 246);
             this.descartar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.descartar.ForeColor = System.Drawing.Color.FromArgb(31, 41, 55);
-            this.descartar.Location = new System.Drawing.Point(500, 444);
+            this.descartar.Location = new System.Drawing.Point(500, 432);
             this.descartar.Name = "descartar";
             this.descartar.Size = new System.Drawing.Size(120, 34);
             this.descartar.TabIndex = 4;
@@ -301,26 +309,74 @@ namespace exxen2._0.capaVisual.Administrador
             this.guardar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(37, 101, 41);
             this.guardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.guardar.ForeColor = System.Drawing.Color.White;
-            this.guardar.Location = new System.Drawing.Point(640, 444);
+            this.guardar.Location = new System.Drawing.Point(640, 432);
             this.guardar.Name = "guardar";
             this.guardar.Size = new System.Drawing.Size(120, 34);
             this.guardar.TabIndex = 5;
             this.guardar.Text = "Guardar";
             this.guardar.UseVisualStyleBackColor = false;
             this.guardar.Click += new System.EventHandler(this.guardar_Click);
+            // grupoCopias
+            this.grupoCopias.BackColor = System.Drawing.Color.White;
+            this.grupoCopias.Controls.Add(this.btnCrearCopia);
+            this.grupoCopias.Controls.Add(this.btnRestaurarCopia);
+            this.grupoCopias.Controls.Add(this.lblUltimaCopia);
+            this.grupoCopias.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.grupoCopias.ForeColor = System.Drawing.Color.FromArgb(31, 41, 55);
+            this.grupoCopias.Location = new System.Drawing.Point(24, 584);
+            this.grupoCopias.Name = "grupoCopias";
+            this.grupoCopias.Size = new System.Drawing.Size(800, 90);
+            this.grupoCopias.TabStop = false;
+            this.grupoCopias.Text = "Copias de seguridad";
+            // btnCrearCopia
+            this.btnCrearCopia.BackColor = System.Drawing.Color.FromArgb(46, 125, 50);
+            this.btnCrearCopia.FlatAppearance.BorderSize = 0;
+            this.btnCrearCopia.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCrearCopia.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnCrearCopia.ForeColor = System.Drawing.Color.White;
+            this.btnCrearCopia.Location = new System.Drawing.Point(20, 25);
+            this.btnCrearCopia.Name = "btnCrearCopia";
+            this.btnCrearCopia.Size = new System.Drawing.Size(175, 30);
+            this.btnCrearCopia.TabIndex = 6;
+            this.btnCrearCopia.Text = "Crear copia de seguridad";
+            this.btnCrearCopia.UseVisualStyleBackColor = false;
+            this.btnCrearCopia.Click += new System.EventHandler(this.btnCrearCopia_Click);
+            // btnRestaurarCopia
+            this.btnRestaurarCopia.BackColor = System.Drawing.Color.FromArgb(185, 28, 28);
+            this.btnRestaurarCopia.FlatAppearance.BorderSize = 0;
+            this.btnRestaurarCopia.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRestaurarCopia.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnRestaurarCopia.ForeColor = System.Drawing.Color.White;
+            this.btnRestaurarCopia.Location = new System.Drawing.Point(205, 25);
+            this.btnRestaurarCopia.Name = "btnRestaurarCopia";
+            this.btnRestaurarCopia.Size = new System.Drawing.Size(155, 30);
+            this.btnRestaurarCopia.TabIndex = 7;
+            this.btnRestaurarCopia.Text = "Restaurar copia";
+            this.btnRestaurarCopia.UseVisualStyleBackColor = false;
+            this.btnRestaurarCopia.Click += new System.EventHandler(this.btnRestaurarCopia_Click);
+            // lblUltimaCopia
+            this.lblUltimaCopia.AutoSize = false;
+            this.lblUltimaCopia.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblUltimaCopia.ForeColor = System.Drawing.Color.FromArgb(55, 65, 81);
+            this.lblUltimaCopia.Location = new System.Drawing.Point(20, 59);
+            this.lblUltimaCopia.Name = "lblUltimaCopia";
+            this.lblUltimaCopia.Size = new System.Drawing.Size(760, 23);
+            this.lblUltimaCopia.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // ConfiguracionFormulario
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(241, 245, 249);
-            this.ClientSize = new System.Drawing.Size(900, 650);
+            this.ClientSize = new System.Drawing.Size(900, 690);
             this.Controls.Add(this.titulo);
             this.Controls.Add(this.grupoCuotas);
+            this.Controls.Add(this.grupoCopias);
             this.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.MinimumSize = new System.Drawing.Size(920, 690);
+            this.MinimumSize = new System.Drawing.Size(920, 730);
             this.Name = "ConfiguracionFormulario";
             this.Text = "SysGym";
             this.Load += new System.EventHandler(this.ConfiguracionFormulario_Load);
             this.grupoCuotas.ResumeLayout(false);
+            this.grupoCopias.ResumeLayout(false);
             this.campos.ResumeLayout(false);
             this.panelVencidas.ResumeLayout(false);
             this.panelVencidas.PerformLayout();

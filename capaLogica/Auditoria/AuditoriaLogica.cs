@@ -51,6 +51,8 @@ namespace exxen2._0.capaLogica.Auditoria
         public const string ExportarComprobantePago = "EXPORTAR_COMPROBANTE_PAGO";
         public const string ExportarHistorialPagos = "EXPORTAR_HISTORIAL_PAGOS";
         public const string ExportarReporteOperativo = "EXPORTAR_REPORTE_OPERATIVO";
+        public const string CrearBackup = "CREAR_BACKUP";
+        public const string RestaurarBackup = "RESTAURAR_BACKUP";
         private readonly int idUsuarioAutenticado;
 
         public AuditoriaLogica(int idUsuarioAutenticado)
@@ -80,7 +82,9 @@ namespace exxen2._0.capaLogica.Auditoria
                 new OpcionAuditoria { Codigo = GenerarReporteAnalisis, Texto = "Generó reporte de análisis" },
                 new OpcionAuditoria { Codigo = ExportarComprobantePago, Texto = "Exportó comprobante de pago" },
                 new OpcionAuditoria { Codigo = ExportarHistorialPagos, Texto = "Exportó historial de pagos" },
-                new OpcionAuditoria { Codigo = ExportarReporteOperativo, Texto = "Exportó reporte operativo" }
+                new OpcionAuditoria { Codigo = ExportarReporteOperativo, Texto = "Exportó reporte operativo" },
+                new OpcionAuditoria { Codigo = CrearBackup, Texto = "Creó copia de seguridad" },
+                new OpcionAuditoria { Codigo = RestaurarBackup, Texto = "Restauró copia de seguridad" }
             };
         }
 
@@ -122,7 +126,8 @@ namespace exxen2._0.capaLogica.Auditoria
             if (idEntidad <= 0 || string.IsNullOrWhiteSpace(entidad) || entidad.Length > 50 ||
                 string.IsNullOrWhiteSpace(detalle) || detalle.Length > 1000)
                 throw new ArgumentException("Los datos de la auditoría no son válidos.");
-            var usuario = ObtenerUsuario(datos, operacion == CrearUsuario || operacion == ModificarConfiguracion || operacion == GenerarReporteAnalisis,
+            var usuario = ObtenerUsuario(datos, operacion == CrearUsuario || operacion == ModificarConfiguracion || operacion == GenerarReporteAnalisis ||
+                operacion == CrearBackup || operacion == RestaurarBackup,
                 operacion == AsignarRutina);
             datos.AuditoriasOperaciones.Agregar(new AuditoriaOperacion
             {

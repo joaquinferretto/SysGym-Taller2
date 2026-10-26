@@ -11,6 +11,7 @@ namespace exxen2._0.capaVisual.Administrador
     public partial class ConfiguracionFormulario : Form
     {
         private readonly ConfiguracionSistemaLogica logica;
+        private readonly CopiaSeguridadLogica copias;
         private int maxVencidasGuardado;
         private int maxAnticipacionGuardado;
         private int diasAvisoGuardado;
@@ -18,7 +19,9 @@ namespace exxen2._0.capaVisual.Administrador
         public ConfiguracionFormulario() : this(null) { }
         public ConfiguracionFormulario(UsuarioSistema usuarioActual)
         {
-            logica = new ConfiguracionSistemaLogica(usuarioActual == null ? 0 : usuarioActual.IdUsuarioSistema);
+            var idUsuario = usuarioActual == null ? 0 : usuarioActual.IdUsuarioSistema;
+            logica = new ConfiguracionSistemaLogica(idUsuario);
+            copias = new CopiaSeguridadLogica(idUsuario);
             InitializeComponent();
         }
 
@@ -37,13 +40,112 @@ namespace exxen2._0.capaVisual.Administrador
                 diasAvisoGuardado = (int)diasAviso.Value;
                 guardar.Enabled = false;
                 descartar.Enabled = false;
+                CargarEstadoCopias();
             }
             catch (Exception ex)
             {
                 campos.Enabled = false;
                 guardar.Enabled = false;
                 descartar.Enabled = false;
+                btnCrearCopia.Enabled = false;
+                btnRestaurarCopia.Enabled = false;
                 AyudaFormularioVisual.MostrarError(lblEstado, ex);
+            }
+        }
+
+        private void CargarEstadoCopias()
+        {
+            try
+            {
+                copias.ValidarAcceso();
+                btnRestaurarCopia.Enabled = true;
+                btnCrearCopia.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                btnCrearCopia.Enabled = false;
+                btnRestaurarCopia.Enabled = false;
+                AyudaFormularioVisual.MostrarError(lblEstado, ex);
+                return;
+            }
+
+            try
+            {
+                var ultima = copias.ObtenerFechaUltimaCopia();
+                lblUltimaCopia.Text = ultima.HasValue
+                    ? "Última copia: " + ultima.Value.ToString("dd/MM/yyyy HH:mm")
+                    : "Última copia: todavía no hay copias registradas";
+            }
+            catch
+            {
+                lblUltimaCopia.Text = "Última copia: no disponible";
+            }
+        }
+
+        private void btnCrearCopia_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var dialogo = new SaveFileDialog
+                {
+                    Title = "Crear copia de seguridad",
+                    Filter = "Copia de seguridad SQL Server (*.bak)|*.bak",
+                    DefaultExt = "bak",
+                    AddExtension = true,
+                    OverwritePrompt = true,
+                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                    FileName = "SysGym-" + DateTime.Now.ToString("yyyy-MM-dd-HHmm") + ".bak"
+                })
+                {
+                    if (dialogo.ShowDialog(this) != DialogResult.OK)
+                        return;
+                    copias.CrearCopia(dialogo.FileName);
+                }
+                CargarEstadoCopias();
+                MessageBox.Show(this, "La copia de seguridad se guardó correctamente.", "SysGym", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                AyudaFormularioVisual.MostrarError(lblEstado, ex);
+            }
+        }
+
+        private void btnRestaurarCopia_Click(object sender, EventArgs e)
+        {
+            using (var dialogo = new OpenFileDialog
+            {
+                Title = "Seleccionar copia de seguridad",
+                Filter = "Copia de seguridad SQL Server (*.bak)|*.bak",
+                CheckFileExists = true,
+                Multiselect = false
+            })
+            {
+                if (dialogo.ShowDialog(this) != DialogResult.OK)
+                    return;
+                if (MessageBox.Show(this,
+                    "Se reemplazarán TODOS los datos actuales por los de la copia. ¿Continuar?",
+                    "Confirmar restauración", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
+                    return;
+
+                try
+                {
+                    copias.RestaurarCopia(dialogo.FileName);
+                    MessageBox.Show(this, "La copia se restauró correctamente. SysGym se reiniciará.",
+                        "SysGym", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Application.Restart();
+                    Close();
+                }
+                catch (RestauracionCompletadaException ex)
+                {
+                    MessageBox.Show(this, ex.Message + " SysGym se reiniciará.",
+                        "SysGym", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    Application.Restart();
+                    Close();
+                }
+                catch (Exception ex)
+                {
+                    AyudaFormularioVisual.MostrarError(lblEstado, ex);
+                }
             }
         }
 

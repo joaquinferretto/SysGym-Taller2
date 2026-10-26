@@ -4,7 +4,7 @@
 
 **Taller 2 — UNNE**
 
-**Fecha:** 21 de octubre de 2026
+**Fecha:** 25 de octubre de 2026
 
 ### Integrantes
 
@@ -205,6 +205,12 @@ Las bases nuevas parten de 2 cuotas vencidas permitidas, 2 meses de anticipació
 #### Inicio del administrador
 
 - **RF-48.** El sistema debe mostrar en el inicio del administrador el pronóstico semanal del clima.
+- **RF-49.** Antes del inicio de sesión, el sistema debe comprobar la conexión a SQL Server y la existencia de la base configurada; si no existe, debe ofrecer crearla con el esquema y la configuración inicial.
+- **RF-50.** Si no hay un Administrador activo, el sistema debe solicitar nombre, apellido, DNI, usuario y contraseña con confirmación, y no debe permitir continuar al inicio de sesión hasta registrar el primer Administrador.
+- **RF-51.** El sistema debe permitir al Administrador crear copias de seguridad de la base, elegir dónde guardar el archivo `.bak` y consultar la fecha de la última copia.
+- **RF-52.** El sistema debe permitir al Administrador restaurar una copia `.bak` después de confirmar el reemplazo de los datos, validar que corresponda a la base configurada y reiniciar la aplicación al terminar.
+- **RF-53.** El sistema debe registrar en la auditoría la creación y restauración de copias de seguridad.
+- **RF-54.** Si no se puede conectar con SQL Server, el sistema debe indicar que se verifique que esté instalado y en ejecución, sin mostrar el error técnico.
 
 ### 3.2 Requisitos no funcionales
 
@@ -235,6 +241,8 @@ Las bases nuevas parten de 2 cuotas vencidas permitidas, 2 meses de anticipació
 
 - **RNF-12.** El sistema debe ejecutarse en un entorno Windows con .NET Framework 4.8 instalado.
 - **RNF-13.** El sistema debe operar con una instancia de SQL Server y con los paquetes requeridos restaurados.
+- **RNF-14.** Si SQL Server no está disponible durante el inicio, el sistema debe informar cómo verificarlo sin mostrar el error técnico de conexión.
+- **RNF-15.** Las copias temporales deben escribirse en una carpeta con permisos para el servicio de SQL Server y copiarse a la ubicación elegida; los errores de permisos deben informarse de forma comprensible.
 
 ### 3.3 Interfaces
 
@@ -301,16 +309,21 @@ Las solicitudes de la interfaz pasan por la capa lógica antes de llegar a la ca
 ### Pasos
 
 1. Abrir `exxen2.0.slnx` o `exxen2.0.csproj` en Visual Studio.
-2. Crear una base nueva: en SQL Server Management Studio, abrir `capaDatos/Database/SysGymDB.sql` y ejecutarlo. Desde `sqlcmd`, indicar la codificación UTF-8 con `-f 65001` (por ejemplo, `sqlcmd -S .\\SQLEXPRESS -E -f 65001 -i capaDatos/Database/SysGymDB.sql`).
+2. Configurar en [`App.config`](App.config) la conexión a la instancia de SQL Server disponible. La cuenta debe poder conectarse al servidor y crear la base configurada si todavía no existe.
+3. Restaurar los paquetes NuGet de la solución.
+4. Compilar y ejecutar el proyecto. En el primer inicio, SysGym ofrece crear la base con `capaDatos/Database/SysGymDB.sql`; después solicita registrar el primer Administrador y muestra el inicio de sesión.
+5. Para preparar el conjunto de datos de desarrollo, ejecutar en orden `SysGymDB.sql` y `SysGymDatos.sql`. El primero crea el esquema, los roles y la configuración global 2/2/7; el segundo carga las cuentas de desarrollo y los datos de ejemplo. Desde `sqlcmd`, por ejemplo:
+
+   ```powershell
+   sqlcmd -S .\\SQLEXPRESS -E -f 65001 -i capaDatos/Database/SysGymDB.sql -b
+   sqlcmd -S .\\SQLEXPRESS -E -d SysGymDB -f 65001 -i capaDatos/Database/SysGymDatos.sql -b
+   ```
+
    Para una base existente, aplicar [`capaDatos/Database/AgregarCuotaEnPago.sql`](capaDatos/Database/AgregarCuotaEnPago.sql) antes de ejecutar esta versión de la aplicación. La migración es repetible y conserva la asociación histórica de los pagos existentes.
-3. Configurar en [`App.config`](App.config) la conexión a la instancia de SQL Server disponible y verificar que las credenciales tengan acceso a la base.
-4. Restaurar los paquetes NuGet de la solución.
-5. Compilar y ejecutar el proyecto.
-6. Iniciar sesión con una de las cuentas iniciales incluidas en el script de creación.
 
 ### Cuentas iniciales
 
-Las cuentas incluidas en la base recién creada son:
+Las cuentas se cargan únicamente al ejecutar `SysGymDatos.sql` para desarrollo. Una instalación limpia solicita registrar su propio Administrador:
 
 | Usuario | Rol | Contraseña inicial |
 | --- | --- | --- |
