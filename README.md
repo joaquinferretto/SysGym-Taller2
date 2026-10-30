@@ -312,11 +312,12 @@ Las solicitudes de la interfaz pasan por la capa lógica antes de llegar a la ca
 1. Abrir `exxen2.0.slnx` o `exxen2.0.csproj` en Visual Studio.
 2. Configurar en [`App.config`](App.config) la conexión a la instancia de SQL Server disponible. La cuenta debe poder conectarse al servidor y crear la base configurada si todavía no existe.
 3. Restaurar los paquetes NuGet de la solución.
-4. Compilar y ejecutar el proyecto. En el primer inicio, SysGym ofrece crear la base con `capaDatos/Database/SysGymDB.sql`; después solicita registrar el primer Administrador y muestra el inicio de sesión. La instalación agrega los catálogos y rutinas modelo desde `capaDatos/Database/SysGymBaseInstalacion.sql`, sin cuentas ni socios.
-5. Para preparar el conjunto de datos de desarrollo, ejecutar en orden `SysGymDB.sql` y `SysGymDatos.sql`. El primero crea el esquema, los roles y la configuración global 2/2/7; el segundo carga las cuentas de desarrollo y los datos de ejemplo. Desde `sqlcmd`, por ejemplo:
+4. Compilar y ejecutar el proyecto. En el primer inicio, SysGym ofrece crear la base con `capaDatos/Database/SysGymDB.sql` y aplica las descripciones de tablas, columnas e índices desde `DocumentarSysGymDB.sql`; después solicita registrar el primer Administrador y muestra el inicio de sesión. La instalación agrega los catálogos y rutinas modelo desde `capaDatos/Database/SysGymBaseInstalacion.sql`, sin cuentas ni socios.
+5. Para preparar el conjunto de datos de desarrollo, ejecutar `SysGymDB.sql`, `DocumentarSysGymDB.sql` y luego `SysGymDatos.sql`. El primero crea el esquema, los roles y la configuración global 2/2/7; el segundo describe el esquema sin cambiar filas; el tercero carga las cuentas y datos de ejemplo para desarrollo. No ejecutar el seed de desarrollo en una base real. Desde `sqlcmd`, por ejemplo:
 
    ```powershell
    sqlcmd -S .\\SQLEXPRESS -E -f 65001 -i capaDatos/Database/SysGymDB.sql -b
+   sqlcmd -S .\\SQLEXPRESS -E -d SysGymDB -f 65001 -i capaDatos/Database/DocumentarSysGymDB.sql -b
    sqlcmd -S .\\SQLEXPRESS -E -d SysGymDB -f 65001 -i capaDatos/Database/SysGymDatos.sql -b
    ```
 
@@ -369,8 +370,8 @@ MSBuild.exe .\exxen2.0.slnx /t:Rebuild /p:Configuration=Release
 & "$env:LOCALAPPDATA\Programs\Inno Setup 6\ISCC.exe" .\Instalador\SysGym.iss
 ```
 
-El resultado es `Instalador/Salida/SysGym-Setup.exe`. El instalador incluye el ejecutable Release, sus DLL, una configuración separada para `(localdb)\MSSQLLocalDB`, el esquema y la configuración de SysGym, el ícono y las imágenes de ejercicios con sus créditos. Luego de registrar el primer Administrador, carga los métodos de pago, planes, ejercicios con imágenes y nueve rutinas modelo desde `SysGymBaseInstalacion.sql`. No incluye `SysGymDatos.sql`, usuarios de desarrollo ni socios de prueba. El manual `Manual/Manual de usuario SysGym.pdf` se agrega automáticamente cuando está disponible.
+El resultado es `Instalador/Salida/SysGym-Setup.exe`. El instalador incluye el ejecutable Release, sus DLL, una configuración separada para `(localdb)\MSSQLLocalDB`, el esquema y las descripciones SQL de SysGym, el ícono y las imágenes de ejercicios con sus créditos. Luego de registrar el primer Administrador, carga los métodos de pago, planes, ejercicios con imágenes y nueve rutinas modelo desde `SysGymBaseInstalacion.sql`. No incluye `SysGymDatos.sql`, usuarios de desarrollo ni socios de prueba. El manual `Manual/Manual de usuario SysGym - 2026 monocromo.pdf` se agrega automáticamente cuando está disponible.
 
-El manual para el personal está en [`Manual/Manual de usuario SysGym.pdf`](Manual/Manual%20de%20usuario%20SysGym.pdf); también se entrega en [Word](Manual/Manual%20de%20usuario%20SysGym.docx) para su edición. Dentro de la aplicación se abre desde **Manual de usuario** en el menú lateral de Administrador, Recepcionista y Entrenador. Las capturas usadas en el documento están en `Manual/Imagenes`.
+El manual para el personal está en [`Manual/Manual de usuario SysGym - 2026 monocromo.pdf`](Manual/Manual%20de%20usuario%20SysGym%20-%202026%20monocromo.pdf); también se entrega en [Word](Manual/Manual%20de%20usuario%20SysGym%20-%202026%20monocromo.docx) para su edición. Dentro de la aplicación se abre desde **Manual de usuario** en el menú lateral de Administrador, Recepcionista y Entrenador. Las capturas usadas en el documento están en `Manual/Imagenes`; el EDMX documentado está en `capaDatos/Database/SysGymDB.edmx`.
 
 La instalación conserva la base, las imágenes y las copias de seguridad en `%ProgramData%\SysGym`, incluso al desinstalar. Las rutas persistidas en la base son relativas y se resuelven bajo `%ProgramData%\SysGym` en la instalación y bajo `Datos` junto al ejecutable en Debug.

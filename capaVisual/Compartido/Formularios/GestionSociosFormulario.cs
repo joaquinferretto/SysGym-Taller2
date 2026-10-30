@@ -132,7 +132,10 @@ namespace exxen2._0.capaVisual.Compartido
                 filtrados = filtrados.Where(s => !s.Estado);
             if (!string.IsNullOrWhiteSpace(criterio))
             {
-                filtrados = filtrados.Where(s => Contiene(s.Nombre + " " + s.Apellido, criterio) || Contiene(s.DNI, criterio));
+                filtrados = filtrados.Where(s =>
+                    Contiene(s.Apellido + ", " + s.Nombre, criterio) ||
+                    Contiene(s.Nombre + " " + s.Apellido, criterio) ||
+                    Contiene(s.DNI, criterio));
             }
 
             cargandoTabla = true;

@@ -23,7 +23,7 @@ namespace exxen2._0.capaVisual.Compartido.Utilidades
         /* Abre el manual instalado o el del repositorio cuando se ejecuta desde bin/Debug. */
         internal static void AbrirManual(IWin32Window propietario)
         {
-            const string nombreManual = "Manual de usuario SysGym.pdf";
+            const string nombreManual = "Manual de usuario SysGym - 2026 monocromo.pdf";
             var carpetaEjecutable = AppDomain.CurrentDomain.BaseDirectory;
             var ruta = Path.Combine(carpetaEjecutable, nombreManual);
             if (!File.Exists(ruta))

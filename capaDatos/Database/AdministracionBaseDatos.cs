@@ -65,6 +65,14 @@ namespace exxen2._0.capaDatos.Servicios
                 .Replace(usarOriginal, "USE " + nombreSeguro + ";");
 
             var lotes = Regex.Split(script, @"(?im)^\s*GO\s*(?:--.*)?$");
+            var rutaDocumentacion = Path.Combine(Path.GetDirectoryName(rutaScript), "DocumentarSysGymDB.sql");
+            if (!File.Exists(rutaDocumentacion))
+                throw new FileNotFoundException("No se encontró la documentación SQL del esquema de SysGym.", rutaDocumentacion);
+            var documentacion = File.ReadAllText(rutaDocumentacion, Encoding.UTF8);
+            if (!documentacion.Contains(usarOriginal))
+                throw new InvalidOperationException("El archivo de documentación no tiene la instrucción USE esperada.");
+            documentacion = documentacion.Replace(usarOriginal, "USE " + nombreSeguro + ";");
+            var lotesDocumentacion = Regex.Split(documentacion, @"(?im)^\s*GO\s*(?:--.*)?$");
             var baseCreada = false;
             using (var conexion = AbrirConexionMaster())
             {
@@ -81,6 +89,17 @@ namespace exxen2._0.capaDatos.Servicios
                         }
                         if (Regex.IsMatch(lote, @"(?is)^\s*CREATE\s+DATABASE\b"))
                             baseCreada = true;
+                    }
+
+                    foreach (var lote in lotesDocumentacion)
+                    {
+                        if (string.IsNullOrWhiteSpace(lote))
+                            continue;
+                        using (var comando = new SqlCommand(lote, conexion))
+                        {
+                            comando.CommandTimeout = 0;
+                            comando.ExecuteNonQuery();
+                        }
                     }
                 }
                 catch

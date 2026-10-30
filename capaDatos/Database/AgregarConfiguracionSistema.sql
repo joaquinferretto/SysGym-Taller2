@@ -5,7 +5,7 @@ BEGIN
     CREATE TABLE dbo.ConfiguracionSistema (
         IdConfiguracion INT NOT NULL CONSTRAINT PK_ConfiguracionSistema PRIMARY KEY,
         MaxCuotasVencidasPermitidas INT NOT NULL CONSTRAINT DF_Configuracion_MaxVencidas DEFAULT 2,
-        MaxMesesAnticipacionCuotas INT NOT NULL CONSTRAINT DF_Configuracion_MaxAnticipacion DEFAULT 1,
+        MaxMesesAnticipacionCuotas INT NOT NULL CONSTRAINT DF_Configuracion_MaxAnticipacion DEFAULT 2,
         DiasAvisoVencimiento INT NOT NULL CONSTRAINT DF_Configuracion_DiasAviso DEFAULT 7,
         CONSTRAINT CK_Configuracion_Unica CHECK (IdConfiguracion = 1),
         CONSTRAINT CK_Configuracion_MaxVencidas CHECK (MaxCuotasVencidasPermitidas BETWEEN 1 AND 120),
@@ -15,5 +15,5 @@ BEGIN
 END;
 IF NOT EXISTS (SELECT 1 FROM dbo.ConfiguracionSistema WHERE IdConfiguracion = 1)
     INSERT INTO dbo.ConfiguracionSistema (IdConfiguracion, MaxCuotasVencidasPermitidas, MaxMesesAnticipacionCuotas, DiasAvisoVencimiento)
-    VALUES (1, 2, 1, 7);
+    VALUES (1, 2, 2, 7);
 COMMIT TRANSACTION;

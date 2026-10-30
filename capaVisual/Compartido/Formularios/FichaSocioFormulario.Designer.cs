@@ -66,7 +66,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.disposicion.Dock = System.Windows.Forms.DockStyle.Fill;
             this.disposicion.Location = new System.Drawing.Point(0, 0);
             this.disposicion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.disposicion.MinimumSize = new System.Drawing.Size(1062, 775);
+            this.disposicion.MinimumSize = new System.Drawing.Size(1062, 749);
             this.disposicion.Name = "disposicion";
             this.disposicion.Padding = new System.Windows.Forms.Padding(15, 15, 15, 15);
             this.disposicion.RowCount = 7;
@@ -391,7 +391,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.Controls.Add(this.disposicion);
             this.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.MinimumSize = new System.Drawing.Size(1120, 813);
+            this.MinimumSize = new System.Drawing.Size(1120, 787);
             this.Name = "FichaSocioFormulario";
             this.Text = "SysGym";
             this.Load += new System.EventHandler(this.FichaSocioFormulario_Load);

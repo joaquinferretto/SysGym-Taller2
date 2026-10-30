@@ -1,0 +1,4586 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx" xmlns:mapping="http://schemas.microsoft.com/ado/2009/11/mapping/cs" xmlns:ns1="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" xmlns:ns3="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Version="3.0">
+  <edmx:Runtime>
+    <edmx:StorageModels>
+      <ns1:Schema Namespace="SysGymModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008">
+        
+  
+        <ns1:EntityContainer Name="SysGymModelStoreContainer">
+          
+    
+          <ns1:EntitySet Name="AuditoriaOperacion" EntityType="SysGymModel.Store.AuditoriaOperacion" store:Type="Tables" Schema="dbo"/>
+          
+    
+          <ns1:EntitySet Name="ConfiguracionSistema" EntityType="SysGymModel.Store.ConfiguracionSistema" store:Type="Tables" Schema="dbo"/>
+          
+    
+          <ns1:EntitySet Name="CuotaMembresia" EntityType="SysGymModel.Store.CuotaMembresia" store:Type="Tables" Schema="dbo"/>
+          
+    
+          <ns1:EntitySet Name="Ejercicio" EntityType="SysGymModel.Store.Ejercicio" store:Type="Tables" Schema="dbo"/>
+          
+    
+          <ns1:EntitySet Name="EjercicioImagen" EntityType="SysGymModel.Store.EjercicioImagen" store:Type="Tables" Schema="dbo"/>
+          
+    
+          <ns1:EntitySet Name="Membresia" EntityType="SysGymModel.Store.Membresia" store:Type="Tables" Schema="dbo"/>
+          
+    
+          <ns1:EntitySet Name="MembresiaEntrenador" EntityType="SysGymModel.Store.MembresiaEntrenador" store:Type="Tables" Schema="dbo"/>
+          
+    
+          <ns1:EntitySet Name="MercadoPago" EntityType="SysGymModel.Store.MercadoPago" store:Type="Tables" Schema="dbo"/>
+          
+    
+          <ns1:EntitySet Name="MetodoPago" EntityType="SysGymModel.Store.MetodoPago" store:Type="Tables" Schema="dbo"/>
+          
+    
+          <ns1:EntitySet Name="Pago" EntityType="SysGymModel.Store.Pago" store:Type="Tables" Schema="dbo"/>
+          
+    
+          <ns1:EntitySet Name="PagoEfectivo" EntityType="SysGymModel.Store.PagoEfectivo" store:Type="Tables" Schema="dbo"/>
+          
+    
+          <ns1:EntitySet Name="Plan" EntityType="SysGymModel.Store.Plan" store:Type="Tables" Schema="dbo"/>
+          
+    
+          <ns1:EntitySet Name="Rol" EntityType="SysGymModel.Store.Rol" store:Type="Tables" Schema="dbo"/>
+          
+    
+          <ns1:EntitySet Name="Rutina" EntityType="SysGymModel.Store.Rutina" store:Type="Tables" Schema="dbo"/>
+          
+    
+          <ns1:EntitySet Name="RutinaEjercicio" EntityType="SysGymModel.Store.RutinaEjercicio" store:Type="Tables" Schema="dbo"/>
+          
+    
+          <ns1:EntitySet Name="Socio" EntityType="SysGymModel.Store.Socio" store:Type="Tables" Schema="dbo"/>
+          
+    
+          <ns1:EntitySet Name="UsuarioSistema" EntityType="SysGymModel.Store.UsuarioSistema" store:Type="Tables" Schema="dbo"/>
+          
+    
+          <ns1:AssociationSet Name="FK_AuditoriaOperacion_Usuario" Association="SysGymModel.Store.FK_AuditoriaOperacion_Usuario">
+            
+      
+            <ns1:End Role="UsuarioSistema" EntitySet="UsuarioSistema"/>
+            
+      
+            <ns1:End Role="AuditoriaOperacion" EntitySet="AuditoriaOperacion"/>
+            
+    
+          </ns1:AssociationSet>
+          
+    
+          <ns1:AssociationSet Name="FK_CuotaMembresia_Membresia" Association="SysGymModel.Store.FK_CuotaMembresia_Membresia">
+            
+      
+            <ns1:End Role="Membresia" EntitySet="Membresia"/>
+            
+      
+            <ns1:End Role="CuotaMembresia" EntitySet="CuotaMembresia"/>
+            
+    
+          </ns1:AssociationSet>
+          
+    
+          <ns1:AssociationSet Name="FK_CuotaMembresia_Pago" Association="SysGymModel.Store.FK_CuotaMembresia_Pago">
+            
+      
+            <ns1:End Role="Pago" EntitySet="Pago"/>
+            
+      
+            <ns1:End Role="CuotaMembresia" EntitySet="CuotaMembresia"/>
+            
+    
+          </ns1:AssociationSet>
+          
+    
+          <ns1:AssociationSet Name="FK_EjercicioImagen_Ejercicio" Association="SysGymModel.Store.FK_EjercicioImagen_Ejercicio">
+            
+      
+            <ns1:End Role="Ejercicio" EntitySet="Ejercicio"/>
+            
+      
+            <ns1:End Role="EjercicioImagen" EntitySet="EjercicioImagen"/>
+            
+    
+          </ns1:AssociationSet>
+          
+    
+          <ns1:AssociationSet Name="FK_Membresia_Plan" Association="SysGymModel.Store.FK_Membresia_Plan">
+            
+      
+            <ns1:End Role="Plan" EntitySet="Plan"/>
+            
+      
+            <ns1:End Role="Membresia" EntitySet="Membresia"/>
+            
+    
+          </ns1:AssociationSet>
+          
+    
+          <ns1:AssociationSet Name="FK_Membresia_Rutina" Association="SysGymModel.Store.FK_Membresia_Rutina">
+            
+      
+            <ns1:End Role="Rutina" EntitySet="Rutina"/>
+            
+      
+            <ns1:End Role="Membresia" EntitySet="Membresia"/>
+            
+    
+          </ns1:AssociationSet>
+          
+    
+          <ns1:AssociationSet Name="FK_Membresia_Socio" Association="SysGymModel.Store.FK_Membresia_Socio">
+            
+      
+            <ns1:End Role="Socio" EntitySet="Socio"/>
+            
+      
+            <ns1:End Role="Membresia" EntitySet="Membresia"/>
+            
+    
+          </ns1:AssociationSet>
+          
+    
+          <ns1:AssociationSet Name="FK_Membresia_UsuarioSistema" Association="SysGymModel.Store.FK_Membresia_UsuarioSistema">
+            
+      
+            <ns1:End Role="UsuarioSistema" EntitySet="UsuarioSistema"/>
+            
+      
+            <ns1:End Role="Membresia" EntitySet="Membresia"/>
+            
+    
+          </ns1:AssociationSet>
+          
+    
+          <ns1:AssociationSet Name="FK_MembresiaEntrenador_Membresia" Association="SysGymModel.Store.FK_MembresiaEntrenador_Membresia">
+            
+      
+            <ns1:End Role="Membresia" EntitySet="Membresia"/>
+            
+      
+            <ns1:End Role="MembresiaEntrenador" EntitySet="MembresiaEntrenador"/>
+            
+    
+          </ns1:AssociationSet>
+          
+    
+          <ns1:AssociationSet Name="FK_MembresiaEntrenador_UsuarioSistema" Association="SysGymModel.Store.FK_MembresiaEntrenador_UsuarioSistema">
+            
+      
+            <ns1:End Role="UsuarioSistema" EntitySet="UsuarioSistema"/>
+            
+      
+            <ns1:End Role="MembresiaEntrenador" EntitySet="MembresiaEntrenador"/>
+            
+    
+          </ns1:AssociationSet>
+          
+    
+          <ns1:AssociationSet Name="FK_MetodoPago_MercadoPago" Association="SysGymModel.Store.FK_MetodoPago_MercadoPago">
+            
+      
+            <ns1:End Role="MercadoPago" EntitySet="MercadoPago"/>
+            
+      
+            <ns1:End Role="MetodoPago" EntitySet="MetodoPago"/>
+            
+    
+          </ns1:AssociationSet>
+          
+    
+          <ns1:AssociationSet Name="FK_MetodoPago_PagoEfectivo" Association="SysGymModel.Store.FK_MetodoPago_PagoEfectivo">
+            
+      
+            <ns1:End Role="PagoEfectivo" EntitySet="PagoEfectivo"/>
+            
+      
+            <ns1:End Role="MetodoPago" EntitySet="MetodoPago"/>
+            
+    
+          </ns1:AssociationSet>
+          
+    
+          <ns1:AssociationSet Name="FK_Pago_CuotaMembresia" Association="SysGymModel.Store.FK_Pago_CuotaMembresia">
+            
+      
+            <ns1:End Role="CuotaMembresia" EntitySet="CuotaMembresia"/>
+            
+      
+            <ns1:End Role="Pago" EntitySet="Pago"/>
+            
+    
+          </ns1:AssociationSet>
+          
+    
+          <ns1:AssociationSet Name="FK_Pago_MetodoPago" Association="SysGymModel.Store.FK_Pago_MetodoPago">
+            
+      
+            <ns1:End Role="MetodoPago" EntitySet="MetodoPago"/>
+            
+      
+            <ns1:End Role="Pago" EntitySet="Pago"/>
+            
+    
+          </ns1:AssociationSet>
+          
+    
+          <ns1:AssociationSet Name="FK_Pago_UsuarioRegistro" Association="SysGymModel.Store.FK_Pago_UsuarioRegistro">
+            
+      
+            <ns1:End Role="UsuarioSistema" EntitySet="UsuarioSistema"/>
+            
+      
+            <ns1:End Role="Pago" EntitySet="Pago"/>
+            
+    
+          </ns1:AssociationSet>
+          
+    
+          <ns1:AssociationSet Name="FK_Rutina_Entrenador" Association="SysGymModel.Store.FK_Rutina_Entrenador">
+            
+      
+            <ns1:End Role="UsuarioSistema" EntitySet="UsuarioSistema"/>
+            
+      
+            <ns1:End Role="Rutina" EntitySet="Rutina"/>
+            
+    
+          </ns1:AssociationSet>
+          
+    
+          <ns1:AssociationSet Name="FK_RutinaEjercicio_Ejercicio" Association="SysGymModel.Store.FK_RutinaEjercicio_Ejercicio">
+            
+      
+            <ns1:End Role="Ejercicio" EntitySet="Ejercicio"/>
+            
+      
+            <ns1:End Role="RutinaEjercicio" EntitySet="RutinaEjercicio"/>
+            
+    
+          </ns1:AssociationSet>
+          
+    
+          <ns1:AssociationSet Name="FK_RutinaEjercicio_Rutina" Association="SysGymModel.Store.FK_RutinaEjercicio_Rutina">
+            
+      
+            <ns1:End Role="Rutina" EntitySet="Rutina"/>
+            
+      
+            <ns1:End Role="RutinaEjercicio" EntitySet="RutinaEjercicio"/>
+            
+    
+          </ns1:AssociationSet>
+          
+    
+          <ns1:AssociationSet Name="FK_UsuarioSistema_Creador" Association="SysGymModel.Store.FK_UsuarioSistema_Creador">
+            
+      
+            <ns1:End Role="UsuarioSistema" EntitySet="UsuarioSistema"/>
+            
+      
+            <ns1:End Role="UsuarioSistema1" EntitySet="UsuarioSistema"/>
+            
+    
+          </ns1:AssociationSet>
+          
+    
+          <ns1:AssociationSet Name="FK_UsuarioSistema_Rol" Association="SysGymModel.Store.FK_UsuarioSistema_Rol">
+            
+      
+            <ns1:End Role="Rol" EntitySet="Rol"/>
+            
+      
+            <ns1:End Role="UsuarioSistema" EntitySet="UsuarioSistema"/>
+            
+    
+          </ns1:AssociationSet>
+          
+  
+        </ns1:EntityContainer>
+        
+  
+        <ns1:EntityType Name="AuditoriaOperacion">
+          
+    
+          <ns1:Key>
+            
+      
+            <ns1:PropertyRef Name="IdAuditoria"/>
+            
+    
+          </ns1:Key>
+          
+    
+          <ns1:Property Name="IdAuditoria" Type="int" Nullable="false" StoreGeneratedPattern="Identity"/>
+          
+    
+          <ns1:Property Name="FechaHora" Type="datetime2" Nullable="false"/>
+          
+    
+          <ns1:Property Name="IdUsuario" Type="int" Nullable="false"/>
+          
+    
+          <ns1:Property Name="UsuarioNombre" Type="nvarchar" Nullable="false" MaxLength="201"/>
+          
+    
+          <ns1:Property Name="Rol" Type="nvarchar" Nullable="false" MaxLength="50"/>
+          
+    
+          <ns1:Property Name="Operacion" Type="nvarchar" Nullable="false" MaxLength="50"/>
+          
+    
+          <ns1:Property Name="Entidad" Type="nvarchar" Nullable="false" MaxLength="50"/>
+          
+    
+          <ns1:Property Name="IdEntidad" Type="int" Nullable="false"/>
+          
+    
+          <ns1:Property Name="Detalle" Type="nvarchar" Nullable="false" MaxLength="1000"/>
+          
+  
+        </ns1:EntityType>
+        
+  
+        <ns1:EntityType Name="ConfiguracionSistema">
+          
+    
+          <ns1:Key>
+            
+      
+            <ns1:PropertyRef Name="IdConfiguracion"/>
+            
+    
+          </ns1:Key>
+          
+    
+          <ns1:Property Name="IdConfiguracion" Type="int" Nullable="false"/>
+          
+    
+          <ns1:Property Name="MaxCuotasVencidasPermitidas" Type="int" Nullable="false"/>
+          
+    
+          <ns1:Property Name="MaxMesesAnticipacionCuotas" Type="int" Nullable="false"/>
+          
+    
+          <ns1:Property Name="DiasAvisoVencimiento" Type="int" Nullable="false"/>
+          
+  
+        </ns1:EntityType>
+        
+  
+        <ns1:EntityType Name="CuotaMembresia">
+          
+    
+          <ns1:Key>
+            
+      
+            <ns1:PropertyRef Name="IdCuotaMembresia"/>
+            
+    
+          </ns1:Key>
+          
+    
+          <ns1:Property Name="IdCuotaMembresia" Type="int" Nullable="false" StoreGeneratedPattern="Identity"/>
+          
+    
+          <ns1:Property Name="FechaDesde" Type="datetime2" Nullable="false"/>
+          
+    
+          <ns1:Property Name="FechaHasta" Type="datetime2" Nullable="false"/>
+          
+    
+          <ns1:Property Name="Importe" Type="decimal" Nullable="false" Scale="2"/>
+          
+    
+          <ns1:Property Name="EstadoPago" Type="nvarchar" Nullable="false" MaxLength="20"/>
+          
+    
+          <ns1:Property Name="IdRegistroPago" Type="int"/>
+          
+    
+          <ns1:Property Name="IdMembresia" Type="int" Nullable="false"/>
+          
+  
+        </ns1:EntityType>
+        
+  
+        <ns1:EntityType Name="Ejercicio">
+          
+    
+          <ns1:Key>
+            
+      
+            <ns1:PropertyRef Name="IdEjercicio"/>
+            
+    
+          </ns1:Key>
+          
+    
+          <ns1:Property Name="IdEjercicio" Type="int" Nullable="false" StoreGeneratedPattern="Identity"/>
+          
+    
+          <ns1:Property Name="Nombre" Type="nvarchar" Nullable="false" MaxLength="100"/>
+          
+    
+          <ns1:Property Name="Descripcion" Type="nvarchar" MaxLength="500"/>
+          
+    
+          <ns1:Property Name="Estado" Type="bit" Nullable="false"/>
+          
+  
+        </ns1:EntityType>
+        
+  
+        <ns1:EntityType Name="EjercicioImagen">
+          
+    
+          <ns1:Key>
+            
+      
+            <ns1:PropertyRef Name="IdEjercicioImagen"/>
+            
+    
+          </ns1:Key>
+          
+    
+          <ns1:Property Name="IdEjercicioImagen" Type="int" Nullable="false" StoreGeneratedPattern="Identity"/>
+          
+    
+          <ns1:Property Name="IdEjercicio" Type="int" Nullable="false"/>
+          
+    
+          <ns1:Property Name="RutaRelativa" Type="nvarchar" Nullable="false" MaxLength="260"/>
+          
+    
+          <ns1:Property Name="Orden" Type="int" Nullable="false"/>
+          
+  
+        </ns1:EntityType>
+        
+  
+        <ns1:EntityType Name="Membresia">
+          
+    
+          <ns1:Key>
+            
+      
+            <ns1:PropertyRef Name="IdMembresia"/>
+            
+    
+          </ns1:Key>
+          
+    
+          <ns1:Property Name="IdMembresia" Type="int" Nullable="false" StoreGeneratedPattern="Identity"/>
+          
+    
+          <ns1:Property Name="FechaInicio" Type="datetime2" Nullable="false"/>
+          
+    
+          <ns1:Property Name="FechaVencimiento" Type="datetime2" Nullable="false"/>
+          
+    
+          <ns1:Property Name="Estado" Type="bit" Nullable="false"/>
+          
+    
+          <ns1:Property Name="IdPlan" Type="int" Nullable="false"/>
+          
+    
+          <ns1:Property Name="IdSocio" Type="int" Nullable="false"/>
+          
+    
+          <ns1:Property Name="IdUsuarioSistema" Type="int" Nullable="false"/>
+          
+    
+          <ns1:Property Name="IdRutina" Type="int"/>
+          
+  
+        </ns1:EntityType>
+        
+  
+        <ns1:EntityType Name="MembresiaEntrenador">
+          
+    
+          <ns1:Key>
+            
+      
+            <ns1:PropertyRef Name="IdMembresiaEntrenador"/>
+            
+    
+          </ns1:Key>
+          
+    
+          <ns1:Property Name="IdMembresiaEntrenador" Type="int" Nullable="false" StoreGeneratedPattern="Identity"/>
+          
+    
+          <ns1:Property Name="Estado" Type="bit" Nullable="false"/>
+          
+    
+          <ns1:Property Name="IdMembresia" Type="int" Nullable="false"/>
+          
+    
+          <ns1:Property Name="IdEntrenador" Type="int" Nullable="false"/>
+          
+  
+        </ns1:EntityType>
+        
+  
+        <ns1:EntityType Name="MercadoPago">
+          
+    
+          <ns1:Key>
+            
+      
+            <ns1:PropertyRef Name="IdNroPagoMP"/>
+            
+    
+          </ns1:Key>
+          
+    
+          <ns1:Property Name="IdNroPagoMP" Type="int" Nullable="false" StoreGeneratedPattern="Identity"/>
+          
+    
+          <ns1:Property Name="MercadoPagoPaymentId" Type="nvarchar" MaxLength="100"/>
+          
+    
+          <ns1:Property Name="MercadoPagoPreferenceId" Type="nvarchar" MaxLength="100"/>
+          
+    
+          <ns1:Property Name="ExternalReference" Type="nvarchar" MaxLength="150"/>
+          
+    
+          <ns1:Property Name="StatusDetail" Type="nvarchar" MaxLength="200"/>
+          
+    
+          <ns1:Property Name="FechaAprobacion" Type="datetime2"/>
+          
+  
+        </ns1:EntityType>
+        
+  
+        <ns1:EntityType Name="MetodoPago">
+          
+    
+          <ns1:Key>
+            
+      
+            <ns1:PropertyRef Name="IdMetodoPago"/>
+            
+    
+          </ns1:Key>
+          
+    
+          <ns1:Property Name="IdMetodoPago" Type="int" Nullable="false" StoreGeneratedPattern="Identity"/>
+          
+    
+          <ns1:Property Name="Estado" Type="bit" Nullable="false"/>
+          
+    
+          <ns1:Property Name="Observaciones" Type="nvarchar" MaxLength="500"/>
+          
+    
+          <ns1:Property Name="IdNroPagoMP" Type="int"/>
+          
+    
+          <ns1:Property Name="IdPagoEfectivo" Type="int"/>
+          
+  
+        </ns1:EntityType>
+        
+  
+        <ns1:EntityType Name="Pago">
+          
+    
+          <ns1:Key>
+            
+      
+            <ns1:PropertyRef Name="IdRegistroPago"/>
+            
+    
+          </ns1:Key>
+          
+    
+          <ns1:Property Name="IdRegistroPago" Type="int" Nullable="false" StoreGeneratedPattern="Identity"/>
+          
+    
+          <ns1:Property Name="Fecha" Type="datetime2" Nullable="false"/>
+          
+    
+          <ns1:Property Name="Descripcion" Type="nvarchar" MaxLength="500"/>
+          
+    
+          <ns1:Property Name="Importe" Type="decimal" Nullable="false" Scale="2"/>
+          
+    
+          <ns1:Property Name="Estado" Type="nvarchar" Nullable="false" MaxLength="20"/>
+          
+    
+          <ns1:Property Name="IdMetodoPago" Type="int" Nullable="false"/>
+          
+    
+          <ns1:Property Name="IdUsuarioRegistro" Type="int"/>
+          
+    
+          <ns1:Property Name="IdCuotaMembresia" Type="int"/>
+          
+  
+        </ns1:EntityType>
+        
+  
+        <ns1:EntityType Name="PagoEfectivo">
+          
+    
+          <ns1:Key>
+            
+      
+            <ns1:PropertyRef Name="IdPagoEfectivo"/>
+            
+    
+          </ns1:Key>
+          
+    
+          <ns1:Property Name="IdPagoEfectivo" Type="int" Nullable="false" StoreGeneratedPattern="Identity"/>
+          
+    
+          <ns1:Property Name="Estado" Type="bit" Nullable="false"/>
+          
+  
+        </ns1:EntityType>
+        
+  
+        <ns1:EntityType Name="Plan">
+          
+    
+          <ns1:Key>
+            
+      
+            <ns1:PropertyRef Name="IdPlan"/>
+            
+    
+          </ns1:Key>
+          
+    
+          <ns1:Property Name="IdPlan" Type="int" Nullable="false" StoreGeneratedPattern="Identity"/>
+          
+    
+          <ns1:Property Name="Nombre" Type="nvarchar" Nullable="false" MaxLength="100"/>
+          
+    
+          <ns1:Property Name="Descripcion" Type="nvarchar" MaxLength="500"/>
+          
+    
+          <ns1:Property Name="Precio" Type="decimal" Nullable="false" Scale="2"/>
+          
+    
+          <ns1:Property Name="Estado" Type="bit" Nullable="false"/>
+          
+  
+        </ns1:EntityType>
+        
+  
+        <ns1:EntityType Name="Rol">
+          
+    
+          <ns1:Key>
+            
+      
+            <ns1:PropertyRef Name="IdRol"/>
+            
+    
+          </ns1:Key>
+          
+    
+          <ns1:Property Name="IdRol" Type="int" Nullable="false" StoreGeneratedPattern="Identity"/>
+          
+    
+          <ns1:Property Name="Descripcion" Type="nvarchar" Nullable="false" MaxLength="50"/>
+          
+    
+          <ns1:Property Name="Estado" Type="bit" Nullable="false"/>
+          
+  
+        </ns1:EntityType>
+        
+  
+        <ns1:EntityType Name="Rutina">
+          
+    
+          <ns1:Key>
+            
+      
+            <ns1:PropertyRef Name="IdRutina"/>
+            
+    
+          </ns1:Key>
+          
+    
+          <ns1:Property Name="IdRutina" Type="int" Nullable="false" StoreGeneratedPattern="Identity"/>
+          
+    
+          <ns1:Property Name="Nombre" Type="nvarchar" Nullable="false" MaxLength="100"/>
+          
+    
+          <ns1:Property Name="Descripcion" Type="nvarchar" MaxLength="500"/>
+          
+    
+          <ns1:Property Name="FechaCreacion" Type="datetime2" Nullable="false"/>
+          
+    
+          <ns1:Property Name="FechaInicio" Type="datetime2"/>
+          
+    
+          <ns1:Property Name="FechaFin" Type="datetime2"/>
+          
+    
+          <ns1:Property Name="Estado" Type="bit" Nullable="false"/>
+          
+    
+          <ns1:Property Name="Objetivo" Type="nvarchar" MaxLength="30"/>
+          
+    
+          <ns1:Property Name="Nivel" Type="nvarchar" MaxLength="20"/>
+          
+    
+          <ns1:Property Name="IdEntrenador" Type="int" Nullable="false"/>
+          
+  
+        </ns1:EntityType>
+        
+  
+        <ns1:EntityType Name="RutinaEjercicio">
+          
+    
+          <ns1:Key>
+            
+      
+            <ns1:PropertyRef Name="IdRutinaEjercicio"/>
+            
+    
+          </ns1:Key>
+          
+    
+          <ns1:Property Name="IdRutinaEjercicio" Type="int" Nullable="false" StoreGeneratedPattern="Identity"/>
+          
+    
+          <ns1:Property Name="Series" Type="int"/>
+          
+    
+          <ns1:Property Name="Repeticiones" Type="int"/>
+          
+    
+          <ns1:Property Name="Peso" Type="decimal" Precision="8" Scale="2"/>
+          
+    
+          <ns1:Property Name="Descanso" Type="int" Nullable="false"/>
+          
+    
+          <ns1:Property Name="Orden" Type="int" Nullable="false"/>
+          
+    
+          <ns1:Property Name="DiaSemana" Type="int"/>
+          
+    
+          <ns1:Property Name="Estado" Type="bit" Nullable="false"/>
+          
+    
+          <ns1:Property Name="IdRutina" Type="int" Nullable="false"/>
+          
+    
+          <ns1:Property Name="IdEjercicio" Type="int" Nullable="false"/>
+          
+  
+        </ns1:EntityType>
+        
+  
+        <ns1:EntityType Name="Socio">
+          
+    
+          <ns1:Key>
+            
+      
+            <ns1:PropertyRef Name="IdSocio"/>
+            
+    
+          </ns1:Key>
+          
+    
+          <ns1:Property Name="IdSocio" Type="int" Nullable="false" StoreGeneratedPattern="Identity"/>
+          
+    
+          <ns1:Property Name="DNI" Type="nvarchar" Nullable="false" MaxLength="20"/>
+          
+    
+          <ns1:Property Name="Nombre" Type="nvarchar" Nullable="false" MaxLength="100"/>
+          
+    
+          <ns1:Property Name="Apellido" Type="nvarchar" Nullable="false" MaxLength="100"/>
+          
+    
+          <ns1:Property Name="FechaNacimiento" Type="datetime2"/>
+          
+    
+          <ns1:Property Name="FechaAlta" Type="datetime2"/>
+          
+    
+          <ns1:Property Name="Peso" Type="decimal" Precision="6" Scale="2"/>
+          
+    
+          <ns1:Property Name="Altura" Type="decimal" Precision="5" Scale="2"/>
+          
+    
+          <ns1:Property Name="FotoRuta" Type="nvarchar" MaxLength="260"/>
+          
+    
+          <ns1:Property Name="Sexo" Type="char" MaxLength="1"/>
+          
+    
+          <ns1:Property Name="Estado" Type="bit" Nullable="false"/>
+          
+  
+        </ns1:EntityType>
+        
+  
+        <ns1:EntityType Name="UsuarioSistema">
+          
+    
+          <ns1:Key>
+            
+      
+            <ns1:PropertyRef Name="IdUsuarioSistema"/>
+            
+    
+          </ns1:Key>
+          
+    
+          <ns1:Property Name="IdUsuarioSistema" Type="int" Nullable="false" StoreGeneratedPattern="Identity"/>
+          
+    
+          <ns1:Property Name="Nombre" Type="nvarchar" Nullable="false" MaxLength="100"/>
+          
+    
+          <ns1:Property Name="Apellido" Type="nvarchar" Nullable="false" MaxLength="100"/>
+          
+    
+          <ns1:Property Name="DNI" Type="nvarchar" Nullable="false" MaxLength="20"/>
+          
+    
+          <ns1:Property Name="Telefono" Type="nvarchar" MaxLength="30"/>
+          
+    
+          <ns1:Property Name="FechaNacimiento" Type="datetime2"/>
+          
+    
+          <ns1:Property Name="Salario" Type="decimal" Nullable="false" Scale="2"/>
+          
+    
+          <ns1:Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="50"/>
+          
+    
+          <ns1:Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="500"/>
+          
+    
+          <ns1:Property Name="FotoRuta" Type="nvarchar" MaxLength="260"/>
+          
+    
+          <ns1:Property Name="Sexo" Type="char" MaxLength="1"/>
+          
+    
+          <ns1:Property Name="Estado" Type="bit" Nullable="false"/>
+          
+    
+          <ns1:Property Name="IdRol" Type="int" Nullable="false"/>
+          
+    
+          <ns1:Property Name="IdUsuarioCreador" Type="int"/>
+          
+  
+        </ns1:EntityType>
+        
+  
+        <ns1:Association Name="FK_AuditoriaOperacion_Usuario">
+          
+    
+          <ns1:End Role="UsuarioSistema" Type="SysGymModel.Store.UsuarioSistema" Multiplicity="1"/>
+          
+    
+          <ns1:End Role="AuditoriaOperacion" Type="SysGymModel.Store.AuditoriaOperacion" Multiplicity="*"/>
+          
+    
+          <ns1:ReferentialConstraint>
+            
+      
+            <ns1:Principal Role="UsuarioSistema">
+              
+        
+              <ns1:PropertyRef Name="IdUsuarioSistema"/>
+              
+      
+            </ns1:Principal>
+            
+      
+            <ns1:Dependent Role="AuditoriaOperacion">
+              
+        
+              <ns1:PropertyRef Name="IdUsuario"/>
+              
+      
+            </ns1:Dependent>
+            
+    
+          </ns1:ReferentialConstraint>
+          
+  
+        </ns1:Association>
+        
+  
+        <ns1:Association Name="FK_CuotaMembresia_Membresia">
+          
+    
+          <ns1:End Role="Membresia" Type="SysGymModel.Store.Membresia" Multiplicity="1"/>
+          
+    
+          <ns1:End Role="CuotaMembresia" Type="SysGymModel.Store.CuotaMembresia" Multiplicity="*"/>
+          
+    
+          <ns1:ReferentialConstraint>
+            
+      
+            <ns1:Principal Role="Membresia">
+              
+        
+              <ns1:PropertyRef Name="IdMembresia"/>
+              
+      
+            </ns1:Principal>
+            
+      
+            <ns1:Dependent Role="CuotaMembresia">
+              
+        
+              <ns1:PropertyRef Name="IdMembresia"/>
+              
+      
+            </ns1:Dependent>
+            
+    
+          </ns1:ReferentialConstraint>
+          
+  
+        </ns1:Association>
+        
+  
+        <ns1:Association Name="FK_CuotaMembresia_Pago">
+          
+    
+          <ns1:End Role="Pago" Type="SysGymModel.Store.Pago" Multiplicity="0..1"/>
+          
+    
+          <ns1:End Role="CuotaMembresia" Type="SysGymModel.Store.CuotaMembresia" Multiplicity="*"/>
+          
+    
+          <ns1:ReferentialConstraint>
+            
+      
+            <ns1:Principal Role="Pago">
+              
+        
+              <ns1:PropertyRef Name="IdRegistroPago"/>
+              
+      
+            </ns1:Principal>
+            
+      
+            <ns1:Dependent Role="CuotaMembresia">
+              
+        
+              <ns1:PropertyRef Name="IdRegistroPago"/>
+              
+      
+            </ns1:Dependent>
+            
+    
+          </ns1:ReferentialConstraint>
+          
+  
+        </ns1:Association>
+        
+  
+        <ns1:Association Name="FK_EjercicioImagen_Ejercicio">
+          
+    
+          <ns1:End Role="Ejercicio" Type="SysGymModel.Store.Ejercicio" Multiplicity="1"/>
+          
+    
+          <ns1:End Role="EjercicioImagen" Type="SysGymModel.Store.EjercicioImagen" Multiplicity="*"/>
+          
+    
+          <ns1:ReferentialConstraint>
+            
+      
+            <ns1:Principal Role="Ejercicio">
+              
+        
+              <ns1:PropertyRef Name="IdEjercicio"/>
+              
+      
+            </ns1:Principal>
+            
+      
+            <ns1:Dependent Role="EjercicioImagen">
+              
+        
+              <ns1:PropertyRef Name="IdEjercicio"/>
+              
+      
+            </ns1:Dependent>
+            
+    
+          </ns1:ReferentialConstraint>
+          
+  
+        </ns1:Association>
+        
+  
+        <ns1:Association Name="FK_Membresia_Plan">
+          
+    
+          <ns1:End Role="Plan" Type="SysGymModel.Store.Plan" Multiplicity="1"/>
+          
+    
+          <ns1:End Role="Membresia" Type="SysGymModel.Store.Membresia" Multiplicity="*"/>
+          
+    
+          <ns1:ReferentialConstraint>
+            
+      
+            <ns1:Principal Role="Plan">
+              
+        
+              <ns1:PropertyRef Name="IdPlan"/>
+              
+      
+            </ns1:Principal>
+            
+      
+            <ns1:Dependent Role="Membresia">
+              
+        
+              <ns1:PropertyRef Name="IdPlan"/>
+              
+      
+            </ns1:Dependent>
+            
+    
+          </ns1:ReferentialConstraint>
+          
+  
+        </ns1:Association>
+        
+  
+        <ns1:Association Name="FK_Membresia_Rutina">
+          
+    
+          <ns1:End Role="Rutina" Type="SysGymModel.Store.Rutina" Multiplicity="0..1"/>
+          
+    
+          <ns1:End Role="Membresia" Type="SysGymModel.Store.Membresia" Multiplicity="*"/>
+          
+    
+          <ns1:ReferentialConstraint>
+            
+      
+            <ns1:Principal Role="Rutina">
+              
+        
+              <ns1:PropertyRef Name="IdRutina"/>
+              
+      
+            </ns1:Principal>
+            
+      
+            <ns1:Dependent Role="Membresia">
+              
+        
+              <ns1:PropertyRef Name="IdRutina"/>
+              
+      
+            </ns1:Dependent>
+            
+    
+          </ns1:ReferentialConstraint>
+          
+  
+        </ns1:Association>
+        
+  
+        <ns1:Association Name="FK_Membresia_Socio">
+          
+    
+          <ns1:End Role="Socio" Type="SysGymModel.Store.Socio" Multiplicity="1"/>
+          
+    
+          <ns1:End Role="Membresia" Type="SysGymModel.Store.Membresia" Multiplicity="*"/>
+          
+    
+          <ns1:ReferentialConstraint>
+            
+      
+            <ns1:Principal Role="Socio">
+              
+        
+              <ns1:PropertyRef Name="IdSocio"/>
+              
+      
+            </ns1:Principal>
+            
+      
+            <ns1:Dependent Role="Membresia">
+              
+        
+              <ns1:PropertyRef Name="IdSocio"/>
+              
+      
+            </ns1:Dependent>
+            
+    
+          </ns1:ReferentialConstraint>
+          
+  
+        </ns1:Association>
+        
+  
+        <ns1:Association Name="FK_Membresia_UsuarioSistema">
+          
+    
+          <ns1:End Role="UsuarioSistema" Type="SysGymModel.Store.UsuarioSistema" Multiplicity="1"/>
+          
+    
+          <ns1:End Role="Membresia" Type="SysGymModel.Store.Membresia" Multiplicity="*"/>
+          
+    
+          <ns1:ReferentialConstraint>
+            
+      
+            <ns1:Principal Role="UsuarioSistema">
+              
+        
+              <ns1:PropertyRef Name="IdUsuarioSistema"/>
+              
+      
+            </ns1:Principal>
+            
+      
+            <ns1:Dependent Role="Membresia">
+              
+        
+              <ns1:PropertyRef Name="IdUsuarioSistema"/>
+              
+      
+            </ns1:Dependent>
+            
+    
+          </ns1:ReferentialConstraint>
+          
+  
+        </ns1:Association>
+        
+  
+        <ns1:Association Name="FK_MembresiaEntrenador_Membresia">
+          
+    
+          <ns1:End Role="Membresia" Type="SysGymModel.Store.Membresia" Multiplicity="1"/>
+          
+    
+          <ns1:End Role="MembresiaEntrenador" Type="SysGymModel.Store.MembresiaEntrenador" Multiplicity="*"/>
+          
+    
+          <ns1:ReferentialConstraint>
+            
+      
+            <ns1:Principal Role="Membresia">
+              
+        
+              <ns1:PropertyRef Name="IdMembresia"/>
+              
+      
+            </ns1:Principal>
+            
+      
+            <ns1:Dependent Role="MembresiaEntrenador">
+              
+        
+              <ns1:PropertyRef Name="IdMembresia"/>
+              
+      
+            </ns1:Dependent>
+            
+    
+          </ns1:ReferentialConstraint>
+          
+  
+        </ns1:Association>
+        
+  
+        <ns1:Association Name="FK_MembresiaEntrenador_UsuarioSistema">
+          
+    
+          <ns1:End Role="UsuarioSistema" Type="SysGymModel.Store.UsuarioSistema" Multiplicity="1"/>
+          
+    
+          <ns1:End Role="MembresiaEntrenador" Type="SysGymModel.Store.MembresiaEntrenador" Multiplicity="*"/>
+          
+    
+          <ns1:ReferentialConstraint>
+            
+      
+            <ns1:Principal Role="UsuarioSistema">
+              
+        
+              <ns1:PropertyRef Name="IdUsuarioSistema"/>
+              
+      
+            </ns1:Principal>
+            
+      
+            <ns1:Dependent Role="MembresiaEntrenador">
+              
+        
+              <ns1:PropertyRef Name="IdEntrenador"/>
+              
+      
+            </ns1:Dependent>
+            
+    
+          </ns1:ReferentialConstraint>
+          
+  
+        </ns1:Association>
+        
+  
+        <ns1:Association Name="FK_MetodoPago_MercadoPago">
+          
+    
+          <ns1:End Role="MercadoPago" Type="SysGymModel.Store.MercadoPago" Multiplicity="0..1"/>
+          
+    
+          <ns1:End Role="MetodoPago" Type="SysGymModel.Store.MetodoPago" Multiplicity="*"/>
+          
+    
+          <ns1:ReferentialConstraint>
+            
+      
+            <ns1:Principal Role="MercadoPago">
+              
+        
+              <ns1:PropertyRef Name="IdNroPagoMP"/>
+              
+      
+            </ns1:Principal>
+            
+      
+            <ns1:Dependent Role="MetodoPago">
+              
+        
+              <ns1:PropertyRef Name="IdNroPagoMP"/>
+              
+      
+            </ns1:Dependent>
+            
+    
+          </ns1:ReferentialConstraint>
+          
+  
+        </ns1:Association>
+        
+  
+        <ns1:Association Name="FK_MetodoPago_PagoEfectivo">
+          
+    
+          <ns1:End Role="PagoEfectivo" Type="SysGymModel.Store.PagoEfectivo" Multiplicity="0..1"/>
+          
+    
+          <ns1:End Role="MetodoPago" Type="SysGymModel.Store.MetodoPago" Multiplicity="*"/>
+          
+    
+          <ns1:ReferentialConstraint>
+            
+      
+            <ns1:Principal Role="PagoEfectivo">
+              
+        
+              <ns1:PropertyRef Name="IdPagoEfectivo"/>
+              
+      
+            </ns1:Principal>
+            
+      
+            <ns1:Dependent Role="MetodoPago">
+              
+        
+              <ns1:PropertyRef Name="IdPagoEfectivo"/>
+              
+      
+            </ns1:Dependent>
+            
+    
+          </ns1:ReferentialConstraint>
+          
+  
+        </ns1:Association>
+        
+  
+        <ns1:Association Name="FK_Pago_CuotaMembresia">
+          
+    
+          <ns1:End Role="CuotaMembresia" Type="SysGymModel.Store.CuotaMembresia" Multiplicity="0..1"/>
+          
+    
+          <ns1:End Role="Pago" Type="SysGymModel.Store.Pago" Multiplicity="*"/>
+          
+    
+          <ns1:ReferentialConstraint>
+            
+      
+            <ns1:Principal Role="CuotaMembresia">
+              
+        
+              <ns1:PropertyRef Name="IdCuotaMembresia"/>
+              
+      
+            </ns1:Principal>
+            
+      
+            <ns1:Dependent Role="Pago">
+              
+        
+              <ns1:PropertyRef Name="IdCuotaMembresia"/>
+              
+      
+            </ns1:Dependent>
+            
+    
+          </ns1:ReferentialConstraint>
+          
+  
+        </ns1:Association>
+        
+  
+        <ns1:Association Name="FK_Pago_MetodoPago">
+          
+    
+          <ns1:End Role="MetodoPago" Type="SysGymModel.Store.MetodoPago" Multiplicity="1"/>
+          
+    
+          <ns1:End Role="Pago" Type="SysGymModel.Store.Pago" Multiplicity="*"/>
+          
+    
+          <ns1:ReferentialConstraint>
+            
+      
+            <ns1:Principal Role="MetodoPago">
+              
+        
+              <ns1:PropertyRef Name="IdMetodoPago"/>
+              
+      
+            </ns1:Principal>
+            
+      
+            <ns1:Dependent Role="Pago">
+              
+        
+              <ns1:PropertyRef Name="IdMetodoPago"/>
+              
+      
+            </ns1:Dependent>
+            
+    
+          </ns1:ReferentialConstraint>
+          
+  
+        </ns1:Association>
+        
+  
+        <ns1:Association Name="FK_Pago_UsuarioRegistro">
+          
+    
+          <ns1:End Role="UsuarioSistema" Type="SysGymModel.Store.UsuarioSistema" Multiplicity="0..1"/>
+          
+    
+          <ns1:End Role="Pago" Type="SysGymModel.Store.Pago" Multiplicity="*"/>
+          
+    
+          <ns1:ReferentialConstraint>
+            
+      
+            <ns1:Principal Role="UsuarioSistema">
+              
+        
+              <ns1:PropertyRef Name="IdUsuarioSistema"/>
+              
+      
+            </ns1:Principal>
+            
+      
+            <ns1:Dependent Role="Pago">
+              
+        
+              <ns1:PropertyRef Name="IdUsuarioRegistro"/>
+              
+      
+            </ns1:Dependent>
+            
+    
+          </ns1:ReferentialConstraint>
+          
+  
+        </ns1:Association>
+        
+  
+        <ns1:Association Name="FK_Rutina_Entrenador">
+          
+    
+          <ns1:End Role="UsuarioSistema" Type="SysGymModel.Store.UsuarioSistema" Multiplicity="1"/>
+          
+    
+          <ns1:End Role="Rutina" Type="SysGymModel.Store.Rutina" Multiplicity="*"/>
+          
+    
+          <ns1:ReferentialConstraint>
+            
+      
+            <ns1:Principal Role="UsuarioSistema">
+              
+        
+              <ns1:PropertyRef Name="IdUsuarioSistema"/>
+              
+      
+            </ns1:Principal>
+            
+      
+            <ns1:Dependent Role="Rutina">
+              
+        
+              <ns1:PropertyRef Name="IdEntrenador"/>
+              
+      
+            </ns1:Dependent>
+            
+    
+          </ns1:ReferentialConstraint>
+          
+  
+        </ns1:Association>
+        
+  
+        <ns1:Association Name="FK_RutinaEjercicio_Ejercicio">
+          
+    
+          <ns1:End Role="Ejercicio" Type="SysGymModel.Store.Ejercicio" Multiplicity="1"/>
+          
+    
+          <ns1:End Role="RutinaEjercicio" Type="SysGymModel.Store.RutinaEjercicio" Multiplicity="*"/>
+          
+    
+          <ns1:ReferentialConstraint>
+            
+      
+            <ns1:Principal Role="Ejercicio">
+              
+        
+              <ns1:PropertyRef Name="IdEjercicio"/>
+              
+      
+            </ns1:Principal>
+            
+      
+            <ns1:Dependent Role="RutinaEjercicio">
+              
+        
+              <ns1:PropertyRef Name="IdEjercicio"/>
+              
+      
+            </ns1:Dependent>
+            
+    
+          </ns1:ReferentialConstraint>
+          
+  
+        </ns1:Association>
+        
+  
+        <ns1:Association Name="FK_RutinaEjercicio_Rutina">
+          
+    
+          <ns1:End Role="Rutina" Type="SysGymModel.Store.Rutina" Multiplicity="1"/>
+          
+    
+          <ns1:End Role="RutinaEjercicio" Type="SysGymModel.Store.RutinaEjercicio" Multiplicity="*"/>
+          
+    
+          <ns1:ReferentialConstraint>
+            
+      
+            <ns1:Principal Role="Rutina">
+              
+        
+              <ns1:PropertyRef Name="IdRutina"/>
+              
+      
+            </ns1:Principal>
+            
+      
+            <ns1:Dependent Role="RutinaEjercicio">
+              
+        
+              <ns1:PropertyRef Name="IdRutina"/>
+              
+      
+            </ns1:Dependent>
+            
+    
+          </ns1:ReferentialConstraint>
+          
+  
+        </ns1:Association>
+        
+  
+        <ns1:Association Name="FK_UsuarioSistema_Creador">
+          
+    
+          <ns1:End Role="UsuarioSistema" Type="SysGymModel.Store.UsuarioSistema" Multiplicity="0..1"/>
+          
+    
+          <ns1:End Role="UsuarioSistema1" Type="SysGymModel.Store.UsuarioSistema" Multiplicity="*"/>
+          
+    
+          <ns1:ReferentialConstraint>
+            
+      
+            <ns1:Principal Role="UsuarioSistema">
+              
+        
+              <ns1:PropertyRef Name="IdUsuarioSistema"/>
+              
+      
+            </ns1:Principal>
+            
+      
+            <ns1:Dependent Role="UsuarioSistema1">
+              
+        
+              <ns1:PropertyRef Name="IdUsuarioCreador"/>
+              
+      
+            </ns1:Dependent>
+            
+    
+          </ns1:ReferentialConstraint>
+          
+  
+        </ns1:Association>
+        
+  
+        <ns1:Association Name="FK_UsuarioSistema_Rol">
+          
+    
+          <ns1:End Role="Rol" Type="SysGymModel.Store.Rol" Multiplicity="1"/>
+          
+    
+          <ns1:End Role="UsuarioSistema" Type="SysGymModel.Store.UsuarioSistema" Multiplicity="*"/>
+          
+    
+          <ns1:ReferentialConstraint>
+            
+      
+            <ns1:Principal Role="Rol">
+              
+        
+              <ns1:PropertyRef Name="IdRol"/>
+              
+      
+            </ns1:Principal>
+            
+      
+            <ns1:Dependent Role="UsuarioSistema">
+              
+        
+              <ns1:PropertyRef Name="IdRol"/>
+              
+      
+            </ns1:Dependent>
+            
+    
+          </ns1:ReferentialConstraint>
+          
+  
+        </ns1:Association>
+        
+
+      </ns1:Schema>
+    </edmx:StorageModels>
+    <edmx:ConceptualModels>
+      <ns3:Schema Namespace="SysGymModel" Alias="Self" p1:UseStrongSpatialTypes="false">
+        
+  
+        <ns3:EntityContainer Name="SysGymModelContainer" p1:LazyLoadingEnabled="true">
+          
+    
+          <ns3:EntitySet Name="AuditoriaOperacion" EntityType="SysGymModel.AuditoriaOperacion"/>
+          
+    
+          <ns3:EntitySet Name="ConfiguracionSistema" EntityType="SysGymModel.ConfiguracionSistema"/>
+          
+    
+          <ns3:EntitySet Name="CuotaMembresia" EntityType="SysGymModel.CuotaMembresia"/>
+          
+    
+          <ns3:EntitySet Name="Ejercicio" EntityType="SysGymModel.Ejercicio"/>
+          
+    
+          <ns3:EntitySet Name="EjercicioImagen" EntityType="SysGymModel.EjercicioImagen"/>
+          
+    
+          <ns3:EntitySet Name="Membresia" EntityType="SysGymModel.Membresia"/>
+          
+    
+          <ns3:EntitySet Name="MembresiaEntrenador" EntityType="SysGymModel.MembresiaEntrenador"/>
+          
+    
+          <ns3:EntitySet Name="MercadoPago" EntityType="SysGymModel.MercadoPago"/>
+          
+    
+          <ns3:EntitySet Name="MetodoPago" EntityType="SysGymModel.MetodoPago"/>
+          
+    
+          <ns3:EntitySet Name="Pago" EntityType="SysGymModel.Pago"/>
+          
+    
+          <ns3:EntitySet Name="PagoEfectivo" EntityType="SysGymModel.PagoEfectivo"/>
+          
+    
+          <ns3:EntitySet Name="Plan" EntityType="SysGymModel.Plan"/>
+          
+    
+          <ns3:EntitySet Name="Rol" EntityType="SysGymModel.Rol"/>
+          
+    
+          <ns3:EntitySet Name="Rutina" EntityType="SysGymModel.Rutina"/>
+          
+    
+          <ns3:EntitySet Name="RutinaEjercicio" EntityType="SysGymModel.RutinaEjercicio"/>
+          
+    
+          <ns3:EntitySet Name="Socio" EntityType="SysGymModel.Socio"/>
+          
+    
+          <ns3:EntitySet Name="UsuarioSistema" EntityType="SysGymModel.UsuarioSistema"/>
+          
+    
+          <ns3:AssociationSet Name="FK_AuditoriaOperacion_Usuario" Association="SysGymModel.FK_AuditoriaOperacion_Usuario">
+            
+      
+            <ns3:End Role="UsuarioSistema" EntitySet="UsuarioSistema"/>
+            
+      
+            <ns3:End Role="AuditoriaOperacion" EntitySet="AuditoriaOperacion"/>
+            
+    
+          </ns3:AssociationSet>
+          
+    
+          <ns3:AssociationSet Name="FK_CuotaMembresia_Membresia" Association="SysGymModel.FK_CuotaMembresia_Membresia">
+            
+      
+            <ns3:End Role="Membresia" EntitySet="Membresia"/>
+            
+      
+            <ns3:End Role="CuotaMembresia" EntitySet="CuotaMembresia"/>
+            
+    
+          </ns3:AssociationSet>
+          
+    
+          <ns3:AssociationSet Name="FK_CuotaMembresia_Pago" Association="SysGymModel.FK_CuotaMembresia_Pago">
+            
+      
+            <ns3:End Role="Pago" EntitySet="Pago"/>
+            
+      
+            <ns3:End Role="CuotaMembresia" EntitySet="CuotaMembresia"/>
+            
+    
+          </ns3:AssociationSet>
+          
+    
+          <ns3:AssociationSet Name="FK_Pago_CuotaMembresia" Association="SysGymModel.FK_Pago_CuotaMembresia">
+            
+      
+            <ns3:End Role="CuotaMembresia" EntitySet="CuotaMembresia"/>
+            
+      
+            <ns3:End Role="Pago" EntitySet="Pago"/>
+            
+    
+          </ns3:AssociationSet>
+          
+    
+          <ns3:AssociationSet Name="FK_EjercicioImagen_Ejercicio" Association="SysGymModel.FK_EjercicioImagen_Ejercicio">
+            
+      
+            <ns3:End Role="Ejercicio" EntitySet="Ejercicio"/>
+            
+      
+            <ns3:End Role="EjercicioImagen" EntitySet="EjercicioImagen"/>
+            
+    
+          </ns3:AssociationSet>
+          
+    
+          <ns3:AssociationSet Name="FK_RutinaEjercicio_Ejercicio" Association="SysGymModel.FK_RutinaEjercicio_Ejercicio">
+            
+      
+            <ns3:End Role="Ejercicio" EntitySet="Ejercicio"/>
+            
+      
+            <ns3:End Role="RutinaEjercicio" EntitySet="RutinaEjercicio"/>
+            
+    
+          </ns3:AssociationSet>
+          
+    
+          <ns3:AssociationSet Name="FK_Membresia_Plan" Association="SysGymModel.FK_Membresia_Plan">
+            
+      
+            <ns3:End Role="Plan" EntitySet="Plan"/>
+            
+      
+            <ns3:End Role="Membresia" EntitySet="Membresia"/>
+            
+    
+          </ns3:AssociationSet>
+          
+    
+          <ns3:AssociationSet Name="FK_Membresia_Rutina" Association="SysGymModel.FK_Membresia_Rutina">
+            
+      
+            <ns3:End Role="Rutina" EntitySet="Rutina"/>
+            
+      
+            <ns3:End Role="Membresia" EntitySet="Membresia"/>
+            
+    
+          </ns3:AssociationSet>
+          
+    
+          <ns3:AssociationSet Name="FK_Membresia_Socio" Association="SysGymModel.FK_Membresia_Socio">
+            
+      
+            <ns3:End Role="Socio" EntitySet="Socio"/>
+            
+      
+            <ns3:End Role="Membresia" EntitySet="Membresia"/>
+            
+    
+          </ns3:AssociationSet>
+          
+    
+          <ns3:AssociationSet Name="FK_Membresia_UsuarioSistema" Association="SysGymModel.FK_Membresia_UsuarioSistema">
+            
+      
+            <ns3:End Role="UsuarioSistema" EntitySet="UsuarioSistema"/>
+            
+      
+            <ns3:End Role="Membresia" EntitySet="Membresia"/>
+            
+    
+          </ns3:AssociationSet>
+          
+    
+          <ns3:AssociationSet Name="FK_MembresiaEntrenador_Membresia" Association="SysGymModel.FK_MembresiaEntrenador_Membresia">
+            
+      
+            <ns3:End Role="Membresia" EntitySet="Membresia"/>
+            
+      
+            <ns3:End Role="MembresiaEntrenador" EntitySet="MembresiaEntrenador"/>
+            
+    
+          </ns3:AssociationSet>
+          
+    
+          <ns3:AssociationSet Name="FK_MembresiaEntrenador_UsuarioSistema" Association="SysGymModel.FK_MembresiaEntrenador_UsuarioSistema">
+            
+      
+            <ns3:End Role="UsuarioSistema" EntitySet="UsuarioSistema"/>
+            
+      
+            <ns3:End Role="MembresiaEntrenador" EntitySet="MembresiaEntrenador"/>
+            
+    
+          </ns3:AssociationSet>
+          
+    
+          <ns3:AssociationSet Name="FK_MetodoPago_MercadoPago" Association="SysGymModel.FK_MetodoPago_MercadoPago">
+            
+      
+            <ns3:End Role="MercadoPago" EntitySet="MercadoPago"/>
+            
+      
+            <ns3:End Role="MetodoPago" EntitySet="MetodoPago"/>
+            
+    
+          </ns3:AssociationSet>
+          
+    
+          <ns3:AssociationSet Name="FK_MetodoPago_PagoEfectivo" Association="SysGymModel.FK_MetodoPago_PagoEfectivo">
+            
+      
+            <ns3:End Role="PagoEfectivo" EntitySet="PagoEfectivo"/>
+            
+      
+            <ns3:End Role="MetodoPago" EntitySet="MetodoPago"/>
+            
+    
+          </ns3:AssociationSet>
+          
+    
+          <ns3:AssociationSet Name="FK_Pago_MetodoPago" Association="SysGymModel.FK_Pago_MetodoPago">
+            
+      
+            <ns3:End Role="MetodoPago" EntitySet="MetodoPago"/>
+            
+      
+            <ns3:End Role="Pago" EntitySet="Pago"/>
+            
+    
+          </ns3:AssociationSet>
+          
+    
+          <ns3:AssociationSet Name="FK_Pago_UsuarioRegistro" Association="SysGymModel.FK_Pago_UsuarioRegistro">
+            
+      
+            <ns3:End Role="UsuarioSistema" EntitySet="UsuarioSistema"/>
+            
+      
+            <ns3:End Role="Pago" EntitySet="Pago"/>
+            
+    
+          </ns3:AssociationSet>
+          
+    
+          <ns3:AssociationSet Name="FK_UsuarioSistema_Rol" Association="SysGymModel.FK_UsuarioSistema_Rol">
+            
+      
+            <ns3:End Role="Rol" EntitySet="Rol"/>
+            
+      
+            <ns3:End Role="UsuarioSistema" EntitySet="UsuarioSistema"/>
+            
+    
+          </ns3:AssociationSet>
+          
+    
+          <ns3:AssociationSet Name="FK_Rutina_Entrenador" Association="SysGymModel.FK_Rutina_Entrenador">
+            
+      
+            <ns3:End Role="UsuarioSistema" EntitySet="UsuarioSistema"/>
+            
+      
+            <ns3:End Role="Rutina" EntitySet="Rutina"/>
+            
+    
+          </ns3:AssociationSet>
+          
+    
+          <ns3:AssociationSet Name="FK_RutinaEjercicio_Rutina" Association="SysGymModel.FK_RutinaEjercicio_Rutina">
+            
+      
+            <ns3:End Role="Rutina" EntitySet="Rutina"/>
+            
+      
+            <ns3:End Role="RutinaEjercicio" EntitySet="RutinaEjercicio"/>
+            
+    
+          </ns3:AssociationSet>
+          
+    
+          <ns3:AssociationSet Name="FK_UsuarioSistema_Creador" Association="SysGymModel.FK_UsuarioSistema_Creador">
+            
+      
+            <ns3:End Role="UsuarioSistema" EntitySet="UsuarioSistema"/>
+            
+      
+            <ns3:End Role="UsuarioSistema1" EntitySet="UsuarioSistema"/>
+            
+    
+          </ns3:AssociationSet>
+          
+  
+        </ns3:EntityContainer>
+        
+  
+        <ns3:EntityType Name="AuditoriaOperacion">
+          
+    
+          <ns3:Documentation>
+            <ns3:Summary>Historial de operaciones auditadas, con responsable, fecha, entidad afectada y detalle.</ns3:Summary>
+          </ns3:Documentation>
+          <ns3:Key>
+            
+      
+            <ns3:PropertyRef Name="IdAuditoria"/>
+            
+    
+          </ns3:Key>
+          
+    
+          <ns3:Property Name="IdAuditoria" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity">
+            <ns3:Documentation>
+              <ns3:Summary>Identificador interno autogenerado de la operación auditada; clave primaria.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="FechaHora" Type="DateTime" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Fecha y hora en que se registró la operación.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="IdUsuario" Type="Int32" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Clave foránea al usuario responsable de la operación.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="UsuarioNombre" Type="String" Nullable="false" MaxLength="201" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Copia del nombre del responsable al momento del evento para preservar el contexto histórico.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Rol" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Copia del rol del responsable al momento del evento.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Operacion" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Código de la acción realizada, por ejemplo REGISTRAR_PAGO o BAJA_SOCIO.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Entidad" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Tipo de registro afectado, por ejemplo Pago, Socio o Membresia.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="IdEntidad" Type="Int32" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Identificador del registro afectado dentro de Entidad; no es FK porque el destino es polimórfico.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Detalle" Type="String" Nullable="false" MaxLength="1000" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Resumen contextual de la operación para su consulta en Auditoría.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:NavigationProperty Name="UsuarioSistema" Relationship="SysGymModel.FK_AuditoriaOperacion_Usuario" FromRole="AuditoriaOperacion" ToRole="UsuarioSistema"/>
+          
+  
+        </ns3:EntityType>
+        
+  
+        <ns3:EntityType Name="ConfiguracionSistema">
+          
+    
+          <ns3:Documentation>
+            <ns3:Summary>Parámetros globales de deuda, anticipación y avisos. Solo existe la fila IdConfiguracion = 1.</ns3:Summary>
+          </ns3:Documentation>
+          <ns3:Key>
+            
+      
+            <ns3:PropertyRef Name="IdConfiguracion"/>
+            
+    
+          </ns3:Key>
+          
+    
+          <ns3:Property Name="IdConfiguracion" Type="Int32" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Identificador fijo de la configuración global; PK y CHECK restringen el valor a 1.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="MaxCuotasVencidasPermitidas" Type="Int32" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Cantidad límite de cuotas pendientes vencidas; rango 1 a 120.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="MaxMesesAnticipacionCuotas" Type="Int32" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Meses futuros permitidos al generar cuotas, además del período actual; rango 0 a 120.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="DiasAvisoVencimiento" Type="Int32" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Días previos al vencimiento incluidos en los avisos; rango 0 a 365.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+  
+        </ns3:EntityType>
+        
+  
+        <ns3:EntityType Name="CuotaMembresia">
+          
+    
+          <ns3:Documentation>
+            <ns3:Summary>Cargo de un período de membresía con importe histórico y estado de pago.</ns3:Summary>
+          </ns3:Documentation>
+          <ns3:Key>
+            
+      
+            <ns3:PropertyRef Name="IdCuotaMembresia"/>
+            
+    
+          </ns3:Key>
+          
+    
+          <ns3:Property Name="IdCuotaMembresia" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity">
+            <ns3:Documentation>
+              <ns3:Summary>Identificador interno autogenerado de la cuota; clave primaria.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="FechaDesde" Type="DateTime" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Primer día del período cobrado.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="FechaHasta" Type="DateTime" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Último día incluido en el período cobrado.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Importe" Type="Decimal" Nullable="false" Precision="18" Scale="2">
+            <ns3:Documentation>
+              <ns3:Summary>Precio guardado al generar la cuota; no cambia con el precio futuro del plan.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="EstadoPago" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Estado de la cuota: Pendiente, Pagada o Anulada.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="IdRegistroPago" Type="Int32">
+            <ns3:Documentation>
+              <ns3:Summary>Clave foránea opcional al pago vigente que determina el estado de la cuota.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="IdMembresia" Type="Int32" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Clave foránea a la membresía propietaria del período.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:NavigationProperty Name="Membresia" Relationship="SysGymModel.FK_CuotaMembresia_Membresia" FromRole="CuotaMembresia" ToRole="Membresia"/>
+          
+    
+          <ns3:NavigationProperty Name="Pago" Relationship="SysGymModel.FK_CuotaMembresia_Pago" FromRole="CuotaMembresia" ToRole="Pago"/>
+          
+    
+          <ns3:NavigationProperty Name="Pago1" Relationship="SysGymModel.FK_Pago_CuotaMembresia" FromRole="CuotaMembresia" ToRole="Pago"/>
+          
+  
+        </ns3:EntityType>
+        
+  
+        <ns3:EntityType Name="Ejercicio">
+          
+    
+          <ns3:Documentation>
+            <ns3:Summary>Catálogo de ejercicios disponibles para construir rutinas.</ns3:Summary>
+          </ns3:Documentation>
+          <ns3:Key>
+            
+      
+            <ns3:PropertyRef Name="IdEjercicio"/>
+            
+    
+          </ns3:Key>
+          
+    
+          <ns3:Property Name="IdEjercicio" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity">
+            <ns3:Documentation>
+              <ns3:Summary>Identificador interno autogenerado del ejercicio; clave primaria.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Nombre mostrado en el catálogo y en las rutinas.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Descripcion" Type="String" MaxLength="500" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Descripción opcional del movimiento o los grupos musculares trabajados.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Estado" Type="Boolean" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Estado del ejercicio: 1 disponible, 0 dado de baja lógicamente.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:NavigationProperty Name="EjercicioImagen" Relationship="SysGymModel.FK_EjercicioImagen_Ejercicio" FromRole="Ejercicio" ToRole="EjercicioImagen"/>
+          
+    
+          <ns3:NavigationProperty Name="RutinaEjercicio" Relationship="SysGymModel.FK_RutinaEjercicio_Ejercicio" FromRole="Ejercicio" ToRole="RutinaEjercicio"/>
+          
+  
+        </ns3:EntityType>
+        
+  
+        <ns3:EntityType Name="EjercicioImagen">
+          
+    
+          <ns3:Documentation>
+            <ns3:Summary>Imágenes asociadas a ejercicios, guardadas como rutas relativas y posiciones de presentación.</ns3:Summary>
+          </ns3:Documentation>
+          <ns3:Key>
+            
+      
+            <ns3:PropertyRef Name="IdEjercicioImagen"/>
+            
+    
+          </ns3:Key>
+          
+    
+          <ns3:Property Name="IdEjercicioImagen" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity">
+            <ns3:Documentation>
+              <ns3:Summary>Identificador interno autogenerado de la imagen asociada; clave primaria.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="IdEjercicio" Type="Int32" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Clave foránea al ejercicio al que pertenece la imagen.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="RutaRelativa" Type="String" Nullable="false" MaxLength="260" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Ruta única del archivo dentro del almacenamiento de SysGym; la imagen queda fuera de SQL Server.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Orden" Type="Int32" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Posición positiva en que se muestra la imagen del ejercicio.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:NavigationProperty Name="Ejercicio" Relationship="SysGymModel.FK_EjercicioImagen_Ejercicio" FromRole="EjercicioImagen" ToRole="Ejercicio"/>
+          
+  
+        </ns3:EntityType>
+        
+  
+        <ns3:EntityType Name="Membresia">
+          
+    
+          <ns3:Documentation>
+            <ns3:Summary>Vínculo histórico entre un socio, un plan, quien la registró y una rutina opcional.</ns3:Summary>
+          </ns3:Documentation>
+          <ns3:Key>
+            
+      
+            <ns3:PropertyRef Name="IdMembresia"/>
+            
+    
+          </ns3:Key>
+          
+    
+          <ns3:Property Name="IdMembresia" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity">
+            <ns3:Documentation>
+              <ns3:Summary>Identificador interno autogenerado de la membresía; clave primaria.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="FechaInicio" Type="DateTime" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Fecha desde la que comienza la membresía.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="FechaVencimiento" Type="DateTime" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Fecha de vencimiento registrada; debe ser igual o posterior al inicio.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Estado" Type="Boolean" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Estado de la membresía: 1 activa, 0 inactiva; se conserva el historial.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="IdPlan" Type="Int32" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Clave foránea al plan asociado.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="IdSocio" Type="Int32" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Clave foránea al socio titular.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="IdUsuarioSistema" Type="Int32" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Clave foránea al Administrador o Recepcionista que la registró.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="IdRutina" Type="Int32">
+            <ns3:Documentation>
+              <ns3:Summary>Clave foránea opcional a la rutina asignada; NULL mientras no se elija una.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:NavigationProperty Name="CuotaMembresia" Relationship="SysGymModel.FK_CuotaMembresia_Membresia" FromRole="Membresia" ToRole="CuotaMembresia"/>
+          
+    
+          <ns3:NavigationProperty Name="Plan" Relationship="SysGymModel.FK_Membresia_Plan" FromRole="Membresia" ToRole="Plan"/>
+          
+    
+          <ns3:NavigationProperty Name="Rutina" Relationship="SysGymModel.FK_Membresia_Rutina" FromRole="Membresia" ToRole="Rutina"/>
+          
+    
+          <ns3:NavigationProperty Name="Socio" Relationship="SysGymModel.FK_Membresia_Socio" FromRole="Membresia" ToRole="Socio"/>
+          
+    
+          <ns3:NavigationProperty Name="UsuarioSistema" Relationship="SysGymModel.FK_Membresia_UsuarioSistema" FromRole="Membresia" ToRole="UsuarioSistema"/>
+          
+    
+          <ns3:NavigationProperty Name="MembresiaEntrenador" Relationship="SysGymModel.FK_MembresiaEntrenador_Membresia" FromRole="Membresia" ToRole="MembresiaEntrenador"/>
+          
+  
+        </ns3:EntityType>
+        
+  
+        <ns3:EntityType Name="MembresiaEntrenador">
+          
+    
+          <ns3:Documentation>
+            <ns3:Summary>Asignaciones históricas de entrenadores a membresías; la baja lógica conserva los cambios anteriores.</ns3:Summary>
+          </ns3:Documentation>
+          <ns3:Key>
+            
+      
+            <ns3:PropertyRef Name="IdMembresiaEntrenador"/>
+            
+    
+          </ns3:Key>
+          
+    
+          <ns3:Property Name="IdMembresiaEntrenador" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity">
+            <ns3:Documentation>
+              <ns3:Summary>Identificador interno autogenerado de la asignación; clave primaria.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Estado" Type="Boolean" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Estado de la asignación: 1 vigente, 0 finalizada o dada de baja.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="IdMembresia" Type="Int32" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Clave foránea a la membresía cuyo socio recibe seguimiento.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="IdEntrenador" Type="Int32" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Clave foránea al usuario con rol Entrenador asignado.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:NavigationProperty Name="Membresia" Relationship="SysGymModel.FK_MembresiaEntrenador_Membresia" FromRole="MembresiaEntrenador" ToRole="Membresia"/>
+          
+    
+          <ns3:NavigationProperty Name="UsuarioSistema" Relationship="SysGymModel.FK_MembresiaEntrenador_UsuarioSistema" FromRole="MembresiaEntrenador" ToRole="UsuarioSistema"/>
+          
+  
+        </ns3:EntityType>
+        
+  
+        <ns3:EntityType Name="MercadoPago">
+          
+    
+          <ns3:Documentation>
+            <ns3:Summary>Referencias opcionales de Mercado Pago; SysGym no inicia cobros contra su API.</ns3:Summary>
+          </ns3:Documentation>
+          <ns3:Key>
+            
+      
+            <ns3:PropertyRef Name="IdNroPagoMP"/>
+            
+    
+          </ns3:Key>
+          
+    
+          <ns3:Property Name="IdNroPagoMP" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity">
+            <ns3:Documentation>
+              <ns3:Summary>Identificador interno autogenerado del registro; clave primaria.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="MercadoPagoPaymentId" Type="String" MaxLength="100" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Identificador opcional del pago informado por Mercado Pago.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="MercadoPagoPreferenceId" Type="String" MaxLength="100" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Identificador opcional de la preferencia informada por Mercado Pago.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="ExternalReference" Type="String" MaxLength="150" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Referencia externa opcional para relacionar el pago con otro sistema o contexto.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="StatusDetail" Type="String" MaxLength="200" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Detalle opcional del estado recibido desde Mercado Pago.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="FechaAprobacion" Type="DateTime">
+            <ns3:Documentation>
+              <ns3:Summary>Fecha y hora opcional de aprobación informada para el pago.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:NavigationProperty Name="MetodoPago" Relationship="SysGymModel.FK_MetodoPago_MercadoPago" FromRole="MercadoPago" ToRole="MetodoPago"/>
+          
+  
+        </ns3:EntityType>
+        
+  
+        <ns3:EntityType Name="MetodoPago">
+          
+    
+          <ns3:Documentation>
+            <ns3:Summary>Catálogo de métodos de pago y su detalle específico, efectivo o Mercado Pago.</ns3:Summary>
+          </ns3:Documentation>
+          <ns3:Key>
+            
+      
+            <ns3:PropertyRef Name="IdMetodoPago"/>
+            
+    
+          </ns3:Key>
+          
+    
+          <ns3:Property Name="IdMetodoPago" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity">
+            <ns3:Documentation>
+              <ns3:Summary>Identificador interno autogenerado del método; clave primaria.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Estado" Type="Boolean" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Estado del método: 1 disponible para registrar pagos, 0 deshabilitado.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Observaciones" Type="String" MaxLength="500" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Etiqueta que distingue la opción de pago mostrada al operador.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="IdNroPagoMP" Type="Int32">
+            <ns3:Documentation>
+              <ns3:Summary>Clave foránea opcional al detalle Mercado Pago; no puede coexistir con IdPagoEfectivo.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="IdPagoEfectivo" Type="Int32">
+            <ns3:Documentation>
+              <ns3:Summary>Clave foránea opcional al detalle efectivo; no puede coexistir con IdNroPagoMP.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:NavigationProperty Name="MercadoPago" Relationship="SysGymModel.FK_MetodoPago_MercadoPago" FromRole="MetodoPago" ToRole="MercadoPago"/>
+          
+    
+          <ns3:NavigationProperty Name="PagoEfectivo" Relationship="SysGymModel.FK_MetodoPago_PagoEfectivo" FromRole="MetodoPago" ToRole="PagoEfectivo"/>
+          
+    
+          <ns3:NavigationProperty Name="Pago" Relationship="SysGymModel.FK_Pago_MetodoPago" FromRole="MetodoPago" ToRole="Pago"/>
+          
+  
+        </ns3:EntityType>
+        
+  
+        <ns3:EntityType Name="Pago">
+          
+    
+          <ns3:Documentation>
+            <ns3:Summary>Intentos de pago de cuotas con estado financiero e historial de anulaciones o reembolsos.</ns3:Summary>
+          </ns3:Documentation>
+          <ns3:Key>
+            
+      
+            <ns3:PropertyRef Name="IdRegistroPago"/>
+            
+    
+          </ns3:Key>
+          
+    
+          <ns3:Property Name="IdRegistroPago" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity">
+            <ns3:Documentation>
+              <ns3:Summary>Identificador interno autogenerado del pago; clave primaria.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Fecha" Type="DateTime" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Fecha y hora en que el operador registró el pago en SysGym.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Descripcion" Type="String" MaxLength="500" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Detalle opcional del pago o su contexto.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Importe" Type="Decimal" Nullable="false" Precision="18" Scale="2">
+            <ns3:Documentation>
+              <ns3:Summary>Importe positivo asociado a este intento de pago.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Estado" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Estado: Pendiente, Aprobado, Rechazado, Anulado o Reembolsado.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="IdMetodoPago" Type="Int32" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Clave foránea al método utilizado.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="IdUsuarioRegistro" Type="Int32">
+            <ns3:Documentation>
+              <ns3:Summary>Clave foránea opcional al usuario que registró el pago; NULL en datos históricos sin responsable.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="IdCuotaMembresia" Type="Int32">
+            <ns3:Documentation>
+              <ns3:Summary>Clave foránea opcional a la cuota correspondiente; se conserva al anular o reembolsar.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:NavigationProperty Name="CuotaMembresia" Relationship="SysGymModel.FK_CuotaMembresia_Pago" FromRole="Pago" ToRole="CuotaMembresia"/>
+          
+    
+          <ns3:NavigationProperty Name="CuotaMembresia1" Relationship="SysGymModel.FK_Pago_CuotaMembresia" FromRole="Pago" ToRole="CuotaMembresia"/>
+          
+    
+          <ns3:NavigationProperty Name="MetodoPago" Relationship="SysGymModel.FK_Pago_MetodoPago" FromRole="Pago" ToRole="MetodoPago"/>
+          
+    
+          <ns3:NavigationProperty Name="UsuarioSistema" Relationship="SysGymModel.FK_Pago_UsuarioRegistro" FromRole="Pago" ToRole="UsuarioSistema"/>
+          
+  
+        </ns3:EntityType>
+        
+  
+        <ns3:EntityType Name="PagoEfectivo">
+          
+    
+          <ns3:Documentation>
+            <ns3:Summary>Detalle identificador de un método de pago en efectivo.</ns3:Summary>
+          </ns3:Documentation>
+          <ns3:Key>
+            
+      
+            <ns3:PropertyRef Name="IdPagoEfectivo"/>
+            
+    
+          </ns3:Key>
+          
+    
+          <ns3:Property Name="IdPagoEfectivo" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity">
+            <ns3:Documentation>
+              <ns3:Summary>Identificador interno autogenerado del detalle de efectivo; clave primaria.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Estado" Type="Boolean" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Indica si el método de efectivo está habilitado: 1 sí, 0 no.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:NavigationProperty Name="MetodoPago" Relationship="SysGymModel.FK_MetodoPago_PagoEfectivo" FromRole="PagoEfectivo" ToRole="MetodoPago"/>
+          
+  
+        </ns3:EntityType>
+        
+  
+        <ns3:EntityType Name="Plan">
+          
+    
+          <ns3:Documentation>
+            <ns3:Summary>Catálogo de planes ofrecidos por el gimnasio y su precio vigente para cuotas futuras.</ns3:Summary>
+          </ns3:Documentation>
+          <ns3:Key>
+            
+      
+            <ns3:PropertyRef Name="IdPlan"/>
+            
+    
+          </ns3:Key>
+          
+    
+          <ns3:Property Name="IdPlan" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity">
+            <ns3:Documentation>
+              <ns3:Summary>Identificador interno autogenerado del plan; clave primaria.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Nombre mostrado al crear o cambiar una membresía.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Descripcion" Type="String" MaxLength="500" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Descripción opcional de los servicios incluidos.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Precio" Type="Decimal" Nullable="false" Precision="18" Scale="2">
+            <ns3:Documentation>
+              <ns3:Summary>Precio vigente; las cuotas ya generadas conservan su importe histórico.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Estado" Type="Boolean" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Estado del plan: 1 habilitado para nuevas operaciones, 0 dado de baja.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:NavigationProperty Name="Membresia" Relationship="SysGymModel.FK_Membresia_Plan" FromRole="Plan" ToRole="Membresia"/>
+          
+  
+        </ns3:EntityType>
+        
+  
+        <ns3:EntityType Name="Rol">
+          
+    
+          <ns3:Documentation>
+            <ns3:Summary>Catálogo de roles que determina las funciones habilitadas para cada cuenta del sistema.</ns3:Summary>
+          </ns3:Documentation>
+          <ns3:Key>
+            
+      
+            <ns3:PropertyRef Name="IdRol"/>
+            
+    
+          </ns3:Key>
+          
+    
+          <ns3:Property Name="IdRol" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity">
+            <ns3:Documentation>
+              <ns3:Summary>Identificador interno autogenerado del rol; clave primaria.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Nombre único del rol asignable: Administrador, Recepcionista o Entrenador.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Estado" Type="Boolean" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Indica si el rol puede asignarse: 1 activo, 0 inactivo.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:NavigationProperty Name="UsuarioSistema" Relationship="SysGymModel.FK_UsuarioSistema_Rol" FromRole="Rol" ToRole="UsuarioSistema"/>
+          
+  
+        </ns3:EntityType>
+        
+  
+        <ns3:EntityType Name="Rutina">
+          
+    
+          <ns3:Documentation>
+            <ns3:Summary>Rutinas de entrenamiento creadas por un entrenador; los modelos tienen objetivo y nivel.</ns3:Summary>
+          </ns3:Documentation>
+          <ns3:Key>
+            
+      
+            <ns3:PropertyRef Name="IdRutina"/>
+            
+    
+          </ns3:Key>
+          
+    
+          <ns3:Property Name="IdRutina" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity">
+            <ns3:Documentation>
+              <ns3:Summary>Identificador interno autogenerado de la rutina; clave primaria.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Nombre identificador de la rutina.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Descripcion" Type="String" MaxLength="500" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Descripción opcional de su finalidad o contenido.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="FechaCreacion" Type="DateTime" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Fecha de creación de la rutina.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="FechaInicio" Type="DateTime">
+            <ns3:Documentation>
+              <ns3:Summary>Inicio opcional del período previsto para la rutina.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="FechaFin" Type="DateTime">
+            <ns3:Documentation>
+              <ns3:Summary>Fin opcional del período previsto; no puede anteceder a FechaInicio si ambas existen.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Estado" Type="Boolean" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Estado de la rutina: 1 disponible, 0 dada de baja lógicamente.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Objetivo" Type="String" MaxLength="30" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Objetivo del modelo: Fuerza, Hipertrofia o Acondicionamiento; NULL para rutina libre.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Nivel" Type="String" MaxLength="20" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Nivel del modelo: Principiante, Intermedio o Avanzado; debe acompañar a Objetivo.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="IdEntrenador" Type="Int32" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Clave foránea al entrenador que creó y administra la rutina.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:NavigationProperty Name="Membresia" Relationship="SysGymModel.FK_Membresia_Rutina" FromRole="Rutina" ToRole="Membresia"/>
+          
+    
+          <ns3:NavigationProperty Name="UsuarioSistema" Relationship="SysGymModel.FK_Rutina_Entrenador" FromRole="Rutina" ToRole="UsuarioSistema"/>
+          
+    
+          <ns3:NavigationProperty Name="RutinaEjercicio" Relationship="SysGymModel.FK_RutinaEjercicio_Rutina" FromRole="Rutina" ToRole="RutinaEjercicio"/>
+          
+  
+        </ns3:EntityType>
+        
+  
+        <ns3:EntityType Name="RutinaEjercicio">
+          
+    
+          <ns3:Documentation>
+            <ns3:Summary>Parámetros de un ejercicio dentro de una rutina, ordenados por día y posición.</ns3:Summary>
+          </ns3:Documentation>
+          <ns3:Key>
+            
+      
+            <ns3:PropertyRef Name="IdRutinaEjercicio"/>
+            
+    
+          </ns3:Key>
+          
+    
+          <ns3:Property Name="IdRutinaEjercicio" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity">
+            <ns3:Documentation>
+              <ns3:Summary>Identificador interno autogenerado del detalle de rutina; clave primaria.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Series" Type="Int32">
+            <ns3:Documentation>
+              <ns3:Summary>Cantidad opcional de series; si se informa debe ser mayor que cero.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Repeticiones" Type="Int32">
+            <ns3:Documentation>
+              <ns3:Summary>Repeticiones opcionales por serie; si se informan deben ser mayores que cero.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Peso" Type="Decimal" Precision="8" Scale="2">
+            <ns3:Documentation>
+              <ns3:Summary>Peso opcional de trabajo en kilogramos; no puede ser negativo.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Descanso" Type="Int32" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Segundos de descanso; debe ser cero o mayor.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Orden" Type="Int32" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Posición positiva del ejercicio dentro de la rutina.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="DiaSemana" Type="Int32">
+            <ns3:Documentation>
+              <ns3:Summary>Día opcional de entrenamiento: 1 a 5 corresponde a lunes a viernes.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Estado" Type="Boolean" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Estado del detalle: 1 incluido, 0 quitado lógicamente.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="IdRutina" Type="Int32" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Clave foránea a la rutina que contiene el ejercicio.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="IdEjercicio" Type="Int32" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Clave foránea al ejercicio del catálogo.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:NavigationProperty Name="Ejercicio" Relationship="SysGymModel.FK_RutinaEjercicio_Ejercicio" FromRole="RutinaEjercicio" ToRole="Ejercicio"/>
+          
+    
+          <ns3:NavigationProperty Name="Rutina" Relationship="SysGymModel.FK_RutinaEjercicio_Rutina" FromRole="RutinaEjercicio" ToRole="Rutina"/>
+          
+  
+        </ns3:EntityType>
+        
+  
+        <ns3:EntityType Name="Socio">
+          
+    
+          <ns3:Documentation>
+            <ns3:Summary>Personas inscritas en el gimnasio, con sus datos personales, estado y medidas opcionales.</ns3:Summary>
+          </ns3:Documentation>
+          <ns3:Key>
+            
+      
+            <ns3:PropertyRef Name="IdSocio"/>
+            
+    
+          </ns3:Key>
+          
+    
+          <ns3:Property Name="IdSocio" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity">
+            <ns3:Documentation>
+              <ns3:Summary>Identificador interno autogenerado del socio; clave primaria.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="DNI" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Documento de identidad único del socio; no se puede repetir.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Nombre de pila del socio.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Apellido" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Apellido del socio.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="FechaNacimiento" Type="DateTime">
+            <ns3:Documentation>
+              <ns3:Summary>Fecha de nacimiento opcional; se usa para validar la edad mínima de alta.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="FechaAlta" Type="DateTime">
+            <ns3:Documentation>
+              <ns3:Summary>Fecha de alta; NULL cuando no existe una fecha histórica confiable.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Peso" Type="Decimal" Precision="6" Scale="2">
+            <ns3:Documentation>
+              <ns3:Summary>Peso corporal opcional en kilogramos; si se informa debe ser positivo.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Altura" Type="Decimal" Precision="5" Scale="2">
+            <ns3:Documentation>
+              <ns3:Summary>Altura opcional en metros; si se informa debe ser positiva.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="FotoRuta" Type="String" MaxLength="260" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Ruta relativa de la fotografía guardada en disco; el archivo no se almacena en SQL Server.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Sexo" Type="String" MaxLength="1" Unicode="false" FixedLength="true">
+            <ns3:Documentation>
+              <ns3:Summary>Código opcional de un carácter: M o F.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Estado" Type="Boolean" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Estado del socio: 1 activo, 0 dado de baja; la baja conserva el historial.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:NavigationProperty Name="Membresia" Relationship="SysGymModel.FK_Membresia_Socio" FromRole="Socio" ToRole="Membresia"/>
+          
+  
+        </ns3:EntityType>
+        
+  
+        <ns3:EntityType Name="UsuarioSistema">
+          
+    
+          <ns3:Documentation>
+            <ns3:Summary>Cuentas del personal que inicia sesión y ejecuta operaciones en SysGym.</ns3:Summary>
+          </ns3:Documentation>
+          <ns3:Key>
+            
+      
+            <ns3:PropertyRef Name="IdUsuarioSistema"/>
+            
+    
+          </ns3:Key>
+          
+    
+          <ns3:Property Name="IdUsuarioSistema" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity">
+            <ns3:Documentation>
+              <ns3:Summary>Identificador interno autogenerado de la cuenta; clave primaria.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Nombre de pila de la persona usuaria del sistema.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Apellido" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Apellido de la persona usuaria del sistema.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="DNI" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Documento de identidad único; no se puede repetir.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Telefono" Type="String" MaxLength="30" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Teléfono de contacto opcional del empleado.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="FechaNacimiento" Type="DateTime">
+            <ns3:Documentation>
+              <ns3:Summary>Fecha de nacimiento opcional del empleado.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Salario" Type="Decimal" Nullable="false" Precision="18" Scale="2">
+            <ns3:Documentation>
+              <ns3:Summary>Importe salarial registrado; SysGym no liquida ni paga salarios.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Username" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Nombre de usuario único usado para iniciar sesión.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Password" Type="String" Nullable="false" MaxLength="500" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Hash Argon2id de la contraseña; no debe contener la contraseña legible.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="FotoRuta" Type="String" MaxLength="260" Unicode="true" FixedLength="false">
+            <ns3:Documentation>
+              <ns3:Summary>Ruta relativa de la fotografía guardada en disco; el archivo no se almacena en SQL Server.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Sexo" Type="String" MaxLength="1" Unicode="false" FixedLength="true">
+            <ns3:Documentation>
+              <ns3:Summary>Código opcional de un carácter: M o F.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="Estado" Type="Boolean" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Estado de la cuenta: 1 activa, 0 dada de baja.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="IdRol" Type="Int32" Nullable="false">
+            <ns3:Documentation>
+              <ns3:Summary>Clave foránea al rol que define los permisos de la cuenta.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:Property Name="IdUsuarioCreador" Type="Int32">
+            <ns3:Documentation>
+              <ns3:Summary>Clave foránea opcional a quien dio de alta esta cuenta; NULL para cuentas antiguas o iniciales.</ns3:Summary>
+            </ns3:Documentation>
+          </ns3:Property>
+          
+    
+          <ns3:NavigationProperty Name="AuditoriaOperacion" Relationship="SysGymModel.FK_AuditoriaOperacion_Usuario" FromRole="UsuarioSistema" ToRole="AuditoriaOperacion"/>
+          
+    
+          <ns3:NavigationProperty Name="Membresia" Relationship="SysGymModel.FK_Membresia_UsuarioSistema" FromRole="UsuarioSistema" ToRole="Membresia"/>
+          
+    
+          <ns3:NavigationProperty Name="MembresiaEntrenador" Relationship="SysGymModel.FK_MembresiaEntrenador_UsuarioSistema" FromRole="UsuarioSistema" ToRole="MembresiaEntrenador"/>
+          
+    
+          <ns3:NavigationProperty Name="Pago" Relationship="SysGymModel.FK_Pago_UsuarioRegistro" FromRole="UsuarioSistema" ToRole="Pago"/>
+          
+    
+          <ns3:NavigationProperty Name="Rol" Relationship="SysGymModel.FK_UsuarioSistema_Rol" FromRole="UsuarioSistema" ToRole="Rol"/>
+          
+    
+          <ns3:NavigationProperty Name="Rutina" Relationship="SysGymModel.FK_Rutina_Entrenador" FromRole="UsuarioSistema" ToRole="Rutina"/>
+          
+    
+          <ns3:NavigationProperty Name="UsuarioSistema1" Relationship="SysGymModel.FK_UsuarioSistema_Creador" FromRole="UsuarioSistema" ToRole="UsuarioSistema1"/>
+          
+    
+          <ns3:NavigationProperty Name="UsuarioSistema2" Relationship="SysGymModel.FK_UsuarioSistema_Creador" FromRole="UsuarioSistema1" ToRole="UsuarioSistema"/>
+          
+  
+        </ns3:EntityType>
+        
+  
+        <ns3:Association Name="FK_AuditoriaOperacion_Usuario">
+          
+    
+          <ns3:End Role="UsuarioSistema" Type="SysGymModel.UsuarioSistema" Multiplicity="1"/>
+          
+    
+          <ns3:End Role="AuditoriaOperacion" Type="SysGymModel.AuditoriaOperacion" Multiplicity="*"/>
+          
+    
+          <ns3:ReferentialConstraint>
+            
+      
+            <ns3:Principal Role="UsuarioSistema">
+              
+        
+              <ns3:PropertyRef Name="IdUsuarioSistema"/>
+              
+      
+            </ns3:Principal>
+            
+      
+            <ns3:Dependent Role="AuditoriaOperacion">
+              
+        
+              <ns3:PropertyRef Name="IdUsuario"/>
+              
+      
+            </ns3:Dependent>
+            
+    
+          </ns3:ReferentialConstraint>
+          
+  
+        </ns3:Association>
+        
+  
+        <ns3:Association Name="FK_CuotaMembresia_Membresia">
+          
+    
+          <ns3:End Role="Membresia" Type="SysGymModel.Membresia" Multiplicity="1"/>
+          
+    
+          <ns3:End Role="CuotaMembresia" Type="SysGymModel.CuotaMembresia" Multiplicity="*"/>
+          
+    
+          <ns3:ReferentialConstraint>
+            
+      
+            <ns3:Principal Role="Membresia">
+              
+        
+              <ns3:PropertyRef Name="IdMembresia"/>
+              
+      
+            </ns3:Principal>
+            
+      
+            <ns3:Dependent Role="CuotaMembresia">
+              
+        
+              <ns3:PropertyRef Name="IdMembresia"/>
+              
+      
+            </ns3:Dependent>
+            
+    
+          </ns3:ReferentialConstraint>
+          
+  
+        </ns3:Association>
+        
+  
+        <ns3:Association Name="FK_CuotaMembresia_Pago">
+          
+    
+          <ns3:End Role="Pago" Type="SysGymModel.Pago" Multiplicity="0..1"/>
+          
+    
+          <ns3:End Role="CuotaMembresia" Type="SysGymModel.CuotaMembresia" Multiplicity="*"/>
+          
+    
+          <ns3:ReferentialConstraint>
+            
+      
+            <ns3:Principal Role="Pago">
+              
+        
+              <ns3:PropertyRef Name="IdRegistroPago"/>
+              
+      
+            </ns3:Principal>
+            
+      
+            <ns3:Dependent Role="CuotaMembresia">
+              
+        
+              <ns3:PropertyRef Name="IdRegistroPago"/>
+              
+      
+            </ns3:Dependent>
+            
+    
+          </ns3:ReferentialConstraint>
+          
+  
+        </ns3:Association>
+        
+  
+        <ns3:Association Name="FK_Pago_CuotaMembresia">
+          
+    
+          <ns3:End Role="CuotaMembresia" Type="SysGymModel.CuotaMembresia" Multiplicity="0..1"/>
+          
+    
+          <ns3:End Role="Pago" Type="SysGymModel.Pago" Multiplicity="*"/>
+          
+    
+          <ns3:ReferentialConstraint>
+            
+      
+            <ns3:Principal Role="CuotaMembresia">
+              
+        
+              <ns3:PropertyRef Name="IdCuotaMembresia"/>
+              
+      
+            </ns3:Principal>
+            
+      
+            <ns3:Dependent Role="Pago">
+              
+        
+              <ns3:PropertyRef Name="IdCuotaMembresia"/>
+              
+      
+            </ns3:Dependent>
+            
+    
+          </ns3:ReferentialConstraint>
+          
+  
+        </ns3:Association>
+        
+  
+        <ns3:Association Name="FK_EjercicioImagen_Ejercicio">
+          
+    
+          <ns3:End Role="Ejercicio" Type="SysGymModel.Ejercicio" Multiplicity="1"/>
+          
+    
+          <ns3:End Role="EjercicioImagen" Type="SysGymModel.EjercicioImagen" Multiplicity="*"/>
+          
+    
+          <ns3:ReferentialConstraint>
+            
+      
+            <ns3:Principal Role="Ejercicio">
+              
+        
+              <ns3:PropertyRef Name="IdEjercicio"/>
+              
+      
+            </ns3:Principal>
+            
+      
+            <ns3:Dependent Role="EjercicioImagen">
+              
+        
+              <ns3:PropertyRef Name="IdEjercicio"/>
+              
+      
+            </ns3:Dependent>
+            
+    
+          </ns3:ReferentialConstraint>
+          
+  
+        </ns3:Association>
+        
+  
+        <ns3:Association Name="FK_RutinaEjercicio_Ejercicio">
+          
+    
+          <ns3:End Role="Ejercicio" Type="SysGymModel.Ejercicio" Multiplicity="1"/>
+          
+    
+          <ns3:End Role="RutinaEjercicio" Type="SysGymModel.RutinaEjercicio" Multiplicity="*"/>
+          
+    
+          <ns3:ReferentialConstraint>
+            
+      
+            <ns3:Principal Role="Ejercicio">
+              
+        
+              <ns3:PropertyRef Name="IdEjercicio"/>
+              
+      
+            </ns3:Principal>
+            
+      
+            <ns3:Dependent Role="RutinaEjercicio">
+              
+        
+              <ns3:PropertyRef Name="IdEjercicio"/>
+              
+      
+            </ns3:Dependent>
+            
+    
+          </ns3:ReferentialConstraint>
+          
+  
+        </ns3:Association>
+        
+  
+        <ns3:Association Name="FK_Membresia_Plan">
+          
+    
+          <ns3:End Role="Plan" Type="SysGymModel.Plan" Multiplicity="1"/>
+          
+    
+          <ns3:End Role="Membresia" Type="SysGymModel.Membresia" Multiplicity="*"/>
+          
+    
+          <ns3:ReferentialConstraint>
+            
+      
+            <ns3:Principal Role="Plan">
+              
+        
+              <ns3:PropertyRef Name="IdPlan"/>
+              
+      
+            </ns3:Principal>
+            
+      
+            <ns3:Dependent Role="Membresia">
+              
+        
+              <ns3:PropertyRef Name="IdPlan"/>
+              
+      
+            </ns3:Dependent>
+            
+    
+          </ns3:ReferentialConstraint>
+          
+  
+        </ns3:Association>
+        
+  
+        <ns3:Association Name="FK_Membresia_Rutina">
+          
+    
+          <ns3:End Role="Rutina" Type="SysGymModel.Rutina" Multiplicity="0..1"/>
+          
+    
+          <ns3:End Role="Membresia" Type="SysGymModel.Membresia" Multiplicity="*"/>
+          
+    
+          <ns3:ReferentialConstraint>
+            
+      
+            <ns3:Principal Role="Rutina">
+              
+        
+              <ns3:PropertyRef Name="IdRutina"/>
+              
+      
+            </ns3:Principal>
+            
+      
+            <ns3:Dependent Role="Membresia">
+              
+        
+              <ns3:PropertyRef Name="IdRutina"/>
+              
+      
+            </ns3:Dependent>
+            
+    
+          </ns3:ReferentialConstraint>
+          
+  
+        </ns3:Association>
+        
+  
+        <ns3:Association Name="FK_Membresia_Socio">
+          
+    
+          <ns3:End Role="Socio" Type="SysGymModel.Socio" Multiplicity="1"/>
+          
+    
+          <ns3:End Role="Membresia" Type="SysGymModel.Membresia" Multiplicity="*"/>
+          
+    
+          <ns3:ReferentialConstraint>
+            
+      
+            <ns3:Principal Role="Socio">
+              
+        
+              <ns3:PropertyRef Name="IdSocio"/>
+              
+      
+            </ns3:Principal>
+            
+      
+            <ns3:Dependent Role="Membresia">
+              
+        
+              <ns3:PropertyRef Name="IdSocio"/>
+              
+      
+            </ns3:Dependent>
+            
+    
+          </ns3:ReferentialConstraint>
+          
+  
+        </ns3:Association>
+        
+  
+        <ns3:Association Name="FK_Membresia_UsuarioSistema">
+          
+    
+          <ns3:End Role="UsuarioSistema" Type="SysGymModel.UsuarioSistema" Multiplicity="1"/>
+          
+    
+          <ns3:End Role="Membresia" Type="SysGymModel.Membresia" Multiplicity="*"/>
+          
+    
+          <ns3:ReferentialConstraint>
+            
+      
+            <ns3:Principal Role="UsuarioSistema">
+              
+        
+              <ns3:PropertyRef Name="IdUsuarioSistema"/>
+              
+      
+            </ns3:Principal>
+            
+      
+            <ns3:Dependent Role="Membresia">
+              
+        
+              <ns3:PropertyRef Name="IdUsuarioSistema"/>
+              
+      
+            </ns3:Dependent>
+            
+    
+          </ns3:ReferentialConstraint>
+          
+  
+        </ns3:Association>
+        
+  
+        <ns3:Association Name="FK_MembresiaEntrenador_Membresia">
+          
+    
+          <ns3:End Role="Membresia" Type="SysGymModel.Membresia" Multiplicity="1"/>
+          
+    
+          <ns3:End Role="MembresiaEntrenador" Type="SysGymModel.MembresiaEntrenador" Multiplicity="*"/>
+          
+    
+          <ns3:ReferentialConstraint>
+            
+      
+            <ns3:Principal Role="Membresia">
+              
+        
+              <ns3:PropertyRef Name="IdMembresia"/>
+              
+      
+            </ns3:Principal>
+            
+      
+            <ns3:Dependent Role="MembresiaEntrenador">
+              
+        
+              <ns3:PropertyRef Name="IdMembresia"/>
+              
+      
+            </ns3:Dependent>
+            
+    
+          </ns3:ReferentialConstraint>
+          
+  
+        </ns3:Association>
+        
+  
+        <ns3:Association Name="FK_MembresiaEntrenador_UsuarioSistema">
+          
+    
+          <ns3:End Role="UsuarioSistema" Type="SysGymModel.UsuarioSistema" Multiplicity="1"/>
+          
+    
+          <ns3:End Role="MembresiaEntrenador" Type="SysGymModel.MembresiaEntrenador" Multiplicity="*"/>
+          
+    
+          <ns3:ReferentialConstraint>
+            
+      
+            <ns3:Principal Role="UsuarioSistema">
+              
+        
+              <ns3:PropertyRef Name="IdUsuarioSistema"/>
+              
+      
+            </ns3:Principal>
+            
+      
+            <ns3:Dependent Role="MembresiaEntrenador">
+              
+        
+              <ns3:PropertyRef Name="IdEntrenador"/>
+              
+      
+            </ns3:Dependent>
+            
+    
+          </ns3:ReferentialConstraint>
+          
+  
+        </ns3:Association>
+        
+  
+        <ns3:Association Name="FK_MetodoPago_MercadoPago">
+          
+    
+          <ns3:End Role="MercadoPago" Type="SysGymModel.MercadoPago" Multiplicity="0..1"/>
+          
+    
+          <ns3:End Role="MetodoPago" Type="SysGymModel.MetodoPago" Multiplicity="*"/>
+          
+    
+          <ns3:ReferentialConstraint>
+            
+      
+            <ns3:Principal Role="MercadoPago">
+              
+        
+              <ns3:PropertyRef Name="IdNroPagoMP"/>
+              
+      
+            </ns3:Principal>
+            
+      
+            <ns3:Dependent Role="MetodoPago">
+              
+        
+              <ns3:PropertyRef Name="IdNroPagoMP"/>
+              
+      
+            </ns3:Dependent>
+            
+    
+          </ns3:ReferentialConstraint>
+          
+  
+        </ns3:Association>
+        
+  
+        <ns3:Association Name="FK_MetodoPago_PagoEfectivo">
+          
+    
+          <ns3:End Role="PagoEfectivo" Type="SysGymModel.PagoEfectivo" Multiplicity="0..1"/>
+          
+    
+          <ns3:End Role="MetodoPago" Type="SysGymModel.MetodoPago" Multiplicity="*"/>
+          
+    
+          <ns3:ReferentialConstraint>
+            
+      
+            <ns3:Principal Role="PagoEfectivo">
+              
+        
+              <ns3:PropertyRef Name="IdPagoEfectivo"/>
+              
+      
+            </ns3:Principal>
+            
+      
+            <ns3:Dependent Role="MetodoPago">
+              
+        
+              <ns3:PropertyRef Name="IdPagoEfectivo"/>
+              
+      
+            </ns3:Dependent>
+            
+    
+          </ns3:ReferentialConstraint>
+          
+  
+        </ns3:Association>
+        
+  
+        <ns3:Association Name="FK_Pago_MetodoPago">
+          
+    
+          <ns3:End Role="MetodoPago" Type="SysGymModel.MetodoPago" Multiplicity="1"/>
+          
+    
+          <ns3:End Role="Pago" Type="SysGymModel.Pago" Multiplicity="*"/>
+          
+    
+          <ns3:ReferentialConstraint>
+            
+      
+            <ns3:Principal Role="MetodoPago">
+              
+        
+              <ns3:PropertyRef Name="IdMetodoPago"/>
+              
+      
+            </ns3:Principal>
+            
+      
+            <ns3:Dependent Role="Pago">
+              
+        
+              <ns3:PropertyRef Name="IdMetodoPago"/>
+              
+      
+            </ns3:Dependent>
+            
+    
+          </ns3:ReferentialConstraint>
+          
+  
+        </ns3:Association>
+        
+  
+        <ns3:Association Name="FK_Pago_UsuarioRegistro">
+          
+    
+          <ns3:End Role="UsuarioSistema" Type="SysGymModel.UsuarioSistema" Multiplicity="0..1"/>
+          
+    
+          <ns3:End Role="Pago" Type="SysGymModel.Pago" Multiplicity="*"/>
+          
+    
+          <ns3:ReferentialConstraint>
+            
+      
+            <ns3:Principal Role="UsuarioSistema">
+              
+        
+              <ns3:PropertyRef Name="IdUsuarioSistema"/>
+              
+      
+            </ns3:Principal>
+            
+      
+            <ns3:Dependent Role="Pago">
+              
+        
+              <ns3:PropertyRef Name="IdUsuarioRegistro"/>
+              
+      
+            </ns3:Dependent>
+            
+    
+          </ns3:ReferentialConstraint>
+          
+  
+        </ns3:Association>
+        
+  
+        <ns3:Association Name="FK_UsuarioSistema_Rol">
+          
+    
+          <ns3:End Role="Rol" Type="SysGymModel.Rol" Multiplicity="1"/>
+          
+    
+          <ns3:End Role="UsuarioSistema" Type="SysGymModel.UsuarioSistema" Multiplicity="*"/>
+          
+    
+          <ns3:ReferentialConstraint>
+            
+      
+            <ns3:Principal Role="Rol">
+              
+        
+              <ns3:PropertyRef Name="IdRol"/>
+              
+      
+            </ns3:Principal>
+            
+      
+            <ns3:Dependent Role="UsuarioSistema">
+              
+        
+              <ns3:PropertyRef Name="IdRol"/>
+              
+      
+            </ns3:Dependent>
+            
+    
+          </ns3:ReferentialConstraint>
+          
+  
+        </ns3:Association>
+        
+  
+        <ns3:Association Name="FK_Rutina_Entrenador">
+          
+    
+          <ns3:End Role="UsuarioSistema" Type="SysGymModel.UsuarioSistema" Multiplicity="1"/>
+          
+    
+          <ns3:End Role="Rutina" Type="SysGymModel.Rutina" Multiplicity="*"/>
+          
+    
+          <ns3:ReferentialConstraint>
+            
+      
+            <ns3:Principal Role="UsuarioSistema">
+              
+        
+              <ns3:PropertyRef Name="IdUsuarioSistema"/>
+              
+      
+            </ns3:Principal>
+            
+      
+            <ns3:Dependent Role="Rutina">
+              
+        
+              <ns3:PropertyRef Name="IdEntrenador"/>
+              
+      
+            </ns3:Dependent>
+            
+    
+          </ns3:ReferentialConstraint>
+          
+  
+        </ns3:Association>
+        
+  
+        <ns3:Association Name="FK_RutinaEjercicio_Rutina">
+          
+    
+          <ns3:End Role="Rutina" Type="SysGymModel.Rutina" Multiplicity="1"/>
+          
+    
+          <ns3:End Role="RutinaEjercicio" Type="SysGymModel.RutinaEjercicio" Multiplicity="*"/>
+          
+    
+          <ns3:ReferentialConstraint>
+            
+      
+            <ns3:Principal Role="Rutina">
+              
+        
+              <ns3:PropertyRef Name="IdRutina"/>
+              
+      
+            </ns3:Principal>
+            
+      
+            <ns3:Dependent Role="RutinaEjercicio">
+              
+        
+              <ns3:PropertyRef Name="IdRutina"/>
+              
+      
+            </ns3:Dependent>
+            
+    
+          </ns3:ReferentialConstraint>
+          
+  
+        </ns3:Association>
+        
+  
+        <ns3:Association Name="FK_UsuarioSistema_Creador">
+          
+    
+          <ns3:End Role="UsuarioSistema" Type="SysGymModel.UsuarioSistema" Multiplicity="0..1"/>
+          
+    
+          <ns3:End Role="UsuarioSistema1" Type="SysGymModel.UsuarioSistema" Multiplicity="*"/>
+          
+    
+          <ns3:ReferentialConstraint>
+            
+      
+            <ns3:Principal Role="UsuarioSistema">
+              
+        
+              <ns3:PropertyRef Name="IdUsuarioSistema"/>
+              
+      
+            </ns3:Principal>
+            
+      
+            <ns3:Dependent Role="UsuarioSistema1">
+              
+        
+              <ns3:PropertyRef Name="IdUsuarioCreador"/>
+              
+      
+            </ns3:Dependent>
+            
+    
+          </ns3:ReferentialConstraint>
+          
+  
+        </ns3:Association>
+        
+
+      </ns3:Schema>
+    </edmx:ConceptualModels>
+    <edmx:Mappings>
+      <mapping:Mapping Space="C-S">
+        
+  
+        <mapping:EntityContainerMapping StorageEntityContainer="SysGymModelStoreContainer" CdmEntityContainer="SysGymModelContainer">
+          
+    
+          <mapping:EntitySetMapping Name="AuditoriaOperacion">
+            
+      
+            <mapping:EntityTypeMapping TypeName="SysGymModel.AuditoriaOperacion">
+              
+        
+              <mapping:MappingFragment StoreEntitySet="AuditoriaOperacion">
+                
+          
+                <mapping:ScalarProperty Name="IdAuditoria" ColumnName="IdAuditoria"/>
+                
+          
+                <mapping:ScalarProperty Name="FechaHora" ColumnName="FechaHora"/>
+                
+          
+                <mapping:ScalarProperty Name="IdUsuario" ColumnName="IdUsuario"/>
+                
+          
+                <mapping:ScalarProperty Name="UsuarioNombre" ColumnName="UsuarioNombre"/>
+                
+          
+                <mapping:ScalarProperty Name="Rol" ColumnName="Rol"/>
+                
+          
+                <mapping:ScalarProperty Name="Operacion" ColumnName="Operacion"/>
+                
+          
+                <mapping:ScalarProperty Name="Entidad" ColumnName="Entidad"/>
+                
+          
+                <mapping:ScalarProperty Name="IdEntidad" ColumnName="IdEntidad"/>
+                
+          
+                <mapping:ScalarProperty Name="Detalle" ColumnName="Detalle"/>
+                
+        
+              </mapping:MappingFragment>
+              
+      
+            </mapping:EntityTypeMapping>
+            
+    
+          </mapping:EntitySetMapping>
+          
+    
+          <mapping:EntitySetMapping Name="ConfiguracionSistema">
+            
+      
+            <mapping:EntityTypeMapping TypeName="SysGymModel.ConfiguracionSistema">
+              
+        
+              <mapping:MappingFragment StoreEntitySet="ConfiguracionSistema">
+                
+          
+                <mapping:ScalarProperty Name="IdConfiguracion" ColumnName="IdConfiguracion"/>
+                
+          
+                <mapping:ScalarProperty Name="MaxCuotasVencidasPermitidas" ColumnName="MaxCuotasVencidasPermitidas"/>
+                
+          
+                <mapping:ScalarProperty Name="MaxMesesAnticipacionCuotas" ColumnName="MaxMesesAnticipacionCuotas"/>
+                
+          
+                <mapping:ScalarProperty Name="DiasAvisoVencimiento" ColumnName="DiasAvisoVencimiento"/>
+                
+        
+              </mapping:MappingFragment>
+              
+      
+            </mapping:EntityTypeMapping>
+            
+    
+          </mapping:EntitySetMapping>
+          
+    
+          <mapping:EntitySetMapping Name="CuotaMembresia">
+            
+      
+            <mapping:EntityTypeMapping TypeName="SysGymModel.CuotaMembresia">
+              
+        
+              <mapping:MappingFragment StoreEntitySet="CuotaMembresia">
+                
+          
+                <mapping:ScalarProperty Name="IdCuotaMembresia" ColumnName="IdCuotaMembresia"/>
+                
+          
+                <mapping:ScalarProperty Name="FechaDesde" ColumnName="FechaDesde"/>
+                
+          
+                <mapping:ScalarProperty Name="FechaHasta" ColumnName="FechaHasta"/>
+                
+          
+                <mapping:ScalarProperty Name="Importe" ColumnName="Importe"/>
+                
+          
+                <mapping:ScalarProperty Name="EstadoPago" ColumnName="EstadoPago"/>
+                
+          
+                <mapping:ScalarProperty Name="IdRegistroPago" ColumnName="IdRegistroPago"/>
+                
+          
+                <mapping:ScalarProperty Name="IdMembresia" ColumnName="IdMembresia"/>
+                
+        
+              </mapping:MappingFragment>
+              
+      
+            </mapping:EntityTypeMapping>
+            
+    
+          </mapping:EntitySetMapping>
+          
+    
+          <mapping:EntitySetMapping Name="Ejercicio">
+            
+      
+            <mapping:EntityTypeMapping TypeName="SysGymModel.Ejercicio">
+              
+        
+              <mapping:MappingFragment StoreEntitySet="Ejercicio">
+                
+          
+                <mapping:ScalarProperty Name="IdEjercicio" ColumnName="IdEjercicio"/>
+                
+          
+                <mapping:ScalarProperty Name="Nombre" ColumnName="Nombre"/>
+                
+          
+                <mapping:ScalarProperty Name="Descripcion" ColumnName="Descripcion"/>
+                
+          
+                <mapping:ScalarProperty Name="Estado" ColumnName="Estado"/>
+                
+        
+              </mapping:MappingFragment>
+              
+      
+            </mapping:EntityTypeMapping>
+            
+    
+          </mapping:EntitySetMapping>
+          
+    
+          <mapping:EntitySetMapping Name="EjercicioImagen">
+            
+      
+            <mapping:EntityTypeMapping TypeName="SysGymModel.EjercicioImagen">
+              
+        
+              <mapping:MappingFragment StoreEntitySet="EjercicioImagen">
+                
+          
+                <mapping:ScalarProperty Name="IdEjercicioImagen" ColumnName="IdEjercicioImagen"/>
+                
+          
+                <mapping:ScalarProperty Name="IdEjercicio" ColumnName="IdEjercicio"/>
+                
+          
+                <mapping:ScalarProperty Name="RutaRelativa" ColumnName="RutaRelativa"/>
+                
+          
+                <mapping:ScalarProperty Name="Orden" ColumnName="Orden"/>
+                
+        
+              </mapping:MappingFragment>
+              
+      
+            </mapping:EntityTypeMapping>
+            
+    
+          </mapping:EntitySetMapping>
+          
+    
+          <mapping:EntitySetMapping Name="Membresia">
+            
+      
+            <mapping:EntityTypeMapping TypeName="SysGymModel.Membresia">
+              
+        
+              <mapping:MappingFragment StoreEntitySet="Membresia">
+                
+          
+                <mapping:ScalarProperty Name="IdMembresia" ColumnName="IdMembresia"/>
+                
+          
+                <mapping:ScalarProperty Name="FechaInicio" ColumnName="FechaInicio"/>
+                
+          
+                <mapping:ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento"/>
+                
+          
+                <mapping:ScalarProperty Name="Estado" ColumnName="Estado"/>
+                
+          
+                <mapping:ScalarProperty Name="IdPlan" ColumnName="IdPlan"/>
+                
+          
+                <mapping:ScalarProperty Name="IdSocio" ColumnName="IdSocio"/>
+                
+          
+                <mapping:ScalarProperty Name="IdUsuarioSistema" ColumnName="IdUsuarioSistema"/>
+                
+          
+                <mapping:ScalarProperty Name="IdRutina" ColumnName="IdRutina"/>
+                
+        
+              </mapping:MappingFragment>
+              
+      
+            </mapping:EntityTypeMapping>
+            
+    
+          </mapping:EntitySetMapping>
+          
+    
+          <mapping:EntitySetMapping Name="MembresiaEntrenador">
+            
+      
+            <mapping:EntityTypeMapping TypeName="SysGymModel.MembresiaEntrenador">
+              
+        
+              <mapping:MappingFragment StoreEntitySet="MembresiaEntrenador">
+                
+          
+                <mapping:ScalarProperty Name="IdMembresiaEntrenador" ColumnName="IdMembresiaEntrenador"/>
+                
+          
+                <mapping:ScalarProperty Name="Estado" ColumnName="Estado"/>
+                
+          
+                <mapping:ScalarProperty Name="IdMembresia" ColumnName="IdMembresia"/>
+                
+          
+                <mapping:ScalarProperty Name="IdEntrenador" ColumnName="IdEntrenador"/>
+                
+        
+              </mapping:MappingFragment>
+              
+      
+            </mapping:EntityTypeMapping>
+            
+    
+          </mapping:EntitySetMapping>
+          
+    
+          <mapping:EntitySetMapping Name="MercadoPago">
+            
+      
+            <mapping:EntityTypeMapping TypeName="SysGymModel.MercadoPago">
+              
+        
+              <mapping:MappingFragment StoreEntitySet="MercadoPago">
+                
+          
+                <mapping:ScalarProperty Name="IdNroPagoMP" ColumnName="IdNroPagoMP"/>
+                
+          
+                <mapping:ScalarProperty Name="MercadoPagoPaymentId" ColumnName="MercadoPagoPaymentId"/>
+                
+          
+                <mapping:ScalarProperty Name="MercadoPagoPreferenceId" ColumnName="MercadoPagoPreferenceId"/>
+                
+          
+                <mapping:ScalarProperty Name="ExternalReference" ColumnName="ExternalReference"/>
+                
+          
+                <mapping:ScalarProperty Name="StatusDetail" ColumnName="StatusDetail"/>
+                
+          
+                <mapping:ScalarProperty Name="FechaAprobacion" ColumnName="FechaAprobacion"/>
+                
+        
+              </mapping:MappingFragment>
+              
+      
+            </mapping:EntityTypeMapping>
+            
+    
+          </mapping:EntitySetMapping>
+          
+    
+          <mapping:EntitySetMapping Name="MetodoPago">
+            
+      
+            <mapping:EntityTypeMapping TypeName="SysGymModel.MetodoPago">
+              
+        
+              <mapping:MappingFragment StoreEntitySet="MetodoPago">
+                
+          
+                <mapping:ScalarProperty Name="IdMetodoPago" ColumnName="IdMetodoPago"/>
+                
+          
+                <mapping:ScalarProperty Name="Estado" ColumnName="Estado"/>
+                
+          
+                <mapping:ScalarProperty Name="Observaciones" ColumnName="Observaciones"/>
+                
+          
+                <mapping:ScalarProperty Name="IdNroPagoMP" ColumnName="IdNroPagoMP"/>
+                
+          
+                <mapping:ScalarProperty Name="IdPagoEfectivo" ColumnName="IdPagoEfectivo"/>
+                
+        
+              </mapping:MappingFragment>
+              
+      
+            </mapping:EntityTypeMapping>
+            
+    
+          </mapping:EntitySetMapping>
+          
+    
+          <mapping:EntitySetMapping Name="Pago">
+            
+      
+            <mapping:EntityTypeMapping TypeName="SysGymModel.Pago">
+              
+        
+              <mapping:MappingFragment StoreEntitySet="Pago">
+                
+          
+                <mapping:ScalarProperty Name="IdRegistroPago" ColumnName="IdRegistroPago"/>
+                
+          
+                <mapping:ScalarProperty Name="Fecha" ColumnName="Fecha"/>
+                
+          
+                <mapping:ScalarProperty Name="Descripcion" ColumnName="Descripcion"/>
+                
+          
+                <mapping:ScalarProperty Name="Importe" ColumnName="Importe"/>
+                
+          
+                <mapping:ScalarProperty Name="Estado" ColumnName="Estado"/>
+                
+          
+                <mapping:ScalarProperty Name="IdMetodoPago" ColumnName="IdMetodoPago"/>
+                
+          
+                <mapping:ScalarProperty Name="IdUsuarioRegistro" ColumnName="IdUsuarioRegistro"/>
+                
+          
+                <mapping:ScalarProperty Name="IdCuotaMembresia" ColumnName="IdCuotaMembresia"/>
+                
+        
+              </mapping:MappingFragment>
+              
+      
+            </mapping:EntityTypeMapping>
+            
+    
+          </mapping:EntitySetMapping>
+          
+    
+          <mapping:EntitySetMapping Name="PagoEfectivo">
+            
+      
+            <mapping:EntityTypeMapping TypeName="SysGymModel.PagoEfectivo">
+              
+        
+              <mapping:MappingFragment StoreEntitySet="PagoEfectivo">
+                
+          
+                <mapping:ScalarProperty Name="IdPagoEfectivo" ColumnName="IdPagoEfectivo"/>
+                
+          
+                <mapping:ScalarProperty Name="Estado" ColumnName="Estado"/>
+                
+        
+              </mapping:MappingFragment>
+              
+      
+            </mapping:EntityTypeMapping>
+            
+    
+          </mapping:EntitySetMapping>
+          
+    
+          <mapping:EntitySetMapping Name="Plan">
+            
+      
+            <mapping:EntityTypeMapping TypeName="SysGymModel.Plan">
+              
+        
+              <mapping:MappingFragment StoreEntitySet="Plan">
+                
+          
+                <mapping:ScalarProperty Name="IdPlan" ColumnName="IdPlan"/>
+                
+          
+                <mapping:ScalarProperty Name="Nombre" ColumnName="Nombre"/>
+                
+          
+                <mapping:ScalarProperty Name="Descripcion" ColumnName="Descripcion"/>
+                
+          
+                <mapping:ScalarProperty Name="Precio" ColumnName="Precio"/>
+                
+          
+                <mapping:ScalarProperty Name="Estado" ColumnName="Estado"/>
+                
+        
+              </mapping:MappingFragment>
+              
+      
+            </mapping:EntityTypeMapping>
+            
+    
+          </mapping:EntitySetMapping>
+          
+    
+          <mapping:EntitySetMapping Name="Rol">
+            
+      
+            <mapping:EntityTypeMapping TypeName="SysGymModel.Rol">
+              
+        
+              <mapping:MappingFragment StoreEntitySet="Rol">
+                
+          
+                <mapping:ScalarProperty Name="IdRol" ColumnName="IdRol"/>
+                
+          
+                <mapping:ScalarProperty Name="Descripcion" ColumnName="Descripcion"/>
+                
+          
+                <mapping:ScalarProperty Name="Estado" ColumnName="Estado"/>
+                
+        
+              </mapping:MappingFragment>
+              
+      
+            </mapping:EntityTypeMapping>
+            
+    
+          </mapping:EntitySetMapping>
+          
+    
+          <mapping:EntitySetMapping Name="Rutina">
+            
+      
+            <mapping:EntityTypeMapping TypeName="SysGymModel.Rutina">
+              
+        
+              <mapping:MappingFragment StoreEntitySet="Rutina">
+                
+          
+                <mapping:ScalarProperty Name="IdRutina" ColumnName="IdRutina"/>
+                
+          
+                <mapping:ScalarProperty Name="Nombre" ColumnName="Nombre"/>
+                
+          
+                <mapping:ScalarProperty Name="Descripcion" ColumnName="Descripcion"/>
+                
+          
+                <mapping:ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion"/>
+                
+          
+                <mapping:ScalarProperty Name="FechaInicio" ColumnName="FechaInicio"/>
+                
+          
+                <mapping:ScalarProperty Name="FechaFin" ColumnName="FechaFin"/>
+                
+          
+                <mapping:ScalarProperty Name="Estado" ColumnName="Estado"/>
+                
+          
+                <mapping:ScalarProperty Name="Objetivo" ColumnName="Objetivo"/>
+                
+          
+                <mapping:ScalarProperty Name="Nivel" ColumnName="Nivel"/>
+                
+          
+                <mapping:ScalarProperty Name="IdEntrenador" ColumnName="IdEntrenador"/>
+                
+        
+              </mapping:MappingFragment>
+              
+      
+            </mapping:EntityTypeMapping>
+            
+    
+          </mapping:EntitySetMapping>
+          
+    
+          <mapping:EntitySetMapping Name="RutinaEjercicio">
+            
+      
+            <mapping:EntityTypeMapping TypeName="SysGymModel.RutinaEjercicio">
+              
+        
+              <mapping:MappingFragment StoreEntitySet="RutinaEjercicio">
+                
+          
+                <mapping:ScalarProperty Name="IdRutinaEjercicio" ColumnName="IdRutinaEjercicio"/>
+                
+          
+                <mapping:ScalarProperty Name="Series" ColumnName="Series"/>
+                
+          
+                <mapping:ScalarProperty Name="Repeticiones" ColumnName="Repeticiones"/>
+                
+          
+                <mapping:ScalarProperty Name="Peso" ColumnName="Peso"/>
+                
+          
+                <mapping:ScalarProperty Name="Descanso" ColumnName="Descanso"/>
+                
+          
+                <mapping:ScalarProperty Name="Orden" ColumnName="Orden"/>
+                
+          
+                <mapping:ScalarProperty Name="DiaSemana" ColumnName="DiaSemana"/>
+                
+          
+                <mapping:ScalarProperty Name="Estado" ColumnName="Estado"/>
+                
+          
+                <mapping:ScalarProperty Name="IdRutina" ColumnName="IdRutina"/>
+                
+          
+                <mapping:ScalarProperty Name="IdEjercicio" ColumnName="IdEjercicio"/>
+                
+        
+              </mapping:MappingFragment>
+              
+      
+            </mapping:EntityTypeMapping>
+            
+    
+          </mapping:EntitySetMapping>
+          
+    
+          <mapping:EntitySetMapping Name="Socio">
+            
+      
+            <mapping:EntityTypeMapping TypeName="SysGymModel.Socio">
+              
+        
+              <mapping:MappingFragment StoreEntitySet="Socio">
+                
+          
+                <mapping:ScalarProperty Name="IdSocio" ColumnName="IdSocio"/>
+                
+          
+                <mapping:ScalarProperty Name="DNI" ColumnName="DNI"/>
+                
+          
+                <mapping:ScalarProperty Name="Nombre" ColumnName="Nombre"/>
+                
+          
+                <mapping:ScalarProperty Name="Apellido" ColumnName="Apellido"/>
+                
+          
+                <mapping:ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento"/>
+                
+          
+                <mapping:ScalarProperty Name="FechaAlta" ColumnName="FechaAlta"/>
+                
+          
+                <mapping:ScalarProperty Name="Peso" ColumnName="Peso"/>
+                
+          
+                <mapping:ScalarProperty Name="Altura" ColumnName="Altura"/>
+                
+          
+                <mapping:ScalarProperty Name="FotoRuta" ColumnName="FotoRuta"/>
+                
+          
+                <mapping:ScalarProperty Name="Sexo" ColumnName="Sexo"/>
+                
+          
+                <mapping:ScalarProperty Name="Estado" ColumnName="Estado"/>
+                
+        
+              </mapping:MappingFragment>
+              
+      
+            </mapping:EntityTypeMapping>
+            
+    
+          </mapping:EntitySetMapping>
+          
+    
+          <mapping:EntitySetMapping Name="UsuarioSistema">
+            
+      
+            <mapping:EntityTypeMapping TypeName="SysGymModel.UsuarioSistema">
+              
+        
+              <mapping:MappingFragment StoreEntitySet="UsuarioSistema">
+                
+          
+                <mapping:ScalarProperty Name="IdUsuarioSistema" ColumnName="IdUsuarioSistema"/>
+                
+          
+                <mapping:ScalarProperty Name="Nombre" ColumnName="Nombre"/>
+                
+          
+                <mapping:ScalarProperty Name="Apellido" ColumnName="Apellido"/>
+                
+          
+                <mapping:ScalarProperty Name="DNI" ColumnName="DNI"/>
+                
+          
+                <mapping:ScalarProperty Name="Telefono" ColumnName="Telefono"/>
+                
+          
+                <mapping:ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento"/>
+                
+          
+                <mapping:ScalarProperty Name="Salario" ColumnName="Salario"/>
+                
+          
+                <mapping:ScalarProperty Name="Username" ColumnName="Username"/>
+                
+          
+                <mapping:ScalarProperty Name="Password" ColumnName="Password"/>
+                
+          
+                <mapping:ScalarProperty Name="FotoRuta" ColumnName="FotoRuta"/>
+                
+          
+                <mapping:ScalarProperty Name="Sexo" ColumnName="Sexo"/>
+                
+          
+                <mapping:ScalarProperty Name="Estado" ColumnName="Estado"/>
+                
+          
+                <mapping:ScalarProperty Name="IdRol" ColumnName="IdRol"/>
+                
+          
+                <mapping:ScalarProperty Name="IdUsuarioCreador" ColumnName="IdUsuarioCreador"/>
+                
+        
+              </mapping:MappingFragment>
+              
+      
+            </mapping:EntityTypeMapping>
+            
+    
+          </mapping:EntitySetMapping>
+          
+  
+        </mapping:EntityContainerMapping>
+        
+
+      </mapping:Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <edmx:Designer>
+    <edmx:Connection>
+      <edmx:DesignerInfoPropertySet>
+        <edmx:DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly"/>
+        <edmx:DesignerProperty Name="CodeGenerationStrategy" Value="None"/>
+      </edmx:DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <edmx:DesignerInfoPropertySet>
+        <edmx:DesignerProperty Name="ValidateOnBuild" Value="true"/>
+      </edmx:DesignerInfoPropertySet>
+    </edmx:Options>
+    <edmx:Diagrams>
+      <edmx:Diagram DiagramId="1" Name="SysGymDB" ZoomLevel="100">
+        <edmx:EntityTypeShape EntityType="SysGymModel.AuditoriaOperacion" Width="2.55" Height="3.21" PointX="0.50" PointY="0.50"/>
+        <edmx:EntityTypeShape EntityType="SysGymModel.EjercicioImagen" Width="2.55" Height="2.01" PointX="0.50" PointY="4.26"/>
+        <edmx:EntityTypeShape EntityType="SysGymModel.MetodoPago" Width="2.55" Height="2.25" PointX="0.50" PointY="6.82"/>
+        <edmx:EntityTypeShape EntityType="SysGymModel.Rol" Width="2.55" Height="1.77" PointX="0.50" PointY="9.62"/>
+        <edmx:EntityTypeShape EntityType="SysGymModel.UsuarioSistema" Width="2.90" Height="4.41" PointX="0.50" PointY="11.94"/>
+        <edmx:EntityTypeShape EntityType="SysGymModel.ConfiguracionSistema" Width="2.55" Height="2.01" PointX="4.60" PointY="0.50"/>
+        <edmx:EntityTypeShape EntityType="SysGymModel.Membresia" Width="2.55" Height="2.97" PointX="4.60" PointY="3.06"/>
+        <edmx:EntityTypeShape EntityType="SysGymModel.Pago" Width="2.55" Height="2.97" PointX="4.60" PointY="6.58"/>
+        <edmx:EntityTypeShape EntityType="SysGymModel.Rutina" Width="2.55" Height="3.45" PointX="4.60" PointY="10.10"/>
+        <edmx:EntityTypeShape EntityType="SysGymModel.CuotaMembresia" Width="2.55" Height="2.73" PointX="8.70" PointY="0.50"/>
+        <edmx:EntityTypeShape EntityType="SysGymModel.MembresiaEntrenador" Width="2.55" Height="2.01" PointX="8.70" PointY="3.78"/>
+        <edmx:EntityTypeShape EntityType="SysGymModel.PagoEfectivo" Width="2.55" Height="1.53" PointX="8.70" PointY="6.34"/>
+        <edmx:EntityTypeShape EntityType="SysGymModel.RutinaEjercicio" Width="2.55" Height="3.45" PointX="8.70" PointY="8.42"/>
+        <edmx:EntityTypeShape EntityType="SysGymModel.Ejercicio" Width="2.55" Height="2.01" PointX="12.80" PointY="0.50"/>
+        <edmx:EntityTypeShape EntityType="SysGymModel.MercadoPago" Width="2.55" Height="2.49" PointX="12.80" PointY="3.06"/>
+        <edmx:EntityTypeShape EntityType="SysGymModel.Plan" Width="2.55" Height="2.25" PointX="12.80" PointY="6.10"/>
+        <edmx:EntityTypeShape EntityType="SysGymModel.Socio" Width="2.55" Height="3.69" PointX="12.80" PointY="8.90"/>
+        <edmx:AssociationConnector Association="SysGymModel.FK_AuditoriaOperacion_Usuario"/>
+        <edmx:AssociationConnector Association="SysGymModel.FK_CuotaMembresia_Membresia"/>
+        <edmx:AssociationConnector Association="SysGymModel.FK_CuotaMembresia_Pago"/>
+        <edmx:AssociationConnector Association="SysGymModel.FK_Pago_CuotaMembresia"/>
+        <edmx:AssociationConnector Association="SysGymModel.FK_EjercicioImagen_Ejercicio"/>
+        <edmx:AssociationConnector Association="SysGymModel.FK_RutinaEjercicio_Ejercicio"/>
+        <edmx:AssociationConnector Association="SysGymModel.FK_Membresia_Plan"/>
+        <edmx:AssociationConnector Association="SysGymModel.FK_Membresia_Rutina"/>
+        <edmx:AssociationConnector Association="SysGymModel.FK_Membresia_Socio"/>
+        <edmx:AssociationConnector Association="SysGymModel.FK_Membresia_UsuarioSistema"/>
+        <edmx:AssociationConnector Association="SysGymModel.FK_MembresiaEntrenador_Membresia"/>
+        <edmx:AssociationConnector Association="SysGymModel.FK_MembresiaEntrenador_UsuarioSistema"/>
+        <edmx:AssociationConnector Association="SysGymModel.FK_MetodoPago_MercadoPago"/>
+        <edmx:AssociationConnector Association="SysGymModel.FK_MetodoPago_PagoEfectivo"/>
+        <edmx:AssociationConnector Association="SysGymModel.FK_Pago_MetodoPago"/>
+        <edmx:AssociationConnector Association="SysGymModel.FK_Pago_UsuarioRegistro"/>
+        <edmx:AssociationConnector Association="SysGymModel.FK_UsuarioSistema_Rol"/>
+        <edmx:AssociationConnector Association="SysGymModel.FK_Rutina_Entrenador"/>
+        <edmx:AssociationConnector Association="SysGymModel.FK_RutinaEjercicio_Rutina"/>
+        <edmx:AssociationConnector Association="SysGymModel.FK_UsuarioSistema_Creador"/>
+      </edmx:Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

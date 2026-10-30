@@ -1,4 +1,5 @@
-/* Creacion de la base */
+/* Creación de la base SysGymDB.
+   Los comentarios de tablas, columnas e índices se aplican con DocumentarSysGymDB.sql. */
 
 CREATE DATABASE SysGymDB;
 GO
@@ -325,18 +326,21 @@ CREATE TABLE RutinaEjercicio (
 );
 GO
 
-/* Indices */
+/* Índices: aceleran los recorridos habituales y protegen relaciones de pago.
+   Las descripciones detalladas de cada índice se guardan como MS_Description. */
 
+/* Membresías de un socio, incluidas sus membresías históricas. */
 CREATE INDEX IX_Membresia_IdSocio
     ON Membresia(IdSocio);
 
-/* Indice de cuotas */
+/* Un pago vigente puede determinar como máximo una cuota; NULL no participa en la unicidad. */
 
 CREATE UNIQUE INDEX UX_CuotaMembresia_IdRegistroPago
     ON CuotaMembresia(IdRegistroPago)
     WHERE IdRegistroPago IS NOT NULL;
 GO
 
+/* Búsqueda de todos los intentos asociados a una cuota; omite pagos no vinculados. */
 CREATE INDEX IX_Pago_IdCuotaMembresia
     ON Pago(IdCuotaMembresia)
     WHERE IdCuotaMembresia IS NOT NULL;

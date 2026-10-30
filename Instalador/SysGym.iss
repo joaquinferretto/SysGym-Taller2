@@ -44,9 +44,10 @@ Source: "..\bin\Release\runtimes\*"; DestDir: "{app}\runtimes"; Flags: ignorever
 Source: "SysGym.exe.config"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Resources\SysGym.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\capaDatos\Database\SysGymDB.sql"; DestDir: "{app}\capaDatos\Database"; Flags: ignoreversion
+Source: "..\capaDatos\Database\DocumentarSysGymDB.sql"; DestDir: "{app}\capaDatos\Database"; Flags: ignoreversion
 Source: "..\capaDatos\Database\SysGymBaseInstalacion.sql"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\capaDatos\Imagenes\Ejercicios\*"; DestDir: "{commonappdata}\SysGym\Imagenes\Ejercicios"; Flags: ignoreversion recursesubdirs createallsubdirs uninsneveruninstall
-Source: "..\Manual\Manual de usuario SysGym.pdf"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "..\Manual\Manual de usuario SysGym - 2026 monocromo.pdf"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "Redist\vc_redist.x64.exe"; DestDir: "{tmp}"; Flags: dontcopy
 Source: "Redist\SqlLocalDB-2022-x64.msi"; DestDir: "{tmp}"; Flags: dontcopy
 
