@@ -32,6 +32,7 @@ namespace exxen2._0.capaVisual.Recepcionista
         private Label lblEntrenadores;
         private Button btnAsignar;
         private Button btnConsultar;
+        private Button btnManual;
         private Button btnSalir;
         private Panel panelContenido;
         private Panel panelInicio;
@@ -70,6 +71,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.lblEntrenadores = new System.Windows.Forms.Label();
             this.btnAsignar = new System.Windows.Forms.Button();
             this.btnConsultar = new System.Windows.Forms.Button();
+            this.btnManual = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
             this.panelContenido = new System.Windows.Forms.Panel();
             this.panelInicio = new System.Windows.Forms.Panel();
@@ -288,6 +290,7 @@ this.lblSubtituloModulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)
             this.panelMenu.BackColor = System.Drawing.Color.FromArgb(243, 244, 247);
             this.panelMenu.Controls.Add(this.panelOpciones);
             this.panelMenu.Controls.Add(this.panelLogo);
+            this.panelMenu.Controls.Add(this.btnManual);
             this.panelMenu.Controls.Add(this.btnSalir);
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelMenu.Location = new System.Drawing.Point(0, 0);
@@ -314,7 +317,7 @@ this.lblSubtituloModulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)
             this.panelOpciones.Location = new System.Drawing.Point(0, 96);
             this.panelOpciones.Name = "panelOpciones";
             this.panelOpciones.Padding = new System.Windows.Forms.Padding(14, 10, 14, 10);
-            this.panelOpciones.Size = new System.Drawing.Size(273, 511);
+            this.panelOpciones.Size = new System.Drawing.Size(273, 465);
             this.panelOpciones.TabIndex = 1;
             //
             // lblClientes
@@ -478,6 +481,25 @@ this.lblEntrenadores.ForeColor = System.Drawing.Color.FromArgb(104, 99, 113);
             this.btnConsultar.Visible = false;
             this.btnConsultar.Click += new System.EventHandler(this.btnConsultar_Click);
             //
+            // btnManual
+            //
+            this.btnManual.BackColor = System.Drawing.Color.FromArgb(248, 249, 251);
+            this.btnManual.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnManual.FlatAppearance.BorderSize = 0;
+            this.btnManual.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(231, 226, 239);
+            this.btnManual.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(242, 239, 247);
+            this.btnManual.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnManual.ForeColor = System.Drawing.Color.FromArgb(45, 43, 53);
+            this.btnManual.Location = new System.Drawing.Point(0, 561);
+            this.btnManual.Name = "btnManual";
+            this.btnManual.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
+            this.btnManual.Size = new System.Drawing.Size(273, 46);
+            this.btnManual.TabIndex = 2;
+            this.btnManual.Text = "Manual de usuario";
+            this.btnManual.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnManual.UseVisualStyleBackColor = false;
+            this.btnManual.Click += new System.EventHandler(this.btnManual_Click);
+            //
             // btnSalir
             //
             this.btnSalir.BackColor = System.Drawing.Color.FromArgb(248, 249, 251);
@@ -492,7 +514,7 @@ this.lblEntrenadores.ForeColor = System.Drawing.Color.FromArgb(104, 99, 113);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
             this.btnSalir.Size = new System.Drawing.Size(273, 46);
-            this.btnSalir.TabIndex = 2;
+            this.btnSalir.TabIndex = 3;
             this.btnSalir.Text = "Salir";
             this.btnSalir.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSalir.UseVisualStyleBackColor = false;

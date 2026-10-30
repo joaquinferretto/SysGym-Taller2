@@ -211,6 +211,7 @@ Las bases nuevas parten de 2 cuotas vencidas permitidas, 2 meses de anticipació
 - **RF-52.** El sistema debe permitir al Administrador restaurar una copia `.bak` después de confirmar el reemplazo de los datos, validar que corresponda a la base configurada y reiniciar la aplicación al terminar.
 - **RF-53.** El sistema debe registrar en la auditoría la creación y restauración de copias de seguridad.
 - **RF-54.** Si no se puede conectar con SQL Server, el sistema debe indicar que se verifique que esté instalado y en ejecución, sin mostrar el error técnico.
+- **RF-55.** Los tres roles deben poder abrir el manual de usuario en PDF desde la aplicación. Si falta el archivo o no hay un lector disponible, el sistema debe mostrar una indicación clara.
 
 ### 3.2 Requisitos no funcionales
 
@@ -369,5 +370,7 @@ MSBuild.exe .\exxen2.0.slnx /t:Rebuild /p:Configuration=Release
 ```
 
 El resultado es `Instalador/Salida/SysGym-Setup.exe`. El instalador incluye el ejecutable Release, sus DLL, una configuración separada para `(localdb)\MSSQLLocalDB`, el esquema y la configuración de SysGym, el ícono y las imágenes de ejercicios con sus créditos. Luego de registrar el primer Administrador, carga los métodos de pago, planes, ejercicios con imágenes y nueve rutinas modelo desde `SysGymBaseInstalacion.sql`. No incluye `SysGymDatos.sql`, usuarios de desarrollo ni socios de prueba. El manual `Manual/Manual de usuario SysGym.pdf` se agrega automáticamente cuando está disponible.
+
+El manual para el personal está en [`Manual/Manual de usuario SysGym.pdf`](Manual/Manual%20de%20usuario%20SysGym.pdf); también se entrega en [Word](Manual/Manual%20de%20usuario%20SysGym.docx) para su edición. Dentro de la aplicación se abre desde **Manual de usuario** en el menú lateral de Administrador, Recepcionista y Entrenador. Las capturas usadas en el documento están en `Manual/Imagenes`.
 
 La instalación conserva la base, las imágenes y las copias de seguridad en `%ProgramData%\SysGym`, incluso al desinstalar. Las rutas persistidas en la base son relativas y se resuelven bajo `%ProgramData%\SysGym` en la instalación y bajo `Datos` junto al ejecutable en Debug.

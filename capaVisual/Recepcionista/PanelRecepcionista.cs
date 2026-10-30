@@ -135,6 +135,11 @@ namespace exxen2._0.capaVisual.Recepcionista
             navegacion.Salir();
         }
 
+        private void btnManual_Click(object origen, EventArgs e)
+        {
+            AyudaFormularioVisual.AbrirManual(this);
+        }
+
         /* Al hacer clic en btnSocios, abre el módulo correspondiente dentro del panel principal. */
         private GestionSociosFormulario CrearSocios(int id)
         {

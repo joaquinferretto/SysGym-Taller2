@@ -134,6 +134,11 @@ namespace exxen2._0.capaVisual.Administrador
             navegacion.Salir();
         }
 
+        private void btnManual_Click(object origen, EventArgs e)
+        {
+            AyudaFormularioVisual.AbrirManual(this);
+        }
+
         /* Al hacer clic en btnUsuarios, abre el módulo correspondiente dentro del panel principal. */
         private void btnUsuarios_Click(object origen, EventArgs e)
         {

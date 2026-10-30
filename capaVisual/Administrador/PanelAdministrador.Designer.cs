@@ -16,7 +16,7 @@ namespace exxen2._0.capaVisual.Administrador
         private Label lblDniTitulo;
         private Label lblDni;
         private Label lblSexoTitulo;
-        private Label lblSexo; private Label lblModuloActual; private Button btnCambiarCuenta; private Panel panelMenu; private Panel panelLogo; private Panel panelOpciones; private Button btnSalir; private Panel panelContenido;
+        private Label lblSexo; private Label lblModuloActual; private Button btnCambiarCuenta; private Panel panelMenu; private Panel panelLogo; private Panel panelOpciones; private Button btnManual; private Button btnSalir; private Panel panelContenido;
         private Label lblAdministracion; private Label lblOperacion; private Label lblRutinas; private Label lblConsultas; private Button btnUsuarios; private Button btnSocios; private Button btnPlanes; private Button btnMembresias; private Button btnPagos; private Button btnAsignaciones; private Button btnEjercicios; private Button btnRutinas; private Button btnMisSocios; private Button btnReportes; private Button btnAnalisis;
 
         private Label lblSubtituloModulo;
@@ -59,6 +59,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.btnAnalisis = new System.Windows.Forms.Button();
             this.btnAuditoria = new System.Windows.Forms.Button();
             this.btnConfiguracion = new System.Windows.Forms.Button();
+            this.btnManual = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
             this.panelContenido = new System.Windows.Forms.Panel();
             this.inicioPanel = new exxen2._0.capaVisual.Administrador.InicioPanelAdministrador();
@@ -275,6 +276,7 @@ this.lblModuloActual.ForeColor = System.Drawing.Color.White;
             this.panelMenu.BackColor = System.Drawing.Color.FromArgb(243, 244, 247);
             this.panelMenu.Controls.Add(this.panelOpciones);
             this.panelMenu.Controls.Add(this.panelLogo);
+            this.panelMenu.Controls.Add(this.btnManual);
             this.panelMenu.Controls.Add(this.btnSalir);
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelMenu.Location = new System.Drawing.Point(0, 0);
@@ -309,7 +311,7 @@ this.lblModuloActual.ForeColor = System.Drawing.Color.White;
             this.panelOpciones.Location = new System.Drawing.Point(0, 96);
             this.panelOpciones.Name = "panelOpciones";
             this.panelOpciones.Padding = new System.Windows.Forms.Padding(14, 10, 14, 10);
-            this.panelOpciones.Size = new System.Drawing.Size(273, 607);
+            this.panelOpciones.Size = new System.Drawing.Size(273, 561);
             this.panelOpciones.TabIndex = 1;
             //
             // lblAdministracion
@@ -632,6 +634,25 @@ this.lblConsultas.ForeColor = System.Drawing.Color.FromArgb(104, 99, 113);
             this.btnConfiguracion.Visible = true;
             this.btnConfiguracion.Click += new System.EventHandler(this.btnConfiguracion_Click);
             //
+            // btnManual
+            //
+            this.btnManual.BackColor = System.Drawing.Color.FromArgb(248, 249, 251);
+            this.btnManual.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btnManual.FlatAppearance.BorderSize = 0;
+            this.btnManual.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(231, 226, 239);
+            this.btnManual.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(242, 239, 247);
+            this.btnManual.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnManual.ForeColor = System.Drawing.Color.FromArgb(45, 43, 53);
+            this.btnManual.Location = new System.Drawing.Point(0, 657);
+            this.btnManual.Name = "btnManual";
+            this.btnManual.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
+            this.btnManual.Size = new System.Drawing.Size(273, 46);
+            this.btnManual.TabIndex = 2;
+            this.btnManual.Text = "Manual de usuario";
+            this.btnManual.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnManual.UseVisualStyleBackColor = false;
+            this.btnManual.Click += new System.EventHandler(this.btnManual_Click);
+            //
             // btnSalir
             //
             this.btnSalir.BackColor = System.Drawing.Color.FromArgb(248, 249, 251);
@@ -646,7 +667,7 @@ this.lblConsultas.ForeColor = System.Drawing.Color.FromArgb(104, 99, 113);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
             this.btnSalir.Size = new System.Drawing.Size(273, 46);
-            this.btnSalir.TabIndex = 2;
+            this.btnSalir.TabIndex = 3;
             this.btnSalir.Text = "Salir";
             this.btnSalir.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSalir.UseVisualStyleBackColor = false;

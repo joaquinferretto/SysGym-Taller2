@@ -20,6 +20,34 @@ namespace exxen2._0.capaVisual.Compartido.Utilidades
     /* Agrupa validaciones de entrada y mensajes compartidos por los formularios estándar. */
     internal static class AyudaFormularioVisual
     {
+        /* Abre el manual instalado o el del repositorio cuando se ejecuta desde bin/Debug. */
+        internal static void AbrirManual(IWin32Window propietario)
+        {
+            const string nombreManual = "Manual de usuario SysGym.pdf";
+            var carpetaEjecutable = AppDomain.CurrentDomain.BaseDirectory;
+            var ruta = Path.Combine(carpetaEjecutable, nombreManual);
+            if (!File.Exists(ruta))
+                ruta = Path.GetFullPath(Path.Combine(carpetaEjecutable, "..", "..", "Manual", nombreManual));
+
+            if (!File.Exists(ruta))
+            {
+                MessageBox.Show(propietario, "No se encontró el manual de usuario. Verifique que el archivo PDF esté disponible.",
+                    "SysGym", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            try
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(ruta) { UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                RegistrarDetalleError(ex);
+                MessageBox.Show(propietario, "No se pudo abrir el manual de usuario. Verifique que tenga un lector de PDF instalado.",
+                    "SysGym", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
         /* Muestra una copia independiente de la foto o del avatar disponible, sin retener el flujo. */
         internal static void MostrarFoto(PictureBox destino, byte[] contenido, string sexo)
         {
