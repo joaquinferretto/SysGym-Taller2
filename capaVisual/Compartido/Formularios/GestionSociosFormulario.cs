@@ -449,6 +449,11 @@ namespace exxen2._0.capaVisual.Compartido
         {
             try
             {
+                if (!ValidarPeso() | !ValidarAltura())
+                {
+                    AyudaFormularioVisual.EnfocarPrimerError(indicadorErrores, peso, altura);
+                    return;
+                }
                 var socio = new Socio
                 {
                     Peso = AyudaFormularioVisual.DecimalPositivo(peso, "peso"),
@@ -625,6 +630,7 @@ namespace exxen2._0.capaVisual.Compartido
                 if (string.IsNullOrWhiteSpace(altura.Text))
                     return;
                 var valor = AyudaFormularioVisual.DecimalPositivo(altura, "altura");
+                ValidacionesGimnasio.ValidarDosDecimales(valor, "altura");
                 if (valor < 0.80m || valor > 2.50m)
                     throw new InvalidOperationException("La altura debe estar entre 0,80 y 2,50 m.");
                 if (decimal.Truncate(valor) == valor)
@@ -639,9 +645,8 @@ namespace exxen2._0.capaVisual.Compartido
             {
                 if (string.IsNullOrWhiteSpace(peso.Text))
                     return;
-                var valor = AyudaFormularioVisual.DecimalPositivo(peso, "peso");
-                if (valor < 20m || valor > 300m)
-                    throw new InvalidOperationException("El peso debe estar entre 20 y 300 kg.");
+                var valor = AyudaFormularioVisual.DecimalPositivo(peso, "peso", true);
+                ValidacionesGimnasio.ValidarPesoSocio(valor);
             });
         }
 

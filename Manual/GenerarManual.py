@@ -28,12 +28,9 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MANUAL = os.path.join(ROOT, "Manual")
 IMAGES = os.path.join(MANUAL, "Imagenes")
 COVER_LOGO = os.path.join(ROOT, "Resources", "SysGymLogo.png")
-EDMX = os.path.join(ROOT, "capaDatos", "Database", "SysGymDB.edmx")
-DOC_SQL = os.path.join(ROOT, "capaDatos", "Database", "DocumentarSysGymDB.sql")
-DDL_SQL = os.path.join(ROOT, "capaDatos", "Database", "SysGymDB.sql")
-SEED_SQL = os.path.join(ROOT, "capaDatos", "Database", "SysGymDatos.sql")
 PDF_OUT = os.path.join(MANUAL, "Manual de usuario SysGym - 2026 monocromo.pdf")
 DOCX_OUT = os.path.join(MANUAL, "Manual de usuario SysGym - 2026 monocromo.docx")
+FECHA_EDICION = "04/11/2026"
 IMAGE_TEMP_DIR = None
 FIGURE_CROPS = {
     "paso-alta-socio.png": (75, 0, 720, 650),
@@ -114,29 +111,29 @@ def PB():
 
 
 H1("1. Alcance y uso del manual")
-P("SysGym es una aplicación de escritorio para administrar un gimnasio. Este manual reúne los recorridos de Recepción, Entrenadores y Administración y un apéndice técnico que explica la base SysGymDB, sus tablas, relaciones, índices, scripts y transacciones.")
-P("Las capturas de operación son pantallas reales de SysGym. Las capturas identificadas como seed o QA corresponden a datos de demostración y sirven para aprender a leer las salidas. No representan el estado actual de una instalación.")
+P("SysGym es una aplicación de escritorio para administrar un gimnasio. Este manual explica, paso a paso, las tareas disponibles para Recepción, Entrenadores y Administración.")
+P("Las imágenes muestran pantallas y ejemplos de informes. Los nombres, importes y cantidades visibles son ilustrativos; los resultados de cada usuario dependen de los datos registrados y del período consultado.")
 TBL(
     ["Rol", "Acciones disponibles"],
     [
-        ["Recepcionista", "Socios, membresías, cuotas, pagos, asignaciones de entrenadores y reportes operativos."],
-        ["Entrenador", "Consultar sus alumnos, ver fichas y rutinas, elegir o modificar rutinas y exportarlas."],
-        ["Administrador", "Usuarios y roles, planes, ejercicios e imágenes, configuración, reportes, análisis, auditoría y copias de seguridad."],
+        ["Recepcionista", "Socios, membresías, cuotas, pagos, comprobantes e historiales PDF, asignación y consulta de entrenadores y reportes operativos."],
+        ["Entrenador", "Consultar sus alumnos, asignar y editar sus rutinas, mantener ejercicios y exportar rutinas."],
+        ["Administrador", "Tareas operativas de Recepción, además de usuarios, planes, ejercicios, rutinas, configuración, análisis, auditoría y copias de seguridad."],
     ],
 )
-NOTE("Antes de empezar", "Los cambios de precio de un plan aplican a cuotas que se generen más adelante. Una baja conserva el historial. Las capturas pueden mostrar nombres o importes de la base de prueba.")
+NOTE("Antes de empezar", "Los cambios de precio de un plan aplican a cuotas que se generen más adelante. Una baja conserva el historial. Las capturas pueden mostrar datos de demostración.")
 
 H1("2. Instalación, primer inicio y acceso")
 H2("2.1 Requisitos e instalación")
 P("Se necesita Windows 10 u 11 y .NET Framework 4.8. Ejecutá SysGym-Setup.exe, aceptá el aviso de Windows, seguí el asistente y pulsá Instalar. Al terminar, abrí SysGym desde Inicio o el acceso directo. Si se informa que falta .NET Framework 4.8, instalalo desde el enlace oficial que muestra Windows y repetí la instalación.")
-H2("2.2 Crear la base y registrar al primer Administrador")
+H2("2.2 Primer inicio y registro del Administrador")
 STEPS(
-    "Al iniciar por primera vez, respondé Sí a la creación de la base. Esperá a que la instalación termine sin cerrar SysGym.",
+    "Si aparece la confirmación de preparación inicial, respondé Sí y esperá a que SysGym termine el proceso sin cerrar la aplicación.",
     "En Registrar administrador completá nombre, apellido, DNI, sexo, nombre de usuario, contraseña y confirmación.",
     "Pulsá Registrar administrador. Si los datos son válidos, SysGym crea la cuenta inicial y abre el inicio de sesión.",
     "Ingresá con el usuario y contraseña recién creados. Después, creá las cuentas de Recepción y Entrenador desde Usuarios y roles.",
 )
-FIG("paso-primer-inicio.png", "Primer inicio: confirmación para crear la base.")
+FIG("paso-primer-inicio.png", "Primer inicio: confirmación para continuar la preparación inicial.")
 FIG("paso-registro-admin.png", "Registro obligatorio del primer Administrador.")
 H2("2.3 Iniciar sesión, cambiar de cuenta y salir")
 STEPS(
@@ -149,7 +146,7 @@ STEPS(
 FIG("paso-inicio-sesion.png", "Pantalla de acceso de SysGym.")
 FIG("paso-menu-manual.png", "El menú lateral permite abrir este manual y navegar por el rol.")
 H2("2.4 Desinstalación")
-P("En Windows abrí Aplicaciones instaladas, buscá SysGym y elegí Desinstalar, o usá la opción del menú Inicio. La desinstalación quita el programa y los accesos directos; conserva datos, imágenes y copias de seguridad ubicados en %ProgramData%\\SysGym. Antes de reinstalar o trasladar la PC, guardá una copia externa.")
+P("En Windows abrí Aplicaciones instaladas, buscá SysGym y elegí Desinstalar, o usá la opción del menú Inicio. La desinstalación quita el programa y los accesos directos, pero conserva los datos y las copias de seguridad. Antes de reinstalar o trasladar la PC, guardá una copia externa y consultá con la persona responsable del sistema.")
 
 H1("3. Recepción: socios, membresías y cobros")
 H2("3.1 Alta de socio")
@@ -206,13 +203,22 @@ STEPS(
     "Para cobrarla otra vez, seleccioná la cuota pendiente, elegí el método y registrá un nuevo pago aprobado.",
 )
 FIG("paso-estados-pago.png", "La lista distingue cuotas pendientes, pagadas, anuladas y pagos reembolsados.")
-H2("3.7 Cambiar el plan de una membresía")
+H2("3.7 Exportar comprobantes e historial de pagos en PDF")
+STEPS(
+    "Para exportar un comprobante individual, abrí Cuotas y pagos, buscá al socio por nombre o DNI y seleccioná la cuota cuyo pago está aprobado. La cuota debe figurar como Pagada.",
+    "Pulsá Exportar comprobante, elegí la carpeta y el nombre del archivo y guardá el PDF. El comprobante incluye los datos del socio, la cuota, el importe, el método, el estado y quién registró el pago.",
+    "Para exportar todos los pagos de un socio, abrí su Ficha completa y pulsá Exportar historial PDF. También podés hacer clic derecho sobre una fila del socio en Cuotas y pagos y elegir Exportar historial.",
+    "Elegí dónde guardar el archivo. El historial conserva los pagos aprobados, anulados y reembolsados; el total abonado cuenta solo los pagos aprobados.",
+)
+FIG("paso-exportar-historial.png", "La Ficha completa permite exportar el historial de pagos del socio en PDF.")
+NOTE("Disponibilidad", "El comprobante individual se habilita para un pago aprobado. Desde la Ficha completa se puede exportar el historial aunque el socio todavía no tenga pagos registrados.")
+H2("3.8 Cambiar el plan de una membresía")
 STEPS(
     "En Membresías, seleccioná la membresía activa que debe cambiar.",
     "Elegí el plan nuevo y pulsá Cambiar plan.",
     "Volvé a revisar la membresía y el precio. Las cuotas ya creadas conservan su importe; las cuotas futuras toman el nuevo precio.",
 )
-H2("3.8 Baja, reactivación y límite de deuda")
+H2("3.9 Baja, reactivación y límite de deuda")
 P("Una cuota pendiente se cuenta como vencida cuando terminó su período. La configuración define cuántas cuotas vencidas impagas alcanzan el límite. Con un límite de dos, la segunda cuota vencida puede dejar inactiva la membresía. Cobrar la deuda reduce el saldo impago, pero no reactiva automáticamente la membresía.")
 STEPS(
     "Consultá la deuda en Cuotas y pagos o en el reporte operativo de deuda.",
@@ -220,7 +226,7 @@ STEPS(
     "Volvé a Membresías y verificá el estado actual.",
     "Si se cumplen las reglas de reactivación, seleccioná la membresía inactiva y pulsá Reactivar. Si la persona también fue dada de baja, reactivá primero al socio.",
 )
-H2("3.9 Asignar, cambiar o terminar la asignación de un entrenador")
+H2("3.10 Asignar, cambiar o terminar la asignación de un entrenador")
 STEPS(
     "Abrí Asignar entrenador y elegí la membresía.",
     "Revisá socio, plan, estado y entrenador actual.",
@@ -228,7 +234,14 @@ STEPS(
     "Para cambiar la asignación, elegí otro entrenador y guardá. Para terminarla, usá Dar de baja en la asignación.",
 )
 FIG("paso-asignar-entrenador.png", "La asignación vincula una membresía con el entrenador responsable.")
-H2("3.10 Consultar y exportar un reporte operativo")
+H2("3.11 Consultar entrenadores y socios asignados")
+STEPS(
+    "Abrí Entrenadores y elegí Consultar.",
+    "Buscá por nombre o DNI. La lista muestra cada entrenador, la cantidad de socios asignados y su estado.",
+    "Seleccioná un entrenador para ver sus socios, DNI, plan, vencimiento de cuota, rutina y estado de la membresía.",
+    "Pulsá Actualizar listado si necesitás volver a cargar la información. Para cambiar una asignación, usá Asignar entrenador.",
+)
+H2("3.12 Consultar y exportar un reporte operativo")
 P("Reportes operativos ofrece listados de deuda pendiente, personas en límite de deuda, socios sin entrenador, socios sin rutina, próximos vencimientos y membresías inactivas. La pantalla actualiza el listado cuando cambiás el tipo; también permite filtrar por nombre o DNI.")
 STEPS(
     "Elegí el tipo de informe.",
@@ -256,6 +269,7 @@ STEPS(
     "Para empezar una rutina propia, pulsá Crear personalizada y completá nombre, descripción y fechas si aplican.",
     "La rutina queda asociada con el entrenador que la creó. La selección de un modelo no reemplaza una evaluación profesional.",
 )
+P("También podés abrir Rutinas desde el menú del Entrenador para crear y mantener modelos. El catálogo es compartido: podés consultar rutinas de otros entrenadores, pero solo modificar las que creaste. Administración puede mantener el catálogo completo; los pasos están en 5.4.")
 H2("4.3 Agregar, editar y ordenar ejercicios")
 STEPS(
     "Pulsá Ver / editar en la rutina del alumno.",
@@ -266,6 +280,7 @@ STEPS(
 )
 FIG("paso-editar-rutina.png", "Edición de ejercicios y parámetros de una rutina.")
 FIG("paso-ejercicios-imagenes.png", "Referencia visual del catálogo de ejercicios.")
+P("Si el ejercicio que necesitás no aparece, abrí Ejercicios desde el menú del Entrenador para agregarlo al catálogo. El procedimiento para mantener ejercicios e imágenes está en 5.3.")
 H2("4.4 Exportar la rutina del alumno")
 STEPS(
     "En Mis alumnos, seleccioná la persona y verificá la rutina que se exportará.",
@@ -292,7 +307,7 @@ STEPS(
     "Para modificar, dar de baja o reactivar, seleccioná el plan y elegí la acción correspondiente.",
 )
 FIG("paso-planes.png", "Catálogo de planes y precio vigente.")
-H2("5.3 Mantener ejercicios e imágenes")
+H2("5.3 Mantener ejercicios e imágenes (Entrenador y Administración)")
 STEPS(
     "En Ejercicios, pulsá Nuevo y completá nombre y descripción; guardá.",
     "Para editar o dar de baja, seleccioná el ejercicio y usá la acción disponible. La baja conserva sus usos históricos.",
@@ -300,7 +315,26 @@ STEPS(
     "Para retirar una imagen, seleccioná su registro y usá la acción disponible. El archivo se almacena fuera de la base; la tabla conserva la ruta relativa.",
 )
 FIG("paso-ejercicios-imagenes.png", "Catálogo de ejercicios y gestión de imágenes.")
-H2("5.4 Configurar vencimientos, anticipación y avisos")
+H2("5.4 Administrar el catálogo de rutinas (Entrenador y Administración)")
+STEPS(
+    "Abrí Rutinas desde el menú de Administración.",
+    "Pulsá + Nueva rutina, completá el nombre y la descripción y guardá.",
+    "Seleccioná una rutina para revisar sus datos y ejercicios. Para agregar un ejercicio, elegí el movimiento, el día y el orden; completá series, repeticiones, peso y descanso y guardá.",
+    "Para corregir un ejercicio, seleccioná la fila y pulsá Editar. Para retirarlo, seleccioná la fila y pulsá Quitar.",
+    "Usá Dar de baja para dejar de ofrecer una rutina. Para volver a ofrecerla, seleccioná una rutina inactiva y pulsá Reactivar.",
+)
+FIG("paso-editar-rutina.png", "El editor permite organizar y mantener los ejercicios de cada rutina.")
+P("El Entrenador puede consultar rutinas de otros usuarios, pero solo editar las que creó. Administración puede editar y dar de baja cualquier rutina.")
+H2("5.5 Asignar y revisar rutinas de socios")
+STEPS(
+    "Abrí Socios y rutinas. Buscá por nombre o DNI y usá el filtro Con rutina o Sin rutina.",
+    "Seleccioná un socio para revisar su plan, entrenador, vencimiento, objetivo, nivel y rutina semanal.",
+    "Para asignar o cambiar una rutina modelo, elegí objetivo y nivel, seleccioná una rutina activa y pulsá Asignar rutina o Cambiar rutina.",
+    "Para preparar una rutina individual, pulsá Crear personalizada, completá nombre y descripción y guardá. Después agregá sus ejercicios desde el editor.",
+    "Pulsá Ver / editar para modificar la rutina del socio. Si tiene una rutina asignada, también podés pulsar Exportar PDF para guardar una copia.",
+)
+P("La lista de Administración incluye los socios con membresía activa. El Entrenador, desde Mis alumnos, ve únicamente los socios que tiene asignados.")
+H2("5.6 Configurar vencimientos, anticipación y avisos")
 STEPS(
     "Abrí Configuración y el grupo Cuotas y pagos.",
     "Ajustá Cuotas vencidas, Meses de anticipación y Días de aviso dentro de los rangos indicados en pantalla.",
@@ -310,7 +344,7 @@ STEPS(
 )
 P("La configuración inicial de bases nuevas es 2 cuotas vencidas, 2 meses de anticipación y 7 días de aviso. Las bases existentes conservan sus propios valores.")
 FIG("paso-configuracion.png", "Parámetros generales de cuotas y pagos.")
-H2("5.5 Consultar auditoría")
+H2("5.7 Consultar auditoría")
 STEPS(
     "Abrí Auditoría.",
     "Ingresá el rango de fechas y, si corresponde, filtrá por usuario u operación.",
@@ -318,9 +352,9 @@ STEPS(
     "La auditoría es de consulta; no modifica los registros filtrados.",
 )
 FIG("paso-auditoria.png", "Historial de operaciones para seguimiento administrativo.")
-H2("5.6 Consultar reportes operativos")
-P("Administración comparte la consulta y exportación de los reportes operativos descritos en 3.10. La pantalla añade indicadores de socios, usuarios, membresías, rutinas y ejercicios; algunos indicadores se muestran solo al Administrador.")
-H2("5.7 Consultar Análisis: período, indicadores y pestañas")
+H2("5.8 Consultar reportes operativos")
+P("Administración comparte la consulta y exportación de los reportes operativos descritos en 3.12. La pantalla añade indicadores de socios, usuarios, membresías, rutinas y ejercicios; algunos indicadores se muestran solo al Administrador.")
+H2("5.9 Consultar Análisis: período, indicadores y pestañas")
 STEPS(
     "Abrí Análisis. Al ingresar se propone un rango de los últimos doce meses.",
     "Elegí Desde y Hasta y pulsá Aplicar. Ambas fechas se incluyen.",
@@ -342,7 +376,7 @@ TBL(
     ],
 )
 P("Ingresos, pagos aprobados y altas se calculan para el rango elegido. Socios, deuda, planes, entrenadores, rutinas y ejercicios reflejan la situación actual consultada. Los pagos anulados, reembolsados o rechazados no cuentan como ingresos. Si el período anterior tuvo cero ingresos, la variación aparece como raya.")
-H2("5.8 Comparar períodos y exportar el informe")
+H2("5.10 Comparar períodos y exportar el informe")
 STEPS(
     "En Comparar, ingresá las fechas Desde y Hasta para el período A y para el B.",
     "Pulsá Comparar períodos y leé la tabla y los gráficos.",
@@ -353,7 +387,7 @@ STEPS(
 FIG("paso-analisis-rango.png", "Selección del período principal del análisis.")
 FIG("paso-analisis-comparar.png", "Comparación en la interfaz con totales de los dos períodos.")
 FIG("paso-analisis-socio.png", "Consulta individual de socio dentro de Análisis.")
-H2("5.9 Crear y restaurar copias de seguridad")
+H2("5.11 Crear y restaurar copias de seguridad")
 STEPS(
     "Abrí Configuración y Copias de seguridad.",
     "Para crear una copia, pulsá Crear copia de seguridad, elegí destino y guardá el archivo .bak. SysGym propone un nombre con fecha y hora.",
@@ -363,11 +397,11 @@ STEPS(
 )
 FIG("paso-copias.png", "Crear y restaurar copias de seguridad.")
 NOTE("Restauración", "Antes de reemplazar la base actual, creá una copia de su estado presente. Guardá los archivos de respaldo en un lugar separado del equipo.")
-H2("5.10 Cambiar de cuenta y cerrar")
+H2("5.12 Cambiar de cuenta y cerrar")
 P("Cambiar de cuenta cierra la sesión actual y vuelve al acceso. Volver abre la pantalla principal del rol. Salir cierra la aplicación. Si otra persona usará la PC, cerrá o cambiá la cuenta antes de dejarla.")
 
-H1("6. Ejemplos completos con la seed de demostración")
-P("Las siguientes capturas se tomaron de ejecuciones de QA con datos de demostración. Sirven para leer los informes y comparar resultados; no describen la base que esté instalada en otra PC.")
+H1("6. Ejemplos de lectura de Análisis")
+P("Estos ejemplos muestran cómo interpretar los informes y gráficos de Análisis. Las cifras son ilustrativas: tus resultados varían según el período elegido y los datos cargados en SysGym.")
 H2("6.1 Ejemplo de reporte PDF de Análisis")
 TBL(
     ["Indicador del reporte", "Resultado de la captura"],
@@ -382,9 +416,9 @@ TBL(
         ["Altas del período", "70"],
     ],
 )
-FIG("analisis-seed-pdf-p1.png", "Página 1 del reporte PDF real generado por la aplicación con seed QA. Los valores pertenecen a esa captura.")
-FIG("analisis-seed-pdf-p3.png", "Página del PDF con el detalle de situación de socios de la misma ejecución.")
-FIG("analisis-seed-p17.png", "Página del reporte de QA con los ejercicios más usados.")
+FIG("analisis-seed-pdf-p1.png", "Primera página de un reporte PDF de Análisis; los valores son de ejemplo.")
+FIG("analisis-seed-pdf-p3.png", "Detalle de la situación de socios en el reporte PDF.")
+FIG("analisis-seed-p17.png", "Ejemplo del apartado de ejercicios más usados en el reporte.")
 H2("6.2 Ejemplo de comparación A/B")
 TBL(
     ["Indicador", "Período A", "Período B", "Variación de B vs. A"],
@@ -396,24 +430,23 @@ TBL(
     ],
 )
 P("Ejemplo de lectura: el total de ingresos de B fue $529.000 menor que A. La división de esa diferencia por el total de A da una disminución de 7,80 %. Este resultado no permite inferir por sí solo la cantidad de socios actuales ni la deuda histórica.")
-FIG("analisis-seed-comparar.png", "Comparación A/B en la aplicación; los gráficos y la tabla muestran los mismos totales.")
+FIG("analisis-seed-comparar.png", "Comparación de períodos A y B; los gráficos y la tabla muestran los mismos totales.")
 H2("6.3 Vistas de las pestañas de Análisis")
-P("Estas capturas muestran las pestañas pobladas con el conjunto QA. Las cifras dependen del rango seleccionado y del instante en que se generó la captura.")
-FIG("analisis-seed-resumen.png", "Seed QA: resumen mensual.")
-FIG("analisis-seed-finanzas.png", "Seed QA: finanzas y métodos de pago.")
-FIG("analisis-seed-socios.png", "Seed QA: altas, estados y deuda de socios.")
-FIG("analisis-seed-planes.png", "Seed QA: uso actual de planes.")
-FIG("analisis-seed-entrenadores.png", "Seed QA: socios asignados por entrenador.")
-FIG("analisis-seed-rutinas.png", "Seed QA: rutinas utilizadas.")
-FIG("analisis-seed-ejercicios.png", "Seed QA: uso de ejercicios.")
-FIG("analisis-seed-socio.png", "Seed QA: consulta individual.")
-NOTE("Datos de ejemplo", "El seed SysGymDatos.sql es únicamente para desarrollo y QA. No lo ejecutes en una base productiva ni interpretes las capturas como valores actuales.")
+P("Las imágenes ilustran las pestañas disponibles. Las cifras dependen del rango seleccionado y de la información registrada en el momento de la consulta.")
+FIG("analisis-seed-resumen.png", "Resumen mensual de ingresos y variaciones.")
+FIG("analisis-seed-finanzas.png", "Ingresos y distribución por método de pago.")
+FIG("analisis-seed-socios.png", "Altas, estados y situación de deuda de socios.")
+FIG("analisis-seed-planes.png", "Distribución actual de membresías por plan.")
+FIG("analisis-seed-entrenadores.png", "Cantidad de socios asignados a cada entrenador.")
+FIG("analisis-seed-rutinas.png", "Rutinas utilizadas por los socios.")
+FIG("analisis-seed-ejercicios.png", "Ejercicios más utilizados y ejercicios sin uso.")
+FIG("analisis-seed-socio.png", "Consulta individual de la situación de un socio.")
 
 H1("7. Preguntas frecuentes")
 TBL(
     ["Situación", "Qué hacer"],
     [
-        ["SysGym no conecta con SQL Server.", "Cerrá y abrí la app. Comprobá con el responsable del equipo que el servicio de base de datos esté instalado y activo. No borres archivos ni bases para probar."],
+        ["No puedo iniciar SysGym.", "Cerrá y abrí la aplicación. Si el problema continúa, contactá al administrador del equipo o al soporte e informá el mensaje que aparece. No borres datos para probar."],
         ["Olvidé la contraseña.", "Pedí a un Administrador que la restablezca desde Usuarios y roles. La aplicación no muestra la contraseña anterior."],
         ["No aparece una foto.", "Verificá que el registro tenga ruta de imagen y que el archivo no se haya movido. Pedí a Administración que vuelva a asociarlo."],
         ["No puedo reactivar una membresía.", "Revisá las cuotas vencidas y el límite de deuda, y confirmá que el socio también esté activo."],
@@ -423,337 +456,27 @@ TBL(
     ],
 )
 
-H1("8. Diccionario de la base SysGymDB")
-P("El modelo corresponde a SQL Server y Entity Framework 6.4.4 sobre .NET Framework 4.8. El archivo SysGymDB.edmx es una vista de diseño del esquema actual de 17 tablas, 114 columnas y las relaciones generadas desde la base SysGymDB local el 30/10/2026. Abrilo en Visual Studio como archivo EDMX para inspeccionar el diagrama.")
-P("Las descripciones del inventario se aplican como propiedad extendida MS_Description para cada tabla, columna e índice mediante DocumentarSysGymDB.sql. El script puede repetirse y no cambia filas ni crea columnas.")
-NOTE("Cómo leer el diccionario", "PK identifica la clave primaria; FK identifica una clave foránea; IDENTITY indica que SQL Server genera el número; NULL permitido significa que el dato puede faltar; NOT NULL significa que se requiere. Los nombres de columnas se muestran igual que en SQL Server.")
-
-H2("8.1 Propósito de cada tabla")
-TBL(
-    ["Tabla", "Qué representa"],
-    [
-        ["AuditoriaOperacion", "Registro de operación, usuario, fecha, entidad y detalle. IdEntidad es polimórfico y no es FK."],
-        ["ConfiguracionSistema", "Única configuración global de deuda, anticipación y avisos."],
-        ["CuotaMembresia", "Período e importe histórico facturado a una membresía, con estado y pago vigente."],
-        ["Ejercicio", "Catálogo de movimientos disponibles."],
-        ["EjercicioImagen", "Ruta relativa y orden de una imagen de ejercicio almacenada fuera de SQL."],
-        ["Membresia", "Historial del vínculo socio, plan, usuario que registra y rutina opcional."],
-        ["MembresiaEntrenador", "Asignaciones vigentes e históricas de entrenadores a membresías."],
-        ["MercadoPago", "Referencias opcionales informadas para pagos; SysGym no inicia cobros mediante API."],
-        ["MetodoPago", "Catálogo de método de pago y el detalle efectivo o Mercado Pago."],
-        ["Pago", "Intento de pago con importe, fecha, estado, cuota y responsable opcional."],
-        ["PagoEfectivo", "Detalle identificador del método de pago en efectivo."],
-        ["Plan", "Plan ofrecido y precio vigente para cuotas futuras."],
-        ["Rol", "Catálogo de roles de acceso."],
-        ["Rutina", "Rutina libre o modelo de entrenamiento asociado a su entrenador creador."],
-        ["RutinaEjercicio", "Ejercicio, día, orden y parámetros dentro de una rutina."],
-        ["Socio", "Persona registrada, medidas opcionales, foto externa y estado."],
-        ["UsuarioSistema", "Cuenta y datos del empleado, rol y usuario creador opcional."],
-    ],
-    database=True,
-)
-
-
-def sql_descriptions():
-    text = open(DOC_SQL, "r", encoding="utf-8-sig").read()
-    pattern = re.compile(
-        r"\(\s*'([^']+)'\s*,\s*(NULL|'([^']*)')\s*,\s*N'((?:''|[^'])*)'\s*\)",
-        re.MULTILINE,
-    )
-    result = {}
-    for match in pattern.finditer(text):
-        table = match.group(1)
-        column = match.group(3)
-        description = match.group(4).replace("''", "'")
-        result[(table, column)] = description
-    return result
-
-
-def schema_dictionary():
-    root = ET.parse(EDMX).getroot()
-    ns = {
-        "edm": "http://schemas.microsoft.com/ado/2009/11/edm",
-        "ssdl": "http://schemas.microsoft.com/ado/2009/11/edm/ssdl",
-    }
-    csdl = root.find(".//edm:Schema", ns)
-    ssdl = root.find(".//ssdl:Schema", ns)
-    descriptions = sql_descriptions()
-    ss_types = {e.attrib["Name"]: e for e in ssdl.findall("ssdl:EntityType", ns)}
-    descriptions_by_table = {
-        table: descriptions.get((table, None), "")
-        for table in ss_types
-    }
-    keys = {}
-    foreign = set()
-    for name, entity in ss_types.items():
-        key = entity.find("ssdl:Key/ssdl:PropertyRef", ns)
-        keys[name] = key.attrib["Name"] if key is not None else None
-    for association in csdl.findall("edm:Association", ns):
-        principal = association.find("edm:ReferentialConstraint/edm:Principal", ns)
-        dependent = association.find("edm:ReferentialConstraint/edm:Dependent", ns)
-        ends = association.findall("edm:End", ns)
-        if principal is None or dependent is None or len(ends) != 2:
-            continue
-        role_types = {end.attrib["Role"]: end.attrib["Type"].split(".")[-1] for end in ends}
-        ptable = role_types[principal.attrib["Role"]]
-        dtable = role_types[dependent.attrib["Role"]]
-        pcol = principal.find("edm:PropertyRef", ns).attrib["Name"]
-        dcol = dependent.find("edm:PropertyRef", ns).attrib["Name"]
-        foreign.add((dtable, dcol))
-
-    tables = []
-    for name in sorted(ss_types):
-        entity = ss_types[name]
-        fields = []
-        for prop in entity.findall("ssdl:Property", ns):
-            col = prop.attrib["Name"]
-            sql_type = prop.attrib["Type"].lower()
-            if sql_type in ("nvarchar", "varchar", "nchar", "char", "varbinary", "binary"):
-                length = prop.attrib.get("MaxLength")
-                if length:
-                    sql_type += "(max)" if length == "Max" else "(" + length + ")"
-            elif sql_type in ("decimal", "numeric"):
-                precision = prop.attrib.get("Precision", "18")
-                scale = prop.attrib.get("Scale", "0")
-                sql_type += "(" + precision + "," + scale + ")"
-            if prop.attrib.get("StoreGeneratedPattern") == "Identity":
-                sql_type += " IDENTITY"
-            nullable = prop.attrib.get("Nullable", "true") == "true"
-            flags = []
-            if keys[name] == col:
-                flags.append("PK")
-            if (name, col) in foreign:
-                flags.append("FK")
-            description = descriptions.get((name, col))
-            if not description:
-                raise ValueError("Falta MS_Description para " + name + "." + col)
-            fields.append([col, sql_type, "Sí" if nullable else "No", ", ".join(flags) or "—", description])
-        if not descriptions_by_table[name]:
-            raise ValueError("Falta MS_Description de tabla para " + name)
-        tables.append((name, descriptions_by_table[name], fields))
-    if len(tables) != 17 or sum(len(item[2]) for item in tables) != 114:
-        raise ValueError("El diccionario cambió: se esperaban 17 tablas y 114 atributos.")
-    return tables
-
-
-TABLES = schema_dictionary()
-for table_name, purpose, fields in TABLES:
-    H3(table_name)
-    P(purpose)
-    TBL(["Campo", "Tipo SQL", "NULL", "Clave", "Descripción"], fields, [74, 79, 31, 45, 343], database=True)
-
-H2("8.2 Relaciones y claves foráneas")
-P("Una FK conserva la integridad al impedir que una fila apunte a otra que no existe. En la tabla de relaciones, la columna dependiente almacena la clave de la fila referenciada. Los registros históricos de asignaciones y pagos se conservan con bajas o cambios de estado.")
-
-
-def schema_relations():
-    root = ET.parse(EDMX).getroot()
-    ns = {"edm": "http://schemas.microsoft.com/ado/2009/11/edm"}
-    schema = root.find(".//edm:Schema", ns)
-    relations = []
-    for association in schema.findall("edm:Association", ns):
-        principal = association.find("edm:ReferentialConstraint/edm:Principal", ns)
-        dependent = association.find("edm:ReferentialConstraint/edm:Dependent", ns)
-        ends = association.findall("edm:End", ns)
-        if principal is None or dependent is None or len(ends) != 2:
-            continue
-        role_types = {end.attrib["Role"]: end.attrib["Type"].split(".")[-1] for end in ends}
-        ptable = role_types[principal.attrib["Role"]]
-        dtable = role_types[dependent.attrib["Role"]]
-        pcol = principal.find("edm:PropertyRef", ns).attrib["Name"]
-        dcol = dependent.find("edm:PropertyRef", ns).attrib["Name"]
-        relations.append([dtable + "." + dcol, ptable + "." + pcol, "FK; el lado dependiente guarda la referencia"])
-    return sorted(relations)
-
-
-TBL(["Columna que referencia", "Fila referenciada", "Lectura"], schema_relations(), database=True)
-P("Relaciones relevantes: Rol 1:N UsuarioSistema; Socio 1:N Membresia; Plan 1:N Membresia; Membresia 1:N CuotaMembresia; Membresia 1:N MembresiaEntrenador; Rutina 1:N RutinaEjercicio; Ejercicio 1:N RutinaEjercicio e imágenes. UsuarioSistema también tiene una autorrelación de creador. Pago y CuotaMembresia conservan el pago vigente y el historial por cuota.")
-P("AuditoriaOperacion.IdEntidad no se une con una FK porque puede identificar entidades de distintos tipos. La columna Entidad indica cómo interpretar ese identificador.")
-H2("8.3 JOIN: reunir los datos relacionados")
-P("INNER JOIN devuelve únicamente filas que tienen coincidencia en ambos lados. Se usa cuando el resultado requiere una relación existente.")
-CODE("""
-SELECT s.DNI, s.Apellido + N', ' + s.Nombre AS Socio,
-       m.IdMembresia, p.Nombre AS Plan
-FROM dbo.Socio AS s
-INNER JOIN dbo.Membresia AS m ON m.IdSocio = s.IdSocio
-INNER JOIN dbo.Plan AS p ON p.IdPlan = m.IdPlan
-WHERE s.Estado = 1 AND m.Estado = 1
-ORDER BY s.Apellido, s.Nombre;
-""")
-P("Cada igualdad compara la FK de Membresia con la PK de Socio o Plan. Si un socio no tiene membresía, INNER JOIN no lo incluye.")
-P("LEFT JOIN devuelve todas las filas de la tabla a la izquierda; si no existe pareja, las columnas del lado derecho quedan NULL. Sirve para encontrar socios sin asignación.")
-CODE("""
-SELECT m.IdMembresia, s.DNI,
-       s.Apellido + N', ' + s.Nombre AS Socio,
-       e.Nombre AS NombreEntrenador
-FROM dbo.Membresia AS m
-INNER JOIN dbo.Socio AS s ON s.IdSocio = m.IdSocio
-LEFT JOIN dbo.MembresiaEntrenador AS me
-       ON me.IdMembresia = m.IdMembresia AND me.Estado = 1
-LEFT JOIN dbo.UsuarioSistema AS e
-       ON e.IdUsuarioSistema = me.IdEntrenador
-WHERE m.Estado = 1
-ORDER BY s.Apellido, s.Nombre;
-""")
-P("La condición me.Estado = 1 está en ON para mantener también las membresías que no tienen un entrenador vigente. Si se filtrara por me.Estado en WHERE, esas filas podrían desaparecer como en una unión interna.")
-H2("8.4 Índices: columnas y propósito")
-P("Un índice mantiene una estructura ordenada para encontrar filas con menos lecturas. SQL Server crea un índice para cada PK y restricción UNIQUE. Una FK por sí sola no crea un índice automáticamente. Los índices adicionales de SysGym se justifican por consultas usadas por la aplicación.")
-
-INDEX_ROWS = []
-for table_name, purpose, fields in TABLES:
-    pk = next((field[0] for field in fields if "PK" in field[3]), None)
-    if pk:
-        INDEX_ROWS.append([table_name, "PK (nombre SQL autogenerado)", pk, "Único, clustered", "Identifica una fila y resuelve búsquedas por clave."])
-INDEX_ROWS.extend([
-    ["Rol", "UNIQUE (nombre SQL autogenerado)", "Descripcion", "Único, nonclustered", "Evita roles con la misma descripción."],
-    ["Socio", "UNIQUE (nombre SQL autogenerado)", "DNI", "Único, nonclustered", "Evita registrar dos personas con el mismo DNI."],
-    ["UsuarioSistema", "UNIQUE (nombre SQL autogenerado)", "DNI", "Único, nonclustered", "Evita duplicar la identificación de un empleado."],
-    ["UsuarioSistema", "UNIQUE (nombre SQL autogenerado)", "Username", "Único, nonclustered", "Hace inequívoca la cuenta de acceso."],
-    ["EjercicioImagen", "UQ_EjercicioImagen_Ruta", "RutaRelativa", "Único, nonclustered", "Evita asociar dos registros a la misma ruta de archivo."],
-    ["CuotaMembresia", "UQ_CuotaMembresia_Periodo", "IdMembresia, FechaDesde", "Único, nonclustered", "Evita dos cuotas que comiencen en el mismo período de una membresía."],
-    ["CuotaMembresia", "UX_CuotaMembresia_IdRegistroPago", "IdRegistroPago", "Único, nonclustered; filtro IS NOT NULL", "Un pago vigente puede determinar como máximo una cuota."],
-    ["AuditoriaOperacion", "IX_AuditoriaOperacion_FechaHora", "FechaHora DESC, IdAuditoria DESC", "Nonclustered", "Acelera la auditoría reciente y ordena empates."],
-    ["Membresia", "IX_Membresia_IdSocio", "IdSocio", "Nonclustered", "Acelera la búsqueda del historial por socio."],
-    ["Pago", "IX_Pago_IdCuotaMembresia", "IdCuotaMembresia", "Nonclustered; filtro IS NOT NULL", "Acelera el historial de intentos por cuota."],
-])
-INDEX_ROWS.sort(key=lambda row: (row[0], row[1]))
-TBL(["Tabla", "Índice / restricción", "Columnas", "Características", "Propósito"], INDEX_ROWS, [72, 143, 111, 102, 144], database=True)
-P("La base actual tiene 27 índices: 17 de PK, 7 únicos y 3 secundarios no únicos. Los nombres que SQL Server asigna automáticamente a PK o UNIQUE pueden variar entre instalaciones; los cuatro índices de consulta y los nombres UQ explícitos son estables.")
-H2("8.5 DDL: crear tablas, claves, restricciones e índices")
-P("DDL (Data Definition Language) define la estructura. SysGymDB.sql crea la base, tablas, claves primarias y foráneas, restricciones CHECK/UNIQUE, valores por defecto e índices. El instalador ejecuta DocumentarSysGymDB.sql después para guardar descripciones MS_Description.")
-CODE("""
-CREATE TABLE Socio (
-    IdSocio INT IDENTITY(1,1) PRIMARY KEY,
-    DNI NVARCHAR(20) NOT NULL UNIQUE,
-    Nombre NVARCHAR(100) NOT NULL,
-    Apellido NVARCHAR(100) NOT NULL,
-    FechaNacimiento DATETIME2 NULL,
-    FechaAlta DATETIME2 NULL,
-    Peso DECIMAL(6,2) NULL,
-    Altura DECIMAL(5,2) NULL,
-    FotoRuta NVARCHAR(260) NULL,
-    Sexo CHAR(1) NULL,
-    Estado BIT NOT NULL DEFAULT 1,
-    CONSTRAINT CK_Socio_Peso
-        CHECK (Peso IS NULL OR Peso > 0),
-    CONSTRAINT CK_Socio_Altura
-        CHECK (Altura IS NULL OR Altura > 0)
-);
-""")
-P("El ejemplo corresponde al DDL real de SysGymDB.sql y muestra identidad, unicidad, nulabilidad, tipos decimales y validaciones. El modelo completo está documentado en el diccionario y el EDMX.")
-H2("8.6 DML: consultar y modificar filas")
-P("DML (Data Manipulation Language) lee y modifica los datos. En la aplicación, Entity Framework traduce las operaciones del repositorio a SQL. SysGymDatos.sql es una carga DML de desarrollo y QA, no una tarea de producción.")
-CODE("""
--- Ejemplo de INSERT presente en el seed de desarrollo:
-INSERT INTO Ejercicio (Nombre, Descripcion, Estado)
-VALUES (N'Press de banca',
-        N'Pecho, triceps y deltoides anterior.', 1);
-
--- Lectura con INNER JOIN sobre claves reales:
-SELECT s.DNI, s.Nombre, s.Apellido, p.Nombre AS Plan
-FROM dbo.Socio AS s
-INNER JOIN dbo.Membresia AS m ON m.IdSocio = s.IdSocio
-INNER JOIN dbo.Plan AS p ON p.IdPlan = m.IdPlan;
-""")
-P("SysGymDatos.sql se protege para no cargar el mismo conjunto dos veces, activa XACT_ABORT, abre una transacción, inserta usuarios de prueba, métodos, ejercicios, rutinas, socios, membresías, cuotas y pagos, y confirma al final. Si falla el lote, SQL Server revierte la transacción. La seed contiene contraseñas almacenadas como hashes; el manual no las reproduce.")
-H2("8.7 Transacciones: BEGIN, COMMIT y ROLLBACK")
-P("Una transacción agrupa operaciones relacionadas para conservar la regla de todo o nada. BEGIN TRANSACTION inicia el grupo; COMMIT confirma sus cambios; ROLLBACK deshace los cambios no confirmados.")
-CODE("""
-DECLARE @MensajeError NVARCHAR(4000);
-BEGIN TRY
-    BEGIN TRANSACTION;
-        -- Operaciones relacionadas: por ejemplo, membresía y cuota inicial.
-    COMMIT TRANSACTION;
-END TRY
-BEGIN CATCH
-    SET @MensajeError = ERROR_MESSAGE();
-    IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
-    RAISERROR(@MensajeError, 16, 1);
-END CATCH;
-""")
-P("En SysGym, la transacción de negocio se implementa en C# con Entity Framework 6, no en un procedimiento almacenado. UnidadDeTrabajoGimnasio.IniciarTransaccion crea la transacción y el objeto Transaccion confirma con Commit. Si se libera sin Confirmar, Dispose llama Rollback.")
-CODE("""
-public ITransaccion IniciarTransaccion()
-{
-    return new Transaccion(contexto.Database.BeginTransaction());
-}
-
-public void Confirmar()
-{
-    transaccion.Commit();
-    confirmada = true;
-}
-
-public void Dispose()
-{
-    if (!confirmada)
-        transaccion.Rollback();
-    transaccion.Dispose();
-}
-""")
-H2("8.8 Scripts SQL incluidos")
-TBL(
-    ["Script", "Propósito"],
-    [
-        ["SysGymDB.sql", "Esquema principal de instalación: tablas, relaciones, restricciones, índices y configuración inicial."],
-        ["DocumentarSysGymDB.sql", "Aplica o actualiza MS_Description de tablas, 114 columnas e índices; no cambia filas ni estructura."],
-        ["SysGymBaseInstalacion.sql", "Inserta catálogos y rutinas modelo que requiere una base recién instalada, sin crear cuentas ni socios."],
-        ["SysGymDatos.sql", "Seed de desarrollo y QA con usuarios y datos relacionados; transaccional y protegida contra recarga."],
-        ["AgregarAuditoriaOperaciones.sql", "Migración aditiva para el registro de auditoría."],
-        ["AgregarConfiguracionSistema.sql", "Migración aditiva de la configuración global y sus restricciones."],
-        ["AgregarCuotaEnPago.sql", "Agrega/vincula IdCuotaMembresia, conserva relaciones históricas y crea el índice filtrado de consulta."],
-        ["AgregarObjetivoNivelRutina.sql", "Agrega objetivo y nivel de rutina y sus restricciones de combinación."],
-        ["AgregarSocioFechaAlta.sql", "Agrega la fecha de alta histórica opcional de los socios."],
-        ["MigrarEjercicioImagen.sql", "Migra los datos y estructura asociados al catálogo de imágenes de ejercicios."],
-    ],
-)
-P("Las migraciones resuelven versiones anteriores de forma condicional y aditiva. Para una base nueva se sigue la secuencia de instalación de README.md; no se deben ejecutar migraciones a ciegas sobre una base productiva.")
-H2("8.9 Procedimientos almacenados")
-P("La base SysGymDB actual no contiene procedimientos almacenados propios: sys.procedures no devolvió filas. La lógica de negocio y las transacciones están en capaLogica y capaDatos mediante EF6.")
-P("Algunas migraciones ejecutan sys.sp_executesql, procedimiento integrado de SQL Server que compila una instrucción SQL dinámica dentro del lote. DocumentarSysGymDB.sql usa los procedimientos integrados sys.sp_addextendedproperty y sys.sp_updateextendedproperty para añadir o actualizar descripciones. Ninguno es un procedimiento de negocio creado por SysGym.")
-NOTE("COMMIT/ROLLBACK", "COMMIT y ROLLBACK son instrucciones de control transaccional de SQL Server y métodos de DbContextTransaction en EF6; no son procedimientos almacenados de SysGym.")
-H2("8.10 Integridad y decisiones del modelo")
-UL(
-    "Los identificadores IDENTITY son claves técnicas autogeneradas y no se ingresan desde las pantallas.",
-    "DNI, username, rol, ruta de imagen y período de cuota tienen restricciones de unicidad donde corresponde.",
-    "Los importes históricos se conservan en CuotaMembresia.Importe aunque cambie Plan.Precio.",
-    "FotoRuta y RutaRelativa apuntan a archivos en disco; las imágenes no se guardan como binarios en SQL.",
-    "Los estados de una cuota y de un intento de pago tienen significados distintos.",
-    "Pago.IdCuotaMembresia y CuotaMembresia.IdRegistroPago conservan dos direcciones de la relación: historial del intento y pago vigente de la cuota.",
-    "AuditoriaOperacion guarda un nombre de entidad y un IdEntidad polimórfico; no hay una FK hacia cada tabla de negocio.",
-    "ConfiguracionSistema restringe su única fila a IdConfiguracion = 1 y acota valores con CHECK.",
-)
-H2("8.11 Abrir el EDMX")
-STEPS(
-    "Abrí la solución exxen2.0 en Visual Studio.",
-    "En el Explorador de soluciones, expandí capaDatos y Database.",
-    "Abrí SysGymDB.edmx. Visual Studio muestra las entidades y las líneas de asociación incluidas en el diagrama.",
-    "Seleccioná una entidad y abrí su superficie de diseño o su XML para revisar propiedades y relaciones.",
-)
-P("SysGymDB.edmx se distribuye como archivo de documentación y no genera una segunda clase de contexto durante la compilación. El contexto ejecutable existente sigue siendo ContextoGimnasio con EF6.")
-
-H1("9. Glosario")
+H1("8. Glosario")
 TBL(
     ["Término", "Significado"],
     [
         ["Socio", "Persona registrada en el gimnasio."],
-        ["Membresía", "Relación histórica de un socio con un plan."],
-        ["Cuota", "Importe que corresponde a un período de una membresía."],
-        ["Pago", "Intento registrado de cobro; conserva estados como aprobado, anulado o reembolsado."],
-        ["Deuda", "Cuotas vencidas que permanecen pendientes."],
-        ["Rutina modelo", "Plan de ejercicios reutilizable con objetivo y nivel."],
-        ["Auditoría", "Historial de operaciones que registra usuario, hora, entidad y detalle."],
-        ["PK", "Clave primaria: identifica una fila."],
-        ["FK", "Clave foránea: referencia una clave de otra tabla."],
-        ["DDL", "Instrucciones que definen la estructura de una base."],
-        ["DML", "Instrucciones que consultan o cambian las filas."],
-        ["Seed", "Datos de ejemplo para desarrollo o QA."],
-        ["Índice", "Estructura auxiliar para localizar u ordenar filas, o imponer unicidad."],
-        ["Transacción", "Grupo de cambios que se confirma completo o se revierte."],
-        ["Copia de seguridad", "Archivo .bak utilizado para recuperar la base."],
+        ["Membresía", "Servicio contratado por un socio mediante un plan."],
+        ["Cuota", "Importe correspondiente a un período de una membresía."],
+        ["Pago pendiente", "Pago que todavía no figura como aprobado."],
+        ["Pago aprobado", "Pago confirmado y aplicado a una cuota."],
+        ["Anular", "Dejar sin efecto un pago registrado, conservando su historial."],
+        ["Reembolsar", "Registrar que se devolvió el dinero de un pago aprobado."],
+        ["Plan", "Servicio y precio ofrecidos por el gimnasio."],
+        ["Rutina modelo", "Rutina reutilizable organizada por objetivo y nivel."],
+        ["Rutina personalizada", "Rutina preparada por un entrenador para un alumno."],
+        ["IMC", "Indicador calculado con peso y altura; es orientativo y no reemplaza una evaluación profesional."],
+        ["Auditoría", "Historial de acciones realizadas en SysGym."],
+        ["Reporte operativo", "Listado para consultar situaciones que requieren seguimiento."],
+        ["Análisis", "Vista de indicadores e informes para un período seleccionado."],
+        ["Copia de seguridad", "Archivo que permite recuperar la información guardada en SysGym."],
     ],
 )
-
 
 def font_paths():
     candidates = [
@@ -873,12 +596,12 @@ def make_pdf():
             canv.line(17*mm, A4[1]-13*mm, A4[0]-17*mm, A4[1]-13*mm)
             canv.setFont("SysGym-Bold", 7)
             canv.setFillColor(colors.HexColor("#" + BLUE))
-            canv.drawString(17*mm, A4[1]-10.5*mm, "SYSGYM  /  MANUAL DE USUARIO Y BASE DE DATOS")
+            canv.drawString(17*mm, A4[1]-10.5*mm, "SYSGYM  /  MANUAL DE USUARIO")
             canv.setStrokeColor(colors.HexColor("#" + MID))
             canv.line(17*mm, 13*mm, A4[0]-17*mm, 13*mm)
             canv.setFont("SysGym", 7)
             canv.setFillColor(colors.HexColor("#" + MUTED))
-            canv.drawString(17*mm, 8.5*mm, "Versión 30/10/2026 · Datos seed identificados como ejemplos")
+            canv.drawString(17*mm, 8.5*mm, "Edición " + FECHA_EDICION)
             canv.drawRightString(A4[0]-17*mm, 8.5*mm, "Página " + str(canv.getPageNumber()))
             canv.restoreState()
 
@@ -921,8 +644,8 @@ def make_pdf():
         story.extend([Spacer(1, 14*mm), Paragraph("Manual de usuario", styles["CoverTitle"]),
                       Paragraph("SysGym", styles["CoverSub"]),
                       Paragraph("Guía para Recepción, Entrenadores y Administración", styles["CoverLine"]),
-                      Paragraph("Procesos de trabajo, reportes y documentación técnica de la base de datos", styles["CoverLine"]),
-                      Spacer(1, 20*mm), Paragraph("Octubre de 2026", styles["CoverLine"]), PageBreak(),
+                      Paragraph("Guía paso a paso de los flujos de SysGym", styles["CoverLine"]),
+                      Spacer(1, 20*mm), Paragraph("Noviembre de 2026", styles["CoverLine"]), PageBreak(),
                       Paragraph("Contenido", styles["TOCTitle"])])
         toc_rows = []
         for level, title, key in heading_sequence:
@@ -1016,11 +739,11 @@ def make_pdf():
             canv.line(17*mm, A4[1]-13*mm, A4[0]-17*mm, A4[1]-13*mm)
             canv.setFont("SysGym-Bold", 7)
             canv.setFillColor(colors.black)
-            canv.drawString(17*mm, A4[1]-10.5*mm, "SYSGYM  /  MANUAL DE USUARIO Y BASE DE DATOS")
+            canv.drawString(17*mm, A4[1]-10.5*mm, "SYSGYM  /  MANUAL DE USUARIO")
             canv.line(17*mm, 13*mm, A4[0]-17*mm, 13*mm)
             canv.setFont("SysGym", 7)
             canv.setFillColor(colors.HexColor("#" + MUTED))
-            canv.drawString(17*mm, 8.5*mm, "Versión 30/10/2026 · Datos seed identificados como ejemplos")
+            canv.drawString(17*mm, 8.5*mm, "Edición " + FECHA_EDICION)
             canv.drawRightString(A4[0]-17*mm, 8.5*mm, "Página " + str(canv.getPageNumber()))
             canv.restoreState()
 
@@ -1285,8 +1008,8 @@ def make_word():
     word_paragraph(body, "Manual de usuario", color=INK, bold=True, size=38, after=120, align="center")
     word_paragraph(body, "SysGym", color=INK, font="Cambria", size=24, italic=True, after=110, align="center")
     word_paragraph(body, "Guía para Recepción, Entrenadores y Administración", color=INK, size=17, after=70, align="center")
-    word_paragraph(body, "Procesos de trabajo, reportes y documentación técnica de la base de datos", color=INK, size=15, after=180, align="center")
-    word_paragraph(body, "Octubre de 2026", color=INK, size=15, before=800, after=150, align="center")
+    word_paragraph(body, "Guía paso a paso de los flujos de SysGym", color=INK, size=15, after=180, align="center")
+    word_paragraph(body, "Noviembre de 2026", color=INK, size=15, before=800, after=150, align="center")
     word_page_break(body)
     word_paragraph(body, "Contenido", color=INK, bold=True, size=30, after=180)
     word_toc(body, heading_rows)
@@ -1373,7 +1096,7 @@ def make_word():
         ET.SubElement(sp, wtag("sz"), {wtag("val"): str(size)})
 
     header = ET.Element(wtag("hdr"))
-    word_paragraph(header, "SysGym  /  Manual de usuario y base de datos", color=INK, bold=True, size=13, after=0)
+    word_paragraph(header, "SysGym  /  Manual de usuario", color=INK, bold=True, size=13, after=0)
     header_first = ET.Element(wtag("hdr"))
     settings = ET.Element(wtag("settings"))
     ET.SubElement(settings, wtag("updateFields"), {wtag("val"): "true"})
@@ -1381,7 +1104,7 @@ def make_word():
     footer_p = ET.SubElement(footer, wtag("p"))
     footer_ppr = ET.SubElement(footer_p, wtag("pPr"))
     ET.SubElement(footer_ppr, wtag("jc"), {wtag("val"): "right"})
-    word_run(footer_p, "SysGym · 30/10/2026 · Página ", color=MUTED, size=13)
+    word_run(footer_p, "SysGym · Edición " + FECHA_EDICION + " · Página ", color=MUTED, size=13)
     fld = ET.SubElement(footer_p, wtag("r"))
     ET.SubElement(fld, wtag("fldChar"), {wtag("fldCharType"): "begin"})
     inst = ET.SubElement(ET.SubElement(footer_p, wtag("r")), wtag("instrText"))
@@ -1459,5 +1182,4 @@ if __name__ == "__main__":
         make_word()
     print("PDF:", PDF_OUT)
     print("DOCX:", DOCX_OUT)
-    print("Entidades:", len(TABLES), "Atributos:", sum(len(item[2]) for item in TABLES))
     print("Capturas:", sum(1 for block in BLOCKS if block[0] == "fig"))

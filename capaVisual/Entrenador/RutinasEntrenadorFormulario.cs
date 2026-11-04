@@ -60,6 +60,8 @@ namespace exxen2._0.capaVisual.Entrenador
         private void ConfigurarValidaciones()
         {
             nombre.Validating += nombre_Validating;
+            descripcion.Validating += descripcion_Validating;
+            descripcion.TextChanged += campoValidado_Cambiado;
             ejercicio.Validating += ejercicio_Validating;
             dia.Validating += dia_Validating;
             series.Validating += enteroPositivo_Validating;
@@ -592,8 +594,7 @@ namespace exxen2._0.capaVisual.Entrenador
 
         private static decimal? DecimalOpcional(TextBox campo)
         {
-            decimal valor;
-            return string.IsNullOrWhiteSpace(campo.Text) ? (decimal?)null : (decimal.TryParse(campo.Text, out valor) ? valor : throw new InvalidOperationException("Revisa el peso del ejercicio."));
+            return string.IsNullOrWhiteSpace(campo.Text) ? (decimal?)null : AyudaFormularioVisual.DecimalPositivo(campo, "peso", true);
         }
 
         private void series_KeyPress(object origen, KeyPressEventArgs e) { AyudaFormularioVisual.ValidarEntradaEntero(e); }
@@ -605,7 +606,12 @@ namespace exxen2._0.capaVisual.Entrenador
         /* Al salir del nombre de rutina, informa el requisito vigente. */
         private void nombre_Validating(object origen, CancelEventArgs e)
         {
-            AyudaFormularioVisual.ValidarRequerido(indicadorErrores, nombre, "El nombre de la rutina es obligatorio.");
+            AyudaFormularioVisual.ValidarTexto(indicadorErrores, nombre, "nombre de la rutina", 100, true);
+        }
+
+        private void descripcion_Validating(object origen, CancelEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarTexto(indicadorErrores, descripcion, "detalle de la rutina", 500, false);
         }
 
         /* Al salir del catálogo, exige un ejercicio durante alta o edición del detalle. */
@@ -631,7 +637,15 @@ namespace exxen2._0.capaVisual.Entrenador
         /* Valida el peso opcional como decimal no negativo. */
         private void peso_Validating(object origen, CancelEventArgs e)
         {
-            AyudaFormularioVisual.ValidarDecimal(indicadorErrores, peso, "peso", false, true);
+            ValidarPesoRutina();
+        }
+
+        private bool ValidarPesoRutina()
+        {
+            return AyudaFormularioVisual.ValidarConError(indicadorErrores, peso, delegate
+            {
+                ValidacionesGimnasio.ValidarPesoRutina(DecimalOpcional(peso));
+            });
         }
 
         /* Valida el descanso opcional como entero no negativo. */
@@ -657,9 +671,10 @@ namespace exxen2._0.capaVisual.Entrenador
         private bool ValidarFormularioRutina()
         {
             LimpiarErroresDelDetalle();
-            var valido = AyudaFormularioVisual.ValidarRequerido(indicadorErrores, nombre, "El nombre de la rutina es obligatorio.");
+            var valido = AyudaFormularioVisual.ValidarTexto(indicadorErrores, nombre, "nombre de la rutina", 100, true);
+            valido = AyudaFormularioVisual.ValidarTexto(indicadorErrores, descripcion, "detalle de la rutina", 500, false) & valido;
             if (!valido)
-                AyudaFormularioVisual.EnfocarPrimerError(indicadorErrores, nombre);
+                AyudaFormularioVisual.EnfocarPrimerError(indicadorErrores, nombre, descripcion);
             return valido;
         }
 
@@ -671,7 +686,7 @@ namespace exxen2._0.capaVisual.Entrenador
             valido = AyudaFormularioVisual.ValidarCombo(indicadorErrores, dia, "Seleccioná un día.") & valido;
             valido = AyudaFormularioVisual.ValidarEntero(indicadorErrores, series, "series", true, false) & valido;
             valido = AyudaFormularioVisual.ValidarEntero(indicadorErrores, repeticiones, "repeticiones", true, false) & valido;
-            valido = AyudaFormularioVisual.ValidarDecimal(indicadorErrores, peso, "peso", false, true) & valido;
+            valido = ValidarPesoRutina() & valido;
             valido = AyudaFormularioVisual.ValidarEntero(indicadorErrores, descanso, "descanso", false, true) & valido;
             valido = AyudaFormularioVisual.ValidarEntero(indicadorErrores, orden, "orden", true, false) & valido;
             if (!valido)

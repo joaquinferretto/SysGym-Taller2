@@ -75,6 +75,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.disposicion.Controls.Add(this.acciones, 0, 6);
             this.disposicion.Controls.Add(this.lblEstado, 0, 7);
             this.disposicion.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.disposicion.AutoScroll = true;
             this.disposicion.Location = new System.Drawing.Point(0, 0);
             this.disposicion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.disposicion.Name = "disposicion";
@@ -82,8 +83,8 @@ namespace exxen2._0.capaVisual.Administrador
             this.disposicion.RowCount = 8;
             this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
             this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
-            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 52F));
-            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
+            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
+            this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.AutoSize));
             this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
             this.disposicion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 52F));
@@ -180,7 +181,9 @@ namespace exxen2._0.capaVisual.Administrador
             this.filtros.Name = "filtros";
             this.filtros.Size = new System.Drawing.Size(1345, 52);
             this.filtros.TabIndex = 2;
-            this.filtros.WrapContents = false;
+            this.filtros.AutoScroll = true;
+            this.filtros.AutoSize = true;
+            this.filtros.WrapContents = true;
             //
             // lblTipo
             //
@@ -259,7 +262,8 @@ namespace exxen2._0.capaVisual.Administrador
             this.panelFechas.Name = "panelFechas";
             this.panelFechas.Size = new System.Drawing.Size(1345, 55);
             this.panelFechas.TabIndex = 3;
-            this.panelFechas.WrapContents = false;
+            this.panelFechas.AutoSize = true;
+            this.panelFechas.WrapContents = true;
             //
             // lblDesde
             //

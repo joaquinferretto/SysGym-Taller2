@@ -190,6 +190,8 @@ namespace exxen2._0.capaVisual.Recepcionista
             // splitContenido.Panel2
             //
             this.splitContenido.Panel2.BackColor = System.Drawing.Color.White;
+            this.splitContenido.Panel2.AutoScroll = true;
+            this.splitContenido.Panel2.AutoScrollMinSize = new System.Drawing.Size(0, 540);
             this.splitContenido.Panel2.Controls.Add(this.lblVinculacion);
             this.splitContenido.Panel2.Controls.Add(this.lblDetalleTitulo);
             this.splitContenido.Panel2.Controls.Add(this.lblSocio);
@@ -549,7 +551,8 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.cambiar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(74)))), ((int)(((byte)(61)))), ((int)(((byte)(112)))));
             this.cambiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cambiar.ForeColor = System.Drawing.Color.White;
-            this.cambiar.Location = new System.Drawing.Point(215, 485);
+            this.cambiar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cambiar.Location = new System.Drawing.Point(158, 485);
             this.cambiar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cambiar.Name = "cambiar";
             this.cambiar.Size = new System.Drawing.Size(215, 45);
@@ -567,7 +570,8 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.darDeBaja.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.darDeBaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.darDeBaja.ForeColor = System.Drawing.Color.White;
-            this.darDeBaja.Location = new System.Drawing.Point(440, 485);
+            this.darDeBaja.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.darDeBaja.Location = new System.Drawing.Point(383, 485);
             this.darDeBaja.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.darDeBaja.Name = "darDeBaja";
             this.darDeBaja.Size = new System.Drawing.Size(185, 45);

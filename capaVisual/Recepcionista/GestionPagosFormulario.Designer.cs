@@ -154,7 +154,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.tabla.RowHeadersVisible = false;
             this.tabla.RowHeadersWidth = 51;
             this.tabla.RowTemplate.Height = 30;
-            this.tabla.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tabla.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.tabla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.tabla.Size = new System.Drawing.Size(623, 348);
             this.tabla.TabIndex = 3;
@@ -210,7 +210,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             //
             this.colPeriodo.FillWeight = 190F;
             this.colPeriodo.HeaderText = "Período";
-            this.colPeriodo.MinimumWidth = 145;
+            this.colPeriodo.MinimumWidth = 190;
             this.colPeriodo.Name = "colPeriodo";
             this.colPeriodo.ReadOnly = true;
             //
@@ -361,6 +361,8 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.panelDetalle.Controls.Add(this.exportarComprobante);
             this.panelDetalle.Location = new System.Drawing.Point(705, 20);
             this.panelDetalle.Margin = new System.Windows.Forms.Padding(0);
+            this.panelDetalle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelDetalle.AutoScroll = true;
             this.panelDetalle.Name = "panelDetalle";
             this.panelDetalle.Padding = new System.Windows.Forms.Padding(20);
             this.panelDetalle.Size = new System.Drawing.Size(525, 522);

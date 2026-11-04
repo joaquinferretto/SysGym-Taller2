@@ -64,9 +64,10 @@ namespace exxen2._0.capaVisual.Compartido
             this.disposicion.Controls.Add(this.acciones, 0, 5);
             this.disposicion.Controls.Add(this.lblEstado, 0, 6);
             this.disposicion.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.disposicion.AutoScroll = true;
             this.disposicion.Location = new System.Drawing.Point(0, 0);
             this.disposicion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.disposicion.MinimumSize = new System.Drawing.Size(1062, 749);
+            this.disposicion.MinimumSize = System.Drawing.Size.Empty;
             this.disposicion.Name = "disposicion";
             this.disposicion.Padding = new System.Windows.Forms.Padding(15, 15, 15, 15);
             this.disposicion.RowCount = 7;
@@ -118,6 +119,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.lblNombre.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.lblNombre.Location = new System.Drawing.Point(150, 2);
             this.lblNombre.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblNombre.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.lblNombre.Name = "lblNombre";
             this.lblNombre.Size = new System.Drawing.Size(1025, 40);
             this.lblNombre.TabIndex = 1;
@@ -127,6 +129,7 @@ namespace exxen2._0.capaVisual.Compartido
             //
             this.lblDatos.Location = new System.Drawing.Point(150, 45);
             this.lblDatos.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblDatos.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             this.lblDatos.Name = "lblDatos";
             this.lblDatos.Size = new System.Drawing.Size(1025, 95);
             this.lblDatos.TabIndex = 2;

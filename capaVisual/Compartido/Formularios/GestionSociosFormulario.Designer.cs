@@ -509,6 +509,8 @@ namespace exxen2._0.capaVisual.Compartido
             this.panelDetalle.Controls.Add(this.btnQuitarFoto);
             this.panelDetalle.Controls.Add(this.verRutina);
             this.panelDetalle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelDetalle.AutoScroll = true;
+            this.panelDetalle.AutoScrollMinSize = new System.Drawing.Size(0, 740);
             this.panelDetalle.Location = new System.Drawing.Point(0, 0);
             this.panelDetalle.Margin = new System.Windows.Forms.Padding(4);
             this.panelDetalle.Name = "panelDetalle";

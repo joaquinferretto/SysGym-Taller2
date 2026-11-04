@@ -16,3 +16,5 @@ obj/
 /docs/
 /Instalador/Redist/
 /Instalador/Salida/
+
+Manual/GenerarManual.py

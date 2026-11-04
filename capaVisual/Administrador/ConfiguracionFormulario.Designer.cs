@@ -372,6 +372,7 @@ namespace exxen2._0.capaVisual.Administrador
             this.Controls.Add(this.grupoCopias);
             this.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.MinimumSize = new System.Drawing.Size(920, 730);
+            this.AutoScroll = true;
             this.Name = "ConfiguracionFormulario";
             this.Text = "SysGym";
             this.Load += new System.EventHandler(this.ConfiguracionFormulario_Load);

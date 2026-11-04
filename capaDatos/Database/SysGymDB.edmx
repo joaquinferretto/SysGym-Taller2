@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx" xmlns:mapping="http://schemas.microsoft.com/ado/2009/11/mapping/cs" xmlns:ns1="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" xmlns:ns3="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Version="3.0">
   <edmx:Runtime>
     <edmx:StorageModels>
@@ -4542,14 +4542,14 @@
       </edmx:DesignerInfoPropertySet>
     </edmx:Options>
     <edmx:Diagrams>
-      <edmx:Diagram DiagramId="1" Name="SysGymDB" ZoomLevel="100">
+      <edmx:Diagram DiagramId="1" Name="SysGymDB" ZoomLevel="67">
         <edmx:EntityTypeShape EntityType="SysGymModel.AuditoriaOperacion" Width="2.55" Height="3.21" PointX="0.50" PointY="0.50"/>
         <edmx:EntityTypeShape EntityType="SysGymModel.EjercicioImagen" Width="2.55" Height="2.01" PointX="0.50" PointY="4.26"/>
         <edmx:EntityTypeShape EntityType="SysGymModel.MetodoPago" Width="2.55" Height="2.25" PointX="0.50" PointY="6.82"/>
         <edmx:EntityTypeShape EntityType="SysGymModel.Rol" Width="2.55" Height="1.77" PointX="0.50" PointY="9.62"/>
         <edmx:EntityTypeShape EntityType="SysGymModel.UsuarioSistema" Width="2.90" Height="4.41" PointX="0.50" PointY="11.94"/>
         <edmx:EntityTypeShape EntityType="SysGymModel.ConfiguracionSistema" Width="2.55" Height="2.01" PointX="4.60" PointY="0.50"/>
-        <edmx:EntityTypeShape EntityType="SysGymModel.Membresia" Width="2.55" Height="2.97" PointX="4.60" PointY="3.06"/>
+        <edmx:EntityTypeShape EntityType="SysGymModel.Membresia" Width="2.5" Height="2.97" PointX="4.75" PointY="2.875"/>
         <edmx:EntityTypeShape EntityType="SysGymModel.Pago" Width="2.55" Height="2.97" PointX="4.60" PointY="6.58"/>
         <edmx:EntityTypeShape EntityType="SysGymModel.Rutina" Width="2.55" Height="3.45" PointX="4.60" PointY="10.10"/>
         <edmx:EntityTypeShape EntityType="SysGymModel.CuotaMembresia" Width="2.55" Height="2.73" PointX="8.70" PointY="0.50"/>

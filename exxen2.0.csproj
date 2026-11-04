@@ -395,13 +395,7 @@
     <None Include="capaDatos\Database\SysGymDB.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="capaDatos\Database\DocumentarSysGymDB.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="capaDatos\Database\SysGymDB.edmx" />
-    <None Include="capaDatos\Database\SysGymBaseInstalacion.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="capaDatos\Database\SysGymDatos.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

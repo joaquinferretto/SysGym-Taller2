@@ -242,10 +242,7 @@ namespace exxen2._0.capaLogica
             ValidacionesGimnasio.ValidarNombre(socio.Apellido, "apellido");
             ValidacionesGimnasio.ValidarEdadMinima(socio.FechaNacimiento, 13, "El socio debe tener al menos 13 años.");
 
-            if (socio.Peso.HasValue && (socio.Peso.Value < 20 || socio.Peso.Value > 300))
-            {
-                throw new InvalidOperationException("El peso debe estar entre 20 y 300 kg.");
-            }
+            ValidacionesGimnasio.ValidarPesoSocio(socio.Peso);
 
             if (socio.Altura.HasValue && (socio.Altura.Value < 0.80m || socio.Altura.Value > 2.50m))
             {
@@ -253,6 +250,7 @@ namespace exxen2._0.capaLogica
             }
 
             ValidarAlturaFraccionaria(socio.Altura);
+            ValidacionesGimnasio.ValidarDosDecimales(socio.Altura, "altura");
             ValidacionesGimnasio.ValidarFotoYSexo(null, socio.Sexo);
             AlmacenamientoImagenes.ValidarRutaRelativa(socio.FotoRuta);
         }

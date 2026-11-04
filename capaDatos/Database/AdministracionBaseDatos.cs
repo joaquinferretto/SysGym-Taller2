@@ -294,11 +294,14 @@ namespace exxen2._0.capaDatos.Servicios
 
             var nombreBase = NombreBaseConfigurada;
             var nombreSeguro = new SqlCommandBuilder().QuoteIdentifier(nombreBase);
+            string copiaTemporal = null;
             try
             {
+                // SQL lee una copia con permisos propios; el archivo elegido conserva sus permisos.
+                copiaTemporal = PrepararCopiaTemporalParaRestaurar(ruta);
                 using (var conexion = AbrirConexionMaster())
                 {
-                    var posicion = ObtenerPosicionCopiaSysGym(conexion, ruta, nombreBase);
+                    var posicion = ObtenerPosicionCopiaSysGym(conexion, copiaTemporal, nombreBase);
                     var baseEnUnSoloUsuario = false;
                     Exception errorRestauracion = null;
                     try
@@ -309,7 +312,7 @@ namespace exxen2._0.capaDatos.Servicios
                             "RESTORE DATABASE " + nombreSeguro + " FROM DISK = @ruta WITH FILE = " + posicion + ", REPLACE, CHECKSUM, RECOVERY;", conexion))
                         {
                             comando.CommandTimeout = 0;
-                            comando.Parameters.Add("@ruta", SqlDbType.NVarChar, 4000).Value = ruta;
+                            comando.Parameters.Add("@ruta", SqlDbType.NVarChar, 4000).Value = copiaTemporal;
                             comando.ExecuteNonQuery();
                         }
                     }
@@ -345,6 +348,29 @@ namespace exxen2._0.capaDatos.Servicios
             catch (SqlException ex) when (EsErrorPermisoArchivo(ex))
             {
                 throw new InvalidOperationException("SQL Server no tiene permisos para leer el archivo de copia seleccionado.", ex);
+            }
+            finally
+            {
+                EliminarCopiaTemporal(copiaTemporal);
+            }
+        }
+
+        private static string PrepararCopiaTemporalParaRestaurar(string origen)
+        {
+            var carpeta = Path.Combine(Path.GetTempPath(), ".SysGymBackup-Restaurar-" + Guid.NewGuid().ToString("N"));
+            try
+            {
+                Directory.CreateDirectory(carpeta);
+                if (!EsConexionLocalDb())
+                    AsignarPermisoTemporalServicio(carpeta, ObtenerCuentaServicioSql());
+                var destino = Path.Combine(carpeta, "restauracion.bak");
+                File.Copy(origen, destino);
+                return destino;
+            }
+            catch
+            {
+                EliminarCarpetaTemporal(carpeta);
+                throw;
             }
         }
 

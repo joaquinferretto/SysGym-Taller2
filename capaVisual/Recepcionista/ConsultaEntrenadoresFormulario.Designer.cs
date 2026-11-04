@@ -85,6 +85,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             // splitConsulta.Panel2
             //
             this.splitConsulta.Panel2.BackColor = System.Drawing.Color.White;
+            this.splitConsulta.Panel2.AutoScroll = true;
             this.splitConsulta.Panel2.Controls.Add(this.lblSocios);
             this.splitConsulta.Panel2.Controls.Add(this.lblSeleccion);
             this.splitConsulta.Panel2.Controls.Add(this.lblResumen);

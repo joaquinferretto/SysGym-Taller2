@@ -121,10 +121,8 @@ namespace exxen2._0.capaLogica
                 throw new ArgumentNullException("ejercicio");  // Se recibió null donde no corresponde.
             }
 
-            if (string.IsNullOrWhiteSpace(ejercicio.Nombre))
-            {
-                throw new InvalidOperationException("El nombre del ejercicio es obligatorio.");
-            }
+            ValidacionesGimnasio.ValidarTexto(ejercicio.Nombre, "nombre del ejercicio", 100, true);
+            ValidacionesGimnasio.ValidarTexto(ejercicio.Descripcion, "detalle del ejercicio", 500, false);
         }
     }
 }

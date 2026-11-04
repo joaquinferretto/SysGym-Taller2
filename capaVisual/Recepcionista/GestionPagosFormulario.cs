@@ -86,7 +86,6 @@ namespace exxen2._0.capaVisual.Recepcionista
             try
             {
             CargarMembresias();
-            CargarMetodosPago();
             Cargar();
             nuevo_Click(null, EventArgs.Empty);
             if (idSocioInicial > 0)
@@ -134,6 +133,8 @@ namespace exxen2._0.capaVisual.Recepcionista
         {
             try
             {
+                // Mantiene las opciones Efectivo/Mercado Pago alineadas con pagos recién registrados o anulados.
+                CargarMetodosPago();
                 cuotasCargadas = cuotas.ListarParaGestion();
                 AplicarFiltro();
             }
@@ -296,7 +297,7 @@ namespace exxen2._0.capaVisual.Recepcionista
                 (modoNuevo ? "Nuevo pago - Cuota pendiente" : "Registrar cuota pendiente")) :
                 (tienePago ? "Detalle del pago - " + seleccionada.Pago.Estado : "Cuota " + seleccionada.EstadoPago);
             membresia.Enabled = !tienePago;
-            importe.ReadOnly = !puedeRegistrar;
+            importe.ReadOnly = true; // El monto se toma de la cuota; Recepción no modifica su precio.
             metodo.Enabled = puedeRegistrar;
             estado.Enabled = puedeRegistrar;
             registrar.Enabled = puedeRegistrar;

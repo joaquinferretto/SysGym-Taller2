@@ -262,6 +262,8 @@ namespace exxen2._0.capaLogica
             using (var datos = new UnidadDeTrabajoGimnasio())
             using (var transaccion = datos.IniciarTransaccion())
             {
+                var auditoria = new AuditoriaLogica(idUsuarioAutenticado);
+                auditoria.ObtenerUsuario(datos);
                 var pago = datos.Pagos.Buscar(pagoActualizado.IdRegistroPago);
                 if (pago == null)
                 {
@@ -402,7 +404,7 @@ namespace exxen2._0.capaLogica
             return metodo.IdPagoEfectivo.HasValue ? "Efectivo" : "Mercado Pago";
         }
 
-        /* Rechaza importes no positivos o superiores a la cuota antes de contabilizar un pago. */
+        /* Cada cuota se cobra completa con un único pago aprobado, sin pagos parciales. */
         private static void ValidarImporteAprobado(CuotaMembresia cuota, decimal importe)
         {
             if (importe <= 0)
@@ -410,9 +412,9 @@ namespace exxen2._0.capaLogica
                 throw new InvalidOperationException("El importe debe ser mayor que cero.");
             }
 
-            if (importe > cuota.Importe)  // No se puede cobrar más de lo que vale la cuota.
+            if (importe != cuota.Importe)  // Se usa el importe histórico de la cuota, no el precio actual del plan.
             {
-                throw new InvalidOperationException("El pago supera el importe de la cuota.");
+                throw new InvalidOperationException("La cuota debe pagarse completa. El importe del pago debe ser igual al importe de la cuota.");
             }
         }
     }

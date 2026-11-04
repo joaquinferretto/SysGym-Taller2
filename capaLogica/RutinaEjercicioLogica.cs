@@ -112,7 +112,8 @@ namespace exxen2._0.capaLogica
                 MembresiaLogica.ActualizarEstadosPorDeudaEnContexto(datos);
                 datos.GuardarCambios();
                 var membresia = datos.Membresias.ConsultarSoloLectura("Rutina")
-                    .Where(m => m.IdSocio == idSocio && m.Estado && m.IdRutina.HasValue)  // Where = filtro (como filter de Streams / WHERE de SQL). "x => ..." es una lambda.
+                    .Where(m => m.IdSocio == idSocio && m.Estado && m.Socio.Estado && m.Plan.Estado &&
+                        m.IdRutina.HasValue && m.Rutina.Estado)  // La semana vigente requiere socio, membresía, plan y rutina habilitados.
                     .OrderByDescending(m => m.FechaInicio)  // Ordena (ORDER BY).
                     .FirstOrDefault();
                 if (membresia == null || !membresia.IdRutina.HasValue)  // HasValue: ¿el valor opcional (int?, DateTime?) tiene dato?
@@ -163,10 +164,7 @@ namespace exxen2._0.capaLogica
                 throw new InvalidOperationException("Las repeticiones deben ser mayores que cero.");
             }
 
-            if (rutinaEjercicio.Peso.HasValue && rutinaEjercicio.Peso.Value < 0)
-            {
-                throw new InvalidOperationException("El peso no puede ser negativo.");
-            }
+            ValidacionesGimnasio.ValidarPesoRutina(rutinaEjercicio.Peso);
 
             if (rutinaEjercicio.Descanso < 0)
             {

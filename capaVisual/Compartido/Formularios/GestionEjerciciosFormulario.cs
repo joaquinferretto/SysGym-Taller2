@@ -26,6 +26,8 @@ namespace exxen2._0.capaVisual.Compartido
         {
             InitializeComponent();
             nombre.Validating += nombre_Validating;
+            descripcion.Validating += descripcion_Validating;
+            descripcion.TextChanged += delegate { indicadorErrores.SetError(descripcion, string.Empty); };
             nombre.TextChanged += nombre_TextChanged;
         }
 
@@ -195,7 +197,12 @@ namespace exxen2._0.capaVisual.Compartido
         /* Al salir del nombre, informa la obligatoriedad del único campo requerido del catálogo. */
         private void nombre_Validating(object origen, CancelEventArgs e)
         {
-            AyudaFormularioVisual.ValidarRequerido(indicadorErrores, nombre, "El nombre del ejercicio es obligatorio.");
+            AyudaFormularioVisual.ValidarTexto(indicadorErrores, nombre, "nombre del ejercicio", 100, true);
+        }
+
+        private void descripcion_Validating(object origen, CancelEventArgs e)
+        {
+            AyudaFormularioVisual.ValidarTexto(indicadorErrores, descripcion, "detalle del ejercicio", 500, false);
         }
 
         /* Al corregir el nombre, retira el aviso anterior. */
@@ -208,9 +215,10 @@ namespace exxen2._0.capaVisual.Compartido
         private bool ValidarFormulario()
         {
             indicadorErrores.Clear();
-            var valido = AyudaFormularioVisual.ValidarRequerido(indicadorErrores, nombre, "El nombre del ejercicio es obligatorio.");
+            var valido = AyudaFormularioVisual.ValidarTexto(indicadorErrores, nombre, "nombre del ejercicio", 100, true);
+            valido = AyudaFormularioVisual.ValidarTexto(indicadorErrores, descripcion, "detalle del ejercicio", 500, false) & valido;
             if (!valido)
-                AyudaFormularioVisual.EnfocarPrimerError(indicadorErrores, nombre);
+                AyudaFormularioVisual.EnfocarPrimerError(indicadorErrores, nombre, descripcion);
             return valido;
         }
 

@@ -198,7 +198,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.splitContenido.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContenido.Location = new System.Drawing.Point(20, 20);
             this.splitContenido.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.splitContenido.MinimumSize = new System.Drawing.Size(1078, 525);
+            this.splitContenido.MinimumSize = System.Drawing.Size.Empty;
             this.splitContenido.Name = "splitContenido";
             //
             // splitContenido.Panel1
@@ -218,6 +218,7 @@ namespace exxen2._0.capaVisual.Compartido
             // splitContenido.Panel2
             //
             this.splitContenido.Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.splitContenido.Panel2.AutoScroll = true;
             this.splitContenido.Panel2.Controls.Add(this.lblDetalleTitulo);
             this.splitContenido.Panel2.Controls.Add(this.lblNombre);
             this.splitContenido.Panel2.Controls.Add(this.nombre);
@@ -380,6 +381,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.nombre.Location = new System.Drawing.Point(145, 52);
             this.nombre.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.nombre.Name = "nombre";
+            this.nombre.MaxLength = 100;
             this.nombre.Size = new System.Drawing.Size(644, 29);
             this.nombre.TabIndex = 0;
             //
@@ -403,6 +405,7 @@ namespace exxen2._0.capaVisual.Compartido
             this.descripcion.Margin = new System.Windows.Forms.Padding(0, 4, 0, 4);
             this.descripcion.Multiline = true;
             this.descripcion.Name = "descripcion";
+            this.descripcion.MaxLength = 500;
             this.descripcion.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.descripcion.Size = new System.Drawing.Size(644, 104);
             this.descripcion.TabIndex = 1;

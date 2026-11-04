@@ -335,6 +335,8 @@ namespace exxen2._0.capaVisual.Entrenador
             this.panelDetalle.Controls.Add(this.guardarEjercicio);
             this.panelDetalle.Controls.Add(this.cancelarEjercicio);
             this.panelDetalle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelDetalle.AutoScroll = true;
+            this.panelDetalle.AutoScrollMinSize = new System.Drawing.Size(0, 732);
             this.panelDetalle.Location = new System.Drawing.Point(430, 30);
             this.panelDetalle.Margin = new System.Windows.Forms.Padding(10, 10, 10, 10);
             this.panelDetalle.Name = "panelDetalle";
@@ -377,6 +379,7 @@ namespace exxen2._0.capaVisual.Entrenador
             this.nombre.Location = new System.Drawing.Point(145, 42);
             this.nombre.Margin = new System.Windows.Forms.Padding(0, 2, 10, 2);
             this.nombre.Name = "nombre";
+            this.nombre.MaxLength = 100;
             this.nombre.Size = new System.Drawing.Size(687, 29);
             this.nombre.TabIndex = 2;
             //
@@ -400,6 +403,7 @@ namespace exxen2._0.capaVisual.Entrenador
             this.descripcion.Location = new System.Drawing.Point(145, 82);
             this.descripcion.Margin = new System.Windows.Forms.Padding(0, 2, 10, 2);
             this.descripcion.Name = "descripcion";
+            this.descripcion.MaxLength = 500;
             this.descripcion.Size = new System.Drawing.Size(687, 29);
             this.descripcion.TabIndex = 4;
             //

@@ -151,7 +151,9 @@ namespace exxen2._0.capaVisual.Entrenador
             asignarRutina.Text = socioSeleccionado.TieneRutina ? "Cambiar rutina" : "Asignar rutina";
             ActualizarAcciones();
             lblAccionInfo.Text = socioSeleccionado.TieneRutina
-                ? "La rutina se muestra abajo. Podés cambiarla o editar sus ejercicios."
+                ? (tablaRutina.Rows.Count > 0
+                    ? "Podés cambiar la rutina o editar sus ejercicios."
+                    : "No hay ejercicios vigentes. Podés revisar la rutina o elegir otra.")
                 : "Seleccioná una rutina del catálogo o creá una personalizada.";
         }
 
@@ -320,7 +322,10 @@ namespace exxen2._0.capaVisual.Entrenador
         {
             if (e.Button != MouseButtons.Right || e.RowIndex < 0) return;
             tabla.ClearSelection();
-            tabla.Rows[e.RowIndex].Selected = true;
+            var fila = tabla.Rows[e.RowIndex];
+            tabla.CurrentCell = fila.Cells[2];
+            fila.Selected = true;
+            tabla_SelectionChanged(tabla, EventArgs.Empty);
         }
 
         /* Al salir del catálogo, exige una rutina cuando la acción de asignar está disponible. */

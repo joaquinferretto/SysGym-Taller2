@@ -223,6 +223,8 @@ namespace exxen2._0.capaVisual.Administrador
             this.lblCreadoPor.Location = new System.Drawing.Point(15, 418);
             this.lblCreadoPor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCreadoPor.Name = "lblCreadoPor";
+            this.lblCreadoPor.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.lblCreadoPor.AutoEllipsis = true;
             this.lblCreadoPor.Size = new System.Drawing.Size(455, 25);
             this.lblCreadoPor.TabIndex = 17;
             this.lblCreadoPor.Text = "Creado por: Sin información";
@@ -260,6 +262,7 @@ namespace exxen2._0.capaVisual.Administrador
             //
             // contenedorContenido.Panel2
             //
+            this.contenedorContenido.Panel2.AutoScroll = true;
             this.contenedorContenido.Panel2.Controls.Add(this.lblFormulario);
             this.contenedorContenido.Panel2.Controls.Add(this.lblNombre);
             this.contenedorContenido.Panel2.Controls.Add(this.nombre);

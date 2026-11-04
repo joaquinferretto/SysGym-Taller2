@@ -255,7 +255,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.lblAyuda.Location = new System.Drawing.Point(20, 55);
             this.lblAyuda.Margin = new System.Windows.Forms.Padding(0, 0, 0, 8);
             this.lblAyuda.Name = "lblAyuda";
-            this.lblAyuda.Size = new System.Drawing.Size(749, 30);
+            this.lblAyuda.Size = new System.Drawing.Size(623, 30);
             this.lblAyuda.TabIndex = 1;
             this.lblAyuda.Text = "Busca por socio, DNI o plan";
             this.lblAyuda.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -269,7 +269,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.lblListado.Location = new System.Drawing.Point(20, 20);
             this.lblListado.Margin = new System.Windows.Forms.Padding(0);
             this.lblListado.Name = "lblListado";
-            this.lblListado.Size = new System.Drawing.Size(749, 35);
+            this.lblListado.Size = new System.Drawing.Size(623, 35);
             this.lblListado.TabIndex = 0;
             this.lblListado.Text = "Membresías";
             this.lblListado.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -304,6 +304,8 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.panelDetalle.Controls.Add(this.generarCuota);
             this.panelDetalle.Location = new System.Drawing.Point(705, 20);
             this.panelDetalle.Margin = new System.Windows.Forms.Padding(0);
+            this.panelDetalle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelDetalle.AutoScroll = true;
             this.panelDetalle.Name = "panelDetalle";
             this.panelDetalle.Padding = new System.Windows.Forms.Padding(20);
             this.panelDetalle.Size = new System.Drawing.Size(525, 540);

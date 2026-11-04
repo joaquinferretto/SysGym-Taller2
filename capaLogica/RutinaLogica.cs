@@ -313,13 +313,12 @@ namespace exxen2._0.capaLogica
                 return false;
             }
 
-            if (rutina.IdEntrenador == idUsuario)  // Regla: el autor de la rutina puede editarla...
-            {
-                return true;
-            }
-
             var usuario = datos.UsuariosSistema.ConsultarSoloLectura("Rol").SingleOrDefault(u => u.IdUsuarioSistema == idUsuario);
-            return ValidacionesGimnasio.EsAdministradorActivo(usuario);  // ...y si no es el autor, solo un administrador.
+            // La autoría no sustituye el requisito de usuario y rol activos.
+            if (!ValidacionesGimnasio.PuedeGestionarRutinas(usuario))
+                return false;
+
+            return rutina.IdEntrenador == idUsuario || ValidacionesGimnasio.EsAdministradorActivo(usuario);
         }
 
         /* Consulta las rutinas del entrenador incluyendo bajas para la gestion del catalogo. */
@@ -412,7 +411,8 @@ namespace exxen2._0.capaLogica
                 NombrePlan = membresia.Plan == null ? "-" : membresia.Plan.Nombre,
                 CuotaHasta = CuotaMembresiaLogica.CubiertaHasta(membresia.Cuotas),
                 NombreEntrenador = usuario == null ? "Sin asignar" : usuario.Apellido + ", " + usuario.Nombre,
-                NombreRutina = membresia.Rutina == null ? string.Empty : membresia.Rutina.Nombre
+                NombreRutina = membresia.Rutina == null ? string.Empty : membresia.Rutina.Nombre +
+                    (membresia.Rutina.Estado ? string.Empty : " (inactiva)")
                 ,Objetivo = membresia.Rutina == null ? null : membresia.Rutina.Objetivo
                 ,Nivel = membresia.Rutina == null ? null : membresia.Rutina.Nivel
                 ,Peso = membresia.Socio == null ? null : membresia.Socio.Peso
@@ -456,10 +456,8 @@ namespace exxen2._0.capaLogica
                 throw new ArgumentNullException("rutina");  // Se recibió null donde no corresponde.
             }
 
-            if (string.IsNullOrWhiteSpace(rutina.Nombre))
-            {
-                throw new InvalidOperationException("El nombre de la rutina es obligatorio.");
-            }
+            ValidacionesGimnasio.ValidarTexto(rutina.Nombre, "nombre de la rutina", 100, true);
+            ValidacionesGimnasio.ValidarTexto(rutina.Descripcion, "detalle de la rutina", 500, false);
 
             var objetivoValido = new[] { "Fuerza", "Hipertrofia", "Acondicionamiento" };
             var nivelValido = new[] { "Principiante", "Intermedio", "Avanzado" };

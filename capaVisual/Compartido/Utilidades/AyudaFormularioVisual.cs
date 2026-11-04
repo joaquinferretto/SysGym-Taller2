@@ -438,6 +438,11 @@ namespace exxen2._0.capaVisual.Compartido.Utilidades
             return ValidarConError(errores, campo, delegate { ValidacionesGimnasio.ValidarNombreUsuario(campo.Text.Trim()); });
         }
 
+        internal static bool ValidarTexto(ErrorProvider errores, TextBox campo, string nombreCampo, int maximo, bool obligatorio)
+        {
+            return ValidarConError(errores, campo, delegate { ValidacionesGimnasio.ValidarTexto(campo.Text, nombreCampo, maximo, obligatorio); });
+        }
+
         internal static bool ValidarDecimal(ErrorProvider errores, TextBox campo, string nombreCampo, bool obligatorio, bool permitirCero)
         {
             return ValidarConError(errores, campo, delegate

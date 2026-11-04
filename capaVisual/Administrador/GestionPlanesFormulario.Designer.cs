@@ -128,6 +128,7 @@ namespace exxen2._0.capaVisual.Administrador
             // splitContenido.Panel2
             //
             this.splitContenido.Panel2.BackColor = System.Drawing.Color.White;
+            this.splitContenido.Panel2.AutoScroll = true;
             this.splitContenido.Panel2.Controls.Add(this.lblFormulario);
             this.splitContenido.Panel2.Controls.Add(this.lblNombre);
             this.splitContenido.Panel2.Controls.Add(this.nombre);

@@ -15,6 +15,37 @@ namespace exxen2._0.capaLogica
         public const int LongitudMaximaNombreUsuario = 50;
         public const int TamanoMaximoFoto = ProcesadorImagenes.TamanoMaximoBytes;
 
+        /* Valida textos libres de catálogo según la longitud que admite su almacenamiento. */
+        public static void ValidarTexto(string valor, string campo, int maximo, bool obligatorio)
+        {
+            if (obligatorio && string.IsNullOrWhiteSpace(valor))
+                throw new InvalidOperationException("El " + campo + " es obligatorio.");
+            if (valor != null && valor.Length > maximo)
+                throw new InvalidOperationException("El " + campo + " no puede superar " + maximo + " caracteres.");
+        }
+
+        /* Evita que SQL redondee silenciosamente datos escritos con mayor precisión. */
+        public static void ValidarDosDecimales(decimal? valor, string campo)
+        {
+            if (valor.HasValue && decimal.Round(valor.Value, 2) != valor.Value)
+                throw new InvalidOperationException("El " + campo + " admite hasta 2 decimales.");
+        }
+
+        public static void ValidarPesoRutina(decimal? peso)
+        {
+            if (peso.HasValue && (peso.Value < 0 || peso.Value > 999999.99m))
+                throw new InvalidOperationException("El peso debe estar entre 0 y 999999,99.");
+            ValidarDosDecimales(peso, "peso");
+        }
+
+        /* El peso corporal es opcional; cuando se informa debe superar 35 kg. */
+        public static void ValidarPesoSocio(decimal? peso)
+        {
+            if (peso.HasValue && (peso.Value <= 35m || peso.Value > 300m))
+                throw new InvalidOperationException("El peso debe ser mayor a 35 kg y no superar 300 kg.");
+            ValidarDosDecimales(peso, "peso");
+        }
+
         /* Valida un nombre humano sin aceptar numeros ni simbolos ajenos al nombre. */
         public static void ValidarNombre(string valor, string campo)
         {

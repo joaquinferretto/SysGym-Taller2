@@ -72,19 +72,20 @@ namespace exxen2._0.capaLogica.Reportes
             var documento = CrearDocumento("Comprobante de pago");
             var seccion = documento.AddSection();
             seccion.PageSetup.PageFormat = PageFormat.A4;
-            seccion.PageSetup.TopMargin = Unit.FromCentimeter(2);
+            seccion.PageSetup.TopMargin = Unit.FromCentimeter(1.6);
+            seccion.PageSetup.BottomMargin = Unit.FromCentimeter(2.2);
+            seccion.PageSetup.LeftMargin = Unit.FromCentimeter(2);
+            seccion.PageSetup.RightMargin = Unit.FromCentimeter(2);
             AgregarMarca(seccion);
             AgregarTitulo(seccion, "Comprobante de pago");
-            AgregarLinea(seccion, "Pago", "N.º " + pago.Id);
-            AgregarLinea(seccion, "Socio", pago.Nombre + " " + pago.Apellido);
-            AgregarLinea(seccion, "DNI", pago.Dni);
-            AgregarLinea(seccion, "Plan", pago.Plan);
-            AgregarLinea(seccion, "Período", Periodo(pago));
-            AgregarLinea(seccion, "Fecha del pago", pago.Fecha.ToString("dd/MM/yyyy HH:mm", CultureInfo.CurrentCulture));
-            AgregarLinea(seccion, "Importe", pago.Importe.ToString("C", CultureInfo.CurrentCulture));
-            AgregarLinea(seccion, "Método de pago", pago.Metodo);
-            AgregarLinea(seccion, "Estado", pago.Estado);
-            AgregarLinea(seccion, "Registrado por", pago.RegistradoPor);
+            AgregarReferenciaComprobante(seccion, pago);
+            AgregarBloqueDatosComprobante(seccion, "Datos del socio",
+                new[] { "Socio", "DNI", "Plan", "Período" },
+                new[] { pago.Nombre + " " + pago.Apellido, pago.Dni, pago.Plan, Periodo(pago) });
+            AgregarBloqueDatosComprobante(seccion, "Detalle del pago",
+                new[] { "Fecha del pago", "Método de pago", "Registrado por" },
+                new[] { pago.Fecha.ToString("dd/MM/yyyy HH:mm", CultureInfo.CurrentCulture), pago.Metodo, pago.RegistradoPor });
+            AgregarImporteComprobante(seccion, pago.Importe);
             AgregarPie(seccion);
             Guardar(documento, destino, AuditoriaLogica.ExportarComprobantePago, "Pago", idPago,
                 "Comprobante del pago #" + idPago + " exportado para " + pago.Nombre + " " + pago.Apellido);
@@ -259,6 +260,114 @@ namespace exxen2._0.capaLogica.Reportes
             var pie = seccion.Footers.Primary.AddParagraph("Comprobante generado por SysGym · " + DateTime.Now.ToString("dd/MM/yyyy HH:mm", CultureInfo.CurrentCulture));
             pie.Format.Font.Size = 8;
             pie.Format.Alignment = ParagraphAlignment.Center;
+        }
+
+        /* Presenta el número del pago y su estado en una franja destacada. */
+        private static void AgregarReferenciaComprobante(Section seccion, PagoExportable pago)
+        {
+            var tabla = seccion.AddTable();
+            tabla.Borders.Color = Color.FromRgb(255, 255, 255);
+            tabla.Borders.Width = Unit.FromPoint(0.5);
+            tabla.LeftPadding = Unit.FromPoint(8);
+            tabla.RightPadding = Unit.FromPoint(8);
+            tabla.AddColumn(Unit.FromCentimeter(11.3));
+            tabla.AddColumn(Unit.FromCentimeter(5.7));
+
+            var fila = tabla.AddRow();
+            fila.Cells[0].VerticalAlignment = VerticalAlignment.Center;
+            var referencia = fila.Cells[0].AddParagraph("COMPROBANTE N.º " + pago.Id);
+            referencia.Format.Font.Bold = true;
+            referencia.Format.Font.Size = 10;
+            referencia.Format.Font.Color = Color.FromRgb(71, 85, 105);
+
+            fila.Cells[1].Shading.Color = Color.FromRgb(220, 252, 231);
+            fila.Cells[1].VerticalAlignment = VerticalAlignment.Center;
+            fila.Cells[1].Format.Alignment = ParagraphAlignment.Center;
+            var estado = fila.Cells[1].AddParagraph((pago.Estado ?? "").ToUpperInvariant());
+            estado.Format.Font.Bold = true;
+            estado.Format.Font.Size = 9;
+            estado.Format.Font.Color = Color.FromRgb(22, 101, 52);
+        }
+
+        /* Organiza dos pares de datos en tarjetas con etiquetas y valores legibles. */
+        private static void AgregarBloqueDatosComprobante(Section seccion, string titulo, string[] etiquetas, string[] valores)
+        {
+            var encabezado = seccion.AddParagraph(titulo);
+            encabezado.Format.Font.Bold = true;
+            encabezado.Format.Font.Size = 11;
+            encabezado.Format.Font.Color = Color.FromRgb(51, 65, 85);
+            encabezado.Format.SpaceBefore = Unit.FromPoint(12);
+            encabezado.Format.SpaceAfter = Unit.FromPoint(5);
+
+            var tabla = seccion.AddTable();
+            tabla.Borders.Color = Color.FromRgb(226, 232, 240);
+            tabla.Borders.Width = Unit.FromPoint(0.5);
+            tabla.LeftPadding = Unit.FromPoint(8);
+            tabla.RightPadding = Unit.FromPoint(8);
+            tabla.TopPadding = Unit.FromPoint(6);
+            tabla.BottomPadding = Unit.FromPoint(6);
+            tabla.AddColumn(Unit.FromCentimeter(8.5));
+            tabla.AddColumn(Unit.FromCentimeter(8.5));
+
+            for (var indice = 0; indice < etiquetas.Length; indice += 2)
+            {
+                var fila = tabla.AddRow();
+                fila.Cells[0].Shading.Color = Color.FromRgb(248, 250, 252);
+                fila.Cells[0].VerticalAlignment = VerticalAlignment.Center;
+                AgregarCampoComprobante(fila.Cells[0], etiquetas[indice], valores[indice]);
+                if (indice + 1 < etiquetas.Length)
+                {
+                    fila.Cells[1].Shading.Color = Color.FromRgb(248, 250, 252);
+                    fila.Cells[1].VerticalAlignment = VerticalAlignment.Center;
+                    AgregarCampoComprobante(fila.Cells[1], etiquetas[indice + 1], valores[indice + 1]);
+                }
+            }
+        }
+
+        /* Separa visualmente el nombre del campo y su valor. */
+        private static void AgregarCampoComprobante(Cell celda, string etiqueta, string valor)
+        {
+            var titulo = celda.AddParagraph((etiqueta ?? "").ToUpperInvariant());
+            titulo.Format.Font.Bold = true;
+            titulo.Format.Font.Size = 8;
+            titulo.Format.Font.Color = Color.FromRgb(100, 116, 139);
+            titulo.Format.SpaceAfter = Unit.FromPoint(2);
+
+            var dato = celda.AddParagraph(string.IsNullOrWhiteSpace(valor) ? "-" : valor);
+            dato.Format.Font.Size = 10;
+            dato.Format.Font.Color = Color.FromRgb(15, 23, 42);
+        }
+
+        /* Destaca el importe para que se identifique rápido al leer o imprimir el comprobante. */
+        private static void AgregarImporteComprobante(Section seccion, decimal importe)
+        {
+            var tabla = seccion.AddTable();
+            tabla.Borders.Color = Color.FromRgb(199, 210, 254);
+            tabla.Borders.Width = Unit.FromPoint(0.75);
+            tabla.LeftPadding = Unit.FromPoint(10);
+            tabla.RightPadding = Unit.FromPoint(10);
+            tabla.TopPadding = Unit.FromPoint(8);
+            tabla.BottomPadding = Unit.FromPoint(8);
+            tabla.AddColumn(Unit.FromCentimeter(8.5));
+            tabla.AddColumn(Unit.FromCentimeter(8.5));
+
+            var fila = tabla.AddRow();
+            foreach (Cell celda in fila.Cells)
+            {
+                celda.Shading.Color = Color.FromRgb(239, 240, 255);
+                celda.VerticalAlignment = VerticalAlignment.Center;
+            }
+
+            var etiqueta = fila.Cells[0].AddParagraph("IMPORTE ABONADO");
+            etiqueta.Format.Font.Bold = true;
+            etiqueta.Format.Font.Size = 9;
+            etiqueta.Format.Font.Color = Color.FromRgb(71, 85, 105);
+
+            fila.Cells[1].Format.Alignment = ParagraphAlignment.Right;
+            var valor = fila.Cells[1].AddParagraph(importe.ToString("C", CultureInfo.CurrentCulture));
+            valor.Format.Font.Bold = true;
+            valor.Format.Font.Size = 20;
+            valor.Format.Font.Color = Color.FromRgb(79, 70, 229);
         }
 
         private static string Periodo(PagoExportable pago)

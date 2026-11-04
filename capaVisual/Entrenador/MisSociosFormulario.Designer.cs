@@ -213,7 +213,7 @@ namespace exxen2._0.capaVisual.Entrenador
             this.splitContenido.IsSplitterFixed = true;
             this.splitContenido.Location = new System.Drawing.Point(20, 20);
             this.splitContenido.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.splitContenido.MinimumSize = new System.Drawing.Size(1078, 525);
+            this.splitContenido.MinimumSize = System.Drawing.Size.Empty;
             this.splitContenido.Name = "splitContenido";
             //
             // splitContenido.Panel1
@@ -231,6 +231,8 @@ namespace exxen2._0.capaVisual.Entrenador
             // splitContenido.Panel2
             //
             this.splitContenido.Panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
+            this.splitContenido.Panel2.AutoScroll = true;
+            this.splitContenido.Panel2.AutoScrollMinSize = new System.Drawing.Size(0, 740);
             this.splitContenido.Panel2.Controls.Add(this.lblDetalleTitulo);
             this.splitContenido.Panel2.Controls.Add(this.lblSocio);
             this.splitContenido.Panel2.Controls.Add(this.txtSocio);
@@ -602,7 +604,7 @@ namespace exxen2._0.capaVisual.Entrenador
             this.tablaRutina.RowHeadersWidth = 51;
             this.tablaRutina.RowTemplate.Height = 28;
             this.tablaRutina.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.tablaRutina.Size = new System.Drawing.Size(765, 288);
+            this.tablaRutina.Size = new System.Drawing.Size(765, 240);
             this.tablaRutina.TabIndex = 5;
             //
             // colDia
@@ -673,7 +675,8 @@ namespace exxen2._0.capaVisual.Entrenador
             this.lblSugerencia.Location = new System.Drawing.Point(12, 174);
             this.lblSugerencia.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSugerencia.Name = "lblSugerencia";
-            this.lblSugerencia.Size = new System.Drawing.Size(768, 52);
+            this.lblSugerencia.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            this.lblSugerencia.Size = new System.Drawing.Size(728, 52);
             this.lblSugerencia.TabIndex = 15;
             this.lblSugerencia.Text = "IMC no disponible. Sin sugerencia.";
             //
@@ -762,7 +765,7 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             // verRutina
             //
-            this.verRutina.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.verRutina.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.verRutina.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(75)))), ((int)(((byte)(138)))));
             this.verRutina.Enabled = false;
             this.verRutina.FlatAppearance.BorderSize = 0;
@@ -771,7 +774,7 @@ namespace exxen2._0.capaVisual.Entrenador
             this.verRutina.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.verRutina.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.verRutina.ForeColor = System.Drawing.Color.White;
-            this.verRutina.Location = new System.Drawing.Point(394, 688);
+            this.verRutina.Location = new System.Drawing.Point(192, 688);
             this.verRutina.Margin = new System.Windows.Forms.Padding(0, 2, 10, 0);
             this.verRutina.Name = "verRutina";
             this.verRutina.Size = new System.Drawing.Size(204, 40);
@@ -782,7 +785,7 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             // crearPersonalizada
             //
-            this.crearPersonalizada.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.crearPersonalizada.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.crearPersonalizada.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(125)))), ((int)(((byte)(50)))));
             this.crearPersonalizada.Enabled = false;
             this.crearPersonalizada.FlatAppearance.BorderSize = 0;
@@ -791,10 +794,10 @@ namespace exxen2._0.capaVisual.Entrenador
             this.crearPersonalizada.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.crearPersonalizada.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.crearPersonalizada.ForeColor = System.Drawing.Color.White;
-            this.crearPersonalizada.Location = new System.Drawing.Point(144, 688);
+            this.crearPersonalizada.Location = new System.Drawing.Point(12, 688);
             this.crearPersonalizada.Margin = new System.Windows.Forms.Padding(0, 2, 10, 0);
             this.crearPersonalizada.Name = "crearPersonalizada";
-            this.crearPersonalizada.Size = new System.Drawing.Size(240, 40);
+            this.crearPersonalizada.Size = new System.Drawing.Size(170, 40);
             this.crearPersonalizada.TabIndex = 8;
             this.crearPersonalizada.Text = "Crear personalizada";
             this.crearPersonalizada.UseVisualStyleBackColor = false;
@@ -802,7 +805,7 @@ namespace exxen2._0.capaVisual.Entrenador
             //
             // exportarPdf
             //
-            this.exportarPdf.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.exportarPdf.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.exportarPdf.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(75)))), ((int)(((byte)(138)))));
             this.exportarPdf.Enabled = false;
             this.exportarPdf.FlatAppearance.BorderSize = 0;
@@ -811,7 +814,7 @@ namespace exxen2._0.capaVisual.Entrenador
             this.exportarPdf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.exportarPdf.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.exportarPdf.ForeColor = System.Drawing.Color.White;
-            this.exportarPdf.Location = new System.Drawing.Point(608, 688);
+            this.exportarPdf.Location = new System.Drawing.Point(406, 688);
             this.exportarPdf.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.exportarPdf.Name = "exportarPdf";
             this.exportarPdf.Size = new System.Drawing.Size(170, 40);
