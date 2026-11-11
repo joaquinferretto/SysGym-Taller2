@@ -137,7 +137,7 @@ namespace exxen2._0.capaVisual.Recepcionista
 
         private void btnManual_Click(object origen, EventArgs e)
         {
-            AyudaFormularioVisual.AbrirManual(this);
+            Abrir(btnManual, new ManualUsuarioFormulario("Recepcionista"), "Manual de usuario | Flujos de Recepción");
         }
 
         /* Al hacer clic en btnSocios, abre el módulo correspondiente dentro del panel principal. */

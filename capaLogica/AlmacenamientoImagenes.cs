@@ -1,5 +1,4 @@
 using System;
-using System.Configuration;
 using System.IO;
 
 namespace exxen2._0.capaLogica
@@ -12,31 +11,18 @@ namespace exxen2._0.capaLogica
         private const string CarpetaUsuarios = "Usuarios";
         private const string CarpetaEjercicios = "Ejercicios";
 
-        /* La instalación usa ProgramData; Debug conserva la carpeta Datos junto al ejecutable. */
+        /* Las rutas persistidas se resuelven desde Datos, junto al ejecutable. */
         public static string DirectorioRaiz
         {
-            get
-            {
-                return EsInstalacion()
-                    ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "SysGym")
-                    : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Datos");
-            }
+            get { return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Datos"); }
         }
 
-        /* Ubicación de los archivos MDF/LDF de la instalación. */
-        public static string DirectorioBaseDatos
-        {
-            get { return EsInstalacion() ? Path.Combine(DirectorioRaiz, "Datos") : DirectorioRaiz; }
-        }
-
-        /* Prepara las carpetas comunes y configura DataDirectory para las capas de persistencia. */
+        /* Prepara las carpetas de imágenes de la aplicación. */
         public static void PrepararDirectorios()
         {
             Directory.CreateDirectory(DirectorioRaiz);
-            Directory.CreateDirectory(DirectorioBaseDatos);
             Directory.CreateDirectory(Path.Combine(DirectorioRaiz, CarpetaImagenes, CarpetaEjercicios));
             Directory.CreateDirectory(Path.Combine(DirectorioRaiz, CarpetaImagenes, CarpetaSocios));
-            AppDomain.CurrentDomain.SetData("DataDirectory", DirectorioBaseDatos);
         }
 
         /* Guarda una foto de socio en la carpeta compartida de imágenes y devuelve la ruta relativa. */
@@ -117,11 +103,6 @@ namespace exxen2._0.capaLogica
                     File.Delete(rutaAbsoluta);
                 throw;
             }
-        }
-
-        private static bool EsInstalacion()
-        {
-            return string.Equals(ConfigurationManager.AppSettings["SysGymModoInstalado"], "true", StringComparison.OrdinalIgnoreCase);
         }
     }
 }

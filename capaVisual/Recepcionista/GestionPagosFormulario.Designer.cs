@@ -539,7 +539,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.nuevo.Location = new System.Drawing.Point(20, 330);
             this.nuevo.Margin = new System.Windows.Forms.Padding(0, 0, 10, 10);
             this.nuevo.Name = "nuevo";
-            this.nuevo.Size = new System.Drawing.Size(237, 48);
+            this.nuevo.Size = new System.Drawing.Size(227, 48);
             this.nuevo.TabIndex = 11;
             this.nuevo.Text = "Nuevo";
             this.nuevo.UseVisualStyleBackColor = false;
@@ -553,10 +553,10 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.registrar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(101)))), ((int)(((byte)(41)))));
             this.registrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.registrar.ForeColor = System.Drawing.Color.White;
-            this.registrar.Location = new System.Drawing.Point(248, 330);
+            this.registrar.Location = new System.Drawing.Point(258, 330);
             this.registrar.Margin = new System.Windows.Forms.Padding(0, 0, 10, 10);
             this.registrar.Name = "registrar";
-            this.registrar.Size = new System.Drawing.Size(237, 48);
+            this.registrar.Size = new System.Drawing.Size(227, 48);
             this.registrar.TabIndex = 12;
             this.registrar.Text = "Registrar pago";
             this.registrar.UseVisualStyleBackColor = false;
@@ -573,7 +573,7 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.anular.Location = new System.Drawing.Point(20, 388);
             this.anular.Margin = new System.Windows.Forms.Padding(0, 0, 10, 10);
             this.anular.Name = "anular";
-            this.anular.Size = new System.Drawing.Size(237, 48);
+            this.anular.Size = new System.Drawing.Size(227, 48);
             this.anular.TabIndex = 13;
             this.anular.Text = "Anular";
             this.anular.UseVisualStyleBackColor = false;
@@ -587,10 +587,10 @@ namespace exxen2._0.capaVisual.Recepcionista
             this.reembolsar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(152)))), ((int)(((byte)(100)))), ((int)(((byte)(25)))));
             this.reembolsar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.reembolsar.ForeColor = System.Drawing.Color.White;
-            this.reembolsar.Location = new System.Drawing.Point(248, 388);
+            this.reembolsar.Location = new System.Drawing.Point(258, 388);
             this.reembolsar.Margin = new System.Windows.Forms.Padding(0, 0, 10, 10);
             this.reembolsar.Name = "reembolsar";
-            this.reembolsar.Size = new System.Drawing.Size(237, 48);
+            this.reembolsar.Size = new System.Drawing.Size(227, 48);
             this.reembolsar.TabIndex = 14;
             this.reembolsar.Text = "Reembolsar";
             this.reembolsar.UseVisualStyleBackColor = false;

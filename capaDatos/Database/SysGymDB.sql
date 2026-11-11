@@ -1,12 +1,11 @@
-/* Creación de la base SysGymDB.
-   Los comentarios de tablas, columnas e índices se aplican con DocumentarSysGymDB.sql. */
+﻿/* Creación de SysGymDB para una instalación nueva.
+   CREATE/ALTER definen tablas, claves e índices; INSERT agrega los catálogos y la configuración inicial.
+   Ejecutar una sola vez. Los datos de ejemplo se cargan por separado con SysGymDatos.sql. */
 
 CREATE DATABASE SysGymDB;
 GO
 
 USE SysGymDB;
-GO
-SET QUOTED_IDENTIFIER ON;
 GO
 
 /* Roles y usuarios */
@@ -346,10 +345,7 @@ CREATE INDEX IX_Pago_IdCuotaMembresia
     WHERE IdCuotaMembresia IS NOT NULL;
 GO
 
-SET XACT_ABORT ON;
-BEGIN TRANSACTION;
-IF OBJECT_ID(N'dbo.ConfiguracionSistema', N'U') IS NULL
-BEGIN
+/* Parámetros iniciales del gimnasio. */
     CREATE TABLE dbo.ConfiguracionSistema (
         IdConfiguracion INT NOT NULL CONSTRAINT PK_ConfiguracionSistema PRIMARY KEY,
         MaxCuotasVencidasPermitidas INT NOT NULL CONSTRAINT DF_Configuracion_MaxVencidas DEFAULT 2,
@@ -360,17 +356,28 @@ BEGIN
         CONSTRAINT CK_Configuracion_MaxAnticipacion CHECK (MaxMesesAnticipacionCuotas BETWEEN 0 AND 120),
         CONSTRAINT CK_Configuracion_DiasAviso CHECK (DiasAvisoVencimiento BETWEEN 0 AND 365)
     );
-END;
-IF NOT EXISTS (SELECT 1 FROM dbo.ConfiguracionSistema WHERE IdConfiguracion = 1)
-    INSERT INTO dbo.ConfiguracionSistema (IdConfiguracion, MaxCuotasVencidasPermitidas, MaxMesesAnticipacionCuotas, DiasAvisoVencimiento)
+
+INSERT INTO dbo.ConfiguracionSistema (IdConfiguracion, MaxCuotasVencidasPermitidas, MaxMesesAnticipacionCuotas, DiasAvisoVencimiento)
     VALUES (1, 2, 2, 7);
-COMMIT TRANSACTION;
 
 GO
-/* Roles iniciales; los usuarios y datos de ejemplo se cargan desde SysGymDatos.sql. */
+/* Roles y medios de pago iniciales. SysGymDatos.sql agrega los datos de demostración. */
 INSERT INTO Rol (Descripcion, Estado)
 VALUES
     (N'Administrador', 1),
     (N'Recepcionista', 1),
     (N'Entrenador', 1);
+
+INSERT INTO PagoEfectivo (Estado)
+VALUES (1);
+DECLARE @IdEfectivo INT = SCOPE_IDENTITY();
+
+INSERT INTO MercadoPago (ExternalReference)
+VALUES (N'SYSGYM_MANUAL');
+DECLARE @IdMercadoPago INT = SCOPE_IDENTITY();
+
+INSERT INTO MetodoPago (Estado, Observaciones, IdNroPagoMP, IdPagoEfectivo)
+VALUES
+    (1, N'Mercado Pago', @IdMercadoPago, NULL),
+    (1, N'Pago en efectivo', NULL, @IdEfectivo);
 GO

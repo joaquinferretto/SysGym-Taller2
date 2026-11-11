@@ -1,15 +1,15 @@
 # SysGym
 
-## Especificación de Requisitos de Software
+## Especificación de Requisitos de Software (IEEE 830-1998)
 
 **Taller 2 — UNNE**
 
-**Fecha:** 25 de octubre de 2026
+**Fecha** 10 de noviembre de 2026
 
 ### Integrantes
 
-1. Ferretto Joaquin Daniel 45247702  
-2. Leonardo Oscar Canteros 44213011
+1. Ferretto Joaquin Daniel
+2. Leonardo Oscar Canteros
 
 
 ## 1. Introducción
@@ -20,9 +20,9 @@ Este documento especifica los requisitos de SysGym, una aplicación de escritori
 
 ### 1.2 Alcance
 
-SysGym permite administrar la operación de un gimnasio: usuarios del sistema, socios, planes, membresías, cuotas, pagos, entrenadores, asignaciones, rutinas y ejercicios. También presenta el estado de cuenta de los socios, emite reportes operativos y análisis, registra operaciones de auditoría y exporta determinados comprobantes e informes a PDF.
+SysGym permite administrar usuarios del sistema, socios, planes, membresías, cuotas, pagos, entrenadores, asignaciones, rutinas y ejercicios. También presenta el estado de cuenta de los socios, emite reportes operativos y análisis, registra operaciones de auditoría y exporta comprobantes e informes a PDF. Incluye un manual para cada rol.
 
-El sistema registra pagos en efectivo o mediante Mercado Pago como métodos de pago. No inicia cobros ni procesa operaciones mediante la API de Mercado Pago. La aplicación tampoco administra compras, proveedores, inventario ni liquidaciones salariales.
+El sistema registra en forma interna los pagos en efectivo y los recibidos por Mercado Pago. El alcance incluye el salario registrado en la ficha del empleado. Las liquidaciones salariales, compras, proveedores, inventario y ejecución de cobros en una pasarela quedan fuera del alcance.
 
 ### 1.3 Definiciones y abreviaturas
 
@@ -47,10 +47,11 @@ El sistema registra pagos en efectivo o mediante Mercado Pago como métodos de p
 - IEEE, *IEEE Recommended Practice for Software Requirements Specifications*, IEEE Std 830-1998. [Registro en IEEE Xplore](https://ieeexplore.ieee.org/document/720574).
 - Microsoft, documentación de [.NET Framework 4.8](https://learn.microsoft.com/en-us/dotnet/framework/get-started/).
 - Microsoft, [documentación de Entity Framework 6](https://learn.microsoft.com/en-us/ef/ef6/).
+- Open-Meteo, [documentación de Weather Forecast API](https://open-meteo.com/en/docs).
 
 ### 1.5 Visión general del documento
 
-La sección 2 describe el producto, sus usuarios y su entorno. La sección 3 enumera los requisitos funcionales y no funcionales y las interfaces. La sección 4 resume el modelo de datos. La sección 5 presenta la arquitectura por capas y la sección 6 indica los requisitos de instalación y ejecución.
+La sección 2 describe el producto, los roles y el entorno. La sección 3 define requisitos, interfaces y criterios de aceptación. Las secciones 4 y 5 describen el modelo de datos y la arquitectura. La sección 6 explica cómo ejecutar la aplicación y acceder a los manuales.
 
 ## 2. Descripción general
 
@@ -86,6 +87,7 @@ El sistema contempla tres roles. La tabla resume el acceso disponible desde los 
 | Reportes operativos | Sí | Sí | No |
 | Análisis general | Sí | No | No |
 | Auditoría y configuración | Sí | No | No |
+| Manual de usuario | Guía completa | Guía de Recepción | Guía de Entrenador |
 
 El administrador gestiona el conjunto de módulos administrativos. El recepcionista realiza tareas de atención, cobro y asignación. El entrenador trabaja con sus alumnos y con rutinas y ejercicios.
 
@@ -101,8 +103,8 @@ El administrador gestiona el conjunto de módulos administrativos. El recepcioni
 
 - Se dispone de una instancia de SQL Server accesible desde el equipo donde se ejecuta la aplicación.
 - La base de datos y los archivos de imágenes necesarios están disponibles para la aplicación.
-- Se requiere conexión a internet para consultar el pronóstico del clima y para restaurar los paquetes necesarios durante la preparación del entorno.
-- Las funciones principales de gestión no dependen de una conexión a servicios de pago externos.
+- La consulta del pronóstico requiere acceso a Open-Meteo. Si el servicio falla, se puede mostrar el último pronóstico válido de la caché local.
+- La primera restauración de paquetes requiere acceso a una fuente de NuGet o a una caché con las versiones del proyecto.
 
 ## 3. Requisitos específicos
 
@@ -134,14 +136,15 @@ El administrador gestiona el conjunto de módulos administrativos. El recepcioni
 
 #### Membresías y cuotas
 
-- **RF-12.** El sistema debe permitir crear y consultar la membresía de un socio y asociarla a un plan; también debe permitir cambiar a un plan activo solo mientras la membresía esté activa, aplicando el precio nuevo a cuotas futuras y conservando el importe de las cuotas existentes.
+- **RF-12.** El sistema debe permitir crear y consultar la membresía de un socio y asociarla a un plan. Debe permitir cambiar a un plan activo mientras la membresía esté activa. El nuevo precio aplica a las cuotas que se generen posteriormente.
 - **RF-13.** El sistema debe permitir generar cuotas mensuales consecutivas y conservar el importe correspondiente a cada período.
 - **RF-14.** El sistema debe permitir configurar la cantidad de cuotas vencidas permitidas antes de inactivar al socio y su membresía.
-- **RF-15.** El sistema debe inactivar automáticamente al socio y su membresía cuando alcance el límite de deuda configurado.
+- **RF-15.** Al evaluar la deuda en las operaciones de gestión, el sistema debe inactivar al socio y su membresía cuando las cuotas pendientes vencidas alcancen el límite configurado.
 - **RF-16.** El sistema debe permitir reactivar manualmente una membresía solo cuando la cantidad de cuotas vencidas sea inferior al límite configurado. Registrar el pago de la deuda no debe reactivar automáticamente la membresía.
 - **RF-17.** El sistema debe permitir configurar con cuánta anticipación se pueden generar cuotas.
 - **RF-18.** El sistema debe impedir generar nuevas cuotas cuando el socio haya alcanzado el límite de cuotas vencidas o cuando el período solicitado supere la anticipación configurada.
 - **RF-19.** El sistema debe permitir consultar las cuotas de una membresía, sus períodos, importes y estados.
+- **RF-56.** El sistema debe impedir una segunda membresía histórica para el mismo socio y generar la primera cuota cuando crea una membresía.
 - Al crear una membresía, Recepción o Administración puede asignar en la misma transacción una rutina modelo activa por objetivo y nivel, o elegir Libre para dejarla sin rutina. En una membresía activa pueden cambiar la rutina modelo o dejarla Libre; Recepción no puede asignar rutinas libres ni crear o editar rutinas.
 
 #### Pagos
@@ -150,6 +153,7 @@ El administrador gestiona el conjunto de módulos administrativos. El recepcioni
 - **RF-21.** El sistema debe permitir consultar el estado de los pagos y asociar cada pago con su cuota correspondiente; la cuota conserva la referencia a su pago vigente.
 - **RF-22.** El sistema debe permitir anular pagos aprobados y registrar el reembolso de pagos aprobados.
 - **RF-23.** El sistema debe permitir consultar el historial de pagos y exportar comprobantes e historiales a PDF.
+- **RF-57.** Al aprobar un pago, el sistema debe exigir el importe completo de la cuota. La cuota queda pagada mediante un único pago aprobado vigente.
 
 #### Entrenadores y asignaciones
 
@@ -204,14 +208,14 @@ Las bases nuevas parten de 2 cuotas vencidas permitidas, 2 meses de anticipació
 
 #### Inicio del administrador
 
-- **RF-48.** El sistema debe mostrar en el inicio del administrador el pronóstico semanal del clima.
+- **RF-48.** El sistema debe mostrar en el inicio del Administrador el pronóstico diario para Corrientes Capital con fecha, descripción, temperaturas mínima y máxima y probabilidad de precipitación. Debe indicar el origen del resultado y mostrar el último respaldo local cuando la consulta falla y el respaldo es usable. Si ambos fallan, debe mostrar que el pronóstico está sin datos.
 - **RF-49.** Antes del inicio de sesión, el sistema debe comprobar la conexión a SQL Server y la existencia de la base configurada; si no existe, debe ofrecer crearla con el esquema y la configuración inicial.
-- **RF-50.** Si no hay un Administrador activo, el sistema debe solicitar nombre, apellido, DNI, usuario y contraseña con confirmación, y no debe permitir continuar al inicio de sesión hasta registrar el primer Administrador.
+- **RF-50.** Si no hay un Administrador activo, el sistema debe solicitar nombre, apellido, DNI, sexo, usuario y contraseña con confirmación. El inicio de sesión queda disponible después de registrar la cuenta.
 - **RF-51.** El sistema debe permitir al Administrador crear copias de seguridad de la base, elegir dónde guardar el archivo `.bak` y consultar la fecha de la última copia.
 - **RF-52.** El sistema debe permitir al Administrador restaurar una copia `.bak` después de confirmar el reemplazo de los datos, validar que corresponda a la base configurada y reiniciar la aplicación al terminar.
 - **RF-53.** El sistema debe registrar en la auditoría la creación y restauración de copias de seguridad.
 - **RF-54.** Si no se puede conectar con SQL Server, el sistema debe indicar que se verifique que esté instalado y en ejecución, sin mostrar el error técnico.
-- **RF-55.** Los tres roles deben poder abrir el manual de usuario en PDF desde la aplicación. Si falta el archivo o no hay un lector disponible, el sistema debe mostrar una indicación clara.
+- **RF-55.** Cada rol debe poder consultar el manual correspondiente dentro de la aplicación, buscar temas y abrir o guardar su PDF. Si falla la apertura en un lector de Windows, debe mostrarse una indicación clara.
 
 ### 3.2 Requisitos no funcionales
 
@@ -229,7 +233,7 @@ Las bases nuevas parten de 2 cuotas vencidas permitidas, 2 meses de anticipació
 
 #### Usabilidad
 
-- **RNF-07.** El sistema debe permitir utilizar sus pantallas principales con una resolución mínima de 1366 × 768 píxeles.
+- **RNF-07.** El sistema debe permitir utilizar las pantallas principales en una resolución de escritorio de 1366 × 768 píxeles. Los módulos deben adaptar sus contenedores al área disponible y ofrecer desplazamiento donde corresponda.
 - **RNF-08.** El sistema debe presentar los errores de validación junto al campo que requiere corrección cuando sea posible.
 - **RNF-09.** El sistema debe mantener una navegación diferenciada por rol y permitir volver al inicio del panel.
 
@@ -256,11 +260,25 @@ La interfaz se organiza en paneles para Administrador, Recepcionista y Entrenado
 - SQL Server almacena los datos de la aplicación.
 - Entity Framework 6 realiza el mapeo objeto-relacional.
 - PDFsharp y MigraDoc se utilizan para generar documentos PDF.
-- Open-Meteo proporciona el pronóstico del clima consultado desde el inicio.
+- Open-Meteo proporciona el pronóstico en JSON mediante GET HTTPS a `/v1/forecast`. El cliente solicita ocho días con coordenadas y huso fijos. El panel dispone de siete tarjetas. El límite de espera es de 12 segundos y el respaldo del último resultado válido se guarda en un archivo JSON local.
+- El sistema usa el lector de PDF configurado en Windows para abrir el manual exportado. Los temas y los PDF de los tres roles forman parte de los recursos de la aplicación.
 
 #### Interfaces de hardware
 
 El sistema no requiere periféricos especializados. Se utiliza con una computadora compatible con Windows, teclado, dispositivo apuntador y pantalla.
+
+### 3.4 Criterios de aceptación
+
+| Requisito | Condición de aceptación |
+| --- | --- |
+| RF-01–03, RNF-01–02 | Ingresar con una cuenta activa abre su panel. Una contraseña incorrecta o una cuenta inactiva impide el acceso. Cambiar de cuenta vuelve al formulario de acceso. |
+| RF-07–09, RF-12–19, RF-56 | Crear un socio y su membresía produce una primera cuota pendiente. Generar otro período continúa desde la última fecha. Un segundo alta de membresía para el mismo socio se rechaza. |
+| RF-20–23, RF-57, RNF-04–05 | Aprobar el monto exacto de una cuota la deja pagada y genera auditoría. Un monto distinto se rechaza. Si se reembolsa, el pago permanece visible en el historial. |
+| RF-24–31 | Asignar un entrenador hace visible el socio en Mis alumnos. Al asignar una rutina activa, la vista semanal muestra sus ejercicios por día. |
+| RF-38–47 | El filtro de un reporte determina las filas exportadas. El Administrador puede consultar indicadores, auditoría y parámetros del sistema. |
+| RF-48 | Con internet se muestra el pronóstico de Corrientes Capital. Ante un fallo de red se indica respaldo local si está disponible y «No disponible» si falta. |
+| RF-49–54 | Con una base vacía, el primer inicio crea la estructura y permite registrar el primer administrador. Con una base existente, se puede seleccionar una copia desde Configuración con los permisos de SQL Server correspondientes. |
+| RF-55 | Los tres paneles abren el manual del rol. La búsqueda filtra sus temas y el PDF que se exporta corresponde al mismo rol. |
 
 ## 4. Modelo de datos
 
@@ -275,8 +293,9 @@ El siguiente diagrama presenta el modelo entidad-relación de SysGym.
 | Plan | Nombre, descripción, precio y estado de un plan. |
 | Membresía y MembresiaEntrenador | Relación del socio con un plan, una rutina y las asignaciones de entrenador. |
 | CuotaMembresia | Período, importe, estado y referencia al pago vigente de cada cuota. |
-| Pago y MetodoPago | Registro de pagos, método utilizado y cuota histórica a la que pertenece cada pago mediante `Pago.IdCuotaMembresia`. |
+| Pago, MetodoPago, PagoEfectivo y MercadoPago | Registro de pagos, catálogo y detalles de los métodos utilizados. Cada pago puede referenciar la cuota de su historial. |
 | Rutina, Ejercicio y RutinaEjercicio | Rutinas libres o modelos clasificados con `Rutina.Objetivo` y `Rutina.Nivel`, catálogo de ejercicios y organización semanal. |
+| EjercicioImagen | Rutas y orden de las imágenes asociadas con un ejercicio. |
 | AuditoriaOperacion | Registro de operaciones realizadas por usuarios. |
 | ConfiguracionSistema | Parámetros generales de deuda, cuotas y avisos. |
 
@@ -298,80 +317,37 @@ capaVisual → capaLogica → capaDatos → EF6 → SQL Server
 
 Las solicitudes de la interfaz pasan por la capa lógica antes de llegar a la capa de datos. La capa visual no accede directamente a la base de datos.
 
-## 6. Instalación y ejecución
+## 6. Compilación y ejecución
 
-### Requisitos
+### 6.1 Entorno
 
-- Windows y .NET Framework 4.8.
-- Visual Studio con herramientas de desarrollo para aplicaciones de escritorio .NET, o herramientas compatibles para compilar el proyecto.
-- SQL Server o SQL Server Express, con permisos para crear una base de datos.
-- Acceso a internet durante la restauración de paquetes NuGet y para consultar el pronóstico del clima.
+- Windows y .NET Framework 4.8. Para compilar se requiere el paquete de desarrollo de .NET Framework 4.8 y la carga **Desarrollo de escritorio de .NET** de Visual Studio.
+- Una instancia de SQL Server accesible. El archivo [App.config](App.config) incluye `.\SQLEXPRESS` como conexión principal y `localhost,1433` como alternativa. Ajustar ambas al entorno de la entrega. La autenticación integrada utiliza la identidad de Windows.
 
-### Pasos
+### 6.2 Primer inicio
 
-1. Abrir `exxen2.0.slnx` o `exxen2.0.csproj` en Visual Studio.
-2. Configurar en [`App.config`](App.config) la conexión a la instancia de SQL Server disponible. La cuenta debe poder conectarse al servidor y crear la base configurada si todavía no existe.
-3. Restaurar los paquetes NuGet de la solución.
-4. Compilar y ejecutar el proyecto. En el primer inicio, SysGym ofrece crear la base con `capaDatos/Database/SysGymDB.sql` y aplica las descripciones de tablas, columnas e índices desde `DocumentarSysGymDB.sql`; después solicita registrar el primer Administrador y muestra el inicio de sesión. La instalación agrega los catálogos y rutinas modelo desde `capaDatos/Database/SysGymBaseInstalacion.sql`, sin cuentas ni socios.
-5. Para preparar el conjunto de datos de desarrollo, ejecutar `SysGymDB.sql`, `DocumentarSysGymDB.sql` y luego `SysGymDatos.sql`. El primero crea el esquema, los roles y la configuración global 2/2/7; el segundo describe el esquema sin cambiar filas; el tercero carga las cuentas y datos de ejemplo para desarrollo. No ejecutar el seed de desarrollo en una base real. Desde `sqlcmd`, por ejemplo:
+1. Abrir [exxen2.0.slnx](exxen2.0.slnx) en Visual Studio, restaurar los paquetes NuGet y compilar. El ejecutable queda en `bin\Debug` o `bin\Release`, según la configuración.
+2. Ejecutar SysGym. Si la base configurada no existe, aceptar su creación. Se necesita permiso de SQL Server para crear bases. SysGym aplica [SysGymDB.sql](capaDatos/Database/SysGymDB.sql) con sus tablas, roles, medios de pago y configuración inicial.
+3. Si todavía no hay un Administrador activo, registrarlo en el formulario de primer inicio. Luego ingresar y crear las cuentas que correspondan.
+4. Los archivos de imágenes se resuelven desde `Datos\Imagenes`, junto al ejecutable. La compilación copia las imágenes incluidas en el proyecto. [Créditos y licencias de las imágenes de ejercicios](capaDatos/Imagenes/Ejercicios/CREDITOS.txt).
 
-   ```powershell
-   sqlcmd -S .\\SQLEXPRESS -E -f 65001 -i capaDatos/Database/SysGymDB.sql -b
-   sqlcmd -S .\\SQLEXPRESS -E -d SysGymDB -f 65001 -i capaDatos/Database/DocumentarSysGymDB.sql -b
-   sqlcmd -S .\\SQLEXPRESS -E -d SysGymDB -f 65001 -i capaDatos/Database/SysGymDatos.sql -b
-   ```
+### 6.3 Datos de demostración
 
-   Para una base existente, aplicar [`capaDatos/Database/AgregarCuotaEnPago.sql`](capaDatos/Database/AgregarCuotaEnPago.sql) antes de ejecutar esta versión de la aplicación. La migración es repetible y conserva la asociación histórica de los pagos existentes.
+Para una demostración, ejecutar [SysGymDB.sql](capaDatos/Database/SysGymDB.sql) y después [SysGymDatos.sql](capaDatos/Database/SysGymDatos.sql) en una base nueva y aislada. En SSMS, seleccionar explícitamente la base nueva al correr el segundo archivo. Los scripts de demostración se ejecutan una vez. Para una base existente de una versión anterior, revisar su esquema y aplicar los scripts de actualización que correspondan de [capaDatos/Database](capaDatos/Database).
 
-### Cuentas iniciales
+Las cuentas siguientes corresponden al conjunto de demostración.
 
-Las cuentas se cargan únicamente al ejecutar `SysGymDatos.sql` para desarrollo. Una instalación limpia solicita registrar su propio Administrador:
-
-| Usuario | Rol | Contraseña inicial |
+| Usuario | Rol | Contraseña de demostración |
 | --- | --- | --- |
 | `klaus.schneider` | Administrador | `Vq7!mR2#sL9@` |
 | `san.martin` | Administrador | `N8!vQ2#xL6@r` |
 | `greta.hoffmann` | Recepcionista | `H4p$N8x!cT3%` |
 | `lukas.becker` | Entrenador | `B9&kZ5!rW2q` |
 
-Crédito de imágenes de ejercicios: autoría, licencia, fuente y adaptaciones por archivo en [CREDITOS.txt](capaDatos/Imagenes/Ejercicios/CREDITOS.txt). Las imágenes derivadas de Workout Guide se mantienen bajo CC BY-SA 4.0.
+### 6.4 Manuales de usuario
 
-### Generar el instalador de SysGym
+**Manual de usuario**, en el menú de cada panel, abre la guía correspondiente con índice, búsqueda y opciones para abrir o exportar su PDF.
 
-El instalador se compila con Inno Setup 6. En la PC de desarrollo se utilizó Inno Setup 6.7.3. Antes de compilar, descargá los redistribuibles oficiales indicados abajo dentro de `Instalador/Redist`; esa carpeta y `Instalador/Salida` están excluidas de Git. .NET Framework 4.8 no se incluye porque Windows 10 y 11 ya lo incorporan.
-
-| Dependencia | Versión incluida | Origen oficial |
-| --- | --- | --- |
-| SQL Server Express LocalDB x64 | 16.0.1000.6 (SQL Server 2022) | [SQL Server 2022 Express](https://go.microsoft.com/fwlink/?linkid=2215160), medio LocalDB |
-| Visual C++ Redistributable x64 | 14.51.36247.0 | [Último redistribuible compatible de Visual C++](https://aka.ms/vc14/vc_redist.x64.exe) |
-
-SysGym detecta .NET Framework 4.8 mediante el valor `Release` del registro (mínimo 528040). Si no está disponible, muestra el enlace oficial de [descarga de .NET Framework 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) y cancela la instalación. El instalador detecta Visual C++ x64 y LocalDB 2019, 2022 o 2025; instala en modo silencioso los redistribuibles incluidos que falten. LocalDB 2022 se obtiene del instalador oficial de SQL Server Express con la opción de descarga `LocalDB`; se incluye únicamente `SqlLocalDB.msi` en el Setup.
-
-Para preparar las dependencias en `Instalador/Redist`, usá PowerShell desde la raíz del repositorio:
-
-```powershell
-$redist = Join-Path (Get-Location) 'Instalador\Redist'
-New-Item -ItemType Directory -Force -Path $redist | Out-Null
-Invoke-WebRequest 'https://aka.ms/vc14/vc_redist.x64.exe' -OutFile (Join-Path $redist 'vc_redist.x64.exe')
-$bootstrapper = Join-Path $env:TEMP 'SQL2022-SSEI-Expr.exe'
-$media = Join-Path $redist 'SQL2022'
-Invoke-WebRequest 'https://go.microsoft.com/fwlink/?linkid=2215160' -OutFile $bootstrapper
-& $bootstrapper /Action=Download /MediaType=LocalDB /Quiet /MediaPath=$media
-$localDb = Get-ChildItem -LiteralPath $media -Filter 'SqlLocalDB.msi' -Recurse | Select-Object -First 1
-Copy-Item -LiteralPath $localDb.FullName -Destination (Join-Path $redist 'SqlLocalDB-2022-x64.msi')
-Remove-Item -LiteralPath $media -Recurse -Force
-Remove-Item -LiteralPath $bootstrapper -Force
-```
-
-Compilá Release y ejecutá el compilador de Inno Setup:
-
-```powershell
-MSBuild.exe .\exxen2.0.slnx /t:Rebuild /p:Configuration=Release
-& "$env:LOCALAPPDATA\Programs\Inno Setup 6\ISCC.exe" .\Instalador\SysGym.iss
-```
-
-El resultado es `Instalador/Salida/SysGym-Setup.exe`. El instalador incluye el ejecutable Release, sus DLL, una configuración separada para `(localdb)\MSSQLLocalDB`, el esquema y las descripciones SQL de SysGym, el ícono y las imágenes de ejercicios con sus créditos. Luego de registrar el primer Administrador, carga los métodos de pago, planes, ejercicios con imágenes y nueve rutinas modelo desde `SysGymBaseInstalacion.sql`. No incluye `SysGymDatos.sql`, usuarios de desarrollo ni socios de prueba. El manual `Manual/Manual de usuario SysGym - 2026 monocromo.pdf` se agrega automáticamente cuando está disponible.
-
-El manual para el personal está en [`Manual/Manual de usuario SysGym - 2026 monocromo.pdf`](Manual/Manual%20de%20usuario%20SysGym%20-%202026%20monocromo.pdf); también se entrega en [Word](Manual/Manual%20de%20usuario%20SysGym%20-%202026%20monocromo.docx) para su edición. Dentro de la aplicación se abre desde **Manual de usuario** en el menú lateral de Administrador, Recepcionista y Entrenador. Las capturas usadas en el documento están en `Manual/Imagenes`; el EDMX documentado está en `capaDatos/Database/SysGymDB.edmx`.
-
-La instalación conserva la base, las imágenes y las copias de seguridad en `%ProgramData%\SysGym`, incluso al desinstalar. Las rutas persistidas en la base son relativas y se resuelven bajo `%ProgramData%\SysGym` en la instalación y bajo `Datos` junto al ejecutable en Debug.
+- [Administrador](Manual/Manual%20de%20usuario%20SysGym%20-%20Administrador%20-%202026.pdf)
+- [Recepcionista](Manual/Manual%20de%20usuario%20SysGym%20-%20Recepcionista%20-%202026.pdf)
+- [Entrenador](Manual/Manual%20de%20usuario%20SysGym%20-%20Entrenador%20-%202026.pdf)

@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manual version="10/11/2026">
+  <tema id="inicio" titulo="Usar este manual y guardar su PDF" grupo="Primeros pasos" roles="Administrador,Recepcionista,Entrenador">
+    <pasos>
+      <item>El encabezado indica para qué rol es el manual. Administración tiene el recorrido completo; Recepción y Entrenador tienen sus propias tareas.</item>
+      <item>Buscá una palabra, por ejemplo cuota o rutina, en Buscar tema. Seleccioná un título del índice para leerlo.</item>
+      <item>Seguí los pasos en orden. Anterior y Siguiente recorren los temas visibles. Borrá la búsqueda para volver al índice completo.</item>
+      <item>Abrir PDF abre una copia del manual de tu rol con el lector de PDF de Windows. Exportar PDF permite elegir carpeta y nombre para conservar una copia.</item>
+      <item>Usá Volver, en el encabezado de SysGym, para regresar al inicio de tu rol. El manual no modifica los datos del gimnasio.</item>
+    </pasos>
+  </tema>
+  <tema id="2.1" titulo="Requisitos para abrir SysGym" grupo="Primeros pasos" roles="Administrador">
+    <parrafo>Se necesita Windows, .NET Framework 4.8 y acceso a la instancia de SQL Server configurada. Abrí el ejecutable de SysGym o ejecutá el proyecto desde Visual Studio. El README indica cómo compilar el proyecto y seleccionar la conexión de SQL Server.</parrafo>
+  </tema>
+  <tema id="2.2" titulo="Primer inicio y registro del Administrador" grupo="Primeros pasos" roles="Administrador">
+    <pasos>
+      <item>Si aparece la confirmación de preparación inicial, respondé Sí y esperá a que SysGym termine el proceso sin cerrar la aplicación.</item>
+      <item>En Registrar administrador completá nombre, apellido, DNI, sexo, nombre de usuario, contraseña y confirmación.</item>
+      <item>Pulsá Registrar administrador. Si los datos son válidos, SysGym crea la cuenta inicial y abre el inicio de sesión.</item>
+      <item>Ingresá con el usuario y contraseña recién creados. Después, creá las cuentas de Recepción y Entrenador desde Usuarios y roles.</item>
+    </pasos>
+  </tema>
+  <tema id="2.3" titulo="Iniciar sesión, cambiar de cuenta y salir" grupo="Primeros pasos" roles="Administrador,Recepcionista,Entrenador">
+    <pasos>
+      <item>En el acceso escribí tu nombre de usuario y contraseña y pulsá Ingresar. Si se rechazan, revisá lo escrito; si necesitás restablecer la clave, contactá al Administrador.</item>
+      <item>Verificá tu nombre y rol en el encabezado. Abrí las funciones del menú lateral; desplegá su grupo si está cerrado.</item>
+      <item>Volver regresa al inicio del rol. Cambiar de cuenta vuelve al acceso para ingresar con otra cuenta.</item>
+      <item>Manual de usuario abre esta guía dentro de SysGym. Salir solicita confirmación antes de cerrar la aplicación.</item>
+    </pasos>
+  </tema>
+  <tema id="3.1" titulo="Alta de socio" grupo="Recepción" roles="Administrador,Recepcionista">
+    <pasos>
+      <item>Abrí Socios y pulsá Nuevo para empezar un registro.</item>
+      <item>Completá nombre, apellido, DNI de 7 u 8 dígitos, fecha de nacimiento y sexo según los campos obligatorios. La edad mínima es 13 años.</item>
+      <item>Peso y altura son opcionales: peso corporal mayor que 35 y hasta 300 kg; altura entre 0,80 y 2,50 m, con decimales. Se admiten hasta dos decimales y separador punto o coma.</item>
+      <item>Si necesitás foto, pulsá Seleccionar foto y elegí una imagen válida. Calcular IMC utiliza el peso y la altura ingresados como referencia orientativa.</item>
+      <item>Pulsá Guardar. Si aparece un aviso rojo junto a un campo, corregilo y volvé a guardar. Buscá al socio por DNI para comprobar el alta.</item>
+      <item>Crear el socio no crea su membresía. Continuá en Membresías para elegir el plan y generar su primera cuota.</item>
+    </pasos>
+    <nota titulo="A tener en cuenta">El DNI no puede repetirse. El peso de ejercicios es un dato diferente del peso corporal y puede ser inferior a 35 kg.</nota>
+  </tema>
+  <tema id="3.2" titulo="Buscar, modificar, dar de baja y reactivar un socio" grupo="Recepción" roles="Administrador,Recepcionista">
+    <pasos>
+      <item>En Socios, escribí parte del nombre, apellido o DNI en el buscador y seleccioná la persona en la lista.</item>
+      <item>Modificá los campos habilitados y guardá. Si la persona tiene membresías o pagos, el sistema conserva esas relaciones históricas.</item>
+      <item>Para terminar la relación con el gimnasio, elegí Dar de baja y confirmá. La baja lógica cambia el estado y conserva los registros.</item>
+      <item>Para recuperar el acceso, buscá también entre los inactivos, seleccioná la persona y pulsá Reactivar.</item>
+      <item>Si hay una membresía inactiva, revisala en Membresías y reactivala allí por separado cuando corresponda. La reactivación puede estar impedida por el límite de cuotas vencidas.</item>
+    </pasos>
+    <nota titulo="Historial">Dar de baja no borra la fila, las cuotas ni los pagos. Esto permite conservar auditoría, reportes e historial de la persona.</nota>
+  </tema>
+  <tema id="3.3" titulo="Crear una membresía" grupo="Recepción" roles="Administrador,Recepcionista">
+    <pasos>
+      <item>Abrí Membresías y pulsá Nueva.</item>
+      <item>Seleccioná el socio, el plan y la fecha de inicio. El precio corresponde al plan vigente.</item>
+      <item>Elegí objetivo y nivel, o Libre si todavía no se asignará una rutina.</item>
+      <item>Si se informa peso y altura, la pantalla puede mostrar una sugerencia por IMC. Verificá la decisión con el entrenador; el IMC no determina por sí solo la rutina adecuada.</item>
+      <item>Pulsá Guardar. La membresía queda asociada con el socio, el plan y el usuario que la registró; se crea la cuota inicial según las reglas vigentes.</item>
+      <item>Buscá la membresía y revisá estado, plan, fecha y cuota antes de seguir.</item>
+    </pasos>
+    <parrafo>La sugerencia mostrada por la aplicación es orientativa: un IMC menor que 18,5 sugiere Hipertrofia; de 18,5 a menos de 25, Hipertrofia o Fuerza; de 25 a menos de 30, Acondicionamiento; desde 30, Acondicionamiento con nivel Principiante. El entrenador debe decidir según la evaluación de la persona.</parrafo>
+  </tema>
+  <tema id="3.4" titulo="Generar la cuota de otro período" grupo="Recepción" roles="Administrador,Recepcionista">
+    <pasos>
+      <item>En Membresías, seleccioná una membresía activa.</item>
+      <item>Pulsá Generar cuota cuando corresponda crear el período siguiente.</item>
+      <item>SysGym impide duplicar el mismo período y aplica el máximo de anticipación configurado.</item>
+      <item>En Cuotas y pagos, localizá la cuota recién creada y verificá fechas, importe y estado pendiente.</item>
+    </pasos>
+    <parrafo>Una cuota conserva el importe que tenía el plan al generarse. Modificar el precio del plan no reescribe cargos anteriores.</parrafo>
+  </tema>
+  <tema id="3.5" titulo="Registrar un pago aprobado" grupo="Recepción" roles="Administrador,Recepcionista">
+    <pasos>
+      <item>Abrí Cuotas y pagos, buscá al socio y seleccioná una cuota pendiente. Revisá que el período sea el que vas a cobrar.</item>
+      <item>Pulsá Nuevo cuando corresponda. El importe se completa con el valor histórico de la cuota y no se escribe libremente.</item>
+      <item>Elegí Efectivo o Mercado Pago, según el cobro realizado. Para un cobro confirmado seleccioná Aprobado.</item>
+      <item>Pulsá Registrar pago. Verificá que la cuota quede Pagada y que el detalle muestre método, estado y persona que registró el cobro.</item>
+      <item>Para registrar otro mes, generá la siguiente cuota permitida desde Membresías y cobrá esa segunda cuota completa.</item>
+    </pasos>
+    <nota titulo="A tener en cuenta">Cada cuota se cobra completa mediante un solo pago aprobado. No se admiten pagos parciales ni un segundo pago aprobado sobre la misma cuota. Registrar Mercado Pago en SysGym no ejecuta un cobro externo.</nota>
+  </tema>
+  <tema id="3.6" titulo="Anular, reembolsar y volver a cobrar" grupo="Recepción" roles="Administrador,Recepcionista">
+    <pasos>
+      <item>En Cuotas y pagos, seleccioná el pago del historial que corresponda.</item>
+      <item>Pulsá Anular para dejar sin efecto el registro o Reembolsar cuando el dinero ya se devolvió. Leé y confirmá el aviso.</item>
+      <item>El estado anterior queda en el historial; SysGym no elimina el pago. Si era el pago vigente de una cuota, la cuota vuelve a quedar pendiente.</item>
+      <item>Para cobrarla otra vez, seleccioná la cuota pendiente, elegí el método y registrá un nuevo pago aprobado.</item>
+    </pasos>
+  </tema>
+  <tema id="3.7" titulo="Exportar comprobantes e historial de pagos en PDF" grupo="Recepción" roles="Administrador,Recepcionista">
+    <pasos>
+      <item>Para exportar un comprobante individual, abrí Cuotas y pagos, buscá al socio por nombre o DNI y seleccioná la cuota cuyo pago está aprobado. La cuota debe figurar como Pagada.</item>
+      <item>Pulsá Exportar comprobante, elegí la carpeta y el nombre del archivo y guardá el PDF. El comprobante incluye los datos del socio, la cuota, el importe, el método, el estado y quién registró el pago.</item>
+      <item>Para exportar todos los pagos de un socio, abrí su Ficha completa y pulsá Exportar historial PDF. También podés hacer clic derecho sobre una fila del socio en Cuotas y pagos y elegir Exportar historial.</item>
+      <item>Elegí dónde guardar el archivo. El historial conserva los pagos aprobados, anulados y reembolsados; el total abonado cuenta solo los pagos aprobados.</item>
+    </pasos>
+    <nota titulo="Disponibilidad">El comprobante individual se habilita para un pago aprobado. Desde la Ficha completa se puede exportar el historial aunque el socio todavía no tenga pagos registrados.</nota>
+  </tema>
+  <tema id="3.8" titulo="Cambiar el plan de una membresía" grupo="Recepción" roles="Administrador,Recepcionista">
+    <pasos>
+      <item>En Membresías, seleccioná la membresía activa que debe cambiar.</item>
+      <item>Elegí el plan nuevo y pulsá Cambiar plan.</item>
+      <item>Volvé a revisar la membresía y el precio. Las cuotas ya creadas conservan su importe; las cuotas futuras toman el nuevo precio.</item>
+    </pasos>
+  </tema>
+  <tema id="3.9" titulo="Baja, reactivación y límite de deuda" grupo="Recepción" roles="Administrador,Recepcionista">
+    <parrafo>Una cuota pendiente se cuenta como vencida cuando terminó su período. La configuración define cuántas cuotas vencidas impagas alcanzan el límite. Con un límite de dos, la segunda cuota vencida puede dejar inactiva la membresía. Cobrar la deuda reduce el saldo impago, pero no reactiva automáticamente la membresía.</parrafo>
+    <pasos>
+      <item>Consultá la deuda en Cuotas y pagos o en el reporte operativo de deuda.</item>
+      <item>Registrá el pago de cada cuota pendiente que se haya cobrado.</item>
+      <item>Volvé a Membresías y verificá el estado actual.</item>
+      <item>Si se cumplen las reglas de reactivación, seleccioná la membresía inactiva y pulsá Reactivar. Si la persona también fue dada de baja, reactivá primero al socio.</item>
+    </pasos>
+  </tema>
+  <tema id="3.10" titulo="Asignar, cambiar o terminar la asignación de un entrenador" grupo="Recepción" roles="Administrador,Recepcionista">
+    <pasos>
+      <item>Abrí Asignar entrenador y elegí la membresía.</item>
+      <item>Revisá socio, plan, estado y entrenador actual.</item>
+      <item>En Nuevo entrenador, seleccioná la cuenta que tenga rol Entrenador activa y guardá.</item>
+      <item>Para cambiar la asignación, elegí otro entrenador y guardá. Para terminarla, usá Dar de baja en la asignación.</item>
+    </pasos>
+  </tema>
+  <tema id="3.11" titulo="Consultar entrenadores y socios asignados" grupo="Recepción" roles="Administrador,Recepcionista">
+    <pasos>
+      <item>Abrí Entrenadores y elegí Consultar.</item>
+      <item>Buscá por nombre o DNI. La lista muestra cada entrenador, la cantidad de socios asignados y su estado.</item>
+      <item>Seleccioná un entrenador para ver sus socios, DNI, plan, vencimiento de cuota, rutina y estado de la membresía.</item>
+      <item>Pulsá Actualizar listado si necesitás volver a cargar la información. Para cambiar una asignación, usá Asignar entrenador.</item>
+    </pasos>
+  </tema>
+  <tema id="3.12" titulo="Consultar y exportar un reporte operativo" grupo="Recepción" roles="Administrador,Recepcionista">
+    <parrafo>Reportes operativos ofrece listados de deuda pendiente, personas en límite de deuda, socios sin entrenador, socios sin rutina, próximos vencimientos y membresías inactivas. La pantalla actualiza el listado cuando cambiás el tipo; también permite filtrar por nombre o DNI.</parrafo>
+    <pasos>
+      <item>Elegí el tipo de informe.</item>
+      <item>Para vencimientos, marcá Desde y Hasta si necesitás acotar fechas. Para otros informes, usá el buscador disponible.</item>
+      <item>Pulsá Consultar. Revisá el resumen, la cantidad y las filas devueltas.</item>
+      <item>Para abrir la ficha de una fila compatible, seleccioná el socio y usá Ver ficha.</item>
+      <item>Pulsá Exportar PDF, elegí carpeta y nombre y guardá el archivo.</item>
+    </pasos>
+  </tema>
+  <tema id="4.1" titulo="Consultar Mis alumnos y la ficha" grupo="Entrenamiento" roles="Administrador,Entrenador">
+    <pasos>
+      <item>Al entrar como Entrenador se abre Mis alumnos. Allí aparecen los socios con membresía activa asignados a tu cuenta.</item>
+      <item>Buscá por nombre o DNI; si hace falta, elegí Con rutina o Sin rutina.</item>
+      <item>Seleccioná una fila y revisá a la derecha socio, plan, cuota hasta, rutina y los ejercicios de la semana.</item>
+      <item>Si no aparece una persona, pedí a Recepción que revise la asignación y el estado del socio/membresía. Volvé al inicio para cargar la información actualizada.</item>
+    </pasos>
+    <nota titulo="A tener en cuenta">La asignación o baja de alumnos se gestiona desde Recepción o Administración. El Entrenador no puede quitarse ni agregarse alumnos desde Mis alumnos. El detalle de esta pantalla no es la Ficha completa de cobros de Recepción.</nota>
+  </tema>
+  <tema id="4.2" titulo="Elegir otra rutina o crear una personalizada" grupo="Entrenamiento" roles="Administrador,Entrenador">
+    <pasos>
+      <item>En Mis alumnos seleccioná al socio y revisá su rutina actual.</item>
+      <item>Para un modelo elegí objetivo, nivel y rutina; pulsá Asignar rutina o Cambiar rutina.</item>
+      <item>Para una rutina propia pulsá Crear personalizada. Completá nombre y descripción y pulsá Guardar rutina; después agregá sus ejercicios.</item>
+      <item>Volvé a Mis alumnos y comprobá que el nombre y los ejercicios correspondan a la persona seleccionada.</item>
+    </pasos>
+    <nota titulo="A tener en cuenta">El catálogo se comparte entre entrenadores. Solo podés editar rutinas propias; Administración puede mantener el catálogo completo. Si hace falta adaptar un modelo ajeno, creá una personalizada.</nota>
+  </tema>
+  <tema id="4.3" titulo="Agregar, editar y ordenar ejercicios" grupo="Entrenamiento" roles="Administrador,Entrenador">
+    <pasos>
+      <item>Pulsá Ver / editar en la rutina del alumno.</item>
+      <item>Elegí el día y el ejercicio disponible. Completá series, repeticiones, peso y segundos de descanso.</item>
+      <item>Pulsá + Agregar ejercicio para incluir otro movimiento. Revisá el día y el orden en que se presentará.</item>
+      <item>Seleccioná un ejercicio existente para modificar sus parámetros o quitarlo de la rutina.</item>
+      <item>Guardá los cambios y volvé a Mis alumnos para revisar la rutina semanal actualizada.</item>
+    </pasos>
+    <parrafo>Si el ejercicio que necesitás no aparece, abrí Ejercicios desde el menú del Entrenador para agregarlo al catálogo. El procedimiento para mantener ejercicios e imágenes está en Mantener ejercicios e imágenes.</parrafo>
+  </tema>
+  <tema id="4.4" titulo="Exportar la rutina del alumno" grupo="Entrenamiento" roles="Administrador,Entrenador">
+    <pasos>
+      <item>En Mis alumnos, seleccioná la persona y verificá la rutina que se exportará.</item>
+      <item>Pulsá Exportar PDF, elegí la ubicación y guardá.</item>
+      <item>Abrí el archivo generado y comprobá que incluya los ejercicios, los días, los parámetros y las imágenes disponibles.</item>
+    </pasos>
+  </tema>
+  <tema id="5.1" titulo="Crear y administrar usuarios y roles" grupo="Administración" roles="Administrador">
+    <pasos>
+      <item>Abrí Usuarios y roles y pulsá Nuevo.</item>
+      <item>Completá nombre, apellido, DNI, usuario, contraseña, salario, rol y sexo. Teléfono, fecha de nacimiento y foto son opcionales cuando la pantalla los permite.</item>
+      <item>Pulsá Guardar y comprobá la fila. Revisá el rol antes de entregar el acceso.</item>
+      <item>Para editar una cuenta, seleccionála, modificá los campos y guardá.</item>
+      <item>Para baja o reactivación, seleccioná la cuenta y usá la acción disponible. La cuenta inactiva conserva los registros históricos.</item>
+      <item>Para restablecer una contraseña olvidada, seleccioná la cuenta y usá Restablecer contraseña. El sistema no muestra la contraseña anterior.</item>
+    </pasos>
+  </tema>
+  <tema id="5.2" titulo="Crear y mantener planes" grupo="Administración" roles="Administrador">
+    <pasos>
+      <item>Abrí Planes y pulsá Nuevo.</item>
+      <item>Completá nombre, descripción y precio positivo.</item>
+      <item>Pulsá Guardar y comprobá la fila.</item>
+      <item>Para modificar, dar de baja o reactivar, seleccioná el plan y elegí la acción correspondiente.</item>
+    </pasos>
+  </tema>
+  <tema id="5.3" titulo="Mantener ejercicios e imágenes (Entrenador y Administración)" grupo="Entrenamiento" roles="Administrador,Entrenador">
+    <pasos>
+      <item>En Ejercicios, pulsá Nuevo y completá nombre y descripción; guardá.</item>
+      <item>Para editar o dar de baja, seleccioná el ejercicio y usá la acción disponible. La baja conserva sus usos históricos.</item>
+      <item>Con el ejercicio seleccionado, usá Agregar imagen y elegí un archivo. Si hay varias imágenes, ordenalas y confirmá que aparezcan en la ficha.</item>
+      <item>Para retirar una imagen, seleccioná su registro y usá la acción disponible. El archivo se almacena fuera de la base; la tabla conserva la ruta relativa.</item>
+    </pasos>
+  </tema>
+  <tema id="5.4" titulo="Administrar el catálogo de rutinas (Entrenador y Administración)" grupo="Entrenamiento" roles="Administrador,Entrenador">
+    <pasos>
+      <item>Abrí Rutinas desde el menú de Administración.</item>
+      <item>Pulsá + Nueva rutina, completá el nombre y la descripción y guardá.</item>
+      <item>Seleccioná una rutina para revisar sus datos y ejercicios. Para agregar un ejercicio, elegí el movimiento, el día y el orden; completá series, repeticiones, peso y descanso y guardá.</item>
+      <item>Para corregir un ejercicio, seleccioná la fila y pulsá Editar. Para retirarlo, seleccioná la fila y pulsá Quitar.</item>
+      <item>Usá Dar de baja para dejar de ofrecer una rutina. Para volver a ofrecerla, seleccioná una rutina inactiva y pulsá Reactivar.</item>
+    </pasos>
+    <parrafo>El Entrenador puede consultar rutinas de otros usuarios, pero solo editar las que creó. Administración puede editar y dar de baja cualquier rutina.</parrafo>
+  </tema>
+  <tema id="5.5" titulo="Asignar y revisar rutinas de socios" grupo="Administración" roles="Administrador">
+    <pasos>
+      <item>Abrí Socios y rutinas. Buscá por nombre o DNI y usá el filtro Con rutina o Sin rutina.</item>
+      <item>Seleccioná un socio para revisar su plan, entrenador, vencimiento, objetivo, nivel y rutina semanal.</item>
+      <item>Para asignar o cambiar una rutina modelo, elegí objetivo y nivel, seleccioná una rutina activa y pulsá Asignar rutina o Cambiar rutina.</item>
+      <item>Para preparar una rutina individual, pulsá Crear personalizada, completá nombre y descripción y guardá. Después agregá sus ejercicios desde el editor.</item>
+      <item>Pulsá Ver / editar para modificar la rutina del socio. Si tiene una rutina asignada, también podés pulsar Exportar PDF para guardar una copia.</item>
+    </pasos>
+    <parrafo>La lista de Administración incluye los socios con membresía activa. El Entrenador, desde Mis alumnos, ve únicamente los socios que tiene asignados.</parrafo>
+  </tema>
+  <tema id="5.6" titulo="Configurar vencimientos, anticipación y avisos" grupo="Administración" roles="Administrador">
+    <pasos>
+      <item>Abrí Configuración y el grupo Cuotas y pagos.</item>
+      <item>Ajustá Cuotas vencidas, Meses de anticipación y Días de aviso dentro de los rangos indicados en pantalla.</item>
+      <item>Pulsá Guardar para aplicar los nuevos valores.</item>
+      <item>Pulsá Descartar para recuperar los valores guardados si todavía no confirmaste el cambio.</item>
+      <item>Revisá el resultado en las próximas consultas de deuda, generación de cuotas y avisos.</item>
+    </pasos>
+    <parrafo>La configuración inicial de bases nuevas es 2 cuotas vencidas, 2 meses de anticipación y 7 días de aviso. Las bases existentes conservan sus propios valores.</parrafo>
+  </tema>
+  <tema id="5.7" titulo="Consultar auditoría" grupo="Administración" roles="Administrador">
+    <pasos>
+      <item>Abrí Auditoría.</item>
+      <item>Ingresá el rango de fechas y, si corresponde, filtrá por usuario u operación.</item>
+      <item>Pulsá Aplicar filtros y revisá fecha, usuario, rol, operación, entidad, identificador y detalle.</item>
+      <item>La auditoría es de consulta; no modifica los registros filtrados.</item>
+    </pasos>
+  </tema>
+  <tema id="5.9" titulo="Consultar Análisis: período, indicadores y pestañas" grupo="Administración" roles="Administrador">
+    <pasos>
+      <item>Abrí Análisis. Al ingresar se propone un rango de los últimos doce meses.</item>
+      <item>Elegí Desde y Hasta y pulsá Aplicar. Ambas fechas se incluyen.</item>
+      <item>Leé los cuatro indicadores: Ingresos del período, Pagos aprobados, Socios activos y Socios con deuda.</item>
+      <item>Revisá la pestaña correspondiente. Si cambiás el rango, pulsá Aplicar antes de interpretar o exportar.</item>
+    </pasos>
+    <parrafo>Resumen — Ingresos por mes y comparación del último mes con el anterior.</parrafo>
+    <parrafo>Finanzas — Ingresos y cantidad de pagos por mes y distribución por método de pago.</parrafo>
+    <parrafo>Socios — Altas por mes, socios activos/inactivos y situación actual de deuda.</parrafo>
+    <parrafo>Planes — Membresías actuales por plan; el volumen no equivale a ingresos.</parrafo>
+    <parrafo>Entrenadores — Socios asignados a cada entrenador y personas sin asignación.</parrafo>
+    <parrafo>Rutinas — Rutinas utilizadas y socios que todavía no tienen rutina.</parrafo>
+    <parrafo>Ejercicios — Ejercicios más usados y ejercicios que no aparecen en rutinas.</parrafo>
+    <parrafo>Comparar — Totales de ingresos, pagos y altas para dos rangos; variación de B respecto de A.</parrafo>
+    <parrafo>Socio — Consulta individual por nombre o DNI. No se incluye en el PDF general.</parrafo>
+    <parrafo>Ingresos, pagos aprobados y altas se calculan para el rango elegido. Socios, deuda, planes, entrenadores, rutinas y ejercicios reflejan la situación actual consultada. Los pagos anulados, reembolsados o rechazados no cuentan como ingresos. Si el período anterior tuvo cero ingresos, la variación aparece como raya.</parrafo>
+  </tema>
+  <tema id="5.10" titulo="Comparar períodos y exportar el informe" grupo="Administración" roles="Administrador">
+    <pasos>
+      <item>En Comparar, ingresá las fechas Desde y Hasta para el período A y para el B.</item>
+      <item>Pulsá Comparar períodos y leé la tabla y los gráficos.</item>
+      <item>La variación es B con respecto a A; no representa una deuda histórica.</item>
+      <item>Para exportar, volvé al rango principal, pulsá Aplicar y luego Exportar reporte PDF.</item>
+      <item>La exportación incluye indicadores, gráficos y tablas de la consulta aplicada; incorpora la comparación si ya se calculó. La consulta individual de Socio queda fuera.</item>
+    </pasos>
+  </tema>
+  <tema id="5.11" titulo="Crear y restaurar copias de seguridad" grupo="Administración" roles="Administrador">
+    <pasos>
+      <item>Abrí Configuración y Copias de seguridad.</item>
+      <item>Para crear una copia, pulsá Crear copia de seguridad, elegí destino y guardá el archivo .bak. SysGym propone un nombre con fecha y hora.</item>
+      <item>Tras finalizar, comprobá la fecha de Última copia y guardá otra copia fuera de la PC.</item>
+      <item>Para restaurar, pulsá Restaurar copia y seleccioná un .bak compatible de SysGym.</item>
+      <item>Leé la confirmación: restaurar reemplaza los datos actuales por el contenido del respaldo. Confirmá solo si corresponde y esperá a que SysGym complete la operación y se reinicie.</item>
+    </pasos>
+    <nota titulo="Restauración">Antes de reemplazar la base actual, creá una copia de su estado presente. Guardá los archivos de respaldo en un lugar separado del equipo.</nota>
+  </tema>
+  <tema id="rec-ficha" titulo="Consultar la ficha completa de un socio" grupo="Recepción" roles="Administrador,Recepcionista">
+    <pasos>
+      <item>Buscá al socio en el inicio, Socios, Cuotas y pagos o un reporte compatible.</item>
+      <item>Abrí Ficha completa o Ver ficha desde el menú de la fila; en Pagos y Reportes también podés abrirla con doble clic.</item>
+      <item>Revisá datos personales, estado, membresía, deuda e historial de pagos. Las acciones de la ficha llevan al módulo con el socio preseleccionado.</item>
+      <item>Usá Exportar historial PDF para guardar los pagos del socio, o Volver para regresar al inicio.</item>
+    </pasos>
+  </tema>
+  <tema id="rec-quitar" titulo="Quitar y volver a asignar un entrenador" grupo="Recepción" roles="Administrador,Recepcionista">
+    <pasos>
+      <item>En Asignar entrenador buscá al socio y seleccioná su membresía. Revisá el entrenador actual.</item>
+      <item>Pulsá Dar de baja para terminar esa asignación. El alumno deja de aparecer al entrenador anterior cuando actualiza su consulta.</item>
+      <item>Con la membresía seleccionada elegí un entrenador activo y pulsá Asignar entrenador. Si ya hay una asignación, usá Cambiar entrenador.</item>
+      <item>Verificá el nombre en Entrenador actual. El Entrenador debe volver a Mis alumnos para ver al socio otra vez.</item>
+    </pasos>
+    <nota titulo="A tener en cuenta">Se conserva el historial de asignaciones. Si la membresía o el plan no están activos, revisá primero sus estados.</nota>
+  </tema>
+  <tema id="ayuda" titulo="Resolver avisos y corregir una entrada" grupo="Ayuda" roles="Administrador,Recepcionista,Entrenador">
+    <pasos>
+      <item>Un símbolo rojo al lado de un campo indica que falta un dato o no cumple su formato. Acercá el puntero para leer el aviso, corregí y guardá otra vez.</item>
+      <item>Seleccioná una fila antes de editar o exportar. Si una acción está deshabilitada, revisá la selección, el estado del registro y las instrucciones del tema correspondiente.</item>
+      <item>Si una confirmación ofrece Sí y No, leé qué operación hará. No cancela esa operación y conserva el registro.</item>
+      <item>Si no hay filas, borrá el buscador y revisá los filtros. Si cambió otra cuenta, volvé a abrir el módulo para cargar datos actuales.</item>
+      <item>Si no abre un PDF, usá Exportar PDF para conservarlo y comprobá que Windows tenga un lector asociado. Si no se puede guardar, elegí una carpeta con permiso y cerrá el archivo si está abierto.</item>
+      <item>Si aparece un error de conexión, informá al responsable del sistema y evitá repetir cobros sin consultar antes el historial.</item>
+    </pasos>
+  </tema>
+</manual>

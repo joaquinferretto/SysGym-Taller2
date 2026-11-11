@@ -68,7 +68,6 @@ namespace exxen2._0
                             return false;
                     }
                 }
-                inicializacion.PrepararDatosBaseInstalada(Path.Combine(Application.StartupPath, "SysGymBaseInstalacion.sql"));
                 return true;
             }
             catch (Exception ex)

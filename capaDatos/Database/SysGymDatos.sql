@@ -1,23 +1,8 @@
-IF EXISTS (SELECT 1 FROM dbo.Socio WHERE IdSocio = 31)
-BEGIN
-    RAISERROR(N'Los datos ya fueron cargados.', 16, 1);
-    SET NOEXEC ON;
-END;
-GO
-SET XACT_ABORT ON;
-SET ANSI_NULLS ON;
-SET ANSI_PADDING ON;
-SET ANSI_WARNINGS ON;
-SET ARITHABORT ON;
-SET CONCAT_NULL_YIELDS_NULL ON;
-SET QUOTED_IDENTIFIER ON;
-SET NUMERIC_ROUNDABORT OFF;
-BEGIN TRANSACTION;
-
+﻿/* Datos de demostración: ejecutar UNA VEZ sobre una base recién creada con SysGymDB.sql.
+   No ejecutar en una base con información de trabajo.
+   En SSMS seleccionar la base nueva antes de ejecutar este archivo. */
 /* Usuarios iniciales y datos de desarrollo que antes estaban en SysGymDB.sql. */
 /* Datos iniciales */
-
-
 
 /* Usuarios del sistema */
 INSERT INTO UsuarioSistema (Nombre, Apellido, DNI, Telefono, FechaNacimiento, Salario, Username, Password, FotoRuta, Sexo, Estado, IdRol)
@@ -26,17 +11,6 @@ VALUES
     (N'Klaus', N'Schneider', N'28451736', N'1147218365', '19800612', 950000, N'klaus.schneider', N'ARGON2ID:19:65536:3:2:H5Pvgpdu7mZ3PqfybaPqww==:YpexbCtYb9/FXFA5w6+i8bXtds9IN23ccIF8/mm0b40=', N'Imagenes\Usuarios\7e665f53c5f54ac1ba1192da2609e7b1.jpg', N'M', 1, 1),
     (N'Greta', N'Hoffmann', N'33617290', N'1158340172', '19880923', 720000, N'greta.hoffmann', N'ARGON2ID:19:65536:3:2:LakJj1tgK8KYhU4t6HKcZg==:q230nzMnE+8P3fx2DvS0Y4+MbXO6kuf4m26JdknhmZU=', N'Imagenes\Usuarios\1b5f13461f324ba59a3f927204fa637a.jpg', N'F', 1, 2),
     (N'Lukas', N'Becker', N'36072814', N'1163927458', '19920304', 810000, N'lukas.becker', N'ARGON2ID:19:65536:3:2:scAe6Ok6nEP/5KsIkIzG4g==:NA+/8oS/XNQqagO/6byvaDw28qT9RpQia6McWQN2V3w=', N'Imagenes\Usuarios\31c5235ceec7401cb94ab63107735658.jpg', N'M', 1, 3);
-
-INSERT INTO PagoEfectivo (Estado)
-VALUES (1);
-
-INSERT INTO MercadoPago (ExternalReference)
-VALUES (N'SYSGYM_MANUAL');
-
-INSERT INTO MetodoPago (Estado, Observaciones, IdNroPagoMP, IdPagoEfectivo)
-VALUES
-    (1, N'Mercado Pago', 1, NULL),
-    (1, N'Pago en efectivo', NULL, 1);
 
 /* Ejercicios */
 INSERT INTO Ejercicio (Nombre, Descripcion, Estado)
@@ -1722,9 +1696,6 @@ VALUES
     (1, (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'32150947') AND FechaInicio = DATEADD(DAY, 0, DATEADD(MONTH, -1, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), (SELECT IdUsuarioSistema FROM UsuarioSistema WHERE Username = N'lukas.becker')),
     (1, (SELECT IdMembresia FROM Membresia WHERE IdSocio = (SELECT IdSocio FROM Socio WHERE DNI = N'38047615') AND FechaInicio = DATEADD(DAY, 0, DATEADD(MONTH, -1, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), (SELECT IdUsuarioSistema FROM UsuarioSistema WHERE Username = N'lukas.becker'));
 GO
-
-
-
 
 -- Usuarios del sistema
 SET IDENTITY_INSERT dbo.[UsuarioSistema] ON;
@@ -4408,16 +4379,8 @@ INNER JOIN dbo.CuotaMembresia AS c ON c.IdRegistroPago = p.IdRegistroPago
 WHERE p.IdCuotaMembresia IS NULL;
 
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
-
 -- Cinco socios Al día (12,2 % de los 41 activos del seed) tienen una o dos cuotas futuras pagadas.
 -- El período actual de octubre queda pendiente; las cuotas de noviembre y diciembre se pagaron el 20/10/2026.
-SET XACT_ABORT ON;
-
 SET IDENTITY_INSERT dbo.[PagoEfectivo] ON;
 INSERT INTO dbo.[PagoEfectivo] (IdPagoEfectivo, Estado)
 VALUES
@@ -4482,14 +4445,7 @@ INNER JOIN dbo.CuotaMembresia AS c ON c.IdRegistroPago = p.IdRegistroPago
 WHERE p.IdCuotaMembresia IS NULL;
 
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
-
 -- Historia ampliada relativa al mes de ejecución: 340 socios (IDs 111 a 450).
-SET XACT_ABORT ON;
 SET IDENTITY_INSERT dbo.[Socio] ON;
 INSERT INTO dbo.[Socio] (IdSocio, DNI, Nombre, Apellido, FechaNacimiento, FechaAlta, Peso, Altura, FotoRuta, Sexo, Estado)
 VALUES
@@ -4836,12 +4792,6 @@ VALUES
     (450, N'33046443', N'Carolina', N'Molina', DATEADD(YEAR, -39, CAST(GETDATE() AS date)), DATEADD(DAY, 18, DATEADD(MONTH, -26, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), 97.2, 1.95, NULL, N'F', 0);
 SET IDENTITY_INSERT dbo.[Socio] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
-
 SET IDENTITY_INSERT dbo.[Membresia] ON;
 INSERT INTO dbo.[Membresia] (IdMembresia, FechaInicio, FechaVencimiento, Estado, IdPlan, IdSocio, IdUsuarioSistema, IdRutina)
 VALUES
@@ -5171,12 +5121,6 @@ VALUES
     (440, DATEADD(DAY, 18, DATEADD(MONTH, -26, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -20, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 0, 2, 450, 3, NULL);
 SET IDENTITY_INSERT dbo.[Membresia] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
-
 SET IDENTITY_INSERT dbo.[MembresiaEntrenador] ON;
 INSERT INTO dbo.[MembresiaEntrenador] (IdMembresiaEntrenador, Estado, IdMembresia, IdEntrenador)
 VALUES
@@ -5506,12 +5450,6 @@ VALUES
     (1340, 0, 440, 4);
 SET IDENTITY_INSERT dbo.[MembresiaEntrenador] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
-
 SET IDENTITY_INSERT dbo.[CuotaMembresia] ON;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia, FechaDesde, FechaHasta, Importe, EstadoPago, IdRegistroPago, IdMembresia)
 VALUES
@@ -6016,11 +5954,6 @@ VALUES
     (1179, DATEADD(MONTH, -54, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -54, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 3700, N'Pagada', NULL, 115),
     (1180, DATEADD(MONTH, -53, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -53, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 3900, N'Pagada', NULL, 115);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia, FechaDesde, FechaHasta, Importe, EstadoPago, IdRegistroPago, IdMembresia)
 VALUES
     (1181, DATEADD(MONTH, -52, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -52, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 4000, N'Pagada', NULL, 115),
@@ -6524,11 +6457,6 @@ VALUES
     (1679, DATEADD(MONTH, -20, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -20, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 24800, N'Pagada', NULL, 127),
     (1680, DATEADD(MONTH, -19, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -19, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 25300, N'Pagada', NULL, 127);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia, FechaDesde, FechaHasta, Importe, EstadoPago, IdRegistroPago, IdMembresia)
 VALUES
     (1681, DATEADD(MONTH, -18, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -18, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 25900, N'Pagada', NULL, 127),
@@ -7032,11 +6960,6 @@ VALUES
     (2179, DATEADD(MONTH, -33, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -33, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 12000, N'Pagada', NULL, 139),
     (2180, DATEADD(MONTH, -32, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -32, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 12800, N'Pagada', NULL, 139);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia, FechaDesde, FechaHasta, Importe, EstadoPago, IdRegistroPago, IdMembresia)
 VALUES
     (2181, DATEADD(MONTH, -31, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -31, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 13700, N'Pagada', NULL, 139),
@@ -7540,11 +7463,6 @@ VALUES
     (2679, DATEADD(MONTH, -64, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -64, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 2800, N'Pagada', NULL, 150),
     (2680, DATEADD(MONTH, -63, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -63, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 2900, N'Pagada', NULL, 150);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia, FechaDesde, FechaHasta, Importe, EstadoPago, IdRegistroPago, IdMembresia)
 VALUES
     (2681, DATEADD(MONTH, -62, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -62, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 3000, N'Pagada', NULL, 150),
@@ -8048,11 +7966,6 @@ VALUES
     (3179, DATEADD(MONTH, -46, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -46, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 6800, N'Pagada', NULL, 163),
     (3180, DATEADD(MONTH, -45, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -45, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 6900, N'Pagada', NULL, 163);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia, FechaDesde, FechaHasta, Importe, EstadoPago, IdRegistroPago, IdMembresia)
 VALUES
     (3181, DATEADD(MONTH, -44, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -44, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 7500, N'Pagada', NULL, 163),
@@ -8160,11 +8073,6 @@ VALUES
     (3283, DATEADD(MONTH, -1, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -1, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 28000, N'Pendiente', NULL, 164),
     (3284, DATEADD(MONTH, 0, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, 0, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 28500, N'Pendiente', NULL, 164);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia, FechaDesde, FechaHasta, Importe, EstadoPago, IdRegistroPago, IdMembresia)
 VALUES
     (3794, DATEADD(MONTH, -44, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -44, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 5800, N'Pagada', NULL, 181),
@@ -8555,11 +8463,6 @@ VALUES
     (4179, DATEADD(MONTH, -4, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -4, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 33000, N'Pagada', NULL, 194),
     (4180, DATEADD(MONTH, -46, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -46, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 5900, N'Pagada', NULL, 195);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia, FechaDesde, FechaHasta, Importe, EstadoPago, IdRegistroPago, IdMembresia)
 VALUES
     (4181, DATEADD(MONTH, -45, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -45, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 6000, N'Pagada', NULL, 195),
@@ -9063,11 +8966,6 @@ VALUES
     (4679, DATEADD(MONTH, -38, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -38, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 8300, N'Pagada', NULL, 214),
     (4680, DATEADD(MONTH, -37, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -37, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 8800, N'Pagada', NULL, 214);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia, FechaDesde, FechaHasta, Importe, EstadoPago, IdRegistroPago, IdMembresia)
 VALUES
     (4681, DATEADD(MONTH, -36, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -36, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 9300, N'Pagada', NULL, 214),
@@ -9571,11 +9469,6 @@ VALUES
     (5179, DATEADD(MONTH, -40, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -40, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 7700, N'Pagada', NULL, 230),
     (5180, DATEADD(MONTH, -39, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -39, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 8200, N'Pagada', NULL, 230);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia, FechaDesde, FechaHasta, Importe, EstadoPago, IdRegistroPago, IdMembresia)
 VALUES
     (5181, DATEADD(MONTH, -38, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -38, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 8700, N'Pagada', NULL, 230),
@@ -10079,11 +9972,6 @@ VALUES
     (5679, DATEADD(MONTH, -74, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -74, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 1700, N'Pendiente', NULL, 248),
     (5680, DATEADD(MONTH, -73, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -73, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 1700, N'Pendiente', NULL, 248);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia, FechaDesde, FechaHasta, Importe, EstadoPago, IdRegistroPago, IdMembresia)
 VALUES
     (5681, DATEADD(MONTH, -72, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -72, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 1800, N'Pendiente', NULL, 248),
@@ -10587,11 +10475,6 @@ VALUES
     (6179, DATEADD(MONTH, -15, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -15, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 21100, N'Pagada', NULL, 271),
     (6180, DATEADD(MONTH, -14, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -14, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 21500, N'Pagada', NULL, 271);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia, FechaDesde, FechaHasta, Importe, EstadoPago, IdRegistroPago, IdMembresia)
 VALUES
     (6181, DATEADD(MONTH, -13, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -13, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 22000, N'Pagada', NULL, 271),
@@ -11095,11 +10978,6 @@ VALUES
     (6679, DATEADD(MONTH, -32, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -32, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 10800, N'Pagada', NULL, 289),
     (6680, DATEADD(MONTH, -31, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -31, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 11500, N'Pagada', NULL, 289);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia, FechaDesde, FechaHasta, Importe, EstadoPago, IdRegistroPago, IdMembresia)
 VALUES
     (6681, DATEADD(MONTH, -30, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -30, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 12200, N'Pagada', NULL, 289),
@@ -11603,11 +11481,6 @@ VALUES
     (7179, DATEADD(MONTH, -28, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -28, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 18700, N'Pagada', NULL, 307),
     (7180, DATEADD(MONTH, -27, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -27, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 19700, N'Pagada', NULL, 307);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia, FechaDesde, FechaHasta, Importe, EstadoPago, IdRegistroPago, IdMembresia)
 VALUES
     (7181, DATEADD(MONTH, -26, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -26, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 20600, N'Pagada', NULL, 307),
@@ -12111,11 +11984,6 @@ VALUES
     (7679, DATEADD(MONTH, -26, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -26, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 20600, N'Pagada', NULL, 328),
     (7680, DATEADD(MONTH, -25, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -25, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 21600, N'Pagada', NULL, 328);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia, FechaDesde, FechaHasta, Importe, EstadoPago, IdRegistroPago, IdMembresia)
 VALUES
     (7681, DATEADD(MONTH, -24, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -24, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 22600, N'Pagada', NULL, 328),
@@ -12619,11 +12487,6 @@ VALUES
     (8179, DATEADD(MONTH, -53, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -53, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 3900, N'Pagada', NULL, 349),
     (8180, DATEADD(MONTH, -52, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -52, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 4000, N'Pagada', NULL, 349);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia, FechaDesde, FechaHasta, Importe, EstadoPago, IdRegistroPago, IdMembresia)
 VALUES
     (8181, DATEADD(MONTH, -51, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -51, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 4200, N'Pagada', NULL, 349),
@@ -13127,11 +12990,6 @@ VALUES
     (8679, DATEADD(MONTH, -23, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -23, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 22600, N'Pagada', NULL, 390),
     (8680, DATEADD(MONTH, -22, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -22, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 23500, N'Pagada', NULL, 390);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia, FechaDesde, FechaHasta, Importe, EstadoPago, IdRegistroPago, IdMembresia)
 VALUES
     (8681, DATEADD(MONTH, -21, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -21, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 24200, N'Pagada', NULL, 390),
@@ -13548,12 +13406,6 @@ VALUES
     (9092, DATEADD(MONTH, -20, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(MONTH, -20, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))), 24800, N'Pagada', NULL, 440);
 SET IDENTITY_INSERT dbo.[CuotaMembresia] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
-
 SET IDENTITY_INSERT dbo.[PagoEfectivo] ON;
 INSERT INTO dbo.[PagoEfectivo] (IdPagoEfectivo, Estado)
 VALUES
@@ -14058,11 +13910,6 @@ VALUES
     (2511, 1),
     (2512, 1);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[PagoEfectivo] (IdPagoEfectivo, Estado)
 VALUES
     (2513, 1),
@@ -14566,11 +14413,6 @@ VALUES
     (3362, 1),
     (3363, 1);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[PagoEfectivo] (IdPagoEfectivo, Estado)
 VALUES
     (3364, 1),
@@ -15066,11 +14908,6 @@ VALUES
     (4203, 1),
     (4204, 1);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[PagoEfectivo] (IdPagoEfectivo, Estado)
 VALUES
     (4205, 1),
@@ -15308,11 +15145,6 @@ VALUES
     (5031, 1),
     (5034, 1);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[PagoEfectivo] (IdPagoEfectivo, Estado)
 VALUES
     (5036, 1),
@@ -15802,11 +15634,6 @@ VALUES
     (5787, 1),
     (5788, 1);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[PagoEfectivo] (IdPagoEfectivo, Estado)
 VALUES
     (5789, 1),
@@ -16302,11 +16129,6 @@ VALUES
     (6576, 1),
     (6579, 1);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[PagoEfectivo] (IdPagoEfectivo, Estado)
 VALUES
     (6580, 1),
@@ -16781,11 +16603,6 @@ VALUES
     (7281, 1),
     (7283, 1);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[PagoEfectivo] (IdPagoEfectivo, Estado)
 VALUES
     (7284, 1),
@@ -17269,11 +17086,6 @@ VALUES
     (8031, 1),
     (8032, 1);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[PagoEfectivo] (IdPagoEfectivo, Estado)
 VALUES
     (8033, 1),
@@ -17777,11 +17589,6 @@ VALUES
     (8783, 1),
     (8785, 1);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[PagoEfectivo] (IdPagoEfectivo, Estado)
 VALUES
     (8786, 1),
@@ -18278,11 +18085,6 @@ VALUES
     (9608, 1),
     (9609, 1);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[PagoEfectivo] (IdPagoEfectivo, Estado)
 VALUES
     (9611, 1),
@@ -18516,12 +18318,6 @@ VALUES
     (10046, 1);
 SET IDENTITY_INSERT dbo.[PagoEfectivo] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
-
 SET IDENTITY_INSERT dbo.[MercadoPago] ON;
 INSERT INTO dbo.[MercadoPago] (IdNroPagoMP, MercadoPagoPaymentId, MercadoPagoPreferenceId, ExternalReference, StatusDetail, FechaAprobacion)
 VALUES
@@ -19026,11 +18822,6 @@ VALUES
     (2856, 2856, NULL, N'HIST-2856', N'Pago acreditado', DATEADD(DAY, 7, DATEADD(MONTH, -4, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))),
     (2859, 2859, NULL, N'HIST-2859', N'Pago acreditado', DATEADD(DAY, 7, DATEADD(MONTH, -1, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))));
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MercadoPago] (IdNroPagoMP, MercadoPagoPaymentId, MercadoPagoPreferenceId, ExternalReference, StatusDetail, FechaAprobacion)
 VALUES
     (2869, 2869, NULL, N'HIST-2869', N'Pago acreditado', DATEADD(DAY, 7, DATEADD(MONTH, -46, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))),
@@ -19534,11 +19325,6 @@ VALUES
     (4077, 4077, NULL, N'HIST-4077', N'Pago acreditado', DATEADD(DAY, 7, DATEADD(MONTH, -6, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))),
     (4078, 4078, NULL, N'HIST-4078', N'Pago acreditado', DATEADD(DAY, 7, DATEADD(MONTH, -5, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))));
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MercadoPago] (IdNroPagoMP, MercadoPagoPaymentId, MercadoPagoPreferenceId, ExternalReference, StatusDetail, FechaAprobacion)
 VALUES
     (4079, 4079, NULL, N'HIST-4079', N'Pago acreditado', DATEADD(DAY, 7, DATEADD(MONTH, -4, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))),
@@ -19835,11 +19621,6 @@ VALUES
     (5351, 5351, NULL, N'HIST-5351', N'Pago acreditado', DATEADD(DAY, 7, DATEADD(MONTH, -32, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))),
     (5352, 5352, NULL, N'HIST-5352', N'Pago acreditado', DATEADD(DAY, 7, DATEADD(MONTH, -31, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))));
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MercadoPago] (IdNroPagoMP, MercadoPagoPaymentId, MercadoPagoPreferenceId, ExternalReference, StatusDetail, FechaAprobacion)
 VALUES
     (5357, 5357, NULL, N'HIST-5357', N'Pago acreditado', DATEADD(DAY, 7, DATEADD(MONTH, -26, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))),
@@ -20343,11 +20124,6 @@ VALUES
     (6837, 6837, NULL, N'HIST-6837', N'Pago acreditado', DATEADD(DAY, 7, DATEADD(MONTH, -24, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))),
     (6839, 6839, NULL, N'HIST-6839', N'Pago acreditado', DATEADD(DAY, 7, DATEADD(MONTH, -22, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))));
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MercadoPago] (IdNroPagoMP, MercadoPagoPaymentId, MercadoPagoPreferenceId, ExternalReference, StatusDetail, FechaAprobacion)
 VALUES
     (6840, 6840, NULL, N'HIST-6840', N'Pago acreditado', DATEADD(DAY, 7, DATEADD(MONTH, -21, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))),
@@ -20850,11 +20626,6 @@ VALUES
     (8403, 8403, NULL, N'HIST-8403', N'Pago acreditado', DATEADD(DAY, 7, DATEADD(MONTH, -24, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))),
     (8407, 8407, NULL, N'HIST-8407', N'Pago acreditado', DATEADD(DAY, 7, DATEADD(MONTH, -21, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))));
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MercadoPago] (IdNroPagoMP, MercadoPagoPaymentId, MercadoPagoPreferenceId, ExternalReference, StatusDetail, FechaAprobacion)
 VALUES
     (8408, 8408, NULL, N'HIST-8408', N'Pago acreditado', DATEADD(DAY, 7, DATEADD(MONTH, -20, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))),
@@ -21358,11 +21129,6 @@ VALUES
     (9725, 9725, NULL, N'HIST-9725', N'Pago acreditado', DATEADD(DAY, 7, DATEADD(MONTH, -9, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))),
     (9727, 9727, NULL, N'HIST-9727', N'Pago acreditado', DATEADD(DAY, 7, DATEADD(MONTH, -7, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))));
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MercadoPago] (IdNroPagoMP, MercadoPagoPaymentId, MercadoPagoPreferenceId, ExternalReference, StatusDetail, FechaAprobacion)
 VALUES
     (9728, 9728, NULL, N'HIST-9728', N'Pago acreditado', DATEADD(DAY, 7, DATEADD(MONTH, -6, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date))))),
@@ -21523,12 +21289,6 @@ VALUES
     (10047, 10047, NULL, N'HIST-10047', N'Pago acreditado', DATEADD(DAY, 7, DATEADD(MONTH, -20, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))));
 SET IDENTITY_INSERT dbo.[MercadoPago] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
-
 SET IDENTITY_INSERT dbo.[MetodoPago] ON;
 INSERT INTO dbo.[MetodoPago] (IdMetodoPago, Estado, Observaciones, IdNroPagoMP, IdPagoEfectivo)
 VALUES
@@ -22033,11 +21793,6 @@ VALUES
     (2161, 1, N'Efectivo - cuota histórica', NULL, 2161),
     (2162, 1, N'Efectivo - cuota histórica', NULL, 2162);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MetodoPago] (IdMetodoPago, Estado, Observaciones, IdNroPagoMP, IdPagoEfectivo)
 VALUES
     (2163, 1, N'Efectivo - cuota histórica', NULL, 2163),
@@ -22541,11 +22296,6 @@ VALUES
     (2661, 1, N'Mercado Pago - cuota histórica', 2661, NULL),
     (2662, 1, N'Efectivo - cuota histórica', NULL, 2662);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MetodoPago] (IdMetodoPago, Estado, Observaciones, IdNroPagoMP, IdPagoEfectivo)
 VALUES
     (2663, 1, N'Efectivo - cuota histórica', NULL, 2663),
@@ -23049,11 +22799,6 @@ VALUES
     (3161, 1, N'Mercado Pago - cuota histórica', 3161, NULL),
     (3162, 1, N'Efectivo - cuota histórica', NULL, 3162);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MetodoPago] (IdMetodoPago, Estado, Observaciones, IdNroPagoMP, IdPagoEfectivo)
 VALUES
     (3163, 1, N'Efectivo - cuota histórica', NULL, 3163),
@@ -23549,11 +23294,6 @@ VALUES
     (3661, 1, N'Efectivo - cuota histórica', NULL, 3661),
     (3662, 1, N'Efectivo - cuota histórica', NULL, 3662);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MetodoPago] (IdMetodoPago, Estado, Observaciones, IdNroPagoMP, IdPagoEfectivo)
 VALUES
     (3663, 1, N'Efectivo - cuota histórica', NULL, 3663),
@@ -24057,11 +23797,6 @@ VALUES
     (4161, 1, N'Efectivo - cuota histórica', NULL, 4161),
     (4162, 1, N'Efectivo - cuota histórica', NULL, 4162);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MetodoPago] (IdMetodoPago, Estado, Observaciones, IdNroPagoMP, IdPagoEfectivo)
 VALUES
     (4163, 1, N'Efectivo - cuota histórica', NULL, 4163),
@@ -24152,11 +23887,6 @@ VALUES
     (4248, 1, N'Mercado Pago - cuota histórica', 4248, NULL),
     (4249, 1, N'Efectivo - cuota histórica', NULL, 4249);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MetodoPago] (IdMetodoPago, Estado, Observaciones, IdNroPagoMP, IdPagoEfectivo)
 VALUES
     (4723, 1, N'Efectivo - cuota histórica', NULL, 4723),
@@ -24600,11 +24330,6 @@ VALUES
     (5161, 1, N'Efectivo - cuota histórica', NULL, 5161),
     (5162, 1, N'Efectivo - cuota histórica', NULL, 5162);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MetodoPago] (IdMetodoPago, Estado, Observaciones, IdNroPagoMP, IdPagoEfectivo)
 VALUES
     (5163, 1, N'Mercado Pago - cuota histórica', 5163, NULL),
@@ -25094,11 +24819,6 @@ VALUES
     (5654, 1, N'Efectivo - cuota histórica', NULL, 5654),
     (5662, 1, N'Efectivo - cuota histórica', NULL, 5662);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MetodoPago] (IdMetodoPago, Estado, Observaciones, IdNroPagoMP, IdPagoEfectivo)
 VALUES
     (5663, 1, N'Efectivo - cuota histórica', NULL, 5663),
@@ -25594,11 +25314,6 @@ VALUES
     (6161, 1, N'Mercado Pago - cuota histórica', 6161, NULL),
     (6162, 1, N'Efectivo - cuota histórica', NULL, 6162);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MetodoPago] (IdMetodoPago, Estado, Observaciones, IdNroPagoMP, IdPagoEfectivo)
 VALUES
     (6163, 1, N'Efectivo - cuota histórica', NULL, 6163),
@@ -26095,11 +25810,6 @@ VALUES
     (6661, 1, N'Mercado Pago - cuota histórica', 6661, NULL),
     (6662, 1, N'Mercado Pago - cuota histórica', 6662, NULL);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MetodoPago] (IdMetodoPago, Estado, Observaciones, IdNroPagoMP, IdPagoEfectivo)
 VALUES
     (6663, 1, N'Efectivo - cuota histórica', NULL, 6663),
@@ -26588,11 +26298,6 @@ VALUES
     (7161, 1, N'Efectivo - cuota histórica', NULL, 7161),
     (7162, 1, N'Mercado Pago - cuota histórica', 7162, NULL);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MetodoPago] (IdMetodoPago, Estado, Observaciones, IdNroPagoMP, IdPagoEfectivo)
 VALUES
     (7163, 1, N'Efectivo - cuota histórica', NULL, 7163),
@@ -27075,11 +26780,6 @@ VALUES
     (7661, 1, N'Efectivo - cuota histórica', NULL, 7661),
     (7662, 1, N'Efectivo - cuota histórica', NULL, 7662);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MetodoPago] (IdMetodoPago, Estado, Observaciones, IdNroPagoMP, IdPagoEfectivo)
 VALUES
     (7663, 1, N'Mercado Pago - cuota histórica', 7663, NULL),
@@ -27576,11 +27276,6 @@ VALUES
     (8161, 1, N'Mercado Pago - cuota histórica', 8161, NULL),
     (8162, 1, N'Efectivo - cuota histórica', NULL, 8162);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MetodoPago] (IdMetodoPago, Estado, Observaciones, IdNroPagoMP, IdPagoEfectivo)
 VALUES
     (8163, 1, N'Efectivo - cuota histórica', NULL, 8163),
@@ -28084,11 +27779,6 @@ VALUES
     (8661, 1, N'Efectivo - cuota histórica', NULL, 8661),
     (8662, 1, N'Efectivo - cuota histórica', NULL, 8662);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MetodoPago] (IdMetodoPago, Estado, Observaciones, IdNroPagoMP, IdPagoEfectivo)
 VALUES
     (8663, 1, N'Efectivo - cuota histórica', NULL, 8663),
@@ -28585,11 +28275,6 @@ VALUES
     (9161, 1, N'Efectivo - cuota histórica', NULL, 9161),
     (9162, 1, N'Efectivo - cuota histórica', NULL, 9162);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MetodoPago] (IdMetodoPago, Estado, Observaciones, IdNroPagoMP, IdPagoEfectivo)
 VALUES
     (9163, 1, N'Efectivo - cuota histórica', NULL, 9163),
@@ -29093,11 +28778,6 @@ VALUES
     (9661, 1, N'Mercado Pago - cuota histórica', 9661, NULL),
     (9662, 1, N'Mercado Pago - cuota histórica', 9662, NULL);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MetodoPago] (IdMetodoPago, Estado, Observaciones, IdNroPagoMP, IdPagoEfectivo)
 VALUES
     (9663, 1, N'Mercado Pago - cuota histórica', 9663, NULL),
@@ -29487,12 +29167,6 @@ VALUES
     (10047, 1, N'Mercado Pago - cuota histórica', 10047, NULL);
 SET IDENTITY_INSERT dbo.[MetodoPago] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
-
 SET IDENTITY_INSERT dbo.[Pago] ON;
 INSERT INTO dbo.[Pago] (IdRegistroPago, Fecha, Descripcion, Importe, Estado, IdMetodoPago, IdUsuarioRegistro, IdCuotaMembresia)
 VALUES
@@ -29997,11 +29671,6 @@ VALUES
     (2161, DATEADD(DAY, 16, DATEADD(MONTH, -52, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 125 período -52', 4000, N'Aprobado', 2161, 2, 1181),
     (2162, DATEADD(DAY, 8, DATEADD(MONTH, -51, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 125 período -51', 4200, N'Aprobado', 2162, 3, 1182);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[Pago] (IdRegistroPago, Fecha, Descripcion, Importe, Estado, IdMetodoPago, IdUsuarioRegistro, IdCuotaMembresia)
 VALUES
     (2163, DATEADD(DAY, 9, DATEADD(MONTH, -50, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 125 período -50', 4400, N'Aprobado', 2163, 7, 1183),
@@ -30505,11 +30174,6 @@ VALUES
     (2661, DATEADD(DAY, 11, DATEADD(MONTH, -18, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 137 período -18', 25900, N'Aprobado', 2661, 7, 1681),
     (2662, DATEADD(DAY, 8, DATEADD(MONTH, -17, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 137 período -17', 26500, N'Aprobado', 2662, 1, 1682);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[Pago] (IdRegistroPago, Fecha, Descripcion, Importe, Estado, IdMetodoPago, IdUsuarioRegistro, IdCuotaMembresia)
 VALUES
     (2663, DATEADD(DAY, 12, DATEADD(MONTH, -16, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 137 período -16', 27100, N'Aprobado', 2663, 6, 1683),
@@ -31013,11 +30677,6 @@ VALUES
     (3161, DATEADD(DAY, 9, DATEADD(MONTH, -32, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 149 período -32', 12800, N'Aprobado', 3161, 6, 2180),
     (3162, DATEADD(DAY, 12, DATEADD(MONTH, -31, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 149 período -31', 13700, N'Aprobado', 3162, 6, 2181);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[Pago] (IdRegistroPago, Fecha, Descripcion, Importe, Estado, IdMetodoPago, IdUsuarioRegistro, IdCuotaMembresia)
 VALUES
     (3163, DATEADD(DAY, 12, DATEADD(MONTH, -30, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 149 período -30', 14600, N'Aprobado', 3163, 1, 2182),
@@ -31513,11 +31172,6 @@ VALUES
     (3661, DATEADD(DAY, 8, DATEADD(MONTH, -63, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 160 período -63', 2900, N'Aprobado', 3661, 2, 2680),
     (3662, DATEADD(DAY, 11, DATEADD(MONTH, -62, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 160 período -62', 3000, N'Aprobado', 3662, 2, 2681);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[Pago] (IdRegistroPago, Fecha, Descripcion, Importe, Estado, IdMetodoPago, IdUsuarioRegistro, IdCuotaMembresia)
 VALUES
     (3663, DATEADD(DAY, 19, DATEADD(MONTH, -61, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 160 período -61', 3100, N'Aprobado', 3663, 2, 2682),
@@ -32021,11 +31675,6 @@ VALUES
     (4161, DATEADD(DAY, 16, DATEADD(MONTH, -31, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 173 período -31', 15800, N'Aprobado', 4161, 3, 3194),
     (4162, DATEADD(DAY, 19, DATEADD(MONTH, -30, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 173 período -30', 16700, N'Aprobado', 4162, 6, 3195);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[Pago] (IdRegistroPago, Fecha, Descripcion, Importe, Estado, IdMetodoPago, IdUsuarioRegistro, IdCuotaMembresia)
 VALUES
     (4163, DATEADD(DAY, 10, DATEADD(MONTH, -29, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 173 período -29', 17700, N'Aprobado', 4163, 6, 3196),
@@ -32116,11 +31765,6 @@ VALUES
     (4248, DATEADD(DAY, 13, DATEADD(MONTH, -3, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 174 período -3', 26900, N'Aprobado', 4248, 2, 3281),
     (4249, DATEADD(DAY, 12, DATEADD(MONTH, -2, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 174 período -2', 27500, N'Aprobado', 4249, 3, 3282);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[Pago] (IdRegistroPago, Fecha, Descripcion, Importe, Estado, IdMetodoPago, IdUsuarioRegistro, IdCuotaMembresia)
 VALUES
     (4723, DATEADD(DAY, 13, DATEADD(MONTH, -44, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 191 período -44', 5800, N'Aprobado', 4723, 2, 3794),
@@ -32564,11 +32208,6 @@ VALUES
     (5161, DATEADD(DAY, 14, DATEADD(MONTH, -38, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 206 período -38', 8700, N'Aprobado', 5161, 3, 4228),
     (5162, DATEADD(DAY, 12, DATEADD(MONTH, -37, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 206 período -37', 9200, N'Aprobado', 5162, 1, 4229);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[Pago] (IdRegistroPago, Fecha, Descripcion, Importe, Estado, IdMetodoPago, IdUsuarioRegistro, IdCuotaMembresia)
 VALUES
     (5163, DATEADD(DAY, 9, DATEADD(MONTH, -36, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 206 período -36', 9700, N'Aprobado', 5163, 7, 4230),
@@ -33058,11 +32697,6 @@ VALUES
     (5654, DATEADD(DAY, 4, DATEADD(MONTH, -79, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 226 período -79', 1700, N'Aprobado', 5654, 1, 4717),
     (5662, DATEADD(DAY, 8, DATEADD(MONTH, -72, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 226 período -72', 2100, N'Rechazado', 5662, 3, 4724);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[Pago] (IdRegistroPago, Fecha, Descripcion, Importe, Estado, IdMetodoPago, IdUsuarioRegistro, IdCuotaMembresia)
 VALUES
     (5663, DATEADD(DAY, 10, DATEADD(MONTH, -71, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 226 período -71', 2200, N'Aprobado', 5663, 1, 4725),
@@ -33558,11 +33192,6 @@ VALUES
     (6161, DATEADD(DAY, 9, DATEADD(MONTH, -35, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 241 período -35', 13300, N'Aprobado', 6161, 2, 5217),
     (6162, DATEADD(DAY, 4, DATEADD(MONTH, -34, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 241 período -34', 14000, N'Aprobado', 6162, 3, 5218);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[Pago] (IdRegistroPago, Fecha, Descripcion, Importe, Estado, IdMetodoPago, IdUsuarioRegistro, IdCuotaMembresia)
 VALUES
     (6163, DATEADD(DAY, 19, DATEADD(MONTH, -33, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 241 período -33', 13800, N'Aprobado', 6163, 2, 5219),
@@ -34059,11 +33688,6 @@ VALUES
     (6661, DATEADD(DAY, 6, DATEADD(MONTH, -40, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 258 período -40', 7400, N'Aprobado', 6661, 6, 5713),
     (6662, DATEADD(DAY, 6, DATEADD(MONTH, -39, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 258 período -39', 7900, N'Aprobado', 6662, 6, 5714);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[Pago] (IdRegistroPago, Fecha, Descripcion, Importe, Estado, IdMetodoPago, IdUsuarioRegistro, IdCuotaMembresia)
 VALUES
     (6663, DATEADD(DAY, 11, DATEADD(MONTH, -38, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 258 período -38', 8300, N'Aprobado', 6663, 7, 5715),
@@ -34552,11 +34176,6 @@ VALUES
     (7161, DATEADD(DAY, 5, DATEADD(MONTH, -25, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 282 período -25', 15800, N'Aprobado', 7161, 3, 6210),
     (7162, DATEADD(DAY, 13, DATEADD(MONTH, -24, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 282 período -24', 16500, N'Aprobado', 7162, 1, 6211);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[Pago] (IdRegistroPago, Fecha, Descripcion, Importe, Estado, IdMetodoPago, IdUsuarioRegistro, IdCuotaMembresia)
 VALUES
     (7163, DATEADD(DAY, 9, DATEADD(MONTH, -79, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 283 período -79', 1900, N'Aprobado', 7163, 6, 6213),
@@ -35039,11 +34658,6 @@ VALUES
     (7661, DATEADD(DAY, 15, DATEADD(MONTH, -6, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 299 período -6', 24200, N'Aprobado', 7661, 2, 6705),
     (7662, DATEADD(DAY, 9, DATEADD(MONTH, -5, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 299 período -5', 24700, N'Aprobado', 7662, 7, 6706);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[Pago] (IdRegistroPago, Fecha, Descripcion, Importe, Estado, IdMetodoPago, IdUsuarioRegistro, IdCuotaMembresia)
 VALUES
     (7663, DATEADD(DAY, 19, DATEADD(MONTH, -4, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 299 período -4', 25200, N'Aprobado', 7663, 6, 6707),
@@ -35540,11 +35154,6 @@ VALUES
     (8161, DATEADD(DAY, 10, DATEADD(MONTH, -14, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 318 período -14', 28200, N'Aprobado', 8161, 1, 7200),
     (8162, DATEADD(DAY, 9, DATEADD(MONTH, -13, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 318 período -13', 28800, N'Aprobado', 8162, 1, 7201);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[Pago] (IdRegistroPago, Fecha, Descripcion, Importe, Estado, IdMetodoPago, IdUsuarioRegistro, IdCuotaMembresia)
 VALUES
     (8163, DATEADD(DAY, 8, DATEADD(MONTH, -12, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 318 período -12', 29300, N'Aprobado', 8163, 1, 7202),
@@ -36048,11 +35657,6 @@ VALUES
     (8661, DATEADD(DAY, 7, DATEADD(MONTH, -9, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 338 período -9', 31000, N'Aprobado', 8661, 1, 7696),
     (8662, DATEADD(DAY, 7, DATEADD(MONTH, -64, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 339 período -64', 3200, N'Aprobado', 8662, 2, 7697);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[Pago] (IdRegistroPago, Fecha, Descripcion, Importe, Estado, IdMetodoPago, IdUsuarioRegistro, IdCuotaMembresia)
 VALUES
     (8663, DATEADD(DAY, 13, DATEADD(MONTH, -63, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 339 período -63', 3300, N'Aprobado', 8663, 3, 7698),
@@ -36549,11 +36153,6 @@ VALUES
     (9161, DATEADD(DAY, 15, DATEADD(MONTH, -40, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 359 período -40', 7700, N'Aprobado', 9161, 2, 8192),
     (9162, DATEADD(DAY, 11, DATEADD(MONTH, -39, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 359 período -39', 8200, N'Aprobado', 9162, 6, 8193);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[Pago] (IdRegistroPago, Fecha, Descripcion, Importe, Estado, IdMetodoPago, IdUsuarioRegistro, IdCuotaMembresia)
 VALUES
     (9163, DATEADD(DAY, 6, DATEADD(MONTH, -38, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 359 período -38', 8700, N'Aprobado', 9163, 1, 8194),
@@ -37057,11 +36656,6 @@ VALUES
     (9661, DATEADD(DAY, 14, DATEADD(MONTH, -6, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 400 período -6', 31700, N'Aprobado', 9661, 2, 8696),
     (9662, DATEADD(DAY, 4, DATEADD(MONTH, -5, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 400 período -5', 32300, N'Aprobado', 9662, 1, 8697);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[Pago] (IdRegistroPago, Fecha, Descripcion, Importe, Estado, IdMetodoPago, IdUsuarioRegistro, IdCuotaMembresia)
 VALUES
     (9663, DATEADD(DAY, 14, DATEADD(MONTH, -4, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 400 período -4', 33000, N'Aprobado', 9663, 1, 8698),
@@ -37451,91 +37045,35 @@ VALUES
     (10047, DATEADD(DAY, 15, DATEADD(MONTH, -20, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), N'Cuota histórica socio 450 período -20', 24800, N'Aprobado', 10047, 2, 9092);
 SET IDENTITY_INSERT dbo.[Pago] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
-
 UPDATE c SET IdRegistroPago = p.IdRegistroPago FROM dbo.CuotaMembresia c INNER JOIN dbo.Pago p ON p.IdCuotaMembresia = c.IdCuotaMembresia AND p.Estado = N'Aprobado' WHERE c.IdCuotaMembresia >= 681;
 -- Ajuste histórico: las bajas manuales no conservan cuotas impagas ni cuotas posteriores.
 SET IDENTITY_INSERT dbo.[Socio] ON;
 INSERT INTO dbo.[Socio] (IdSocio,DNI,Nombre,Apellido,FechaNacimiento,FechaAlta,Peso,Altura,FotoRuta,Sexo,Estado) VALUES (451,N'44999998',N'Emilia',N'Roldán',DATEADD(YEAR,-29,CAST(GETDATE() AS date)),DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),64.5,1.66,NULL,N'F',1);
 SET IDENTITY_INSERT dbo.[Socio] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 SET IDENTITY_INSERT dbo.[Membresia] ON;
 INSERT INTO dbo.[Membresia] (IdMembresia,FechaInicio,FechaVencimiento,Estado,IdPlan,IdSocio,IdUsuarioSistema,IdRutina) VALUES (441,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1,1,451,4,2005);
 SET IDENTITY_INSERT dbo.[Membresia] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MembresiaEntrenador] (Estado,IdMembresia,IdEntrenador) VALUES (1,441,4);
 SET IDENTITY_INSERT dbo.[CuotaMembresia] ON;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9093,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,441);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9094,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,441);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9095,DATEADD(MONTH,-3,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-3,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,441);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9096,DATEADD(MONTH,-2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,441);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9097,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,441);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9098,DATEADD(MONTH,0,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,0,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,441);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9099,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,441);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9100,DATEADD(MONTH,2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,441);
 SET IDENTITY_INSERT dbo.[CuotaMembresia] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 SET IDENTITY_INSERT dbo.[PagoEfectivo] ON;
 INSERT INTO dbo.[PagoEfectivo] (IdPagoEfectivo,Estado) VALUES (10047,1),
 (10048,1),
@@ -37563,11 +37101,6 @@ INSERT INTO dbo.[PagoEfectivo] (IdPagoEfectivo,Estado) VALUES (10047,1),
 (10070,1);
 SET IDENTITY_INSERT dbo.[PagoEfectivo] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 SET IDENTITY_INSERT dbo.[MercadoPago] ON;
 INSERT INTO dbo.[MercadoPago] (IdNroPagoMP,MercadoPagoPaymentId,MercadoPagoPreferenceId,ExternalReference,StatusDetail,FechaAprobacion) VALUES (10048,NULL,NULL,N'SYSGYM-SEED-10067',N'Pago acreditado',DATEADD(DAY,CASE WHEN DAY(CAST(GETDATE() AS date))>5 THEN 5-DAY(CAST(GETDATE() AS date)) ELSE 0 END,CAST(GETDATE() AS date))),
 (10049,NULL,NULL,N'SYSGYM-SEED-10068',N'Pago acreditado',DATEADD(DAY,CASE WHEN DAY(CAST(GETDATE() AS date))>5 THEN 5-DAY(CAST(GETDATE() AS date)) ELSE 0 END,CAST(GETDATE() AS date))),
@@ -37671,11 +37204,6 @@ INSERT INTO dbo.[MercadoPago] (IdNroPagoMP,MercadoPagoPaymentId,MercadoPagoPrefe
 (10147,NULL,NULL,N'SYSGYM-SEED-10166',N'Pago acreditado',DATEADD(DAY,CASE WHEN DAY(CAST(GETDATE() AS date))>5 THEN 5-DAY(CAST(GETDATE() AS date)) ELSE 0 END,CAST(GETDATE() AS date)));
 SET IDENTITY_INSERT dbo.[MercadoPago] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 SET IDENTITY_INSERT dbo.[MetodoPago] ON;
 INSERT INTO dbo.[MetodoPago] (IdMetodoPago,Estado,Observaciones,IdNroPagoMP,IdPagoEfectivo) VALUES (10048,1,N'Pago en efectivo',NULL,10047),
 (10049,1,N'Pago en efectivo',NULL,10048),
@@ -37803,11 +37331,6 @@ INSERT INTO dbo.[MetodoPago] (IdMetodoPago,Estado,Observaciones,IdNroPagoMP,IdPa
 (10171,1,N'Pago en efectivo',NULL,10070);
 SET IDENTITY_INSERT dbo.[MetodoPago] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 SET IDENTITY_INSERT dbo.[Pago] ON;
 INSERT INTO dbo.[Pago] (IdRegistroPago,Fecha,Descripcion,Importe,Estado,IdMetodoPago,IdUsuarioRegistro,IdCuotaMembresia) VALUES (10048,DATEADD(DAY,9,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),N'Regularización antes de continuar activo',25000.00,N'Aprobado',10048,1,11),
 (10049,DATEADD(DAY,9,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),N'Regularización antes de continuar activo',25000.00,N'Aprobado',10049,1,12),
@@ -37935,852 +37458,252 @@ INSERT INTO dbo.[Pago] (IdRegistroPago,Fecha,Descripcion,Importe,Estado,IdMetodo
 (10171,DATEADD(DAY,CASE WHEN DAY(CAST(GETDATE() AS date))>5 THEN 5-DAY(CAST(GETDATE() AS date)) ELSE 0 END,CAST(GETDATE() AS date)),N'Cuota del mes actual',28000.00,N'Aprobado',10171,1,9098);
 SET IDENTITY_INSERT dbo.[Pago] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 UPDATE c SET EstadoPago=N'Pagada',IdRegistroPago=p.IdRegistroPago FROM dbo.CuotaMembresia c JOIN dbo.Pago p ON p.IdCuotaMembresia=c.IdCuotaMembresia WHERE p.IdRegistroPago BETWEEN 10048 AND 10171 AND p.Estado=N'Aprobado';
 -- Nuevas altas de membresía reemplazan bajas y sostienen ingresos recientes con períodos pagados.
 UPDATE dbo.Socio SET Estado=1 WHERE IdSocio IN (450,449,448,447,446,445,444,443,442,441,440,439);
 SET IDENTITY_INSERT dbo.[Membresia] ON;
 INSERT INTO dbo.[Membresia] (IdMembresia,FechaInicio,FechaVencimiento,Estado,IdPlan,IdSocio,IdUsuarioSistema,IdRutina) VALUES (442,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1,1,450,4,2001);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[Membresia] (IdMembresia,FechaInicio,FechaVencimiento,Estado,IdPlan,IdSocio,IdUsuarioSistema,IdRutina) VALUES (443,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1,1,449,4,2002);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[Membresia] (IdMembresia,FechaInicio,FechaVencimiento,Estado,IdPlan,IdSocio,IdUsuarioSistema,IdRutina) VALUES (444,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1,1,448,4,2003);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[Membresia] (IdMembresia,FechaInicio,FechaVencimiento,Estado,IdPlan,IdSocio,IdUsuarioSistema,IdRutina) VALUES (445,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1,1,447,4,2004);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[Membresia] (IdMembresia,FechaInicio,FechaVencimiento,Estado,IdPlan,IdSocio,IdUsuarioSistema,IdRutina) VALUES (446,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1,1,446,4,2005);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[Membresia] (IdMembresia,FechaInicio,FechaVencimiento,Estado,IdPlan,IdSocio,IdUsuarioSistema,IdRutina) VALUES (447,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1,1,445,4,2006);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[Membresia] (IdMembresia,FechaInicio,FechaVencimiento,Estado,IdPlan,IdSocio,IdUsuarioSistema,IdRutina) VALUES (448,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1,1,444,4,2007);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[Membresia] (IdMembresia,FechaInicio,FechaVencimiento,Estado,IdPlan,IdSocio,IdUsuarioSistema,IdRutina) VALUES (449,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1,1,443,4,2008);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[Membresia] (IdMembresia,FechaInicio,FechaVencimiento,Estado,IdPlan,IdSocio,IdUsuarioSistema,IdRutina) VALUES (450,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1,1,442,4,2009);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[Membresia] (IdMembresia,FechaInicio,FechaVencimiento,Estado,IdPlan,IdSocio,IdUsuarioSistema,IdRutina) VALUES (451,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1,1,441,4,2001);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[Membresia] (IdMembresia,FechaInicio,FechaVencimiento,Estado,IdPlan,IdSocio,IdUsuarioSistema,IdRutina) VALUES (452,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1,1,440,4,2002);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[Membresia] (IdMembresia,FechaInicio,FechaVencimiento,Estado,IdPlan,IdSocio,IdUsuarioSistema,IdRutina) VALUES (453,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1,1,439,4,2003);
 SET IDENTITY_INSERT dbo.[Membresia] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MembresiaEntrenador] (Estado,IdMembresia,IdEntrenador) VALUES (1,442,4);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MembresiaEntrenador] (Estado,IdMembresia,IdEntrenador) VALUES (1,443,4);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MembresiaEntrenador] (Estado,IdMembresia,IdEntrenador) VALUES (1,444,4);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MembresiaEntrenador] (Estado,IdMembresia,IdEntrenador) VALUES (1,445,4);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MembresiaEntrenador] (Estado,IdMembresia,IdEntrenador) VALUES (1,446,4);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MembresiaEntrenador] (Estado,IdMembresia,IdEntrenador) VALUES (1,447,4);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MembresiaEntrenador] (Estado,IdMembresia,IdEntrenador) VALUES (1,448,4);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MembresiaEntrenador] (Estado,IdMembresia,IdEntrenador) VALUES (1,449,4);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MembresiaEntrenador] (Estado,IdMembresia,IdEntrenador) VALUES (1,450,4);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MembresiaEntrenador] (Estado,IdMembresia,IdEntrenador) VALUES (1,451,4);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MembresiaEntrenador] (Estado,IdMembresia,IdEntrenador) VALUES (1,452,4);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[MembresiaEntrenador] (Estado,IdMembresia,IdEntrenador) VALUES (1,453,4);
 SET IDENTITY_INSERT dbo.[CuotaMembresia] ON;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9101,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,442);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9102,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,442);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9103,DATEADD(MONTH,-3,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-3,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,442);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9104,DATEADD(MONTH,-2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,442);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9105,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,442);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9106,DATEADD(MONTH,0,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,0,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,442);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9107,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,442);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9108,DATEADD(MONTH,2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,442);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9109,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,443);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9110,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,443);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9111,DATEADD(MONTH,-3,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-3,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,443);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9112,DATEADD(MONTH,-2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,443);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9113,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,443);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9114,DATEADD(MONTH,0,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,0,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,443);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9115,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,443);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9116,DATEADD(MONTH,2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,443);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9117,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,444);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9118,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,444);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9119,DATEADD(MONTH,-3,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-3,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,444);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9120,DATEADD(MONTH,-2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,444);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9121,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,444);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9122,DATEADD(MONTH,0,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,0,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,444);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9123,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,444);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9124,DATEADD(MONTH,2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,444);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9125,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,445);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9126,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,445);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9127,DATEADD(MONTH,-3,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-3,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,445);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9128,DATEADD(MONTH,-2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,445);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9129,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,445);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9130,DATEADD(MONTH,0,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,0,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,445);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9131,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,445);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9132,DATEADD(MONTH,2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,445);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9133,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,446);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9134,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,446);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9135,DATEADD(MONTH,-3,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-3,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,446);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9136,DATEADD(MONTH,-2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,446);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9137,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,446);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9138,DATEADD(MONTH,0,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,0,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,446);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9139,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,446);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9140,DATEADD(MONTH,2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,446);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9141,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,447);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9142,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,447);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9143,DATEADD(MONTH,-3,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-3,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,447);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9144,DATEADD(MONTH,-2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,447);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9145,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,447);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9146,DATEADD(MONTH,0,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,0,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,447);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9147,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,447);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9148,DATEADD(MONTH,2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,447);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9149,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,448);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9150,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,448);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9151,DATEADD(MONTH,-3,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-3,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,448);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9152,DATEADD(MONTH,-2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,448);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9153,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,448);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9154,DATEADD(MONTH,0,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,0,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,448);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9155,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,448);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9156,DATEADD(MONTH,2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,448);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9157,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,449);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9158,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,449);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9159,DATEADD(MONTH,-3,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-3,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,449);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9160,DATEADD(MONTH,-2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,449);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9161,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,449);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9162,DATEADD(MONTH,0,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,0,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,449);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9163,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,449);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9164,DATEADD(MONTH,2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,449);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9165,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,450);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9166,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,450);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9167,DATEADD(MONTH,-3,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-3,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,450);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9168,DATEADD(MONTH,-2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,450);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9169,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,450);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9170,DATEADD(MONTH,0,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,0,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,450);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9171,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,450);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9172,DATEADD(MONTH,2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,450);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9173,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,451);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9174,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,451);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9175,DATEADD(MONTH,-3,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-3,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,451);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9176,DATEADD(MONTH,-2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,451);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9177,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,451);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9178,DATEADD(MONTH,0,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,0,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,451);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9179,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,451);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9180,DATEADD(MONTH,2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,451);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9181,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,452);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9182,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,452);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9183,DATEADD(MONTH,-3,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-3,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,452);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9184,DATEADD(MONTH,-2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,452);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9185,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,452);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9186,DATEADD(MONTH,0,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,0,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,452);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9187,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,452);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9188,DATEADD(MONTH,2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,452);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9189,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,453);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9190,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,453);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9191,DATEADD(MONTH,-3,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-3,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,453);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9192,DATEADD(MONTH,-2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,453);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9193,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,453);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9194,DATEADD(MONTH,0,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,0,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,453);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9195,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,1,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,453);
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia) VALUES (9196,DATEADD(MONTH,2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,1,DATEADD(MONTH,2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),28000,N'Pendiente',NULL,453);
 SET IDENTITY_INSERT dbo.[CuotaMembresia] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 SET IDENTITY_INSERT dbo.[PagoEfectivo] ON;
 INSERT INTO dbo.[PagoEfectivo] (IdPagoEfectivo,Estado) VALUES (10071,1),
 (10072,1),
@@ -38818,11 +37741,6 @@ INSERT INTO dbo.[PagoEfectivo] (IdPagoEfectivo,Estado) VALUES (10071,1),
 (10104,1);
 SET IDENTITY_INSERT dbo.[PagoEfectivo] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 SET IDENTITY_INSERT dbo.[MercadoPago] ON;
 INSERT INTO dbo.[MercadoPago] (IdNroPagoMP,MercadoPagoPaymentId,MercadoPagoPreferenceId,ExternalReference,StatusDetail,FechaAprobacion) VALUES (10148,NULL,NULL,N'SYSGYM-SEED-10172',N'Pago acreditado',DATEADD(DAY,4,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),
 (10149,NULL,NULL,N'SYSGYM-SEED-10173',N'Pago acreditado',DATEADD(DAY,4,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))),
@@ -38860,11 +37778,6 @@ INSERT INTO dbo.[MercadoPago] (IdNroPagoMP,MercadoPagoPaymentId,MercadoPagoPrefe
 (10181,NULL,NULL,N'SYSGYM-SEED-10205',N'Pago acreditado',DATEADD(DAY,4,DATEADD(MONTH,-2,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))));
 SET IDENTITY_INSERT dbo.[MercadoPago] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 SET IDENTITY_INSERT dbo.[MetodoPago] ON;
 INSERT INTO dbo.[MetodoPago] (IdMetodoPago,Estado,Observaciones,IdNroPagoMP,IdPagoEfectivo) VALUES (10172,1,N'Mercado Pago seed',10148,NULL),
 (10173,1,N'Mercado Pago seed',10149,NULL),
@@ -38936,11 +37849,6 @@ INSERT INTO dbo.[MetodoPago] (IdMetodoPago,Estado,Observaciones,IdNroPagoMP,IdPa
 (10239,1,N'Pago en efectivo',NULL,10104);
 SET IDENTITY_INSERT dbo.[MetodoPago] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 SET IDENTITY_INSERT dbo.[Pago] ON;
 INSERT INTO dbo.[Pago] (IdRegistroPago,Fecha,Descripcion,Importe,Estado,IdMetodoPago,IdUsuarioRegistro,IdCuotaMembresia) VALUES (10172,DATEADD(DAY,4,DATEADD(MONTH,-5,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),N'Cuota mensual membresía 442',28000.00,N'Aprobado',10172,1,9101),
 (10173,DATEADD(DAY,4,DATEADD(MONTH,-4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),N'Cuota mensual membresía 442',28000.00,N'Aprobado',10173,1,9102),
@@ -39012,11 +37920,6 @@ INSERT INTO dbo.[Pago] (IdRegistroPago,Fecha,Descripcion,Importe,Estado,IdMetodo
 (10239,DATEADD(DAY,CASE WHEN DAY(CAST(GETDATE() AS date))>5 THEN 5-DAY(CAST(GETDATE() AS date)) ELSE 0 END,CAST(GETDATE() AS date)),N'Cuota mensual membresía 453',28000.00,N'Aprobado',10239,1,9194);
 SET IDENTITY_INSERT dbo.[Pago] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 UPDATE c SET EstadoPago=N'Pagada',IdRegistroPago=p.IdRegistroPago FROM dbo.CuotaMembresia c JOIN dbo.Pago p ON p.IdCuotaMembresia=c.IdCuotaMembresia WHERE p.IdRegistroPago BETWEEN 10172 AND 10239 AND p.Estado=N'Aprobado';
 -- Se preservan los atrasos de las membresías que alcanzaron el límite; se quitan cuotas posteriores.
 DELETE c FROM dbo.CuotaMembresia c JOIN dbo.Membresia m ON m.IdMembresia=c.IdMembresia WHERE m.Estado=0 AND c.EstadoPago=N'Pendiente' AND (c.FechaDesde>=DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)) OR (SELECT COUNT(*) FROM dbo.CuotaMembresia venc WHERE venc.IdMembresia=m.IdMembresia AND venc.EstadoPago=N'Pendiente' AND venc.FechaHasta<CAST(GETDATE() AS date))<2);
@@ -39064,12 +37967,6 @@ VALUES
     (9209, DATEADD(DAY, 1-DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)), DATEADD(DAY, -1, DATEADD(MONTH, 1, DATEADD(DAY, 1-DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))), 15000.00, N'Pagada', NULL, 28);
 SET IDENTITY_INSERT dbo.[CuotaMembresia] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
-
 SET IDENTITY_INSERT dbo.[MercadoPago] ON;
 INSERT INTO dbo.[MercadoPago] (IdNroPagoMP, MercadoPagoPaymentId, MercadoPagoPreferenceId, ExternalReference, StatusDetail, FechaAprobacion)
 VALUES
@@ -39088,12 +37985,6 @@ VALUES
     (10252, NULL, NULL, N'SYSGYM-AJUSTE-10252', N'Pago acreditado', DATEADD(DAY, CASE WHEN DAY(CAST(GETDATE() AS date)) >= 5 THEN 4 ELSE DAY(CAST(GETDATE() AS date)) - 1 END, CAST(GETDATE() AS date)));
 SET IDENTITY_INSERT dbo.[MercadoPago] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
-
 SET IDENTITY_INSERT dbo.[MetodoPago] ON;
 INSERT INTO dbo.[MetodoPago] (IdMetodoPago, Estado, Observaciones, IdNroPagoMP, IdPagoEfectivo)
 VALUES
@@ -39112,12 +38003,6 @@ VALUES
     (10252, 1, N'Mercado Pago - cuota en curso', 10252, NULL);
 SET IDENTITY_INSERT dbo.[MetodoPago] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
-
 SET IDENTITY_INSERT dbo.[Pago] ON;
 INSERT INTO dbo.[Pago] (IdRegistroPago, Fecha, Descripcion, Importe, Estado, IdMetodoPago, IdUsuarioRegistro, IdCuotaMembresia)
 VALUES
@@ -39136,11 +38021,6 @@ VALUES
     (10252, DATEADD(DAY, CASE WHEN DAY(CAST(GETDATE() AS date)) >= 5 THEN 4 ELSE DAY(CAST(GETDATE() AS date)) - 1 END, CAST(GETDATE() AS date)), N'Cuota mensual membresía 28', 15000.00, N'Aprobado', 10252, 1, 9209);
 SET IDENTITY_INSERT dbo.[Pago] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
 UPDATE c SET EstadoPago = N'Pagada', IdRegistroPago = p.IdRegistroPago
 FROM dbo.CuotaMembresia c JOIN dbo.Pago p ON p.IdCuotaMembresia = c.IdCuotaMembresia
 WHERE p.IdRegistroPago BETWEEN 10240 AND 10252 AND p.Estado = N'Aprobado';
@@ -39217,7 +38097,7 @@ UPDATE dbo.Socio SET FechaAlta = CASE IdSocio
     WHEN 254 THEN DATEADD(DAY,20,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))
     WHEN 319 THEN DATEADD(DAY,3,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))
     WHEN 308 THEN DATEADD(DAY,16,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))
-    WHEN 174 THEN DATEADD(DAY,29,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))
+    WHEN 174 THEN DATEADD(DAY,27,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))
     WHEN 156 THEN DATEADD(DAY,12,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))
     WHEN 215 THEN DATEADD(DAY,25,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))
     WHEN 207 THEN DATEADD(DAY,8,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))
@@ -39247,7 +38127,7 @@ UPDATE dbo.Socio SET FechaAlta = CASE IdSocio
     WHEN 173 THEN DATEADD(DAY,20,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))
     WHEN 253 THEN DATEADD(DAY,3,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))
     WHEN 336 THEN DATEADD(DAY,16,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))
-    WHEN 145 THEN DATEADD(DAY,29,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))
+    WHEN 145 THEN DATEADD(DAY,27,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))
     WHEN 113 THEN DATEADD(DAY,12,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))
     WHEN 271 THEN DATEADD(DAY,25,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))
     WHEN 137 THEN DATEADD(DAY,8,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))))
@@ -39288,7 +38168,7 @@ VALUES
     (2020,DATEADD(DAY,20,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),DATEADD(DAY,-1,DATEADD(MONTH,-77,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),0,1,254,4,NULL),
     (2021,DATEADD(DAY,3,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),DATEADD(DAY,-1,DATEADD(MONTH,-77,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),0,1,319,4,NULL),
     (2022,DATEADD(DAY,16,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),DATEADD(DAY,-1,DATEADD(MONTH,-77,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),0,1,308,4,NULL),
-    (2023,DATEADD(DAY,29,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),DATEADD(DAY,-1,DATEADD(MONTH,-77,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),0,1,174,4,NULL),
+    (2023,DATEADD(DAY,27,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),DATEADD(DAY,-1,DATEADD(MONTH,-77,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),0,1,174,4,NULL),
     (2024,DATEADD(DAY,12,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),DATEADD(DAY,-1,DATEADD(MONTH,-77,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),0,1,156,4,NULL),
     (2025,DATEADD(DAY,25,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),DATEADD(DAY,-1,DATEADD(MONTH,-77,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),0,1,215,4,NULL),
     (2026,DATEADD(DAY,8,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),DATEADD(DAY,-1,DATEADD(MONTH,-77,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),0,1,207,4,NULL),
@@ -39318,7 +38198,7 @@ VALUES
     (2050,DATEADD(DAY,20,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),DATEADD(DAY,-1,DATEADD(MONTH,-77,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),0,1,173,4,NULL),
     (2051,DATEADD(DAY,3,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),DATEADD(DAY,-1,DATEADD(MONTH,-77,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),0,1,253,4,NULL),
     (2052,DATEADD(DAY,16,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),DATEADD(DAY,-1,DATEADD(MONTH,-77,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),0,1,336,4,NULL),
-    (2053,DATEADD(DAY,29,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),DATEADD(DAY,-1,DATEADD(MONTH,-77,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),0,1,145,4,NULL),
+    (2053,DATEADD(DAY,27,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),DATEADD(DAY,-1,DATEADD(MONTH,-77,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),0,1,145,4,NULL),
     (2054,DATEADD(DAY,12,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),DATEADD(DAY,-1,DATEADD(MONTH,-77,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),0,1,113,4,NULL),
     (2055,DATEADD(DAY,25,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),DATEADD(DAY,-1,DATEADD(MONTH,-77,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),0,1,271,4,NULL),
     (2056,DATEADD(DAY,8,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),DATEADD(DAY,-1,DATEADD(MONTH,-77,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),0,1,137,4,NULL),
@@ -39375,12 +38255,6 @@ VALUES
     (2107,DATEADD(MONTH,-67,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,-65,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),0,1,113,4,NULL);
 SET IDENTITY_INSERT dbo.[Membresia] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
-
 SET IDENTITY_INSERT dbo.[PagoEfectivo] ON;
 INSERT INTO dbo.[PagoEfectivo] (IdPagoEfectivo,Estado)
 VALUES
@@ -39844,12 +38718,6 @@ VALUES
     (14457,1);
 SET IDENTITY_INSERT dbo.[PagoEfectivo] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
-
 SET IDENTITY_INSERT dbo.[MetodoPago] ON;
 INSERT INTO dbo.[MetodoPago] (IdMetodoPago,Estado,Observaciones,IdNroPagoMP,IdPagoEfectivo)
 VALUES
@@ -40313,12 +39181,6 @@ VALUES
     (14457,1,N'Cuota mensual historica',NULL,14457);
 SET IDENTITY_INSERT dbo.[MetodoPago] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
-
 SET IDENTITY_INSERT dbo.[Pago] ON;
 INSERT INTO dbo.[Pago] (IdRegistroPago,Fecha,Descripcion,Importe,Estado,IdMetodoPago,IdUsuarioRegistro,IdCuotaMembresia)
 VALUES
@@ -40535,7 +39397,7 @@ VALUES
     (14210,DATEADD(DAY,16,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),N'Cuota mensual historica',1500.00,N'Aprobado',14210,1,NULL),
     (14211,DATEADD(DAY,4,DATEADD(MONTH,-80,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),N'Cuota mensual historica',1600.00,N'Aprobado',14211,5,NULL),
     (14212,DATEADD(DAY,4,DATEADD(MONTH,-79,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),N'Cuota mensual historica',1800.00,N'Aprobado',14212,1,NULL),
-    (14213,DATEADD(DAY,29,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),N'Cuota mensual historica',1500.00,N'Aprobado',14213,5,NULL),
+    (14213,DATEADD(DAY,27,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),N'Cuota mensual historica',1500.00,N'Aprobado',14213,5,NULL),
     (14214,DATEADD(DAY,4,DATEADD(MONTH,-80,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),N'Cuota mensual historica',1600.00,N'Aprobado',14214,1,NULL),
     (14215,DATEADD(DAY,4,DATEADD(MONTH,-79,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),N'Cuota mensual historica',1800.00,N'Aprobado',14215,5,NULL),
     (14216,DATEADD(DAY,12,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),N'Cuota mensual historica',1500.00,N'Aprobado',14216,1,NULL),
@@ -40625,7 +39487,7 @@ VALUES
     (14300,DATEADD(DAY,16,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),N'Cuota mensual historica',1500.00,N'Aprobado',14300,1,NULL),
     (14301,DATEADD(DAY,4,DATEADD(MONTH,-80,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),N'Cuota mensual historica',1600.00,N'Aprobado',14301,5,NULL),
     (14302,DATEADD(DAY,4,DATEADD(MONTH,-79,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),N'Cuota mensual historica',1800.00,N'Aprobado',14302,1,NULL),
-    (14303,DATEADD(DAY,29,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),N'Cuota mensual historica',1500.00,N'Aprobado',14303,5,NULL),
+    (14303,DATEADD(DAY,27,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),N'Cuota mensual historica',1500.00,N'Aprobado',14303,5,NULL),
     (14304,DATEADD(DAY,4,DATEADD(MONTH,-80,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),N'Cuota mensual historica',1600.00,N'Aprobado',14304,1,NULL),
     (14305,DATEADD(DAY,4,DATEADD(MONTH,-79,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),N'Cuota mensual historica',1800.00,N'Aprobado',14305,5,NULL),
     (14306,DATEADD(DAY,12,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),N'Cuota mensual historica',1500.00,N'Aprobado',14306,1,NULL),
@@ -40782,12 +39644,6 @@ VALUES
     (14457,DATEADD(MONTH,-67,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),N'Cuota mensual historica',1900.00,N'Aprobado',14457,5,NULL);
 SET IDENTITY_INSERT dbo.[Pago] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
-
 SET IDENTITY_INSERT dbo.[CuotaMembresia] ON;
 INSERT INTO dbo.[CuotaMembresia] (IdCuotaMembresia,FechaDesde,FechaHasta,Importe,EstadoPago,IdRegistroPago,IdMembresia)
 VALUES
@@ -41004,7 +39860,7 @@ VALUES
     (13210,DATEADD(DAY,16,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),DATEADD(DAY,-1,DATEADD(MONTH,-80,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1500.00,N'Pagada',14210,2022),
     (13211,DATEADD(MONTH,-80,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,-79,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1600.00,N'Pagada',14211,2022),
     (13212,DATEADD(MONTH,-79,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,-78,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1800.00,N'Pagada',14212,2022),
-    (13213,DATEADD(DAY,29,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),DATEADD(DAY,-1,DATEADD(MONTH,-80,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1500.00,N'Pagada',14213,2023),
+    (13213,DATEADD(DAY,27,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),DATEADD(DAY,-1,DATEADD(MONTH,-80,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1500.00,N'Pagada',14213,2023),
     (13214,DATEADD(MONTH,-80,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,-79,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1600.00,N'Pagada',14214,2023),
     (13215,DATEADD(MONTH,-79,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,-78,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1800.00,N'Pagada',14215,2023),
     (13216,DATEADD(DAY,12,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),DATEADD(DAY,-1,DATEADD(MONTH,-80,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1500.00,N'Pagada',14216,2024),
@@ -41094,7 +39950,7 @@ VALUES
     (13300,DATEADD(DAY,16,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),DATEADD(DAY,-1,DATEADD(MONTH,-80,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1500.00,N'Pagada',14300,2052),
     (13301,DATEADD(MONTH,-80,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,-79,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1600.00,N'Pagada',14301,2052),
     (13302,DATEADD(MONTH,-79,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,-78,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1800.00,N'Pagada',14302,2052),
-    (13303,DATEADD(DAY,29,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),DATEADD(DAY,-1,DATEADD(MONTH,-80,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1500.00,N'Pagada',14303,2053),
+    (13303,DATEADD(DAY,27,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),DATEADD(DAY,-1,DATEADD(MONTH,-80,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1500.00,N'Pagada',14303,2053),
     (13304,DATEADD(MONTH,-80,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,-79,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1600.00,N'Pagada',14304,2053),
     (13305,DATEADD(MONTH,-79,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,-78,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1800.00,N'Pagada',14305,2053),
     (13306,DATEADD(DAY,12,DATEADD(MONTH,-81,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),DATEADD(DAY,-1,DATEADD(MONTH,-80,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1500.00,N'Pagada',14306,2054),
@@ -41251,12 +40107,6 @@ VALUES
     (13457,DATEADD(MONTH,-67,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))),DATEADD(DAY,-1,DATEADD(MONTH,-66,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date)))),1900.00,N'Pagada',14457,2107);
 SET IDENTITY_INSERT dbo.[CuotaMembresia] OFF;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
-
 UPDATE p SET IdCuotaMembresia = c.IdCuotaMembresia
 FROM dbo.Pago p JOIN dbo.CuotaMembresia c ON c.IdRegistroPago = p.IdRegistroPago
 WHERE p.IdRegistroPago BETWEEN 14000 AND 14457;
@@ -41308,12 +40158,6 @@ WHERE p.IdRegistroPago BETWEEN 14000 AND 14457 AND p.Estado = N'Reembolsado'
   AND c.FechaDesde >= DATEADD(MONTH, -71, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)))
   AND c.FechaDesde < DATEADD(MONTH, -70, DATEADD(DAY, 1 - DAY(CAST(GETDATE() AS date)), CAST(GETDATE() AS date)));
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
-
 ;WITH Candidatos AS (
     SELECT TOP (4) p.IdRegistroPago
     FROM dbo.Pago p
@@ -41554,12 +40398,5 @@ UPDATE p SET Fecha=DATEADD(DAY,4,DATEADD(MONTH,-1,DATEADD(DAY,1-DAY(CAST(GETDATE
 ), Seleccion AS (SELECT TOP (5) IdRegistroPago FROM Candidatos WHERE rn=1 ORDER BY Importe,IdRegistroPago)
 UPDATE p SET Fecha=CASE WHEN DAY(CAST(GETDATE() AS date))>5 THEN DATEADD(DAY,4,DATEADD(DAY,1-DAY(CAST(GETDATE() AS date)),CAST(GETDATE() AS date))) ELSE CAST(GETDATE() AS date) END FROM dbo.Pago p INNER JOIN Seleccion s ON s.IdRegistroPago=p.IdRegistroPago;
 GO
-IF @@TRANCOUNT = 0
-BEGIN
-    RAISERROR('La carga se detuvo por un error anterior.', 16, 1);
-    SET NOEXEC ON;
-END;
-COMMIT TRANSACTION;
 GO
-SET NOEXEC OFF;
 GO

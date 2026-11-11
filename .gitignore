@@ -8,13 +8,24 @@
 # Build output
 bin/
 obj/
-.codegraph
-.codegraph/
+packages/
+*.bak
+*.mdf
+*.ldf
+*.log
 
-# Archivos locales
+# Herramientas y documentación local
+/.agents/
+/.codex/
+/.codegraph/
 /AGENTS.md
 /docs/
-/Instalador/Redist/
-/Instalador/Salida/
+__pycache__/
 
-Manual/GenerarManual.py
+# Distribución y material de trabajo
+/Instalador/
+/Manual/*
+!/Manual/ManualesPorRol.xml
+!/Manual/Manual de usuario SysGym - Administrador - 2026.pdf
+!/Manual/Manual de usuario SysGym - Recepcionista - 2026.pdf
+!/Manual/Manual de usuario SysGym - Entrenador - 2026.pdf

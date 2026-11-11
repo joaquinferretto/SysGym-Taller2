@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 
 namespace exxen2._0.capaDatos.Servicios
 {
-    /* Ejecuta las tareas de instalación y copias que SQL Server debe realizar sobre la base. */
+    /* Ejecuta la creación, las copias y la restauración de la base en SQL Server. */
     public static class AdministracionBaseDatos
     {
         private static readonly string[] NombresConexion = { "GymContext", "GymContextRespaldo" };
@@ -49,7 +49,7 @@ namespace exxen2._0.capaDatos.Servicios
         public static void CrearBaseDesdeScript(string rutaScript)
         {
             if (string.IsNullOrWhiteSpace(rutaScript) || !File.Exists(rutaScript))
-                throw new FileNotFoundException("No se encontró el esquema de SysGym para instalar la base.", rutaScript);
+                throw new FileNotFoundException("No se encontró el esquema de SysGym para crear la base.", rutaScript);
 
             var nombreBase = NombreBaseConfigurada;
             var nombreSeguro = new SqlCommandBuilder().QuoteIdentifier(nombreBase);
@@ -57,22 +57,11 @@ namespace exxen2._0.capaDatos.Servicios
             const string crearOriginal = "CREATE DATABASE SysGymDB;";
             const string usarOriginal = "USE SysGymDB;";
             if (!script.Contains(crearOriginal) || !script.Contains(usarOriginal))
-                throw new InvalidOperationException("El archivo de esquema no tiene las instrucciones de instalación esperadas.");
-            var instruccionCrear = EsInstalacionLocalDb()
-                ? CrearBaseConArchivos(nombreSeguro)
-                : "CREATE DATABASE " + nombreSeguro + ";";
-            script = script.Replace(crearOriginal, instruccionCrear)
+                throw new InvalidOperationException("El archivo de esquema no tiene las instrucciones de creación esperadas.");
+            script = script.Replace(crearOriginal, "CREATE DATABASE " + nombreSeguro + ";")
                 .Replace(usarOriginal, "USE " + nombreSeguro + ";");
 
             var lotes = Regex.Split(script, @"(?im)^\s*GO\s*(?:--.*)?$");
-            var rutaDocumentacion = Path.Combine(Path.GetDirectoryName(rutaScript), "DocumentarSysGymDB.sql");
-            if (!File.Exists(rutaDocumentacion))
-                throw new FileNotFoundException("No se encontró la documentación SQL del esquema de SysGym.", rutaDocumentacion);
-            var documentacion = File.ReadAllText(rutaDocumentacion, Encoding.UTF8);
-            if (!documentacion.Contains(usarOriginal))
-                throw new InvalidOperationException("El archivo de documentación no tiene la instrucción USE esperada.");
-            documentacion = documentacion.Replace(usarOriginal, "USE " + nombreSeguro + ";");
-            var lotesDocumentacion = Regex.Split(documentacion, @"(?im)^\s*GO\s*(?:--.*)?$");
             var baseCreada = false;
             using (var conexion = AbrirConexionMaster())
             {
@@ -87,19 +76,8 @@ namespace exxen2._0.capaDatos.Servicios
                             comando.CommandTimeout = 0;
                             comando.ExecuteNonQuery();
                         }
-                        if (Regex.IsMatch(lote, @"(?is)^\s*CREATE\s+DATABASE\b"))
+                        if (Regex.IsMatch(lote, @"(?im)^\s*CREATE\s+DATABASE\b"))
                             baseCreada = true;
-                    }
-
-                    foreach (var lote in lotesDocumentacion)
-                    {
-                        if (string.IsNullOrWhiteSpace(lote))
-                            continue;
-                        using (var comando = new SqlCommand(lote, conexion))
-                        {
-                            comando.CommandTimeout = 0;
-                            comando.ExecuteNonQuery();
-                        }
                     }
                 }
                 catch
@@ -107,31 +85,6 @@ namespace exxen2._0.capaDatos.Servicios
                     if (baseCreada)
                         EliminarBaseIncompleta(conexion, nombreSeguro, nombreBase);
                     throw;
-                }
-            }
-        }
-
-        public static void PrepararDatosBaseInstalada(string rutaScript)
-        {
-            if (!EsInstalacionLocalDb())
-                return;
-            if (string.IsNullOrWhiteSpace(rutaScript) || !File.Exists(rutaScript))
-                throw new FileNotFoundException("No se encontró la configuración inicial de SysGym.", rutaScript);
-
-            var configuracion = ConfigurationManager.ConnectionStrings[NombresConexion[0]];
-            var script = File.ReadAllText(rutaScript, Encoding.UTF8);
-            using (var conexion = new SqlConnection(configuracion.ConnectionString))
-            {
-                conexion.Open();
-                foreach (var lote in Regex.Split(script, @"(?im)^\s*GO\s*(?:--.*)?$"))
-                {
-                    if (string.IsNullOrWhiteSpace(lote))
-                        continue;
-                    using (var comando = new SqlCommand(lote, conexion))
-                    {
-                        comando.CommandTimeout = 0;
-                        comando.ExecuteNonQuery();
-                    }
                 }
             }
         }
@@ -435,25 +388,6 @@ namespace exxen2._0.capaDatos.Servicios
             return constructor.DataSource.IndexOf("(localdb)", StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
-        private static bool EsInstalacionLocalDb()
-        {
-            return EsConexionLocalDb() && string.Equals(
-                ConfigurationManager.AppSettings["SysGymModoInstalado"], "true", StringComparison.OrdinalIgnoreCase);
-        }
-
-        private static string CrearBaseConArchivos(string nombreSeguro)
-        {
-            var directorio = AppDomain.CurrentDomain.GetData("DataDirectory") as string;
-            if (string.IsNullOrWhiteSpace(directorio))
-                throw new InvalidOperationException("No se configuró la carpeta de datos de SysGym.");
-            Directory.CreateDirectory(directorio);
-            var archivoDatos = Path.Combine(directorio, "SysGymDB.mdf").Replace("'", "''");
-            var archivoRegistro = Path.Combine(directorio, "SysGymDB_log.ldf").Replace("'", "''");
-            return "CREATE DATABASE " + nombreSeguro +
-                " ON PRIMARY (NAME = N'SysGymDB', FILENAME = N'" + archivoDatos + "')" +
-                " LOG ON (NAME = N'SysGymDB_log', FILENAME = N'" + archivoRegistro + "');";
-        }
-
         private static void Ejecutar(SqlConnection conexion, string texto)
         {
             using (var comando = new SqlCommand(texto, conexion))
@@ -486,7 +420,7 @@ namespace exxen2._0.capaDatos.Servicios
             }
             catch
             {
-                // Se conserva el error del esquema para mostrar un mensaje de instalación comprensible.
+                // Se conserva el error original de creación de la base.
             }
         }
     }

@@ -136,7 +136,7 @@ namespace exxen2._0.capaVisual.Administrador
 
         private void btnManual_Click(object origen, EventArgs e)
         {
-            AyudaFormularioVisual.AbrirManual(this);
+            Abrir(btnManual, new ManualUsuarioFormulario("Administrador"), "Manual de usuario | Todos los flujos de SysGym");
         }
 
         /* Al hacer clic en btnUsuarios, abre el módulo correspondiente dentro del panel principal. */

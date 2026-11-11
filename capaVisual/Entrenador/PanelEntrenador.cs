@@ -110,7 +110,7 @@ namespace exxen2._0.capaVisual.Entrenador
 
         private void btnManual_Click(object origen, EventArgs e)
         {
-            AyudaFormularioVisual.AbrirManual(this);
+            Abrir(btnManual, new ManualUsuarioFormulario("Entrenador"), "Manual de usuario | Flujos de Entrenador");
         }
 
         /* Al hacer clic en Mis alumnos, regresa al inicio del entrenador, que es esa misma pantalla. */

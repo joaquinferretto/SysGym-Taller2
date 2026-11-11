@@ -160,6 +160,22 @@
     <Compile Include="capaVisual\Autenticacion\RegistrarAdministradorFormulario.Designer.cs">
       <DependentUpon>RegistrarAdministradorFormulario.cs</DependentUpon>
     </Compile>
+    <Compile Include="capaLogica\Manuales\ManualUsuarioServicio.cs" />
+    <Compile Include="capaVisual\Compartido\ManualUsuarioFormulario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <EmbeddedResource Include="Manual\ManualesPorRol.xml">
+      <LogicalName>SysGym.ManualesPorRol.xml</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Manual\Manual de usuario SysGym - Administrador - 2026.pdf">
+      <LogicalName>SysGym.Manual.Administrador.pdf</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Manual\Manual de usuario SysGym - Recepcionista - 2026.pdf">
+      <LogicalName>SysGym.Manual.Recepcionista.pdf</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Manual\Manual de usuario SysGym - Entrenador - 2026.pdf">
+      <LogicalName>SysGym.Manual.Entrenador.pdf</LogicalName>
+    </EmbeddedResource>
     <Compile Include="capaLogica\Navegacion\ControladorNavegacion.cs" />
     <Compile Include="capaLogica\Navegacion\AccionEstadoSocio.cs" />
     <Compile Include="capaLogica\Navegacion\AccionEstadoSocioEventArgs.cs" />
@@ -383,7 +399,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Properties\PaletaBotones.ps1" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
