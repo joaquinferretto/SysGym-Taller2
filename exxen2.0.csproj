@@ -98,7 +98,7 @@
       <DependentUpon>ConfiguracionFormulario.cs</DependentUpon>
     </Compile>
     <Compile Include="capaDatos\Contexto\ContextoGimnasio.cs" />
-    <Compile Include="capaDatos\Database\AdministracionBaseDatos.cs" />
+    <Compile Include="capaDatos\Servicios\AdministracionBaseDatos.cs" />
     <Compile Include="capaDatos\Repositorios\UnidadDeTrabajoGimnasio.cs" />
     <Compile Include="capaDatos\Entidades\Ejercicio.cs" />
     <Compile Include="capaDatos\Entidades\EjercicioImagen.cs" />
